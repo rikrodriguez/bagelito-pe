@@ -4,14 +4,12 @@ Source repository for the Bagelito.pe website.
 
 Production site: https://bagelito-pe.vercel.app/
 
-## Current status
+## Status
 
-The current production deployment was created directly on Vercel from a temporary local folder. That source folder is no longer available, so this repository is now the permanent source of truth going forward.
-
-Before connecting this repository to production, rebuild or restore the exact Next.js source and verify it in a preview deployment.
+This repository is now the permanent source of truth for Bagelito.pe going forward. The original direct-to-Vercel temporary source folder was lost, so production should not be replaced until this source is verified through a Vercel preview.
 
 ## Guardrails
 
 - Do not commit secrets, `.env` files, credentials, wallets, or private keys.
 - Keep production unchanged until a preview matches the current live site.
-- Use Vercel for deployment.
+- Deploy through Vercel after preview QA.
