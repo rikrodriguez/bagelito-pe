@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./overrides.css";
 
 export const metadata: Metadata = {
   title: "Bagelito.pe | The Monthly Bagel Drop in Lima",
