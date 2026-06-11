@@ -4,12 +4,29 @@ Source repository for the Bagelito.pe website.
 
 Production site: https://bagelito-pe.vercel.app/
 
-## Status
+## Overview
 
-This repository is now the permanent source of truth for Bagelito.pe going forward. The original direct-to-Vercel temporary source folder was lost, so production should not be replaced until this source is verified through a Vercel preview.
+Bagelito.pe is positioned as the monthly bagel drop in Lima: customers reserve packs during a batch window, payment is reviewed manually, and confirmed paid orders enter production.
+
+## Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind-style global CSS
+- Framer Motion
+- lucide-react
+- Supabase schema and reservation/admin CRM code
+- Vercel deployment
 
 ## Guardrails
 
 - Do not commit secrets, `.env` files, credentials, wallets, or private keys.
-- Keep production unchanged until a preview matches the current live site.
-- Deploy through Vercel after preview QA.
+- Keep `payment-proofs` private in Supabase Storage.
+- Payment proof screenshots must be viewed through signed URLs only.
+- Production summary should count only payment-confirmed/production/delivery statuses.
+
+## Production
+
+Current Vercel URL:
+
+https://bagelito-pe.vercel.app/
