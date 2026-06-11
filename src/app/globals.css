@@ -1019,3 +1019,24 @@ section[id] {
     height: 122%;
   }
 }
+
+
+/* Normalize the rainbow bagel optical size outside the hero collage. */
+.bagel-photo.bagel-variant-rainbow:not(.hero-bagel) .bagel-photo-img {
+  transform: scale(.88);
+  transform-origin: center;
+}
+
+.flavor-mini .bagel-photo.bagel-variant-rainbow .bagel-photo-img,
+.flavor-select-card .bagel-photo.bagel-variant-rainbow .bagel-photo-img {
+  transform: scale(.86);
+}
+
+.final-cta-card .bagel-photo.bagel-variant-rainbow .bagel-photo-img,
+.reserve-herolet .bagel-photo.bagel-variant-rainbow .bagel-photo-img {
+  transform: scale(.9);
+}
+
+.hero-bagel.bagel-variant-rainbow .bagel-photo-img {
+  transform: none;
+}

@@ -41,7 +41,7 @@ export function RollingBagel({ variant = "plain", size = "md", className = "", s
 
   return (
     <motion.div
-      className={`bagel-photo ${sizeClass[size]} ${className}`}
+      className={`bagel-photo bagel-variant-${variant} ${sizeClass[size]} ${className}`}
       style={{ ...style, rotate }}
       aria-label={alt}
       role="img"
