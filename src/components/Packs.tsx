@@ -1,19 +1,53 @@
-import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle, ShieldCheck, ShoppingCart } from "lucide-react";
 import { packs, type Pack } from "@/data/packs";
+import { RollingBagel, type BagelVariant } from "./RollingBagel";
 
 type PackVisual = {
-  src: string;
-  alt: string;
+  variants: BagelVariant[];
+  label: string;
 };
 
-const packImages: Record<Pack["slug"], PackVisual> = {
-  "12-mixed": { src: "/images/pack-12-mixed.png", alt: "Tray with 12 mixed Bagelito bagels" },
-  "6-mixed": { src: "/images/pack-6-mixed.png", alt: "Tray with 6 mixed Bagelito bagels" },
-  "12-single": { src: "/images/pack-12-single.png", alt: "Tray with 12 plain Bagelito bagels" },
-  "6-single": { src: "/images/pack-6-single.png", alt: "Tray with 6 plain Bagelito bagels" },
+const packVisuals: Record<Pack["slug"], PackVisual> = {
+  "12-mixed": {
+    label: "Twelve mixed handmade Bagelito bagels in a tray",
+    variants: ["everything", "jalapeno", "rainbow", "plain", "cheddar", "blueberry", "sesame", "onion", "cinnamon", "snickerdoodle", "everything", "rainbow"],
+  },
+  "6-mixed": {
+    label: "Six mixed handmade Bagelito bagels in a tray",
+    variants: ["jalapeno", "plain", "rainbow", "cheddar", "sesame", "blueberry"],
+  },
+  "12-single": {
+    label: "Twelve single flavor handmade Bagelito bagels in a tray",
+    variants: Array.from({ length: 12 }, () => "plain" as BagelVariant),
+  },
+  "6-single": {
+    label: "Six single flavor handmade Bagelito bagels in a tray",
+    variants: Array.from({ length: 6 }, () => "plain" as BagelVariant),
+  },
 };
+
+function PackTray({ pack }: { pack: Pack }) {
+  const visual = packVisuals[pack.slug];
+
+  return (
+    <div className={`pack-tray-stage pack-tray-${pack.units}`} aria-label={visual.label} role="img">
+      <div className="pack-tray-base" aria-hidden="true">
+        <span>Bagelito.pe</span>
+      </div>
+      <div className="pack-tray-grid" aria-hidden="true">
+        {visual.variants.map((variant, index) => (
+          <RollingBagel
+            key={`${pack.slug}-${variant}-${index}`}
+            variant={variant}
+            size="sm"
+            className="pack-tray-bagel"
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function Packs() {
   return (
@@ -26,33 +60,20 @@ export function Packs() {
         </div>
       </div>
       <div className="pack-grid">
-        {packs.map((pack) => {
-          const visual = packImages[pack.slug];
-
-          return (
-            <article className={`pack-card ${pack.accent} ${pack.mostWanted ? "has-badge" : ""}`} key={pack.slug}>
-              {pack.mostWanted ? <span className="most-wanted">Most wanted</span> : null}
-              <div className="pack-title-block">
-                <h3>{pack.name}</h3>
-                <strong>S/{pack.amount}</strong>
-              </div>
-              <div className={`pack-visual pack-image-wrap pack-${pack.slug}`}>
-                <Image
-                  src={visual.src}
-                  alt={visual.alt}
-                  width={1600}
-                  height={900}
-                  sizes="(max-width: 760px) 88vw, (max-width: 1120px) 42vw, 300px"
-                  className="pack-mockup-image"
-                />
-              </div>
-              <p>{pack.description}</p>
-              <Link className={`pill-button ${pack.accent}`} href={`/reserve?pack=${pack.slug}`}>
-                <MessageCircle size={18} /> Reserve this pack
-              </Link>
-            </article>
-          );
-        })}
+        {packs.map((pack) => (
+          <article className={`pack-card ${pack.accent} ${pack.mostWanted ? "has-badge" : ""}`} key={pack.slug}>
+            {pack.mostWanted ? <span className="most-wanted">Most wanted</span> : null}
+            <div className="pack-title-block">
+              <h3>{pack.name}</h3>
+              <strong>S/{pack.amount}</strong>
+            </div>
+            <PackTray pack={pack} />
+            <p>{pack.description}</p>
+            <Link className={`pill-button ${pack.accent}`} href={`/reserve?pack=${pack.slug}`}>
+              <MessageCircle size={18} /> Reserve this pack
+            </Link>
+          </article>
+        ))}
       </div>
       <div className="reservation-rules">
         <span><ShieldCheck size={19} /> Your reservation is confirmed only after payment.</span>

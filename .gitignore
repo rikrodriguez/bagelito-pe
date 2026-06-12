@@ -18,3 +18,4 @@ out/
 bagelito-packs-local.png
 .DS_Store
 *.log
+.vercel
