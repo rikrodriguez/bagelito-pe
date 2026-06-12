@@ -4,15 +4,17 @@ import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CreditCard, LockKeyhole, ShoppingBag, Truck } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
 
-const steps = [
-  { n: 1, title: "Choose your pack", text: "Pick your favorite flavors from this month's batch.", Icon: ShoppingBag, color: "pink" },
-  { n: 2, title: "Pay to reserve", text: "Your order is confirmed only after payment.", Icon: CreditCard, color: "orange" },
-  { n: 3, title: "We close production", text: "Once the window closes, we buy ingredients and prep only what was reserved.", Icon: LockKeyhole, color: "mint" },
-  { n: 4, title: "We bake and deliver", text: "Your pack is baked fresh and delivered in one scheduled Lima delivery window.", Icon: Truck, color: "purple" },
-];
+const stepMeta = [
+  { n: 1, Icon: ShoppingBag, color: "pink" },
+  { n: 2, Icon: CreditCard, color: "orange" },
+  { n: 3, Icon: LockKeyhole, color: "mint" },
+  { n: 4, Icon: Truck, color: "purple" },
+] as const;
 
 export function HowMonthlyWorks() {
+  const { copy } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -27,53 +29,37 @@ export function HowMonthlyWorks() {
 
   return (
     <section id="how-it-works" className="how-section section-pad" ref={sectionRef}>
-      <h2>How the monthly batch works</h2>
+      <h2>{copy.how.title}</h2>
       <div className="step-line" aria-hidden="true">
         <motion.span className="step-line-progress" style={{ width: trailWidth }} />
-        {steps.map(({ n, color }) => (
-          <span className={`step-line-dot ${color}`} key={n}>{n}</span>
+        {stepMeta.map(({ n, color }) => (
+          <span className={"step-line-dot " + color} key={n}>{n}</span>
         ))}
       </div>
       <div className="scroll-bagel-track desktop" aria-hidden="true">
         <motion.span className="step-pop-burst" style={{ opacity: popOpacity, scale: burstScale }} />
-        <motion.div
-          className="step-rolling-bagel"
-          style={{ left: travelerLeft, rotate, scale: popScale }}
-        >
-          <Image
-            src="/images/bagel-everything.png"
-            alt=""
-            width={220}
-            height={220}
-            sizes="58px"
-            className="step-rolling-bagel-img"
-          />
+        <motion.div className="step-rolling-bagel" style={{ left: travelerLeft, rotate, scale: popScale }}>
+          <Image src="/images/bagel-everything.png" alt="" width={220} height={220} sizes="58px" className="step-rolling-bagel-img" />
         </motion.div>
       </div>
       <div className="scroll-bagel-track mobile" aria-hidden="true">
-        <motion.div
-          className="step-rolling-bagel"
-          style={{ left: travelerLeft, rotate, scale: popScale }}
-        >
-          <Image
-            src="/images/bagel-everything.png"
-            alt=""
-            width={220}
-            height={220}
-            sizes="48px"
-            className="step-rolling-bagel-img"
-          />
+        <motion.div className="step-rolling-bagel" style={{ left: travelerLeft, rotate, scale: popScale }}>
+          <Image src="/images/bagel-everything.png" alt="" width={220} height={220} sizes="48px" className="step-rolling-bagel-img" />
         </motion.div>
       </div>
       <div className="steps-grid">
-        {steps.map(({ n, title, text, Icon, color }) => (
-          <article className={`step-card ${color}`} key={title}>
-            <span className="step-number">{n}</span>
-            <div className="step-icon"><Icon size={34} /></div>
-            <h3>{title}</h3>
-            <p>{text}</p>
-          </article>
-        ))}
+        {copy.how.steps.map((step, index) => {
+          const meta = stepMeta[index];
+          const Icon = meta.Icon;
+          return (
+            <article className={"step-card " + meta.color} key={step.title}>
+              <span className="step-number">{meta.n}</span>
+              <div className="step-icon"><Icon size={34} /></div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

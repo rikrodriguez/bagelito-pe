@@ -1,25 +1,34 @@
-import { Leaf, ShoppingCart, Smile, Trash2 } from "lucide-react";
+"use client";
 
-const reasons = [
-  { title: "Fresher product", text: "Baked closer to delivery day for the best taste and texture.", Icon: Leaf, color: "mint" },
-  { title: "Less waste", text: "We only make what's reserved. Better for the planet.", Icon: Trash2, color: "pink" },
-  { title: "Smarter ingredients", text: "We buy better, plan better and support quality.", Icon: ShoppingCart, color: "orange" },
-  { title: "Better monthly experience", text: "More flavors, more fun, more Bagelito.", Icon: Smile, color: "purple" },
-];
+import { Leaf, ShoppingCart, Smile, Trash2 } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
+
+const reasonMeta = [
+  { Icon: Leaf, color: "mint" },
+  { Icon: Trash2, color: "pink" },
+  { Icon: ShoppingCart, color: "orange" },
+  { Icon: Smile, color: "purple" },
+] as const;
 
 export function WhyMonthly() {
+  const { copy } = useLanguage();
+
   return (
     <section id="about" className="why-section section-pad">
-      <h2>Why monthly?</h2>
-      <p className="section-intro">We bake by reservation because it makes the product better. No random stock, no leftovers, no rushed production. We know exactly how many packs to prepare, buy ingredients smarter, reduce waste, and deliver a fresher batch.</p>
+      <h2>{copy.why.title}</h2>
+      <p className="section-intro">{copy.why.intro}</p>
       <div className="reason-grid">
-        {reasons.map(({ title, text, Icon, color }) => (
-          <article className={`reason-card ${color}`} key={title}>
-            <Icon size={42} />
-            <h3>{title}</h3>
-            <p>{text}</p>
-          </article>
-        ))}
+        {copy.why.reasons.map((reason, index) => {
+          const meta = reasonMeta[index];
+          const Icon = meta.Icon;
+          return (
+            <article className={"reason-card " + meta.color} key={reason.title}>
+              <Icon size={42} />
+              <h3>{reason.title}</h3>
+              <p>{reason.text}</p>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

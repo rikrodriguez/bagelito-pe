@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowRight, Check, Minus, Plus } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
+import { useLanguage } from "@/components/LanguageProvider";
+import { flavorCopy, packCopy } from "@/lib/i18n";
 import { districtOptions } from "@/lib/reservations/schema";
 
 type Props = {
@@ -23,7 +25,6 @@ type Details = {
   deliveryNotes: string;
 };
 
-const steps = ["Pack", "Flavors", "Delivery", "Review"] as const;
 const initialDetails: Details = {
   customerName: "",
   whatsapp: "",
@@ -35,6 +36,8 @@ const initialDetails: Details = {
 };
 
 export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
+  const { locale, copy } = useLanguage();
+  const r = copy.reserve;
   const [step, setStep] = useState(1);
   const [packSlug, setPackSlug] = useState<PackSlug>(initialPackSlug);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
@@ -45,6 +48,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const [submitting, setSubmitting] = useState(false);
 
   const selectedPack = packs.find((pack) => pack.slug === packSlug) ?? packs[0];
+  const localizedSelectedPack = packCopy[locale][selectedPack.slug];
   const selectedTotal = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
   const selectedItems = useMemo(() => {
     if (selectedPack.packType === "single") {
@@ -56,10 +60,18 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       .map(([flavorSlug, quantity]) => ({ flavorSlug, quantity }));
   }, [quantities, selectedPack, singleFlavor]);
 
-  const flavorSummary = selectedItems.map((item) => ({
-    ...item,
-    flavorName: flavors.find((flavor) => flavor.slug === item.flavorSlug)?.name ?? item.flavorSlug,
-  }));
+  const flavorSummary = selectedItems.map((item) => {
+    const flavor = flavors.find((candidate) => candidate.slug === item.flavorSlug);
+    return {
+      ...item,
+      flavorName: flavorCopy[locale][item.flavorSlug] ?? flavor?.name ?? item.flavorSlug,
+    };
+  });
+
+  function getFlavorLabel(flavorSlug: string) {
+    const flavor = flavors.find((candidate) => candidate.slug === flavorSlug);
+    return flavorCopy[locale][flavorSlug] ?? flavor?.name ?? flavorSlug;
+  }
 
   function selectPack(nextSlug: PackSlug) {
     setPackSlug(nextSlug);
@@ -88,12 +100,12 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   function goNext() {
     setError("");
     if (step === 2 && !validateFlavorStep()) {
-      setError(selectedPack.packType === "mixed" ? `Select exactly ${selectedPack.units} bagels.` : "Choose one flavor.");
+      setError(selectedPack.packType === "mixed" ? r.errors.exactBagels.replace("{units}", String(selectedPack.units)) : r.errors.chooseFlavor);
       return;
     }
 
     if (step === 3 && !validateDeliveryStep()) {
-      setError("Please complete all required delivery fields.");
+      setError(r.errors.deliveryRequired);
       return;
     }
 
@@ -103,7 +115,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   async function submitReservation() {
     setError("");
     if (!termsAccepted) {
-      setError("Please accept the monthly batch terms before submitting.");
+      setError(r.errors.terms);
       return;
     }
 
@@ -118,11 +130,11 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       const response = await fetch("/api/reservations", { method: "POST", body: formData });
       const result = await response.json() as { ok?: boolean; orderCode?: string; error?: string };
       if (!response.ok || !result.ok || !result.orderCode) {
-        throw new Error(result.error ?? "Could not submit reservation.");
+        throw new Error(result.error ?? r.errors.submit);
       }
-      window.location.href = `/reserve/success?order=${encodeURIComponent(result.orderCode)}&pack=${encodeURIComponent(selectedPack.name)}&amount=${selectedPack.amount}`;
+      window.location.href = "/reserve/success?order=" + encodeURIComponent(result.orderCode) + "&pack=" + encodeURIComponent(selectedPack.name) + "&packSlug=" + encodeURIComponent(selectedPack.slug) + "&amount=" + selectedPack.amount;
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Could not submit reservation.");
+      setError(submitError instanceof Error ? submitError.message : r.errors.submit);
       setSubmitting(false);
     }
   }
@@ -131,15 +143,15 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     <section className="reserve-shell">
       <div className="reserve-herolet">
         <div>
-          <p className="kicker">Monthly pre-order batch</p>
-          <h1>Reserve your Bagelito pack</h1>
-          <p>Choose your pack and delivery details now. Bagelito will coordinate payment details via WhatsApp before production closes.</p>
+          <p className="kicker">{r.heroKicker}</p>
+          <h1>{r.heroTitle}</h1>
+          <p>{r.heroText}</p>
         </div>
         <RollingBagel variant="rainbow" size="md" />
       </div>
 
       <div className="reserve-progress">
-        {steps.map((label, index) => (
+        {r.steps.map((label, index) => (
           <button key={label} type="button" className={step === index + 1 ? "active" : ""} onClick={() => setStep(index + 1)}>
             {index + 1}. {label}
           </button>
@@ -150,40 +162,44 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
 
       {step === 1 ? (
         <div className="reserve-card-grid">
-          {packs.map((pack) => (
-            <button key={pack.slug} type="button" className={`reserve-pack-option ${packSlug === pack.slug ? "selected" : ""}`} onClick={() => selectPack(pack.slug)}>
-              <span>{pack.units} bagels</span>
-              <strong>{pack.name}</strong>
-              <b>S/{pack.amount}</b>
-              <small>{pack.packType === "mixed" ? "Mixed flavors" : "One flavor only"}</small>
-            </button>
-          ))}
+          {packs.map((pack) => {
+            const localizedPack = packCopy[locale][pack.slug];
+            return (
+              <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} onClick={() => selectPack(pack.slug)}>
+                <span>{pack.units} {r.bagels}</span>
+                <strong>{localizedPack.name}</strong>
+                <b>S/{pack.amount}</b>
+                <small>{localizedPack.typeLabel}</small>
+              </button>
+            );
+          })}
         </div>
       ) : null}
 
       {step === 2 ? (
         <div className="reserve-card">
           <div className="reserve-step-title">
-            <h2>Choose flavors</h2>
-            <span>{selectedPack.packType === "mixed" ? `${selectedTotal} / ${selectedPack.units} selected` : singleFlavor ? `${selectedPack.units} x ${flavors.find((flavor) => flavor.slug === singleFlavor)?.name}` : "Choose one flavor"}</span>
+            <h2>{r.chooseFlavors}</h2>
+            <span>{selectedPack.packType === "mixed" ? selectedTotal + " / " + selectedPack.units + " " + r.selected : singleFlavor ? selectedPack.units + " x " + getFlavorLabel(singleFlavor) : r.chooseOneFlavor}</span>
           </div>
           <div className="flavor-select-grid">
             {flavors.map((flavor) => {
               const quantity = quantities[flavor.slug] ?? 0;
               const isSingleSelected = singleFlavor === flavor.slug;
+              const flavorLabel = flavorCopy[locale][flavor.slug] ?? flavor.name;
               return (
-                <article className={`flavor-select-card ${isSingleSelected ? "selected" : ""}`} key={flavor.slug}>
-                  <RollingBagel variant={flavor.variant as BagelVariant} size="sm" />
-                  <h3>{flavor.name}</h3>
-                  <p>{flavor.category === "premium" ? "Premium / seasonal" : "Classic"} S/{flavor.price}</p>
+                <article className={"flavor-select-card " + (isSingleSelected ? "selected" : "")} key={flavor.slug}>
+                  <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorLabel} />
+                  <h3>{flavorLabel}</h3>
+                  <p>{flavor.category === "premium" ? r.premiumSeasonal : r.classic} S/{flavor.price}</p>
                   {selectedPack.packType === "mixed" ? (
                     <div className="quantity-control">
-                      <button type="button" onClick={() => changeQuantity(flavor.slug, -1)} aria-label={`Remove ${flavor.name}`}><Minus size={15} /></button>
+                      <button type="button" onClick={() => changeQuantity(flavor.slug, -1)} aria-label={r.remove + " " + flavorLabel}><Minus size={15} /></button>
                       <strong>{quantity}</strong>
-                      <button type="button" onClick={() => changeQuantity(flavor.slug, 1)} aria-label={`Add ${flavor.name}`}><Plus size={15} /></button>
+                      <button type="button" onClick={() => changeQuantity(flavor.slug, 1)} aria-label={r.add + " " + flavorLabel}><Plus size={15} /></button>
                     </div>
                   ) : (
-                    <button type="button" className="select-flavor-button" onClick={() => setSingleFlavor(flavor.slug)}>{isSingleSelected ? <Check size={16} /> : null} Select</button>
+                    <button type="button" className="select-flavor-button" onClick={() => setSingleFlavor(flavor.slug)}>{isSingleSelected ? <Check size={16} /> : null} {r.select}</button>
                   )}
                 </article>
               );
@@ -194,43 +210,43 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
 
       {step === 3 ? (
         <div className="reserve-card form-card">
-          <h2>Delivery details</h2>
+          <h2>{r.deliveryDetails}</h2>
           <div className="form-grid">
-            <label>Full name<input required value={details.customerName} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
-            <label>WhatsApp number<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
-            <label>Email<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
-            <label>District<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district}</option>)}</select></label>
-            <label className="wide">Delivery address<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
-            <label>Address reference<input value={details.addressReference} onChange={(event) => setDetails({ ...details, addressReference: event.target.value })} /></label>
-            <label className="wide">Delivery notes<textarea rows={4} value={details.deliveryNotes} onChange={(event) => setDetails({ ...details, deliveryNotes: event.target.value })} /></label>
+            <label>{r.fields.fullName}<input required value={details.customerName} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
+            <label>{r.fields.whatsapp}<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
+            <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
+            <label>{r.fields.district}<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district === "Other" ? r.otherDistrict : district}</option>)}</select></label>
+            <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
+            <label>{r.fields.addressReference}<input value={details.addressReference} onChange={(event) => setDetails({ ...details, addressReference: event.target.value })} /></label>
+            <label className="wide">{r.fields.deliveryNotes}<textarea rows={4} value={details.deliveryNotes} onChange={(event) => setDetails({ ...details, deliveryNotes: event.target.value })} /></label>
           </div>
         </div>
       ) : null}
 
       {step === 4 ? (
         <div className="reserve-card review-card">
-          <h2>Review reservation</h2>
+          <h2>{r.reviewTitle}</h2>
           <div className="review-grid">
-            <div><span>Pack</span><strong>{selectedPack.name}</strong></div>
-            <div><span>Total amount</span><strong>S/{selectedPack.amount}</strong></div>
-            <div><span>Status after submit</span><strong>Payment pending review</strong></div>
-            <div><span>Customer</span><strong>{details.customerName}</strong></div>
-            <div><span>WhatsApp</span><strong>{details.whatsapp}</strong></div>
-            <div><span>Email</span><strong>{details.email}</strong></div>
-            <div className="wide"><span>Address</span><strong>{details.deliveryAddress}, {details.district}</strong></div>
-            <div className="wide"><span>Flavors</span><strong>{flavorSummary.map((item) => `${item.quantity} x ${item.flavorName}`).join(", ")}</strong></div>
+            <div><span>{r.reviewLabels.pack}</span><strong>{localizedSelectedPack.name}</strong></div>
+            <div><span>{r.reviewLabels.totalAmount}</span><strong>S/{selectedPack.amount}</strong></div>
+            <div><span>{r.reviewLabels.statusAfterSubmit}</span><strong>{r.statusPending}</strong></div>
+            <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
+            <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>
+            <div><span>{r.reviewLabels.email}</span><strong>{details.email}</strong></div>
+            <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
+            <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
           </div>
           <label className="terms-box">
             <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} />
-            I understand that Bagelito works as a monthly pre-order batch. My reservation is received after submitting this form, and Bagelito will coordinate payment details via WhatsApp before production closes. Production only starts for orders that complete the manual payment follow-up.
+            {r.terms}
           </label>
-          <button className="pill-button pink submit-button" type="button" disabled={submitting} onClick={submitReservation}>{submitting ? "Submitting..." : "Submit reservation"}</button>
+          <button className="pill-button pink submit-button" type="button" disabled={submitting} onClick={submitReservation}>{submitting ? r.submitting : r.submit}</button>
         </div>
       ) : null}
 
       <div className="reserve-nav">
-        <button className="pill-button outline" type="button" onClick={() => setStep((current) => Math.max(1, current - 1))} disabled={step === 1}><ArrowLeft size={17} /> Back</button>
-        {step < 4 ? <button className="pill-button pink" type="button" onClick={goNext}>Continue <ArrowRight size={17} /></button> : null}
+        <button className="pill-button outline" type="button" onClick={() => setStep((current) => Math.max(1, current - 1))} disabled={step === 1}><ArrowLeft size={17} /> {r.back}</button>
+        {step < 4 ? <button className="pill-button pink" type="button" onClick={goNext}>{r.continue} <ArrowRight size={17} /></button> : null}
       </div>
     </section>
   );

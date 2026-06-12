@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
 
 const deadline = new Date("2026-06-30T23:59:00-05:00").getTime();
 const reservedPercent = 68;
@@ -21,6 +22,7 @@ function getTimeLeft() {
 }
 
 export function BatchDeadlineBanner() {
+  const { copy } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({ days: "--", hours: "--", minutes: "--" });
 
   useEffect(() => {
@@ -30,22 +32,22 @@ export function BatchDeadlineBanner() {
   }, []);
 
   return (
-    <aside className="batch-deadline-banner" aria-label="Current batch deadline and availability">
+    <aside className="batch-deadline-banner" aria-label={copy.deadline.aria}>
       <div className="deadline-banner-copy">
-        <span><CalendarClock size={17} /> Batch deadline</span>
-        <strong>Orders close June 30</strong>
+        <span><CalendarClock size={17} /> {copy.deadline.title}</span>
+        <strong>{copy.deadline.close}</strong>
       </div>
 
-      <div className="deadline-timer" aria-label="Time left until orders close">
-        <span><strong>{timeLeft.days}</strong><small>days</small></span>
-        <span><strong>{timeLeft.hours}</strong><small>hrs</small></span>
-        <span><strong>{timeLeft.minutes}</strong><small>min</small></span>
+      <div className="deadline-timer" aria-label={copy.deadline.timerAria}>
+        <span><strong>{timeLeft.days}</strong><small>{copy.deadline.days}</small></span>
+        <span><strong>{timeLeft.hours}</strong><small>{copy.deadline.hours}</small></span>
+        <span><strong>{timeLeft.minutes}</strong><small>{copy.deadline.minutes}</small></span>
       </div>
 
       <div className="batch-availability">
         <div className="availability-label">
-          <span><Gauge size={17} /> {reservedPercent}% batch reserved</span>
-          <strong>{availablePercent}% available</strong>
+          <span><Gauge size={17} /> {reservedPercent}% {copy.deadline.reserved}</span>
+          <strong>{availablePercent}% {copy.deadline.available}</strong>
         </div>
         <div className="availability-track" aria-hidden="true">
           <span style={{ width: `${reservedPercent}%` }} />
@@ -53,7 +55,7 @@ export function BatchDeadlineBanner() {
       </div>
 
       <a className="deadline-banner-cta" href="https://wa.me/51917547745" target="_blank" rel="noreferrer">
-        <MessageCircle size={16} /> Reserve
+        <MessageCircle size={16} /> {copy.deadline.cta}
       </a>
     </aside>
   );
