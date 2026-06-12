@@ -16,7 +16,7 @@ export function Hero() {
         <h1>{copy.hero.titleLine1} <span>{copy.hero.titleHighlight}</span> {copy.hero.titleLine3}</h1>
         <p className="hero-subcopy">{copy.hero.subcopy}</p>
         <div className="hero-buttons">
-          <a className="pill-button pink" href="https://wa.me/51917547745" target="_blank" rel="noreferrer"><MessageCircle size={18} /> {copy.hero.primaryCta}</a>
+          <a className="pill-button pink" href="#packs"><MessageCircle size={18} /> {copy.hero.primaryCta}</a>
           <a className="pill-button outline" href="#flavors">{copy.hero.secondaryCta}</a>
         </div>
         <div className="hero-badges">
