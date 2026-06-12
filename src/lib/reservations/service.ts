@@ -64,6 +64,7 @@ export function payloadFromFormData(formData: FormData): ReservationPayload {
     district: formData.get("district"),
     addressReference: formData.get("addressReference") ?? "",
     deliveryNotes: formData.get("deliveryNotes") ?? "",
+    deliveryHandoff: formData.get("deliveryHandoff") ?? "self",
     termsAccepted: formData.get("termsAccepted") === "true",
   });
 }
@@ -79,7 +80,9 @@ export async function createReservation(formData: FormData) {
   const supabase = createSupabaseAdminClient();
   const batchId = await getOrCreateCurrentBatch(supabase);
   const orderCode = await nextOrderCode(supabase);
-  const paymentScreenshotPath = `${deferredPayment.screenshotPathPrefix}${orderCode}`;
+  const paymentScreenshotPath = deferredPayment.screenshotPathPrefix + orderCode;
+  const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepcion: Dejar en porteria" : "Recepcion: Yo lo recepciono";
+  const deliveryNotes = [handoffNote, payload.deliveryNotes].filter(Boolean).join(" | ");
 
   const { data: order, error: orderError } = await supabase
     .from("orders")
@@ -96,7 +99,7 @@ export async function createReservation(formData: FormData) {
       delivery_address: payload.deliveryAddress,
       district: payload.district,
       address_reference: payload.addressReference || null,
-      delivery_notes: payload.deliveryNotes || null,
+      delivery_notes: deliveryNotes || null,
       total_amount: pack.amount,
       payment_method: deferredPayment.method,
       payment_transaction_number: deferredPayment.transactionNumber,

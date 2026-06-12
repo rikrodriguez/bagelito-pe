@@ -32,6 +32,7 @@ export const reservationPayloadSchema = z.object({
   district: z.enum(districtOptions),
   addressReference: z.string().trim().optional().default(""),
   deliveryNotes: z.string().trim().optional().default(""),
+  deliveryHandoff: z.enum(["self", "porteria"]).default("self"),
   termsAccepted: z.boolean().refine((value) => value, "Monthly batch terms must be accepted."),
 }).superRefine((payload, ctx) => {
   const pack = getPackBySlug(payload.packSlug);

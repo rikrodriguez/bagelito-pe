@@ -151,6 +151,11 @@ export const translations = {
       remove: "Remove",
       add: "Add",
       deliveryDetails: "Delivery details",
+      deliveryHandoff: {
+        label: "Delivery handoff",
+        receive: "I will receive it",
+        porter: "Leave at front desk",
+      },
       fields: {
         fullName: "Full name",
         whatsapp: "WhatsApp number",
@@ -170,6 +175,7 @@ export const translations = {
         whatsapp: "WhatsApp",
         email: "Email",
         address: "Address",
+        deliveryHandoff: "Delivery handoff",
         flavors: "Flavors",
       },
       statusPending: "Payment pending review",
@@ -349,6 +355,11 @@ export const translations = {
       remove: "Quitar",
       add: "Agregar",
       deliveryDetails: "Datos de entrega",
+      deliveryHandoff: {
+        label: "Recepción del pedido",
+        receive: "Yo lo recepciono",
+        porter: "Dejar en portería",
+      },
       fields: {
         fullName: "Nombre completo",
         whatsapp: "Número de WhatsApp",
@@ -368,6 +379,7 @@ export const translations = {
         whatsapp: "WhatsApp",
         email: "Email",
         address: "Dirección",
+        deliveryHandoff: "Recepción",
         flavors: "Sabores",
       },
       statusPending: "Pago pendiente de revisión",

@@ -332,6 +332,12 @@ section[id] { scroll-margin-top: 104px; }
 .form-grid, .review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .form-grid label, .admin-login-card label { display: grid; gap: 8px; font-weight: 950; text-align: left; }
 .form-grid .wide, .review-grid .wide { grid-column: 1 / -1; }
+.handoff-box { display: grid; gap: 12px; border: 1px solid var(--line); border-radius: 16px; background: #fff7df; padding: 16px; text-align: left; }
+.handoff-box > span { font-weight: 950; }
+.handoff-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.handoff-option { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; border: 2px solid transparent; border-radius: 14px; background: white; color: var(--navy); font-weight: 950; box-shadow: 0 12px 24px rgba(10,22,54,.06); transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+.handoff-option:hover { transform: translateY(-1px); box-shadow: 0 16px 28px rgba(10,22,54,.09); }
+.handoff-option.active { border-color: var(--pink); background: #fff0f6; color: var(--pink); }
 input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: white; padding: 13px 14px; color: var(--navy); outline: none; }
 input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(238,79,147,.12); }
 .review-grid > div { display: grid; gap: 6px; border-radius: 12px; background: #fff7df; padding: 14px; }
@@ -398,6 +404,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   .hero-badges { grid-template-columns: repeat(2, 1fr); margin-top: 30px; }
   .hero-art { min-height: 430px; transform: scale(.82); transform-origin: top center; margin-bottom: -70px; }
   .batch-section, .batch-grid, .steps-grid, .pack-grid, .reason-grid, .flavor-strip, .review-grid, .final-cta-card, .site-footer, .reserve-card-grid, .form-grid, .review-grid, .admin-panels { grid-template-columns: 1fr; }
+  .handoff-options { grid-template-columns: 1fr; }
   .section-pad { padding: 34px 18px; }
   .split-heading, .admin-topbar, .admin-card-head { align-items: flex-start; flex-direction: column; }
   .note-pills { justify-content: flex-start; }

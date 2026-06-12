@@ -23,6 +23,7 @@ type Details = {
   district: string;
   addressReference: string;
   deliveryNotes: string;
+  deliveryHandoff: "self" | "porteria";
 };
 
 const initialDetails: Details = {
@@ -33,6 +34,7 @@ const initialDetails: Details = {
   district: "Miraflores",
   addressReference: "",
   deliveryNotes: "",
+  deliveryHandoff: "self",
 };
 
 export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
@@ -217,6 +219,19 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
             <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
             <label>{r.fields.district}<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district === "Other" ? r.otherDistrict : district}</option>)}</select></label>
             <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
+            <div className="handoff-box wide" role="radiogroup" aria-label={r.deliveryHandoff.label}>
+              <span>{r.deliveryHandoff.label}</span>
+              <div className="handoff-options">
+                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "self" ? "active" : "")} onClick={() => setDetails({ ...details, deliveryHandoff: "self" })}>
+                  {details.deliveryHandoff === "self" ? <Check size={16} /> : null}
+                  <strong>{r.deliveryHandoff.receive}</strong>
+                </button>
+                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "porteria" ? "active" : "")} onClick={() => setDetails({ ...details, deliveryHandoff: "porteria" })}>
+                  {details.deliveryHandoff === "porteria" ? <Check size={16} /> : null}
+                  <strong>{r.deliveryHandoff.porter}</strong>
+                </button>
+              </div>
+            </div>
             <label>{r.fields.addressReference}<input value={details.addressReference} onChange={(event) => setDetails({ ...details, addressReference: event.target.value })} /></label>
             <label className="wide">{r.fields.deliveryNotes}<textarea rows={4} value={details.deliveryNotes} onChange={(event) => setDetails({ ...details, deliveryNotes: event.target.value })} /></label>
           </div>
@@ -233,6 +248,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
             <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
             <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>
             <div><span>{r.reviewLabels.email}</span><strong>{details.email}</strong></div>
+            <div><span>{r.reviewLabels.deliveryHandoff}</span><strong>{details.deliveryHandoff === "porteria" ? r.deliveryHandoff.porter : r.deliveryHandoff.receive}</strong></div>
             <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
             <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
           </div>
