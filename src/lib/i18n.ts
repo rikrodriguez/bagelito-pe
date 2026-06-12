@@ -23,7 +23,8 @@ export const translations = {
       ],
       mainNav: "Main navigation",
       joinWaitlist: "Join the waitlist",
-      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+      whatsappMessage: "Hi Bagelito.pe! I want to join the waitlist for the next monthly bagel batch.",
     },
     deadline: {
       aria: "Current batch deadline and availability",
@@ -220,7 +221,8 @@ export const translations = {
       ],
       mainNav: "Navegación principal",
       joinWaitlist: "Unirme a la lista",
-      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+      whatsappMessage: "Hola Bagelito.pe! Quiero unirme a la lista de espera del proximo batch mensual.",
     },
     deadline: {
       aria: "Fecha límite y disponibilidad del batch actual",
