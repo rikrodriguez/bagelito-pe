@@ -1,9 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#fff8ee"/>
-  <circle cx="32" cy="32" r="22" fill="#f5a43c"/>
-  <circle cx="32" cy="32" r="9" fill="#fff8ee"/>
-  <path d="M20 19c9 7 20-4 26 7" fill="none" stroke="#112b5c" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="22" cy="34" r="2" fill="#112b5c"/>
-  <circle cx="43" cy="29" r="2" fill="#112b5c"/>
-  <circle cx="38" cy="44" r="2" fill="#112b5c"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bagelito.pe favicon">
+  <title>Bagelito.pe</title>
+  <defs>
+    <radialGradient id="bg" cx="22%" cy="16%" r="90%">
+      <stop offset="0" stop-color="#fffdfa"/>
+      <stop offset="0.58" stop-color="#fff8ee"/>
+      <stop offset="1" stop-color="#ffe8cf"/>
+    </radialGradient>
+    <radialGradient id="bagel" cx="30%" cy="24%" r="72%">
+      <stop offset="0" stop-color="#ffe9ae"/>
+      <stop offset="0.32" stop-color="#f7b75a"/>
+      <stop offset="0.68" stop-color="#d98225"/>
+      <stop offset="1" stop-color="#9d551b"/>
+    </radialGradient>
+    <radialGradient id="hole" cx="40%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#fff8ee"/>
+      <stop offset="0.7" stop-color="#ffe2bf"/>
+      <stop offset="1" stop-color="#c8843d"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.6" flood-color="#071333" flood-opacity="0.18"/>
+    </filter>
+    <filter id="seedShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0.5" stdDeviation="0.25" flood-color="#7d4518" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x="1.4" y="1.4" width="61.2" height="61.2" rx="13.6" fill="none" stroke="#f1dcc2" stroke-width="1.2"/>
+
+  <g filter="url(#softShadow)">
+    <circle cx="32" cy="32" r="24" fill="url(#bagel)"/>
+    <circle cx="32" cy="32" r="9.6" fill="url(#hole)"/>
+    <circle cx="32" cy="32" r="7.6" fill="#fff8ee"/>
+    <path d="M16.5 25.2C21.8 15.6 37.8 13 48.3 22.8" fill="none" stroke="#fff6d5" stroke-width="4.5" stroke-linecap="round" opacity="0.48"/>
+    <path d="M15.8 39.2C22.4 52 43.7 53 50.2 37.6" fill="none" stroke="#7c3f13" stroke-width="3.2" stroke-linecap="round" opacity="0.14"/>
+  </g>
+
+  <g fill="#fff0c5" filter="url(#seedShadow)">
+    <ellipse cx="21" cy="22" rx="1.3" ry="2.1" transform="rotate(-35 21 22)"/>
+    <ellipse cx="27.5" cy="18.5" rx="1.2" ry="2" transform="rotate(-8 27.5 18.5)"/>
+    <ellipse cx="38.6" cy="19.8" rx="1.2" ry="2" transform="rotate(24 38.6 19.8)"/>
+    <ellipse cx="46.2" cy="28.6" rx="1.1" ry="1.9" transform="rotate(62 46.2 28.6)"/>
+    <ellipse cx="42.6" cy="43.2" rx="1.2" ry="2" transform="rotate(38 42.6 43.2)"/>
+    <ellipse cx="28.4" cy="46.1" rx="1.15" ry="1.9" transform="rotate(-18 28.4 46.1)"/>
+    <ellipse cx="17.4" cy="35.7" rx="1.1" ry="1.9" transform="rotate(-56 17.4 35.7)"/>
+  </g>
+
+  <path d="M44.8 15.7c5.8 3.3 9.4 8.8 10.1 15" fill="none" stroke="#ee4f93" stroke-width="4.6" stroke-linecap="round"/>
+  <path d="M48.7 18.9c3.8 3.3 6 7.7 6.2 11.8" fill="none" stroke="#ffe59a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M51.2 23.6c1.6 2.2 2.5 4.6 2.6 7" fill="none" stroke="#5ec6b8" stroke-width="2.2" stroke-linecap="round"/>
+
+  <circle cx="49.7" cy="49.7" r="6.6" fill="#ee4f93"/>
+  <path d="M47.5 49.5c0-1.5 1-2.6 2.5-2.6 1.6 0 2.6 1 2.6 2.5s-1 2.5-2.7 2.5h-2.4v-2.4Z" fill="#fff8ee"/>
 </svg>
