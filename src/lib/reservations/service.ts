@@ -4,20 +4,44 @@ import { getMissingReservationEnv } from "@/lib/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { parseItems, reservationPayloadSchema, type ReservationPayload } from "./schema";
 
-const deferredPayment = {
-  method: "Yape",
-  transactionNumber: "PENDING_PAYMENT",
-  holderName: "Payment pending",
-  phoneNumber: "Payment pending",
-  screenshotPathPrefix: "payment-pending/",
-  exactAmountConfirmed: false,
-};
+const paymentProofBucket = "payment-proofs";
+const maxPaymentScreenshotBytes = 5 * 1024 * 1024;
+const allowedPaymentScreenshotTypes = new Set(["image/png", "image/jpeg", "image/jpg", "image/webp"]);
 
 type BatchRow = { id: string };
 type OrderRow = { id: string; order_code: string };
 
 function fallbackOrderCode() {
-  return `BAG-${Date.now().toString(36).toUpperCase()}-${randomBytes(2).toString("hex").toUpperCase()}`;
+  return "BAG-" + Date.now().toString(36).toUpperCase() + "-" + randomBytes(2).toString("hex").toUpperCase();
+}
+
+function safeFilename(filename: string) {
+  const cleaned = filename
+    .trim()
+    .replace(/[^a-zA-Z0-9._-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^[-.]+|[-.]+$/g, "")
+    .slice(0, 90);
+
+  return cleaned || "payment-proof.png";
+}
+
+function getPaymentScreenshot(formData: FormData) {
+  const file = formData.get("paymentScreenshot");
+
+  if (!(file instanceof File) || file.size === 0) {
+    throw new Error("Payment screenshot is required.");
+  }
+
+  if (!allowedPaymentScreenshotTypes.has(file.type)) {
+    throw new Error("Payment screenshot must be PNG, JPG, JPEG, or WEBP.");
+  }
+
+  if (file.size > maxPaymentScreenshotBytes) {
+    throw new Error("Payment screenshot must be 5MB or smaller.");
+  }
+
+  return file;
 }
 
 async function nextOrderCode(supabase: ReturnType<typeof createSupabaseAdminClient>) {
@@ -34,7 +58,7 @@ async function getOrCreateCurrentBatch(supabase: ReturnType<typeof createSupabas
     .limit(1)
     .maybeSingle();
 
-  if (error) throw new Error(`Could not read active batch: ${error.message}`);
+  if (error) throw new Error("Could not read active batch: " + error.message);
 
   const batch = data as BatchRow | null;
   if (batch?.id) return batch.id;
@@ -47,7 +71,7 @@ async function getOrCreateCurrentBatch(supabase: ReturnType<typeof createSupabas
 
   const createdBatch = created as BatchRow | null;
   if (createError || !createdBatch?.id) {
-    throw new Error(`Could not create default batch: ${createError?.message ?? "unknown error"}`);
+    throw new Error("Could not create default batch: " + (createError?.message ?? "unknown error"));
   }
 
   return createdBatch.id;
@@ -65,24 +89,42 @@ export function payloadFromFormData(formData: FormData): ReservationPayload {
     addressReference: formData.get("addressReference") ?? "",
     deliveryNotes: formData.get("deliveryNotes") ?? "",
     deliveryHandoff: formData.get("deliveryHandoff") ?? "self",
+    marketingOptIn: formData.get("marketingOptIn") === "true",
+    paymentMethod: formData.get("paymentMethod"),
+    paymentTransactionNumber: formData.get("paymentTransactionNumber"),
+    paymentHolderName: formData.get("paymentHolderName"),
+    paymentPhoneNumber: formData.get("paymentPhoneNumber"),
+    exactAmountConfirmed: formData.get("exactAmountConfirmed") === "true",
     termsAccepted: formData.get("termsAccepted") === "true",
   });
 }
 
 export async function createReservation(formData: FormData) {
   const missing = getMissingReservationEnv();
-  if (missing.length) throw new Error(`Missing required environment variables: ${missing.join(", ")}`);
+  if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
 
   const payload = payloadFromFormData(formData);
+  const paymentScreenshot = getPaymentScreenshot(formData);
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
 
   const supabase = createSupabaseAdminClient();
   const batchId = await getOrCreateCurrentBatch(supabase);
   const orderCode = await nextOrderCode(supabase);
-  const paymentScreenshotPath = deferredPayment.screenshotPathPrefix + orderCode;
+  const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepcion: Dejar en porteria" : "Recepcion: Yo lo recepciono";
   const deliveryNotes = [handoffNote, payload.deliveryNotes].filter(Boolean).join(" | ");
+
+  const { error: uploadError } = await supabase.storage
+    .from(paymentProofBucket)
+    .upload(paymentScreenshotPath, paymentScreenshot, {
+      contentType: paymentScreenshot.type,
+      upsert: false,
+    });
+
+  if (uploadError) {
+    throw new Error("Could not upload payment proof: " + uploadError.message);
+  }
 
   const { data: order, error: orderError } = await supabase
     .from("orders")
@@ -100,14 +142,15 @@ export async function createReservation(formData: FormData) {
       district: payload.district,
       address_reference: payload.addressReference || null,
       delivery_notes: deliveryNotes || null,
+      marketing_opt_in: payload.marketingOptIn,
       total_amount: pack.amount,
-      payment_method: deferredPayment.method,
-      payment_transaction_number: deferredPayment.transactionNumber,
-      payment_holder_name: deferredPayment.holderName,
-      payment_phone_number: deferredPayment.phoneNumber,
+      payment_method: payload.paymentMethod,
+      payment_transaction_number: payload.paymentTransactionNumber,
+      payment_holder_name: payload.paymentHolderName,
+      payment_phone_number: payload.paymentPhoneNumber,
       payment_screenshot_path: paymentScreenshotPath,
       terms_accepted: payload.termsAccepted,
-      exact_amount_confirmed: deferredPayment.exactAmountConfirmed,
+      exact_amount_confirmed: payload.exactAmountConfirmed,
       status: "payment_pending_review",
     })
     .select("id, order_code")
@@ -115,7 +158,8 @@ export async function createReservation(formData: FormData) {
 
   const orderRow = order as OrderRow | null;
   if (orderError || !orderRow?.id) {
-    throw new Error(`Could not create reservation: ${orderError?.message ?? "unknown error"}`);
+    await supabase.storage.from(paymentProofBucket).remove([paymentScreenshotPath]);
+    throw new Error("Could not create reservation: " + (orderError?.message ?? "unknown error"));
   }
 
   const items = payload.items.map((item) => {
@@ -130,7 +174,7 @@ export async function createReservation(formData: FormData) {
   });
 
   const { error: itemsError } = await supabase.from("order_items").insert(items);
-  if (itemsError) throw new Error(`Could not create order items: ${itemsError.message}`);
+  if (itemsError) throw new Error("Could not create order items: " + itemsError.message);
 
   await supabase.from("order_status_history").insert({
     order_id: orderRow.id,

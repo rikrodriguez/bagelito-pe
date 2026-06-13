@@ -31,6 +31,7 @@ export type Order = {
   district: string;
   address_reference: string | null;
   delivery_notes: string | null;
+  marketing_opt_in: boolean;
   total_amount: number;
   payment_method: string;
   payment_transaction_number: string;

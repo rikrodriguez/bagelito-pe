@@ -50,6 +50,7 @@ create table if not exists public.orders (
   district text not null,
   address_reference text null,
   delivery_notes text null,
+  marketing_opt_in boolean not null default false,
   total_amount numeric not null,
   payment_method text not null check (payment_method in ('Yape','Plin')),
   payment_transaction_number text not null,
@@ -89,9 +90,12 @@ for each row
 execute function public.set_updated_at();
 
 create index if not exists batches_status_created_at_idx on public.batches(status, created_at desc);
+alter table public.orders add column if not exists marketing_opt_in boolean not null default false;
+
 create index if not exists orders_status_created_at_idx on public.orders(status, created_at desc);
 create index if not exists orders_batch_id_idx on public.orders(batch_id);
 create index if not exists orders_order_code_idx on public.orders(order_code);
+create index if not exists orders_email_created_at_idx on public.orders(email, created_at desc);
 create index if not exists order_items_order_id_idx on public.order_items(order_id);
 create index if not exists order_status_history_order_id_idx on public.order_status_history(order_id, created_at desc);
 

@@ -43,7 +43,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ or
 
 function PaymentDetail({ order }: { order: Order }) {
   if (isManualPaymentPending(order)) {
-    return <><p><strong>Pending/manual follow-up</strong></p><p>Coordinate payment details via WhatsApp before production closes.</p><p>No uploaded payment proof yet.</p></>;
+    return <><p><strong>Legacy order without voucher</strong></p><p>Ask the customer to submit a Yape or Plin payment proof before confirming production.</p><p>No uploaded payment proof yet.</p></>;
   }
 
   return <><p>{order.payment_method}</p><p>Transaction: {order.payment_transaction_number}</p><p>Name: {order.payment_holder_name}</p><p>Phone: {order.payment_phone_number}</p>{hasUploadedPaymentProof(order) ? <a className="mini-link" href={`/admin/payment-proof/${order.order_code}`} target="_blank" rel="noreferrer"><Eye size={16} /> View screenshot</a> : <p>No uploaded payment proof yet.</p>}</>;

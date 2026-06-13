@@ -17,6 +17,8 @@ export const districtOptions = [
   "Other",
 ] as const;
 
+export const paymentMethodOptions = ["Yape", "Plin"] as const;
+
 const itemSchema = z.object({
   flavorSlug: z.string().min(1),
   quantity: z.coerce.number().int().positive(),
@@ -33,6 +35,12 @@ export const reservationPayloadSchema = z.object({
   addressReference: z.string().trim().optional().default(""),
   deliveryNotes: z.string().trim().optional().default(""),
   deliveryHandoff: z.enum(["self", "porteria"]).default("self"),
+  marketingOptIn: z.boolean().default(false),
+  paymentMethod: z.enum(paymentMethodOptions),
+  paymentTransactionNumber: z.string().trim().min(3, "Payment transaction number is required."),
+  paymentHolderName: z.string().trim().min(2, "Payment holder name is required."),
+  paymentPhoneNumber: z.string().trim().min(7, "Payment phone number is required."),
+  exactAmountConfirmed: z.boolean().refine((value) => value, "Exact payment amount must be confirmed."),
   termsAccepted: z.boolean().refine((value) => value, "Monthly batch terms must be accepted."),
 }).superRefine((payload, ctx) => {
   const pack = getPackBySlug(payload.packSlug);

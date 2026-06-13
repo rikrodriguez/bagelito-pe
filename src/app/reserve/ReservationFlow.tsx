@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Minus, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Minus, Plus, Upload } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
@@ -24,6 +24,15 @@ type Details = {
   addressReference: string;
   deliveryNotes: string;
   deliveryHandoff: "self" | "porteria";
+  marketingOptIn: boolean;
+};
+
+type PaymentDetails = {
+  paymentMethod: "Yape" | "Plin";
+  paymentTransactionNumber: string;
+  paymentHolderName: string;
+  paymentPhoneNumber: string;
+  exactAmountConfirmed: boolean;
 };
 
 const initialDetails: Details = {
@@ -35,7 +44,19 @@ const initialDetails: Details = {
   addressReference: "",
   deliveryNotes: "",
   deliveryHandoff: "self",
+  marketingOptIn: false,
 };
+
+const initialPaymentDetails: PaymentDetails = {
+  paymentMethod: "Yape",
+  paymentTransactionNumber: "",
+  paymentHolderName: "",
+  paymentPhoneNumber: "",
+  exactAmountConfirmed: false,
+};
+
+const allowedPaymentTypes = new Set(["image/png", "image/jpeg", "image/jpg", "image/webp"]);
+const maxPaymentFileSize = 5 * 1024 * 1024;
 
 export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const { locale, copy } = useLanguage();
@@ -45,6 +66,8 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [singleFlavor, setSingleFlavor] = useState("");
   const [details, setDetails] = useState<Details>(initialDetails);
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>(initialPaymentDetails);
+  const [paymentScreenshot, setPaymentScreenshot] = useState<File | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -52,6 +75,11 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const selectedPack = packs.find((pack) => pack.slug === packSlug) ?? packs[0];
   const localizedSelectedPack = packCopy[locale][selectedPack.slug];
   const selectedTotal = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
+  const paymentConfig = {
+    yapeNumber: process.env.NEXT_PUBLIC_YAPE_NUMBER || r.payment.notConfigured,
+    plinNumber: process.env.NEXT_PUBLIC_PLIN_NUMBER || r.payment.notConfigured,
+    holder: process.env.NEXT_PUBLIC_PAYMENT_HOLDER || r.payment.notConfigured,
+  };
   const selectedItems = useMemo(() => {
     if (selectedPack.packType === "single") {
       return singleFlavor ? [{ flavorSlug: singleFlavor, quantity: selectedPack.units }] : [];
@@ -99,6 +127,19 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     return Boolean(details.customerName && details.whatsapp && details.email && details.deliveryAddress && details.district);
   }
 
+  function getPaymentValidationError() {
+    if (!paymentDetails.paymentTransactionNumber.trim() || !paymentDetails.paymentHolderName.trim() || !paymentDetails.paymentPhoneNumber.trim()) {
+      return r.errors.paymentRequired;
+    }
+
+    if (!paymentScreenshot) return r.errors.paymentScreenshotRequired;
+    if (!allowedPaymentTypes.has(paymentScreenshot.type)) return r.errors.paymentScreenshotType;
+    if (paymentScreenshot.size > maxPaymentFileSize) return r.errors.paymentScreenshotSize;
+    if (!paymentDetails.exactAmountConfirmed) return r.errors.exactAmount;
+
+    return "";
+  }
+
   function goNext() {
     setError("");
     if (step === 2 && !validateFlavorStep()) {
@@ -111,11 +152,44 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       return;
     }
 
-    setStep((current) => Math.min(4, current + 1));
+    if (step === 4) {
+      const paymentError = getPaymentValidationError();
+      if (paymentError) {
+        setError(paymentError);
+        return;
+      }
+    }
+
+    setStep((current) => Math.min(5, current + 1));
+  }
+
+  function handlePaymentScreenshotChange(file: File | null) {
+    setError("");
+    setPaymentScreenshot(null);
+    if (!file) return;
+
+    if (!allowedPaymentTypes.has(file.type)) {
+      setError(r.errors.paymentScreenshotType);
+      return;
+    }
+
+    if (file.size > maxPaymentFileSize) {
+      setError(r.errors.paymentScreenshotSize);
+      return;
+    }
+
+    setPaymentScreenshot(file);
   }
 
   async function submitReservation() {
     setError("");
+    const paymentError = getPaymentValidationError();
+    if (paymentError) {
+      setError(paymentError);
+      setStep(4);
+      return;
+    }
+
     if (!termsAccepted) {
       setError(r.errors.terms);
       return;
@@ -124,7 +198,9 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     const formData = new FormData();
     formData.set("packSlug", selectedPack.slug);
     formData.set("items", JSON.stringify(selectedItems));
-    Object.entries(details).forEach(([key, value]) => formData.set(key, value));
+    Object.entries(details).forEach(([key, value]) => formData.set(key, String(value)));
+    Object.entries(paymentDetails).forEach(([key, value]) => formData.set(key, String(value)));
+    if (paymentScreenshot) formData.set("paymentScreenshot", paymentScreenshot);
     formData.set("termsAccepted", String(termsAccepted));
 
     setSubmitting(true);
@@ -153,11 +229,14 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       </div>
 
       <div className="reserve-progress">
-        {r.steps.map((label, index) => (
-          <button key={label} type="button" className={step === index + 1 ? "active" : ""} onClick={() => setStep(index + 1)}>
-            {index + 1}. {label}
-          </button>
-        ))}
+        {r.steps.map((label, index) => {
+          const targetStep = index + 1;
+          return (
+            <button key={label} type="button" className={step === targetStep ? "active" : ""} disabled={targetStep > step} onClick={() => setStep(targetStep)}>
+              {targetStep}. {label}
+            </button>
+          );
+        })}
       </div>
 
       {error ? <div className="reserve-alert">{error}</div> : null}
@@ -234,11 +313,56 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
             </div>
             <label>{r.fields.addressReference}<input value={details.addressReference} onChange={(event) => setDetails({ ...details, addressReference: event.target.value })} /></label>
             <label className="wide">{r.fields.deliveryNotes}<textarea rows={4} value={details.deliveryNotes} onChange={(event) => setDetails({ ...details, deliveryNotes: event.target.value })} /></label>
+            <label className="marketing-box wide">
+              <input type="checkbox" checked={details.marketingOptIn} onChange={(event) => setDetails({ ...details, marketingOptIn: event.target.checked })} />
+              <span>{r.marketingOptIn}</span>
+            </label>
           </div>
         </div>
       ) : null}
 
       {step === 4 ? (
+        <div className="reserve-card form-card payment-card">
+          <div className="reserve-step-title">
+            <h2>{r.payment.title}</h2>
+            <span>{r.payment.total}: S/{selectedPack.amount}</span>
+          </div>
+          <p className="payment-intro">{r.payment.instruction}</p>
+          <div className="payment-summary-grid">
+            <div><span>{r.payment.yapeNumber}</span><strong>{paymentConfig.yapeNumber}</strong></div>
+            <div><span>{r.payment.plinNumber}</span><strong>{paymentConfig.plinNumber}</strong></div>
+            <div><span>{r.payment.holder}</span><strong>{paymentConfig.holder}</strong></div>
+          </div>
+          <div className="payment-method-box" role="radiogroup" aria-label={r.payment.method}>
+            <span>{r.payment.method}</span>
+            <div className="payment-method-options">
+              {(["Yape", "Plin"] as const).map((method) => (
+                <button key={method} type="button" className={"payment-method-option " + (paymentDetails.paymentMethod === method ? "active" : "")} onClick={() => setPaymentDetails({ ...paymentDetails, paymentMethod: method })}>
+                  {paymentDetails.paymentMethod === method ? <Check size={16} /> : null}
+                  <strong>{method}</strong>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="form-grid payment-form-grid">
+            <label>{r.payment.transactionNumber}<input required value={paymentDetails.paymentTransactionNumber} onChange={(event) => setPaymentDetails({ ...paymentDetails, paymentTransactionNumber: event.target.value })} /></label>
+            <label>{r.payment.paymentHolderName}<input required value={paymentDetails.paymentHolderName} onChange={(event) => setPaymentDetails({ ...paymentDetails, paymentHolderName: event.target.value })} /></label>
+            <label>{r.payment.paymentPhoneNumber}<input required value={paymentDetails.paymentPhoneNumber} onChange={(event) => setPaymentDetails({ ...paymentDetails, paymentPhoneNumber: event.target.value })} /></label>
+            <label className="upload-box wide">
+              <span><Upload size={18} /> {r.payment.screenshot}</span>
+              <input type="file" accept="image/png,image/jpeg,image/jpg,image/webp" onChange={(event) => handlePaymentScreenshotChange(event.target.files?.[0] ?? null)} />
+              <small>{paymentScreenshot ? paymentScreenshot.name : r.payment.screenshotHint}</small>
+            </label>
+          </div>
+          <label className="terms-box payment-confirmation">
+            <input type="checkbox" checked={paymentDetails.exactAmountConfirmed} onChange={(event) => setPaymentDetails({ ...paymentDetails, exactAmountConfirmed: event.target.checked })} />
+            {r.payment.exactAmount}
+          </label>
+          <p className="payment-note">{r.payment.officialSeparation}</p>
+        </div>
+      ) : null}
+
+      {step === 5 ? (
         <div className="reserve-card review-card">
           <h2>{r.reviewTitle}</h2>
           <div className="review-grid">
@@ -248,6 +372,11 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
             <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
             <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>
             <div><span>{r.reviewLabels.email}</span><strong>{details.email}</strong></div>
+            <div><span>{r.reviewLabels.paymentMethod}</span><strong>{paymentDetails.paymentMethod}</strong></div>
+            <div><span>{r.reviewLabels.paymentTransaction}</span><strong>{paymentDetails.paymentTransactionNumber}</strong></div>
+            <div><span>{r.reviewLabels.paymentHolder}</span><strong>{paymentDetails.paymentHolderName}</strong></div>
+            <div><span>{r.reviewLabels.paymentPhone}</span><strong>{paymentDetails.paymentPhoneNumber}</strong></div>
+            <div><span>{r.reviewLabels.paymentScreenshot}</span><strong>{paymentScreenshot?.name ?? r.payment.screenshot}</strong></div>
             <div><span>{r.reviewLabels.deliveryHandoff}</span><strong>{details.deliveryHandoff === "porteria" ? r.deliveryHandoff.porter : r.deliveryHandoff.receive}</strong></div>
             <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
             <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
@@ -262,7 +391,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
 
       <div className="reserve-nav">
         <button className="pill-button outline" type="button" onClick={() => setStep((current) => Math.max(1, current - 1))} disabled={step === 1}><ArrowLeft size={17} /> {r.back}</button>
-        {step < 4 ? <button className="pill-button pink" type="button" onClick={goNext}>{r.continue} <ArrowRight size={17} /></button> : null}
+        {step < 5 ? <button className="pill-button pink" type="button" onClick={goNext}>{r.continue} <ArrowRight size={17} /></button> : null}
       </div>
     </section>
   );

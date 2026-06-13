@@ -9,7 +9,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
 }
 
 function PaymentCell({ order }: { order: Order }) {
-  if (isManualPaymentPending(order)) return <span>Pending/manual follow-up</span>;
+  if (isManualPaymentPending(order)) return <span>Legacy: proof missing</span>;
   return <span>{order.payment_method} - {order.payment_transaction_number}</span>;
 }
 
