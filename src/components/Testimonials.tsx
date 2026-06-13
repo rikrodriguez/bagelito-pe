@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "./LanguageProvider";
 
 export function Testimonials() {
@@ -18,6 +19,24 @@ export function Testimonials() {
           </article>
         ))}
       </div>
+
+      <article className="founder-note-card">
+        <div className="founder-note-media">
+          <Image
+            src="/images/dawn-brookes-bagelito.jpg"
+            alt="Dawn Brookes with handmade Bagelito bagels"
+            width={1120}
+            height={1400}
+            sizes="(max-width: 760px) 100vw, 420px"
+          />
+        </div>
+        <div className="founder-note-copy">
+          <span>{copy.testimonials.feature.kicker}</span>
+          <h3>{copy.testimonials.feature.title}</h3>
+          <p>{copy.testimonials.feature.text}</p>
+          <strong>{copy.testimonials.feature.name}</strong>
+        </div>
+      </article>
     </section>
   );
 }

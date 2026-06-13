@@ -107,6 +107,12 @@ export const translations = {
     testimonials: {
       title: "Batch love from Lima",
       intro: "Real-style notes from people who get the Bagelito mood: handmade bagels, nostalgia, and the perfect chew.",
+      feature: {
+        kicker: "From the kitchen",
+        title: "Handmade Bagels 🥯",
+        text: "Nostalgia with the perfect chew",
+        name: "Dawn Brookes",
+      },
       reviews: [
         { source: "WhatsApp", name: "Maria", lang: "EN", text: "These bagels taste like home. Soft, chewy, and gone in one morning." },
         { source: "Instagram", name: "Claudia", lang: "ES", text: "El rainbow bagel fue un hit en mi casa. Se ve lindo y sabe buenazo." },
@@ -335,6 +341,12 @@ export const translations = {
     testimonials: {
       title: "Amor de batch desde Lima",
       intro: "Notas estilo chat de personas que entienden el mood Bagelito: bagels artesanales, nostalgia y la mordida perfecta.",
+      feature: {
+        kicker: "Desde la cocina",
+        title: "Bagels artesanales 🥯",
+        text: "Nostalgia con la mordida perfecta",
+        name: "Dawn Brookes",
+      },
       reviews: [
         { source: "WhatsApp", name: "Maria", lang: "ES", text: "Saben a casa. Suaves, con buena mordida y desaparecieron en una mañana." },
         { source: "Instagram", name: "Claudia", lang: "ES", text: "El rainbow bagel fue un hit en mi casa. Se ve lindo y sabe buenazo." },
