@@ -272,7 +272,6 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
                 <article className={"flavor-select-card " + (isSingleSelected ? "selected" : "")} key={flavor.slug}>
                   <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorLabel} />
                   <h3>{flavorLabel}</h3>
-                  <p>{flavor.category === "premium" ? r.premiumSeasonal : r.classic} S/{flavor.price}</p>
                   {selectedPack.packType === "mixed" ? (
                     <div className="quantity-control">
                       <button type="button" onClick={() => changeQuantity(flavor.slug, -1)} aria-label={r.remove + " " + flavorLabel}><Minus size={15} /></button>
