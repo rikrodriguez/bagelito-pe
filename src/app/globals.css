@@ -1498,8 +1498,8 @@ section[id] {
   display: inline-grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
-  min-width: 86px;
-  min-height: 42px;
+  min-width: 98px;
+  min-height: 46px;
   padding: 4px;
   border: 1px solid rgba(7, 19, 51, .14);
   border-radius: 12px;
@@ -1508,7 +1508,8 @@ section[id] {
 }
 
 .language-toggle button {
-  min-height: 32px;
+  min-width: 44px;
+  min-height: 36px;
   border: 0;
   border-radius: 9px;
   background: transparent;
@@ -1526,13 +1527,14 @@ section[id] {
 
 @media (max-width: 760px) {
   .language-toggle {
-    min-width: 74px;
-    min-height: 38px;
+    min-width: 94px;
+    min-height: 44px;
     padding: 3px;
   }
 
   .language-toggle button {
-    min-height: 30px;
+    min-width: 42px;
+    min-height: 36px;
     font-size: .72rem;
   }
 
