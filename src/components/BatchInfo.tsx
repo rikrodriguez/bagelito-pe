@@ -35,15 +35,6 @@ export function BatchInfo() {
           </div>
         </div>
       </div>
-      <aside className="batch-card waitlist-card">
-        <h2>{copy.batch.waitlistTitle}</h2>
-        <p>{copy.batch.waitlistIntro}</p>
-        <ul>
-          {copy.batch.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-        </ul>
-        <a className="pill-button purple" href="https://wa.me/51917547745" target="_blank" rel="noreferrer">{copy.batch.cta}</a>
-        <small>{copy.batch.noSpam}</small>
-      </aside>
     </section>
   );
 }
