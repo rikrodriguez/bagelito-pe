@@ -126,6 +126,17 @@ export const translations = {
         { source: "Instagram", name: "Paula", lang: "ES", text: "Los pedi para brunch y todos preguntaron de donde eran." },
       ],
     },
+    faq: {
+      title: "FAQ",
+      intro: "Everything you need to know before reserving your next Bagelito batch.",
+      items: [
+        { question: "How does the monthly batch work?", answer: "Orders open once a month. You reserve your pack, pay to separate it, we close production, bake only confirmed orders, and deliver in one scheduled Lima window." },
+        { question: "Is my pack confirmed when I submit the form?", answer: "Not immediately. Your reservation is received first, then Bagelito.pe reviews your Yape or Plin proof and reconfirms your spot via WhatsApp." },
+        { question: "What is the minimum order?", answer: "The minimum order is a 6-pack. You can choose 6 mixed, 6 single flavor, 12 mixed, or 12 single flavor." },
+        { question: "Can I choose my flavors?", answer: "Yes. Mixed packs let you choose the exact number of bagels across this month’s flavors. Single-flavor packs use one flavor for the full pack." },
+        { question: "How does delivery work?", answer: "Delivery happens in one scheduled Lima window. Please be available at the address provided; the driver waits up to 10 minutes before Bagelito.pe may need to re-coordinate depending on availability." },
+      ],
+    },
     finalCta: {
       title: "Missed this batch?",
       text: "Join the waitlist and be first to know when the next Bagelito window opens.",
@@ -358,6 +369,17 @@ export const translations = {
         { source: "Instagram", name: "Mateo", lang: "ES", text: "El jalapeño cheddar estuvo brutal. Quiero el de 12 para la próxima." },
         { source: "WhatsApp", name: "Camila", lang: "ES", text: "Me encantó la idea del drop mensual. Se siente especial y llegaron frescos." },
         { source: "Instagram", name: "Paula", lang: "ES", text: "Los pedí para brunch y todos preguntaron de dónde eran." },
+      ],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      intro: "Todo lo que necesitas saber antes de separar tu próximo batch Bagelito.",
+      items: [
+        { question: "¿Cómo funciona el batch mensual?", answer: "Abrimos pedidos una vez al mes. Separas tu pack, pagas para reservarlo, cerramos producción, horneamos solo pedidos confirmados y entregamos en una ventana programada en Lima." },
+        { question: "¿Mi pack queda confirmado al enviar el formulario?", answer: "No inmediatamente. Primero recibimos tu reserva; luego Bagelito.pe revisa tu voucher de Yape o Plin y reconfirma tu separación por WhatsApp." },
+        { question: "¿Cuál es el pedido mínimo?", answer: "El pedido mínimo es un pack de 6. Puedes elegir 6 mixtos, 6 de un sabor, 12 mixtos o 12 de un sabor." },
+        { question: "¿Puedo elegir mis sabores?", answer: "Sí. En packs mixtos eliges la cantidad exacta de bagels entre los sabores del mes. En packs de un sabor, todo el pack va con un solo sabor." },
+        { question: "¿Cómo funciona el delivery?", answer: "La entrega ocurre en una ventana programada en Lima. Debe haber alguien disponible en la dirección indicada; el repartidor espera hasta 10 minutos antes de que Bagelito.pe pueda recoordinar según disponibilidad." },
       ],
     },
     finalCta: {

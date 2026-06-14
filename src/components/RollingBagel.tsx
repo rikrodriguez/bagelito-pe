@@ -12,6 +12,8 @@ type Props = {
   className?: string;
   style?: CSSProperties;
   label?: string;
+  spin?: number;
+  spinOffset?: number;
 };
 
 const sizeClass = {
@@ -34,9 +36,9 @@ const imageByVariant: Record<BagelVariant, string> = {
   snickerdoodle: "/images/bagel-snickerdoodle.png",
 };
 
-export function RollingBagel({ variant = "plain", size = "md", className = "", style, label }: Props) {
+export function RollingBagel({ variant = "plain", size = "md", className = "", style, label, spin = 1, spinOffset = 0 }: Props) {
   const { scrollYProgress } = useScroll();
-  const rotate = useTransform(scrollYProgress, [0, 1], [-80, 360]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [spinOffset - 80, spinOffset + 360 * spin]);
   const alt = label ?? `${variant} bagel without filling`;
 
   return (

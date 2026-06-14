@@ -1,5 +1,6 @@
 import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
 import { BatchInfo } from "@/components/BatchInfo";
+import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { FlavorStrip } from "@/components/FlavorStrip";
 import { Footer } from "@/components/Footer";
@@ -23,6 +24,7 @@ export default function HomePage() {
         <WhyMonthly />
         <FlavorStrip />
         <Testimonials />
+        <FAQ />
         <FinalCTA />
       </main>
       <Footer />

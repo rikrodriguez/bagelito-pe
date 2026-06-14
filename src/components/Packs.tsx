@@ -36,7 +36,14 @@ function PackTray({ pack, label }: { pack: Pack; label: string }) {
       </div>
       <div className="pack-tray-grid" aria-hidden="true">
         {visual.variants.map((variant, index) => (
-          <RollingBagel key={pack.slug + "-" + variant + "-" + index} variant={variant} size="sm" className="pack-tray-bagel" />
+          <RollingBagel
+            key={pack.slug + "-" + variant + "-" + index}
+            variant={variant}
+            size="sm"
+            className="pack-tray-bagel"
+            spin={2.6}
+            spinOffset={index * 18}
+          />
         ))}
       </div>
     </div>
