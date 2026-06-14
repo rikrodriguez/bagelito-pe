@@ -140,7 +140,7 @@ export const translations = {
     finalCta: {
       title: "Missed this batch?",
       text: "Join the waitlist and be first to know when the next Bagelito window opens.",
-      cta: "Join next batch",
+      cta: "Reserve next batch",
     },
     footer: {
       homeLabel: "Bagelito.pe home",
@@ -385,7 +385,7 @@ export const translations = {
     finalCta: {
       title: "¿Te perdiste este batch?",
       text: "Únete a la lista y sé de los primeros en saber cuándo abre la próxima ventana de Bagelito.",
-      cta: "Unirme al próximo batch",
+      cta: "Reservar próximo batch",
     },
     footer: {
       homeLabel: "Inicio de Bagelito.pe",
