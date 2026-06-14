@@ -110,6 +110,19 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     setError("");
   }
 
+  function scrollToFlowStart() {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    });
+  }
+
+  function goToStep(nextStep: number) {
+    setStep(Math.max(1, Math.min(5, nextStep)));
+    scrollToFlowStart();
+  }
+
   function changeQuantity(flavorSlug: string, delta: number) {
     setQuantities((current) => {
       const currentQuantity = current[flavorSlug] ?? 0;
@@ -160,7 +173,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       }
     }
 
-    setStep((current) => Math.min(5, current + 1));
+    goToStep(step + 1);
   }
 
   function handlePaymentScreenshotChange(file: File | null) {
@@ -186,7 +199,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     const paymentError = getPaymentValidationError();
     if (paymentError) {
       setError(paymentError);
-      setStep(4);
+      goToStep(4);
       return;
     }
 
@@ -232,7 +245,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
         {r.steps.map((label, index) => {
           const targetStep = index + 1;
           return (
-            <button key={label} type="button" className={step === targetStep ? "active" : ""} disabled={targetStep > step} onClick={() => setStep(targetStep)}>
+            <button key={label} type="button" className={step === targetStep ? "active" : ""} disabled={targetStep > step} onClick={() => goToStep(targetStep)}>
               {targetStep}. {label}
             </button>
           );
@@ -389,7 +402,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       ) : null}
 
       <div className="reserve-nav">
-        <button className="pill-button outline" type="button" onClick={() => setStep((current) => Math.max(1, current - 1))} disabled={step === 1}><ArrowLeft size={17} /> {r.back}</button>
+        <button className="pill-button outline" type="button" onClick={() => goToStep(step - 1)} disabled={step === 1}><ArrowLeft size={17} /> {r.back}</button>
         {step < 5 ? <button className="pill-button pink" type="button" onClick={goNext}>{r.continue} <ArrowRight size={17} /></button> : null}
       </div>
     </section>
