@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Minus, Plus, Upload } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
@@ -71,6 +71,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const hasMountedRef = useRef(false);
 
   const selectedPack = packs.find((pack) => pack.slug === packSlug) ?? packs[0];
   const localizedSelectedPack = packCopy[locale][selectedPack.slug];
@@ -98,6 +99,28 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     };
   });
 
+  useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    scrollToTop();
+    const frame = window.requestAnimationFrame(scrollToTop);
+    const timeout = window.setTimeout(scrollToTop, 90);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
+  }, [step]);
+
   function getFlavorLabel(flavorSlug: string) {
     const flavor = flavors.find((candidate) => candidate.slug === flavorSlug);
     return flavorCopy[locale][flavorSlug] ?? flavor?.name ?? flavorSlug;
@@ -110,17 +133,8 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     setError("");
   }
 
-  function scrollToFlowStart() {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
-    });
-  }
-
   function goToStep(nextStep: number) {
     setStep(Math.max(1, Math.min(5, nextStep)));
-    scrollToFlowStart();
   }
 
   function changeQuantity(flavorSlug: string, delta: number) {
