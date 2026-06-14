@@ -1604,6 +1604,328 @@ section[id] {
   box-shadow: 0 8px 14px rgba(7, 19, 51, .14);
 }
 
+/* Admin CRM upgrade */
+.crm-shell {
+  max-width: 1440px;
+}
+
+.admin-intro {
+  max-width: 720px;
+  margin-top: 8px;
+  color: #53637a;
+  font-weight: 850;
+}
+
+.crm-stat-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.crm-stat-card {
+  position: relative;
+  min-height: 142px;
+  overflow: hidden;
+}
+
+.crm-stat-card::after {
+  content: "";
+  position: absolute;
+  right: -26px;
+  bottom: -30px;
+  width: 94px;
+  height: 94px;
+  border-radius: 999px;
+  background: rgba(255, 225, 225, .62);
+}
+
+.stat-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: #fff1bf;
+  color: var(--pink);
+}
+
+.crm-stat-card small {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 6px;
+  color: #66758a;
+  font-weight: 800;
+}
+
+.crm-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.crm-insight-card {
+  min-height: 250px;
+}
+
+.admin-card-head.compact {
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.admin-card-head.compact h2 {
+  font-size: 1.15rem;
+}
+
+.admin-card-head.compact p {
+  color: #66758a;
+  font-size: .85rem;
+  font-weight: 850;
+}
+
+.metric-list,
+.district-list,
+.action-list {
+  display: grid;
+  gap: 10px;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+}
+
+.metric-row strong,
+.district-row strong {
+  display: block;
+  font-size: .9rem;
+}
+
+.metric-row span,
+.district-row span,
+.district-row small {
+  display: block;
+  color: #66758a;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.metric-row b {
+  color: var(--pink);
+  font-size: .95rem;
+}
+
+.bar-meter {
+  grid-column: 1 / -1;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eef2f7;
+}
+
+.bar-meter i {
+  display: block;
+  height: 100%;
+  min-width: 6px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--pink), var(--orange), var(--mint));
+}
+
+.district-row {
+  display: grid;
+  gap: 2px;
+  border-radius: 12px;
+  background: #fbf8f2;
+  padding: 10px 12px;
+}
+
+.action-list span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  background: #f8f3ff;
+  padding: 10px 12px;
+  color: var(--navy);
+  font-weight: 900;
+}
+
+.customer-section {
+  margin-top: 20px;
+}
+
+.customer-list {
+  display: grid;
+  gap: 16px;
+}
+
+.customer-card {
+  display: grid;
+  gap: 16px;
+  border: 1px solid #e5eef6;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff, #fffdfa);
+  padding: 18px;
+  box-shadow: 0 12px 26px rgba(10, 22, 54, .05);
+}
+
+.customer-card-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.customer-avatar {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffe59a, #ffe1e1);
+  color: var(--navy);
+  font-size: 1rem;
+  font-weight: 1000;
+}
+
+.customer-title-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.customer-title-line h3 {
+  font-size: 1.25rem;
+}
+
+.customer-summary > p {
+  margin-top: 4px;
+  color: #66758a;
+  font-size: .9rem;
+  font-weight: 850;
+}
+
+.customer-summary > p span {
+  text-transform: capitalize;
+}
+
+.customer-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.customer-contact-grid span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #f7fbff;
+  padding: 8px 10px;
+  color: #32425b;
+  font-size: .82rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reservation-data-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.data-block {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  min-height: 112px;
+  border-radius: 14px;
+  background: #fff8ee;
+  padding: 12px;
+}
+
+.data-block.wide {
+  grid-column: span 2;
+}
+
+.data-block small {
+  color: #66758a;
+  font-size: .74rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.data-block strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--navy);
+  font-size: .9rem;
+  line-height: 1.35;
+}
+
+.data-block span,
+.data-block a {
+  color: #4f6179;
+  font-size: .82rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.data-block a {
+  color: var(--pink);
+}
+
+.customer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  border-top: 1px solid #edf2f7;
+  padding-top: 14px;
+}
+
+.status-action {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: white;
+  font-size: .82rem;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.status-action:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.status-action.paid { background: #18b87a; }
+.status-action.pending { background: #637083; }
+.status-action.warning { background: var(--orange); }
+
+.status-pill.paid { background: #e8fbf2; color: #13805b !important; }
+.status-pill.pending { background: #fff4d7; color: #9a6405 !important; }
+.status-pill.warning { background: #fff0da; color: #b85f00 !important; }
+.status-pill.cancelled { background: #ffe5e5; color: #b91c1c !important; }
+.status-pill.neutral { background: #eef2ff; color: var(--navy) !important; }
+
+.empty-state {
+  border-radius: 16px;
+  background: #fff8ee;
+  padding: 24px;
+  color: #66758a;
+  font-weight: 900;
+}
+
 @media (max-width: 760px) {
   .language-toggle {
     min-width: 94px;
@@ -1619,5 +1941,52 @@ section[id] {
 
   .header-actions {
     gap: 8px;
+  }
+
+  .crm-stat-grid,
+  .crm-overview-grid,
+  .customer-contact-grid,
+  .reservation-data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-block.wide {
+    grid-column: auto;
+  }
+
+  .customer-card-main {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-avatar {
+    width: 46px;
+    height: 46px;
+  }
+
+  .customer-actions {
+    align-items: stretch;
+  }
+
+  .customer-actions form,
+  .customer-actions .mini-link,
+  .status-action {
+    width: 100%;
+  }
+
+  .status-action,
+  .customer-actions .mini-link {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  .crm-stat-grid,
+  .crm-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-contact-grid,
+  .reservation-data-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
