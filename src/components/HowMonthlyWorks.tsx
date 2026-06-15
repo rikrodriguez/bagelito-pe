@@ -53,7 +53,6 @@ export function HowMonthlyWorks() {
           const Icon = meta.Icon;
           return (
             <article className={"step-card " + meta.color} key={step.title}>
-              <span className="step-number">{meta.n}</span>
               <div className="step-icon"><Icon size={34} /></div>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
