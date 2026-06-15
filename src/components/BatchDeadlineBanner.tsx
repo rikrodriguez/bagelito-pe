@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
+import { CalendarClock, Gauge } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 
 const deadline = new Date("2026-06-30T23:59:00-05:00").getTime();
@@ -53,10 +53,6 @@ export function BatchDeadlineBanner() {
           <span style={{ width: `${reservedPercent}%` }} />
         </div>
       </div>
-
-      <a className="deadline-banner-cta" href="https://wa.me/51917547745" target="_blank" rel="noreferrer">
-        <MessageCircle size={16} /> {copy.deadline.cta}
-      </a>
     </aside>
   );
 }

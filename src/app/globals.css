@@ -1403,7 +1403,7 @@ section[id] {
   z-index: 70;
   min-height: var(--batch-banner-height);
   display: grid;
-  grid-template-columns: minmax(190px, .9fr) auto minmax(260px, .9fr) auto;
+  grid-template-columns: minmax(190px, .82fr) auto minmax(280px, 1fr);
   align-items: center;
   gap: clamp(12px, 2vw, 22px);
   padding: 10px clamp(18px, 6vw, 96px);
@@ -1505,28 +1505,6 @@ section[id] {
   background: linear-gradient(90deg, var(--pink), var(--orange));
 }
 
-.deadline-banner-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 42px;
-  border-radius: 12px;
-  background: var(--navy);
-  color: white;
-  padding: 0 18px;
-  font-size: .86rem;
-  font-weight: 1000;
-  white-space: nowrap;
-  box-shadow: 0 12px 24px rgba(7, 19, 51, .16);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.deadline-banner-cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 28px rgba(7, 19, 51, .2);
-}
-
 @media (max-width: 960px) {
   :root { --batch-banner-height: 118px; }
 
@@ -1546,10 +1524,6 @@ section[id] {
     grid-column: 1 / -1;
     order: 4;
   }
-
-  .deadline-banner-cta {
-    align-self: center;
-  }
 }
 
 @media (max-width: 560px) {
@@ -1558,10 +1532,6 @@ section[id] {
   .batch-deadline-banner {
     grid-template-columns: 1fr;
     gap: 10px;
-  }
-
-  .deadline-banner-cta {
-    width: 100%;
   }
 }
 
