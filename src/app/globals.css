@@ -375,6 +375,10 @@ section[id] { scroll-margin-top: 104px; }
 .site-footer a { display: inline-flex; align-items: center; gap: 8px; }
 .site-footer strong { color: var(--pink); }
 
+.mobile-sticky-reserve-cta {
+  display: none;
+}
+
 .reserve-page, .success-page, .admin-page, .admin-login-page { min-height: 70vh; padding: 42px clamp(20px, 5vw, 76px); }
 .reserve-shell, .success-card, .admin-shell { max-width: 1160px; margin: 0 auto; }
 .reserve-herolet { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; border-radius: 22px; background: #ffeaf3; padding: 30px; box-shadow: var(--shadow); }
@@ -515,6 +519,29 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   .final-cta-card { padding: 24px; }
   .final-sesame { display: none; }
   .site-footer { text-align: left; gap: 14px; }
+
+  .mobile-sticky-reserve-cta {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    z-index: 90;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 58px;
+    border-radius: 18px;
+    background: var(--pink);
+    color: white;
+    font-size: 1rem;
+    font-weight: 1000;
+    box-shadow: 0 18px 34px rgba(238, 79, 147, .34), 0 0 0 1px rgba(255, 255, 255, .42) inset;
+  }
+
+  .site-footer {
+    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  }
   .reserve-herolet { grid-template-columns: 1fr; padding: 22px; }
   .reserve-progress { grid-template-columns: repeat(2, 1fr); }
   .flavor-select-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }

@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { HowMonthlyWorks } from "@/components/HowMonthlyWorks";
+import { MobileStickyReserveCTA } from "@/components/MobileStickyReserveCTA";
 import { Packs } from "@/components/Packs";
 import { Testimonials } from "@/components/Testimonials";
 import { WhyMonthly } from "@/components/WhyMonthly";
@@ -28,6 +29,7 @@ export default function HomePage() {
         <FinalCTA />
       </main>
       <Footer />
+      <MobileStickyReserveCTA />
     </>
   );
 }

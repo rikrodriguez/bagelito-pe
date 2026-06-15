@@ -11,6 +11,10 @@ export const translations = {
       english: "EN",
       spanish: "ES",
     },
+    stickyReserveCta: {
+      label: "Reserve your pack",
+      aria: "Reserve your pack and jump to pack selection",
+    },
     header: {
       homeLabel: "Bagelito.pe home",
       nav: [
@@ -255,6 +259,10 @@ export const translations = {
       label: "Elegir idioma",
       english: "EN",
       spanish: "ES",
+    },
+    stickyReserveCta: {
+      label: "Reserva tu pack",
+      aria: "Reserva tu pack e ir a la selección de packs",
     },
     header: {
       homeLabel: "Inicio de Bagelito.pe",
