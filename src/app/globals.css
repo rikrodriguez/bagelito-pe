@@ -395,8 +395,8 @@ section[id] { scroll-margin-top: 104px; }
   line-height: 1.55;
 }
 .founder-note-card { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(280px, 1fr); gap: clamp(20px, 4vw, 42px); align-items: center; max-width: 980px; margin: 38px auto 0; border: 1px solid rgba(238, 79, 147, .24); border-radius: 22px; background: linear-gradient(135deg, #fffdfa, #ffeaf3 58%, #fff8ee); padding: clamp(16px, 2.6vw, 28px); box-shadow: 0 20px 45px rgba(10,22,54,.08); text-align: left; }
-.founder-note-media { position: relative; overflow: hidden; border-radius: 18px; aspect-ratio: 4 / 3.25; background: var(--cream); box-shadow: 0 16px 34px rgba(10,22,54,.12); }
-.founder-note-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block; }
+.founder-note-media { position: relative; overflow: hidden; border-radius: 18px; aspect-ratio: 4 / 5; background: var(--cream); box-shadow: 0 16px 34px rgba(10,22,54,.12); }
+.founder-note-media img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
 .founder-note-copy span { display: inline-flex; width: fit-content; border-radius: 999px; background: var(--yellow); padding: 7px 13px; color: var(--pink); font-size: .74rem; font-weight: 1000; text-transform: uppercase; }
 .founder-note-copy h3 { margin-top: 14px; font-size: clamp(1.8rem, 3vw, 3rem); line-height: .95; }
 .founder-note-copy p { margin-top: 12px; color: var(--pink); font-size: clamp(1.05rem, 1.7vw, 1.35rem); font-weight: 950; line-height: 1.2; }
@@ -542,7 +542,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   .handoff-options, .payment-method-options { grid-template-columns: 1fr; }
   .section-pad { padding: 34px 18px; }
   .founder-note-card { grid-template-columns: 1fr; gap: 18px; margin-top: 28px; padding: 14px; text-align: left; }
-  .founder-note-media { aspect-ratio: 4 / 3.45; }
+  .founder-note-media { aspect-ratio: 4 / 5; }
   .founder-note-copy h3 { font-size: clamp(1.8rem, 10vw, 2.4rem); }
   .split-heading, .admin-topbar, .admin-card-head { align-items: flex-start; flex-direction: column; }
   .note-pills { justify-content: flex-start; }
