@@ -39,7 +39,8 @@ section[id] { scroll-margin-top: 24px; }
 
 .site-header {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
   align-items: center;
   gap: 26px;
   padding: 18px clamp(20px, 6vw, 96px);
@@ -511,7 +512,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 .admin-login-card { width: min(100%, 440px); display: grid; gap: 16px; border-radius: 22px; background: white; padding: 34px; box-shadow: var(--shadow); }
 
 @media (max-width: 1120px) {
-  .site-header { grid-template-columns: auto auto; }
   .site-header nav { display: none; }
   .header-actions { justify-content: flex-end; }
   .hero-section { grid-template-columns: 1fr; min-height: auto; }
