@@ -1,4 +1,3 @@
-import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
 import { BatchInfo } from "@/components/BatchInfo";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
@@ -15,7 +14,6 @@ import { WhyMonthly } from "@/components/WhyMonthly";
 export default function HomePage() {
   return (
     <>
-      <BatchDeadlineBanner />
       <Header />
       <main>
         <Hero />

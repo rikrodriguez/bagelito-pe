@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <LanguageProvider>
+          <BatchDeadlineBanner />
           {children}
           <FloatingWhatsApp />
         </LanguageProvider>

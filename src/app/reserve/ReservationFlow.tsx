@@ -121,6 +121,11 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     };
   }, [step]);
 
+  useEffect(() => {
+    document.body.classList.toggle("reservation-review-active", step === 5);
+    return () => document.body.classList.remove("reservation-review-active");
+  }, [step]);
+
   function getFlavorLabel(flavorSlug: string) {
     const flavor = flavors.find((candidate) => candidate.slug === flavorSlug);
     return flavorCopy[locale][flavorSlug] ?? flavor?.name ?? flavorSlug;

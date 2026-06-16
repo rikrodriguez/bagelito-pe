@@ -1504,6 +1504,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   backdrop-filter: blur(18px);
 }
 
+body.reservation-review-active .batch-deadline-banner {
+  display: none;
+}
+
 
 section[id] {
   scroll-margin-top: 32px;
