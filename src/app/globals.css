@@ -2013,3 +2013,187 @@ section[id] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Packs art direction: calm grouped platters, uniform bagel sizing, no loose visual noise. */
+.packs-section .pack-grid {
+  align-items: stretch;
+  gap: clamp(18px, 2vw, 28px);
+}
+
+.packs-section .pack-card {
+  min-height: 548px;
+  padding: 28px clamp(18px, 1.7vw, 26px) 22px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 229, 154, .18), transparent 190px),
+    rgba(255, 255, 255, .94);
+  overflow: hidden;
+}
+
+.packs-section .pack-card.has-badge {
+  padding-top: 34px;
+}
+
+.packs-section .pack-title-block {
+  height: 116px;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.packs-section .pack-title-block h3 {
+  font-size: clamp(1.55rem, 1.9vw, 1.95rem);
+  line-height: .98;
+}
+
+.packs-section .pack-title-block strong {
+  font-size: clamp(1.55rem, 2vw, 1.95rem);
+  line-height: 1;
+}
+
+.pack-display {
+  position: relative;
+  width: min(100%, 360px);
+  height: 216px;
+  flex: 0 0 216px;
+  margin: 4px auto 22px;
+  isolation: isolate;
+}
+
+.pack-platter {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 16px;
+  height: 108px;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 238, .92), rgba(243, 218, 180, .96) 46%, rgba(203, 145, 87, .96));
+  box-shadow:
+    inset 0 12px 0 rgba(255, 255, 255, .42),
+    inset 0 -18px 22px rgba(126, 75, 31, .15),
+    0 22px 30px rgba(64, 43, 26, .15);
+  z-index: 1;
+}
+
+.pack-platter::before {
+  content: "";
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  top: -28px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 250, 236, .98), rgba(234, 203, 160, .92));
+  box-shadow:
+    inset 0 -12px 16px rgba(139, 87, 42, .10),
+    0 6px 16px rgba(71, 45, 22, .06);
+}
+
+.pack-platter::after {
+  content: "";
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  top: 43px;
+  height: 16px;
+  border-radius: 999px;
+  border: 6px solid rgba(255, 246, 224, .78);
+  border-top-color: rgba(151, 92, 43, .20);
+}
+
+.pack-platter span {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  color: rgba(158, 96, 47, .44);
+  font-size: .82rem;
+  font-weight: 1000;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.pack-bagel-group {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.pack-bagel-item.bagel-photo {
+  position: absolute;
+  left: var(--slot-x);
+  top: var(--slot-y);
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  filter: drop-shadow(0 12px 13px rgba(64, 43, 26, .18));
+}
+
+.pack-display-6 .pack-bagel-item.bagel-photo {
+  width: 88px;
+  height: 88px;
+  margin: -44px 0 0 -44px;
+}
+
+.pack-bagel-item .bagel-photo-img,
+.pack-bagel-item.bagel-variant-rainbow .bagel-photo-img {
+  object-fit: contain;
+  transform: none;
+}
+
+.packs-section .pack-card p {
+  flex: 0 0 62px;
+  min-height: 62px;
+  max-width: 300px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1.36;
+}
+
+.packs-section .pack-card .pill-button {
+  margin-top: auto;
+  min-height: 54px;
+}
+
+@media (max-width: 1120px) {
+  .packs-section .pack-card {
+    min-height: 534px;
+  }
+
+  .pack-display {
+    width: min(100%, 372px);
+  }
+}
+
+@media (max-width: 760px) {
+  .packs-section .pack-card {
+    min-height: auto;
+    padding: 26px 18px 22px;
+  }
+
+  .packs-section .pack-title-block {
+    height: 98px;
+  }
+
+  .pack-display {
+    width: min(100%, 350px);
+    height: 212px;
+    flex-basis: 212px;
+    margin: 0 auto 20px;
+  }
+
+  .pack-bagel-item.bagel-photo {
+    width: 70px;
+    height: 70px;
+    margin: -35px 0 0 -35px;
+  }
+
+  .pack-display-6 .pack-bagel-item.bagel-photo {
+    width: 82px;
+    height: 82px;
+    margin: -41px 0 0 -41px;
+  }
+}
