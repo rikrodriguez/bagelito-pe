@@ -73,6 +73,30 @@ section[id] { scroll-margin-top: 24px; }
 .pill-button.outline { background: white; border: 2px solid var(--navy); color: var(--navy); }
 .icon-button { display: inline-flex; width: 56px; height: 56px; align-items: center; justify-content: center; border: 4px solid var(--navy); border-radius: 13px; background: white; }
 
+.floating-whatsapp {
+  position: fixed;
+  right: clamp(18px, 2.4vw, 34px);
+  bottom: clamp(22px, 3vw, 38px);
+  z-index: 120;
+  display: inline-flex;
+  width: 68px;
+  height: 68px;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--navy);
+  border-radius: 20px;
+  background: #fffdf8;
+  color: var(--navy);
+  box-shadow: 0 18px 34px rgba(10, 22, 54, .16), 0 0 0 1px rgba(255, 255, 255, .72) inset;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.floating-whatsapp:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: white;
+  box-shadow: 0 22px 42px rgba(10, 22, 54, .20), 0 0 0 1px rgba(255, 255, 255, .82) inset;
+}
+
 .hero-section {
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(320px, 1.08fr);
@@ -573,6 +597,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
     font-size: 1rem;
     font-weight: 1000;
     box-shadow: 0 18px 34px rgba(238, 79, 147, .34), 0 0 0 1px rgba(255, 255, 255, .42) inset;
+  }
+
+  .floating-whatsapp {
+    right: 16px;
+    bottom: calc(92px + env(safe-area-inset-bottom));
+    width: 56px;
+    height: 56px;
+    border-width: 3px;
+    border-radius: 17px;
   }
 
   .site-footer {
