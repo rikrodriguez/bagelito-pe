@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarClock, Gauge } from "lucide-react";
+import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 
 const deadline = new Date("2026-06-30T23:59:00-05:00").getTime();
@@ -13,21 +13,23 @@ function getTimeLeft() {
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
   return {
     days: String(days).padStart(2, "0"),
     hours: String(hours).padStart(2, "0"),
     minutes: String(minutes).padStart(2, "0"),
+    seconds: String(seconds).padStart(2, "0"),
   };
 }
 
 export function BatchDeadlineBanner() {
   const { copy } = useLanguage();
-  const [timeLeft, setTimeLeft] = useState({ days: "--", hours: "--", minutes: "--" });
+  const [timeLeft, setTimeLeft] = useState({ days: "--", hours: "--", minutes: "--", seconds: "--" });
 
   useEffect(() => {
     setTimeLeft(getTimeLeft());
-    const interval = window.setInterval(() => setTimeLeft(getTimeLeft()), 60_000);
+    const interval = window.setInterval(() => setTimeLeft(getTimeLeft()), 1000);
     return () => window.clearInterval(interval);
   }, []);
 
@@ -42,6 +44,7 @@ export function BatchDeadlineBanner() {
         <span><strong>{timeLeft.days}</strong><small>{copy.deadline.days}</small></span>
         <span><strong>{timeLeft.hours}</strong><small>{copy.deadline.hours}</small></span>
         <span><strong>{timeLeft.minutes}</strong><small>{copy.deadline.minutes}</small></span>
+        <span><strong>{timeLeft.seconds}</strong><small>{copy.deadline.seconds}</small></span>
       </div>
 
       <div className="batch-availability">
@@ -53,6 +56,11 @@ export function BatchDeadlineBanner() {
           <span style={{ width: `${reservedPercent}%` }} />
         </div>
       </div>
+
+      <a className="deadline-cta" href="#packs">
+        <MessageCircle size={17} />
+        {copy.deadline.cta}
+      </a>
     </aside>
   );
 }

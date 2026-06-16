@@ -38,9 +38,10 @@ export const translations = {
       days: "days",
       hours: "hrs",
       minutes: "min",
+      seconds: "sec",
       reserved: "batch reserved",
       available: "available",
-      cta: "Reserve",
+      cta: "Reserve next batch",
     },
     hero: {
       kicker: "Baked by batch",
@@ -287,9 +288,10 @@ export const translations = {
       days: "días",
       hours: "hrs",
       minutes: "min",
+      seconds: "seg",
       reserved: "del batch reservado",
       available: "disponible",
-      cta: "Reservar",
+      cta: "Reservar próximo batch",
     },
     hero: {
       kicker: "Horneado por batch",
