@@ -12,8 +12,8 @@ export const translations = {
       spanish: "ES",
     },
     stickyReserveCta: {
-      label: "Reserve your pack",
-      aria: "Reserve your pack and jump to pack selection",
+      label: "Reserve your batch",
+      aria: "Reserve your batch and jump to pack selection",
     },
     header: {
       homeLabel: "Bagelito.pe home",
@@ -26,9 +26,9 @@ export const translations = {
         { label: "FAQ", href: "#faq" },
       ],
       mainNav: "Main navigation",
-      joinWaitlist: "Join the waitlist",
+      joinWaitlist: "Reserve your batch",
       whatsapp: "WhatsApp",
-      whatsappMessage: "Hi Bagelito.pe! I want to join the waitlist for the next monthly bagel batch.",
+      whatsappMessage: "Hi Bagelito.pe! I want to reserve the next monthly bagel batch.",
     },
     deadline: {
       aria: "Current batch deadline and availability",
@@ -261,8 +261,8 @@ export const translations = {
       spanish: "ES",
     },
     stickyReserveCta: {
-      label: "Reserva tu pack",
-      aria: "Reserva tu pack e ir a la selección de packs",
+      label: "Reserva tu batch",
+      aria: "Reserva tu batch e ir a la selección de packs",
     },
     header: {
       homeLabel: "Inicio de Bagelito.pe",
@@ -275,9 +275,9 @@ export const translations = {
         { label: "FAQ", href: "#faq" },
       ],
       mainNav: "Navegación principal",
-      joinWaitlist: "Unirme a la lista",
+      joinWaitlist: "Reserva tu batch",
       whatsapp: "WhatsApp",
-      whatsappMessage: "Hola Bagelito.pe! Quiero unirme a la lista de espera del proximo batch mensual.",
+      whatsappMessage: "¡Hola Bagelito.pe! Quiero reservar el próximo batch mensual.",
     },
     deadline: {
       aria: "Fecha límite y disponibilidad del batch actual",

@@ -22,9 +22,9 @@ export function Header() {
       </nav>
       <div className="header-actions">
         <LanguageToggle />
-        <a className="pill-button pink" href="https://wa.me/51917547745" target="_blank" rel="noreferrer">
+        <Link className="pill-button pink" href="/#packs">
           <MessageCircle size={18} /> {copy.header.joinWaitlist}
-        </a>
+        </Link>
         <a className="icon-button" href={quickWhatsappHref} target="_blank" rel="noreferrer" aria-label={copy.header.whatsapp}>
           <MessageCircle size={25} />
         </a>
