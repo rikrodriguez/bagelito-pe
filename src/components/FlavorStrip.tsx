@@ -17,7 +17,6 @@ export function FlavorStrip() {
           <article className="flavor-mini" key={flavor.slug}>
             <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorCopy[locale][flavor.slug] ?? flavor.name} />
             <h3>{flavorCopy[locale][flavor.slug] ?? flavor.name}</h3>
-            {flavor.seasonal ? <span>{copy.flavors.seasonal}</span> : null}
           </article>
         ))}
       </div>
