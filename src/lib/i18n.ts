@@ -421,7 +421,7 @@ export const translations = {
       deliveryDetails: "Datos de entrega",
       deliveryHandoff: {
         label: "Recepción del pedido",
-        receive: "Yo lo recepciono",
+        receive: "Yo lo recibo",
         porter: "Dejar en portería",
       },
       marketingOptIn: "Quiero recibir novedades del batch mensual y próximos sabores por email.",
@@ -470,7 +470,7 @@ export const translations = {
         paymentScreenshot: "Voucher",
       },
       statusPending: "Pago pendiente de revisión",
-      terms: "Entiendo que Bagelito funciona como un batch mensual por preventa. Mi reserva se recibe al enviar este formulario, pero mi pack queda oficialmente separado solo cuando Bagelito revise mi voucher Yape/Plin y me reconfirme por WhatsApp. Solo se producen pedidos con pago confirmado. El delivery incluye una espera máxima de 10 minutos en la dirección indicada. Si el pedido no es recepcionado dentro de ese tiempo, Bagelito.pe podrá intentar recoordinar la entrega según disponibilidad, pero la entrega ya no queda garantizada y Bagelito.pe no será responsable por reclamos, demoras o inconvenientes causados por no haber una persona disponible para recibirlo.",
+      terms: "Entiendo que Bagelito funciona como un batch mensual por preventa. Mi reserva se recibe al enviar este formulario, pero mi pack queda oficialmente separado solo cuando Bagelito revise mi voucher Yape/Plin y me reconfirme por WhatsApp. Solo se producen pedidos con pago confirmado. El delivery incluye una espera máxima de 10 minutos en la dirección indicada. Si el pedido no es recibido dentro de ese tiempo, Bagelito.pe podrá intentar recoordinar la entrega según disponibilidad, pero la entrega ya no queda garantizada y Bagelito.pe no será responsable por reclamos, demoras o inconvenientes causados por no haber una persona disponible para recibirlo.",
       submit: "Enviar reserva pagada",
       submitting: "Enviando...",
       back: "Atrás",

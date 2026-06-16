@@ -601,11 +601,26 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 
   .floating-whatsapp {
     right: 16px;
-    bottom: calc(92px + env(safe-area-inset-bottom));
+    bottom: max(18px, env(safe-area-inset-bottom));
     width: 56px;
     height: 56px;
     border-width: 3px;
     border-radius: 17px;
+  }
+
+  body:has(.mobile-sticky-reserve-cta) .floating-whatsapp {
+    bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  body:has(.reserve-page) .floating-whatsapp,
+  body:has(.success-page) .floating-whatsapp,
+  body:has(.admin-page) .floating-whatsapp,
+  body:has(.admin-login-page) .floating-whatsapp {
+    right: 10px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
   }
 
   .site-footer {

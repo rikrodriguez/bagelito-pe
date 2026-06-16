@@ -112,7 +112,7 @@ export async function createReservation(formData: FormData) {
   const batchId = await getOrCreateCurrentBatch(supabase);
   const orderCode = await nextOrderCode(supabase);
   const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
-  const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepcion: Dejar en porteria" : "Recepcion: Yo lo recepciono";
+  const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
   const deliveryNotes = [handoffNote, payload.deliveryNotes].filter(Boolean).join(" | ");
 
   const { error: uploadError } = await supabase.storage

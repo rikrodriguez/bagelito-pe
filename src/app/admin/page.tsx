@@ -143,8 +143,8 @@ function getFlavorText(order: Order) {
 
 function getReceptionText(order: Order) {
   const notes = order.delivery_notes ?? "";
-  if (notes.toLowerCase().includes("porteria")) return "Leave at front desk";
-  if (notes.toLowerCase().includes("recepciono")) return "Customer receives directly";
+  if (notes.toLowerCase().includes("porteria") || notes.toLowerCase().includes("portería")) return "Leave at front desk";
+  if (notes.toLowerCase().includes("recibo") || notes.toLowerCase().includes("recepciono")) return "Customer receives directly";
   return "Not specified";
 }
 

@@ -25,7 +25,7 @@ function getTimeLeft() {
 
 export function BatchDeadlineBanner() {
   const { copy } = useLanguage();
-  const [timeLeft, setTimeLeft] = useState({ days: "--", hours: "--", minutes: "--", seconds: "--" });
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
 
   useEffect(() => {
     setTimeLeft(getTimeLeft());
