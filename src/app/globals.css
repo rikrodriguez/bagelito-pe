@@ -16,7 +16,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 118px; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background: radial-gradient(circle at 4% 18%, rgba(173, 230, 224, 0.32), transparent 18rem), radial-gradient(circle at 97% 72%, rgba(255, 151, 184, 0.24), transparent 18rem), var(--cream);
@@ -33,14 +33,11 @@ img { max-width: 100%; }
 h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { letter-spacing: -0.03em; }
 .section-pad { padding: 44px clamp(20px, 5vw, 76px); }
-section[id] { scroll-margin-top: 118px; }
+section[id] { scroll-margin-top: 24px; }
 .section-heading h2, .how-section h2, .why-section h2, .flavor-section h2, .testimonials-section h2, .faq-section h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 0.95; text-align: center; }
 .section-intro { max-width: 760px; margin: 16px auto 0; text-align: center; font-weight: 700; line-height: 1.55; }
 
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 80;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
