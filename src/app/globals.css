@@ -2344,9 +2344,22 @@ section[id] {
 .official-pack-hotspot {
   position: absolute;
   z-index: 2;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, .75vw, 12px);
   border-radius: 14px;
+  color: white;
+  font-size: clamp(.82rem, 1.08vw, 1.18rem);
+  font-weight: 1000;
+  line-height: 1;
   outline: 0;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translateZ(0);
+  box-shadow: 0 16px 30px rgba(10, 22, 54, .10);
 }
 
 .official-pack-hotspot:focus-visible {
@@ -2356,7 +2369,22 @@ section[id] {
 }
 
 .official-pack-hotspot:hover {
-  background: rgba(255, 255, 255, .08);
+  transform: translateY(-1px) translateZ(0);
+  box-shadow: 0 18px 32px rgba(10, 22, 54, .14);
+}
+
+.official-pack-hotspot.pink { background: #ee4f93; }
+.official-pack-hotspot.orange { background: #ffa530; }
+.official-pack-hotspot.mint { background: #5ec6b8; }
+.official-pack-hotspot.purple { background: #8562d6; }
+
+.official-pack-hotspot svg {
+  flex: 0 0 auto;
+}
+
+.official-pack-hotspot span {
+  display: block;
+  white-space: nowrap;
 }
 
 @media (max-width: 760px) {
@@ -2371,5 +2399,9 @@ section[id] {
   .official-packs-frame {
     width: 980px;
     max-width: none;
+  }
+
+  .official-pack-hotspot {
+    font-size: .9rem;
   }
 }
