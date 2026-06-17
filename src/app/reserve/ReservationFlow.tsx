@@ -58,6 +58,11 @@ const initialPaymentDetails: PaymentDetails = {
 
 const allowedPaymentTypes = new Set(["image/png", "image/jpeg", "image/jpg", "image/webp"]);
 const maxPaymentFileSize = 5 * 1024 * 1024;
+const paymentRecipient = {
+  yapeNumber: "917 547 745",
+  plinNumber: "917 547 745",
+  holder: "Dawn Brookes",
+};
 
 export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const { locale, copy } = useLanguage();
@@ -80,9 +85,9 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   const totalAmount = selectedPack.amount + deliveryFee;
   const selectedTotal = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
   const paymentConfig = {
-    yapeNumber: process.env.NEXT_PUBLIC_YAPE_NUMBER || r.payment.notConfigured,
-    plinNumber: process.env.NEXT_PUBLIC_PLIN_NUMBER || r.payment.notConfigured,
-    holder: process.env.NEXT_PUBLIC_PAYMENT_HOLDER || r.payment.notConfigured,
+    yapeNumber: paymentRecipient.yapeNumber,
+    plinNumber: paymentRecipient.plinNumber,
+    holder: paymentRecipient.holder,
   };
   const selectedItems = useMemo(() => {
     if (selectedPack.packType === "single") {
