@@ -174,7 +174,6 @@ export const translations = {
         receive: "I will receive it",
         porter: "Leave at front desk",
       },
-      deliveryFeeHint: "Estimated from Lince by delivery zone.",
       marketingOptIn: "Send me monthly batch updates and flavor drops by email.",
       fields: {
         fullName: "Full name",
@@ -429,7 +428,6 @@ export const translations = {
         receive: "Yo lo recibo",
         porter: "Dejar en portería",
       },
-      deliveryFeeHint: "Estimado desde Lince según zona de reparto.",
       marketingOptIn: "Quiero recibir novedades del batch mensual y próximos sabores por email.",
       fields: {
         fullName: "Nombre completo",

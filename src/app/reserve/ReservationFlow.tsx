@@ -331,11 +331,6 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
             <label>{r.fields.whatsapp}<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
             <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
             <label>{r.fields.district}<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district === "Other" ? r.otherDistrict : district}</option>)}</select></label>
-            <div className="delivery-fee-box">
-              <span>{r.payment.deliveryFee}</span>
-              <strong>S/{deliveryFee}</strong>
-              <small>{r.deliveryFeeHint}</small>
-            </div>
             <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
             <div className="handoff-box wide" role="radiogroup" aria-label={r.deliveryHandoff.label}>
               <span>{r.deliveryHandoff.label}</span>

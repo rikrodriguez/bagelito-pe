@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { getFlavorBySlug, getPackBySlug } from "@/lib/catalog";
-import { getDeliveryFee } from "@/lib/delivery-pricing";
+import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
 import { getMissingReservationEnv } from "@/lib/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { parseItems, reservationPayloadSchema, type ReservationPayload } from "./schema";
@@ -108,6 +108,7 @@ export async function createReservation(formData: FormData) {
   const paymentScreenshot = getPaymentScreenshot(formData);
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
+  const deliveryDistanceKm = getDeliveryDistanceKm(payload.district);
   const deliveryFee = getDeliveryFee(payload.district);
   const totalAmount = pack.amount + deliveryFee;
 
@@ -116,7 +117,7 @@ export async function createReservation(formData: FormData) {
   const orderCode = await nextOrderCode(supabase);
   const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
-  const deliveryNotes = [handoffNote, `Delivery: S/${deliveryFee}`, payload.deliveryNotes].filter(Boolean).join(" | ");
+  const deliveryNotes = [handoffNote, `Delivery: S/${deliveryFee} (${deliveryDistanceKm} km)`, payload.deliveryNotes].filter(Boolean).join(" | ");
 
   const { error: uploadError } = await supabase.storage
     .from(paymentProofBucket)
