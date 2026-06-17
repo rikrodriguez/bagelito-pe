@@ -470,6 +470,10 @@ section[id] { scroll-margin-top: 24px; }
 .form-grid label, .admin-login-card label { display: grid; gap: 8px; font-weight: 950; text-align: left; }
 .form-grid .wide, .review-grid .wide { grid-column: 1 / -1; }
 .handoff-box { display: grid; gap: 12px; border: 1px solid var(--line); border-radius: 16px; background: #fff7df; padding: 16px; text-align: left; }
+.delivery-fee-box { display: grid; gap: 6px; align-content: center; min-height: 76px; border: 1px solid rgba(94, 198, 184, .38); border-radius: 14px; background: #eefaf6; padding: 14px 16px; text-align: left; }
+.delivery-fee-box span { color: var(--blue); font-size: .8rem; font-weight: 900; }
+.delivery-fee-box strong { color: var(--mint); font-size: 1.35rem; line-height: 1; }
+.delivery-fee-box small { color: #66758a; font-weight: 800; line-height: 1.25; }
 .handoff-box > span { font-weight: 950; }
 .handoff-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .handoff-option { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; border: 2px solid transparent; border-radius: 14px; background: white; color: var(--navy); font-weight: 950; box-shadow: 0 12px 24px rgba(10,22,54,.06); transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }

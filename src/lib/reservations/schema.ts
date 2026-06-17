@@ -1,21 +1,8 @@
 import { z } from "zod";
 import { getFlavorBySlug, getPackBySlug, isPackSlug } from "@/lib/catalog";
+import { districtOptions } from "@/lib/delivery-pricing";
 
-export const districtOptions = [
-  "Miraflores",
-  "San Isidro",
-  "Barranco",
-  "Surco",
-  "San Borja",
-  "La Molina",
-  "Magdalena",
-  "San Miguel",
-  "Jesus Maria",
-  "Lince",
-  "Pueblo Libre",
-  "Surquillo",
-  "Other",
-] as const;
+export { districtOptions };
 
 export const paymentMethodOptions = ["Yape", "Plin"] as const;
 
@@ -31,7 +18,7 @@ export const reservationPayloadSchema = z.object({
   whatsapp: z.string().trim().min(7, "WhatsApp number is required."),
   email: z.string().trim().email("Enter a valid email."),
   deliveryAddress: z.string().trim().min(5, "Delivery address is required."),
-  district: z.enum(districtOptions),
+  district: z.enum(districtOptions as [string, ...string[]]),
   addressReference: z.string().trim().optional().default(""),
   deliveryNotes: z.string().trim().optional().default(""),
   deliveryHandoff: z.enum(["self", "porteria"]).default("self"),

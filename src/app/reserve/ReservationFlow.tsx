@@ -6,6 +6,7 @@ import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
 import { useLanguage } from "@/components/LanguageProvider";
+import { getDeliveryFee } from "@/lib/delivery-pricing";
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import { districtOptions } from "@/lib/reservations/schema";
 
@@ -75,6 +76,8 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
 
   const selectedPack = packs.find((pack) => pack.slug === packSlug) ?? packs[0];
   const localizedSelectedPack = packCopy[locale][selectedPack.slug];
+  const deliveryFee = getDeliveryFee(details.district);
+  const totalAmount = selectedPack.amount + deliveryFee;
   const selectedTotal = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
   const paymentConfig = {
     yapeNumber: process.env.NEXT_PUBLIC_YAPE_NUMBER || r.payment.notConfigured,
@@ -242,7 +245,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
       if (!response.ok || !result.ok || !result.orderCode) {
         throw new Error(result.error ?? r.errors.submit);
       }
-      window.location.href = "/reserve/success?order=" + encodeURIComponent(result.orderCode) + "&pack=" + encodeURIComponent(selectedPack.name) + "&packSlug=" + encodeURIComponent(selectedPack.slug) + "&amount=" + selectedPack.amount;
+      window.location.href = "/reserve/success?order=" + encodeURIComponent(result.orderCode) + "&pack=" + encodeURIComponent(selectedPack.name) + "&packSlug=" + encodeURIComponent(selectedPack.slug) + "&amount=" + totalAmount;
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : r.errors.submit);
       setSubmitting(false);
@@ -328,6 +331,11 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
             <label>{r.fields.whatsapp}<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
             <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
             <label>{r.fields.district}<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district === "Other" ? r.otherDistrict : district}</option>)}</select></label>
+            <div className="delivery-fee-box">
+              <span>{r.payment.deliveryFee}</span>
+              <strong>S/{deliveryFee}</strong>
+              <small>{r.deliveryFeeHint}</small>
+            </div>
             <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
             <div className="handoff-box wide" role="radiogroup" aria-label={r.deliveryHandoff.label}>
               <span>{r.deliveryHandoff.label}</span>
@@ -356,10 +364,13 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
         <div className="reserve-card form-card payment-card">
           <div className="reserve-step-title">
             <h2>{r.payment.title}</h2>
-            <span>{r.payment.total}: S/{selectedPack.amount}</span>
+            <span>{r.payment.total}: S/{totalAmount}</span>
           </div>
           <p className="payment-intro">{r.payment.instruction}</p>
           <div className="payment-summary-grid">
+            <div><span>{r.payment.packSubtotal}</span><strong>S/{selectedPack.amount}</strong></div>
+            <div><span>{r.payment.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
+            <div><span>{r.payment.total}</span><strong>S/{totalAmount}</strong></div>
             <div><span>{r.payment.yapeNumber}</span><strong>{paymentConfig.yapeNumber}</strong></div>
             <div><span>{r.payment.plinNumber}</span><strong>{paymentConfig.plinNumber}</strong></div>
             <div><span>{r.payment.holder}</span><strong>{paymentConfig.holder}</strong></div>
@@ -398,7 +409,9 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
           <h2>{r.reviewTitle}</h2>
           <div className="review-grid">
             <div><span>{r.reviewLabels.pack}</span><strong>{localizedSelectedPack.name}</strong></div>
-            <div><span>{r.reviewLabels.totalAmount}</span><strong>S/{selectedPack.amount}</strong></div>
+            <div><span>{r.reviewLabels.packSubtotal}</span><strong>S/{selectedPack.amount}</strong></div>
+            <div><span>{r.reviewLabels.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
+            <div><span>{r.reviewLabels.totalAmount}</span><strong>S/{totalAmount}</strong></div>
             <div><span>{r.reviewLabels.statusAfterSubmit}</span><strong>{r.statusPending}</strong></div>
             <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
             <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>

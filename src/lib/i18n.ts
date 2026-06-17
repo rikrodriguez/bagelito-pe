@@ -145,7 +145,7 @@ export const translations = {
     finalCta: {
       title: "Missed this batch?",
       text: "Join the waitlist and be first to know when the next Bagelito window opens.",
-      cta: "Reserve next batch",
+      cta: "Join waiting list",
     },
     footer: {
       homeLabel: "Bagelito.pe home",
@@ -174,6 +174,7 @@ export const translations = {
         receive: "I will receive it",
         porter: "Leave at front desk",
       },
+      deliveryFeeHint: "Estimated from Lince by delivery zone.",
       marketingOptIn: "Send me monthly batch updates and flavor drops by email.",
       fields: {
         fullName: "Full name",
@@ -187,6 +188,8 @@ export const translations = {
       otherDistrict: "Other",
       payment: {
         title: "Payment proof",
+        packSubtotal: "Pack subtotal",
+        deliveryFee: "Delivery",
         total: "Total to pay",
         method: "Payment method",
         yapeNumber: "Yape number",
@@ -205,6 +208,8 @@ export const translations = {
       reviewTitle: "Review reservation",
       reviewLabels: {
         pack: "Pack",
+        packSubtotal: "Pack subtotal",
+        deliveryFee: "Delivery",
         totalAmount: "Total amount",
         statusAfterSubmit: "Status after submit",
         customer: "Customer",
@@ -395,7 +400,7 @@ export const translations = {
     finalCta: {
       title: "¿Te perdiste este batch?",
       text: "Únete a la lista y sé de los primeros en saber cuándo abre la próxima ventana de Bagelito.",
-      cta: "Reservar próximo batch",
+      cta: "Unirme a la lista",
     },
     footer: {
       homeLabel: "Inicio de Bagelito.pe",
@@ -424,6 +429,7 @@ export const translations = {
         receive: "Yo lo recibo",
         porter: "Dejar en portería",
       },
+      deliveryFeeHint: "Estimado desde Lince según zona de reparto.",
       marketingOptIn: "Quiero recibir novedades del batch mensual y próximos sabores por email.",
       fields: {
         fullName: "Nombre completo",
@@ -437,6 +443,8 @@ export const translations = {
       otherDistrict: "Otro",
       payment: {
         title: "Voucher de pago",
+        packSubtotal: "Subtotal del pack",
+        deliveryFee: "Delivery",
         total: "Total a pagar",
         method: "Método de pago",
         yapeNumber: "Número Yape",
@@ -455,6 +463,8 @@ export const translations = {
       reviewTitle: "Revisar reserva",
       reviewLabels: {
         pack: "Pack",
+        packSubtotal: "Subtotal del pack",
+        deliveryFee: "Delivery",
         totalAmount: "Monto total",
         statusAfterSubmit: "Estado al enviar",
         customer: "Cliente",

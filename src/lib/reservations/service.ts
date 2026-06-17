@@ -1,5 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { getFlavorBySlug, getPackBySlug } from "@/lib/catalog";
+import { getDeliveryFee } from "@/lib/delivery-pricing";
 import { getMissingReservationEnv } from "@/lib/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { parseItems, reservationPayloadSchema, type ReservationPayload } from "./schema";
@@ -107,13 +108,15 @@ export async function createReservation(formData: FormData) {
   const paymentScreenshot = getPaymentScreenshot(formData);
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
+  const deliveryFee = getDeliveryFee(payload.district);
+  const totalAmount = pack.amount + deliveryFee;
 
   const supabase = createSupabaseAdminClient();
   const batchId = await getOrCreateCurrentBatch(supabase);
   const orderCode = await nextOrderCode(supabase);
   const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
-  const deliveryNotes = [handoffNote, payload.deliveryNotes].filter(Boolean).join(" | ");
+  const deliveryNotes = [handoffNote, `Delivery: S/${deliveryFee}`, payload.deliveryNotes].filter(Boolean).join(" | ");
 
   const { error: uploadError } = await supabase.storage
     .from(paymentProofBucket)
@@ -143,7 +146,7 @@ export async function createReservation(formData: FormData) {
       address_reference: payload.addressReference || null,
       delivery_notes: deliveryNotes || null,
       marketing_opt_in: payload.marketingOptIn,
-      total_amount: pack.amount,
+      total_amount: totalAmount,
       payment_method: payload.paymentMethod,
       payment_transaction_number: payload.paymentTransactionNumber,
       payment_holder_name: payload.paymentHolderName,
