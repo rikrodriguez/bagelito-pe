@@ -2408,41 +2408,44 @@ section[id] {
 
 /* Clean pack cards: one approved pack image per card, no extra bagel overlays. */
 .clean-pack-grid {
-  align-items: start;
+  align-items: stretch;
   gap: clamp(16px, 1.8vw, 24px);
 }
 
 .packs-section .clean-pack-grid {
-  align-items: start;
+  align-items: stretch;
 }
 
 .clean-pack-card {
   min-height: 0;
-  padding: 18px 22px 22px;
+  padding: 34px 22px 22px;
   overflow: hidden;
   justify-content: flex-start;
 }
 
 .packs-section .clean-pack-card {
   min-height: 0;
-  padding: 18px 22px 22px;
+  padding: 34px 22px 22px;
 }
 
 .clean-pack-card.has-badge {
-  padding-top: 42px;
+  padding-top: 34px;
 }
 
 .packs-section .clean-pack-card.has-badge {
-  padding-top: 42px;
+  padding-top: 34px;
 }
 
 .clean-pack-card .pack-title-block {
   display: grid;
   align-content: center;
   justify-items: center;
+  justify-content: center;
+  width: 100%;
   min-height: 66px;
   height: auto;
   gap: 7px;
+  text-align: center;
 }
 
 .packs-section .clean-pack-card .pack-title-block {
