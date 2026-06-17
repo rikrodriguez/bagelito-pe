@@ -1,5 +1,7 @@
 const deliveryRatePerKm = 3;
-const minimumDeliveryFee = 3;
+const minimumDeliveryFee = 8;
+const longDistanceDiscountThreshold = 15;
+const longDistanceDiscountRate = 0.3;
 
 // Approximate route distance from Jiron Sinchi Roca 2560, Lince to each district center.
 export const districtDeliveryDistancesKm = {
@@ -40,5 +42,8 @@ export function getDeliveryDistanceKm(district: string) {
 }
 
 export function getDeliveryFee(district: string) {
-  return Math.max(minimumDeliveryFee, Math.ceil(getDeliveryDistanceKm(district) * deliveryRatePerKm));
+  const baseFee = Math.ceil(getDeliveryDistanceKm(district) * deliveryRatePerKm);
+  const adjustedFee = baseFee >= longDistanceDiscountThreshold ? Math.ceil(baseFee * (1 - longDistanceDiscountRate)) : baseFee;
+
+  return Math.max(minimumDeliveryFee, adjustedFee);
 }
