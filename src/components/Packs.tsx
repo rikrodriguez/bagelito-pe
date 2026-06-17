@@ -3,57 +3,60 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
-import { packs } from "@/data/packs";
+import { packs, type PackSlug } from "@/data/packs";
 import { packCopy } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 
-const ctaHotspots = [
-  { slug: "12-mixed", tone: "pink", left: 3.75, top: 73.35, width: 21.1, height: 7.7 },
-  { slug: "6-mixed", tone: "orange", left: 28.35, top: 73.35, width: 21.15, height: 7.7 },
-  { slug: "12-single", tone: "mint", left: 52.45, top: 73.35, width: 21.15, height: 7.7 },
-  { slug: "6-single", tone: "purple", left: 76.95, top: 73.35, width: 20.65, height: 7.7 },
-] as const;
+const packImages: Record<PackSlug, string> = {
+  "12-mixed": "/images/pack-12-mixed.png",
+  "6-mixed": "/images/pack-6-mixed.png",
+  "12-single": "/images/pack-12-single.png",
+  "6-single": "/images/pack-6-single.png",
+};
 
 export function Packs() {
   const { locale, copy } = useLanguage();
 
   return (
-    <section id="packs" className="packs-section official-packs-section" aria-labelledby="packs-title">
-      <h2 id="packs-title" className="sr-only">{copy.packs.title}</h2>
-      <div className="official-packs-scroll" aria-label={copy.packs.title}>
-        <div className="official-packs-frame">
-          <Image
-            src="/images/official-packs-section.png"
-            alt={copy.packs.title}
-            width={1659}
-            height={948}
-            sizes="(max-width: 760px) 980px, 100vw"
-            className="official-packs-image"
-            priority={false}
-          />
-          {ctaHotspots.map((spot) => {
-            const pack = packs.find((item) => item.slug === spot.slug);
-            const label = pack ? packCopy[locale][pack.slug].name : spot.slug;
+    <section id="packs" className="packs-section section-pad" aria-labelledby="packs-title">
+      <div className="section-heading">
+        <h2 id="packs-title">{copy.packs.title}</h2>
+        <p className="section-intro">{copy.packs.premiumNote}</p>
+      </div>
 
-            return (
-              <Link
-                key={spot.slug}
-                href={`/reserve?pack=${spot.slug}`}
-                className={`official-pack-hotspot ${spot.tone}`}
-                style={{
-                  left: `${spot.left}%`,
-                  top: `${spot.top}%`,
-                  width: `${spot.width}%`,
-                  height: `${spot.height}%`,
-                }}
-                aria-label={`${copy.packs.button}: ${label}`}
-              >
+      <div className="pack-grid clean-pack-grid" aria-label={copy.packs.title}>
+        {packs.map((pack) => {
+          const localizedPack = packCopy[locale][pack.slug];
+
+          return (
+            <article key={pack.slug} className={`pack-card clean-pack-card ${pack.accent} ${pack.mostWanted ? "has-badge" : ""}`}>
+              {pack.mostWanted ? <span className="most-wanted">{copy.packs.mostWanted}</span> : null}
+
+              <div className="pack-title-block">
+                <h3>{localizedPack.name}</h3>
+                <strong>S/{pack.amount}</strong>
+              </div>
+
+              <div className="clean-pack-image-wrap">
+                <Image
+                  src={packImages[pack.slug]}
+                  alt={localizedPack.trayLabel}
+                  width={960}
+                  height={540}
+                  sizes="(max-width: 760px) 84vw, (max-width: 1120px) 42vw, 22vw"
+                  className="clean-pack-image"
+                />
+              </div>
+
+              <p>{localizedPack.description}</p>
+
+              <Link className={`pill-button ${pack.accent}`} href={`/reserve?pack=${pack.slug}`} aria-label={`${copy.packs.button}: ${localizedPack.name}`}>
                 <MessageCircle size={18} strokeWidth={2.6} aria-hidden="true" />
                 <span>{copy.packs.button}</span>
               </Link>
-            );
-          })}
-        </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
