@@ -7,13 +7,19 @@ import { useLanguage } from "./LanguageProvider";
 const deadline = new Date("2026-06-30T23:59:00-05:00").getTime();
 const reservedPercent = 68;
 const availablePercent = 100 - reservedPercent;
+const initialTimeLeft = {
+  days: "--",
+  hours: "--",
+  minutes: "--",
+  seconds: "--",
+};
 
 function getTimeLeft() {
-  const diff = Math.max(0, deadline - Date.now());
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+  const difference = Math.max(deadline - Date.now(), 0);
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((difference / (1000 * 60)) % 60);
+  const seconds = Math.floor((difference / 1000) % 60);
 
   return {
     days: String(days).padStart(2, "0"),
@@ -25,7 +31,7 @@ function getTimeLeft() {
 
 export function BatchDeadlineBanner() {
   const { copy } = useLanguage();
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+  const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
   useEffect(() => {
     setTimeLeft(getTimeLeft());
@@ -34,33 +40,27 @@ export function BatchDeadlineBanner() {
   }, []);
 
   return (
-    <aside className="batch-deadline-banner" aria-label={copy.deadline.aria}>
-      <div className="deadline-banner-copy">
-        <span><CalendarClock size={17} /> {copy.deadline.title}</span>
-        <strong>{copy.deadline.close}</strong>
+    <section className="batch-deadline" aria-label={copy.deadline.aria}>
+      <div className="deadline-copy">
+        <div className="mini-badge"><CalendarClock size={18} /> {copy.deadline.badge}</div>
+        <h2>{copy.deadline.title}</h2>
+        <p>{copy.deadline.text}</p>
       </div>
-
-      <div className="deadline-timer" aria-label={copy.deadline.timerAria}>
-        <span><strong>{timeLeft.days}</strong><small>{copy.deadline.days}</small></span>
-        <span><strong>{timeLeft.hours}</strong><small>{copy.deadline.hours}</small></span>
-        <span><strong>{timeLeft.minutes}</strong><small>{copy.deadline.minutes}</small></span>
-        <span><strong>{timeLeft.seconds}</strong><small>{copy.deadline.seconds}</small></span>
+      <div className="countdown-grid" aria-label={copy.deadline.countdownLabel}>
+        <span><strong>{timeLeft.days}</strong>{copy.deadline.days}</span>
+        <span><strong>{timeLeft.hours}</strong>{copy.deadline.hours}</span>
+        <span><strong>{timeLeft.minutes}</strong>{copy.deadline.minutes}</span>
+        <span><strong>{timeLeft.seconds}</strong>{copy.deadline.seconds}</span>
       </div>
-
-      <div className="batch-availability">
-        <div className="availability-label">
-          <span><Gauge size={17} /> {reservedPercent}% {copy.deadline.reserved}</span>
-          <strong>{availablePercent}% {copy.deadline.available}</strong>
+      <div className="batch-progress" aria-label={copy.deadline.progressLabel}>
+        <div className="batch-progress-top">
+          <span><Gauge size={17} /> {copy.deadline.progressTitle}</span>
+          <strong>{copy.deadline.available.replace("{percent}", String(availablePercent))}</strong>
         </div>
-        <div className="availability-track" aria-hidden="true">
-          <span style={{ width: `${reservedPercent}%` }} />
-        </div>
+        <div className="batch-progress-bar"><span style={{ width: `${reservedPercent}%` }} /></div>
+        <p>{copy.deadline.progressText}</p>
       </div>
-
-      <a className="deadline-cta" href="#packs">
-        <MessageCircle size={17} />
-        {copy.deadline.cta}
-      </a>
-    </aside>
+      <a className="pill-button pink deadline-button" href="#packs"><MessageCircle size={18} /> {copy.deadline.cta}</a>
+    </section>
   );
 }

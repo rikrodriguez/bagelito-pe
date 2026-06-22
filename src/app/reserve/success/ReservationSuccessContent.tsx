@@ -3,39 +3,39 @@
 import Link from "next/link";
 import { Clock3, MessageCircle } from "lucide-react";
 import { packCopy } from "@/lib/i18n";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 import type { PackSlug } from "@/data/packs";
 import { useLanguage } from "@/components/LanguageProvider";
 
 type Props = {
-  order: string;
+  name: string;
   pack: string;
-  packSlug?: string;
-  amount?: string;
 };
 
-function isPackSlug(value: string | undefined): value is PackSlug {
-  return value === "12-mixed" || value === "6-mixed" || value === "12-single" || value === "6-single";
+function isPackSlug(pack: string): pack is PackSlug {
+  return pack === "mixed-12" || pack === "mixed-6" || pack === "single-12" || pack === "single-6";
 }
 
-export function ReservationSuccessContent({ order, pack, packSlug, amount }: Props) {
-  const { locale, copy } = useLanguage();
+export function ReservationSuccessContent({ name, pack }: Props) {
+  const { lang, copy } = useLanguage();
   const s = copy.success;
-  const displayPack = isPackSlug(packSlug) ? packCopy[locale][packSlug].name : pack || s.fallbackPack;
+  const packLabel = isPackSlug(pack) ? packCopy[lang][pack].title : s.packFallback;
 
   return (
-    <section className="success-card">
-      <p className="kicker">{s.kicker}</p>
-      <h1>{s.title}</h1>
-      <p>{s.text}</p>
-      <div className="success-summary">
-        <div><span>{s.labels.orderCode}</span><strong>{order}</strong></div>
-        <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div>
-        {amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
-        <div><span>{s.labels.status}</span><strong>{s.kicker}</strong></div>
-      </div>
-      <div className="next-step"><Clock3 size={20} /> {s.nextStep} <strong>{s.coordination}</strong></div>
-      <a className="pill-button pink" href="https://wa.me/51917547745" target="_blank" rel="noreferrer"><MessageCircle size={18} /> {s.message}</a>
-      <Link className="mini-link" href="/">{s.backHome}</Link>
-    </section>
+    <main className="success-page">
+      <section className="success-card">
+        <span className="success-eyebrow">{s.eyebrow}</span>
+        <h1>{s.title.replace("{name}", name)}</h1>
+        <p>{s.subtitle.replace("{pack}", packLabel)}</p>
+        <div className="success-next">
+          <Clock3 size={20} />
+          <span>{s.next}</span>
+        </div>
+        <div className="success-actions">
+          <Link className="pill-button pink" href="/#packs">{s.back}</Link>
+          <a className="pill-button pink" href={getWhatsAppHref()} target="_blank" rel="noreferrer"><MessageCircle size={18} /> {s.message}</a>
+        </div>
+      </section>
+    </main>
   );
 }

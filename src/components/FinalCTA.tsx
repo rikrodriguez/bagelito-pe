@@ -1,11 +1,11 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
 
-const waitingListMessage = encodeURIComponent("Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
-const waitingListHref = `https://wa.me/51917547745?text=${waitingListMessage}`;
+const waitingListHref = getWhatsAppHref("Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
 
 export function FinalCTA() {
   const { copy } = useLanguage();
