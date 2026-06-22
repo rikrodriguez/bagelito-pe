@@ -1,36 +1,42 @@
 "use client";
 
 import Image from "next/image";
-import { Quote } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 
 export function Testimonials() {
   const { copy } = useLanguage();
 
   return (
-    <section className="testimonials-section" aria-label={copy.testimonials.aria}>
-      <div className="section-heading compact">
-        <span>{copy.testimonials.eyebrow}</span>
-        <h2>{copy.testimonials.title}</h2>
-        <p>{copy.testimonials.subtitle}</p>
-      </div>
-      <div className="testimonials-grid">
-        {copy.testimonials.items.map((item) => (
-          <article className="testimonial-card" key={item.name}>
-            <Quote size={22} />
-            <p>{item.quote}</p>
-            <strong>{item.name}</strong>
+    <section className="testimonials-section section-pad">
+      <h2>{copy.testimonials.title}</h2>
+      <p className="section-intro">{copy.testimonials.intro}</p>
+      <div className="review-grid">
+        {copy.testimonials.reviews.map((review, index) => (
+          <article className={"review-card " + review.source.toLowerCase()} key={review.name + "-" + index}>
+            <div className="review-top"><strong>{review.source}</strong><span>{review.lang}</span></div>
+            <p>{review.text}</p>
+            <small>{review.name}</small>
           </article>
         ))}
-        <article className="founder-note">
-          <Image src="/images/dawn-brookes.jpeg" alt="Dawn Brookes" width={220} height={220} />
-          <div>
-            <span>{copy.testimonials.founderLabel}</span>
-            <h3>{copy.testimonials.founderTitle}</h3>
-            <p>{copy.testimonials.founderText}</p>
-          </div>
-        </article>
       </div>
+
+      <article className="founder-note-card">
+        <div className="founder-note-media">
+          <Image
+            src="/images/dawn-brookes-bagelito.jpg"
+            alt="Dawn Brookes with handmade Bagelito bagels"
+            width={1120}
+            height={1400}
+            sizes="(max-width: 760px) 100vw, 420px"
+          />
+        </div>
+        <div className="founder-note-copy">
+          <span>{copy.testimonials.feature.kicker}</span>
+          <h3>{copy.testimonials.feature.title}</h3>
+          <p>{copy.testimonials.feature.text}</p>
+          <strong>{copy.testimonials.feature.name}</strong>
+        </div>
+      </article>
     </section>
   );
 }
