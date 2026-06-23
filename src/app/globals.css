@@ -1657,8 +1657,14 @@ section[id] {
   }
 }
 
+@media (max-width: 760px) {
+  .deadline-cta {
+    display: none;
+  }
+}
+
 @media (max-width: 560px) {
-  :root { --batch-banner-height: 202px; }
+  :root { --batch-banner-height: 158px; }
 
   .batch-deadline-banner {
     grid-template-columns: 1fr;
@@ -1680,8 +1686,7 @@ section[id] {
   }
 
   .deadline-cta {
-    order: 4;
-    width: 100%;
+    display: none;
   }
 }
 
