@@ -2036,12 +2036,34 @@ section[id] {
 .status-action.paid { background: #18b87a; }
 .status-action.pending { background: #637083; }
 .status-action.warning { background: var(--orange); }
+.status-action.received { background: var(--mint); color: var(--navy); }
 
 .status-pill.paid { background: #e8fbf2; color: #13805b !important; }
+.status-pill.received { background: #ddf8f5; color: #087769 !important; }
 .status-pill.pending { background: #fff4d7; color: #9a6405 !important; }
 .status-pill.warning { background: #fff0da; color: #b85f00 !important; }
 .status-pill.cancelled { background: #ffe5e5; color: #b91c1c !important; }
 .status-pill.neutral { background: #eef2ff; color: var(--navy) !important; }
+
+.handoff-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: .78rem !important;
+  font-weight: 1000 !important;
+}
+
+.handoff-status.received {
+  background: #ddf8f5;
+  color: #087769 !important;
+}
+
+.handoff-status.pending {
+  background: #fff4d7;
+  color: #9a6405 !important;
+}
 
 .empty-state {
   border-radius: 16px;

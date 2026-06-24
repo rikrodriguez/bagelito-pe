@@ -57,7 +57,12 @@ function isPaid(order: Order) {
   return paidStatuses.has(order.status);
 }
 
+function isDelivered(order: Order) {
+  return order.status === "delivered";
+}
+
 function paymentStatusLabel(order: Order) {
+  if (isDelivered(order)) return "Received by customer";
   if (isPaid(order)) return "Paid confirmed";
   if (order.status === "needs_correction") return "Needs correction";
   if (order.status === "cancelled") return "Cancelled";
@@ -65,6 +70,7 @@ function paymentStatusLabel(order: Order) {
 }
 
 function statusClass(order: Order) {
+  if (isDelivered(order)) return "received";
   if (isPaid(order)) return "paid";
   if (order.status === "needs_correction") return "warning";
   if (order.status === "cancelled") return "cancelled";
@@ -148,7 +154,7 @@ function getReceptionText(order: Order) {
   return "Not specified";
 }
 
-function StatusAction({ order, status, label, tone }: { order: Order; status: string; label: string; tone: "paid" | "pending" | "warning" }) {
+function StatusAction({ order, status, label, tone }: { order: Order; status: string; label: string; tone: "paid" | "pending" | "warning" | "received" }) {
   return (
     <form action={quickUpdateOrderStatus}>
       <input type="hidden" name="orderId" value={order.id} />
@@ -174,6 +180,8 @@ export default async function AdminPage() {
   const production = getProductionSummary(orders);
   const delivery = getDeliverySummary(orders);
   const paidOrders = orders.filter(isPaid);
+  const deliveredOrders = orders.filter(isDelivered);
+  const paidNotDeliveredOrders = paidOrders.filter((order) => !isDelivered(order));
   const pendingOrders = orders.filter((order) => order.status === "payment_pending_review" || order.status === "needs_correction");
   const pendingValue = pendingOrders.reduce((sum, order) => sum + Number(order.total_amount), 0);
   const totalBagels = orders.reduce((sum, order) => sum + Number(order.pack_units), 0);
@@ -207,7 +215,7 @@ export default async function AdminPage() {
           <Stat icon={CreditCard} label="Confirmed revenue" value={formatMoney(stats.confirmedRevenue)} helper="Only paid statuses" />
           <Stat icon={ReceiptText} label="Pending value" value={formatMoney(pendingValue)} helper="Pending + correction" />
           <Stat icon={Package} label="Confirmed bagels" value={stats.confirmedBagels} helper="Production-ready units" />
-          <Stat icon={ShieldCheck} label="Payment proof missing" value={missingProofs} helper="Check before production" />
+          <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
         </div>
 
         <div className="crm-overview-grid">
@@ -256,6 +264,7 @@ export default async function AdminPage() {
               <span><Clock3 size={16} /> {stats.pending} payments waiting for review</span>
               <span><AlertCircle size={16} /> {stats.needsCorrection} orders need correction</span>
               <span><ShieldCheck size={16} /> {missingProofs} orders without uploaded proof</span>
+              <span><Package size={16} /> {paidNotDeliveredOrders.length} paid orders not received yet</span>
               <span><Mail size={16} /> {marketingOptIns} customers opted into updates</span>
             </div>
           </section>
@@ -305,6 +314,9 @@ export default async function AdminPage() {
                     <strong><Home size={14} /> {order.delivery_address}</strong>
                     <span>{order.address_reference ? `Reference: ${order.address_reference}` : "No address reference"}</span>
                     <span>{getReceptionText(order)}{order.delivery_notes ? ` · ${order.delivery_notes}` : ""}</span>
+                    <span className={`handoff-status ${isDelivered(order) ? "received" : "pending"}`}>
+                      {isDelivered(order) ? "Received by customer" : isPaid(order) ? "Paid, not received yet" : "Waiting for paid confirmation"}
+                    </span>
                   </div>
                   <div className="data-block">
                     <small>Payment</small>
@@ -323,6 +335,7 @@ export default async function AdminPage() {
                   <StatusAction order={order} status="payment_confirmed" label="Confirm paid" tone="paid" />
                   <StatusAction order={order} status="payment_pending_review" label="Not confirmed" tone="pending" />
                   <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
+                  {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
                   <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
                 </div>
               </article>
@@ -339,7 +352,10 @@ export default async function AdminPage() {
           <section className="admin-card">
             <h2>Delivery summary</h2>
             <p>Only paid-confirmed orders enter delivery planning.</p>
-            {delivery.length ? delivery.map((group) => <div className="summary-row tall" key={group.district}><span>{group.district}<small>{group.orders.map((order) => order.customer_name).join(", ")}</small></span><strong>{group.orders.length} orders / {group.bagels} bagels</strong></div>) : <p>No confirmed deliveries yet.</p>}
+            {delivery.length ? delivery.map((group) => {
+              const receivedCount = group.orders.filter(isDelivered).length;
+              return <div className="summary-row tall" key={group.district}><span>{group.district}<small>{group.orders.map((order) => order.customer_name).join(", ")}</small><small>{receivedCount} received · {group.orders.length - receivedCount} pending handoff</small></span><strong>{group.orders.length} orders / {group.bagels} bagels</strong></div>;
+            }) : <p>No confirmed deliveries yet.</p>}
           </section>
         </div>
       </section>
