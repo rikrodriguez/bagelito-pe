@@ -43,6 +43,60 @@ async function setOrderStatus(orderId: string, status: string) {
   });
 }
 
+function getSafeAdminReturnTo(formData: FormData, fallback: string) {
+  const returnTo = String(formData.get("returnTo") ?? "");
+  const isAdminPath = returnTo === "/admin" || returnTo.startsWith("/admin/") || returnTo.startsWith("/admin?");
+  return isAdminPath ? returnTo : fallback;
+}
+
+async function readOrderForAdminMutation(orderId: string, orderCode: string) {
+  if (!orderId) throw new Error("Missing order ID");
+
+  const supabase = createSupabaseAdminClient();
+  const { data: order, error } = await supabase
+    .from("orders")
+    .select("id, order_code, status, payment_screenshot_path")
+    .eq("id", orderId)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  if (!order) return null;
+
+  if (orderCode && order.order_code !== orderCode) {
+    throw new Error("Order mismatch. Refresh the admin page and try again.");
+  }
+
+  return { supabase, order };
+}
+
+async function setOrderArchiveState(formData: FormData, archived: boolean) {
+  await requireAdmin();
+  const orderId = String(formData.get("orderId") ?? "");
+  const orderCode = String(formData.get("orderCode") ?? "");
+  const fallback = archived ? `/admin?archived=${encodeURIComponent(orderCode)}` : `/admin?restored=${encodeURIComponent(orderCode)}`;
+  const returnTo = getSafeAdminReturnTo(formData, fallback);
+
+  const result = await readOrderForAdminMutation(orderId, orderCode);
+  if (!result) {
+    revalidatePath("/admin");
+    redirect("/admin?deleted=missing");
+  }
+
+  const { supabase, order } = result;
+  const { error } = await supabase.from("order_status_history").insert({
+    order_id: order.id,
+    old_status: order.status,
+    new_status: archived ? "archived" : "unarchived",
+    changed_by: archived ? "admin archive" : "admin restore",
+  });
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/orders/${order.order_code}`);
+  redirect(returnTo);
+}
+
 export async function loginAdmin(formData: FormData) {
   const password = String(formData.get("password") ?? "");
 
@@ -87,6 +141,14 @@ export async function quickUpdateOrderStatus(formData: FormData) {
   redirect("/admin");
 }
 
+export async function archiveOrder(formData: FormData) {
+  await setOrderArchiveState(formData, true);
+}
+
+export async function restoreOrder(formData: FormData) {
+  await setOrderArchiveState(formData, false);
+}
+
 export async function updateAdminNote(formData: FormData) {
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
@@ -108,23 +170,13 @@ export async function deleteOrder(formData: FormData) {
 
   if (!orderId) throw new Error("Missing order ID");
 
-  const supabase = createSupabaseAdminClient();
-  const { data: order, error: readError } = await supabase
-    .from("orders")
-    .select("id, order_code, payment_screenshot_path")
-    .eq("id", orderId)
-    .maybeSingle();
-
-  if (readError) throw new Error(readError.message);
-
-  if (!order) {
+  const result = await readOrderForAdminMutation(orderId, orderCode);
+  if (!result) {
     revalidatePath("/admin");
     redirect("/admin?deleted=missing");
   }
 
-  if (orderCode && order.order_code !== orderCode) {
-    throw new Error("Order mismatch. Refresh the admin page and try again.");
-  }
+  const { supabase, order } = result;
 
   if (hasUploadedPaymentProof(order)) {
     const { error: storageError } = await supabase.storage.from("payment-proofs").remove([order.payment_screenshot_path]);

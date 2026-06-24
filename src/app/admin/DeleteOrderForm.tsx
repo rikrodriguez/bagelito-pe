@@ -18,9 +18,18 @@ export function DeleteOrderForm({ orderId, orderCode, customerName, label = "Del
       className="delete-order-form"
       onSubmit={(event) => {
         const confirmed = window.confirm(
-          `Delete ${customerName} (${orderCode}) forever? This removes the customer data, order items, status history, and payment proof.`,
+          `Permanent delete for ${customerName} (${orderCode})? Export the full CSV first. This removes the customer data, order items, status history, and payment proof.`,
         );
-        if (!confirmed) event.preventDefault();
+        if (!confirmed) {
+          event.preventDefault();
+          return;
+        }
+
+        const typedCode = window.prompt(`Type ${orderCode} to permanently delete this customer.`);
+        if (typedCode !== orderCode) {
+          event.preventDefault();
+          window.alert("Delete cancelled. The order code did not match.");
+        }
       }}
     >
       <input type="hidden" name="orderId" value={orderId} />

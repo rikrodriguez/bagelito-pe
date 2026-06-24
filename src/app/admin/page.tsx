@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   AlertCircle,
+  Archive,
   CheckCircle2,
   Clock3,
   CreditCard,
@@ -18,16 +19,20 @@ import {
 import { requireAdmin } from "@/lib/admin/auth";
 import {
   fetchOrders,
+  filterActiveOrders,
+  filterArchivedOrders,
   getDashboardStats,
   getDeliverySummary,
+  getOrderArchiveState,
   getProductionSummary,
   hasUploadedPaymentProof,
   isManualPaymentPending,
+  isOrderArchived,
   productionStatuses,
   type Order,
 } from "@/lib/admin/queries";
 import { getMissingAdminEnv } from "@/lib/env";
-import { DeleteOrderForm } from "./DeleteOrderForm";
+import { ArchiveOrderForm } from "./ArchiveOrderForm";
 import { quickUpdateOrderStatus } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
@@ -63,6 +68,7 @@ function isDelivered(order: Order) {
 }
 
 function paymentStatusLabel(order: Order) {
+  if (isOrderArchived(order)) return "Archived";
   if (isDelivered(order)) return "Received by customer";
   if (isPaid(order)) return "Paid confirmed";
   if (order.status === "needs_correction") return "Needs correction";
@@ -71,6 +77,7 @@ function paymentStatusLabel(order: Order) {
 }
 
 function statusClass(order: Order) {
+  if (isOrderArchived(order)) return "archived";
   if (isDelivered(order)) return "received";
   if (isPaid(order)) return "paid";
   if (order.status === "needs_correction") return "warning";
@@ -168,31 +175,41 @@ function StatusAction({ order, status, label, tone }: { order: Order; status: st
   );
 }
 
-export default async function AdminPage({ searchParams }: { searchParams?: Promise<{ deleted?: string }> }) {
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string }>;
+}) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
   const params = await searchParams;
   const deletedOrderCode = params?.deleted;
+  const archivedOrderCode = params?.archived;
+  const restoredOrderCode = params?.restored;
+  const showingArchived = params?.view === "archived";
 
   if (missing.length) {
     return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p></section></main>;
   }
 
-  const orders = await fetchOrders();
-  const stats = getDashboardStats(orders);
-  const production = getProductionSummary(orders);
-  const delivery = getDeliverySummary(orders);
-  const paidOrders = orders.filter(isPaid);
-  const deliveredOrders = orders.filter(isDelivered);
+  const allOrders = await fetchOrders();
+  const activeOrders = filterActiveOrders(allOrders);
+  const archivedOrders = filterArchivedOrders(allOrders);
+  const orders = showingArchived ? archivedOrders : activeOrders;
+  const stats = getDashboardStats(activeOrders);
+  const production = getProductionSummary(activeOrders);
+  const delivery = getDeliverySummary(activeOrders);
+  const paidOrders = activeOrders.filter(isPaid);
+  const deliveredOrders = activeOrders.filter(isDelivered);
   const paidNotDeliveredOrders = paidOrders.filter((order) => !isDelivered(order));
-  const pendingOrders = orders.filter((order) => order.status === "payment_pending_review" || order.status === "needs_correction");
+  const pendingOrders = activeOrders.filter((order) => order.status === "payment_pending_review" || order.status === "needs_correction");
   const pendingValue = pendingOrders.reduce((sum, order) => sum + Number(order.total_amount), 0);
-  const totalBagels = orders.reduce((sum, order) => sum + Number(order.pack_units), 0);
-  const missingProofs = orders.filter((order) => !hasUploadedPaymentProof(order)).length;
-  const marketingOptIns = orders.filter((order) => order.marketing_opt_in).length;
-  const packStats = getPackStats(orders);
-  const packTypeStats = getPackTypeStats(orders);
-  const districtStats = getDistrictStats(orders);
+  const totalBagels = activeOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
+  const missingProofs = activeOrders.filter((order) => !hasUploadedPaymentProof(order)).length;
+  const marketingOptIns = activeOrders.filter((order) => order.marketing_opt_in).length;
+  const packStats = getPackStats(activeOrders);
+  const packTypeStats = getPackTypeStats(activeOrders);
+  const districtStats = getDistrictStats(activeOrders);
 
   return (
     <main className="admin-page">
@@ -204,10 +221,19 @@ export default async function AdminPage({ searchParams }: { searchParams?: Promi
             <p className="admin-intro">Aquí ves la data de clientes, formularios, packs, distritos y revisión de pagos de Bagelito.</p>
           </div>
           <div className="admin-export-row">
-            <a href="/admin/export/orders"><FileDown size={16} /> Orders CSV</a>
+            <a href="/admin/export/orders"><FileDown size={16} /> Full backup CSV</a>
             <a href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>
           </div>
+        </div>
+
+        <div className="admin-safety-card">
+          <div>
+            <span><ShieldCheck size={17} /> Admin safety</span>
+            <strong>Export before destructive work. Use Archive for daily cleanup.</strong>
+            <p>Supabase database backups protect tables by plan; payment screenshots live in Storage, so keep CSV exports before deleting real customers.</p>
+          </div>
+          <a href="/admin/export/orders"><FileDown size={16} /> Download full CSV</a>
         </div>
 
         {deletedOrderCode ? (
@@ -216,9 +242,17 @@ export default async function AdminPage({ searchParams }: { searchParams?: Promi
           </div>
         ) : null}
 
+        {archivedOrderCode ? (
+          <div className="admin-flash success">Archived {archivedOrderCode}. It is hidden from active production and delivery views.</div>
+        ) : null}
+
+        {restoredOrderCode ? (
+          <div className="admin-flash success">Restored {restoredOrderCode} to the active customer list.</div>
+        ) : null}
+
         <div className="stat-grid crm-stat-grid">
           <Stat icon={Users} label="Clients / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
-          <Stat icon={CheckCircle2} label="Paid confirmed" value={paidOrders.length} helper={`${percent(paidOrders.length, orders.length)}% of reservations`} />
+          <Stat icon={CheckCircle2} label="Paid confirmed" value={paidOrders.length} helper={`${percent(paidOrders.length, activeOrders.length)}% of active reservations`} />
           <Stat icon={Clock3} label="Not confirmed" value={stats.pending} helper="Payment pending review" />
           <Stat icon={AlertCircle} label="Needs correction" value={stats.needsCorrection} helper="Follow up via WhatsApp" />
           <Stat icon={CreditCard} label="Confirmed revenue" value={formatMoney(stats.confirmedRevenue)} helper="Only paid statuses" />
@@ -282,14 +316,23 @@ export default async function AdminPage({ searchParams }: { searchParams?: Promi
         <section className="admin-card customer-section">
           <div className="admin-card-head">
             <div>
-              <h2>Visual customer list</h2>
-              <p>Formulario completo, entrega, pago y acciones rápidas.</p>
+              <h2>{showingArchived ? "Archived customers" : "Visual customer list"}</h2>
+              <p>{showingArchived ? "Pedidos ocultos de operación diaria. Puedes restaurarlos si fueron archivados por error." : "Formulario completo, entrega, pago y acciones rápidas."}</p>
             </div>
-            <span className="status-pill neutral">{orders.length} reservations</span>
+            <span className="status-pill neutral">{orders.length} {showingArchived ? "archived" : "active"} reservations</span>
+          </div>
+
+          <div className="admin-view-tabs">
+            <Link className={!showingArchived ? "active" : ""} href="/admin">Active customers <b>{activeOrders.length}</b></Link>
+            <Link className={showingArchived ? "active" : ""} href="/admin?view=archived"><Archive size={15} /> Archive <b>{archivedOrders.length}</b></Link>
           </div>
 
           <div className="customer-list">
-            {orders.length ? orders.map((order) => (
+            {orders.length ? orders.map((order) => {
+              const archived = isOrderArchived(order);
+              const archiveState = getOrderArchiveState(order);
+
+              return (
               <article className="customer-card" key={order.id}>
                 <div className="customer-card-main">
                   <div className="customer-avatar">{initials(order.customer_name)}</div>
@@ -298,7 +341,10 @@ export default async function AdminPage({ searchParams }: { searchParams?: Promi
                       <h3>{order.customer_name}</h3>
                       <span className={`status-pill ${statusClass(order)}`}>{paymentStatusLabel(order)}</span>
                     </div>
-                    <p>{order.order_code} · {formatDate(order.created_at)} · <span>{humanStatus(order.status)}</span></p>
+                    <p>
+                      {order.order_code} · {formatDate(order.created_at)} · <span>{humanStatus(order.status)}</span>
+                      {archiveState.archivedAt ? ` · archived ${formatDate(archiveState.archivedAt)}` : ""}
+                    </p>
                     <div className="customer-contact-grid">
                       <span><Phone size={14} /> {order.whatsapp}</span>
                       <span><Mail size={14} /> {order.email}</span>
@@ -341,15 +387,33 @@ export default async function AdminPage({ searchParams }: { searchParams?: Promi
                 </div>
 
                 <div className="customer-actions">
-                  <StatusAction order={order} status="payment_confirmed" label="Confirm paid" tone="paid" />
-                  <StatusAction order={order} status="payment_pending_review" label="Not confirmed" tone="pending" />
-                  <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
-                  {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
+                  {archived ? (
+                    <ArchiveOrderForm
+                      archived
+                      orderId={order.id}
+                      orderCode={order.order_code}
+                      customerName={order.customer_name}
+                      returnTo={`/admin?view=archived&restored=${encodeURIComponent(order.order_code)}`}
+                    />
+                  ) : (
+                    <>
+                      <StatusAction order={order} status="payment_confirmed" label="Confirm paid" tone="paid" />
+                      <StatusAction order={order} status="payment_pending_review" label="Not confirmed" tone="pending" />
+                      <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
+                      {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
+                      <ArchiveOrderForm
+                        orderId={order.id}
+                        orderCode={order.order_code}
+                        customerName={order.customer_name}
+                        returnTo={`/admin?archived=${encodeURIComponent(order.order_code)}`}
+                      />
+                    </>
+                  )}
                   <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
-                  <DeleteOrderForm orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} />
                 </div>
               </article>
-            )) : <div className="empty-state">No reservations yet. Customer data will appear here after the reservation form is submitted.</div>}
+              );
+            }) : <div className="empty-state">{showingArchived ? "No archived reservations yet." : "No reservations yet. Customer data will appear here after the reservation form is submitted."}</div>}
           </div>
         </section>
 
