@@ -2576,3 +2576,281 @@ section[id] {
     width: calc(100% + 40px);
   }
 }
+
+/* Mobile completion pass: compact operational pages, stable actions, no floating clutter. */
+@media (max-width: 760px) {
+  h1,
+  h2,
+  h3 {
+    letter-spacing: 0;
+  }
+
+  body:has(.reserve-page) .floating-whatsapp,
+  body:has(.success-page) .floating-whatsapp,
+  body:has(.admin-page) .floating-whatsapp,
+  body:has(.admin-login-page) .floating-whatsapp {
+    display: none;
+  }
+
+  .batch-deadline-banner {
+    min-height: auto;
+    padding: 10px 14px;
+  }
+
+  .deadline-banner-copy strong,
+  .availability-label strong {
+    font-size: .94rem;
+    line-height: 1.15;
+  }
+
+  .deadline-timer {
+    gap: 6px;
+  }
+
+  .deadline-timer span {
+    min-height: 38px;
+    border-radius: 10px;
+  }
+
+  .deadline-timer strong {
+    font-size: .94rem;
+  }
+
+  .deadline-timer small {
+    font-size: .57rem;
+  }
+
+  .reserve-page,
+  .success-page,
+  .admin-page,
+  .admin-login-page {
+    padding: 20px 14px 30px;
+  }
+
+  .reserve-herolet,
+  .success-card,
+  .admin-login-card {
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .reserve-herolet h1,
+  .success-card h1,
+  .admin-topbar h1 {
+    font-size: clamp(2.15rem, 11vw, 2.95rem);
+    line-height: 1;
+  }
+
+  .reserve-herolet p:not(.kicker),
+  .admin-intro {
+    font-size: .95rem;
+    line-height: 1.45;
+  }
+
+  .reserve-herolet .bagel-photo {
+    justify-self: center;
+  }
+
+  .reserve-progress {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    margin: 16px 0;
+  }
+
+  .reserve-progress button {
+    min-width: 0;
+    min-height: 44px;
+    border-radius: 10px;
+    padding: 8px 4px;
+    font-size: .69rem;
+    line-height: 1.05;
+  }
+
+  .reserve-card,
+  .reserve-pack-option,
+  .stat-card,
+  .admin-card,
+  .customer-card,
+  .data-block {
+    border-radius: 14px;
+  }
+
+  .reserve-card {
+    padding: 18px;
+  }
+
+  .reserve-pack-option {
+    min-height: 150px;
+    padding: 18px;
+  }
+
+  .reserve-step-title {
+    display: grid;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .reserve-step-title span {
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: .82rem;
+    line-height: 1.2;
+  }
+
+  .flavor-select-grid {
+    gap: 8px;
+  }
+
+  .flavor-select-card {
+    gap: 8px;
+    padding: 14px 8px;
+  }
+
+  .flavor-select-card .bagel-photo.bagel-sm {
+    width: 118px;
+    height: 118px;
+  }
+
+  .quantity-control {
+    grid-template-columns: 34px 32px 34px;
+  }
+
+  .payment-summary-grid {
+    gap: 10px;
+  }
+
+  .payment-summary-grid div,
+  .review-grid > div,
+  .terms-box,
+  .marketing-box,
+  .handoff-box,
+  .payment-method-box,
+  .upload-box {
+    border-radius: 12px;
+  }
+
+  .reserve-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    margin: 18px -14px -30px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255, 248, 238, .92);
+    border-top: 1px solid rgba(240, 220, 194, .9);
+    backdrop-filter: blur(14px);
+  }
+
+  .reserve-nav .pill-button {
+    min-width: 0;
+    min-height: 48px;
+    flex: 1 1 0;
+    padding: 0 14px;
+  }
+
+  .admin-topbar {
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .admin-export-row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .admin-export-row a {
+    min-height: 42px;
+    justify-content: center;
+  }
+
+  .crm-stat-card {
+    min-height: auto;
+  }
+
+  .stat-card,
+  .admin-card {
+    padding: 16px;
+  }
+
+  .stat-card strong {
+    font-size: 1.45rem;
+  }
+
+  .crm-overview-grid,
+  .customer-list,
+  .reservation-data-grid,
+  .metric-list,
+  .district-list,
+  .action-list {
+    gap: 12px;
+  }
+
+  .admin-card-head {
+    gap: 8px;
+  }
+
+  .status-pill {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.18;
+  }
+
+  .customer-card {
+    padding: 14px;
+  }
+
+  .customer-title-line {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+  }
+
+  .customer-title-line h3,
+  .summary-row strong,
+  .data-block strong,
+  .data-block span,
+  .data-block a,
+  .customer-summary > p {
+    overflow-wrap: anywhere;
+  }
+
+  .customer-contact-grid span {
+    align-items: flex-start;
+    border-radius: 12px;
+    white-space: normal;
+  }
+
+  .data-block {
+    min-height: auto;
+    padding: 12px;
+  }
+
+  .handoff-status {
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 12px;
+    white-space: normal;
+  }
+
+  .customer-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .status-action,
+  .customer-actions .mini-link {
+    min-height: 44px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
