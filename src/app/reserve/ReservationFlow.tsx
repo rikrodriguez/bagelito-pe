@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Minus, Plus, Upload } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
@@ -446,7 +447,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
           </div>
           <label className="terms-box">
             <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} />
-            {r.terms}
+            <span>{r.terms} <Link className="inline-terms-link" href="/legal" target="_blank">{r.termsLink}</Link></span>
           </label>
           <button className="pill-button pink submit-button" type="button" disabled={submitting} onClick={submitReservation}>{submitting ? r.submitting : r.submit}</button>
         </div>

@@ -150,6 +150,7 @@ export const translations = {
     footer: {
       homeLabel: "Bagelito.pe home",
       tagline: "The monthly bagel drop in Lima. Baked by batch. Made with attitude.",
+      legal: "Legal policies",
       made: "Made in Lima with",
       love: "love",
     },
@@ -225,6 +226,7 @@ export const translations = {
       },
       statusPending: "Payment pending review",
       terms: "I understand that Bagelito works as a monthly pre-order batch. My reservation is received after submitting this form, but my pack is officially separated only after Bagelito reviews my Yape/Plin proof and reconfirms via WhatsApp. Orders are produced only for confirmed paid reservations. Delivery includes a maximum 10-minute waiting window at the address provided. If the order is not received within that time, Bagelito.pe may try to re-coordinate delivery depending on availability, but delivery is no longer guaranteed and Bagelito.pe is not responsible for claims, delays, or missed handoff issues caused by the customer not being available.",
+      termsLink: "Read the full legal policies.",
       submit: "Submit paid reservation",
       submitting: "Submitting...",
       back: "Back",
@@ -404,6 +406,7 @@ export const translations = {
     footer: {
       homeLabel: "Inicio de Bagelito.pe",
       tagline: "El drop mensual de bagels en Lima. Horneado por batch. Hecho con actitud.",
+      legal: "Políticas legales",
       made: "Hecho en Lima con",
       love: "amor",
     },
@@ -479,6 +482,7 @@ export const translations = {
       },
       statusPending: "Pago pendiente de revisión",
       terms: "Entiendo que Bagelito funciona como un batch mensual por preventa. Mi reserva se recibe al enviar este formulario, pero mi pack queda oficialmente separado solo cuando Bagelito revise mi voucher Yape/Plin y me reconfirme por WhatsApp. Solo se producen pedidos con pago confirmado. El delivery incluye una espera máxima de 10 minutos en la dirección indicada. Si el pedido no es recibido dentro de ese tiempo, Bagelito.pe podrá intentar recoordinar la entrega según disponibilidad, pero la entrega ya no queda garantizada y Bagelito.pe no será responsable por reclamos, demoras o inconvenientes causados por no haber una persona disponible para recibirlo.",
+      termsLink: "Leer políticas legales completas.",
       submit: "Enviar reserva pagada",
       submitting: "Enviando...",
       back: "Atrás",
