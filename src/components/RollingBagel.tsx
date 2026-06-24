@@ -24,16 +24,16 @@ const sizeClass = {
 };
 
 const imageByVariant: Record<BagelVariant, string> = {
-  plain: "/images/bagel-plain.png",
-  sesame: "/images/bagel-sesame.png",
-  everything: "/images/bagel-everything.png",
-  rainbow: "/images/bagel-rainbow.png",
-  jalapeno: "/images/bagel-jalapeno-cheddar.png",
-  cheddar: "/images/bagel-cheddar.png",
-  blueberry: "/images/bagel-blueberry.png",
-  cinnamon: "/images/bagel-cinnamon-raisin.png",
-  onion: "/images/bagel-classic-onion.png",
-  snickerdoodle: "/images/bagel-snickerdoodle.png",
+  plain: "/images/bagel-plain.webp",
+  sesame: "/images/bagel-sesame.webp",
+  everything: "/images/bagel-everything.webp",
+  rainbow: "/images/bagel-rainbow.webp",
+  jalapeno: "/images/bagel-jalapeno-cheddar.webp",
+  cheddar: "/images/bagel-cheddar.webp",
+  blueberry: "/images/bagel-blueberry.webp",
+  cinnamon: "/images/bagel-cinnamon-raisin.webp",
+  onion: "/images/bagel-classic-onion.webp",
+  snickerdoodle: "/images/bagel-snickerdoodle.webp",
 };
 
 export function RollingBagel({ variant = "plain", size = "md", className = "", style, label, spin = 1, spinOffset = 0 }: Props) {

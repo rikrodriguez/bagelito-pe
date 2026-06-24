@@ -23,7 +23,7 @@ export function Testimonials() {
       <article className="founder-note-card">
         <div className="founder-note-media">
           <Image
-            src="/images/dawn-brookes-bagelito.jpg"
+            src="/images/dawn-brookes-bagelito.webp"
             alt="Dawn Brookes with handmade Bagelito bagels"
             width={1120}
             height={1400}

@@ -39,12 +39,12 @@ export function HowMonthlyWorks() {
       <div className="scroll-bagel-track desktop" aria-hidden="true">
         <motion.span className="step-pop-burst" style={{ opacity: popOpacity, scale: burstScale }} />
         <motion.div className="step-rolling-bagel" style={{ left: travelerLeft, rotate, scale: popScale }}>
-          <Image src="/images/bagel-everything.png" alt="" width={220} height={220} sizes="58px" className="step-rolling-bagel-img" />
+          <Image src="/images/bagel-everything.webp" alt="" width={220} height={220} sizes="58px" className="step-rolling-bagel-img" />
         </motion.div>
       </div>
       <div className="scroll-bagel-track mobile" aria-hidden="true">
         <motion.div className="step-rolling-bagel" style={{ left: travelerLeft, rotate, scale: popScale }}>
-          <Image src="/images/bagel-everything.png" alt="" width={220} height={220} sizes="48px" className="step-rolling-bagel-img" />
+          <Image src="/images/bagel-everything.webp" alt="" width={220} height={220} sizes="48px" className="step-rolling-bagel-img" />
         </motion.div>
       </div>
       <div className="steps-grid">

@@ -8,10 +8,10 @@ import { packCopy } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 
 const packImages: Record<PackSlug, string> = {
-  "12-mixed": "/images/pack-12-mixed.png",
-  "6-mixed": "/images/pack-6-mixed.png",
-  "12-single": "/images/pack-12-single.png",
-  "6-single": "/images/pack-6-single.png",
+  "12-mixed": "/images/pack-12-mixed.webp",
+  "6-mixed": "/images/pack-6-mixed.webp",
+  "12-single": "/images/pack-12-single.webp",
+  "6-single": "/images/pack-6-single.webp",
 };
 
 export function Packs() {
