@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 
@@ -63,10 +64,10 @@ export function BatchDeadlineBanner() {
         </div>
       </div>
 
-      <a className="deadline-cta" href="#packs">
+      <Link className="deadline-cta" href="/#packs">
         <MessageCircle size={17} />
         {copy.deadline.cta}
-      </a>
+      </Link>
     </aside>
   );
 }
