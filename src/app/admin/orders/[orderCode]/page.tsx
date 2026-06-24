@@ -4,6 +4,7 @@ import { ArrowLeft, Eye } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { fetchOrderByCode, hasUploadedPaymentProof, isManualPaymentPending, type Order } from "@/lib/admin/queries";
 import { getMissingAdminEnv } from "@/lib/env";
+import { DeleteOrderForm } from "../../DeleteOrderForm";
 import { updateAdminNote, updateOrderStatus } from "../../actions";
 
 const statuses = ["payment_pending_review", "payment_confirmed", "needs_correction", "in_production", "ready_for_delivery", "delivered", "cancelled"];
@@ -48,6 +49,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ or
         <div className="admin-panels detail-panels">
           <div className="admin-card"><h2>Status</h2><form className="admin-detail-form" action={updateOrderStatus}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><select name="status" defaultValue={order.status}>{statuses.map((status) => <option key={status} value={status}>{statusLabel(status)}</option>)}</select><button className="pill-button pink" type="submit">Update status</button></form></div>
           <div className="admin-card"><h2>Admin notes</h2><form className="admin-detail-form" action={updateAdminNote}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><textarea name="adminNotes" defaultValue={order.admin_notes ?? ""} rows={5} /><button className="pill-button pink" type="submit">Save note</button></form></div>
+          <div className="admin-card danger-zone"><h2>Delete customer</h2><p>This permanently removes the customer, order items, status history, and uploaded payment proof.</p><DeleteOrderForm orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} label="Delete this customer" /></div>
         </div>
         <div className="admin-card"><h2>Status history</h2>{order.order_status_history?.length ? order.order_status_history.map((item) => <p key={item.id}>{new Date(item.created_at).toLocaleString("en-US")}: {item.old_status ? statusLabel(item.old_status) : "new"} to {statusLabel(item.new_status)} by {item.changed_by ?? "admin"}</p>) : <p>No status history yet.</p>}</div>
       </section>

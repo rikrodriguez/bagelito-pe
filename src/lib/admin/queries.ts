@@ -71,7 +71,7 @@ export function isManualPaymentPending(order: Order) {
   return order.payment_transaction_number === "PENDING_PAYMENT";
 }
 
-export function hasUploadedPaymentProof(order: Order) {
+export function hasUploadedPaymentProof(order: Pick<Order, "payment_screenshot_path">) {
   return Boolean(order.payment_screenshot_path) && !order.payment_screenshot_path.startsWith("payment-pending/");
 }
 

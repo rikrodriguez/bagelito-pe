@@ -521,6 +521,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 .stat-card strong { display: block; margin-top: 8px; font-size: 1.7rem; }
 .admin-card-head { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
 .admin-card p { line-height: 1.45; }
+.admin-flash { margin: -8px 0 18px; border-radius: 14px; padding: 12px 14px; font-weight: 950; }
+.admin-flash.success { border: 1px solid #b8ead8; background: #e9fbf3; color: #107653; }
 .admin-table-wrap { overflow-x: auto; }
 .admin-table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: .9rem; }
 .admin-table th, .admin-table td { border-bottom: 1px solid #e8eef5; padding: 12px; text-align: left; vertical-align: top; }
@@ -2019,6 +2021,10 @@ section[id] {
 }
 
 .status-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
   border: 0;
   border-radius: 999px;
   padding: 10px 14px;
@@ -2037,6 +2043,30 @@ section[id] {
 .status-action.pending { background: #637083; }
 .status-action.warning { background: var(--orange); }
 .status-action.received { background: var(--mint); color: var(--navy); }
+.status-action.delete { background: #dc3f4d; color: white; }
+
+.delete-order-form {
+  display: inline-flex;
+}
+
+.delete-order-form .status-action {
+  width: 100%;
+}
+
+.danger-zone {
+  border-color: #ffd1d6;
+  background: linear-gradient(180deg, #fff, #fff4f5);
+}
+
+.danger-zone h2 {
+  color: #b91c2b;
+}
+
+.danger-zone p {
+  margin-bottom: 12px;
+  color: #7f3943;
+  font-weight: 850;
+}
 
 .status-pill.paid { background: #e8fbf2; color: #13805b !important; }
 .status-pill.received { background: #ddf8f5; color: #087769 !important; }

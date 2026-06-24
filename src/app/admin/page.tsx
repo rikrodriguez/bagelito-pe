@@ -27,6 +27,7 @@ import {
   type Order,
 } from "@/lib/admin/queries";
 import { getMissingAdminEnv } from "@/lib/env";
+import { DeleteOrderForm } from "./DeleteOrderForm";
 import { quickUpdateOrderStatus } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
@@ -167,9 +168,11 @@ function StatusAction({ order, status, label, tone }: { order: Order; status: st
   );
 }
 
-export default async function AdminPage() {
+export default async function AdminPage({ searchParams }: { searchParams?: Promise<{ deleted?: string }> }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
+  const params = await searchParams;
+  const deletedOrderCode = params?.deleted;
 
   if (missing.length) {
     return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p></section></main>;
@@ -206,6 +209,12 @@ export default async function AdminPage() {
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>
           </div>
         </div>
+
+        {deletedOrderCode ? (
+          <div className="admin-flash success">
+            {deletedOrderCode === "missing" ? "That customer was already deleted." : `Deleted ${deletedOrderCode} permanently.`}
+          </div>
+        ) : null}
 
         <div className="stat-grid crm-stat-grid">
           <Stat icon={Users} label="Clients / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
@@ -337,6 +346,7 @@ export default async function AdminPage() {
                   <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
                   {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
                   <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
+                  <DeleteOrderForm orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} />
                 </div>
               </article>
             )) : <div className="empty-state">No reservations yet. Customer data will appear here after the reservation form is submitted.</div>}
