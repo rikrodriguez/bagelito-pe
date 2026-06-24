@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 import { useLanguage } from "./LanguageProvider";
 
@@ -62,7 +63,14 @@ export function FloatingWhatsApp() {
   }
 
   return (
-    <a className="floating-whatsapp" href={href} target="_blank" rel="noreferrer" aria-label={copy.header.whatsapp}>
+    <a
+      className="floating-whatsapp"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={copy.header.whatsapp}
+      onClick={() => trackBagelitoEvent("WhatsApp Click", { location: "floating", target: "general" })}
+    >
       <MessageCircle size={30} strokeWidth={2.6} />
     </a>
   );

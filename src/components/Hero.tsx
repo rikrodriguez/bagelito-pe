@@ -1,6 +1,7 @@
 "use client";
 
 import { Archive, CalendarDays, LockKeyhole, MessageCircle, Truck } from "lucide-react";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
 
@@ -16,7 +17,7 @@ export function Hero() {
         <h1>{copy.hero.titleLine1} <span>{copy.hero.titleHighlight}</span> {copy.hero.titleLine3}</h1>
         <p className="hero-subcopy">{copy.hero.subcopy}</p>
         <div className="hero-buttons">
-          <a className="pill-button pink" href="#packs"><MessageCircle size={18} /> {copy.hero.primaryCta}</a>
+          <a className="pill-button pink" href="#packs" onClick={() => trackBagelitoEvent("CTA Click", { location: "hero", target: "packs" })}><MessageCircle size={18} /> {copy.hero.primaryCta}</a>
         </div>
         <div className="hero-badges">
           {copy.hero.badges.map((text, index) => {

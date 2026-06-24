@@ -6,6 +6,7 @@ import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { getDeliveryFee } from "@/lib/delivery-pricing";
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import { districtOptions } from "@/lib/reservations/schema";
@@ -134,12 +135,18 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     return () => document.body.classList.remove("reservation-review-active");
   }, [step]);
 
+  useEffect(() => {
+    trackBagelitoEvent("Reserve Step Viewed", { step, pack: selectedPack.slug });
+  }, [selectedPack.slug, step]);
+
   function getFlavorLabel(flavorSlug: string) {
     const flavor = flavors.find((candidate) => candidate.slug === flavorSlug);
     return flavorCopy[locale][flavorSlug] ?? flavor?.name ?? flavorSlug;
   }
 
   function selectPack(nextSlug: PackSlug) {
+    const nextPack = packs.find((pack) => pack.slug === nextSlug);
+    trackBagelitoEvent("Reserve Pack Selected", { pack: nextSlug, amount: nextPack?.amount });
     setPackSlug(nextSlug);
     setQuantities({});
     setSingleFlavor("");
@@ -183,11 +190,16 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   function goNext() {
     setError("");
     if (step === 2 && !validateFlavorStep()) {
+      trackBagelitoEvent("Reserve Validation Error", {
+        step,
+        reason: selectedPack.packType === "mixed" ? "exact_bagel_count" : "choose_flavor",
+      });
       setError(selectedPack.packType === "mixed" ? r.errors.exactBagels.replace("{units}", String(selectedPack.units)) : r.errors.chooseFlavor);
       return;
     }
 
     if (step === 3 && !validateDeliveryStep()) {
+      trackBagelitoEvent("Reserve Validation Error", { step, reason: "delivery_required" });
       setError(r.errors.deliveryRequired);
       return;
     }
@@ -195,11 +207,13 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     if (step === 4) {
       const paymentError = getPaymentValidationError();
       if (paymentError) {
+        trackBagelitoEvent("Reserve Validation Error", { step, reason: "payment_required" });
         setError(paymentError);
         return;
       }
     }
 
+    trackBagelitoEvent("Reserve Continue", { step, pack: selectedPack.slug });
     goToStep(step + 1);
   }
 
@@ -225,12 +239,14 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     setError("");
     const paymentError = getPaymentValidationError();
     if (paymentError) {
+      trackBagelitoEvent("Reserve Validation Error", { step: 5, reason: "payment_required" });
       setError(paymentError);
       goToStep(4);
       return;
     }
 
     if (!termsAccepted) {
+      trackBagelitoEvent("Reserve Validation Error", { step: 5, reason: "terms_required" });
       setError(r.errors.terms);
       return;
     }
@@ -244,14 +260,17 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     formData.set("termsAccepted", String(termsAccepted));
 
     setSubmitting(true);
+    trackBagelitoEvent("Reservation Submit Attempt", { pack: selectedPack.slug, amount: totalAmount });
     try {
       const response = await fetch("/api/reservations", { method: "POST", body: formData });
       const result = await response.json() as { ok?: boolean; orderCode?: string; error?: string };
       if (!response.ok || !result.ok || !result.orderCode) {
         throw new Error(result.error ?? r.errors.submit);
       }
+      trackBagelitoEvent("Reservation Submitted", { pack: selectedPack.slug, amount: totalAmount });
       window.location.href = "/reserve/success?order=" + encodeURIComponent(result.orderCode) + "&pack=" + encodeURIComponent(selectedPack.name) + "&packSlug=" + encodeURIComponent(selectedPack.slug) + "&amount=" + totalAmount;
     } catch (submitError) {
+      trackBagelitoEvent("Reservation Submit Error", { pack: selectedPack.slug, step: 5 });
       setError(submitError instanceof Error ? submitError.message : r.errors.submit);
       setSubmitting(false);
     }

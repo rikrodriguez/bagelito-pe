@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { useLanguage } from "./LanguageProvider";
 
 const deadline = new Date("2026-06-30T23:59:00-05:00").getTime();
@@ -64,7 +65,7 @@ export function BatchDeadlineBanner() {
         </div>
       </div>
 
-      <Link className="deadline-cta" href="/#packs">
+      <Link className="deadline-cta" href="/#packs" onClick={() => trackBagelitoEvent("CTA Click", { location: "deadline_banner", target: "packs" })}>
         <MessageCircle size={17} />
         {copy.deadline.cta}
       </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
@@ -18,7 +19,7 @@ export function FinalCTA() {
           <h2>{copy.finalCta.title}</h2>
           <p>{copy.finalCta.text}</p>
         </div>
-        <a className="pill-button pink" href={waitingListHref} target="_blank" rel="noreferrer"><MessageCircle size={18} /> {copy.finalCta.cta}</a>
+        <a className="pill-button pink" href={waitingListHref} target="_blank" rel="noreferrer" onClick={() => trackBagelitoEvent("WhatsApp Click", { location: "final_cta", target: "waitlist" })}><MessageCircle size={18} /> {copy.finalCta.cta}</a>
         <RollingBagel variant="sesame" size="md" className="final-sesame" />
       </div>
     </section>

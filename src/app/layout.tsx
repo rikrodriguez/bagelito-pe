@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { LanguageProvider } from "@/components/LanguageProvider";
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <BatchDeadlineBanner />
           {children}
           <FloatingWhatsApp />
+          <Analytics />
         </LanguageProvider>
       </body>
     </html>

@@ -187,5 +187,9 @@ export async function createReservation(formData: FormData) {
     changed_by: "customer",
   });
 
-  return { orderCode: orderRow.order_code };
+  return {
+    amount: totalAmount,
+    orderCode: orderRow.order_code,
+    packSlug: pack.slug,
+  };
 }

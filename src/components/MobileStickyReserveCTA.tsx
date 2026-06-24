@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { useLanguage } from "./LanguageProvider";
 
 export function MobileStickyReserveCTA() {
@@ -41,7 +42,7 @@ export function MobileStickyReserveCTA() {
   }
 
   return (
-    <Link className="mobile-sticky-reserve-cta" href="/#packs" aria-label={copy.stickyReserveCta.aria}>
+    <Link className="mobile-sticky-reserve-cta" href="/#packs" aria-label={copy.stickyReserveCta.aria} onClick={() => trackBagelitoEvent("CTA Click", { location: "mobile_sticky", target: "packs" })}>
       <ShoppingBag size={18} />
       <span>{copy.stickyReserveCta.label}</span>
     </Link>

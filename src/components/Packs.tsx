@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { packs, type PackSlug } from "@/data/packs";
+import { trackBagelitoEvent } from "@/lib/analytics";
 import { packCopy } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 
@@ -50,7 +51,12 @@ export function Packs() {
 
               <p>{localizedPack.description}</p>
 
-              <Link className={`pill-button ${pack.accent}`} href={`/reserve?pack=${pack.slug}`} aria-label={`${copy.packs.button}: ${localizedPack.name}`}>
+              <Link
+                className={`pill-button ${pack.accent}`}
+                href={`/reserve?pack=${pack.slug}`}
+                aria-label={`${copy.packs.button}: ${localizedPack.name}`}
+                onClick={() => trackBagelitoEvent("Pack CTA Click", { pack: pack.slug, amount: pack.amount })}
+              >
                 <MessageCircle size={18} strokeWidth={2.6} aria-hidden="true" />
                 <span>{copy.packs.button}</span>
               </Link>
