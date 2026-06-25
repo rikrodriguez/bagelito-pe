@@ -205,6 +205,7 @@ Usar solo para pedidos fake, duplicados o datos que ya no deben existir.
 Antes de borrar:
 
 - Descargar `Full backup CSV`.
+- Seguir la rutina de backups en `docs/supabase-backups-rutina.md`.
 - Confirmar que no sea un cliente real con reclamo, pago, delivery pendiente o necesidad contable.
 - Revisar si existe voucher subido.
 - Abrir el detalle del pedido.
@@ -233,6 +234,7 @@ Desde la parte superior del admin:
 
 Cadencia recomendada:
 
+- Semanalmente: descargar `Full backup CSV` y guardarlo fuera del repo segun `docs/supabase-backups-rutina.md`.
 - Antes de cerrar batch: `Full backup CSV`.
 - Antes de producir: `Production CSV`.
 - Antes de salir a ruta: `Driver CSV` y `Delivery CSV`.
