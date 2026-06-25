@@ -435,13 +435,14 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
   );
 }
 
-function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[] }) {
+function CustomerCommsQueue({ followUps }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[] }) {
   return (
     <section className="admin-card whatsapp-queue-card">
       <div className="admin-card-head">
         <div>
-          <h2>WhatsApp follow-up queue</h2>
-          <p>Mensajes estándar pendientes después de confirmar pago o marcar recibido.</p>
+          <p className="kicker">Customer comms</p>
+          <h2>WhatsApp message queue</h2>
+          <p>Post-compra, confirmación de pago, recordatorio de delivery y feedback/testimonio.</p>
         </div>
         <span className="status-pill neutral">{followUps.length} pending</span>
       </div>
@@ -464,7 +465,7 @@ function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: Admin
           })}
         </div>
       ) : (
-        <div className="empty-state">No hay WhatsApps pendientes. La cola de seguimiento está limpia.</div>
+        <div className="empty-state">No hay mensajes pendientes. La cola de customer comms está limpia.</div>
       )}
     </section>
   );
@@ -853,14 +854,14 @@ export default async function AdminPage({
           <Stat icon={ReceiptText} label="Pending value" value={formatMoney(pendingValue)} helper="Pending + correction" />
           <Stat icon={Package} label="Confirmed bagels" value={stats.confirmedBagels} helper="Production-ready units" />
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
-          <Stat icon={MessageCircle} label="WhatsApp queue" value={whatsappFollowUps.length} helper="Messages pending" />
+          <Stat icon={MessageCircle} label="Customer comms" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
 
         <FinancialPanel summary={finance} />
 
         <BatchManagementPanel batch={currentBatch} stats={batchStats} />
 
-        <WhatsAppQueue followUps={whatsappFollowUps} />
+        <CustomerCommsQueue followUps={whatsappFollowUps} />
 
         <ProductionOpsPanel plan={productionOps} returnTo={currentListHref} />
 
@@ -913,7 +914,7 @@ export default async function AdminPage({
               <span><AlertCircle size={16} /> {stats.needsCorrection} orders need correction</span>
               <span><ShieldCheck size={16} /> {missingProofs} orders without uploaded proof</span>
               <span><Package size={16} /> {paidNotDeliveredOrders.length} paid orders not received yet</span>
-              <span><Send size={16} /> {whatsappFollowUps.length} WhatsApp follow-ups pending</span>
+              <span><Send size={16} /> {whatsappFollowUps.length} customer messages pending</span>
               <span><Mail size={16} /> {marketingOptIns} customers opted into updates</span>
             </div>
           </section>
@@ -1042,8 +1043,11 @@ export default async function AdminPage({
                       <StatusAction order={order} returnTo={currentListHref} status="payment_pending_review" label="Not confirmed" tone="pending" />
                       <StatusAction order={order} returnTo={currentListHref} status="needs_correction" label="Needs correction" tone="warning" />
                       {isPaid(order) ? <StatusAction order={order} returnTo={currentListHref} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
+                      {(order.status === "payment_pending_review" || order.status === "needs_correction") && !hasAdminWhatsAppMessageSent(order, "order_received") ? <AdminWhatsAppLink order={order} intent="order_received" label="Msg order" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
                       {isPaid(order) && !hasAdminWhatsAppMessageSent(order, "payment_confirmed") ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
+                      {order.status === "ready_for_delivery" && !hasAdminWhatsAppMessageSent(order, "delivery_reminder") ? <AdminWhatsAppLink order={order} intent="delivery_reminder" label="Msg delivery" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
                       {isDelivered(order) && !hasAdminWhatsAppMessageSent(order, "delivered") ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
+                      {isDelivered(order) && hasAdminWhatsAppMessageSent(order, "delivered") && !hasAdminWhatsAppMessageSent(order, "feedback_request") ? <AdminWhatsAppLink order={order} intent="feedback_request" label="Msg feedback" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
                       <ArchiveOrderForm
                         orderId={order.id}
                         orderCode={order.order_code}

@@ -241,12 +241,15 @@ Cadencia recomendada:
 - Despues de terminar delivery: `Full backup CSV`.
 - Antes de borrar cualquier cliente real o sensible: `Full backup CSV`.
 
-## 10. WhatsApp operativo
+## 10. Customer comms / WhatsApp operativo
 
 Mensajes desde admin:
 
-- `Msg paid`: usar solo despues de confirmar pago.
-- `Msg received`: usar solo despues de marcar recibido.
+- `Msg order`: post-compra. Usar cuando entra una reserva nueva y el pago esta pendiente o necesita correccion.
+- `Msg paid`: usar despues de confirmar pago.
+- `Msg delivery`: usar cuando el pedido esta en `ready_for_delivery`, antes de salir a ruta o durante la coordinacion con driver.
+- `Msg received`: usar despues de marcar recibido.
+- `Msg feedback`: usar despues del mensaje de recibido para pedir feedback, foto o testimonio.
 
 Buenas practicas:
 
@@ -254,6 +257,14 @@ Buenas practicas:
 - No duplicar mensajes si ya aparece como logged.
 - Si el boton no aparece, revisar el status del pedido.
 - Si hay duda o excepcion, escribirla en `Admin notes`.
+
+Cadencia recomendada:
+
+1. Pedido entra: enviar/loggear `Msg order`.
+2. Pago validado: cambiar a `payment_confirmed` y enviar/loggear `Msg paid`.
+3. Empaque listo: cambiar a `ready_for_delivery` y enviar/loggear `Msg delivery`.
+4. Cliente recibio: cambiar a `delivered` y enviar/loggear `Msg received`.
+5. Despues de probar: enviar/loggear `Msg feedback`.
 
 ## 11. Finanzas
 

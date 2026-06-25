@@ -8,7 +8,6 @@ import {
   hasUploadedPaymentProof,
   isManualPaymentPending,
   isOrderArchived,
-  productionStatuses,
   type Order,
 } from "@/lib/admin/queries";
 import { canSendAdminWhatsAppIntent, hasAdminWhatsAppMessageSent, parseAdminWhatsAppIntent, type AdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
@@ -29,16 +28,15 @@ const statusLabels: Record<string, string> = {
   cancelled: "cancelled",
   archived: "archived",
   unarchived: "restored",
+  whatsapp_order_received_sent: "WhatsApp order received message sent",
   whatsapp_payment_confirmed_sent: "WhatsApp payment message sent",
+  whatsapp_delivery_reminder_sent: "WhatsApp delivery reminder sent",
   whatsapp_delivered_sent: "WhatsApp received message sent",
+  whatsapp_feedback_request_sent: "WhatsApp feedback request sent",
 };
 
 function statusLabel(status: string) {
   return statusLabels[status] ?? status.replaceAll("_", " ");
-}
-
-function isPaid(order: Order) {
-  return productionStatuses.includes(order.status as (typeof productionStatuses)[number]);
 }
 
 function WhatsAppDetailAction({
@@ -117,7 +115,7 @@ export default async function OrderDetailPage({
         </div>
         <div className="admin-panels detail-panels">
           <div className="admin-card"><h2>Status</h2><form className="admin-detail-form" action={updateOrderStatus}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><select name="status" defaultValue={order.status}>{statuses.map((status) => <option key={status} value={status}>{statusLabel(status)}</option>)}</select><button className="pill-button pink" type="submit">Update status</button></form></div>
-          <div className="admin-card whatsapp-zone"><h2>WhatsApp</h2><p>{isPaid(order) ? "Open and log the next customer follow-up." : "Confirm payment before sending customer follow-ups."}</p><div className="admin-detail-actions"><WhatsAppDetailAction order={order} intent="payment_confirmed" label="Payment message" loggedLabel="Payment message logged" blockedLabel="Confirm payment first" /><WhatsAppDetailAction order={order} intent="delivered" label="Received message" loggedLabel="Received message logged" blockedLabel="Mark received first" /></div></div>
+          <div className="admin-card whatsapp-zone"><h2>Customer comms</h2><p>Open and log the right WhatsApp message for each stage: post-compra, delivery reminder, received and feedback.</p><div className="admin-detail-actions"><WhatsAppDetailAction order={order} intent="order_received" label="Order received" loggedLabel="Order message logged" blockedLabel="Order not active" /><WhatsAppDetailAction order={order} intent="payment_confirmed" label="Payment message" loggedLabel="Payment message logged" blockedLabel="Confirm payment first" /><WhatsAppDetailAction order={order} intent="delivery_reminder" label="Delivery reminder" loggedLabel="Delivery reminder logged" blockedLabel="Set ready for delivery first" /><WhatsAppDetailAction order={order} intent="delivered" label="Received message" loggedLabel="Received message logged" blockedLabel="Mark received first" /><WhatsAppDetailAction order={order} intent="feedback_request" label="Feedback request" loggedLabel="Feedback request logged" blockedLabel="Send received first" /></div></div>
           <div className="admin-card"><h2>Admin notes</h2><form className="admin-detail-form" action={updateAdminNote}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><textarea name="adminNotes" defaultValue={order.admin_notes ?? ""} rows={5} /><button className="pill-button pink" type="submit">Save note</button></form></div>
           <div className="admin-card archive-zone"><h2>{archived ? "Restore customer" : "Archive customer"}</h2><p>{archived ? `Archived${archiveState.archivedAt ? ` on ${new Date(archiveState.archivedAt).toLocaleString("en-US")}` : ""}. Restore it when it should return to daily operations.` : "Use this for day-to-day cleanup. The order stays in records, but leaves production, delivery, and active CRM views."}</p><ArchiveOrderForm archived={archived} orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} returnTo={`/admin/orders/${order.order_code}`} /></div>
           <div className="admin-card danger-zone"><h2>Delete customer</h2><p><ShieldCheck size={16} /> Before deleting, download the full CSV backup. This permanently removes the customer, order items, status history, and uploaded payment proof.</p><DeleteOrderForm orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} label="Delete permanently" /></div>

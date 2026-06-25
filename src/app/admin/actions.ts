@@ -99,7 +99,7 @@ async function readOrderForAdminMutation(orderId: string, orderCode: string) {
   const supabase = createSupabaseAdminClient();
   const { data: order, error } = await supabase
     .from("orders")
-    .select("id, order_code, status, payment_screenshot_path")
+    .select("id, order_code, status, payment_screenshot_path, order_status_history(*)")
     .eq("id", orderId)
     .maybeSingle();
 
