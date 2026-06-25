@@ -769,6 +769,64 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   color: white;
   padding: 11px 14px;
 }
+.admin-whatsapp-notice {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin: -4px 0 20px;
+  border: 1px solid #c8eee7;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff, #effcf9);
+  padding: 16px 18px;
+  box-shadow: 0 12px 24px rgba(10,22,54,.045);
+}
+.admin-whatsapp-copy {
+  display: grid;
+  gap: 7px;
+}
+.admin-whatsapp-copy span,
+.admin-whatsapp-notice a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 1000;
+}
+.admin-whatsapp-copy span {
+  color: #16826c;
+  font-size: .82rem;
+}
+.admin-whatsapp-copy strong {
+  color: var(--navy);
+}
+.admin-whatsapp-copy p {
+  color: #53637a;
+  font-size: .9rem;
+  font-weight: 850;
+}
+.admin-whatsapp-copy pre {
+  max-width: 860px;
+  margin: 4px 0 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  border: 1px solid #d9f0ec;
+  border-radius: 12px;
+  background: white;
+  padding: 12px;
+  color: #25334a;
+  font-family: inherit;
+  font-size: .9rem;
+  font-weight: 850;
+  line-height: 1.45;
+}
+.admin-whatsapp-notice a {
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 12px;
+  background: #20a97f;
+  color: white;
+  padding: 12px 15px;
+}
 .admin-table-wrap { overflow-x: auto; }
 .admin-table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: .9rem; }
 .admin-table th, .admin-table td { border-bottom: 1px solid #e8eef5; padding: 12px; text-align: left; vertical-align: top; }
@@ -2346,6 +2404,7 @@ section[id] {
 .status-action.received { background: var(--mint); color: var(--navy); }
 .status-action.archive { background: #23324a; }
 .status-action.restore { background: #2a8b76; }
+.status-action.whatsapp { background: #20a97f; color: white; text-decoration: none; }
 .status-action.delete { background: #dc3f4d; color: white; }
 
 .delete-order-form,
@@ -2365,6 +2424,21 @@ section[id] {
 
 .archive-zone h2 {
   color: #23324a;
+}
+
+.whatsapp-zone {
+  border-color: #c8eee7;
+  background: linear-gradient(180deg, #ffffff, #f1fcf8);
+}
+
+.whatsapp-zone h2 {
+  color: #16826c;
+}
+
+.admin-detail-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .danger-zone {
@@ -3120,6 +3194,20 @@ section[id] {
   .admin-safety-card a {
     justify-content: center;
     width: 100%;
+  }
+
+  .admin-whatsapp-notice {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .admin-whatsapp-notice a {
+    width: 100%;
+  }
+
+  .admin-whatsapp-copy pre {
+    max-height: 220px;
   }
 
   .admin-view-tabs {

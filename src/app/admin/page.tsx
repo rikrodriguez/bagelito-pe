@@ -13,6 +13,7 @@ import {
   Package,
   Phone,
   ReceiptText,
+  Send,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -31,7 +32,9 @@ import {
   productionStatuses,
   type Order,
 } from "@/lib/admin/queries";
+import { parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getMissingAdminEnv } from "@/lib/env";
+import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
 import { quickUpdateOrderStatus } from "./actions";
 
@@ -178,7 +181,7 @@ function StatusAction({ order, status, label, tone }: { order: Order; status: st
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string }>;
+  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string }>;
 }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
@@ -187,6 +190,8 @@ export default async function AdminPage({
   const archivedOrderCode = params?.archived;
   const restoredOrderCode = params?.restored;
   const showingArchived = params?.view === "archived";
+  const whatsappIntent = parseAdminWhatsAppIntent(params?.whatsapp);
+  const whatsappOrderCode = params?.order;
 
   if (missing.length) {
     return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p></section></main>;
@@ -210,6 +215,9 @@ export default async function AdminPage({
   const packStats = getPackStats(activeOrders);
   const packTypeStats = getPackTypeStats(activeOrders);
   const districtStats = getDistrictStats(activeOrders);
+  const whatsappOrder = whatsappIntent && whatsappOrderCode
+    ? allOrders.find((order) => order.order_code === whatsappOrderCode)
+    : null;
 
   return (
     <main className="admin-page">
@@ -249,6 +257,8 @@ export default async function AdminPage({
         {restoredOrderCode ? (
           <div className="admin-flash success">Restored {restoredOrderCode} to the active customer list.</div>
         ) : null}
+
+        {whatsappIntent && whatsappOrder ? <AdminWhatsAppNotice order={whatsappOrder} intent={whatsappIntent} /> : null}
 
         <div className="stat-grid crm-stat-grid">
           <Stat icon={Users} label="Clients / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
@@ -308,6 +318,7 @@ export default async function AdminPage({
               <span><AlertCircle size={16} /> {stats.needsCorrection} orders need correction</span>
               <span><ShieldCheck size={16} /> {missingProofs} orders without uploaded proof</span>
               <span><Package size={16} /> {paidNotDeliveredOrders.length} paid orders not received yet</span>
+              <span><Send size={16} /> WhatsApp opens after payment or received updates</span>
               <span><Mail size={16} /> {marketingOptIns} customers opted into updates</span>
             </div>
           </section>
@@ -401,6 +412,8 @@ export default async function AdminPage({
                       <StatusAction order={order} status="payment_pending_review" label="Not confirmed" tone="pending" />
                       <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
                       {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
+                      {isPaid(order) ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" /> : null}
+                      {isDelivered(order) ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" /> : null}
                       <ArchiveOrderForm
                         orderId={order.id}
                         orderCode={order.order_code}

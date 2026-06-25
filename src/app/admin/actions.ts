@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { hasUploadedPaymentProof } from "@/lib/admin/queries";
+import { getAdminWhatsAppIntentForStatus } from "@/lib/admin/whatsapp-messages";
 
 const allowedOrderStatuses = [
   "payment_pending_review",
@@ -47,6 +48,13 @@ function getSafeAdminReturnTo(formData: FormData, fallback: string) {
   const returnTo = String(formData.get("returnTo") ?? "");
   const isAdminPath = returnTo === "/admin" || returnTo.startsWith("/admin/") || returnTo.startsWith("/admin?");
   return isAdminPath ? returnTo : fallback;
+}
+
+function getWhatsAppStatusQuery(status: string, orderCode: string) {
+  const intent = getAdminWhatsAppIntentForStatus(status);
+  if (!intent) return "";
+
+  return `?whatsapp=${encodeURIComponent(intent)}&order=${encodeURIComponent(orderCode)}`;
 }
 
 async function readOrderForAdminMutation(orderId: string, orderCode: string) {
@@ -125,7 +133,7 @@ export async function updateOrderStatus(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
-  redirect(`/admin/orders/${orderCode}`);
+  redirect(`/admin/orders/${orderCode}${getWhatsAppStatusQuery(status, orderCode)}`);
 }
 
 export async function quickUpdateOrderStatus(formData: FormData) {
@@ -138,7 +146,7 @@ export async function quickUpdateOrderStatus(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
-  redirect("/admin");
+  redirect(`/admin${getWhatsAppStatusQuery(status, orderCode)}`);
 }
 
 export async function archiveOrder(formData: FormData) {
