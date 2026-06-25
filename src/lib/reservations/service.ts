@@ -22,6 +22,7 @@ type CurrentBatchRow = {
 type CapacityOrderRow = { pack_units: number; status: string };
 
 const acceptingBatchStatuses = new Set(["waitlist_open", "orders_open"]);
+const currentBatchSelect = "id, name, status, orders_close_at, delivery_date, capacity_packs, capacity_bagels";
 
 function fallbackOrderCode() {
   return "BAG-" + Date.now().toString(36).toUpperCase() + "-" + randomBytes(2).toString("hex").toUpperCase();
@@ -61,10 +62,10 @@ async function nextOrderCode(supabase: ReturnType<typeof createSupabaseAdminClie
   return error || typeof data !== "string" ? fallbackOrderCode() : data;
 }
 
-async function getOrCreateCurrentBatch(supabase: ReturnType<typeof createSupabaseAdminClient>) {
+async function readCurrentBatch(supabase: ReturnType<typeof createSupabaseAdminClient>) {
   const { data, error } = await supabase
     .from("batches")
-    .select("id, name, status, orders_close_at, delivery_date, capacity_packs, capacity_bagels")
+    .select(currentBatchSelect)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -72,12 +73,17 @@ async function getOrCreateCurrentBatch(supabase: ReturnType<typeof createSupabas
   if (error) throw new Error("Could not read active batch: " + error.message);
 
   const batch = data as CurrentBatchRow | null;
+  return batch?.id ? batch : null;
+}
+
+async function getOrCreateCurrentBatch(supabase: ReturnType<typeof createSupabaseAdminClient>) {
+  const batch = await readCurrentBatch(supabase);
   if (batch?.id) return batch;
 
   const { data: created, error: createError } = await supabase
     .from("batches")
     .insert({ name: "Next Bagelito Batch", status: "orders_open", orders_open_at: new Date().toISOString() })
-    .select("id, name, status, orders_close_at, delivery_date, capacity_packs, capacity_bagels")
+    .select(currentBatchSelect)
     .single();
 
   const createdBatch = created as CurrentBatchRow | null;
@@ -124,9 +130,15 @@ function getBatchBlockReason(batch: CurrentBatchRow, usage: { reservedBagels: nu
   return "";
 }
 
-function fallbackBatchAvailability() {
+function fallbackBatchAvailability({
+  accepting = true,
+  status = "orders_open",
+}: {
+  accepting?: boolean;
+  status?: string;
+} = {}) {
   return {
-    accepting: true,
+    accepting,
     batchName: "Next Bagelito Batch",
     capacityBagels: null,
     capacityPacks: null,
@@ -136,7 +148,7 @@ function fallbackBatchAvailability() {
     remainingPacks: null,
     reservedBagels: 0,
     reservedPacks: 0,
-    status: "orders_open",
+    status,
   };
 }
 
@@ -146,7 +158,9 @@ export async function getReservationBatchAvailability() {
 
   try {
     const supabase = createSupabaseAdminClient();
-    const batch = await getOrCreateCurrentBatch(supabase);
+    const batch = await readCurrentBatch(supabase);
+    if (!batch) return fallbackBatchAvailability({ accepting: false, status: "closed" });
+
     const usage = await getBatchCapacityUsage(supabase, batch.id);
     const blockReason = getBatchBlockReason(batch, usage, 6);
 
@@ -164,7 +178,7 @@ export async function getReservationBatchAvailability() {
       status: batch.status,
     };
   } catch {
-    return fallbackBatchAvailability();
+    return fallbackBatchAvailability({ accepting: false, status: "closed" });
   }
 }
 
