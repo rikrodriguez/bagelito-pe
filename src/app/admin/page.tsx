@@ -20,6 +20,7 @@ import {
   Search,
   Send,
   ShieldCheck,
+  type LucideIcon,
   Users,
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
@@ -84,11 +85,80 @@ const sortOptions = [
   { value: "amount_asc", label: "Lowest amount" },
 ] as const;
 
+const adminSections = [
+  "overview",
+  "customers",
+  "crm",
+  "finance",
+  "batch",
+  "comms",
+  "production",
+  "delivery",
+  "insights",
+  "archive",
+] as const;
+
+type AdminSection = (typeof adminSections)[number];
+
+const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; intro: string }> = {
+  overview: {
+    eyebrow: "Dashboard",
+    title: "Main dashboard overview",
+    intro: "Daily operating snapshot for reservations, payments, production, delivery, and follow-ups.",
+  },
+  customers: {
+    eyebrow: "Customer operations",
+    title: "Active customers",
+    intro: "Review reservations, payment proof, delivery details, and quick actions in one focused list.",
+  },
+  crm: {
+    eyebrow: "Customer CRM",
+    title: "Customer history",
+    intro: "Repeat buyers, last purchases, total spend, and flavor preferences.",
+  },
+  finance: {
+    eyebrow: "Finance",
+    title: "Financial snapshot",
+    intro: "Confirmed sales, pending value, delivery variance, editable costs, and net profit.",
+  },
+  batch: {
+    eyebrow: "Batch",
+    title: "Batch management",
+    intro: "Open or close orders, set capacity, and control batch dates from one place.",
+  },
+  comms: {
+    eyebrow: "Customer comms",
+    title: "WhatsApp queue",
+    intro: "Post-purchase, confirmation, delivery reminder, and feedback messages ready to send.",
+  },
+  production: {
+    eyebrow: "Production ops",
+    title: "Production checklist",
+    intro: "Packing list by flavor, pack totals, and bake-pack-deliver workflow.",
+  },
+  delivery: {
+    eyebrow: "Delivery ops",
+    title: "Driver route",
+    intro: "Route by district, delivery checklist, pending handoffs, and exports for the driver.",
+  },
+  insights: {
+    eyebrow: "Insights",
+    title: "Sales and district insights",
+    intro: "Pack mix, product type split, and district-level demand signals.",
+  },
+  archive: {
+    eyebrow: "Archive",
+    title: "Archived customers",
+    intro: "Orders hidden from daily operations. Restore anything archived by mistake.",
+  },
+};
+
 type AdminSearchParams = {
   batch?: string;
   deleted?: string;
   archived?: string;
   restored?: string;
+  section?: string;
   view?: string;
   whatsapp?: string;
   order?: string;
@@ -99,6 +169,12 @@ type AdminSearchParams = {
   status?: string;
   sort?: string;
 };
+
+function parseAdminSection(value: string | undefined, legacyView?: string): AdminSection {
+  if (adminSections.includes(value as AdminSection)) return value as AdminSection;
+  if (legacyView === "archived") return "archive";
+  return "overview";
+}
 
 function formatMoney(value: number) {
   const amount = Math.round(Number(value));
@@ -272,7 +348,7 @@ function PaymentCell({ order }: { order: Order }) {
   return <span>{order.payment_method} - {order.payment_transaction_number}</span>;
 }
 
-function Stat({ label, value, helper, icon: Icon }: { label: string; value: string | number; helper?: string; icon: typeof Users }) {
+function Stat({ label, value, helper, icon: Icon }: { label: string; value: string | number; helper?: string; icon: LucideIcon }) {
   return (
     <div className="stat-card crm-stat-card">
       <div className="stat-icon"><Icon size={18} /></div>
@@ -280,6 +356,39 @@ function Stat({ label, value, helper, icon: Icon }: { label: string; value: stri
       <strong>{value}</strong>
       {helper ? <small>{helper}</small> : null}
     </div>
+  );
+}
+
+function AdminSectionNav({
+  activeSection,
+  items,
+}: {
+  activeSection: AdminSection;
+  items: { section: AdminSection; label: string; helper: string; href: string; icon: LucideIcon }[];
+}) {
+  return (
+    <aside className="admin-side-nav" aria-label="Admin sections">
+      <div className="admin-side-nav-head">
+        <span>Admin menu</span>
+        <strong>Bagelito Ops</strong>
+      </div>
+      <nav>
+        {items.map((item) => {
+          const Icon = item.icon;
+          const active = item.section === activeSection;
+
+          return (
+            <Link aria-current={active ? "page" : undefined} className={active ? "active" : ""} href={item.href} key={item.section}>
+              <Icon size={17} />
+              <span>
+                {item.label}
+                <small>{item.helper}</small>
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+    </aside>
   );
 }
 
@@ -565,7 +674,7 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
   );
 }
 
-function CustomerCommsQueue({ followUps }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[] }) {
+function CustomerCommsQueue({ followUps, returnTo }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[]; returnTo: string }) {
   return (
     <section className="admin-card whatsapp-queue-card">
       <div className="admin-card-head">
@@ -589,7 +698,7 @@ function CustomerCommsQueue({ followUps }: { followUps: { order: Order; intent: 
                   <strong>{order.customer_name}</strong>
                   <small>{order.order_code} · {order.pack_name}</small>
                 </div>
-                <AdminWhatsAppLink order={order} intent={intent} label="Open + log" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} />
+                <AdminWhatsAppLink order={order} intent={intent} label="Open + log" returnTo={`${returnTo}${returnTo.includes("?") ? "&" : "?"}whatsappSent=${encodeURIComponent(order.order_code)}`} />
               </article>
             );
           })}
@@ -854,7 +963,9 @@ export default async function AdminPage({
   const restoredOrderCode = params?.restored;
   const whatsappError = params?.whatsappError;
   const whatsappSentOrderCode = params?.whatsappSent;
-  const showingArchived = params?.view === "archived";
+  const activeSection = parseAdminSection(params?.section, params?.view);
+  const sectionMeta = adminSectionMeta[activeSection];
+  const showingArchived = activeSection === "archive";
   const whatsappIntent = parseAdminWhatsAppIntent(params?.whatsapp);
   const whatsappOrderCode = params?.order;
   const searchQuery = (params?.q ?? "").trim();
@@ -894,14 +1005,14 @@ export default async function AdminPage({
   const whatsappOrder = whatsappIntent && whatsappOrderCode
     ? allOrders.find((order) => order.order_code === whatsappOrderCode)
     : null;
-  const buildAdminHref = (overrides: Partial<{ view: string; q: string; status: string; sort: string }> = {}) => {
-    const nextView = overrides.view ?? (showingArchived ? "archived" : "");
+  const buildAdminHref = (overrides: Partial<{ section: AdminSection; q: string; status: string; sort: string }> = {}) => {
+    const nextSection = overrides.section ?? activeSection;
     const nextQ = overrides.q ?? searchQuery;
     const nextStatus = overrides.status ?? statusFilter;
     const nextSort = overrides.sort ?? sort;
     const query = new URLSearchParams();
 
-    if (nextView === "archived") query.set("view", "archived");
+    if (nextSection !== "overview") query.set("section", nextSection);
     if (nextQ) query.set("q", nextQ);
     if (nextStatus && nextStatus !== "all") query.set("status", nextStatus);
     if (nextSort && nextSort !== "newest") query.set("sort", nextSort);
@@ -909,23 +1020,99 @@ export default async function AdminPage({
     const value = query.toString();
     return value ? `/admin?${value}` : "/admin";
   };
-  const currentListHref = buildAdminHref();
-  const appendCurrentListQuery = (key: string, value: string) =>
-    `${currentListHref}${currentListHref.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(value)}`;
+  const currentListHref = buildAdminHref({ section: showingArchived ? "archive" : "customers" });
+  const productionReturnHref = buildAdminHref({ section: "production", q: "", status: "all", sort: "newest" });
+  const deliveryReturnHref = buildAdminHref({ section: "delivery", q: "", status: "all", sort: "newest" });
+  const commsReturnHref = buildAdminHref({ section: "comms", q: "", status: "all", sort: "newest" });
+  const appendAdminQuery = (path: string, key: string, value: string) =>
+    `${path}${path.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(value)}`;
+  const appendCurrentListQuery = (key: string, value: string) => appendAdminQuery(currentListHref, key, value);
   const activeFilterCount = Number(Boolean(searchQuery)) + Number(statusFilter !== "all") + Number(sort !== "newest");
   const pendingAttentionCount = activeOrders.filter(isPendingAttention).length;
   const noProofCount = activeOrders.filter((order) => !hasUploadedPaymentProof(order)).length;
   const selectedStatusLabel = statusFilterOptions.find((option) => option.value === statusFilter)?.label ?? "All statuses";
   const selectedSortLabel = sortOptions.find((option) => option.value === sort)?.label ?? "Newest first";
+  const adminNavItems = [
+    {
+      section: "overview",
+      label: "Overview",
+      helper: `${stats.pending} pending`,
+      href: buildAdminHref({ section: "overview", q: "", status: "all", sort: "newest" }),
+      icon: Home,
+    },
+    {
+      section: "customers",
+      label: "Customers",
+      helper: `${activeOrders.length} active`,
+      href: buildAdminHref({ section: "customers", q: "", status: "all", sort: "newest" }),
+      icon: Users,
+    },
+    {
+      section: "crm",
+      label: "Customer CRM",
+      helper: `${customerProfiles.length} profiles`,
+      href: buildAdminHref({ section: "crm", q: "", status: "all", sort: "newest" }),
+      icon: ReceiptText,
+    },
+    {
+      section: "finance",
+      label: "Finance",
+      helper: formatMoney(finance.estimatedNetProfit),
+      href: buildAdminHref({ section: "finance", q: "", status: "all", sort: "newest" }),
+      icon: CreditCard,
+    },
+    {
+      section: "batch",
+      label: "Batch",
+      helper: batchStatusLabel(currentBatch.status),
+      href: buildAdminHref({ section: "batch", q: "", status: "all", sort: "newest" }),
+      icon: CalendarClock,
+    },
+    {
+      section: "comms",
+      label: "Comms",
+      helper: `${whatsappFollowUps.length} pending`,
+      href: buildAdminHref({ section: "comms", q: "", status: "all", sort: "newest" }),
+      icon: MessageCircle,
+    },
+    {
+      section: "production",
+      label: "Production",
+      helper: `${productionOps.totalPacks} packs`,
+      href: buildAdminHref({ section: "production", q: "", status: "all", sort: "newest" }),
+      icon: Package,
+    },
+    {
+      section: "delivery",
+      label: "Delivery",
+      helper: `${routePlan.length} stops`,
+      href: buildAdminHref({ section: "delivery", q: "", status: "all", sort: "newest" }),
+      icon: MapPin,
+    },
+    {
+      section: "insights",
+      label: "Insights",
+      helper: `${districtStats.length} districts`,
+      href: buildAdminHref({ section: "insights", q: "", status: "all", sort: "newest" }),
+      icon: ArrowUpDown,
+    },
+    {
+      section: "archive",
+      label: "Archive",
+      helper: `${archivedOrders.length} hidden`,
+      href: buildAdminHref({ section: "archive", q: "", status: "all", sort: "newest" }),
+      icon: Archive,
+    },
+  ] satisfies { section: AdminSection; label: string; helper: string; href: string; icon: LucideIcon }[];
 
   return (
     <main className="admin-page">
       <section className="admin-shell crm-shell">
         <div className="admin-topbar">
           <div>
-            <p className="kicker">Mini CRM</p>
-            <h1>Customer reservations</h1>
-            <p className="admin-intro">Customer data, reservation forms, packs, districts, and Bagelito payment review live here.</p>
+            <p className="kicker">{sectionMeta.eyebrow}</p>
+            <h1>{sectionMeta.title}</h1>
+            <p className="admin-intro">{sectionMeta.intro}</p>
           </div>
           <div className="admin-export-row">
             <a href="/admin/export/orders"><FileDown size={16} /> Full backup CSV</a>
@@ -935,14 +1122,20 @@ export default async function AdminPage({
           </div>
         </div>
 
-        <div className="admin-safety-card">
-          <div>
-            <span><ShieldCheck size={17} /> Admin safety</span>
-            <strong>Export before destructive work. Use Archive for daily cleanup.</strong>
-            <p>Supabase database backups protect tables by plan; payment screenshots live in Storage, so keep CSV exports before deleting real customers.</p>
+        <div className="admin-workspace">
+          <AdminSectionNav activeSection={activeSection} items={adminNavItems} />
+          <div className="admin-section-content">
+
+        {activeSection === "overview" ? (
+          <div className="admin-safety-card">
+            <div>
+              <span><ShieldCheck size={17} /> Admin safety</span>
+              <strong>Export before destructive work. Use Archive for daily cleanup.</strong>
+              <p>Supabase database backups protect tables by plan; payment screenshots live in Storage, so keep CSV exports before deleting real customers.</p>
+            </div>
+            <a href="/admin/export/orders"><FileDown size={16} /> Download full CSV</a>
           </div>
-          <a href="/admin/export/orders"><FileDown size={16} /> Download full CSV</a>
-        </div>
+        ) : null}
 
         {deletedOrderCode ? (
           <div className="admin-flash success">
@@ -978,10 +1171,11 @@ export default async function AdminPage({
           <AdminWhatsAppNotice
             order={whatsappOrder}
             intent={whatsappIntent}
-            returnTo={`/admin?whatsappSent=${encodeURIComponent(whatsappOrder.order_code)}`}
+            returnTo={appendAdminQuery(buildAdminHref({ section: activeSection }), "whatsappSent", whatsappOrder.order_code)}
           />
         ) : null}
 
+        {activeSection === "overview" ? (
         <div className="stat-grid crm-stat-grid">
           <Stat icon={Users} label="Clients / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
           <Stat icon={CheckCircle2} label="Paid confirmed" value={paidOrders.length} helper={`${percent(paidOrders.length, activeOrders.length)}% of active reservations`} />
@@ -993,19 +1187,21 @@ export default async function AdminPage({
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
           <Stat icon={MessageCircle} label="Customer comms" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
+        ) : null}
 
-        <CustomerCrmPanel profiles={customerProfiles} stats={customerCrmStats} />
+        {activeSection === "crm" ? <CustomerCrmPanel profiles={customerProfiles} stats={customerCrmStats} /> : null}
 
-        <FinancialPanel summary={finance} />
+        {activeSection === "finance" ? <FinancialPanel summary={finance} /> : null}
 
-        <BatchManagementPanel batch={currentBatch} stats={batchStats} />
+        {activeSection === "batch" ? <BatchManagementPanel batch={currentBatch} stats={batchStats} /> : null}
 
-        <CustomerCommsQueue followUps={whatsappFollowUps} />
+        {activeSection === "comms" ? <CustomerCommsQueue followUps={whatsappFollowUps} returnTo={commsReturnHref} /> : null}
 
-        <ProductionOpsPanel plan={productionOps} returnTo={currentListHref} />
+        {activeSection === "production" ? <ProductionOpsPanel plan={productionOps} returnTo={productionReturnHref} /> : null}
 
-        <DeliveryOpsPanel routePlan={routePlan} returnTo={currentListHref} />
+        {activeSection === "delivery" ? <DeliveryOpsPanel routePlan={routePlan} returnTo={deliveryReturnHref} /> : null}
 
+        {activeSection === "insights" ? (
         <div className="crm-overview-grid">
           <section className="admin-card crm-insight-card">
             <div className="admin-card-head compact"><h2>Pack mix</h2><p>% by selected product.</p></div>
@@ -1058,7 +1254,9 @@ export default async function AdminPage({
             </div>
           </section>
         </div>
+        ) : null}
 
+        {activeSection === "customers" || activeSection === "archive" ? (
         <section className="admin-card customer-section">
           <div className="admin-card-head">
             <div>
@@ -1069,15 +1267,15 @@ export default async function AdminPage({
           </div>
 
           <div className="admin-view-tabs">
-            <Link className={!showingArchived && statusFilter === "all" ? "active" : ""} href={buildAdminHref({ view: "", status: "all" })}>Active customers <b>{activeOrders.length}</b></Link>
-            <Link className={!showingArchived && statusFilter === "pending_attention" ? "active" : ""} href={buildAdminHref({ view: "", status: "pending_attention" })}><Clock3 size={15} /> Pending only <b>{pendingAttentionCount}</b></Link>
-            <Link className={!showingArchived && statusFilter === "paid_not_delivered" ? "active" : ""} href={buildAdminHref({ view: "", status: "paid_not_delivered" })}>Paid not received <b>{paidNotDeliveredOrders.length}</b></Link>
-            <Link className={!showingArchived && statusFilter === "no_proof" ? "active" : ""} href={buildAdminHref({ view: "", status: "no_proof" })}>No proof <b>{noProofCount}</b></Link>
-            <Link className={showingArchived ? "active" : ""} href={buildAdminHref({ view: "archived", status: "all" })}><Archive size={15} /> Archive <b>{archivedOrders.length}</b></Link>
+            <Link className={!showingArchived && statusFilter === "all" ? "active" : ""} href={buildAdminHref({ section: "customers", status: "all" })}>Active customers <b>{activeOrders.length}</b></Link>
+            <Link className={!showingArchived && statusFilter === "pending_attention" ? "active" : ""} href={buildAdminHref({ section: "customers", status: "pending_attention" })}><Clock3 size={15} /> Pending only <b>{pendingAttentionCount}</b></Link>
+            <Link className={!showingArchived && statusFilter === "paid_not_delivered" ? "active" : ""} href={buildAdminHref({ section: "customers", status: "paid_not_delivered" })}>Paid not received <b>{paidNotDeliveredOrders.length}</b></Link>
+            <Link className={!showingArchived && statusFilter === "no_proof" ? "active" : ""} href={buildAdminHref({ section: "customers", status: "no_proof" })}>No proof <b>{noProofCount}</b></Link>
+            <Link className={showingArchived ? "active" : ""} href={buildAdminHref({ section: "archive", status: "all" })}><Archive size={15} /> Archive <b>{archivedOrders.length}</b></Link>
           </div>
 
           <form className="admin-filter-bar" action="/admin">
-            {showingArchived ? <input type="hidden" name="view" value="archived" /> : null}
+            <input type="hidden" name="section" value={showingArchived ? "archive" : "customers"} />
             <label className="admin-search-field">
               <span><Search size={15} /> Search</span>
               <input name="q" defaultValue={searchQuery} placeholder="Name, code, district, WhatsApp..." />
@@ -1096,7 +1294,7 @@ export default async function AdminPage({
             </label>
             <div className="admin-filter-actions">
               <button className="status-action paid" type="submit">Apply</button>
-              <Link className="mini-link" href={showingArchived ? "/admin?view=archived" : "/admin"}>Clear</Link>
+              <Link className="mini-link" href={showingArchived ? "/admin?section=archive" : "/admin?section=customers"}>Clear</Link>
             </div>
           </form>
 
@@ -1202,7 +1400,9 @@ export default async function AdminPage({
             }) : <div className="empty-state">{baseOrders.length ? "No reservations match these filters. Clear or loosen the search to see more customers." : showingArchived ? "No archived reservations yet." : "No reservations yet. Customer data will appear here after the reservation form is submitted."}</div>}
           </div>
         </section>
+        ) : null}
 
+        {activeSection === "delivery" ? (
         <div className="admin-panels">
           <section className="admin-card">
             <h2>Delivery summary</h2>
@@ -1212,6 +1412,9 @@ export default async function AdminPage({
               return <div className="summary-row tall" key={group.district}><span>{group.district}<small>{group.orders.map((order) => order.customer_name).join(", ")}</small><small>{receivedCount} received · {group.orders.length - receivedCount} pending handoff</small></span><strong>{group.orders.length} orders / {group.bagels} bagels</strong></div>;
             }) : <p>No confirmed deliveries yet.</p>}
           </section>
+        </div>
+        ) : null}
+          </div>
         </div>
       </section>
     </main>

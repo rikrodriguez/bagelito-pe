@@ -2412,6 +2412,109 @@ section[id] {
   font-weight: 850;
 }
 
+.admin-workspace {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.admin-section-content {
+  display: grid;
+  min-width: 0;
+  gap: 20px;
+}
+
+.admin-section-content .admin-flash,
+.admin-section-content .admin-whatsapp-notice,
+.admin-section-content .admin-safety-card,
+.admin-section-content .stat-grid {
+  margin: 0;
+}
+
+.admin-side-nav {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  gap: 14px;
+  border: 1px solid #dbe6f0;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  padding: 14px;
+  box-shadow: 0 14px 30px rgba(10, 22, 54, .06);
+}
+
+.admin-side-nav-head {
+  display: grid;
+  gap: 3px;
+  border-bottom: 1px solid #e6eef6;
+  padding: 4px 6px 12px;
+}
+
+.admin-side-nav-head span {
+  color: #66758a;
+  font-size: .72rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.admin-side-nav-head strong {
+  color: var(--navy);
+  font-size: 1rem;
+  line-height: 1.15;
+}
+
+.admin-side-nav nav {
+  display: grid;
+  gap: 7px;
+}
+
+.admin-side-nav a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: var(--navy);
+  padding: 9px 10px;
+  font-weight: 1000;
+  text-decoration: none;
+}
+
+.admin-side-nav a svg {
+  color: #7a8aa0;
+}
+
+.admin-side-nav a span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  line-height: 1.1;
+}
+
+.admin-side-nav a small {
+  color: #66758a;
+  font-size: .73rem;
+  font-weight: 850;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-side-nav a.active {
+  border-color: rgba(238, 79, 147, .22);
+  background: #fff0f6;
+  color: var(--pink);
+  box-shadow: inset 0 0 0 1px rgba(238, 79, 147, .08);
+}
+
+.admin-side-nav a.active svg,
+.admin-side-nav a.active small {
+  color: var(--pink);
+}
+
 .crm-stat-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -2551,6 +2654,10 @@ section[id] {
 
 .customer-section {
   margin-top: 20px;
+}
+
+.admin-section-content .customer-section {
+  margin-top: 0;
 }
 
 .finance-panel {
@@ -3437,6 +3544,37 @@ section[id] {
     gap: 8px;
   }
 
+  .admin-workspace {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .admin-side-nav {
+    position: static;
+    gap: 10px;
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .admin-side-nav-head {
+    padding: 2px 4px 8px;
+  }
+
+  .admin-side-nav nav {
+    display: grid;
+    grid-auto-columns: minmax(170px, 1fr);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .admin-side-nav a {
+    min-height: 52px;
+    scroll-snap-align: start;
+  }
+
   .crm-stat-grid,
   .crm-overview-grid,
   .finance-kpi-grid,
@@ -3491,6 +3629,15 @@ section[id] {
 }
 
 @media (min-width: 761px) and (max-width: 1180px) {
+  .admin-workspace {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .admin-side-nav {
+    padding: 12px;
+  }
+
   .crm-stat-grid,
   .crm-overview-grid,
   .customer-crm-kpis,

@@ -368,7 +368,7 @@ export async function updateBatchSettings(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/reserve");
   revalidatePath("/admin");
-  redirect("/admin?batch=updated");
+  redirect("/admin?section=batch&batch=updated");
 }
 
 export async function updateBatchFinancialCosts(formData: FormData) {
@@ -414,7 +414,7 @@ export async function updateBatchFinancialCosts(formData: FormData) {
     durationMs: getDurationMs(startedAt),
   });
   revalidatePath("/admin");
-  redirect("/admin?finance=updated#finance");
+  redirect("/admin?section=finance&finance=updated");
 }
 
 export async function markWhatsAppMessageSent(formData: FormData) {
