@@ -2617,6 +2617,42 @@ section[id] {
   grid-column: span 2;
 }
 
+.finance-cost-card {
+  grid-column: span 2;
+}
+
+.finance-cost-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.finance-cost-form label {
+  display: grid;
+  gap: 6px;
+  color: #66758a;
+  font-size: .75rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.finance-cost-form input {
+  width: 100%;
+  border: 1px solid #dce7f2;
+  border-radius: 12px;
+  background: white;
+  padding: 11px 12px;
+  color: var(--navy);
+  font: inherit;
+  font-weight: 900;
+}
+
+.finance-cost-form button {
+  grid-column: span 2;
+  justify-content: center;
+  border: 0;
+}
+
 .finance-row-list,
 .finance-pack-list {
   display: grid;
@@ -2645,8 +2681,16 @@ section[id] {
 
 .finance-row-list strong,
 .finance-pack-row b {
+  display: grid;
+  gap: 2px;
   color: var(--navy);
   font-size: .95rem;
+  text-align: right;
+}
+
+.finance-pack-row b small {
+  font-size: .72rem;
+  text-align: right;
 }
 
 .finance-pack-row strong {
@@ -3462,7 +3506,8 @@ section[id] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .finance-pack-card {
+  .finance-pack-card,
+  .finance-cost-card {
     grid-column: span 2;
   }
 
@@ -4271,7 +4316,16 @@ section[id] {
     gap: 8px;
   }
 
-  .finance-pack-card {
+  .finance-pack-card,
+  .finance-cost-card {
+    grid-column: auto;
+  }
+
+  .finance-cost-form {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-cost-form button {
     grid-column: auto;
   }
 
@@ -4288,6 +4342,11 @@ section[id] {
   .finance-row-list strong,
   .finance-pack-row b {
     justify-self: start;
+    text-align: left;
+  }
+
+  .finance-pack-row b small {
+    text-align: left;
   }
 
   .production-task-actions {

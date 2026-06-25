@@ -293,11 +293,22 @@ Usar `Financial snapshot` como lectura rapida:
 - Valor pendiente.
 - Delivery collected.
 - Packs por batch.
-- Margen estimado.
+- Costos reales editables.
+- Margen por pack.
+- Utilidad neta por batch.
+
+Antes de cerrar el batch:
+
+- Actualizar `Ingredient / bagel` con el costo promedio real de ingredientes.
+- Actualizar `Packaging / pack` con empaque, bolsa, caja o etiqueta.
+- Actualizar `Real delivery cost` con lo pagado al driver/courier.
+- Usar `Other batch costs` para merma, compras urgentes, comisiones o extras.
+- Revisar `Margin by pack` para ver que packs dejan mejor margen.
+- Revisar `Net profit` antes de archivar o cerrar la operacion.
 
 Nota:
 
-- El margen es estimado. Hoy usa supuestos operativos de costo por bagel, packaging y delivery como pass-through. Para margen real, comparar luego con costos reales de ingredientes, empaques, merma y delivery pagado.
+- El margen sigue siendo operativo, no contabilidad formal. Para cierre contable, comparar con comprobantes reales y extractos de pago.
 
 ## 13. Cierre de batch
 

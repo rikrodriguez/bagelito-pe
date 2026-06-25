@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { batchStatuses, hasUploadedPaymentProof } from "@/lib/admin/queries";
+import { batchStatuses, defaultFinancialCosts, hasUploadedPaymentProof } from "@/lib/admin/queries";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getDurationMs, logError, logInfo, logWarn } from "@/lib/monitoring";
 
@@ -42,6 +42,14 @@ function parseNullableInteger(value: FormDataEntryValue | null) {
   if (!Number.isInteger(number) || number < 0) throw new Error("Batch capacity must be a positive whole number.");
   if (number === 0) return null;
   return number;
+}
+
+function parseMoneyInput(value: FormDataEntryValue | null, label: string) {
+  const text = String(value ?? "").trim().replace(",", ".");
+  if (!text) return 0;
+  const number = Number(text);
+  if (!Number.isFinite(number) || number < 0) throw new Error(`${label} must be a positive amount.`);
+  return Math.round(number * 100) / 100;
 }
 
 function parseLimaDateTime(value: FormDataEntryValue | null) {
@@ -361,6 +369,52 @@ export async function updateBatchSettings(formData: FormData) {
   revalidatePath("/reserve");
   revalidatePath("/admin");
   redirect("/admin?batch=updated");
+}
+
+export async function updateBatchFinancialCosts(formData: FormData) {
+  const startedAt = Date.now();
+  await requireAdmin();
+  const batchId = String(formData.get("batchId") ?? "");
+  if (!batchId) throw new Error("Missing batch ID");
+
+  const ingredientCostPerBagel = parseMoneyInput(formData.get("ingredientCostPerBagel"), "Ingredient cost");
+  const packagingCostPerPack = parseMoneyInput(formData.get("packagingCostPerPack"), "Packaging cost");
+  const actualDeliveryCost = parseMoneyInput(formData.get("actualDeliveryCost"), "Delivery cost");
+  const otherBatchCost = parseMoneyInput(formData.get("otherBatchCost"), "Other batch cost");
+
+  logInfo("admin_finance_costs_update_start", {
+    actualDeliveryCost,
+    batchId,
+    ingredientCostPerBagel,
+    packagingCostPerPack,
+  });
+
+  try {
+    const { error } = await createSupabaseAdminClient()
+      .from("batches")
+      .update({
+        actual_delivery_cost: actualDeliveryCost,
+        ingredient_cost_per_bagel: ingredientCostPerBagel || defaultFinancialCosts.ingredientCostPerBagel,
+        other_batch_cost: otherBatchCost,
+        packaging_cost_per_pack: packagingCostPerPack || defaultFinancialCosts.packagingCostPerPack,
+      })
+      .eq("id", batchId);
+
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_finance_costs_update_failed", error, {
+      batchId,
+      durationMs: getDurationMs(startedAt),
+    });
+    throw error;
+  }
+
+  logInfo("admin_finance_costs_update_success", {
+    batchId,
+    durationMs: getDurationMs(startedAt),
+  });
+  revalidatePath("/admin");
+  redirect("/admin?finance=updated#finance");
 }
 
 export async function markWhatsAppMessageSent(formData: FormData) {

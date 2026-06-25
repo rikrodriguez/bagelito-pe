@@ -32,6 +32,7 @@ Bagelito.pe is positioned as the monthly bagel drop in Lima: customers reserve p
 - [Busqueda y crecimiento](docs/busqueda-crecimiento.md): Search Console, indexing, Instagram/WhatsApp funnel, UTM links, and OG testing.
 - [Customer comms](docs/customer-comms.md): post-purchase, payment, delivery, received, and feedback WhatsApp message cadence.
 - [Customer CRM](docs/customer-crm.md): customer history, repeat buyers, last purchase, total spend, and flavor preferences.
+- [Finanzas reales](docs/finanzas-reales.md): editable batch costs, margin by pack, delivery variance, and net profit.
 
 ## Production
 

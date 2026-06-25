@@ -59,7 +59,7 @@ import {
 import { getMissingAdminEnv } from "@/lib/env";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
-import { quickUpdateOrderStatus, updateBatchSettings } from "./actions";
+import { quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
 const statusFilterOptions = [
@@ -94,6 +94,7 @@ type AdminSearchParams = {
   order?: string;
   whatsappError?: string;
   whatsappSent?: string;
+  finance?: string;
   q?: string;
   status?: string;
   sort?: string;
@@ -106,6 +107,10 @@ function formatMoney(value: number) {
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString("es-PE", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function formatCostInput(value: number) {
+  return Number.isInteger(value) ? String(value) : value.toFixed(2);
 }
 
 function percent(value: number, total: number) {
@@ -443,7 +448,7 @@ function CustomerCrmPanel({ profiles, stats }: { profiles: CustomerProfile[]; st
 }
 
 function FinancialPanel({ summary }: { summary: FinancialSummary }) {
-  const marginTone = summary.estimatedGrossMargin >= 0 ? "positive" : "negative";
+  const marginTone = summary.estimatedNetProfit >= 0 ? "positive" : "negative";
 
   return (
     <section className="admin-card finance-panel" id="finance">
@@ -451,7 +456,7 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
         <div>
           <p className="kicker">Finance</p>
           <h2>Financial snapshot</h2>
-          <p>Ventas, pagos pendientes, delivery cobrado, packs del batch y margen estimado del batch actual.</p>
+          <p>Ventas, costos reales editables, margen por pack y utilidad neta del batch actual.</p>
         </div>
         <span className="status-pill neutral">{summary.batchName}</span>
       </div>
@@ -459,11 +464,41 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
       <div className="finance-kpi-grid">
         <div><span>Confirmed sales</span><strong>{formatMoney(summary.confirmedSales)}</strong><small>{summary.confirmedPacks} paid packs</small></div>
         <div><span>Pending</span><strong>{formatMoney(summary.pendingSales)}</strong><small>{summary.pendingPacks} packs pending review</small></div>
-        <div><span>Delivery collected</span><strong>{formatMoney(summary.deliveryCollected)}</strong><small>{formatMoney(summary.deliveryPending)} pending delivery</small></div>
-        <div className={marginTone}><span>Estimated margin</span><strong>{formatMoney(summary.estimatedGrossMargin)}</strong><small>{summary.estimatedGrossMarginRate}% of product revenue</small></div>
+        <div className={summary.deliverySurplus >= 0 ? "positive" : "negative"}><span>Delivery variance</span><strong>{formatMoney(summary.deliverySurplus)}</strong><small>{formatMoney(summary.deliveryCollected)} collected / {formatMoney(summary.actualDeliveryCost)} real cost</small></div>
+        <div className={marginTone}><span>Net profit</span><strong>{formatMoney(summary.estimatedNetProfit)}</strong><small>{summary.estimatedNetProfitRate}% of total collected</small></div>
       </div>
 
       <div className="finance-detail-grid">
+        <section className="finance-card finance-cost-card">
+          <div className="admin-card-head compact">
+            <h3>Editable real costs</h3>
+            <p>Update after buying ingredients, packaging or paying delivery.</p>
+          </div>
+          <form action={updateBatchFinancialCosts} className="finance-cost-form">
+            <input type="hidden" name="batchId" value={summary.batchId} />
+            <label>
+              <span>Ingredient / bagel</span>
+              <input disabled={!summary.costSchemaReady} min="0" name="ingredientCostPerBagel" step="0.01" type="number" defaultValue={formatCostInput(summary.costs.ingredientCostPerBagel)} />
+            </label>
+            <label>
+              <span>Packaging / pack</span>
+              <input disabled={!summary.costSchemaReady} min="0" name="packagingCostPerPack" step="0.01" type="number" defaultValue={formatCostInput(summary.costs.packagingCostPerPack)} />
+            </label>
+            <label>
+              <span>Real delivery cost</span>
+              <input disabled={!summary.costSchemaReady} min="0" name="actualDeliveryCost" step="0.01" type="number" defaultValue={formatCostInput(summary.costs.actualDeliveryCost)} />
+            </label>
+            <label>
+              <span>Other batch costs</span>
+              <input disabled={!summary.costSchemaReady} min="0" name="otherBatchCost" step="0.01" type="number" defaultValue={formatCostInput(summary.costs.otherBatchCost)} />
+            </label>
+            <button className="status-action paid" disabled={!summary.costSchemaReady} type="submit">Save costs</button>
+          </form>
+          {!summary.costSchemaReady ? (
+            <p className="finance-assumption">Run `supabase/add-batch-financial-costs.sql` once in Supabase to enable editable costs.</p>
+          ) : null}
+        </section>
+
         <section className="finance-card">
           <div className="admin-card-head compact">
             <h3>Revenue bridge</h3>
@@ -492,8 +527,8 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
 
         <section className="finance-card finance-pack-card">
           <div className="admin-card-head compact">
-            <h3>Pack mix</h3>
-            <p>Confirmed sales and reserved count by pack.</p>
+            <h3>Margin by pack</h3>
+            <p>Confirmed product revenue minus ingredient and packaging cost.</p>
           </div>
           <div className="finance-pack-list">
             {summary.packMetrics.length ? summary.packMetrics.map((item) => (
@@ -501,8 +536,9 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
                 <div>
                   <strong>{item.packName}</strong>
                   <small>{item.confirmedPacks} confirmed / {item.reservedPacks} reserved · {item.bagels} bagels</small>
+                  <small>Revenue {formatMoney(item.productRevenue)} · Cost {formatMoney(item.ingredientCost + item.packagingCost)} · {item.grossMarginRate}% margin</small>
                 </div>
-                <b>{formatMoney(item.confirmedSales)}</b>
+                <b>{formatMoney(item.grossMargin)} <small>{formatMoney(item.marginPerPack)} / pack</small></b>
               </div>
             )) : <div className="production-stage-empty">No packs in this batch yet.</div>}
           </div>
@@ -510,15 +546,19 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
 
         <section className="finance-card">
           <div className="admin-card-head compact">
-            <h3>Margin estimate</h3>
-            <p>Simple ops estimate, not accounting close.</p>
+            <h3>Net profit bridge</h3>
+            <p>Batch-level estimate with real editable costs.</p>
           </div>
           <div className="finance-row-list">
-            <div><span>Product COGS</span><strong>{formatMoney(summary.estimatedProductCost)}</strong></div>
+            <div><span>Ingredient cost</span><strong>{formatMoney(summary.estimatedProductCost)}</strong></div>
             <div><span>Packaging</span><strong>{formatMoney(summary.estimatedPackagingCost)}</strong></div>
-            <div><span>Estimated margin</span><strong>{formatMoney(summary.estimatedGrossMargin)}</strong></div>
+            <div><span>Real delivery cost</span><strong>{formatMoney(summary.actualDeliveryCost)}</strong></div>
+            <div><span>Other costs</span><strong>{formatMoney(summary.otherBatchCost)}</strong></div>
+            <div><span>Total costs</span><strong>{formatMoney(summary.estimatedTotalCost)}</strong></div>
+            <div><span>Product gross margin</span><strong>{formatMoney(summary.estimatedGrossMargin)}</strong></div>
+            <div><span>Net profit</span><strong>{formatMoney(summary.estimatedNetProfit)}</strong></div>
           </div>
-          <p className="finance-assumption">Assumption: S/{summary.assumptions.cogsPerBagel.toFixed(2)} per bagel + S/{summary.assumptions.packagingPerPack.toFixed(2)} packaging per pack. Delivery is treated as pass-through.</p>
+          <p className="finance-assumption">Formula: total collected minus ingredients, packaging, real delivery and other batch costs. Product gross margin excludes delivery.</p>
         </section>
       </div>
     </section>
@@ -808,6 +848,7 @@ export default async function AdminPage({
   const missing = getMissingAdminEnv();
   const params = await searchParams;
   const batchMessage = params?.batch;
+  const financeMessage = params?.finance;
   const deletedOrderCode = params?.deleted;
   const archivedOrderCode = params?.archived;
   const restoredOrderCode = params?.restored;
@@ -911,6 +952,10 @@ export default async function AdminPage({
 
         {batchMessage === "updated" ? (
           <div className="admin-flash success">Batch settings updated.</div>
+        ) : null}
+
+        {financeMessage === "updated" ? (
+          <div className="admin-flash success">Finance costs updated.</div>
         ) : null}
 
         {archivedOrderCode ? (

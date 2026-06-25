@@ -15,6 +15,10 @@ export type Batch = {
   delivery_date: string | null;
   capacity_packs: number | null;
   capacity_bagels: number | null;
+  ingredient_cost_per_bagel?: number | string | null;
+  packaging_cost_per_pack?: number | string | null;
+  actual_delivery_cost?: number | string | null;
+  other_batch_cost?: number | string | null;
   created_at: string;
 };
 
@@ -453,10 +457,19 @@ export type ProductionOpsPlan = {
   stages: ProductionStage[];
 };
 
-export const financialEstimateAssumptions = {
-  cogsPerBagel: 3.2,
-  packagingPerPack: 1.5,
-} as const;
+export type FinancialCostSettings = {
+  ingredientCostPerBagel: number;
+  packagingCostPerPack: number;
+  actualDeliveryCost: number;
+  otherBatchCost: number;
+};
+
+export const defaultFinancialCosts: FinancialCostSettings = {
+  ingredientCostPerBagel: 3.2,
+  packagingCostPerPack: 1.5,
+  actualDeliveryCost: 0,
+  otherBatchCost: 0,
+};
 
 export type FinancialPackMetric = {
   packSlug: string;
@@ -467,6 +480,13 @@ export type FinancialPackMetric = {
   deliveredPacks: number;
   bagels: number;
   confirmedSales: number;
+  productRevenue: number;
+  deliveryCollected: number;
+  ingredientCost: number;
+  packagingCost: number;
+  grossMargin: number;
+  grossMarginRate: number;
+  marginPerPack: number;
 };
 
 export type FinancialSummary = {
@@ -483,11 +503,39 @@ export type FinancialSummary = {
   confirmedBagels: number;
   estimatedProductCost: number;
   estimatedPackagingCost: number;
+  actualDeliveryCost: number;
+  otherBatchCost: number;
+  estimatedTotalCost: number;
   estimatedGrossMargin: number;
   estimatedGrossMarginRate: number;
+  deliverySurplus: number;
+  estimatedNetProfit: number;
+  estimatedNetProfitRate: number;
   packMetrics: FinancialPackMetric[];
-  assumptions: typeof financialEstimateAssumptions;
+  costs: FinancialCostSettings;
+  costSchemaReady: boolean;
 };
+
+function readBatchMoney(value: number | string | null | undefined, fallback: number) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
+}
+
+export function getFinancialCostSettings(batch: Partial<Batch>): FinancialCostSettings {
+  return {
+    ingredientCostPerBagel: readBatchMoney(batch.ingredient_cost_per_bagel, defaultFinancialCosts.ingredientCostPerBagel),
+    packagingCostPerPack: readBatchMoney(batch.packaging_cost_per_pack, defaultFinancialCosts.packagingCostPerPack),
+    actualDeliveryCost: readBatchMoney(batch.actual_delivery_cost, defaultFinancialCosts.actualDeliveryCost),
+    otherBatchCost: readBatchMoney(batch.other_batch_cost, defaultFinancialCosts.otherBatchCost),
+  };
+}
+
+function hasFinancialCostColumns(batch: Partial<Batch>) {
+  return "ingredient_cost_per_bagel" in batch
+    && "packaging_cost_per_pack" in batch
+    && "actual_delivery_cost" in batch
+    && "other_batch_cost" in batch;
+}
 
 function parseDeliveryFeeFromNotes(notes: string | null | undefined) {
   const match = notes?.match(/Delivery:\s*S\/\s*(\d+(?:\.\d+)?)/i);
@@ -508,12 +556,14 @@ function isPendingFinancialOrder(order: Pick<Order, "status">) {
   return order.status === "payment_pending_review" || order.status === "needs_correction";
 }
 
-export function getFinancialSummary(batch: Pick<Batch, "id" | "name">, orders: Order[]): FinancialSummary {
+export function getFinancialSummary(batch: Pick<Batch, "actual_delivery_cost" | "id" | "ingredient_cost_per_bagel" | "name" | "other_batch_cost" | "packaging_cost_per_pack">, orders: Order[]): FinancialSummary {
   const activeOrders = filterActiveOrders(orders).filter((order) => order.status !== "cancelled");
   const batchOrders = activeOrders.filter((order) => order.batch_id === batch.id);
   const confirmedOrders = batchOrders.filter((order) => productionStatuses.includes(order.status as (typeof productionStatuses)[number]));
   const pendingOrders = batchOrders.filter(isPendingFinancialOrder);
   const packMap = new Map<string, FinancialPackMetric>();
+  const costs = getFinancialCostSettings(batch);
+  const costSchemaReady = hasFinancialCostColumns(batch);
 
   for (const order of batchOrders) {
     const pack = packMap.get(order.pack_slug) ?? {
@@ -525,26 +575,56 @@ export function getFinancialSummary(batch: Pick<Batch, "id" | "name">, orders: O
       deliveredPacks: 0,
       bagels: 0,
       confirmedSales: 0,
+      productRevenue: 0,
+      deliveryCollected: 0,
+      ingredientCost: 0,
+      packagingCost: 0,
+      grossMargin: 0,
+      grossMarginRate: 0,
+      marginPerPack: 0,
     };
 
     pack.reservedPacks += 1;
     if (productionStatuses.includes(order.status as (typeof productionStatuses)[number])) {
+      const productRevenue = getOrderProductRevenue(order);
       pack.confirmedPacks += 1;
       pack.bagels += Number(order.pack_units);
       pack.confirmedSales += Number(order.total_amount);
+      pack.productRevenue += productRevenue;
+      pack.deliveryCollected += getOrderDeliveryFee(order);
     }
     if (isPendingFinancialOrder(order)) pack.pendingPacks += 1;
     if (order.status === "delivered") pack.deliveredPacks += 1;
     packMap.set(order.pack_slug, pack);
   }
 
+  const packMetrics = Array.from(packMap.values()).map((pack) => {
+    const ingredientCost = pack.bagels * costs.ingredientCostPerBagel;
+    const packagingCost = pack.confirmedPacks * costs.packagingCostPerPack;
+    const grossMargin = pack.productRevenue - ingredientCost - packagingCost;
+
+    return {
+      ...pack,
+      ingredientCost,
+      packagingCost,
+      grossMargin,
+      grossMarginRate: pack.productRevenue ? Math.round((grossMargin / pack.productRevenue) * 100) : 0,
+      marginPerPack: pack.confirmedPacks ? grossMargin / pack.confirmedPacks : 0,
+    };
+  }).sort((a, b) => b.confirmedPacks - a.confirmedPacks || b.reservedPacks - a.reservedPacks || a.packName.localeCompare(b.packName, "es"));
+
   const deliveryCollected = confirmedOrders.reduce((sum, order) => sum + getOrderDeliveryFee(order), 0);
   const confirmedSales = confirmedOrders.reduce((sum, order) => sum + Number(order.total_amount), 0);
   const confirmedProductSales = confirmedOrders.reduce((sum, order) => sum + getOrderProductRevenue(order), 0);
   const confirmedBagels = confirmedOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
-  const estimatedProductCost = confirmedBagels * financialEstimateAssumptions.cogsPerBagel;
-  const estimatedPackagingCost = confirmedOrders.length * financialEstimateAssumptions.packagingPerPack;
+  const estimatedProductCost = confirmedBagels * costs.ingredientCostPerBagel;
+  const estimatedPackagingCost = confirmedOrders.length * costs.packagingCostPerPack;
+  const actualDeliveryCost = costs.actualDeliveryCost;
+  const otherBatchCost = costs.otherBatchCost;
+  const deliverySurplus = deliveryCollected - actualDeliveryCost;
+  const estimatedTotalCost = estimatedProductCost + estimatedPackagingCost + actualDeliveryCost + otherBatchCost;
   const estimatedGrossMargin = confirmedProductSales - estimatedProductCost - estimatedPackagingCost;
+  const estimatedNetProfit = confirmedSales - estimatedTotalCost;
 
   return {
     batchId: batch.id,
@@ -560,10 +640,17 @@ export function getFinancialSummary(batch: Pick<Batch, "id" | "name">, orders: O
     confirmedBagels,
     estimatedProductCost,
     estimatedPackagingCost,
+    actualDeliveryCost,
+    otherBatchCost,
+    estimatedTotalCost,
     estimatedGrossMargin,
     estimatedGrossMarginRate: confirmedProductSales ? Math.round((estimatedGrossMargin / confirmedProductSales) * 100) : 0,
-    packMetrics: Array.from(packMap.values()).sort((a, b) => b.confirmedPacks - a.confirmedPacks || b.reservedPacks - a.reservedPacks || a.packName.localeCompare(b.packName, "es")),
-    assumptions: financialEstimateAssumptions,
+    deliverySurplus,
+    estimatedNetProfit,
+    estimatedNetProfitRate: confirmedSales ? Math.round((estimatedNetProfit / confirmedSales) * 100) : 0,
+    packMetrics,
+    costs,
+    costSchemaReady,
   };
 }
 

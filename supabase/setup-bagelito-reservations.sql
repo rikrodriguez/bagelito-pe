@@ -32,8 +32,27 @@ create table if not exists public.batches (
   delivery_date timestamptz null,
   capacity_packs integer null,
   capacity_bagels integer null,
+  ingredient_cost_per_bagel numeric not null default 3.20,
+  packaging_cost_per_pack numeric not null default 1.50,
+  actual_delivery_cost numeric not null default 0,
+  other_batch_cost numeric not null default 0,
   created_at timestamptz default now()
 );
+
+alter table public.batches add column if not exists ingredient_cost_per_bagel numeric not null default 3.20;
+alter table public.batches add column if not exists packaging_cost_per_pack numeric not null default 1.50;
+alter table public.batches add column if not exists actual_delivery_cost numeric not null default 0;
+alter table public.batches add column if not exists other_batch_cost numeric not null default 0;
+
+alter table public.batches drop constraint if exists batches_finance_costs_nonnegative;
+alter table public.batches
+  add constraint batches_finance_costs_nonnegative
+  check (
+    ingredient_cost_per_bagel >= 0
+    and packaging_cost_per_pack >= 0
+    and actual_delivery_cost >= 0
+    and other_batch_cost >= 0
+  );
 
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
