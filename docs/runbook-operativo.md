@@ -310,7 +310,39 @@ Nota:
 
 - El margen sigue siendo operativo, no contabilidad formal. Para cierre contable, comparar con comprobantes reales y extractos de pago.
 
-## 13. Cierre de batch
+## 13. Contenido y crecimiento
+
+Usar `docs/contenido-crecimiento.md` para ejecutar Instagram alrededor del batch.
+
+Antes de abrir:
+
+- Confirmar bio y link de waitlist.
+- Actualizar highlight `Next batch`.
+- Preparar fotos reales de packs, sabores y behind the scenes.
+- Publicar calendario de expectativa: 7, 5, 3 y 1 dia antes.
+
+Durante batch abierto:
+
+- Cambiar bio y link a reserva.
+- Publicar `orders open`.
+- Usar stories con link a `/reserve`.
+- Responder DMs y dudas de delivery rapido.
+- Publicar `last call` 24 horas antes de cerrar.
+
+Despues de delivery:
+
+- Pedir feedback con `Msg feedback`.
+- Guardar testimonios con permiso.
+- Actualizar highlight `Reviews`.
+- Publicar batch recap y volver la bio a waitlist.
+
+Reglas:
+
+- No publicar datos privados, vouchers, direcciones ni telefonos.
+- Priorizar fotos/videos reales de Bagelito.
+- Medir visitas con UTMs y revisar Vercel Analytics despues de posts fuertes.
+
+## 14. Cierre de batch
 
 Checklist final:
 

@@ -65,6 +65,8 @@ Despues de cada deploy importante:
 
 ## Instagram funnel
 
+Playbook completo de contenido: `docs/contenido-crecimiento.md`.
+
 Perfil recomendado:
 
 - Nombre: `Bagelito.pe`
@@ -169,6 +171,7 @@ Usar UTMs simples:
 
 - Una URL principal por campana.
 - No cambiar OG image durante un batch activo salvo que haya error.
+- Usar el calendario de `docs/contenido-crecimiento.md` para abrir, cerrar, producir y recapitular cada batch.
 - Revisar Search Console semanalmente.
 - Revisar Vercel Analytics despues de cada post o story fuerte.
 - Mantener `@bagelito.pe` como perfil visible en footer y structured data.
