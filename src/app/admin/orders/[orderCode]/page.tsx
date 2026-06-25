@@ -4,10 +4,13 @@ import { ArrowLeft, Eye, ShieldCheck } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import {
   fetchOrderByCode,
+  fetchOrders,
+  findCustomerProfileForOrder,
   getOrderArchiveState,
   hasUploadedPaymentProof,
   isManualPaymentPending,
   isOrderArchived,
+  type CustomerProfile,
   type Order,
 } from "@/lib/admin/queries";
 import { canSendAdminWhatsAppIntent, hasAdminWhatsAppMessageSent, parseAdminWhatsAppIntent, type AdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
@@ -39,6 +42,20 @@ function statusLabel(status: string) {
   return statusLabels[status] ?? status.replaceAll("_", " ");
 }
 
+function formatMoney(value: number) {
+  const amount = Math.round(Number(value));
+  return `${amount < 0 ? "-" : ""}S/${Math.abs(amount)}`;
+}
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString("es-PE", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function getFlavorText(order: Order) {
+  if (!order.order_items?.length) return "No flavors captured";
+  return order.order_items.map((item) => `${item.quantity} x ${item.flavor_name}`).join(" · ");
+}
+
 function WhatsAppDetailAction({
   blockedLabel,
   intent,
@@ -63,6 +80,57 @@ function WhatsAppDetailAction({
   return <AdminWhatsAppLink order={order} intent={intent} label={label} returnTo={`/admin/orders/${order.order_code}?whatsappSent=${intent}`} />;
 }
 
+function CustomerHistoryCard({ currentOrderCode, profile }: { currentOrderCode: string; profile: CustomerProfile }) {
+  return (
+    <div className="admin-card customer-history-card">
+      <div className="admin-card-head compact">
+        <div>
+          <p className="kicker">Customer CRM</p>
+          <h2>Customer history</h2>
+          <p>Compras anteriores, ultima compra, gasto total y preferencias de sabores.</p>
+        </div>
+        <span className={`status-pill ${profile.repeatOrders > 0 ? "paid" : "neutral"}`}>{profile.repeatOrders > 0 ? "Repeat customer" : "First order"}</span>
+      </div>
+
+      <div className="customer-history-kpis">
+        <div><span>Total orders</span><strong>{profile.totalOrders}</strong><small>{profile.repeatOrders} repeat orders</small></div>
+        <div><span>Total spent</span><strong>{formatMoney(profile.totalSpent)}</strong><small>{profile.paidOrders} paid orders</small></div>
+        <div><span>Last purchase</span><strong>{profile.lastPurchaseAt ? formatDate(profile.lastPurchaseAt) : "None yet"}</strong><small>Last order {formatDate(profile.lastOrderAt)}</small></div>
+        <div><span>Bagels bought</span><strong>{profile.totalBagels}</strong><small>{profile.deliveredOrders} received</small></div>
+      </div>
+
+      <div className="customer-history-grid">
+        <section>
+          <h3>Flavor preferences</h3>
+          <div className="customer-flavor-tags">
+            {profile.favoriteFlavors.length ? profile.favoriteFlavors.slice(0, 6).map((flavor) => (
+              <span key={flavor.flavorName}>{flavor.flavorName} · {flavor.quantity}</span>
+            )) : <span>No flavors captured</span>}
+          </div>
+        </section>
+
+        <section>
+          <h3>District history</h3>
+          <div className="customer-flavor-tags">
+            {profile.districts.map((item) => <span key={item.district}>{item.district} · {item.orders}</span>)}
+          </div>
+        </section>
+      </div>
+
+      <div className="customer-history-list">
+        {profile.orders.map((order) => (
+          <Link className={order.order_code === currentOrderCode ? "current" : ""} href={`/admin/orders/${order.order_code}`} key={order.id}>
+            <span>{order.order_code}</span>
+            <strong>{order.pack_name}</strong>
+            <small>{formatDate(order.created_at)} · {formatMoney(Number(order.total_amount))} · {statusLabel(order.status)}</small>
+            <small>{getFlavorText(order)}</small>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default async function OrderDetailPage({
   params,
   searchParams,
@@ -81,6 +149,8 @@ export default async function OrderDetailPage({
 
   const order = await fetchOrderByCode(orderCode);
   if (!order) notFound();
+  const allOrders = await fetchOrders();
+  const customerProfile = findCustomerProfileForOrder(order, allOrders);
   const archived = isOrderArchived(order);
   const archiveState = getOrderArchiveState(order);
   const whatsappIntent = parseAdminWhatsAppIntent(query?.whatsapp);
@@ -113,6 +183,7 @@ export default async function OrderDetailPage({
           <div className="admin-card"><h2>Payment</h2><PaymentDetail order={order} /></div>
           <div className="admin-card"><h2>Customer received?</h2><p><span className={`handoff-status ${order.status === "delivered" ? "received" : "pending"}`}>{order.status === "delivered" ? "Yes, received by customer" : "Not marked received yet"}</span></p><p>Set status to “received by customer” after delivery handoff is confirmed.</p></div>
         </div>
+        {customerProfile ? <CustomerHistoryCard currentOrderCode={order.order_code} profile={customerProfile} /> : null}
         <div className="admin-panels detail-panels">
           <div className="admin-card"><h2>Status</h2><form className="admin-detail-form" action={updateOrderStatus}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><select name="status" defaultValue={order.status}>{statuses.map((status) => <option key={status} value={status}>{statusLabel(status)}</option>)}</select><button className="pill-button pink" type="submit">Update status</button></form></div>
           <div className="admin-card whatsapp-zone"><h2>Customer comms</h2><p>Open and log the right WhatsApp message for each stage: post-compra, delivery reminder, received and feedback.</p><div className="admin-detail-actions"><WhatsAppDetailAction order={order} intent="order_received" label="Order received" loggedLabel="Order message logged" blockedLabel="Order not active" /><WhatsAppDetailAction order={order} intent="payment_confirmed" label="Payment message" loggedLabel="Payment message logged" blockedLabel="Confirm payment first" /><WhatsAppDetailAction order={order} intent="delivery_reminder" label="Delivery reminder" loggedLabel="Delivery reminder logged" blockedLabel="Set ready for delivery first" /><WhatsAppDetailAction order={order} intent="delivered" label="Received message" loggedLabel="Received message logged" blockedLabel="Mark received first" /><WhatsAppDetailAction order={order} intent="feedback_request" label="Feedback request" loggedLabel="Feedback request logged" blockedLabel="Send received first" /></div></div>

@@ -31,6 +31,7 @@ Bagelito.pe is positioned as the monthly bagel drop in Lima: customers reserve p
 - [Rutina de backups y Supabase](docs/supabase-backups-rutina.md): plan backups, weekly CSV export, voucher Storage checks, and delete safety.
 - [Busqueda y crecimiento](docs/busqueda-crecimiento.md): Search Console, indexing, Instagram/WhatsApp funnel, UTM links, and OG testing.
 - [Customer comms](docs/customer-comms.md): post-purchase, payment, delivery, received, and feedback WhatsApp message cadence.
+- [Customer CRM](docs/customer-crm.md): customer history, repeat buyers, last purchase, total spend, and flavor preferences.
 
 ## Production
 

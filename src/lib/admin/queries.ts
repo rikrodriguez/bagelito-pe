@@ -142,6 +142,168 @@ export function hasUploadedPaymentProof(order: Pick<Order, "payment_screenshot_p
   return Boolean(order.payment_screenshot_path) && !order.payment_screenshot_path.startsWith("payment-pending/");
 }
 
+export type CustomerFlavorPreference = {
+  flavorName: string;
+  quantity: number;
+  orders: number;
+};
+
+export type CustomerDistrictPreference = {
+  district: string;
+  orders: number;
+};
+
+export type CustomerProfile = {
+  key: string;
+  customerName: string;
+  whatsapp: string;
+  email: string;
+  district: string;
+  firstOrderAt: string;
+  lastOrderAt: string;
+  lastPurchaseAt: string | null;
+  totalOrders: number;
+  paidOrders: number;
+  deliveredOrders: number;
+  repeatOrders: number;
+  totalSpent: number;
+  totalReservedValue: number;
+  totalBagels: number;
+  marketingOptIn: boolean;
+  favoriteFlavors: CustomerFlavorPreference[];
+  districts: CustomerDistrictPreference[];
+  orders: Order[];
+};
+
+function normalizeCustomerPhone(value: string | null | undefined) {
+  const digits = (value ?? "").replace(/\D/g, "");
+  if (!digits) return "";
+  if (digits.startsWith("51") && digits.length === 11) return digits.slice(2);
+  if (digits.length > 9) return digits.slice(-9);
+  return digits;
+}
+
+function normalizeCustomerEmail(value: string | null | undefined) {
+  return (value ?? "").trim().toLowerCase();
+}
+
+function getCustomerKey(order: Pick<Order, "email" | "id" | "whatsapp">) {
+  const phone = normalizeCustomerPhone(order.whatsapp);
+  if (phone) return `phone:${phone}`;
+
+  const email = normalizeCustomerEmail(order.email);
+  if (email) return `email:${email}`;
+
+  return `order:${order.id}`;
+}
+
+function isConfirmedCustomerOrder(order: Pick<Order, "status">) {
+  return productionStatuses.includes(order.status as (typeof productionStatuses)[number]);
+}
+
+function buildFlavorPreferences(orders: Order[]) {
+  const map = new Map<string, CustomerFlavorPreference>();
+
+  for (const order of orders) {
+    for (const item of order.order_items ?? []) {
+      const current = map.get(item.flavor_name) ?? { flavorName: item.flavor_name, quantity: 0, orders: 0 };
+      current.quantity += Number(item.quantity);
+      current.orders += 1;
+      map.set(item.flavor_name, current);
+    }
+  }
+
+  return Array.from(map.values()).sort((a, b) => b.quantity - a.quantity || b.orders - a.orders || a.flavorName.localeCompare(b.flavorName, "es"));
+}
+
+function buildDistrictPreferences(orders: Order[]) {
+  const map = new Map<string, CustomerDistrictPreference>();
+
+  for (const order of orders) {
+    const current = map.get(order.district) ?? { district: order.district, orders: 0 };
+    current.orders += 1;
+    map.set(order.district, current);
+  }
+
+  return Array.from(map.values()).sort((a, b) => b.orders - a.orders || a.district.localeCompare(b.district, "es"));
+}
+
+function sortCustomerOrders(orders: Order[]) {
+  return [...orders].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+}
+
+export function getCustomerProfiles(orders: Order[]) {
+  const groups = new Map<string, Order[]>();
+
+  for (const order of orders) {
+    if (order.status === "cancelled") continue;
+    const key = getCustomerKey(order);
+    groups.set(key, [...(groups.get(key) ?? []), order]);
+  }
+
+  return Array.from(groups.entries()).map(([key, customerOrders]) => {
+    const sortedOrders = sortCustomerOrders(customerOrders);
+    const latest = sortedOrders[0];
+    const first = sortedOrders.at(-1) ?? latest;
+    const paidOrders = sortedOrders.filter(isConfirmedCustomerOrder);
+    const flavorSource = paidOrders.length ? paidOrders : sortedOrders;
+    const lastPurchase = paidOrders[0] ?? null;
+
+    return {
+      key,
+      customerName: latest.customer_name,
+      whatsapp: latest.whatsapp,
+      email: latest.email,
+      district: latest.district,
+      firstOrderAt: first.created_at,
+      lastOrderAt: latest.created_at,
+      lastPurchaseAt: lastPurchase?.created_at ?? null,
+      totalOrders: sortedOrders.length,
+      paidOrders: paidOrders.length,
+      deliveredOrders: sortedOrders.filter((order) => order.status === "delivered").length,
+      repeatOrders: Math.max(0, sortedOrders.length - 1),
+      totalSpent: paidOrders.reduce((sum, order) => sum + Number(order.total_amount), 0),
+      totalReservedValue: sortedOrders.reduce((sum, order) => sum + Number(order.total_amount), 0),
+      totalBagels: paidOrders.reduce((sum, order) => sum + Number(order.pack_units), 0),
+      marketingOptIn: sortedOrders.some((order) => order.marketing_opt_in),
+      favoriteFlavors: buildFlavorPreferences(flavorSource),
+      districts: buildDistrictPreferences(sortedOrders),
+      orders: sortedOrders,
+    } satisfies CustomerProfile;
+  }).sort((a, b) =>
+    b.totalSpent - a.totalSpent
+      || b.totalOrders - a.totalOrders
+      || new Date(b.lastOrderAt).getTime() - new Date(a.lastOrderAt).getTime()
+      || a.customerName.localeCompare(b.customerName, "es"),
+  );
+}
+
+export function findCustomerProfileForOrder(targetOrder: Pick<Order, "email" | "id" | "whatsapp">, orders: Order[]) {
+  const targetKey = getCustomerKey(targetOrder);
+  return getCustomerProfiles(orders).find((profile) => profile.key === targetKey) ?? null;
+}
+
+export function getCustomerCrmStats(profiles: CustomerProfile[]) {
+  const repeatCustomers = profiles.filter((profile) => profile.repeatOrders > 0).length;
+  const totalSpent = profiles.reduce((sum, profile) => sum + profile.totalSpent, 0);
+  const totalPaidOrders = profiles.reduce((sum, profile) => sum + profile.paidOrders, 0);
+  const lastPurchaseAt = profiles
+    .map((profile) => profile.lastPurchaseAt)
+    .filter((value): value is string => Boolean(value))
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0] ?? null;
+
+  return {
+    totalCustomers: profiles.length,
+    repeatCustomers,
+    repeatRate: profiles.length ? Math.round((repeatCustomers / profiles.length) * 100) : 0,
+    totalSpent,
+    averageCustomerValue: profiles.length ? Math.round(totalSpent / profiles.length) : 0,
+    totalPaidOrders,
+    lastPurchaseAt,
+    topCustomer: profiles[0] ?? null,
+  };
+}
+
 export function getDashboardStats(orders: Order[]) {
   const activeOrders = filterActiveOrders(orders);
   const byStatus = new Map<string, number>();

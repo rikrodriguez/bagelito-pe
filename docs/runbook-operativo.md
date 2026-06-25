@@ -266,7 +266,26 @@ Cadencia recomendada:
 4. Cliente recibio: cambiar a `delivered` y enviar/loggear `Msg received`.
 5. Despues de probar: enviar/loggear `Msg feedback`.
 
-## 11. Finanzas
+## 11. Customer CRM
+
+Usar `Customer CRM` dentro de `/admin` para revisar:
+
+- Historial por cliente.
+- Clientes repetidos.
+- Ultima compra.
+- Total gastado confirmado.
+- Preferencias de sabores.
+- Historial de distritos.
+
+Reglas:
+
+- Revisar el detalle del pedido para ver `Customer history` completo de esa persona.
+- Usar clientes repetidos para priorizar comunicacion y feedback.
+- Si un pedido fue archivado, sigue contando como historial.
+- Si un pedido fue borrado, desaparece del historial.
+- Para merges manuales o notas permanentes por cliente, evaluar una tabla `customers` mas adelante.
+
+## 12. Finanzas
 
 Usar `Financial snapshot` como lectura rapida:
 
@@ -280,7 +299,7 @@ Nota:
 
 - El margen es estimado. Hoy usa supuestos operativos de costo por bagel, packaging y delivery como pass-through. Para margen real, comparar luego con costos reales de ingredientes, empaques, merma y delivery pagado.
 
-## 12. Cierre de batch
+## 13. Cierre de batch
 
 Checklist final:
 

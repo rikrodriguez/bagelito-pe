@@ -30,6 +30,8 @@ import {
   filterActiveOrders,
   filterArchivedOrders,
   getBatchStats,
+  getCustomerCrmStats,
+  getCustomerProfiles,
   getDashboardStats,
   getDeliveryRoutePlan,
   getDeliverySummary,
@@ -41,6 +43,7 @@ import {
   isOrderArchived,
   productionStatuses,
   type Batch,
+  type CustomerProfile,
   type DeliveryRouteStop,
   type FinancialSummary,
   type Order,
@@ -350,6 +353,93 @@ function productionStageActionTone(stageKey: ProductionOpsPlan["stages"][number]
   if (stageKey === "bake") return "warning";
   if (stageKey === "pack") return "paid";
   return "received";
+}
+
+function getCustomerFlavorSummary(profile: CustomerProfile) {
+  if (!profile.favoriteFlavors.length) return "No flavors captured";
+  return profile.favoriteFlavors.slice(0, 3).map((item) => `${item.flavorName} (${item.quantity})`).join(" · ");
+}
+
+function CustomerCrmPanel({ profiles, stats }: { profiles: CustomerProfile[]; stats: ReturnType<typeof getCustomerCrmStats> }) {
+  const topProfiles = profiles.slice(0, 8);
+
+  return (
+    <section className="admin-card customer-crm-panel" id="customer-crm">
+      <div className="admin-card-head">
+        <div>
+          <p className="kicker">Customer CRM</p>
+          <h2>Customer history and repeat buyers</h2>
+          <p>Historial por cliente, recompra, ultima compra, gasto total y preferencias de sabores.</p>
+        </div>
+        <span className="status-pill neutral">{stats.totalCustomers} customers</span>
+      </div>
+
+      <div className="customer-crm-kpis">
+        <div><span>Unique customers</span><strong>{stats.totalCustomers}</strong><small>Grouped by WhatsApp/email</small></div>
+        <div><span>Repeat customers</span><strong>{stats.repeatCustomers}</strong><small>{stats.repeatRate}% repeat rate</small></div>
+        <div><span>Total spent</span><strong>{formatMoney(stats.totalSpent)}</strong><small>{stats.totalPaidOrders} paid orders</small></div>
+        <div><span>Avg customer value</span><strong>{formatMoney(stats.averageCustomerValue)}</strong><small>{stats.lastPurchaseAt ? `Last purchase ${formatDate(stats.lastPurchaseAt)}` : "No paid purchases yet"}</small></div>
+      </div>
+
+      {stats.topCustomer ? (
+        <div className="customer-crm-highlight">
+          <span>Top customer</span>
+          <strong>{stats.topCustomer.customerName}</strong>
+          <small>{stats.topCustomer.totalOrders} orders · {formatMoney(stats.topCustomer.totalSpent)} spent · {getCustomerFlavorSummary(stats.topCustomer)}</small>
+        </div>
+      ) : null}
+
+      {topProfiles.length ? (
+        <div className="customer-profile-list">
+          {topProfiles.map((profile) => {
+            const latestOrder = profile.orders[0];
+            const repeat = profile.repeatOrders > 0;
+
+            return (
+              <article className="customer-profile-card" key={profile.key}>
+                <div className="customer-profile-head">
+                  <div className="customer-avatar">{initials(profile.customerName)}</div>
+                  <div>
+                    <h3>{profile.customerName}</h3>
+                    <p>{profile.whatsapp} · {profile.email}</p>
+                    <p>{profile.district} · first order {formatDate(profile.firstOrderAt)}</p>
+                  </div>
+                  <span className={`status-pill ${repeat ? "paid" : "neutral"}`}>{repeat ? "Repeat" : "New"}</span>
+                </div>
+
+                <div className="customer-profile-metrics">
+                  <div><span>Orders</span><strong>{profile.totalOrders}</strong></div>
+                  <div><span>Paid</span><strong>{profile.paidOrders}</strong></div>
+                  <div><span>Spent</span><strong>{formatMoney(profile.totalSpent)}</strong></div>
+                  <div><span>Last</span><strong>{formatDate(profile.lastPurchaseAt ?? profile.lastOrderAt)}</strong></div>
+                </div>
+
+                <div className="customer-flavor-tags">
+                  {profile.favoriteFlavors.length ? profile.favoriteFlavors.slice(0, 4).map((flavor) => (
+                    <span key={flavor.flavorName}>{flavor.flavorName} · {flavor.quantity}</span>
+                  )) : <span>No flavors captured</span>}
+                </div>
+
+                <div className="customer-order-history-mini">
+                  {profile.orders.slice(0, 3).map((order) => (
+                    <Link href={`/admin/orders/${order.order_code}`} key={order.id}>
+                      <span>{order.order_code}</span>
+                      <strong>{order.pack_name}</strong>
+                      <small>{formatDate(order.created_at)} · {formatMoney(Number(order.total_amount))} · {humanStatus(order.status)}</small>
+                    </Link>
+                  ))}
+                </div>
+
+                {latestOrder ? <Link className="mini-link" href={`/admin/orders/${latestOrder.order_code}`}><Eye size={15} /> Latest order</Link> : null}
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="empty-state">No customer history yet. It will appear after reservations are submitted.</div>
+      )}
+    </section>
+  );
 }
 
 function FinancialPanel({ summary }: { summary: FinancialSummary }) {
@@ -736,6 +826,8 @@ export default async function AdminPage({
 
   const allOrders = await fetchOrders();
   const currentBatch = await fetchCurrentBatch();
+  const customerProfiles = getCustomerProfiles(allOrders);
+  const customerCrmStats = getCustomerCrmStats(customerProfiles);
   const activeOrders = filterActiveOrders(allOrders);
   const archivedOrders = filterArchivedOrders(allOrders);
   const baseOrders = showingArchived ? archivedOrders : activeOrders;
@@ -856,6 +948,8 @@ export default async function AdminPage({
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
           <Stat icon={MessageCircle} label="Customer comms" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
+
+        <CustomerCrmPanel profiles={customerProfiles} stats={customerCrmStats} />
 
         <FinancialPanel summary={finance} />
 
