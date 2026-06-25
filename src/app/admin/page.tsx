@@ -34,7 +34,7 @@ import {
   getDeliveryRoutePlan,
   getDeliverySummary,
   getOrderArchiveState,
-  getProductionSummary,
+  getProductionOpsPlan,
   hasUploadedPaymentProof,
   isManualPaymentPending,
   isOrderArchived,
@@ -42,6 +42,7 @@ import {
   type Batch,
   type DeliveryRouteStop,
   type Order,
+  type ProductionOpsPlan,
 } from "@/lib/admin/queries";
 import {
   buildAdminWhatsAppMessage,
@@ -342,6 +343,12 @@ function StatusAction({ order, returnTo, status, label, tone }: { order: Order; 
   );
 }
 
+function productionStageActionTone(stageKey: ProductionOpsPlan["stages"][number]["key"]) {
+  if (stageKey === "bake") return "warning";
+  if (stageKey === "pack") return "paid";
+  return "received";
+}
+
 function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[] }) {
   return (
     <section className="admin-card whatsapp-queue-card">
@@ -372,6 +379,118 @@ function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: Admin
         </div>
       ) : (
         <div className="empty-state">No hay WhatsApps pendientes. La cola de seguimiento está limpia.</div>
+      )}
+    </section>
+  );
+}
+
+function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; returnTo: string }) {
+  const doneStage = plan.stages.find((stage) => stage.key === "done");
+  const activeStages = plan.stages.filter((stage) => stage.key !== "done");
+  const donePercent = percent(doneStage?.packs ?? 0, plan.totalPacks);
+  const deliveryDate = plan.deliveryDate ? formatBatchDate(plan.deliveryDate) : "Not set";
+
+  return (
+    <section className="admin-card production-ops-card" id="production-ops">
+      <div className="admin-card-head">
+        <div>
+          <p className="kicker">Production ops</p>
+          <h2>{plan.batchName}</h2>
+          <p>Packing list por sabor, conteo total del batch y checklist operativo para hornear, empacar y entregar.</p>
+        </div>
+        <a className="status-action export" href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
+      </div>
+
+      <div className="production-ops-stats">
+        <div><span>Batch packs</span><strong>{plan.totalPacks}</strong><small>{formatMoney(plan.totalRevenue)} confirmed</small></div>
+        <div><span>Bagels</span><strong>{plan.totalBagels}</strong><small>Paid batch count</small></div>
+        <div><span>Flavors</span><strong>{plan.packingList.length}</strong><small>Items to prep</small></div>
+        <div><span>Delivery window</span><strong>{deliveryDate}</strong><small>{donePercent}% received</small></div>
+      </div>
+
+      {plan.totalPacks ? (
+        <>
+          <div className="production-ops-grid">
+            <section>
+              <div className="admin-card-head compact">
+                <h3>Packing list by flavor</h3>
+                <p>Use this to bake and count each flavor before packing.</p>
+              </div>
+              <div className="production-flavor-list">
+                {plan.packingList.map((item) => (
+                  <div className="production-flavor-row" key={item.flavorName}>
+                    <div>
+                      <strong>{item.flavorName}</strong>
+                      <small>{[...new Set(item.orderCodes)].join(", ")}</small>
+                    </div>
+                    <b>{item.quantity}</b>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <div className="admin-card-head compact">
+                <h3>Pack totals</h3>
+                <p>Conteo rápido para cajas y etiquetas.</p>
+              </div>
+              <div className="production-pack-list">
+                {plan.packList.map((item) => (
+                  <div className="production-pack-row" key={item.packSlug}>
+                    <div>
+                      <strong>{item.packName}</strong>
+                      <small>{item.orderCodes.join(", ")}</small>
+                    </div>
+                    <b>{item.packs} packs / {item.bagels} bagels</b>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <div className="production-stage-grid">
+            {plan.stages.map((stage) => (
+              <section className={`production-stage ${stage.key}`} key={stage.key}>
+                <div className="production-stage-head">
+                  <span>{stage.label}</span>
+                  <strong>{stage.packs} packs</strong>
+                  <small>{stage.bagels} bagels · {stage.description}</small>
+                </div>
+
+                <div className="production-task-list">
+                  {stage.orders.length ? stage.orders.map((order) => (
+                    <div className="production-task-row" key={order.id}>
+                      <span className={`production-check ${stage.key === "done" ? "done" : ""}`}>{stage.key === "done" ? "✓" : ""}</span>
+                      <div className="production-task-main">
+                        <strong>{order.order_code} · {order.customer_name}</strong>
+                        <small>{order.pack_name} · {order.pack_units} bagels</small>
+                        <small>{getFlavorText(order)}</small>
+                      </div>
+                      <div className="production-task-actions">
+                        {stage.nextStatus && stage.actionLabel ? (
+                          <StatusAction order={order} returnTo={returnTo} status={stage.nextStatus} label={stage.actionLabel} tone={productionStageActionTone(stage.key)} />
+                        ) : (
+                          <span className="status-pill received">Done</span>
+                        )}
+                        <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
+                      </div>
+                    </div>
+                  )) : (
+                    <div className="production-stage-empty">No orders in this step.</div>
+                  )}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <div className="production-op-note">
+            <strong>Suggested flow:</strong>
+            {activeStages.map((stage) => <span key={stage.key}>{stage.label}: {stage.packs}</span>)}
+            <span>Recibidos: {doneStage?.packs ?? 0}</span>
+          </div>
+        </>
+      ) : (
+        <div className="empty-state">No paid orders in the current batch yet. Confirm payments first, then this checklist will populate.</div>
       )}
     </section>
   );
@@ -537,8 +656,8 @@ export default async function AdminPage({
   const baseOrders = showingArchived ? archivedOrders : activeOrders;
   const orders = filterAndSortOrders(baseOrders, searchQuery, statusFilter, sort);
   const stats = getDashboardStats(activeOrders);
-  const production = getProductionSummary(activeOrders);
   const delivery = getDeliverySummary(activeOrders);
+  const productionOps = getProductionOpsPlan(currentBatch, activeOrders);
   const routePlan = getDeliveryRoutePlan(activeOrders);
   const paidOrders = activeOrders.filter(isPaid);
   const deliveredOrders = activeOrders.filter(isDelivered);
@@ -655,6 +774,8 @@ export default async function AdminPage({
         <BatchManagementPanel batch={currentBatch} stats={batchStats} />
 
         <WhatsAppQueue followUps={whatsappFollowUps} />
+
+        <ProductionOpsPanel plan={productionOps} returnTo={currentListHref} />
 
         <DeliveryOpsPanel routePlan={routePlan} returnTo={currentListHref} />
 
@@ -853,11 +974,6 @@ export default async function AdminPage({
         </section>
 
         <div className="admin-panels">
-          <section className="admin-card">
-            <h2>Production summary</h2>
-            <p>Only paid-confirmed orders enter production.</p>
-            {production.length ? production.map((item) => <div className="summary-row" key={item.flavorName}><span>{item.flavorName}</span><strong>{item.quantity}</strong></div>) : <p>No confirmed production yet.</p>}
-          </section>
           <section className="admin-card">
             <h2>Delivery summary</h2>
             <p>Only paid-confirmed orders enter delivery planning.</p>

@@ -994,7 +994,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 .admin-table th { color: #66758a; font-size: .75rem; text-transform: uppercase; }
 .admin-table td span { display: block; color: #66758a; font-size: .8rem; }
 .status-pill { display: inline-flex !important; border-radius: 999px; background: #eef2ff; color: var(--purple) !important; padding: 5px 10px; font-weight: 950; text-transform: capitalize; }
-.admin-panels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 18px; }
+.admin-panels { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 18px; }
 .detail-panels { grid-template-columns: repeat(4, 1fr); }
 .summary-row { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid #e8eef5; padding: 12px 0; font-weight: 900; }
 .summary-row small { display: block; margin-top: 4px; color: #66758a; font-weight: 700; }
@@ -2289,7 +2289,8 @@ section[id] {
   margin-bottom: 10px;
 }
 
-.admin-card-head.compact h2 {
+.admin-card-head.compact h2,
+.admin-card-head.compact h3 {
   font-size: 1.15rem;
 }
 
@@ -2370,6 +2371,217 @@ section[id] {
 
 .customer-section {
   margin-top: 20px;
+}
+
+.production-ops-card {
+  margin-bottom: 20px;
+}
+
+.production-ops-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 16px;
+}
+
+.production-ops-stats div {
+  display: grid;
+  gap: 4px;
+  border-radius: 14px;
+  background: #fff8ee;
+  padding: 12px;
+}
+
+.production-ops-stats span,
+.production-stage-head span {
+  color: #66758a;
+  font-size: .74rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.production-ops-stats strong {
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.production-ops-stats small {
+  color: #66758a;
+  font-weight: 850;
+}
+
+.production-ops-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.production-ops-grid > section {
+  display: grid;
+  align-content: start;
+  border: 1px solid #f0e0c6;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fffdf8, #fff8ee);
+  padding: 14px;
+}
+
+.production-flavor-list,
+.production-pack-list {
+  display: grid;
+  gap: 10px;
+}
+
+.production-flavor-row,
+.production-pack-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  border-radius: 12px;
+  background: white;
+  padding: 10px 12px;
+}
+
+.production-flavor-row strong,
+.production-pack-row strong,
+.production-task-main strong {
+  display: block;
+  color: var(--navy);
+  font-size: .92rem;
+}
+
+.production-flavor-row small,
+.production-pack-row small,
+.production-task-main small {
+  display: block;
+  color: #66758a;
+  font-size: .78rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.production-flavor-row b,
+.production-pack-row b {
+  color: var(--orange);
+  font-size: 1rem;
+}
+
+.production-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.production-stage {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  border: 1px solid #dfe9f3;
+  border-radius: 16px;
+  background: #fbfdff;
+  padding: 14px;
+}
+
+.production-stage.bake { border-color: #ffd7a1; background: #fff8ee; }
+.production-stage.pack { border-color: #a7e3d7; background: #f2fffb; }
+.production-stage.deliver { border-color: #cab6f1; background: #faf7ff; }
+.production-stage.done { border-color: #b8dfcf; background: #f1fbf6; }
+
+.production-stage-head {
+  display: grid;
+  gap: 4px;
+}
+
+.production-stage-head strong {
+  color: var(--navy);
+  font-size: 1.1rem;
+}
+
+.production-stage-head small {
+  color: #66758a;
+  font-size: .78rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.production-task-list {
+  display: grid;
+  gap: 9px;
+}
+
+.production-task-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  border-radius: 12px;
+  background: white;
+  padding: 10px;
+}
+
+.production-check {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #c8d5e2;
+  border-radius: 8px;
+  color: #168b65;
+  font-weight: 1000;
+}
+
+.production-check.done {
+  border-color: #71d6b8;
+  background: #dff8ee;
+}
+
+.production-task-main {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.production-task-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding-left: 38px;
+}
+
+.production-stage-empty {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .72);
+  color: #66758a;
+  padding: 12px;
+  font-size: .84rem;
+  font-weight: 850;
+}
+
+.production-op-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+  border-radius: 14px;
+  background: #f8fbff;
+  padding: 12px;
+  color: #66758a;
+  font-size: .84rem;
+  font-weight: 850;
+}
+
+.production-op-note strong {
+  color: var(--navy);
+}
+
+.production-op-note span {
+  border-radius: 999px;
+  background: white;
+  padding: 6px 9px;
 }
 
 .delivery-ops-card {
@@ -2892,6 +3104,9 @@ section[id] {
   .customer-contact-grid,
   .batch-ops-grid,
   .batch-settings-form,
+  .production-ops-grid,
+  .production-ops-stats,
+  .production-stage-grid,
   .whatsapp-queue-list,
   .reservation-data-grid {
     grid-template-columns: 1fr;
@@ -2928,8 +3143,13 @@ section[id] {
 
 @media (min-width: 761px) and (max-width: 1180px) {
   .crm-stat-grid,
-  .crm-overview-grid {
+  .crm-overview-grid,
+  .production-stage-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .production-ops-grid {
+    grid-template-columns: 1fr;
   }
 
   .customer-contact-grid,
@@ -3633,6 +3853,12 @@ section[id] {
     justify-content: center;
   }
 
+  .production-ops-grid,
+  .production-ops-stats,
+  .production-stage-grid {
+    grid-template-columns: 1fr;
+  }
+
   .crm-stat-card {
     min-height: auto;
   }
@@ -3650,6 +3876,9 @@ section[id] {
   .customer-list,
   .batch-ops-grid,
   .batch-settings-form,
+  .production-ops-grid,
+  .production-ops-stats,
+  .production-stage-grid,
   .delivery-ops-stats,
   .whatsapp-queue-list,
   .reservation-data-grid,
@@ -3713,9 +3942,27 @@ section[id] {
     gap: 8px;
   }
 
+  .production-flavor-row,
+  .production-pack-row,
+  .production-task-row,
   .delivery-stop-head,
   .delivery-check-item {
     grid-template-columns: 1fr;
+  }
+
+  .production-task-actions {
+    padding-left: 0;
+  }
+
+  .production-task-actions .status-action,
+  .production-task-actions .mini-link {
+    flex: 1 1 160px;
+    justify-content: center;
+  }
+
+  .production-flavor-row b,
+  .production-pack-row b {
+    justify-self: start;
   }
 
   .delivery-stop-head > strong,

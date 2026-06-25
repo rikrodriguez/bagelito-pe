@@ -249,8 +249,139 @@ export type DeliveryRouteStop = {
   pendingHandoff: number;
 };
 
+export type ProductionPackingItem = {
+  flavorName: string;
+  quantity: number;
+  orderCodes: string[];
+  customers: string[];
+};
+
+export type ProductionPackItem = {
+  packSlug: string;
+  packName: string;
+  packs: number;
+  bagels: number;
+  orderCodes: string[];
+};
+
+export type ProductionStageKey = "bake" | "pack" | "deliver" | "done";
+
+export type ProductionStage = {
+  key: ProductionStageKey;
+  label: string;
+  description: string;
+  status: string;
+  nextStatus: string | null;
+  actionLabel: string | null;
+  orders: Order[];
+  packs: number;
+  bagels: number;
+};
+
+export type ProductionOpsPlan = {
+  batchId: string;
+  batchName: string;
+  deliveryDate: string | null;
+  orders: Order[];
+  totalPacks: number;
+  totalBagels: number;
+  totalRevenue: number;
+  packingList: ProductionPackingItem[];
+  packList: ProductionPackItem[];
+  stages: ProductionStage[];
+};
+
 function isDeliveryRouteOrder(order: Order) {
   return productionStatuses.includes(order.status as (typeof productionStatuses)[number]);
+}
+
+function sortOrdersForOps(orders: Order[]) {
+  return [...orders].sort((a, b) =>
+    a.pack_name.localeCompare(b.pack_name, "es")
+      || a.customer_name.localeCompare(b.customer_name, "es")
+      || a.order_code.localeCompare(b.order_code, "es"),
+  );
+}
+
+function getProductionOrdersForBatch(batch: Pick<Batch, "id">, orders: Order[]) {
+  return sortOrdersForOps(
+    filterActiveOrders(orders).filter((order) =>
+      order.batch_id === batch.id && productionStatuses.includes(order.status as (typeof productionStatuses)[number]),
+    ),
+  );
+}
+
+export function getProductionOpsPlan(batch: Pick<Batch, "id" | "name" | "delivery_date">, orders: Order[]): ProductionOpsPlan {
+  const productionOrders = getProductionOrdersForBatch(batch, orders);
+  const packingMap = new Map<string, ProductionPackingItem>();
+  const packMap = new Map<string, ProductionPackItem>();
+
+  for (const order of productionOrders) {
+    const pack = packMap.get(order.pack_slug) ?? {
+      packSlug: order.pack_slug,
+      packName: order.pack_name,
+      packs: 0,
+      bagels: 0,
+      orderCodes: [],
+    };
+    pack.packs += 1;
+    pack.bagels += Number(order.pack_units);
+    pack.orderCodes.push(order.order_code);
+    packMap.set(order.pack_slug, pack);
+
+    for (const item of order.order_items ?? []) {
+      const current = packingMap.get(item.flavor_name) ?? {
+        flavorName: item.flavor_name,
+        quantity: 0,
+        orderCodes: [],
+        customers: [],
+      };
+      current.quantity += Number(item.quantity);
+      current.orderCodes.push(order.order_code);
+      current.customers.push(order.customer_name);
+      packingMap.set(item.flavor_name, current);
+    }
+  }
+
+  const makeStage = (
+    key: ProductionStageKey,
+    label: string,
+    description: string,
+    status: string,
+    nextStatus: string | null,
+    actionLabel: string | null,
+  ): ProductionStage => {
+    const stageOrders = productionOrders.filter((order) => order.status === status);
+    return {
+      key,
+      label,
+      description,
+      status,
+      nextStatus,
+      actionLabel,
+      orders: stageOrders,
+      packs: stageOrders.length,
+      bagels: stageOrders.reduce((sum, order) => sum + Number(order.pack_units), 0),
+    };
+  };
+
+  return {
+    batchId: batch.id,
+    batchName: batch.name,
+    deliveryDate: batch.delivery_date,
+    orders: productionOrders,
+    totalPacks: productionOrders.length,
+    totalBagels: productionOrders.reduce((sum, order) => sum + Number(order.pack_units), 0),
+    totalRevenue: productionOrders.reduce((sum, order) => sum + Number(order.total_amount), 0),
+    packingList: Array.from(packingMap.values()).sort((a, b) => b.quantity - a.quantity || a.flavorName.localeCompare(b.flavorName, "es")),
+    packList: Array.from(packMap.values()).sort((a, b) => b.bagels - a.bagels || a.packName.localeCompare(b.packName, "es")),
+    stages: [
+      makeStage("bake", "Hornear", "Pedidos pagados que ya pueden entrar al horno.", "payment_confirmed", "in_production", "Start baking"),
+      makeStage("pack", "Empacar", "Pedidos en producción que toca armar y cerrar.", "in_production", "ready_for_delivery", "Mark packed"),
+      makeStage("deliver", "Entregar", "Packs listos para salir a ruta.", "ready_for_delivery", "delivered", "Mark delivered"),
+      makeStage("done", "Recibidos", "Clientes que ya recibieron su pedido.", "delivered", null, null),
+    ],
+  };
 }
 
 function sortDeliveryOrders(orders: Order[]) {
