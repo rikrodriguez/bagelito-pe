@@ -175,6 +175,7 @@ export async function deleteOrder(formData: FormData) {
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
+  const confirmOrderCode = String(formData.get("confirmOrderCode") ?? "");
 
   if (!orderId) throw new Error("Missing order ID");
 
@@ -185,6 +186,11 @@ export async function deleteOrder(formData: FormData) {
   }
 
   const { supabase, order } = result;
+  if (confirmOrderCode !== order.order_code) {
+    revalidatePath("/admin");
+    revalidatePath(`/admin/orders/${order.order_code}`);
+    redirect(`/admin/orders/${order.order_code}?deleteError=confirmation`);
+  }
 
   if (hasUploadedPaymentProof(order)) {
     const { error: storageError } = await supabase.storage.from("payment-proofs").remove([order.payment_screenshot_path]);

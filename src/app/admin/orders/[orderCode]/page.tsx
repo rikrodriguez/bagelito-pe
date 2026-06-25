@@ -39,7 +39,7 @@ export default async function OrderDetailPage({
   searchParams,
 }: {
   params: Promise<{ orderCode: string }>;
-  searchParams?: Promise<{ whatsapp?: string }>;
+  searchParams?: Promise<{ deleteError?: string; whatsapp?: string }>;
 }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
@@ -62,6 +62,9 @@ export default async function OrderDetailPage({
         <Link className="mini-link" href="/admin"><ArrowLeft size={16} /> Back to CRM</Link>
         <div className="admin-topbar"><div><p className="kicker">Order detail</p><h1>{order.order_code}</h1></div><span className={`status-pill ${archived ? "archived" : order.status === "delivered" ? "received" : ""}`}>{archived ? "archived" : statusLabel(order.status)}</span></div>
         {whatsappIntent ? <AdminWhatsAppNotice order={order} intent={whatsappIntent} /> : null}
+        {query?.deleteError === "confirmation" ? (
+          <div className="admin-flash warning">Delete cancelled. Type the exact order code to permanently delete this customer.</div>
+        ) : null}
         <div className="admin-panels detail-panels">
           <div className="admin-card"><h2>Customer</h2><p>{order.customer_name}</p><p>{order.whatsapp}</p><p>{order.email}</p></div>
           <div className="admin-card"><h2>Delivery</h2><p>{order.delivery_address}</p><p>{order.district}</p><p>{order.address_reference}</p><p>{order.delivery_notes}</p></div>

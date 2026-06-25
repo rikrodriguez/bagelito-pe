@@ -725,6 +725,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 .admin-card p { line-height: 1.45; }
 .admin-flash { margin: -8px 0 18px; border-radius: 14px; padding: 12px 14px; font-weight: 950; }
 .admin-flash.success { border: 1px solid #b8ead8; background: #e9fbf3; color: #107653; }
+.admin-flash.warning { border: 1px solid #ffd19c; background: #fff5e8; color: #9b5200; }
 .admin-safety-card {
   display: flex;
   align-items: center;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Trash2 } from "lucide-react";
 import { deleteOrder } from "./actions";
@@ -12,6 +13,8 @@ type DeleteOrderFormProps = {
 };
 
 export function DeleteOrderForm({ orderId, orderCode, customerName, label = "Delete customer" }: DeleteOrderFormProps) {
+  const confirmCodeRef = useRef<HTMLInputElement>(null);
+
   return (
     <form
       action={deleteOrder}
@@ -29,11 +32,15 @@ export function DeleteOrderForm({ orderId, orderCode, customerName, label = "Del
         if (typedCode !== orderCode) {
           event.preventDefault();
           window.alert("Delete cancelled. The order code did not match.");
+          return;
         }
+
+        if (confirmCodeRef.current) confirmCodeRef.current.value = typedCode;
       }}
     >
       <input type="hidden" name="orderId" value={orderId} />
       <input type="hidden" name="orderCode" value={orderCode} />
+      <input ref={confirmCodeRef} type="hidden" name="confirmOrderCode" defaultValue="" />
       <DeleteButton label={label} />
     </form>
   );
