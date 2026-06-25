@@ -223,7 +223,7 @@ function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: Admin
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string; whatsappSent?: string }>;
+  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string; whatsappError?: string; whatsappSent?: string }>;
 }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
@@ -231,6 +231,7 @@ export default async function AdminPage({
   const deletedOrderCode = params?.deleted;
   const archivedOrderCode = params?.archived;
   const restoredOrderCode = params?.restored;
+  const whatsappError = params?.whatsappError;
   const whatsappSentOrderCode = params?.whatsappSent;
   const showingArchived = params?.view === "archived";
   const whatsappIntent = parseAdminWhatsAppIntent(params?.whatsapp);
@@ -300,6 +301,10 @@ export default async function AdminPage({
 
         {restoredOrderCode ? (
           <div className="admin-flash success">Restored {restoredOrderCode} to the active customer list.</div>
+        ) : null}
+
+        {whatsappError === "status" ? (
+          <div className="admin-flash warning">WhatsApp follow-up was not logged because the order status is not ready for that message.</div>
         ) : null}
 
         {whatsappSentOrderCode ? (

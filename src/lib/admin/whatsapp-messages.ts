@@ -15,6 +15,8 @@ const intentByStatus: Record<string, AdminWhatsAppIntent | undefined> = {
   delivered: "delivered",
 };
 
+const paidStatuses = new Set(["payment_confirmed", "in_production", "ready_for_delivery", "delivered"]);
+
 function firstName(fullName: string) {
   return fullName.trim().split(/\s+/)[0] || "there";
 }
@@ -47,16 +49,20 @@ export function hasAdminWhatsAppMessageSent(order: Order, intent: AdminWhatsAppI
   return Boolean(getAdminWhatsAppSentAt(order, intent));
 }
 
+export function canSendAdminWhatsAppIntent(order: Pick<Order, "status">, intent: AdminWhatsAppIntent) {
+  if (intent === "payment_confirmed") return paidStatuses.has(order.status);
+  return order.status === "delivered";
+}
+
 export function getAdminWhatsAppFollowUps(orders: Order[]) {
   return orders.flatMap((order) => {
     const items: { order: Order; intent: AdminWhatsAppIntent }[] = [];
-    const isPaid = ["payment_confirmed", "in_production", "ready_for_delivery", "delivered"].includes(order.status);
 
-    if (isPaid && !hasAdminWhatsAppMessageSent(order, "payment_confirmed")) {
+    if (canSendAdminWhatsAppIntent(order, "payment_confirmed") && !hasAdminWhatsAppMessageSent(order, "payment_confirmed")) {
       items.push({ order, intent: "payment_confirmed" });
     }
 
-    if (order.status === "delivered" && !hasAdminWhatsAppMessageSent(order, "delivered")) {
+    if (canSendAdminWhatsAppIntent(order, "delivered") && !hasAdminWhatsAppMessageSent(order, "delivered")) {
       items.push({ order, intent: "delivered" });
     }
 

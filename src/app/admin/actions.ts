@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { hasUploadedPaymentProof } from "@/lib/admin/queries";
-import { getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
+import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 
 const allowedOrderStatuses = [
   "payment_pending_review",
@@ -55,6 +55,10 @@ function getWhatsAppStatusQuery(status: string, orderCode: string) {
   if (!intent) return "";
 
   return `?whatsapp=${encodeURIComponent(intent)}&order=${encodeURIComponent(orderCode)}`;
+}
+
+function appendAdminQuery(path: string, key: string, value: string) {
+  return `${path}${path.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(value)}`;
 }
 
 async function readOrderForAdminMutation(orderId: string, orderCode: string) {
@@ -187,10 +191,33 @@ export async function markWhatsAppMessageSent(formData: FormData) {
   }
 
   const { supabase, order } = result;
+  if (!canSendAdminWhatsAppIntent(order, intent)) {
+    const errorReturnTo = returnTo.startsWith("/admin/orders/") ? `/admin/orders/${order.order_code}` : "/admin";
+    revalidatePath("/admin");
+    revalidatePath(`/admin/orders/${order.order_code}`);
+    redirect(appendAdminQuery(errorReturnTo, "whatsappError", "status"));
+  }
+
+  const sentStatus = getAdminWhatsAppSentStatus(intent);
+  const { data: existing, error: existingError } = await supabase
+    .from("order_status_history")
+    .select("id")
+    .eq("order_id", order.id)
+    .eq("new_status", sentStatus)
+    .limit(1)
+    .maybeSingle();
+
+  if (existingError) throw new Error(existingError.message);
+  if (existing) {
+    revalidatePath("/admin");
+    revalidatePath(`/admin/orders/${order.order_code}`);
+    redirect(returnTo);
+  }
+
   const { error } = await supabase.from("order_status_history").insert({
     order_id: order.id,
     old_status: order.status,
-    new_status: getAdminWhatsAppSentStatus(intent),
+    new_status: sentStatus,
     changed_by: "admin whatsapp",
   });
 
