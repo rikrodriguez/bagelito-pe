@@ -1,6 +1,21 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const productionStatuses = ["payment_confirmed", "in_production", "ready_for_delivery", "delivered"] as const;
+export const batchStatuses = ["waitlist_open", "orders_open", "closed", "in_production", "delivered"] as const;
+
+export type BatchStatus = (typeof batchStatuses)[number];
+
+export type Batch = {
+  id: string;
+  name: string;
+  status: BatchStatus;
+  orders_open_at: string | null;
+  orders_close_at: string | null;
+  delivery_date: string | null;
+  capacity_packs: number | null;
+  capacity_bagels: number | null;
+  created_at: string;
+};
 
 export type OrderItem = {
   id: string;
@@ -20,6 +35,7 @@ export type StatusHistory = {
 export type Order = {
   id: string;
   order_code: string;
+  batch_id: string | null;
   pack_slug: string;
   pack_name: string;
   pack_units: number;
@@ -84,6 +100,28 @@ export async function fetchOrders() {
   return (data ?? []) as Order[];
 }
 
+export async function fetchCurrentBatch() {
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase
+    .from("batches")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  if (data) return data as Batch;
+
+  const { data: created, error: createError } = await supabase
+    .from("batches")
+    .insert({ name: "Next Bagelito Batch", status: "orders_open", orders_open_at: new Date().toISOString() })
+    .select("*")
+    .single();
+
+  if (createError || !created) throw new Error(createError?.message ?? "Could not create current batch.");
+  return created as Batch;
+}
+
 export async function fetchOrderByCode(orderCode: string) {
   const { data, error } = await createSupabaseAdminClient()
     .from("orders")
@@ -134,6 +172,39 @@ export function getDashboardStats(orders: Order[]) {
     confirmedBagels,
     packBreakdown: Array.from(packBreakdown.entries()),
     flavorBreakdown: Array.from(flavorBreakdown.entries()),
+  };
+}
+
+export function isBatchAcceptingReservations(batch: Pick<Batch, "orders_close_at" | "status">) {
+  const statusOpen = batch.status === "waitlist_open" || batch.status === "orders_open";
+  const beforeClose = !batch.orders_close_at || Date.now() < new Date(batch.orders_close_at).getTime();
+  return statusOpen && beforeClose;
+}
+
+export function getBatchStats(batch: Batch, orders: Order[]) {
+  const batchOrders = filterActiveOrders(orders).filter((order) => order.batch_id === batch.id && order.status !== "cancelled");
+  const confirmedOrders = batchOrders.filter((order) => productionStatuses.includes(order.status as (typeof productionStatuses)[number]));
+  const reservedPacks = batchOrders.length;
+  const reservedBagels = batchOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
+  const confirmedPacks = confirmedOrders.length;
+  const confirmedBagels = confirmedOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
+  const packCapacity = Number(batch.capacity_packs ?? 0);
+  const bagelCapacity = Number(batch.capacity_bagels ?? 0);
+  const remainingPacks = packCapacity ? Math.max(0, packCapacity - reservedPacks) : null;
+  const remainingBagels = bagelCapacity ? Math.max(0, bagelCapacity - reservedBagels) : null;
+  const packPercent = packCapacity ? Math.min(100, Math.round((reservedPacks / packCapacity) * 100)) : 0;
+  const bagelPercent = bagelCapacity ? Math.min(100, Math.round((reservedBagels / bagelCapacity) * 100)) : 0;
+
+  return {
+    acceptingReservations: isBatchAcceptingReservations(batch),
+    reservedPacks,
+    reservedBagels,
+    confirmedPacks,
+    confirmedBagels,
+    remainingPacks,
+    remainingBagels,
+    packPercent,
+    bagelPercent,
   };
 }
 

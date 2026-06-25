@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, Minus, Plus, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, MessageCircle, Minus, Plus, Upload } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
@@ -11,11 +11,27 @@ import { trackBagelitoEvent } from "@/lib/analytics";
 import { getDeliveryFee } from "@/lib/delivery-pricing";
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import { districtOptions } from "@/lib/reservations/schema";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 type Props = {
+  batchAvailability: BatchAvailability;
   packs: Pack[];
   flavors: Flavor[];
   initialPackSlug: PackSlug;
+};
+
+type BatchAvailability = {
+  accepting: boolean;
+  batchName: string;
+  capacityBagels: number | null;
+  capacityPacks: number | null;
+  deliveryDate: string | null;
+  ordersCloseAt: string | null;
+  remainingBagels: number | null;
+  remainingPacks: number | null;
+  reservedBagels: number;
+  reservedPacks: number;
+  status: string;
 };
 
 type Details = {
@@ -66,7 +82,7 @@ const paymentRecipient = {
   holder: "Dawn Brookes",
 };
 
-export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
+export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailability }: Props) {
   const { locale, copy } = useLanguage();
   const r = copy.reserve;
   const [step, setStep] = useState(1);
@@ -91,6 +107,32 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     plinNumber: paymentRecipient.plinNumber,
     holder: paymentRecipient.holder,
   };
+  const batchText = locale === "es"
+    ? {
+      closed: "Este batch está cerrado",
+      delivery: "Delivery",
+      joinWaitlist: "Unirme a la lista",
+      limit: "Capacidad",
+      noLimit: "Sin límite definido",
+      open: "Batch abierto",
+      ordersClose: "Cierre",
+      remaining: "cupos restantes",
+      unavailable: "Estamos cerrando o produciendo este batch. Escríbenos para entrar a la lista del próximo drop.",
+    }
+    : {
+      closed: "This batch is closed",
+      delivery: "Delivery",
+      joinWaitlist: "Join waitlist",
+      limit: "Capacity",
+      noLimit: "No limit set",
+      open: "Batch open",
+      ordersClose: "Orders close",
+      remaining: "spots left",
+      unavailable: "We are closing or producing this batch. Message us to join the next drop waitlist.",
+    };
+  const waitlistHref = getWhatsAppHref(locale === "es"
+    ? "Hola Bagelito! Quiero entrar a la lista de espera para el próximo batch por favor 🥯!"
+    : "Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
   const selectedItems = useMemo(() => {
     if (selectedPack.packType === "single") {
       return singleFlavor ? [{ flavorSlug: singleFlavor, quantity: selectedPack.units }] : [];
@@ -143,6 +185,15 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
   function getFlavorLabel(flavorSlug: string) {
     const flavor = flavors.find((candidate) => candidate.slug === flavorSlug);
     return flavorCopy[locale][flavorSlug] ?? flavor?.name ?? flavorSlug;
+  }
+
+  function formatPublicDate(value: string | null) {
+    if (!value) return locale === "es" ? "Por definir" : "To be set";
+    return new Date(value).toLocaleString(locale === "es" ? "es-PE" : "en-US", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: "America/Lima",
+    });
   }
 
   function selectPack(nextSlug: PackSlug) {
@@ -277,6 +328,33 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
     }
   }
 
+  if (!batchAvailability.accepting) {
+    return (
+      <section className="reserve-shell">
+        <div className="reserve-herolet">
+          <div>
+            <p className="kicker">{r.heroKicker}</p>
+            <h1>{batchText.closed}</h1>
+            <p>{batchText.unavailable}</p>
+          </div>
+          <RollingBagel variant="rainbow" size="md" />
+        </div>
+
+        <div className="reserve-closed-card">
+          <div>
+            <span>{batchAvailability.batchName}</span>
+            <strong>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</strong>
+            <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
+          </div>
+          <a className="pill-button pink" href={waitlistHref} target="_blank" rel="noreferrer">
+            <MessageCircle size={18} />
+            {batchText.joinWaitlist}
+          </a>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="reserve-shell">
       <div className="reserve-herolet">
@@ -286,6 +364,20 @@ export function ReservationFlow({ packs, flavors, initialPackSlug }: Props) {
           <p>{r.heroText}</p>
         </div>
         <RollingBagel variant="rainbow" size="md" />
+      </div>
+
+      <div className="reserve-batch-card">
+        <div>
+          <span>{batchAvailability.batchName}</span>
+          <strong>{batchText.open}</strong>
+        </div>
+        <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
+        <p>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</p>
+        <p>
+          {batchText.limit}: {batchAvailability.remainingPacks === null
+            ? batchText.noLimit
+            : `${batchAvailability.remainingPacks} ${batchText.remaining}`}
+        </p>
       </div>
 
       <div className="reserve-progress">

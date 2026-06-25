@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { hasUploadedPaymentProof } from "@/lib/admin/queries";
+import { batchStatuses, hasUploadedPaymentProof } from "@/lib/admin/queries";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 
 const allowedOrderStatuses = [
@@ -18,12 +18,38 @@ const allowedOrderStatuses = [
   "cancelled",
 ] as const;
 
+function parseBatchStatus(status: string) {
+  if (!batchStatuses.includes(status as (typeof batchStatuses)[number])) {
+    throw new Error("Invalid batch status");
+  }
+
+  return status;
+}
+
 function parseOrderStatus(status: string) {
   if (!allowedOrderStatuses.includes(status as (typeof allowedOrderStatuses)[number])) {
     throw new Error("Invalid order status");
   }
 
   return status;
+}
+
+function parseNullableInteger(value: FormDataEntryValue | null) {
+  const text = String(value ?? "").trim();
+  if (!text) return null;
+  const number = Number(text);
+  if (!Number.isInteger(number) || number < 0) throw new Error("Batch capacity must be a positive whole number.");
+  if (number === 0) return null;
+  return number;
+}
+
+function parseLimaDateTime(value: FormDataEntryValue | null) {
+  const text = String(value ?? "").trim();
+  if (!text) return null;
+  const normalized = text.length === 16 ? `${text}:00-05:00` : text;
+  const date = new Date(normalized);
+  if (Number.isNaN(date.getTime())) throw new Error("Invalid batch date.");
+  return date.toISOString();
 }
 
 async function setOrderStatus(orderId: string, status: string) {
@@ -173,6 +199,61 @@ export async function updateAdminNote(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
   redirect(`/admin/orders/${orderCode}`);
+}
+
+export async function updateBatchSettings(formData: FormData) {
+  await requireAdmin();
+  const batchId = String(formData.get("batchId") ?? "");
+  const name = String(formData.get("name") ?? "").trim() || "Next Bagelito Batch";
+  const status = parseBatchStatus(String(formData.get("status") ?? ""));
+  const capacityPacks = parseNullableInteger(formData.get("capacityPacks"));
+  const capacityBagels = parseNullableInteger(formData.get("capacityBagels"));
+  const ordersCloseAt = parseLimaDateTime(formData.get("ordersCloseAt"));
+  const deliveryDate = parseLimaDateTime(formData.get("deliveryDate"));
+  const statusAcceptsOrders = status === "waitlist_open" || status === "orders_open";
+  const nextOrdersCloseAt = statusAcceptsOrders && ordersCloseAt && new Date(ordersCloseAt).getTime() <= Date.now()
+    ? null
+    : ordersCloseAt;
+
+  if (!batchId) throw new Error("Missing batch ID");
+
+  const supabase = createSupabaseAdminClient();
+  const { data: existing, error: readError } = await supabase
+    .from("batches")
+    .select("orders_open_at")
+    .eq("id", batchId)
+    .single();
+
+  if (readError) throw new Error(readError.message);
+
+  const update: {
+    capacity_bagels: number | null;
+    capacity_packs: number | null;
+    delivery_date: string | null;
+    name: string;
+    orders_close_at: string | null;
+    orders_open_at?: string;
+    status: string;
+  } = {
+    capacity_bagels: capacityBagels,
+    capacity_packs: capacityPacks,
+    delivery_date: deliveryDate,
+    name,
+    orders_close_at: status === "closed" && !nextOrdersCloseAt ? new Date().toISOString() : nextOrdersCloseAt,
+    status,
+  };
+
+  if (status === "orders_open" && !(existing as { orders_open_at?: string | null } | null)?.orders_open_at) {
+    update.orders_open_at = new Date().toISOString();
+  }
+
+  const { error } = await supabase.from("batches").update(update).eq("id", batchId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/");
+  revalidatePath("/reserve");
+  revalidatePath("/admin");
+  redirect("/admin?batch=updated");
 }
 
 export async function markWhatsAppMessageSent(formData: FormData) {

@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { getReservationBatchAvailability } from "@/lib/reservations/service";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,12 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const batchAvailability = await getReservationBatchAvailability();
+
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <LanguageProvider>
-          <BatchDeadlineBanner />
+          <BatchDeadlineBanner batchAvailability={batchAvailability} />
           {children}
           <FloatingWhatsApp />
           <Analytics />

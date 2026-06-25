@@ -647,6 +647,46 @@ section[id] { scroll-margin-top: 24px; }
 .reserve-progress button { border: 1px solid var(--line); border-radius: 12px; background: white; padding: 14px; font-weight: 950; color: var(--navy); }
 .reserve-progress button.active { background: var(--navy); color: white; }
 .reserve-progress button:disabled { opacity: .5; cursor: not-allowed; }
+.reserve-batch-card,
+.reserve-closed-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  border: 1px solid #d9f0ec;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff, #effcf9);
+  padding: 16px;
+  box-shadow: 0 12px 24px rgba(10,22,54,.045);
+}
+.reserve-batch-card div,
+.reserve-closed-card div {
+  display: grid;
+  gap: 4px;
+}
+.reserve-batch-card span,
+.reserve-closed-card span {
+  color: #16826c;
+  font-size: .78rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+.reserve-batch-card strong,
+.reserve-closed-card strong {
+  color: var(--navy);
+}
+.reserve-batch-card p,
+.reserve-closed-card p {
+  color: #53637a;
+  font-size: .86rem;
+  font-weight: 850;
+}
+.reserve-closed-card {
+  margin-top: 22px;
+  border-color: #f4c9df;
+  background: linear-gradient(135deg, #ffffff, #fff5fb);
+}
 .reserve-alert { border-radius: 12px; background: #ffe1e1; color: #b4232e; padding: 14px 16px; font-weight: 900; margin: 16px 0; }
 .reserve-card, .reserve-pack-option { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.86); box-shadow: 0 14px 30px rgba(10,22,54,.06); }
 .reserve-card { padding: clamp(22px, 4vw, 34px); }
@@ -835,6 +875,79 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   min-height: 46px;
   border-radius: 12px;
   padding: 12px 15px;
+}
+.batch-management-card {
+  margin-bottom: 20px;
+  border-color: #d6e4f5;
+  background: linear-gradient(180deg, #ffffff, #f6fbff);
+}
+.batch-ops-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.batch-ops-grid > div {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 118px;
+  border: 1px solid #e2edf8;
+  border-radius: 14px;
+  background: white;
+  padding: 14px;
+}
+.batch-ops-grid span,
+.batch-settings-form label {
+  color: #66758a;
+  font-size: .76rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+.batch-ops-grid strong {
+  color: var(--navy);
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+.batch-ops-grid small {
+  color: #53637a;
+  font-weight: 850;
+}
+.batch-ops-grid i {
+  display: block;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf3f8;
+}
+.batch-ops-grid i b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--mint), var(--pink));
+}
+.batch-settings-form {
+  display: grid;
+  grid-template-columns: 1.3fr repeat(5, minmax(0, 1fr)) auto;
+  gap: 10px;
+  align-items: end;
+  border-top: 1px solid #e2edf8;
+  padding-top: 14px;
+}
+.batch-settings-form label {
+  display: grid;
+  gap: 6px;
+}
+.batch-settings-form input,
+.batch-settings-form select {
+  min-width: 0;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: .88rem;
+}
+.batch-settings-form button {
+  min-height: 42px;
+  white-space: nowrap;
 }
 .whatsapp-queue-card {
   margin-bottom: 20px;
@@ -1895,6 +2008,12 @@ body.reservation-review-active .batch-deadline-banner {
   display: none;
 }
 
+body:has(.admin-page) .batch-deadline-banner,
+body:has(.admin-login-page) .batch-deadline-banner,
+body:has(.success-page) .batch-deadline-banner {
+  display: none;
+}
+
 
 section[id] {
   scroll-margin-top: 32px;
@@ -2560,6 +2679,8 @@ section[id] {
   .crm-stat-grid,
   .crm-overview-grid,
   .customer-contact-grid,
+  .batch-ops-grid,
+  .batch-settings-form,
   .whatsapp-queue-list,
   .reservation-data-grid {
     grid-template-columns: 1fr;
@@ -3134,6 +3255,18 @@ section[id] {
     line-height: 1.05;
   }
 
+  .reserve-batch-card,
+  .reserve-closed-card {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .reserve-closed-card .pill-button {
+    width: 100%;
+    justify-content: center;
+  }
+
   .reserve-card,
   .reserve-pack-option,
   .stat-card,
@@ -3285,6 +3418,8 @@ section[id] {
 
   .crm-overview-grid,
   .customer-list,
+  .batch-ops-grid,
+  .batch-settings-form,
   .whatsapp-queue-list,
   .reservation-data-grid,
   .metric-list,

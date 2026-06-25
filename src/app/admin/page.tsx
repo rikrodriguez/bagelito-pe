@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   AlertCircle,
   Archive,
+  CalendarClock,
   CheckCircle2,
   Clock3,
   CreditCard,
@@ -20,9 +21,12 @@ import {
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import {
+  batchStatuses,
+  fetchCurrentBatch,
   fetchOrders,
   filterActiveOrders,
   filterArchivedOrders,
+  getBatchStats,
   getDashboardStats,
   getDeliverySummary,
   getOrderArchiveState,
@@ -31,6 +35,7 @@ import {
   isManualPaymentPending,
   isOrderArchived,
   productionStatuses,
+  type Batch,
   type Order,
 } from "@/lib/admin/queries";
 import {
@@ -43,7 +48,7 @@ import {
 import { getMissingAdminEnv } from "@/lib/env";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
-import { quickUpdateOrderStatus } from "./actions";
+import { quickUpdateOrderStatus, updateBatchSettings } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
 
@@ -97,6 +102,38 @@ function statusClass(order: Order) {
 
 function humanStatus(status: string) {
   return status.replaceAll("_", " ");
+}
+
+function batchStatusLabel(status: string) {
+  const labels: Record<string, string> = {
+    waitlist_open: "Waitlist / soft open",
+    orders_open: "Orders open",
+    closed: "Closed",
+    in_production: "In production",
+    delivered: "Delivered",
+  };
+
+  return labels[status] ?? humanStatus(status);
+}
+
+function formatDateTimeInput(value: string | null) {
+  if (!value) return "";
+  const parts = new Intl.DateTimeFormat("sv-SE", {
+    day: "2-digit",
+    hour: "2-digit",
+    hour12: false,
+    minute: "2-digit",
+    month: "2-digit",
+    timeZone: "America/Lima",
+    year: "numeric",
+  }).format(new Date(value));
+
+  return parts.replace(" ", "T");
+}
+
+function formatBatchDate(value: string | null) {
+  if (!value) return "Not set";
+  return new Date(value).toLocaleString("es-PE", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Lima" });
 }
 
 function PaymentCell({ order }: { order: Order }) {
@@ -220,14 +257,71 @@ function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: Admin
   );
 }
 
+function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnType<typeof getBatchStats> }) {
+  return (
+    <section className="admin-card batch-management-card">
+      <div className="admin-card-head">
+        <div>
+          <p className="kicker">Batch management</p>
+          <h2>{batch.name}</h2>
+          <p>Abre/cierra pedidos, define capacidad y deja clara la fecha operativa del batch.</p>
+        </div>
+        <span className={`status-pill ${stats.acceptingReservations ? "paid" : "pending"}`}>{batchStatusLabel(batch.status)}</span>
+      </div>
+
+      <div className="batch-ops-grid">
+        <div>
+          <span>Reservations</span>
+          <strong>{stats.reservedPacks}{batch.capacity_packs ? ` / ${batch.capacity_packs}` : ""}</strong>
+          <small>{stats.remainingPacks === null ? "No pack limit" : `${stats.remainingPacks} packs left`}</small>
+          {batch.capacity_packs ? <i><b style={{ width: `${stats.packPercent}%` }} /></i> : null}
+        </div>
+        <div>
+          <span>Bagels reserved</span>
+          <strong>{stats.reservedBagels}{batch.capacity_bagels ? ` / ${batch.capacity_bagels}` : ""}</strong>
+          <small>{stats.remainingBagels === null ? "No bagel limit" : `${stats.remainingBagels} bagels left`}</small>
+          {batch.capacity_bagels ? <i><b style={{ width: `${stats.bagelPercent}%` }} /></i> : null}
+        </div>
+        <div>
+          <span>Paid production</span>
+          <strong>{stats.confirmedPacks}</strong>
+          <small>{stats.confirmedBagels} confirmed bagels</small>
+        </div>
+        <div>
+          <span>Orders close</span>
+          <strong>{formatBatchDate(batch.orders_close_at)}</strong>
+          <small>{stats.acceptingReservations ? "Checkout accepting orders" : "Checkout blocked"}</small>
+        </div>
+        <div>
+          <span>Delivery date</span>
+          <strong>{formatBatchDate(batch.delivery_date)}</strong>
+          <small>Lima timezone</small>
+        </div>
+      </div>
+
+      <form action={updateBatchSettings} className="batch-settings-form">
+        <input type="hidden" name="batchId" value={batch.id} />
+        <label>Batch name<input name="name" defaultValue={batch.name} /></label>
+        <label>Status<select name="status" defaultValue={batch.status}>{batchStatuses.map((status) => <option key={status} value={status}>{batchStatusLabel(status)}</option>)}</select></label>
+        <label>Capacity packs<input min={0} name="capacityPacks" type="number" defaultValue={batch.capacity_packs ?? ""} placeholder="No limit" /></label>
+        <label>Capacity bagels<input min={0} name="capacityBagels" type="number" defaultValue={batch.capacity_bagels ?? ""} placeholder="No limit" /></label>
+        <label>Orders close at<input name="ordersCloseAt" type="datetime-local" defaultValue={formatDateTimeInput(batch.orders_close_at)} /></label>
+        <label>Delivery date<input name="deliveryDate" type="datetime-local" defaultValue={formatDateTimeInput(batch.delivery_date)} /></label>
+        <button className="pill-button pink" type="submit"><CalendarClock size={17} /> Save batch</button>
+      </form>
+    </section>
+  );
+}
+
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string; whatsappError?: string; whatsappSent?: string }>;
+  searchParams?: Promise<{ batch?: string; deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string; whatsappError?: string; whatsappSent?: string }>;
 }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
   const params = await searchParams;
+  const batchMessage = params?.batch;
   const deletedOrderCode = params?.deleted;
   const archivedOrderCode = params?.archived;
   const restoredOrderCode = params?.restored;
@@ -242,6 +336,7 @@ export default async function AdminPage({
   }
 
   const allOrders = await fetchOrders();
+  const currentBatch = await fetchCurrentBatch();
   const activeOrders = filterActiveOrders(allOrders);
   const archivedOrders = filterArchivedOrders(allOrders);
   const orders = showingArchived ? archivedOrders : activeOrders;
@@ -259,6 +354,7 @@ export default async function AdminPage({
   const packStats = getPackStats(activeOrders);
   const packTypeStats = getPackTypeStats(activeOrders);
   const districtStats = getDistrictStats(activeOrders);
+  const batchStats = getBatchStats(currentBatch, activeOrders);
   const whatsappFollowUps = getAdminWhatsAppFollowUps(activeOrders);
   const whatsappOrder = whatsappIntent && whatsappOrderCode
     ? allOrders.find((order) => order.order_code === whatsappOrderCode)
@@ -293,6 +389,10 @@ export default async function AdminPage({
           <div className="admin-flash success">
             {deletedOrderCode === "missing" ? "That customer was already deleted." : `Deleted ${deletedOrderCode} permanently.`}
           </div>
+        ) : null}
+
+        {batchMessage === "updated" ? (
+          <div className="admin-flash success">Batch settings updated.</div>
         ) : null}
 
         {archivedOrderCode ? (
@@ -330,6 +430,8 @@ export default async function AdminPage({
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
           <Stat icon={MessageCircle} label="WhatsApp queue" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
+
+        <BatchManagementPanel batch={currentBatch} stats={batchStats} />
 
         <WhatsAppQueue followUps={whatsappFollowUps} />
 

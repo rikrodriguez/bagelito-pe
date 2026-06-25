@@ -9,8 +9,19 @@ const paymentProofBucket = "payment-proofs";
 const maxPaymentScreenshotBytes = 5 * 1024 * 1024;
 const allowedPaymentScreenshotTypes = new Set(["image/png", "image/jpeg", "image/jpg", "image/webp"]);
 
-type BatchRow = { id: string };
 type OrderRow = { id: string; order_code: string };
+type CurrentBatchRow = {
+  id: string;
+  name: string;
+  status: string;
+  orders_close_at: string | null;
+  delivery_date: string | null;
+  capacity_packs: number | null;
+  capacity_bagels: number | null;
+};
+type CapacityOrderRow = { pack_units: number; status: string };
+
+const acceptingBatchStatuses = new Set(["waitlist_open", "orders_open"]);
 
 function fallbackOrderCode() {
   return "BAG-" + Date.now().toString(36).toUpperCase() + "-" + randomBytes(2).toString("hex").toUpperCase();
@@ -53,29 +64,108 @@ async function nextOrderCode(supabase: ReturnType<typeof createSupabaseAdminClie
 async function getOrCreateCurrentBatch(supabase: ReturnType<typeof createSupabaseAdminClient>) {
   const { data, error } = await supabase
     .from("batches")
-    .select("id")
-    .in("status", ["waitlist_open", "orders_open"])
+    .select("id, name, status, orders_close_at, delivery_date, capacity_packs, capacity_bagels")
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
 
   if (error) throw new Error("Could not read active batch: " + error.message);
 
-  const batch = data as BatchRow | null;
-  if (batch?.id) return batch.id;
+  const batch = data as CurrentBatchRow | null;
+  if (batch?.id) return batch;
 
   const { data: created, error: createError } = await supabase
     .from("batches")
-    .insert({ name: "Next Bagelito Batch", status: "waitlist_open" })
-    .select("id")
+    .insert({ name: "Next Bagelito Batch", status: "orders_open", orders_open_at: new Date().toISOString() })
+    .select("id, name, status, orders_close_at, delivery_date, capacity_packs, capacity_bagels")
     .single();
 
-  const createdBatch = created as BatchRow | null;
+  const createdBatch = created as CurrentBatchRow | null;
   if (createError || !createdBatch?.id) {
     throw new Error("Could not create default batch: " + (createError?.message ?? "unknown error"));
   }
 
-  return createdBatch.id;
+  return createdBatch;
+}
+
+async function getBatchCapacityUsage(supabase: ReturnType<typeof createSupabaseAdminClient>, batchId: string) {
+  const { data, error } = await supabase
+    .from("orders")
+    .select("pack_units, status")
+    .eq("batch_id", batchId)
+    .neq("status", "cancelled");
+
+  if (error) throw new Error("Could not read batch capacity: " + error.message);
+
+  const orders = (data ?? []) as CapacityOrderRow[];
+  return {
+    reservedBagels: orders.reduce((sum, order) => sum + Number(order.pack_units), 0),
+    reservedPacks: orders.length,
+  };
+}
+
+function getBatchBlockReason(batch: CurrentBatchRow, usage: { reservedBagels: number; reservedPacks: number }, nextPackUnits = 0) {
+  if (!acceptingBatchStatuses.has(batch.status)) {
+    return "This Bagelito batch is currently closed. Message us on WhatsApp to join the waitlist for the next opening.";
+  }
+
+  if (batch.orders_close_at && Date.now() >= new Date(batch.orders_close_at).getTime()) {
+    return "This Bagelito batch has already closed. Message us on WhatsApp to join the waitlist for the next batch.";
+  }
+
+  if (batch.capacity_packs && usage.reservedPacks + 1 > Number(batch.capacity_packs)) {
+    return "This Bagelito batch is full. Message us on WhatsApp to join the waitlist.";
+  }
+
+  if (batch.capacity_bagels && usage.reservedBagels + nextPackUnits > Number(batch.capacity_bagels)) {
+    return "This Bagelito batch is full for the pack size selected. Message us on WhatsApp to join the waitlist.";
+  }
+
+  return "";
+}
+
+function fallbackBatchAvailability() {
+  return {
+    accepting: true,
+    batchName: "Next Bagelito Batch",
+    capacityBagels: null,
+    capacityPacks: null,
+    deliveryDate: null,
+    ordersCloseAt: null,
+    remainingBagels: null,
+    remainingPacks: null,
+    reservedBagels: 0,
+    reservedPacks: 0,
+    status: "orders_open",
+  };
+}
+
+export async function getReservationBatchAvailability() {
+  const missing = getMissingReservationEnv();
+  if (missing.length) return fallbackBatchAvailability();
+
+  try {
+    const supabase = createSupabaseAdminClient();
+    const batch = await getOrCreateCurrentBatch(supabase);
+    const usage = await getBatchCapacityUsage(supabase, batch.id);
+    const blockReason = getBatchBlockReason(batch, usage, 6);
+
+    return {
+      accepting: !blockReason,
+      batchName: batch.name,
+      capacityBagels: batch.capacity_bagels,
+      capacityPacks: batch.capacity_packs,
+      deliveryDate: batch.delivery_date,
+      ordersCloseAt: batch.orders_close_at,
+      remainingBagels: batch.capacity_bagels ? Math.max(0, Number(batch.capacity_bagels) - usage.reservedBagels) : null,
+      remainingPacks: batch.capacity_packs ? Math.max(0, Number(batch.capacity_packs) - usage.reservedPacks) : null,
+      reservedBagels: usage.reservedBagels,
+      reservedPacks: usage.reservedPacks,
+      status: batch.status,
+    };
+  } catch {
+    return fallbackBatchAvailability();
+  }
 }
 
 export function payloadFromFormData(formData: FormData): ReservationPayload {
@@ -105,7 +195,6 @@ export async function createReservation(formData: FormData) {
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
 
   const payload = payloadFromFormData(formData);
-  const paymentScreenshot = getPaymentScreenshot(formData);
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
   const deliveryDistanceKm = getDeliveryDistanceKm(payload.district);
@@ -113,7 +202,12 @@ export async function createReservation(formData: FormData) {
   const totalAmount = pack.amount + deliveryFee;
 
   const supabase = createSupabaseAdminClient();
-  const batchId = await getOrCreateCurrentBatch(supabase);
+  const batch = await getOrCreateCurrentBatch(supabase);
+  const usage = await getBatchCapacityUsage(supabase, batch.id);
+  const batchBlockReason = getBatchBlockReason(batch, usage, pack.units);
+  if (batchBlockReason) throw new Error(batchBlockReason);
+
+  const paymentScreenshot = getPaymentScreenshot(formData);
   const orderCode = await nextOrderCode(supabase);
   const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
@@ -134,7 +228,7 @@ export async function createReservation(formData: FormData) {
     .from("orders")
     .insert({
       order_code: orderCode,
-      batch_id: batchId,
+      batch_id: batch.id,
       pack_slug: pack.slug,
       pack_name: pack.name,
       pack_units: pack.units,
