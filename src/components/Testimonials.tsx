@@ -27,7 +27,8 @@ export function Testimonials() {
             alt="Dawn Brookes with handmade Bagelito bagels"
             width={1120}
             height={1400}
-            sizes="(max-width: 760px) 100vw, 420px"
+            sizes="(max-width: 760px) 92vw, 420px"
+            quality={74}
           />
         </div>
         <div className="founder-note-copy">

@@ -23,6 +23,20 @@ const sizeClass = {
   xl: "bagel-xl",
 };
 
+const imageSizeByBagelSize: Record<NonNullable<Props["size"]>, number> = {
+  sm: 180,
+  md: 240,
+  lg: 360,
+  xl: 520,
+};
+
+const imageQualityByBagelSize: Record<NonNullable<Props["size"]>, number> = {
+  sm: 70,
+  md: 72,
+  lg: 74,
+  xl: 76,
+};
+
 const imageByVariant: Record<BagelVariant, string> = {
   plain: "/images/bagel-plain.webp",
   sesame: "/images/bagel-sesame.webp",
@@ -40,6 +54,7 @@ export function RollingBagel({ variant = "plain", size = "md", className = "", s
   const { scrollYProgress } = useScroll();
   const rotate = useTransform(scrollYProgress, [0, 1], [spinOffset - 80, spinOffset + 360 * spin]);
   const alt = label ?? `${variant} bagel without filling`;
+  const imageSize = imageSizeByBagelSize[size];
 
   return (
     <motion.div
@@ -51,9 +66,9 @@ export function RollingBagel({ variant = "plain", size = "md", className = "", s
       <Image
         src={imageByVariant[variant]}
         alt={alt}
-        width={1100}
-        height={1100}
-        sizes={size === "xl" ? "(max-width: 768px) 72vw, 330px" : "(max-width: 768px) 30vw, 150px"}
+        width={imageSize}
+        height={imageSize}
+        quality={imageQualityByBagelSize[size]}
         priority={size === "xl"}
         className="bagel-photo-img"
       />

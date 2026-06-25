@@ -44,7 +44,8 @@ export function Packs() {
                   alt={localizedPack.trayLabel}
                   width={960}
                   height={540}
-                  sizes="(max-width: 760px) 84vw, (max-width: 1120px) 42vw, 22vw"
+                  sizes="(max-width: 760px) 84vw, (max-width: 1120px) 42vw, (max-width: 1540px) 23vw, 360px"
+                  quality={72}
                   className="clean-pack-image"
                 />
               </div>
