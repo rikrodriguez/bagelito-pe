@@ -87,7 +87,7 @@ function CustomerHistoryCard({ currentOrderCode, profile }: { currentOrderCode: 
         <div>
           <p className="kicker">Customer CRM</p>
           <h2>Customer history</h2>
-          <p>Compras anteriores, ultima compra, gasto total y preferencias de sabores.</p>
+          <p>Past purchases, last purchase, total spend, and flavor preferences.</p>
         </div>
         <span className={`status-pill ${profile.repeatOrders > 0 ? "paid" : "neutral"}`}>{profile.repeatOrders > 0 ? "Repeat customer" : "First order"}</span>
       </div>

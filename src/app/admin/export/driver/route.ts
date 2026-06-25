@@ -14,8 +14,8 @@ function getFlavorText(order: Order) {
 }
 
 function getHandoffText(order: Order) {
-  const notes = order.delivery_notes ?? "";
-  if (notes.toLowerCase().includes("porteria") || notes.toLowerCase().includes("portería")) return "Front desk";
+  const notes = (order.delivery_notes ?? "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  if (notes.includes("porteria")) return "Front desk";
   return "Customer";
 }
 

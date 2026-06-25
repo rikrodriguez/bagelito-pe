@@ -334,9 +334,9 @@ function getFlavorText(order: Order) {
 }
 
 function getReceptionText(order: Order) {
-  const notes = order.delivery_notes ?? "";
-  if (notes.toLowerCase().includes("porteria") || notes.toLowerCase().includes("portería")) return "Leave at front desk";
-  if (notes.toLowerCase().includes("recibo") || notes.toLowerCase().includes("recepciono")) return "Customer receives directly";
+  const notes = (order.delivery_notes ?? "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  if (notes.includes("porteria")) return "Leave at front desk";
+  if (notes.includes("recibo") || notes.includes("recepciono")) return "Customer receives directly";
   return "Not specified";
 }
 
@@ -374,7 +374,7 @@ function CustomerCrmPanel({ profiles, stats }: { profiles: CustomerProfile[]; st
         <div>
           <p className="kicker">Customer CRM</p>
           <h2>Customer history and repeat buyers</h2>
-          <p>Historial por cliente, recompra, ultima compra, gasto total y preferencias de sabores.</p>
+          <p>Customer history, repeat purchases, last purchase, total spend, and flavor preferences.</p>
         </div>
         <span className="status-pill neutral">{stats.totalCustomers} customers</span>
       </div>
@@ -456,7 +456,7 @@ function FinancialPanel({ summary }: { summary: FinancialSummary }) {
         <div>
           <p className="kicker">Finance</p>
           <h2>Financial snapshot</h2>
-          <p>Ventas, costos reales editables, margen por pack y utilidad neta del batch actual.</p>
+          <p>Sales, editable real costs, margin by pack, and net profit for the current batch.</p>
         </div>
         <span className="status-pill neutral">{summary.batchName}</span>
       </div>
@@ -572,7 +572,7 @@ function CustomerCommsQueue({ followUps }: { followUps: { order: Order; intent: 
         <div>
           <p className="kicker">Customer comms</p>
           <h2>WhatsApp message queue</h2>
-          <p>Post-compra, confirmación de pago, recordatorio de delivery y feedback/testimonio.</p>
+          <p>Post-purchase, payment confirmation, delivery reminders, and feedback/testimonial requests.</p>
         </div>
         <span className="status-pill neutral">{followUps.length} pending</span>
       </div>
@@ -595,7 +595,7 @@ function CustomerCommsQueue({ followUps }: { followUps: { order: Order; intent: 
           })}
         </div>
       ) : (
-        <div className="empty-state">No hay mensajes pendientes. La cola de customer comms está limpia.</div>
+        <div className="empty-state">No pending messages. The customer comms queue is clear.</div>
       )}
     </section>
   );
@@ -613,7 +613,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
         <div>
           <p className="kicker">Production ops</p>
           <h2>{plan.batchName}</h2>
-          <p>Packing list por sabor, conteo total del batch y checklist operativo para hornear, empacar y entregar.</p>
+          <p>Packing list by flavor, total batch count, and the operating checklist for baking, packing, and delivery.</p>
         </div>
         <a className="status-action export" href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
       </div>
@@ -651,7 +651,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
         <section>
           <div className="admin-card-head compact">
             <h3>Pack totals</h3>
-            <p>Conteo rápido para cajas y etiquetas.</p>
+            <p>Quick count for boxes and labels.</p>
           </div>
           <div className="production-pack-list">
             {plan.packList.length ? plan.packList.map((item) => (
@@ -705,7 +705,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
       <div className="production-op-note">
         <strong>Suggested flow:</strong>
         {activeStages.map((stage) => <span key={stage.key}>{stage.label}: {stage.packs}</span>)}
-        <span>Recibidos: {doneStage?.packs ?? 0}</span>
+        <span>Received: {doneStage?.packs ?? 0}</span>
       </div>
     </section>
   );
@@ -718,7 +718,7 @@ function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnTyp
         <div>
           <p className="kicker">Batch management</p>
           <h2>{batch.name}</h2>
-          <p>Abre/cierra pedidos, define capacidad y deja clara la fecha operativa del batch.</p>
+          <p>Open or close orders, set capacity, and keep the batch operating dates clear.</p>
         </div>
         <span className={`status-pill ${stats.acceptingReservations ? "paid" : "pending"}`}>{batchStatusLabel(batch.status)}</span>
       </div>
@@ -779,7 +779,7 @@ function DeliveryOpsPanel({ routePlan, returnTo }: { routePlan: DeliveryRouteSto
         <div>
           <p className="kicker">Delivery ops</p>
           <h2>Driver route by district</h2>
-          <p>Ruta sugerida desde Jr. Sinchi Roca 2560, Lince: distritos cercanos primero, luego los más lejanos.</p>
+          <p>Suggested route from Jr. Sinchi Roca 2560, Lince: nearby districts first, then farther stops.</p>
         </div>
         <a className="status-action export" href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
       </div>
@@ -925,7 +925,7 @@ export default async function AdminPage({
           <div>
             <p className="kicker">Mini CRM</p>
             <h1>Customer reservations</h1>
-            <p className="admin-intro">Aquí ves la data de clientes, formularios, packs, distritos y revisión de pagos de Bagelito.</p>
+            <p className="admin-intro">Customer data, reservation forms, packs, districts, and Bagelito payment review live here.</p>
           </div>
           <div className="admin-export-row">
             <a href="/admin/export/orders"><FileDown size={16} /> Full backup CSV</a>
@@ -1063,14 +1063,14 @@ export default async function AdminPage({
           <div className="admin-card-head">
             <div>
               <h2>{showingArchived ? "Archived customers" : "Visual customer list"}</h2>
-              <p>{showingArchived ? "Pedidos ocultos de operación diaria. Puedes restaurarlos si fueron archivados por error." : "Formulario completo, entrega, pago y acciones rápidas."}</p>
+              <p>{showingArchived ? "Orders hidden from daily operations. Restore them if they were archived by mistake." : "Full form data, delivery, payment, and quick actions."}</p>
             </div>
             <span className="status-pill neutral">{orders.length} of {baseOrders.length} {showingArchived ? "archived" : "active"} reservations</span>
           </div>
 
           <div className="admin-view-tabs">
             <Link className={!showingArchived && statusFilter === "all" ? "active" : ""} href={buildAdminHref({ view: "", status: "all" })}>Active customers <b>{activeOrders.length}</b></Link>
-            <Link className={!showingArchived && statusFilter === "pending_attention" ? "active" : ""} href={buildAdminHref({ view: "", status: "pending_attention" })}><Clock3 size={15} /> Solo pendientes <b>{pendingAttentionCount}</b></Link>
+            <Link className={!showingArchived && statusFilter === "pending_attention" ? "active" : ""} href={buildAdminHref({ view: "", status: "pending_attention" })}><Clock3 size={15} /> Pending only <b>{pendingAttentionCount}</b></Link>
             <Link className={!showingArchived && statusFilter === "paid_not_delivered" ? "active" : ""} href={buildAdminHref({ view: "", status: "paid_not_delivered" })}>Paid not received <b>{paidNotDeliveredOrders.length}</b></Link>
             <Link className={!showingArchived && statusFilter === "no_proof" ? "active" : ""} href={buildAdminHref({ view: "", status: "no_proof" })}>No proof <b>{noProofCount}</b></Link>
             <Link className={showingArchived ? "active" : ""} href={buildAdminHref({ view: "archived", status: "all" })}><Archive size={15} /> Archive <b>{archivedOrders.length}</b></Link>

@@ -739,10 +739,10 @@ export function getProductionOpsPlan(batch: Pick<Batch, "id" | "name" | "deliver
     packingList: Array.from(packingMap.values()).sort((a, b) => b.quantity - a.quantity || a.flavorName.localeCompare(b.flavorName, "es")),
     packList: Array.from(packMap.values()).sort((a, b) => b.bagels - a.bagels || a.packName.localeCompare(b.packName, "es")),
     stages: [
-      makeStage("bake", "Hornear", "Pedidos pagados que ya pueden entrar al horno.", "payment_confirmed", "in_production", "Start baking"),
-      makeStage("pack", "Empacar", "Pedidos en producción que toca armar y cerrar.", "in_production", "ready_for_delivery", "Mark packed"),
-      makeStage("deliver", "Entregar", "Packs listos para salir a ruta.", "ready_for_delivery", "delivered", "Mark delivered"),
-      makeStage("done", "Recibidos", "Clientes que ya recibieron su pedido.", "delivered", null, null),
+      makeStage("bake", "Bake", "Paid orders that can move into baking.", "payment_confirmed", "in_production", "Start baking"),
+      makeStage("pack", "Pack", "Orders in production that need packing and final checks.", "in_production", "ready_for_delivery", "Mark packed"),
+      makeStage("deliver", "Deliver", "Packs ready to leave for the delivery route.", "ready_for_delivery", "delivered", "Mark delivered"),
+      makeStage("done", "Received", "Customers who already received their order.", "delivered", null, null),
     ],
   };
 }
