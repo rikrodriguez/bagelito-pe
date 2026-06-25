@@ -13,9 +13,6 @@ export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
   keywords: ["bagels Lima", "bagels Peru", "Bagelito", "delivery Lima", "handmade bagels", "monthly bagel drop"],
-  alternates: {
-    canonical: "/",
-  },
   icons: { icon: "/icon.svg" },
   openGraph: {
     title: siteTitle,

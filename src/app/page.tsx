@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { BatchInfo } from "@/components/BatchInfo";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
@@ -10,6 +11,12 @@ import { MobileStickyReserveCTA } from "@/components/MobileStickyReserveCTA";
 import { Packs } from "@/components/Packs";
 import { Testimonials } from "@/components/Testimonials";
 import { WhyMonthly } from "@/components/WhyMonthly";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function HomePage() {
   return (
