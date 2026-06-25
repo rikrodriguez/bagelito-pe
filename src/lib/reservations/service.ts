@@ -21,7 +21,21 @@ type CurrentBatchRow = {
 };
 type CapacityOrderRow = { pack_units: number; status: string };
 
-const acceptingBatchStatuses = new Set(["waitlist_open", "orders_open"]);
+export type BatchAvailability = {
+  accepting: boolean;
+  batchName: string;
+  capacityBagels: number | null;
+  capacityPacks: number | null;
+  deliveryDate: string | null;
+  ordersCloseAt: string | null;
+  remainingBagels: number | null;
+  remainingPacks: number | null;
+  reservedBagels: number;
+  reservedPacks: number;
+  status: string;
+};
+
+const acceptingBatchStatuses = new Set(["orders_open"]);
 const currentBatchSelect = "id, name, status, orders_close_at, delivery_date, capacity_packs, capacity_bagels";
 
 function fallbackOrderCode() {
@@ -112,19 +126,19 @@ async function getBatchCapacityUsage(supabase: ReturnType<typeof createSupabaseA
 
 function getBatchBlockReason(batch: CurrentBatchRow, usage: { reservedBagels: number; reservedPacks: number }, nextPackUnits = 0) {
   if (!acceptingBatchStatuses.has(batch.status)) {
-    return "This Bagelito batch is currently closed. Message us on WhatsApp to join the waitlist for the next opening.";
+    return "This Bagelito batch is currently closed. Join the waitlist for the next opening.";
   }
 
   if (batch.orders_close_at && Date.now() >= new Date(batch.orders_close_at).getTime()) {
-    return "This Bagelito batch has already closed. Message us on WhatsApp to join the waitlist for the next batch.";
+    return "This Bagelito batch has already closed. Join the waitlist for the next batch.";
   }
 
   if (batch.capacity_packs && usage.reservedPacks + 1 > Number(batch.capacity_packs)) {
-    return "This Bagelito batch is full. Message us on WhatsApp to join the waitlist.";
+    return "This Bagelito batch is full. Join the waitlist.";
   }
 
   if (batch.capacity_bagels && usage.reservedBagels + nextPackUnits > Number(batch.capacity_bagels)) {
-    return "This Bagelito batch is full for the pack size selected. Message us on WhatsApp to join the waitlist.";
+    return "This Bagelito batch is full for the pack size selected. Join the waitlist.";
   }
 
   return "";
@@ -136,7 +150,7 @@ function fallbackBatchAvailability({
 }: {
   accepting?: boolean;
   status?: string;
-} = {}) {
+} = {}): BatchAvailability {
   return {
     accepting,
     batchName: "Next Bagelito Batch",
@@ -152,7 +166,7 @@ function fallbackBatchAvailability({
   };
 }
 
-export async function getReservationBatchAvailability() {
+export async function getReservationBatchAvailability(): Promise<BatchAvailability> {
   const missing = getMissingReservationEnv();
   if (missing.length) return fallbackBatchAvailability();
 

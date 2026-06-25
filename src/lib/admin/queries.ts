@@ -67,6 +67,27 @@ export type Order = {
   order_status_history?: StatusHistory[];
 };
 
+export type WaitlistSignup = {
+  id: string;
+  batch_id: string | null;
+  list_date: string;
+  list_label: string;
+  customer_name: string;
+  whatsapp: string;
+  email: string;
+  preferred_pack_slug: string | null;
+  preferred_pack_name: string | null;
+  contact_preference: "whatsapp" | "email" | "both";
+  locale: "en" | "es";
+  source: string;
+  notes: string | null;
+  consent_accepted: boolean;
+  status: "new" | "notified" | "converted" | "archived";
+  contacted_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 type ArchiveableOrder = {
   order_status_history?: StatusHistory[];
 };
@@ -103,6 +124,30 @@ export async function fetchOrders() {
 
   if (error) throw new Error(error.message);
   return (data ?? []) as Order[];
+}
+
+export async function fetchWaitlistSignups() {
+  const { data, error } = await createSupabaseAdminClient()
+    .from("waitlist_signups")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(500);
+
+  if (error) {
+    if (error.code === "42P01" || error.message.toLowerCase().includes("waitlist_signups")) {
+      return {
+        schemaReady: false,
+        signups: [] as WaitlistSignup[],
+      };
+    }
+
+    throw new Error(error.message);
+  }
+
+  return {
+    schemaReady: true,
+    signups: (data ?? []) as WaitlistSignup[],
+  };
 }
 
 export async function fetchCurrentBatch() {

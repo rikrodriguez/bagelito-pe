@@ -1,12 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
-import { getWhatsAppHref } from "@/lib/whatsapp";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
-
-const waitingListHref = getWhatsAppHref("Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
 
 export function FinalCTA() {
   const { copy } = useLanguage();
@@ -19,7 +17,7 @@ export function FinalCTA() {
           <h2>{copy.finalCta.title}</h2>
           <p>{copy.finalCta.text}</p>
         </div>
-        <a className="pill-button pink" href={waitingListHref} target="_blank" rel="noreferrer" onClick={() => trackBagelitoEvent("WhatsApp Click", { location: "final_cta", target: "waitlist" })}><MessageCircle size={18} /> {copy.finalCta.cta}</a>
+        <Link className="pill-button pink" href="/waitlist" onClick={() => trackBagelitoEvent("CTA Click", { location: "final_cta", target: "waitlist" })}><MessageCircle size={18} /> {copy.finalCta.cta}</Link>
         <RollingBagel variant="sesame" size="md" className="final-sesame" />
       </div>
     </section>

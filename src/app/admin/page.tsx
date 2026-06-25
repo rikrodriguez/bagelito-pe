@@ -21,6 +21,7 @@ import {
   Send,
   ShieldCheck,
   type LucideIcon,
+  UserPlus,
   Users,
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
@@ -28,6 +29,7 @@ import {
   batchStatuses,
   fetchCurrentBatch,
   fetchOrders,
+  fetchWaitlistSignups,
   filterActiveOrders,
   filterArchivedOrders,
   getBatchStats,
@@ -49,6 +51,7 @@ import {
   type FinancialSummary,
   type Order,
   type ProductionOpsPlan,
+  type WaitlistSignup,
 } from "@/lib/admin/queries";
 import {
   buildAdminWhatsAppMessage,
@@ -58,9 +61,10 @@ import {
   type AdminWhatsAppIntent,
 } from "@/lib/admin/whatsapp-messages";
 import { getMissingAdminEnv } from "@/lib/env";
+import { getWhatsAppHrefForPhone } from "@/lib/whatsapp";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
-import { quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
+import { closeCurrentBatch, quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
 const statusFilterOptions = [
@@ -91,6 +95,7 @@ const adminSections = [
   "crm",
   "finance",
   "batch",
+  "waitlist",
   "comms",
   "production",
   "delivery",
@@ -125,6 +130,11 @@ const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; i
     eyebrow: "Batch",
     title: "Batch management",
     intro: "Open or close orders, set capacity, and control batch dates from one place.",
+  },
+  waitlist: {
+    eyebrow: "Waitlist",
+    title: "Waitlist leads",
+    intro: "People waiting for the next batch, grouped by signup date with WhatsApp and email follow-up links.",
   },
   comms: {
     eyebrow: "Customer comms",
@@ -313,7 +323,7 @@ function filterAndSortOrders(orders: Order[], query: string, statusFilter: strin
 
 function batchStatusLabel(status: string) {
   const labels: Record<string, string> = {
-    waitlist_open: "Waitlist / soft open",
+    waitlist_open: "Waitlist open",
     orders_open: "Orders open",
     closed: "Closed",
     in_production: "In production",
@@ -710,6 +720,94 @@ function CustomerCommsQueue({ followUps, returnTo }: { followUps: { order: Order
   );
 }
 
+function getWaitlistMessage(signup: WaitlistSignup, batch: Batch) {
+  if (signup.locale === "es") {
+    return `Hola ${signup.customer_name}! Ya abrimos el batch de Bagelito: ${batch.name}. Puedes reservar tu pack aquí: https://bagelito.pe/#packs 🥯`;
+  }
+
+  return `Hi ${signup.customer_name}! The Bagelito batch is now open: ${batch.name}. You can reserve your pack here: https://bagelito.pe/#packs 🥯`;
+}
+
+function getWaitlistMailto(signups: WaitlistSignup[], batch: Batch) {
+  const emails = [...new Set(signups.map((signup) => signup.email.trim()).filter(Boolean))];
+  const subject = encodeURIComponent(`Bagelito batch is open: ${batch.name}`);
+  const body = encodeURIComponent(`Hi! The next Bagelito batch is open. Reserve here: https://bagelito.pe/#packs\n\nIf you prefer WhatsApp, reply with your order question. 🥯`);
+  return emails.length ? `mailto:?bcc=${emails.map(encodeURIComponent).join(",")}&subject=${subject}&body=${body}` : "";
+}
+
+function WaitlistPanel({ batch, schemaReady, signups }: { batch: Batch; schemaReady: boolean; signups: WaitlistSignup[] }) {
+  const groupedByDate = signups.reduce((map, signup) => {
+    const current = map.get(signup.list_date) ?? [];
+    current.push(signup);
+    map.set(signup.list_date, current);
+    return map;
+  }, new Map<string, WaitlistSignup[]>());
+  const latestGroup = Array.from(groupedByDate.entries()).sort((a, b) => b[0].localeCompare(a[0]))[0];
+  const mailtoHref = getWaitlistMailto(signups, batch);
+
+  return (
+    <section className="admin-card waitlist-panel">
+      <div className="admin-card-head">
+        <div>
+          <p className="kicker">Waitlist</p>
+          <h2>Batch waitlist leads</h2>
+          <p>Each signup is stored with a list date so you can notify the right cohort when orders open.</p>
+        </div>
+        <div className="admin-export-row compact">
+          <a href="/admin/export/waitlist"><FileDown size={16} /> Waitlist CSV</a>
+          {mailtoHref ? <a href={mailtoHref}><Mail size={16} /> Email list</a> : null}
+        </div>
+      </div>
+
+      {!schemaReady ? (
+        <div className="admin-flash warning">Waitlist table is not configured yet. Run `supabase/add-waitlist-signups.sql` in Supabase.</div>
+      ) : null}
+
+      <div className="waitlist-admin-kpis">
+        <div><span>Total leads</span><strong>{signups.length}</strong><small>{groupedByDate.size} signup dates</small></div>
+        <div><span>Latest list</span><strong>{latestGroup?.[0] ?? "None"}</strong><small>{latestGroup?.[1].length ?? 0} leads</small></div>
+        <div><span>WhatsApp preferred</span><strong>{signups.filter((signup) => signup.contact_preference !== "email").length}</strong><small>Can be contacted manually</small></div>
+        <div><span>Email preferred</span><strong>{signups.filter((signup) => signup.contact_preference !== "whatsapp").length}</strong><small>Use BCC export/email</small></div>
+      </div>
+
+      {signups.length ? (
+        <div className="waitlist-admin-list">
+          {Array.from(groupedByDate.entries()).sort((a, b) => b[0].localeCompare(a[0])).map(([listDate, entries]) => (
+            <section className="waitlist-date-group" key={listDate}>
+              <div className="waitlist-date-head">
+                <div>
+                  <span>{entries[0]?.list_label ?? `Waitlist ${listDate}`}</span>
+                  <strong>{entries.length} leads</strong>
+                </div>
+                <small>{listDate}</small>
+              </div>
+
+              <div className="waitlist-row-list">
+                {entries.map((signup) => (
+                  <article className="waitlist-admin-row" key={signup.id}>
+                    <div>
+                      <strong>{signup.customer_name}</strong>
+                      <span>{signup.whatsapp} · {signup.email}</span>
+                      <small>{signup.preferred_pack_name ?? "No pack preference"} · {signup.contact_preference} · {formatDate(signup.created_at)}</small>
+                      {signup.notes ? <small>Notes: {signup.notes}</small> : null}
+                    </div>
+                    <div className="waitlist-row-actions">
+                      <a className="status-action whatsapp" href={getWhatsAppHrefForPhone(signup.whatsapp, getWaitlistMessage(signup, batch))} target="_blank" rel="noreferrer"><MessageCircle size={15} /> WhatsApp</a>
+                      <a className="mini-link" href={`mailto:${encodeURIComponent(signup.email)}?subject=${encodeURIComponent(`Bagelito batch is open: ${batch.name}`)}&body=${encodeURIComponent(getWaitlistMessage(signup, batch))}`}><Mail size={15} /> Email</a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">{schemaReady ? "No waitlist signups yet. Leads will appear after customers submit the waitlist form." : "Waitlist leads will appear here after the Supabase table is created."}</div>
+      )}
+    </section>
+  );
+}
+
 function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; returnTo: string }) {
   const doneStage = plan.stages.find((stage) => stage.key === "done");
   const activeStages = plan.stages.filter((stage) => stage.key !== "done");
@@ -872,6 +970,15 @@ function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnTyp
         <label>Delivery date<input name="deliveryDate" type="datetime-local" defaultValue={formatDateTimeInput(batch.delivery_date)} /></label>
         <button className="pill-button pink" type="submit"><CalendarClock size={17} /> Save batch</button>
       </form>
+
+      <form action={closeCurrentBatch} className="batch-close-form">
+        <input type="hidden" name="batchId" value={batch.id} />
+        <div>
+          <strong>Close public reservations</strong>
+          <small>Sets this batch to closed, updates the public banner, and routes reservation buttons to the waitlist form.</small>
+        </div>
+        <button className="pill-button danger" disabled={batch.status === "closed"} type="submit">CLOSE BATCHES</button>
+      </form>
     </section>
   );
 }
@@ -978,6 +1085,7 @@ export default async function AdminPage({
 
   const allOrders = await fetchOrders();
   const currentBatch = await fetchCurrentBatch();
+  const waitlistData = await fetchWaitlistSignups();
   const customerProfiles = getCustomerProfiles(allOrders);
   const customerCrmStats = getCustomerCrmStats(customerProfiles);
   const activeOrders = filterActiveOrders(allOrders);
@@ -1069,6 +1177,13 @@ export default async function AdminPage({
       icon: CalendarClock,
     },
     {
+      section: "waitlist",
+      label: "Waitlist",
+      helper: `${waitlistData.signups.length} leads`,
+      href: buildAdminHref({ section: "waitlist", q: "", status: "all", sort: "newest" }),
+      icon: UserPlus,
+    },
+    {
       section: "comms",
       label: "Comms",
       helper: `${whatsappFollowUps.length} pending`,
@@ -1119,6 +1234,7 @@ export default async function AdminPage({
             <a href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>
             <a href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
+            <a href="/admin/export/waitlist"><FileDown size={16} /> Waitlist CSV</a>
           </div>
         </div>
 
@@ -1145,6 +1261,10 @@ export default async function AdminPage({
 
         {batchMessage === "updated" ? (
           <div className="admin-flash success">Batch settings updated.</div>
+        ) : null}
+
+        {batchMessage === "closed" ? (
+          <div className="admin-flash success">Batch closed. Public reservation buttons now point to the waitlist form.</div>
         ) : null}
 
         {financeMessage === "updated" ? (
@@ -1194,6 +1314,8 @@ export default async function AdminPage({
         {activeSection === "finance" ? <FinancialPanel summary={finance} /> : null}
 
         {activeSection === "batch" ? <BatchManagementPanel batch={currentBatch} stats={batchStats} /> : null}
+
+        {activeSection === "waitlist" ? <WaitlistPanel batch={currentBatch} schemaReady={waitlistData.schemaReady} signups={waitlistData.signups} /> : null}
 
         {activeSection === "comms" ? <CustomerCommsQueue followUps={whatsappFollowUps} returnTo={commsReturnHref} /> : null}
 

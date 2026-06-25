@@ -753,6 +753,130 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 .next-step { display: inline-flex; align-items: center; gap: 8px; }
 .mini-link { display: inline-flex; align-items: center; gap: 7px; color: var(--blue); font-weight: 950; }
 
+.waitlist-page {
+  min-height: 70vh;
+  padding: 42px clamp(20px, 5vw, 76px);
+}
+
+.waitlist-shell {
+  display: grid;
+  gap: 22px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.waitlist-hero,
+.waitlist-form-card,
+.waitlist-success-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.waitlist-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+  background: #ffeaf3;
+  padding: clamp(22px, 4vw, 36px);
+}
+
+.waitlist-hero h1,
+.waitlist-success-card h1 {
+  margin-top: 10px;
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  line-height: .95;
+}
+
+.waitlist-hero p:not(.kicker),
+.waitlist-success-card p {
+  max-width: 700px;
+  margin-top: 12px;
+  color: var(--navy);
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.waitlist-status-row,
+.waitlist-date-badge,
+.waitlist-privacy-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 999px;
+  background: white;
+  padding: 10px 14px;
+  color: var(--navy);
+  font-weight: 950;
+}
+
+.waitlist-status-row {
+  margin-top: 18px;
+}
+
+.waitlist-status-row span,
+.waitlist-date-badge span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--blue);
+}
+
+.waitlist-form-card {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 4vw, 34px);
+}
+
+.waitlist-date-badge {
+  background: #fff7df;
+}
+
+.waitlist-privacy-note {
+  margin: 0;
+  border-radius: 12px;
+  background: #eefaf6;
+  color: #306650;
+  font-size: .86rem;
+}
+
+.waitlist-success-card {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  padding: clamp(26px, 5vw, 54px);
+}
+
+.waitlist-success-card svg {
+  color: #168b65;
+}
+
+.waitlist-success-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.waitlist-success-grid div {
+  display: grid;
+  gap: 5px;
+  border-radius: 14px;
+  background: #fff7df;
+  padding: 14px;
+}
+
+.waitlist-success-grid span {
+  color: var(--blue);
+  font-size: .8rem;
+  font-weight: 900;
+}
+
 .admin-page { background: #f8fbff; }
 .admin-topbar { display: flex; justify-content: space-between; gap: 24px; align-items: center; margin-bottom: 24px; }
 .admin-export-row { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -949,10 +1073,132 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   min-height: 42px;
   white-space: nowrap;
 }
+.batch-close-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  border: 1px solid #ffd1d1;
+  border-radius: 16px;
+  background: #fff4f4;
+  padding: 14px;
+}
+.batch-close-form div {
+  display: grid;
+  gap: 4px;
+}
+.batch-close-form strong {
+  color: var(--navy);
+}
+.batch-close-form small {
+  color: #7a4b4b;
+  font-weight: 850;
+  line-height: 1.35;
+}
+.pill-button.danger {
+  border: 0;
+  background: #c9283d;
+  color: white;
+  white-space: nowrap;
+}
+.pill-button.danger:disabled {
+  opacity: .48;
+  cursor: not-allowed;
+}
 .whatsapp-queue-card {
   margin-bottom: 20px;
   border-color: #c8eee7;
   background: linear-gradient(180deg, #ffffff, #f5fffd);
+}
+.waitlist-panel {
+  border-color: #d8e5f5;
+  background: linear-gradient(180deg, #ffffff, #f7fbff);
+}
+.admin-export-row.compact {
+  justify-content: flex-end;
+}
+.waitlist-admin-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.waitlist-admin-kpis div {
+  display: grid;
+  gap: 4px;
+  border-radius: 14px;
+  background: #f8fbff;
+  padding: 12px;
+}
+.waitlist-admin-kpis span,
+.waitlist-date-head span {
+  color: #66758a;
+  font-size: .74rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+.waitlist-admin-kpis strong {
+  color: var(--navy);
+  font-size: 1.25rem;
+  line-height: 1.05;
+}
+.waitlist-admin-kpis small,
+.waitlist-date-head small {
+  color: #66758a;
+  font-weight: 850;
+}
+.waitlist-admin-list,
+.waitlist-row-list {
+  display: grid;
+  gap: 12px;
+}
+.waitlist-date-group {
+  display: grid;
+  gap: 10px;
+  border: 1px solid #dfe9f3;
+  border-radius: 16px;
+  background: white;
+  padding: 14px;
+}
+.waitlist-date-head,
+.waitlist-admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.waitlist-date-head strong {
+  display: block;
+  color: var(--navy);
+  font-size: 1.1rem;
+}
+.waitlist-admin-row {
+  border-radius: 14px;
+  background: #fff8ee;
+  padding: 12px;
+}
+.waitlist-admin-row > div:first-child {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.waitlist-admin-row strong {
+  color: var(--navy);
+}
+.waitlist-admin-row span,
+.waitlist-admin-row small {
+  color: #53637a;
+  font-size: .82rem;
+  font-weight: 850;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.waitlist-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 .whatsapp-queue-list {
   display: grid;
@@ -3579,6 +3825,7 @@ section[id] {
   .crm-overview-grid,
   .finance-kpi-grid,
   .finance-detail-grid,
+  .waitlist-admin-kpis,
   .customer-crm-kpis,
   .customer-profile-list,
   .customer-profile-metrics,
@@ -3614,6 +3861,21 @@ section[id] {
 
   .customer-actions {
     align-items: stretch;
+  }
+
+  .batch-close-form,
+  .waitlist-date-head,
+  .waitlist-admin-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .batch-close-form .pill-button,
+  .waitlist-row-actions,
+  .waitlist-row-actions a {
+    width: 100%;
+    justify-content: center;
   }
 
   .customer-actions form,
@@ -4158,6 +4420,7 @@ section[id] {
   }
 
   .reserve-herolet,
+  .waitlist-hero,
   .success-card,
   .admin-login-card {
     border-radius: 18px;
@@ -4165,6 +4428,8 @@ section[id] {
   }
 
   .reserve-herolet h1,
+  .waitlist-hero h1,
+  .waitlist-success-card h1,
   .success-card h1,
   .admin-topbar h1 {
     font-size: clamp(2.15rem, 11vw, 2.95rem);
@@ -4172,6 +4437,7 @@ section[id] {
   }
 
   .reserve-herolet p:not(.kicker),
+  .waitlist-hero p:not(.kicker),
   .admin-intro {
     font-size: .95rem;
     line-height: 1.45;
@@ -4179,6 +4445,29 @@ section[id] {
 
   .reserve-herolet .bagel-photo {
     justify-self: center;
+  }
+
+  .waitlist-page {
+    padding: 20px 14px 30px;
+  }
+
+  .waitlist-hero,
+  .waitlist-success-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .waitlist-hero .bagel-photo {
+    justify-self: center;
+  }
+
+  .waitlist-status-row,
+  .waitlist-date-badge,
+  .waitlist-privacy-note {
+    width: 100%;
+    border-radius: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    line-height: 1.3;
   }
 
   .reserve-progress {

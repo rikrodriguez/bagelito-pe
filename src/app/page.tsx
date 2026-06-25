@@ -11,6 +11,7 @@ import { MobileStickyReserveCTA } from "@/components/MobileStickyReserveCTA";
 import { Packs } from "@/components/Packs";
 import { Testimonials } from "@/components/Testimonials";
 import { WhyMonthly } from "@/components/WhyMonthly";
+import { getReservationBatchAvailability } from "@/lib/reservations/service";
 
 export const metadata: Metadata = {
   alternates: {
@@ -18,15 +19,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const batchAvailability = await getReservationBatchAvailability();
+
   return (
     <>
       <Header />
       <main>
-        <Hero />
+        <Hero acceptingReservations={batchAvailability.accepting} />
         <BatchInfo />
         <HowMonthlyWorks />
-        <Packs />
+        <Packs acceptingReservations={batchAvailability.accepting} />
         <WhyMonthly />
         <FlavorStrip />
         <Testimonials />
@@ -34,7 +37,7 @@ export default function HomePage() {
         <FinalCTA />
       </main>
       <Footer />
-      <MobileStickyReserveCTA />
+      <MobileStickyReserveCTA acceptingReservations={batchAvailability.accepting} />
     </>
   );
 }

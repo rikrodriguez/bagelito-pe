@@ -304,7 +304,7 @@ export async function updateBatchSettings(formData: FormData) {
   const capacityBagels = parseNullableInteger(formData.get("capacityBagels"));
   const ordersCloseAt = parseLimaDateTime(formData.get("ordersCloseAt"));
   const deliveryDate = parseLimaDateTime(formData.get("deliveryDate"));
-  const statusAcceptsOrders = status === "waitlist_open" || status === "orders_open";
+  const statusAcceptsOrders = status === "orders_open";
   const nextOrdersCloseAt = statusAcceptsOrders && ordersCloseAt && new Date(ordersCloseAt).getTime() <= Date.now()
     ? null
     : ordersCloseAt;
@@ -369,6 +369,43 @@ export async function updateBatchSettings(formData: FormData) {
   revalidatePath("/reserve");
   revalidatePath("/admin");
   redirect("/admin?section=batch&batch=updated");
+}
+
+export async function closeCurrentBatch(formData: FormData) {
+  const startedAt = Date.now();
+  await requireAdmin();
+  const batchId = String(formData.get("batchId") ?? "");
+  if (!batchId) throw new Error("Missing batch ID");
+
+  logInfo("admin_batch_close_start", { batchId });
+
+  try {
+    const { error } = await createSupabaseAdminClient()
+      .from("batches")
+      .update({
+        orders_close_at: new Date().toISOString(),
+        status: "closed",
+      })
+      .eq("id", batchId);
+
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_batch_close_failed", error, {
+      batchId,
+      durationMs: getDurationMs(startedAt),
+    });
+    throw error;
+  }
+
+  logInfo("admin_batch_close_success", {
+    batchId,
+    durationMs: getDurationMs(startedAt),
+  });
+  revalidatePath("/");
+  revalidatePath("/reserve");
+  revalidatePath("/waitlist");
+  revalidatePath("/admin");
+  redirect("/admin?section=batch&batch=closed");
 }
 
 export async function updateBatchFinancialCosts(formData: FormData) {

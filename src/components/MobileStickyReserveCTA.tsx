@@ -6,9 +6,12 @@ import { ShoppingBag } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import { useLanguage } from "./LanguageProvider";
 
-export function MobileStickyReserveCTA() {
+export function MobileStickyReserveCTA({ acceptingReservations = true }: { acceptingReservations?: boolean }) {
   const { copy } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
+  const href = acceptingReservations ? "/#packs" : "/waitlist";
+  const label = acceptingReservations ? copy.stickyReserveCta.label : copy.stickyReserveCta.waitlistLabel;
+  const ariaLabel = acceptingReservations ? copy.stickyReserveCta.aria : copy.stickyReserveCta.waitlistAria;
 
   useEffect(() => {
     const trackedSections = [document.getElementById("home"), document.getElementById("packs")].filter(Boolean) as HTMLElement[];
@@ -42,9 +45,9 @@ export function MobileStickyReserveCTA() {
   }
 
   return (
-    <Link className="mobile-sticky-reserve-cta" href="/#packs" aria-label={copy.stickyReserveCta.aria} onClick={() => trackBagelitoEvent("CTA Click", { location: "mobile_sticky", target: "packs" })}>
+    <Link className="mobile-sticky-reserve-cta" href={href} aria-label={ariaLabel} onClick={() => trackBagelitoEvent("CTA Click", { location: "mobile_sticky", target: acceptingReservations ? "packs" : "waitlist" })}>
       <ShoppingBag size={18} />
-      <span>{copy.stickyReserveCta.label}</span>
+      <span>{label}</span>
     </Link>
   );
 }

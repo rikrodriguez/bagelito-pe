@@ -15,7 +15,7 @@ const packImages: Record<PackSlug, string> = {
   "6-single": "/images/pack-6-single.webp",
 };
 
-export function Packs() {
+export function Packs({ acceptingReservations = true }: { acceptingReservations?: boolean }) {
   const { locale, copy } = useLanguage();
 
   return (
@@ -28,6 +28,8 @@ export function Packs() {
       <div className="pack-grid clean-pack-grid" aria-label={copy.packs.title}>
         {packs.map((pack) => {
           const localizedPack = packCopy[locale][pack.slug];
+          const ctaHref = acceptingReservations ? `/reserve?pack=${pack.slug}` : `/waitlist?pack=${pack.slug}`;
+          const ctaLabel = acceptingReservations ? copy.packs.button : copy.packs.waitlistButton;
 
           return (
             <article key={pack.slug} className={`pack-card clean-pack-card ${pack.accent} ${pack.mostWanted ? "has-badge" : ""}`}>
@@ -54,12 +56,12 @@ export function Packs() {
 
               <Link
                 className={`pill-button ${pack.accent}`}
-                href={`/reserve?pack=${pack.slug}`}
-                aria-label={`${copy.packs.button}: ${localizedPack.name}`}
-                onClick={() => trackBagelitoEvent("Pack CTA Click", { pack: pack.slug, amount: pack.amount })}
+                href={ctaHref}
+                aria-label={`${ctaLabel}: ${localizedPack.name}`}
+                onClick={() => trackBagelitoEvent("Pack CTA Click", { pack: pack.slug, amount: pack.amount, target: acceptingReservations ? "reserve" : "waitlist" })}
               >
                 <MessageCircle size={18} strokeWidth={2.6} aria-hidden="true" />
-                <span>{copy.packs.button}</span>
+                <span>{ctaLabel}</span>
               </Link>
             </article>
           );

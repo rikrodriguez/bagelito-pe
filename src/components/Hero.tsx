@@ -7,8 +7,10 @@ import { useLanguage } from "./LanguageProvider";
 
 const badgeIcons = [CalendarDays, LockKeyhole, Archive, Truck];
 
-export function Hero() {
+export function Hero({ acceptingReservations = true }: { acceptingReservations?: boolean }) {
   const { copy } = useLanguage();
+  const primaryHref = acceptingReservations ? "#packs" : "/waitlist";
+  const primaryLabel = acceptingReservations ? copy.hero.primaryCta : copy.hero.waitlistCta;
 
   return (
     <section id="home" className="hero-section">
@@ -17,7 +19,7 @@ export function Hero() {
         <h1>{copy.hero.titleLine1} <span>{copy.hero.titleHighlight}</span> {copy.hero.titleLine3}</h1>
         <p className="hero-subcopy">{copy.hero.subcopy}</p>
         <div className="hero-buttons">
-          <a className="pill-button pink" href="#packs" onClick={() => trackBagelitoEvent("CTA Click", { location: "hero", target: "packs" })}><MessageCircle size={18} /> {copy.hero.primaryCta}</a>
+          <a className="pill-button pink" href={primaryHref} onClick={() => trackBagelitoEvent("CTA Click", { location: "hero", target: acceptingReservations ? "packs" : "waitlist" })}><MessageCircle size={18} /> {primaryLabel}</a>
         </div>
         <div className="hero-badges">
           {copy.hero.badges.map((text, index) => {

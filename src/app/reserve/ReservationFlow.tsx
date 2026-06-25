@@ -11,27 +11,13 @@ import { trackBagelitoEvent } from "@/lib/analytics";
 import { getDeliveryFee } from "@/lib/delivery-pricing";
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import { districtOptions } from "@/lib/reservations/schema";
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import type { BatchAvailability } from "@/lib/reservations/service";
 
 type Props = {
   batchAvailability: BatchAvailability;
   packs: Pack[];
   flavors: Flavor[];
   initialPackSlug: PackSlug;
-};
-
-type BatchAvailability = {
-  accepting: boolean;
-  batchName: string;
-  capacityBagels: number | null;
-  capacityPacks: number | null;
-  deliveryDate: string | null;
-  ordersCloseAt: string | null;
-  remainingBagels: number | null;
-  remainingPacks: number | null;
-  reservedBagels: number;
-  reservedPacks: number;
-  status: string;
 };
 
 type Details = {
@@ -117,7 +103,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
       open: "Batch abierto",
       ordersClose: "Cierre",
       remaining: "cupos restantes",
-      unavailable: "Estamos cerrando o produciendo este batch. Escríbenos para entrar a la lista del próximo drop.",
+      unavailable: "Estamos cerrando o produciendo este batch. Únete a la lista y te avisaremos cuando abra el próximo drop.",
     }
     : {
       closed: "This batch is closed",
@@ -128,11 +114,8 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
       open: "Batch open",
       ordersClose: "Orders close",
       remaining: "spots left",
-      unavailable: "We are closing or producing this batch. Message us to join the next drop waitlist.",
+      unavailable: "We are closing or producing this batch. Join the waitlist and we will notify you when the next drop opens.",
     };
-  const waitlistHref = getWhatsAppHref(locale === "es"
-    ? "Hola Bagelito! Quiero entrar a la lista de espera para el próximo batch por favor 🥯!"
-    : "Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
   const selectedItems = useMemo(() => {
     if (selectedPack.packType === "single") {
       return singleFlavor ? [{ flavorSlug: singleFlavor, quantity: selectedPack.units }] : [];
@@ -346,10 +329,10 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
             <strong>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</strong>
             <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
           </div>
-          <a className="pill-button pink" href={waitlistHref} target="_blank" rel="noreferrer">
+          <Link className="pill-button pink" href={`/waitlist?pack=${selectedPack.slug}`}>
             <MessageCircle size={18} />
             {batchText.joinWaitlist}
-          </a>
+          </Link>
         </div>
       </section>
     );

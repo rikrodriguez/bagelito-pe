@@ -4,6 +4,7 @@ import { siteUrl } from "@/lib/site";
 const routes = [
   { path: "/", changeFrequency: "weekly", priority: 1 },
   { path: "/reserve", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/waitlist", changeFrequency: "weekly", priority: 0.85 },
   { path: "/legal", changeFrequency: "yearly", priority: 0.4 },
 ] as const;
 

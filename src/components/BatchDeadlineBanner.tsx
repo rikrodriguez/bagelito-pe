@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import type { BatchAvailability } from "@/lib/reservations/service";
 import { useLanguage } from "./LanguageProvider";
 
 const initialTimeLeft = {
@@ -15,16 +15,7 @@ const initialTimeLeft = {
 };
 
 type BatchDeadlineBannerProps = {
-  batchAvailability: {
-    accepting: boolean;
-    capacityBagels: number | null;
-    capacityPacks: number | null;
-    ordersCloseAt: string | null;
-    remainingBagels: number | null;
-    remainingPacks: number | null;
-    reservedBagels: number;
-    reservedPacks: number;
-  };
+  batchAvailability: BatchAvailability;
 };
 
 function getTimeLeft(deadline: number | null) {
@@ -60,15 +51,12 @@ export function BatchDeadlineBanner({ batchAvailability }: BatchDeadlineBannerPr
   const deadline = batchAvailability.ordersCloseAt ? new Date(batchAvailability.ordersCloseAt).getTime() : null;
   const reservedPercent = getReservedPercent(batchAvailability);
   const availablePercent = batchAvailability.accepting ? 100 - reservedPercent : 0;
-  const waitlistHref = getWhatsAppHref(locale === "es"
-    ? "Hola Bagelito! Quiero entrar a la lista de espera para el próximo batch por favor 🥯!"
-    : "Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
   const closeLabel = batchAvailability.ordersCloseAt
     ? (locale === "es" ? "Pedidos cierran " : "Orders close ") + new Date(batchAvailability.ordersCloseAt).toLocaleDateString(locale === "es" ? "es-PE" : "en-US", { day: "numeric", month: "short", timeZone: "America/Lima" })
     : copy.deadline.close;
-  const ctaLabel = batchAvailability.accepting ? copy.deadline.cta : locale === "es" ? "Unirme a la lista" : "Join waitlist";
-  const ctaHref = batchAvailability.accepting ? "/#packs" : waitlistHref;
+  const ctaLabel = batchAvailability.accepting ? copy.deadline.cta : copy.deadline.closedCta;
+  const ctaHref = batchAvailability.accepting ? "/#packs" : "/waitlist";
 
   useEffect(() => {
     setTimeLeft(getTimeLeft(deadline));
@@ -92,15 +80,15 @@ export function BatchDeadlineBanner({ batchAvailability }: BatchDeadlineBannerPr
 
       <div className="batch-availability">
         <div className="availability-label">
-          <span><Gauge size={17} /> {reservedPercent}% {copy.deadline.reserved}</span>
-          <strong>{availablePercent}% {copy.deadline.available}</strong>
+          <span><Gauge size={17} /> {batchAvailability.accepting ? `${reservedPercent}% ${copy.deadline.reserved}` : copy.deadline.closedStatus}</span>
+          <strong>{batchAvailability.accepting ? `${availablePercent}% ${copy.deadline.available}` : copy.deadline.closedBody}</strong>
         </div>
         <div className="availability-track" aria-hidden="true">
           <span style={{ width: `${reservedPercent}%` }} />
         </div>
       </div>
 
-      <Link className="deadline-cta" href={ctaHref} target={batchAvailability.accepting ? undefined : "_blank"} rel={batchAvailability.accepting ? undefined : "noreferrer"} onClick={() => trackBagelitoEvent("CTA Click", { location: "deadline_banner", target: batchAvailability.accepting ? "packs" : "waitlist" })}>
+      <Link className="deadline-cta" href={ctaHref} onClick={() => trackBagelitoEvent("CTA Click", { location: "deadline_banner", target: batchAvailability.accepting ? "packs" : "waitlist" })}>
         <MessageCircle size={17} />
         {ctaLabel}
       </Link>
