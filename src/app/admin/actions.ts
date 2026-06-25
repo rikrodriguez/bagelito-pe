@@ -7,6 +7,7 @@ import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { batchStatuses, hasUploadedPaymentProof } from "@/lib/admin/queries";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
+import { getDurationMs, logError, logInfo, logWarn } from "@/lib/monitoring";
 
 const allowedOrderStatuses = [
   "payment_pending_review",
@@ -113,38 +114,67 @@ async function readOrderForAdminMutation(orderId: string, orderCode: string) {
 }
 
 async function setOrderArchiveState(formData: FormData, archived: boolean) {
+  const startedAt = Date.now();
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
   const fallback = archived ? `/admin?archived=${encodeURIComponent(orderCode)}` : `/admin?restored=${encodeURIComponent(orderCode)}`;
   const returnTo = getSafeAdminReturnTo(formData, fallback);
+  const action = archived ? "archive" : "restore";
+
+  logInfo("admin_order_archive_start", { action, orderCode });
 
   const result = await readOrderForAdminMutation(orderId, orderCode);
   if (!result) {
+    logWarn("admin_order_archive_missing", { action, durationMs: getDurationMs(startedAt), orderCode });
     revalidatePath("/admin");
     redirect("/admin?deleted=missing");
   }
 
   const { supabase, order } = result;
-  const { error } = await supabase.from("order_status_history").insert({
-    order_id: order.id,
-    old_status: order.status,
-    new_status: archived ? "archived" : "unarchived",
-    changed_by: archived ? "admin archive" : "admin restore",
+  try {
+    const { error } = await supabase.from("order_status_history").insert({
+      order_id: order.id,
+      old_status: order.status,
+      new_status: archived ? "archived" : "unarchived",
+      changed_by: archived ? "admin archive" : "admin restore",
+    });
+
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_order_archive_failed", error, {
+      action,
+      durationMs: getDurationMs(startedAt),
+      orderCode: order.order_code,
+    });
+    throw error;
+  }
+
+  logInfo("admin_order_archive_success", {
+    action,
+    durationMs: getDurationMs(startedAt),
+    orderCode: order.order_code,
   });
-
-  if (error) throw new Error(error.message);
-
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${order.order_code}`);
   redirect(returnTo);
 }
 
 export async function loginAdmin(formData: FormData) {
+  const startedAt = Date.now();
   const password = String(formData.get("password") ?? "");
 
-  if (!process.env.ADMIN_PASSWORD) redirect("/admin/login?error=missing-password");
-  if (!verifyAdminPassword(password)) redirect("/admin/login?error=invalid");
+  if (!process.env.ADMIN_PASSWORD) {
+    logError("admin_login_missing_password_env", new Error("ADMIN_PASSWORD is not configured"), {
+      durationMs: getDurationMs(startedAt),
+    });
+    redirect("/admin/login?error=missing-password");
+  }
+
+  if (!verifyAdminPassword(password)) {
+    logWarn("admin_login_invalid", { durationMs: getDurationMs(startedAt) });
+    redirect("/admin/login?error=invalid");
+  }
 
   const cookieStore = await cookies();
   cookieStore.set(getAdminCookieName(), createAdminToken(), {
@@ -155,31 +185,68 @@ export async function loginAdmin(formData: FormData) {
     maxAge: 60 * 60 * 8,
   });
 
+  logInfo("admin_login_success", { durationMs: getDurationMs(startedAt) });
   redirect("/admin");
 }
 
 export async function updateOrderStatus(formData: FormData) {
+  const startedAt = Date.now();
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
   const status = String(formData.get("status") ?? "");
 
-  await setOrderStatus(orderId, status);
+  logInfo("admin_order_status_start", { orderCode, status, source: "detail" });
+  try {
+    await setOrderStatus(orderId, status);
+  } catch (error) {
+    logError("admin_order_status_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      orderCode,
+      source: "detail",
+      status,
+    });
+    throw error;
+  }
 
+  logInfo("admin_order_status_success", {
+    durationMs: getDurationMs(startedAt),
+    orderCode,
+    source: "detail",
+    status,
+  });
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
   redirect(`/admin/orders/${orderCode}${getWhatsAppStatusQuery(status, orderCode)}`);
 }
 
 export async function quickUpdateOrderStatus(formData: FormData) {
+  const startedAt = Date.now();
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
   const status = String(formData.get("status") ?? "");
   const returnTo = getSafeAdminReturnTo(formData, "/admin");
 
-  await setOrderStatus(orderId, status);
+  logInfo("admin_order_status_start", { orderCode, status, source: "quick" });
+  try {
+    await setOrderStatus(orderId, status);
+  } catch (error) {
+    logError("admin_order_status_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      orderCode,
+      source: "quick",
+      status,
+    });
+    throw error;
+  }
 
+  logInfo("admin_order_status_success", {
+    durationMs: getDurationMs(startedAt),
+    orderCode,
+    source: "quick",
+    status,
+  });
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
   redirect(appendAdminQueryString(returnTo, getWhatsAppStatusQuery(status, orderCode)));
@@ -194,20 +261,33 @@ export async function restoreOrder(formData: FormData) {
 }
 
 export async function updateAdminNote(formData: FormData) {
+  const startedAt = Date.now();
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
   const adminNotes = String(formData.get("adminNotes") ?? "");
 
-  const { error } = await createSupabaseAdminClient().from("orders").update({ admin_notes: adminNotes }).eq("id", orderId);
-  if (error) throw new Error(error.message);
+  logInfo("admin_note_update_start", { orderCode });
+  try {
+    const { error } = await createSupabaseAdminClient().from("orders").update({ admin_notes: adminNotes }).eq("id", orderId);
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_note_update_failed", error, { durationMs: getDurationMs(startedAt), orderCode });
+    throw error;
+  }
 
+  logInfo("admin_note_update_success", {
+    durationMs: getDurationMs(startedAt),
+    hasNote: Boolean(adminNotes.trim()),
+    orderCode,
+  });
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
   redirect(`/admin/orders/${orderCode}`);
 }
 
 export async function updateBatchSettings(formData: FormData) {
+  const startedAt = Date.now();
   await requireAdmin();
   const batchId = String(formData.get("batchId") ?? "");
   const name = String(formData.get("name") ?? "").trim() || "Next Bagelito Batch";
@@ -224,38 +304,59 @@ export async function updateBatchSettings(formData: FormData) {
   if (!batchId) throw new Error("Missing batch ID");
 
   const supabase = createSupabaseAdminClient();
-  const { data: existing, error: readError } = await supabase
-    .from("batches")
-    .select("orders_open_at")
-    .eq("id", batchId)
-    .single();
-
-  if (readError) throw new Error(readError.message);
-
-  const update: {
-    capacity_bagels: number | null;
-    capacity_packs: number | null;
-    delivery_date: string | null;
-    name: string;
-    orders_close_at: string | null;
-    orders_open_at?: string;
-    status: string;
-  } = {
-    capacity_bagels: capacityBagels,
-    capacity_packs: capacityPacks,
-    delivery_date: deliveryDate,
-    name,
-    orders_close_at: status === "closed" && !nextOrdersCloseAt ? new Date().toISOString() : nextOrdersCloseAt,
+  logInfo("admin_batch_update_start", {
+    batchId,
+    capacityBagels: capacityBagels ?? null,
+    capacityPacks: capacityPacks ?? null,
     status,
-  };
+  });
 
-  if (status === "orders_open" && !(existing as { orders_open_at?: string | null } | null)?.orders_open_at) {
-    update.orders_open_at = new Date().toISOString();
+  try {
+    const { data: existing, error: readError } = await supabase
+      .from("batches")
+      .select("orders_open_at")
+      .eq("id", batchId)
+      .single();
+
+    if (readError) throw new Error(readError.message);
+
+    const update: {
+      capacity_bagels: number | null;
+      capacity_packs: number | null;
+      delivery_date: string | null;
+      name: string;
+      orders_close_at: string | null;
+      orders_open_at?: string;
+      status: string;
+    } = {
+      capacity_bagels: capacityBagels,
+      capacity_packs: capacityPacks,
+      delivery_date: deliveryDate,
+      name,
+      orders_close_at: status === "closed" && !nextOrdersCloseAt ? new Date().toISOString() : nextOrdersCloseAt,
+      status,
+    };
+
+    if (status === "orders_open" && !(existing as { orders_open_at?: string | null } | null)?.orders_open_at) {
+      update.orders_open_at = new Date().toISOString();
+    }
+
+    const { error } = await supabase.from("batches").update(update).eq("id", batchId);
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_batch_update_failed", error, {
+      batchId,
+      durationMs: getDurationMs(startedAt),
+      status,
+    });
+    throw error;
   }
 
-  const { error } = await supabase.from("batches").update(update).eq("id", batchId);
-  if (error) throw new Error(error.message);
-
+  logInfo("admin_batch_update_success", {
+    batchId,
+    durationMs: getDurationMs(startedAt),
+    status,
+  });
   revalidatePath("/");
   revalidatePath("/reserve");
   revalidatePath("/admin");
@@ -263,6 +364,7 @@ export async function updateBatchSettings(formData: FormData) {
 }
 
 export async function markWhatsAppMessageSent(formData: FormData) {
+  const startedAt = Date.now();
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
@@ -271,14 +373,22 @@ export async function markWhatsAppMessageSent(formData: FormData) {
 
   if (!intent) throw new Error("Invalid WhatsApp message intent");
 
+  logInfo("admin_whatsapp_log_start", { intent, orderCode });
   const result = await readOrderForAdminMutation(orderId, orderCode);
   if (!result) {
+    logWarn("admin_whatsapp_log_missing", { durationMs: getDurationMs(startedAt), intent, orderCode });
     revalidatePath("/admin");
     redirect("/admin?deleted=missing");
   }
 
   const { supabase, order } = result;
   if (!canSendAdminWhatsAppIntent(order, intent)) {
+    logWarn("admin_whatsapp_log_blocked", {
+      durationMs: getDurationMs(startedAt),
+      intent,
+      orderCode: order.order_code,
+      status: order.status,
+    });
     const errorReturnTo = returnTo.startsWith("/admin/orders/") ? `/admin/orders/${order.order_code}` : "/admin";
     revalidatePath("/admin");
     revalidatePath(`/admin/orders/${order.order_code}`);
@@ -286,36 +396,71 @@ export async function markWhatsAppMessageSent(formData: FormData) {
   }
 
   const sentStatus = getAdminWhatsAppSentStatus(intent);
-  const { data: existing, error: existingError } = await supabase
-    .from("order_status_history")
-    .select("id")
-    .eq("order_id", order.id)
-    .eq("new_status", sentStatus)
-    .limit(1)
-    .maybeSingle();
+  let existing: { id?: string } | null = null;
 
-  if (existingError) throw new Error(existingError.message);
+  try {
+    const { data, error: existingError } = await supabase
+      .from("order_status_history")
+      .select("id")
+      .eq("order_id", order.id)
+      .eq("new_status", sentStatus)
+      .limit(1)
+      .maybeSingle();
+
+    if (existingError) throw new Error(existingError.message);
+    existing = data;
+  } catch (error) {
+    logError("admin_whatsapp_log_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      intent,
+      orderCode: order.order_code,
+      stage: "read_existing",
+    });
+    throw error;
+  }
+
   if (existing) {
+    logInfo("admin_whatsapp_log_duplicate", {
+      durationMs: getDurationMs(startedAt),
+      intent,
+      orderCode: order.order_code,
+    });
     revalidatePath("/admin");
     revalidatePath(`/admin/orders/${order.order_code}`);
     redirect(returnTo);
   }
 
-  const { error } = await supabase.from("order_status_history").insert({
-    order_id: order.id,
-    old_status: order.status,
-    new_status: sentStatus,
-    changed_by: "admin whatsapp",
+  try {
+    const { error } = await supabase.from("order_status_history").insert({
+      order_id: order.id,
+      old_status: order.status,
+      new_status: sentStatus,
+      changed_by: "admin whatsapp",
+    });
+
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_whatsapp_log_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      intent,
+      orderCode: order.order_code,
+      stage: "insert_history",
+    });
+    throw error;
+  }
+
+  logInfo("admin_whatsapp_log_success", {
+    durationMs: getDurationMs(startedAt),
+    intent,
+    orderCode: order.order_code,
   });
-
-  if (error) throw new Error(error.message);
-
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${order.order_code}`);
   redirect(returnTo);
 }
 
 export async function deleteOrder(formData: FormData) {
+  const startedAt = Date.now();
   await requireAdmin();
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
@@ -323,27 +468,47 @@ export async function deleteOrder(formData: FormData) {
 
   if (!orderId) throw new Error("Missing order ID");
 
+  logWarn("admin_order_delete_start", { orderCode });
   const result = await readOrderForAdminMutation(orderId, orderCode);
   if (!result) {
+    logWarn("admin_order_delete_missing", { durationMs: getDurationMs(startedAt), orderCode });
     revalidatePath("/admin");
     redirect("/admin?deleted=missing");
   }
 
   const { supabase, order } = result;
   if (confirmOrderCode !== order.order_code) {
+    logWarn("admin_order_delete_confirmation_failed", {
+      durationMs: getDurationMs(startedAt),
+      orderCode: order.order_code,
+    });
     revalidatePath("/admin");
     revalidatePath(`/admin/orders/${order.order_code}`);
     redirect(`/admin/orders/${order.order_code}?deleteError=confirmation`);
   }
 
-  if (hasUploadedPaymentProof(order)) {
-    const { error: storageError } = await supabase.storage.from("payment-proofs").remove([order.payment_screenshot_path]);
-    if (storageError) throw new Error("Could not delete payment proof: " + storageError.message);
+  try {
+    if (hasUploadedPaymentProof(order)) {
+      const { error: storageError } = await supabase.storage.from("payment-proofs").remove([order.payment_screenshot_path]);
+      if (storageError) throw new Error("Could not delete payment proof: " + storageError.message);
+    }
+
+    const { error: deleteError } = await supabase.from("orders").delete().eq("id", order.id);
+    if (deleteError) throw new Error(deleteError.message);
+  } catch (error) {
+    logError("admin_order_delete_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      hasPaymentProof: hasUploadedPaymentProof(order),
+      orderCode: order.order_code,
+    });
+    throw error;
   }
 
-  const { error: deleteError } = await supabase.from("orders").delete().eq("id", order.id);
-  if (deleteError) throw new Error(deleteError.message);
-
+  logWarn("admin_order_delete_success", {
+    durationMs: getDurationMs(startedAt),
+    hasPaymentProof: hasUploadedPaymentProof(order),
+    orderCode: order.order_code,
+  });
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${order.order_code}`);
   redirect(`/admin?deleted=${encodeURIComponent(order.order_code)}`);
