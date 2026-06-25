@@ -87,6 +87,11 @@ function appendAdminQuery(path: string, key: string, value: string) {
   return `${path}${path.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(value)}`;
 }
 
+function appendAdminQueryString(path: string, query: string) {
+  if (!query) return path;
+  return `${path}${path.includes("?") ? "&" : "?"}${query.replace(/^\?/, "")}`;
+}
+
 async function readOrderForAdminMutation(orderId: string, orderCode: string) {
   if (!orderId) throw new Error("Missing order ID");
 
@@ -171,12 +176,13 @@ export async function quickUpdateOrderStatus(formData: FormData) {
   const orderId = String(formData.get("orderId") ?? "");
   const orderCode = String(formData.get("orderCode") ?? "");
   const status = String(formData.get("status") ?? "");
+  const returnTo = getSafeAdminReturnTo(formData, "/admin");
 
   await setOrderStatus(orderId, status);
 
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
-  redirect(`/admin${getWhatsAppStatusQuery(status, orderCode)}`);
+  redirect(appendAdminQueryString(returnTo, getWhatsAppStatusQuery(status, orderCode)));
 }
 
 export async function archiveOrder(formData: FormData) {

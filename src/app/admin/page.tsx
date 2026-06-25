@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   AlertCircle,
+  ArrowUpDown,
   Archive,
   CalendarClock,
   CheckCircle2,
@@ -9,12 +10,14 @@ import {
   Eye,
   FileDown,
   Home,
+  ListFilter,
   Mail,
   MapPin,
   MessageCircle,
   Package,
   Phone,
   ReceiptText,
+  Search,
   Send,
   ShieldCheck,
   Users,
@@ -51,6 +54,42 @@ import { ArchiveOrderForm } from "./ArchiveOrderForm";
 import { quickUpdateOrderStatus, updateBatchSettings } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
+const statusFilterOptions = [
+  { value: "all", label: "All statuses" },
+  { value: "pending_attention", label: "Pending attention" },
+  { value: "payment_pending_review", label: "Payment pending" },
+  { value: "needs_correction", label: "Needs correction" },
+  { value: "payment_confirmed", label: "Paid confirmed" },
+  { value: "in_production", label: "In production" },
+  { value: "ready_for_delivery", label: "Ready for delivery" },
+  { value: "paid_not_delivered", label: "Paid, not received" },
+  { value: "delivered", label: "Received by customer" },
+  { value: "no_proof", label: "No uploaded proof" },
+  { value: "cancelled", label: "Cancelled" },
+] as const;
+const sortOptions = [
+  { value: "newest", label: "Newest first" },
+  { value: "oldest", label: "Oldest first" },
+  { value: "delivery", label: "Delivery route" },
+  { value: "status", label: "Status" },
+  { value: "amount_desc", label: "Highest amount" },
+  { value: "amount_asc", label: "Lowest amount" },
+] as const;
+
+type AdminSearchParams = {
+  batch?: string;
+  deleted?: string;
+  archived?: string;
+  restored?: string;
+  view?: string;
+  whatsapp?: string;
+  order?: string;
+  whatsappError?: string;
+  whatsappSent?: string;
+  q?: string;
+  status?: string;
+  sort?: string;
+};
 
 function formatMoney(value: number) {
   return `S/${Math.round(Number(value))}`;
@@ -102,6 +141,84 @@ function statusClass(order: Order) {
 
 function humanStatus(status: string) {
   return status.replaceAll("_", " ");
+}
+
+function normalizeText(value: string | null | undefined) {
+  return (value ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+}
+
+function compareText(a: string | null | undefined, b: string | null | undefined) {
+  return normalizeText(a).localeCompare(normalizeText(b), "es");
+}
+
+function isPendingAttention(order: Order) {
+  return order.status === "payment_pending_review" || order.status === "needs_correction";
+}
+
+function matchesSearch(order: Order, query: string) {
+  const search = normalizeText(query);
+  if (!search) return true;
+
+  const haystack = normalizeText([
+    order.customer_name,
+    order.order_code,
+    order.district,
+    order.whatsapp,
+    order.email,
+    order.delivery_address,
+    order.pack_name,
+    order.payment_transaction_number,
+    getFlavorText(order),
+  ].join(" "));
+
+  return haystack.includes(search);
+}
+
+function matchesStatusFilter(order: Order, statusFilter: string) {
+  switch (statusFilter) {
+    case "all":
+      return true;
+    case "pending_attention":
+      return isPendingAttention(order);
+    case "paid_not_delivered":
+      return isPaid(order) && !isDelivered(order);
+    case "no_proof":
+      return !hasUploadedPaymentProof(order);
+    default:
+      return order.status === statusFilter;
+  }
+}
+
+function sortOrders(orders: Order[], sort: string) {
+  return [...orders].sort((a, b) => {
+    switch (sort) {
+      case "oldest":
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      case "delivery":
+        return compareText(a.district, b.district)
+          || compareText(a.delivery_address, b.delivery_address)
+          || compareText(a.customer_name, b.customer_name);
+      case "status":
+        return compareText(a.status, b.status) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case "amount_desc":
+        return Number(b.total_amount) - Number(a.total_amount) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case "amount_asc":
+        return Number(a.total_amount) - Number(b.total_amount) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      default:
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    }
+  });
+}
+
+function filterAndSortOrders(orders: Order[], query: string, statusFilter: string, sort: string) {
+  return sortOrders(
+    orders.filter((order) => matchesSearch(order, query) && matchesStatusFilter(order, statusFilter)),
+    sort,
+  );
 }
 
 function batchStatusLabel(status: string) {
@@ -209,12 +326,13 @@ function getReceptionText(order: Order) {
   return "Not specified";
 }
 
-function StatusAction({ order, status, label, tone }: { order: Order; status: string; label: string; tone: "paid" | "pending" | "warning" | "received" }) {
+function StatusAction({ order, returnTo, status, label, tone }: { order: Order; returnTo?: string; status: string; label: string; tone: "paid" | "pending" | "warning" | "received" }) {
   return (
     <form action={quickUpdateOrderStatus}>
       <input type="hidden" name="orderId" value={order.id} />
       <input type="hidden" name="orderCode" value={order.order_code} />
       <input type="hidden" name="status" value={status} />
+      {returnTo ? <input type="hidden" name="returnTo" value={returnTo} /> : null}
       <button className={`status-action ${tone}`} disabled={order.status === status} type="submit">
         {label}
       </button>
@@ -316,7 +434,7 @@ function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnTyp
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ batch?: string; deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string; whatsappError?: string; whatsappSent?: string }>;
+  searchParams?: Promise<AdminSearchParams>;
 }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
@@ -330,6 +448,9 @@ export default async function AdminPage({
   const showingArchived = params?.view === "archived";
   const whatsappIntent = parseAdminWhatsAppIntent(params?.whatsapp);
   const whatsappOrderCode = params?.order;
+  const searchQuery = (params?.q ?? "").trim();
+  const statusFilter = statusFilterOptions.some((option) => option.value === params?.status) ? params?.status ?? "all" : "all";
+  const sort = sortOptions.some((option) => option.value === params?.sort) ? params?.sort ?? "newest" : "newest";
 
   if (missing.length) {
     return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p></section></main>;
@@ -339,7 +460,8 @@ export default async function AdminPage({
   const currentBatch = await fetchCurrentBatch();
   const activeOrders = filterActiveOrders(allOrders);
   const archivedOrders = filterArchivedOrders(allOrders);
-  const orders = showingArchived ? archivedOrders : activeOrders;
+  const baseOrders = showingArchived ? archivedOrders : activeOrders;
+  const orders = filterAndSortOrders(baseOrders, searchQuery, statusFilter, sort);
   const stats = getDashboardStats(activeOrders);
   const production = getProductionSummary(activeOrders);
   const delivery = getDeliverySummary(activeOrders);
@@ -359,6 +481,27 @@ export default async function AdminPage({
   const whatsappOrder = whatsappIntent && whatsappOrderCode
     ? allOrders.find((order) => order.order_code === whatsappOrderCode)
     : null;
+  const buildAdminHref = (overrides: Partial<{ view: string; q: string; status: string; sort: string }> = {}) => {
+    const nextView = overrides.view ?? (showingArchived ? "archived" : "");
+    const nextQ = overrides.q ?? searchQuery;
+    const nextStatus = overrides.status ?? statusFilter;
+    const nextSort = overrides.sort ?? sort;
+    const query = new URLSearchParams();
+
+    if (nextView === "archived") query.set("view", "archived");
+    if (nextQ) query.set("q", nextQ);
+    if (nextStatus && nextStatus !== "all") query.set("status", nextStatus);
+    if (nextSort && nextSort !== "newest") query.set("sort", nextSort);
+
+    const value = query.toString();
+    return value ? `/admin?${value}` : "/admin";
+  };
+  const currentListHref = buildAdminHref();
+  const activeFilterCount = Number(Boolean(searchQuery)) + Number(statusFilter !== "all") + Number(sort !== "newest");
+  const pendingAttentionCount = activeOrders.filter(isPendingAttention).length;
+  const noProofCount = activeOrders.filter((order) => !hasUploadedPaymentProof(order)).length;
+  const selectedStatusLabel = statusFilterOptions.find((option) => option.value === statusFilter)?.label ?? "All statuses";
+  const selectedSortLabel = sortOptions.find((option) => option.value === sort)?.label ?? "Newest first";
 
   return (
     <main className="admin-page">
@@ -494,12 +637,47 @@ export default async function AdminPage({
               <h2>{showingArchived ? "Archived customers" : "Visual customer list"}</h2>
               <p>{showingArchived ? "Pedidos ocultos de operación diaria. Puedes restaurarlos si fueron archivados por error." : "Formulario completo, entrega, pago y acciones rápidas."}</p>
             </div>
-            <span className="status-pill neutral">{orders.length} {showingArchived ? "archived" : "active"} reservations</span>
+            <span className="status-pill neutral">{orders.length} of {baseOrders.length} {showingArchived ? "archived" : "active"} reservations</span>
           </div>
 
           <div className="admin-view-tabs">
-            <Link className={!showingArchived ? "active" : ""} href="/admin">Active customers <b>{activeOrders.length}</b></Link>
-            <Link className={showingArchived ? "active" : ""} href="/admin?view=archived"><Archive size={15} /> Archive <b>{archivedOrders.length}</b></Link>
+            <Link className={!showingArchived && statusFilter === "all" ? "active" : ""} href={buildAdminHref({ view: "", status: "all" })}>Active customers <b>{activeOrders.length}</b></Link>
+            <Link className={!showingArchived && statusFilter === "pending_attention" ? "active" : ""} href={buildAdminHref({ view: "", status: "pending_attention" })}><Clock3 size={15} /> Solo pendientes <b>{pendingAttentionCount}</b></Link>
+            <Link className={!showingArchived && statusFilter === "paid_not_delivered" ? "active" : ""} href={buildAdminHref({ view: "", status: "paid_not_delivered" })}>Paid not received <b>{paidNotDeliveredOrders.length}</b></Link>
+            <Link className={!showingArchived && statusFilter === "no_proof" ? "active" : ""} href={buildAdminHref({ view: "", status: "no_proof" })}>No proof <b>{noProofCount}</b></Link>
+            <Link className={showingArchived ? "active" : ""} href={buildAdminHref({ view: "archived", status: "all" })}><Archive size={15} /> Archive <b>{archivedOrders.length}</b></Link>
+          </div>
+
+          <form className="admin-filter-bar" action="/admin">
+            {showingArchived ? <input type="hidden" name="view" value="archived" /> : null}
+            <label className="admin-search-field">
+              <span><Search size={15} /> Search</span>
+              <input name="q" defaultValue={searchQuery} placeholder="Name, code, district, WhatsApp..." />
+            </label>
+            <label>
+              <span><ListFilter size={15} /> Status</span>
+              <select name="status" defaultValue={statusFilter}>
+                {statusFilterOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            <label>
+              <span><ArrowUpDown size={15} /> Sort</span>
+              <select name="sort" defaultValue={sort}>
+                {sortOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            <div className="admin-filter-actions">
+              <button className="status-action paid" type="submit">Apply</button>
+              <Link className="mini-link" href={showingArchived ? "/admin?view=archived" : "/admin"}>Clear</Link>
+            </div>
+          </form>
+
+          <div className="admin-filter-summary">
+            <span>{orders.length} shown</span>
+            <span>{selectedStatusLabel}</span>
+            <span>{selectedSortLabel}</span>
+            {searchQuery ? <span>Search: &quot;{searchQuery}&quot;</span> : null}
+            {activeFilterCount ? <strong>{activeFilterCount} active filters</strong> : <strong>No filters</strong>}
           </div>
 
           <div className="customer-list">
@@ -568,21 +746,21 @@ export default async function AdminPage({
                       orderId={order.id}
                       orderCode={order.order_code}
                       customerName={order.customer_name}
-                      returnTo={`/admin?view=archived&restored=${encodeURIComponent(order.order_code)}`}
+                      returnTo={`${currentListHref}${currentListHref.includes("?") ? "&" : "?"}restored=${encodeURIComponent(order.order_code)}`}
                     />
                   ) : (
                     <>
-                      <StatusAction order={order} status="payment_confirmed" label="Confirm paid" tone="paid" />
-                      <StatusAction order={order} status="payment_pending_review" label="Not confirmed" tone="pending" />
-                      <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
-                      {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
+                      <StatusAction order={order} returnTo={currentListHref} status="payment_confirmed" label="Confirm paid" tone="paid" />
+                      <StatusAction order={order} returnTo={currentListHref} status="payment_pending_review" label="Not confirmed" tone="pending" />
+                      <StatusAction order={order} returnTo={currentListHref} status="needs_correction" label="Needs correction" tone="warning" />
+                      {isPaid(order) ? <StatusAction order={order} returnTo={currentListHref} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
                       {isPaid(order) && !hasAdminWhatsAppMessageSent(order, "payment_confirmed") ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} /> : null}
                       {isDelivered(order) && !hasAdminWhatsAppMessageSent(order, "delivered") ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} /> : null}
                       <ArchiveOrderForm
                         orderId={order.id}
                         orderCode={order.order_code}
                         customerName={order.customer_name}
-                        returnTo={`/admin?archived=${encodeURIComponent(order.order_code)}`}
+                        returnTo={`${currentListHref}${currentListHref.includes("?") ? "&" : "?"}archived=${encodeURIComponent(order.order_code)}`}
                       />
                     </>
                   )}
@@ -590,7 +768,7 @@ export default async function AdminPage({
                 </div>
               </article>
               );
-            }) : <div className="empty-state">{showingArchived ? "No archived reservations yet." : "No reservations yet. Customer data will appear here after the reservation form is submitted."}</div>}
+            }) : <div className="empty-state">{baseOrders.length ? "No reservations match these filters. Clear or loosen the search to see more customers." : showingArchived ? "No archived reservations yet." : "No reservations yet. Customer data will appear here after the reservation form is submitted."}</div>}
           </div>
         </section>
 
