@@ -29,6 +29,7 @@ Bagelito.pe is positioned as the monthly bagel drop in Lima: customers reserve p
 
 - [Runbook operativo](docs/runbook-operativo.md): batch management, payment review, production, delivery, received status, archive/delete, exports, WhatsApp, and closeout.
 - [Rutina de backups y Supabase](docs/supabase-backups-rutina.md): plan backups, weekly CSV export, voucher Storage checks, and delete safety.
+- [Busqueda y crecimiento](docs/busqueda-crecimiento.md): Search Console, indexing, Instagram/WhatsApp funnel, UTM links, and OG testing.
 
 ## Production
 

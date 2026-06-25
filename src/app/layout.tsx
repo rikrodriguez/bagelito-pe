@@ -4,17 +4,26 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { StructuredData } from "@/components/StructuredData";
 import { getReservationBatchAvailability } from "@/lib/reservations/service";
 import { siteDescription, siteName, siteOgImage, siteTitle, siteUrl } from "@/lib/site";
 import "./globals.css";
+
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: siteName,
   title: siteTitle,
   description: siteDescription,
+  category: "food",
+  creator: siteName,
+  publisher: siteName,
   keywords: ["bagels Lima", "bagels Peru", "Bagelito", "delivery Lima", "handmade bagels", "monthly bagel drop"],
   icons: { icon: "/icon.svg" },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
@@ -48,6 +57,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  ...(googleSiteVerification ? { verification: { google: googleSiteVerification } } : {}),
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -56,6 +66,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
+        <StructuredData />
         <LanguageProvider>
           <BatchDeadlineBanner batchAvailability={batchAvailability} />
           {children}
