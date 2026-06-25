@@ -2,7 +2,7 @@
 
 Source repository for the Bagelito.pe website.
 
-Production site: https://bagelito-pe.vercel.app/
+Production site: https://bagelito.pe/
 
 ## Overview
 
@@ -25,8 +25,12 @@ Bagelito.pe is positioned as the monthly bagel drop in Lima: customers reserve p
 - Payment proof screenshots must be viewed through signed URLs only.
 - Production summary should count only payment-confirmed/production/delivery statuses.
 
+## Operations
+
+- [Runbook operativo](docs/runbook-operativo.md): batch management, payment review, production, delivery, received status, archive/delete, exports, WhatsApp, and closeout.
+
 ## Production
 
 Current Vercel URL:
 
-https://bagelito-pe.vercel.app/
+https://bagelito.pe/
