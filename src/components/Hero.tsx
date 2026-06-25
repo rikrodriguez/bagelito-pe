@@ -34,10 +34,10 @@ export function Hero() {
       <div className="hero-art" aria-hidden="true">
         <div className="dotted-path path-one" />
         <div className="dotted-path path-two" />
-        <RollingBagel variant="sesame" size="lg" className="hero-bagel sesame-float" />
-        <RollingBagel variant="jalapeno" size="lg" className="hero-bagel jalapeno-float" />
-        <RollingBagel variant="rainbow" size="xl" className="hero-bagel rainbow-float" />
-        <RollingBagel variant="everything" size="lg" className="hero-bagel everything-float" />
+        <RollingBagel variant="sesame" size="lg" className="hero-bagel sesame-float" sizes="(max-width: 760px) 43vw, 292px" />
+        <RollingBagel variant="jalapeno" size="lg" className="hero-bagel jalapeno-float" sizes="(max-width: 760px) 43vw, 292px" />
+        <RollingBagel variant="rainbow" size="xl" className="hero-bagel rainbow-float" sizes="(max-width: 760px) 64vw, 420px" />
+        <RollingBagel variant="everything" size="lg" className="hero-bagel everything-float" sizes="(max-width: 760px) 43vw, 292px" />
         <div className="purple-sticker">{copy.hero.sticker}</div>
       </div>
     </section>

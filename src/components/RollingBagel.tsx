@@ -14,6 +14,7 @@ type Props = {
   label?: string;
   spin?: number;
   spinOffset?: number;
+  sizes?: string;
 };
 
 const sizeClass = {
@@ -50,7 +51,7 @@ const imageByVariant: Record<BagelVariant, string> = {
   snickerdoodle: "/images/bagel-snickerdoodle.webp",
 };
 
-export function RollingBagel({ variant = "plain", size = "md", className = "", style, label, spin = 1, spinOffset = 0 }: Props) {
+export function RollingBagel({ variant = "plain", size = "md", className = "", style, label, spin = 1, spinOffset = 0, sizes }: Props) {
   const { scrollYProgress } = useScroll();
   const rotate = useTransform(scrollYProgress, [0, 1], [spinOffset - 80, spinOffset + 360 * spin]);
   const alt = label ?? `${variant} bagel without filling`;
@@ -68,6 +69,7 @@ export function RollingBagel({ variant = "plain", size = "md", className = "", s
         alt={alt}
         width={imageSize}
         height={imageSize}
+        sizes={sizes}
         quality={imageQualityByBagelSize[size]}
         priority={size === "xl"}
         className="bagel-photo-img"
