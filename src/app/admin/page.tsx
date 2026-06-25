@@ -408,90 +408,88 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
         <div><span>Delivery window</span><strong>{deliveryDate}</strong><small>{donePercent}% received</small></div>
       </div>
 
-      {plan.totalPacks ? (
-        <>
-          <div className="production-ops-grid">
-            <section>
-              <div className="admin-card-head compact">
-                <h3>Packing list by flavor</h3>
-                <p>Use this to bake and count each flavor before packing.</p>
-              </div>
-              <div className="production-flavor-list">
-                {plan.packingList.map((item) => (
-                  <div className="production-flavor-row" key={item.flavorName}>
-                    <div>
-                      <strong>{item.flavorName}</strong>
-                      <small>{[...new Set(item.orderCodes)].join(", ")}</small>
-                    </div>
-                    <b>{item.quantity}</b>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <div className="admin-card-head compact">
-                <h3>Pack totals</h3>
-                <p>Conteo rápido para cajas y etiquetas.</p>
-              </div>
-              <div className="production-pack-list">
-                {plan.packList.map((item) => (
-                  <div className="production-pack-row" key={item.packSlug}>
-                    <div>
-                      <strong>{item.packName}</strong>
-                      <small>{item.orderCodes.join(", ")}</small>
-                    </div>
-                    <b>{item.packs} packs / {item.bagels} bagels</b>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
-
-          <div className="production-stage-grid">
-            {plan.stages.map((stage) => (
-              <section className={`production-stage ${stage.key}`} key={stage.key}>
-                <div className="production-stage-head">
-                  <span>{stage.label}</span>
-                  <strong>{stage.packs} packs</strong>
-                  <small>{stage.bagels} bagels · {stage.description}</small>
-                </div>
-
-                <div className="production-task-list">
-                  {stage.orders.length ? stage.orders.map((order) => (
-                    <div className="production-task-row" key={order.id}>
-                      <span className={`production-check ${stage.key === "done" ? "done" : ""}`}>{stage.key === "done" ? "✓" : ""}</span>
-                      <div className="production-task-main">
-                        <strong>{order.order_code} · {order.customer_name}</strong>
-                        <small>{order.pack_name} · {order.pack_units} bagels</small>
-                        <small>{getFlavorText(order)}</small>
-                      </div>
-                      <div className="production-task-actions">
-                        {stage.nextStatus && stage.actionLabel ? (
-                          <StatusAction order={order} returnTo={returnTo} status={stage.nextStatus} label={stage.actionLabel} tone={productionStageActionTone(stage.key)} />
-                        ) : (
-                          <span className="status-pill received">Done</span>
-                        )}
-                        <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
-                      </div>
-                    </div>
-                  )) : (
-                    <div className="production-stage-empty">No orders in this step.</div>
-                  )}
-                </div>
-              </section>
-            ))}
-          </div>
-
-          <div className="production-op-note">
-            <strong>Suggested flow:</strong>
-            {activeStages.map((stage) => <span key={stage.key}>{stage.label}: {stage.packs}</span>)}
-            <span>Recibidos: {doneStage?.packs ?? 0}</span>
-          </div>
-        </>
-      ) : (
+      {!plan.totalPacks ? (
         <div className="empty-state">No paid orders in the current batch yet. Confirm payments first, then this checklist will populate.</div>
-      )}
+      ) : null}
+
+      <div className="production-ops-grid">
+        <section>
+          <div className="admin-card-head compact">
+            <h3>Packing list by flavor</h3>
+            <p>Use this to bake and count each flavor before packing.</p>
+          </div>
+          <div className="production-flavor-list">
+            {plan.packingList.length ? plan.packingList.map((item) => (
+              <div className="production-flavor-row" key={item.flavorName}>
+                <div>
+                  <strong>{item.flavorName}</strong>
+                  <small>{[...new Set(item.orderCodes)].join(", ")}</small>
+                </div>
+                <b>{item.quantity}</b>
+              </div>
+            )) : <div className="production-stage-empty">No flavors to prep yet.</div>}
+          </div>
+        </section>
+
+        <section>
+          <div className="admin-card-head compact">
+            <h3>Pack totals</h3>
+            <p>Conteo rápido para cajas y etiquetas.</p>
+          </div>
+          <div className="production-pack-list">
+            {plan.packList.length ? plan.packList.map((item) => (
+              <div className="production-pack-row" key={item.packSlug}>
+                <div>
+                  <strong>{item.packName}</strong>
+                  <small>{item.orderCodes.join(", ")}</small>
+                </div>
+                <b>{item.packs} packs / {item.bagels} bagels</b>
+              </div>
+            )) : <div className="production-stage-empty">No packs to label yet.</div>}
+          </div>
+        </section>
+      </div>
+
+      <div className="production-stage-grid">
+        {plan.stages.map((stage) => (
+          <section className={`production-stage ${stage.key}`} key={stage.key}>
+            <div className="production-stage-head">
+              <span>{stage.label}</span>
+              <strong>{stage.packs} packs</strong>
+              <small>{stage.bagels} bagels · {stage.description}</small>
+            </div>
+
+            <div className="production-task-list">
+              {stage.orders.length ? stage.orders.map((order) => (
+                <div className="production-task-row" key={order.id}>
+                  <span className={`production-check ${stage.key === "done" ? "done" : ""}`}>{stage.key === "done" ? "✓" : ""}</span>
+                  <div className="production-task-main">
+                    <strong>{order.order_code} · {order.customer_name}</strong>
+                    <small>{order.pack_name} · {order.pack_units} bagels</small>
+                    <small>{getFlavorText(order)}</small>
+                  </div>
+                  <div className="production-task-actions">
+                    {stage.nextStatus && stage.actionLabel ? (
+                      <StatusAction order={order} returnTo={returnTo} status={stage.nextStatus} label={stage.actionLabel} tone={productionStageActionTone(stage.key)} />
+                    ) : (
+                      <span className="status-pill received">Done</span>
+                    )}
+                    <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
+                  </div>
+                </div>
+              )) : (
+                <div className="production-stage-empty">No orders in this step.</div>
+              )}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div className="production-op-note">
+        <strong>Suggested flow:</strong>
+        {activeStages.map((stage) => <span key={stage.key}>{stage.label}: {stage.packs}</span>)}
+        <span>Recibidos: {doneStage?.packs ?? 0}</span>
+      </div>
     </section>
   );
 }
