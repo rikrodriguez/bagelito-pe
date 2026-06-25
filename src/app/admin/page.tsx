@@ -497,6 +497,8 @@ export default async function AdminPage({
     return value ? `/admin?${value}` : "/admin";
   };
   const currentListHref = buildAdminHref();
+  const appendCurrentListQuery = (key: string, value: string) =>
+    `${currentListHref}${currentListHref.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(value)}`;
   const activeFilterCount = Number(Boolean(searchQuery)) + Number(statusFilter !== "all") + Number(sort !== "newest");
   const pendingAttentionCount = activeOrders.filter(isPendingAttention).length;
   const noProofCount = activeOrders.filter((order) => !hasUploadedPaymentProof(order)).length;
@@ -754,8 +756,8 @@ export default async function AdminPage({
                       <StatusAction order={order} returnTo={currentListHref} status="payment_pending_review" label="Not confirmed" tone="pending" />
                       <StatusAction order={order} returnTo={currentListHref} status="needs_correction" label="Needs correction" tone="warning" />
                       {isPaid(order) ? <StatusAction order={order} returnTo={currentListHref} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
-                      {isPaid(order) && !hasAdminWhatsAppMessageSent(order, "payment_confirmed") ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} /> : null}
-                      {isDelivered(order) && !hasAdminWhatsAppMessageSent(order, "delivered") ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} /> : null}
+                      {isPaid(order) && !hasAdminWhatsAppMessageSent(order, "payment_confirmed") ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
+                      {isDelivered(order) && !hasAdminWhatsAppMessageSent(order, "delivered") ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
                       <ArchiveOrderForm
                         orderId={order.id}
                         orderCode={order.order_code}
