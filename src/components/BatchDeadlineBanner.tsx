@@ -59,7 +59,7 @@ export function BatchDeadlineBanner({ batchAvailability }: BatchDeadlineBannerPr
   const { locale, copy } = useLanguage();
   const deadline = batchAvailability.ordersCloseAt ? new Date(batchAvailability.ordersCloseAt).getTime() : null;
   const reservedPercent = getReservedPercent(batchAvailability);
-  const availablePercent = 100 - reservedPercent;
+  const availablePercent = batchAvailability.accepting ? 100 - reservedPercent : 0;
   const waitlistHref = getWhatsAppHref(locale === "es"
     ? "Hola Bagelito! Quiero entrar a la lista de espera para el próximo batch por favor 🥯!"
     : "Hello Bagelito! I want to be part of the waiting list for the next batch please 🥯!");
