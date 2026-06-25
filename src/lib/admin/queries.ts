@@ -1,4 +1,5 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
 
 export const productionStatuses = ["payment_confirmed", "in_production", "ready_for_delivery", "delivered"] as const;
 export const batchStatuses = ["waitlist_open", "orders_open", "closed", "in_production", "delivered"] as const;
@@ -234,4 +235,69 @@ export function getDeliverySummary(orders: Order[]) {
   }
 
   return Array.from(groups.values()).sort((a, b) => a.district.localeCompare(b.district));
+}
+
+export type DeliveryRouteStop = {
+  stopNumber: number;
+  district: string;
+  distanceKm: number;
+  deliveryFee: number;
+  orders: Order[];
+  packs: number;
+  bagels: number;
+  received: number;
+  pendingHandoff: number;
+};
+
+function isDeliveryRouteOrder(order: Order) {
+  return productionStatuses.includes(order.status as (typeof productionStatuses)[number]);
+}
+
+function sortDeliveryOrders(orders: Order[]) {
+  return [...orders].sort((a, b) => {
+    const aReceived = a.status === "delivered";
+    const bReceived = b.status === "delivered";
+
+    if (aReceived !== bReceived) return aReceived ? 1 : -1;
+
+    return a.delivery_address.localeCompare(b.delivery_address, "es")
+      || a.customer_name.localeCompare(b.customer_name, "es")
+      || a.order_code.localeCompare(b.order_code, "es");
+  });
+}
+
+export function getDeliveryRoutePlan(orders: Order[]) {
+  const groups = new Map<string, Omit<DeliveryRouteStop, "stopNumber">>();
+
+  for (const order of filterActiveOrders(orders)) {
+    if (!isDeliveryRouteOrder(order)) continue;
+    const current = groups.get(order.district) ?? {
+      district: order.district,
+      distanceKm: getDeliveryDistanceKm(order.district),
+      deliveryFee: getDeliveryFee(order.district),
+      orders: [],
+      packs: 0,
+      bagels: 0,
+      received: 0,
+      pendingHandoff: 0,
+    };
+
+    current.orders.push(order);
+    current.packs += 1;
+    current.bagels += Number(order.pack_units);
+    if (order.status === "delivered") {
+      current.received += 1;
+    } else {
+      current.pendingHandoff += 1;
+    }
+    groups.set(order.district, current);
+  }
+
+  return Array.from(groups.values())
+    .sort((a, b) => a.distanceKm - b.distanceKm || a.district.localeCompare(b.district, "es"))
+    .map((group, index) => ({
+      ...group,
+      stopNumber: index + 1,
+      orders: sortDeliveryOrders(group.orders),
+    }));
 }

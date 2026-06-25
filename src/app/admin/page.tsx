@@ -31,6 +31,7 @@ import {
   filterArchivedOrders,
   getBatchStats,
   getDashboardStats,
+  getDeliveryRoutePlan,
   getDeliverySummary,
   getOrderArchiveState,
   getProductionSummary,
@@ -39,6 +40,7 @@ import {
   isOrderArchived,
   productionStatuses,
   type Batch,
+  type DeliveryRouteStop,
   type Order,
 } from "@/lib/admin/queries";
 import {
@@ -431,6 +433,78 @@ function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnTyp
   );
 }
 
+function DeliveryOpsPanel({ routePlan, returnTo }: { routePlan: DeliveryRouteStop[]; returnTo: string }) {
+  const totalOrders = routePlan.reduce((sum, stop) => sum + stop.orders.length, 0);
+  const totalPending = routePlan.reduce((sum, stop) => sum + stop.pendingHandoff, 0);
+  const totalBagels = routePlan.reduce((sum, stop) => sum + stop.bagels, 0);
+  const farthestStop = routePlan.at(-1);
+
+  return (
+    <section className="admin-card delivery-ops-card" id="delivery-ops">
+      <div className="admin-card-head">
+        <div>
+          <p className="kicker">Delivery ops</p>
+          <h2>Driver route by district</h2>
+          <p>Ruta sugerida desde Jr. Sinchi Roca 2560, Lince: distritos cercanos primero, luego los más lejanos.</p>
+        </div>
+        <a className="status-action export" href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
+      </div>
+
+      <div className="delivery-ops-stats">
+        <div><span>Stops</span><strong>{routePlan.length}</strong><small>District groups</small></div>
+        <div><span>Orders</span><strong>{totalOrders}</strong><small>{totalPending} pending handoff</small></div>
+        <div><span>Bagels</span><strong>{totalBagels}</strong><small>Paid route inventory</small></div>
+        <div><span>Farthest</span><strong>{farthestStop ? `${farthestStop.distanceKm.toFixed(1)} km` : "0 km"}</strong><small>{farthestStop?.district ?? "No route yet"}</small></div>
+      </div>
+
+      {routePlan.length ? (
+        <div className="delivery-route-list">
+          {routePlan.map((stop) => (
+            <article className="delivery-stop-card" key={stop.district}>
+              <div className="delivery-stop-head">
+                <span>Stop {String(stop.stopNumber).padStart(2, "0")}</span>
+                <div>
+                  <h3>{stop.district}</h3>
+                  <p>{stop.distanceKm.toFixed(1)} km from Lince · approx. S/{stop.deliveryFee} delivery fee</p>
+                </div>
+                <strong>{stop.pendingHandoff} pending / {stop.orders.length} orders</strong>
+              </div>
+
+              <div className="delivery-checklist">
+                {stop.orders.map((order) => {
+                  const delivered = isDelivered(order);
+
+                  return (
+                    <div className={`delivery-check-item ${delivered ? "received" : ""}`} key={order.id}>
+                      <span className="driver-check" aria-label={delivered ? "Received" : "Pending"}>{delivered ? "✓" : ""}</span>
+                      <div className="delivery-check-main">
+                        <div>
+                          <strong>{order.customer_name}</strong>
+                          <small>{order.order_code} · {order.pack_name} · {order.pack_units} bagels · {formatMoney(Number(order.total_amount))}</small>
+                        </div>
+                        <p><Home size={14} /> {order.delivery_address}</p>
+                        <p>{order.address_reference ? `Ref: ${order.address_reference}` : "No reference"} · {getReceptionText(order)}</p>
+                        {order.delivery_notes ? <p>Notes: {order.delivery_notes}</p> : null}
+                        <p><Phone size={14} /> {order.whatsapp} · {getFlavorText(order)}</p>
+                      </div>
+                      <div className="delivery-check-actions">
+                        {delivered ? <span className="status-pill received">Received</span> : <StatusAction order={order} returnTo={returnTo} status="delivered" label="Mark received" tone="received" />}
+                        <Link className="mini-link" href={`/admin/orders/${order.order_code}`}><Eye size={15} /> Detail</Link>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">No paid orders are ready for route planning yet.</div>
+      )}
+    </section>
+  );
+}
+
 export default async function AdminPage({
   searchParams,
 }: {
@@ -465,6 +539,7 @@ export default async function AdminPage({
   const stats = getDashboardStats(activeOrders);
   const production = getProductionSummary(activeOrders);
   const delivery = getDeliverySummary(activeOrders);
+  const routePlan = getDeliveryRoutePlan(activeOrders);
   const paidOrders = activeOrders.filter(isPaid);
   const deliveredOrders = activeOrders.filter(isDelivered);
   const paidNotDeliveredOrders = paidOrders.filter((order) => !isDelivered(order));
@@ -518,6 +593,7 @@ export default async function AdminPage({
             <a href="/admin/export/orders"><FileDown size={16} /> Full backup CSV</a>
             <a href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>
+            <a href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
           </div>
         </div>
 
@@ -579,6 +655,8 @@ export default async function AdminPage({
         <BatchManagementPanel batch={currentBatch} stats={batchStats} />
 
         <WhatsAppQueue followUps={whatsappFollowUps} />
+
+        <DeliveryOpsPanel routePlan={routePlan} returnTo={currentListHref} />
 
         <div className="crm-overview-grid">
           <section className="admin-card crm-insight-card">

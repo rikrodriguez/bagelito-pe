@@ -2372,6 +2372,146 @@ section[id] {
   margin-top: 20px;
 }
 
+.delivery-ops-card {
+  margin-bottom: 20px;
+}
+
+.delivery-ops-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 16px;
+}
+
+.delivery-ops-stats div {
+  display: grid;
+  gap: 4px;
+  border-radius: 14px;
+  background: #f8fbff;
+  padding: 12px;
+}
+
+.delivery-ops-stats span,
+.delivery-stop-head span {
+  color: #66758a;
+  font-size: .74rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.delivery-ops-stats strong {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.delivery-ops-stats small {
+  color: #66758a;
+  font-weight: 850;
+}
+
+.delivery-route-list {
+  display: grid;
+  gap: 14px;
+}
+
+.delivery-stop-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid #dfe9f3;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  padding: 14px;
+}
+
+.delivery-stop-head {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.delivery-stop-head h3 {
+  font-size: 1.25rem;
+}
+
+.delivery-stop-head p {
+  color: #66758a;
+  font-size: .84rem;
+  font-weight: 850;
+}
+
+.delivery-stop-head > strong {
+  justify-self: end;
+  border-radius: 999px;
+  background: #fff0f6;
+  color: var(--pink);
+  padding: 8px 11px;
+  font-size: .84rem;
+}
+
+.delivery-checklist {
+  display: grid;
+  gap: 10px;
+}
+
+.delivery-check-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  border-radius: 14px;
+  background: #fff8ee;
+  padding: 12px;
+}
+
+.delivery-check-item.received {
+  background: #eefaf6;
+}
+
+.driver-check {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid #b8c8d8;
+  border-radius: 8px;
+  background: white;
+  color: #168b65;
+  font-weight: 1000;
+}
+
+.delivery-check-item.received .driver-check {
+  border-color: #71d6b8;
+  background: #dff8ee;
+}
+
+.delivery-check-main {
+  display: grid;
+  gap: 5px;
+}
+
+.delivery-check-main strong {
+  display: block;
+  font-size: .98rem;
+}
+
+.delivery-check-main small,
+.delivery-check-main p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4f6179;
+  font-size: .82rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.delivery-check-actions {
+  display: grid;
+  gap: 7px;
+  justify-items: end;
+}
+
 .admin-view-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -2643,6 +2783,7 @@ section[id] {
 .status-action.restore { background: #2a8b76; }
 .status-action.whatsapp { background: #20a97f; color: white; text-decoration: none; }
 .status-action.delete { background: #dc3f4d; color: white; }
+.status-action.export { background: var(--navy); color: white; text-decoration: none; }
 
 .delete-order-form,
 .archive-order-form {
@@ -3509,6 +3650,7 @@ section[id] {
   .customer-list,
   .batch-ops-grid,
   .batch-settings-form,
+  .delivery-ops-stats,
   .whatsapp-queue-list,
   .reservation-data-grid,
   .metric-list,
@@ -3569,6 +3711,23 @@ section[id] {
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .delivery-stop-head,
+  .delivery-check-item {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-stop-head > strong,
+  .delivery-check-actions {
+    justify-self: stretch;
+    justify-items: stretch;
+  }
+
+  .delivery-check-main small,
+  .delivery-check-main p {
+    align-items: flex-start;
+    overflow-wrap: anywhere;
   }
 
   .whatsapp-queue-item {
