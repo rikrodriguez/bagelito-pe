@@ -5,6 +5,11 @@ export const adminWhatsAppIntents = ["payment_confirmed", "delivered"] as const;
 
 export type AdminWhatsAppIntent = (typeof adminWhatsAppIntents)[number];
 
+const sentStatusByIntent: Record<AdminWhatsAppIntent, string> = {
+  payment_confirmed: "whatsapp_payment_confirmed_sent",
+  delivered: "whatsapp_delivered_sent",
+};
+
 const intentByStatus: Record<string, AdminWhatsAppIntent | undefined> = {
   payment_confirmed: "payment_confirmed",
   delivered: "delivered",
@@ -25,6 +30,38 @@ export function parseAdminWhatsAppIntent(value: string | undefined | null): Admi
 
 export function getAdminWhatsAppIntentForStatus(status: string) {
   return intentByStatus[status] ?? null;
+}
+
+export function getAdminWhatsAppSentStatus(intent: AdminWhatsAppIntent) {
+  return sentStatusByIntent[intent];
+}
+
+export function getAdminWhatsAppSentAt(order: Order, intent: AdminWhatsAppIntent) {
+  const sentStatus = getAdminWhatsAppSentStatus(intent);
+  return [...(order.order_status_history ?? [])]
+    .filter((item) => item.new_status === sentStatus)
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0]?.created_at ?? null;
+}
+
+export function hasAdminWhatsAppMessageSent(order: Order, intent: AdminWhatsAppIntent) {
+  return Boolean(getAdminWhatsAppSentAt(order, intent));
+}
+
+export function getAdminWhatsAppFollowUps(orders: Order[]) {
+  return orders.flatMap((order) => {
+    const items: { order: Order; intent: AdminWhatsAppIntent }[] = [];
+    const isPaid = ["payment_confirmed", "in_production", "ready_for_delivery", "delivered"].includes(order.status);
+
+    if (isPaid && !hasAdminWhatsAppMessageSent(order, "payment_confirmed")) {
+      items.push({ order, intent: "payment_confirmed" });
+    }
+
+    if (order.status === "delivered" && !hasAdminWhatsAppMessageSent(order, "delivered")) {
+      items.push({ order, intent: "delivered" });
+    }
+
+    return items;
+  });
 }
 
 export function buildAdminWhatsAppMessage(order: Order, intent: AdminWhatsAppIntent) {

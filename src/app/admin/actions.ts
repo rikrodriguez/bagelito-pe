@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { hasUploadedPaymentProof } from "@/lib/admin/queries";
-import { getAdminWhatsAppIntentForStatus } from "@/lib/admin/whatsapp-messages";
+import { getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 
 const allowedOrderStatuses = [
   "payment_pending_review",
@@ -169,6 +169,36 @@ export async function updateAdminNote(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderCode}`);
   redirect(`/admin/orders/${orderCode}`);
+}
+
+export async function markWhatsAppMessageSent(formData: FormData) {
+  await requireAdmin();
+  const orderId = String(formData.get("orderId") ?? "");
+  const orderCode = String(formData.get("orderCode") ?? "");
+  const intent = parseAdminWhatsAppIntent(String(formData.get("intent") ?? ""));
+  const returnTo = getSafeAdminReturnTo(formData, "/admin");
+
+  if (!intent) throw new Error("Invalid WhatsApp message intent");
+
+  const result = await readOrderForAdminMutation(orderId, orderCode);
+  if (!result) {
+    revalidatePath("/admin");
+    redirect("/admin?deleted=missing");
+  }
+
+  const { supabase, order } = result;
+  const { error } = await supabase.from("order_status_history").insert({
+    order_id: order.id,
+    old_status: order.status,
+    new_status: getAdminWhatsAppSentStatus(intent),
+    changed_by: "admin whatsapp",
+  });
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/orders/${order.order_code}`);
+  redirect(returnTo);
 }
 
 export async function deleteOrder(formData: FormData) {

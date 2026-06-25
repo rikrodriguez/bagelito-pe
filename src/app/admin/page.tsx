@@ -10,6 +10,7 @@ import {
   Home,
   Mail,
   MapPin,
+  MessageCircle,
   Package,
   Phone,
   ReceiptText,
@@ -32,7 +33,13 @@ import {
   productionStatuses,
   type Order,
 } from "@/lib/admin/queries";
-import { parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
+import {
+  buildAdminWhatsAppMessage,
+  getAdminWhatsAppFollowUps,
+  hasAdminWhatsAppMessageSent,
+  parseAdminWhatsAppIntent,
+  type AdminWhatsAppIntent,
+} from "@/lib/admin/whatsapp-messages";
 import { getMissingAdminEnv } from "@/lib/env";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
@@ -178,10 +185,45 @@ function StatusAction({ order, status, label, tone }: { order: Order; status: st
   );
 }
 
+function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[] }) {
+  return (
+    <section className="admin-card whatsapp-queue-card">
+      <div className="admin-card-head">
+        <div>
+          <h2>WhatsApp follow-up queue</h2>
+          <p>Mensajes estándar pendientes después de confirmar pago o marcar recibido.</p>
+        </div>
+        <span className="status-pill neutral">{followUps.length} pending</span>
+      </div>
+
+      {followUps.length ? (
+        <div className="whatsapp-queue-list">
+          {followUps.map(({ order, intent }) => {
+            const content = buildAdminWhatsAppMessage(order, intent);
+
+            return (
+              <article className="whatsapp-queue-item" key={`${order.id}-${intent}`}>
+                <div>
+                  <span>{content.eyebrow}</span>
+                  <strong>{order.customer_name}</strong>
+                  <small>{order.order_code} · {order.pack_name}</small>
+                </div>
+                <AdminWhatsAppLink order={order} intent={intent} label="Open + log" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} />
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="empty-state">No hay WhatsApps pendientes. La cola de seguimiento está limpia.</div>
+      )}
+    </section>
+  );
+}
+
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string }>;
+  searchParams?: Promise<{ deleted?: string; archived?: string; restored?: string; view?: string; whatsapp?: string; order?: string; whatsappSent?: string }>;
 }) {
   await requireAdmin();
   const missing = getMissingAdminEnv();
@@ -189,6 +231,7 @@ export default async function AdminPage({
   const deletedOrderCode = params?.deleted;
   const archivedOrderCode = params?.archived;
   const restoredOrderCode = params?.restored;
+  const whatsappSentOrderCode = params?.whatsappSent;
   const showingArchived = params?.view === "archived";
   const whatsappIntent = parseAdminWhatsAppIntent(params?.whatsapp);
   const whatsappOrderCode = params?.order;
@@ -215,6 +258,7 @@ export default async function AdminPage({
   const packStats = getPackStats(activeOrders);
   const packTypeStats = getPackTypeStats(activeOrders);
   const districtStats = getDistrictStats(activeOrders);
+  const whatsappFollowUps = getAdminWhatsAppFollowUps(activeOrders);
   const whatsappOrder = whatsappIntent && whatsappOrderCode
     ? allOrders.find((order) => order.order_code === whatsappOrderCode)
     : null;
@@ -258,7 +302,17 @@ export default async function AdminPage({
           <div className="admin-flash success">Restored {restoredOrderCode} to the active customer list.</div>
         ) : null}
 
-        {whatsappIntent && whatsappOrder ? <AdminWhatsAppNotice order={whatsappOrder} intent={whatsappIntent} /> : null}
+        {whatsappSentOrderCode ? (
+          <div className="admin-flash success">WhatsApp follow-up logged for {whatsappSentOrderCode}.</div>
+        ) : null}
+
+        {whatsappIntent && whatsappOrder ? (
+          <AdminWhatsAppNotice
+            order={whatsappOrder}
+            intent={whatsappIntent}
+            returnTo={`/admin?whatsappSent=${encodeURIComponent(whatsappOrder.order_code)}`}
+          />
+        ) : null}
 
         <div className="stat-grid crm-stat-grid">
           <Stat icon={Users} label="Clients / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
@@ -269,7 +323,10 @@ export default async function AdminPage({
           <Stat icon={ReceiptText} label="Pending value" value={formatMoney(pendingValue)} helper="Pending + correction" />
           <Stat icon={Package} label="Confirmed bagels" value={stats.confirmedBagels} helper="Production-ready units" />
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
+          <Stat icon={MessageCircle} label="WhatsApp queue" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
+
+        <WhatsAppQueue followUps={whatsappFollowUps} />
 
         <div className="crm-overview-grid">
           <section className="admin-card crm-insight-card">
@@ -318,7 +375,7 @@ export default async function AdminPage({
               <span><AlertCircle size={16} /> {stats.needsCorrection} orders need correction</span>
               <span><ShieldCheck size={16} /> {missingProofs} orders without uploaded proof</span>
               <span><Package size={16} /> {paidNotDeliveredOrders.length} paid orders not received yet</span>
-              <span><Send size={16} /> WhatsApp opens after payment or received updates</span>
+              <span><Send size={16} /> {whatsappFollowUps.length} WhatsApp follow-ups pending</span>
               <span><Mail size={16} /> {marketingOptIns} customers opted into updates</span>
             </div>
           </section>
@@ -412,8 +469,8 @@ export default async function AdminPage({
                       <StatusAction order={order} status="payment_pending_review" label="Not confirmed" tone="pending" />
                       <StatusAction order={order} status="needs_correction" label="Needs correction" tone="warning" />
                       {isPaid(order) ? <StatusAction order={order} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
-                      {isPaid(order) ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" /> : null}
-                      {isDelivered(order) ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" /> : null}
+                      {isPaid(order) && !hasAdminWhatsAppMessageSent(order, "payment_confirmed") ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} /> : null}
+                      {isDelivered(order) && !hasAdminWhatsAppMessageSent(order, "delivered") ? <AdminWhatsAppLink order={order} intent="delivered" label="Msg received" returnTo={`/admin?whatsappSent=${encodeURIComponent(order.order_code)}`} /> : null}
                       <ArchiveOrderForm
                         orderId={order.id}
                         orderCode={order.order_code}

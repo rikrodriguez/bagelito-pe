@@ -787,7 +787,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   gap: 7px;
 }
 .admin-whatsapp-copy span,
-.admin-whatsapp-notice a {
+.admin-whatsapp-copy small {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -805,6 +805,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   font-size: .9rem;
   font-weight: 850;
 }
+.admin-whatsapp-copy small {
+  color: #16826c;
+  font-size: .8rem;
+}
 .admin-whatsapp-copy pre {
   max-width: 860px;
   margin: 4px 0 0;
@@ -820,13 +824,56 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   font-weight: 850;
   line-height: 1.45;
 }
-.admin-whatsapp-notice a {
+.admin-whatsapp-send-form {
+  display: inline-flex;
+}
+.admin-whatsapp-notice .admin-whatsapp-send-form {
+  justify-content: flex-end;
+}
+.admin-whatsapp-notice .status-action.whatsapp {
   justify-content: center;
   min-height: 46px;
   border-radius: 12px;
-  background: #20a97f;
-  color: white;
   padding: 12px 15px;
+}
+.whatsapp-queue-card {
+  margin-bottom: 20px;
+  border-color: #c8eee7;
+  background: linear-gradient(180deg, #ffffff, #f5fffd);
+}
+.whatsapp-queue-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.whatsapp-queue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid #d9f0ec;
+  border-radius: 14px;
+  background: white;
+  padding: 14px;
+}
+.whatsapp-queue-item div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.whatsapp-queue-item span {
+  color: #16826c;
+  font-size: .76rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+.whatsapp-queue-item strong,
+.whatsapp-queue-item small {
+  overflow-wrap: anywhere;
+}
+.whatsapp-queue-item small {
+  color: #66758a;
+  font-weight: 850;
 }
 .admin-table-wrap { overflow-x: auto; }
 .admin-table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: .9rem; }
@@ -2513,6 +2560,7 @@ section[id] {
   .crm-stat-grid,
   .crm-overview-grid,
   .customer-contact-grid,
+  .whatsapp-queue-list,
   .reservation-data-grid {
     grid-template-columns: 1fr;
   }
@@ -3203,7 +3251,8 @@ section[id] {
     padding: 14px;
   }
 
-  .admin-whatsapp-notice a {
+  .admin-whatsapp-notice .admin-whatsapp-send-form,
+  .admin-whatsapp-notice .status-action.whatsapp {
     width: 100%;
   }
 
@@ -3236,6 +3285,7 @@ section[id] {
 
   .crm-overview-grid,
   .customer-list,
+  .whatsapp-queue-list,
   .reservation-data-grid,
   .metric-list,
   .district-list,
@@ -3295,6 +3345,11 @@ section[id] {
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .whatsapp-queue-item {
+    display: grid;
+    gap: 10px;
   }
 
   .status-action,
