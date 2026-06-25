@@ -33,6 +33,7 @@ import {
   getDashboardStats,
   getDeliveryRoutePlan,
   getDeliverySummary,
+  getFinancialSummary,
   getOrderArchiveState,
   getProductionOpsPlan,
   hasUploadedPaymentProof,
@@ -41,6 +42,7 @@ import {
   productionStatuses,
   type Batch,
   type DeliveryRouteStop,
+  type FinancialSummary,
   type Order,
   type ProductionOpsPlan,
 } from "@/lib/admin/queries";
@@ -95,7 +97,8 @@ type AdminSearchParams = {
 };
 
 function formatMoney(value: number) {
-  return `S/${Math.round(Number(value))}`;
+  const amount = Math.round(Number(value));
+  return `${amount < 0 ? "-" : ""}S/${Math.abs(amount)}`;
 }
 
 function formatDate(date: string) {
@@ -347,6 +350,89 @@ function productionStageActionTone(stageKey: ProductionOpsPlan["stages"][number]
   if (stageKey === "bake") return "warning";
   if (stageKey === "pack") return "paid";
   return "received";
+}
+
+function FinancialPanel({ summary }: { summary: FinancialSummary }) {
+  const marginTone = summary.estimatedGrossMargin >= 0 ? "positive" : "negative";
+
+  return (
+    <section className="admin-card finance-panel" id="finance">
+      <div className="admin-card-head">
+        <div>
+          <p className="kicker">Finance</p>
+          <h2>Financial snapshot</h2>
+          <p>Ventas, pagos pendientes, delivery cobrado, packs del batch y margen estimado del batch actual.</p>
+        </div>
+        <span className="status-pill neutral">{summary.batchName}</span>
+      </div>
+
+      <div className="finance-kpi-grid">
+        <div><span>Confirmed sales</span><strong>{formatMoney(summary.confirmedSales)}</strong><small>{summary.confirmedPacks} paid packs</small></div>
+        <div><span>Pending</span><strong>{formatMoney(summary.pendingSales)}</strong><small>{summary.pendingPacks} packs pending review</small></div>
+        <div><span>Delivery collected</span><strong>{formatMoney(summary.deliveryCollected)}</strong><small>{formatMoney(summary.deliveryPending)} pending delivery</small></div>
+        <div className={marginTone}><span>Estimated margin</span><strong>{formatMoney(summary.estimatedGrossMargin)}</strong><small>{summary.estimatedGrossMarginRate}% of product revenue</small></div>
+      </div>
+
+      <div className="finance-detail-grid">
+        <section className="finance-card">
+          <div className="admin-card-head compact">
+            <h3>Revenue bridge</h3>
+            <p>Delivery is separated from product revenue.</p>
+          </div>
+          <div className="finance-row-list">
+            <div><span>Confirmed total collected</span><strong>{formatMoney(summary.confirmedSales)}</strong></div>
+            <div><span>Product revenue</span><strong>{formatMoney(summary.confirmedProductSales)}</strong></div>
+            <div><span>Delivery collected</span><strong>{formatMoney(summary.deliveryCollected)}</strong></div>
+            <div><span>Pending pipeline</span><strong>{formatMoney(summary.pendingSales)}</strong></div>
+          </div>
+        </section>
+
+        <section className="finance-card">
+          <div className="admin-card-head compact">
+            <h3>Packs by batch</h3>
+            <p>Current batch only.</p>
+          </div>
+          <div className="finance-row-list">
+            <div><span>Reserved packs</span><strong>{summary.reservedPacks}</strong></div>
+            <div><span>Confirmed packs</span><strong>{summary.confirmedPacks}</strong></div>
+            <div><span>Pending packs</span><strong>{summary.pendingPacks}</strong></div>
+            <div><span>Confirmed bagels</span><strong>{summary.confirmedBagels}</strong></div>
+          </div>
+        </section>
+
+        <section className="finance-card finance-pack-card">
+          <div className="admin-card-head compact">
+            <h3>Pack mix</h3>
+            <p>Confirmed sales and reserved count by pack.</p>
+          </div>
+          <div className="finance-pack-list">
+            {summary.packMetrics.length ? summary.packMetrics.map((item) => (
+              <div className="finance-pack-row" key={item.packSlug}>
+                <div>
+                  <strong>{item.packName}</strong>
+                  <small>{item.confirmedPacks} confirmed / {item.reservedPacks} reserved · {item.bagels} bagels</small>
+                </div>
+                <b>{formatMoney(item.confirmedSales)}</b>
+              </div>
+            )) : <div className="production-stage-empty">No packs in this batch yet.</div>}
+          </div>
+        </section>
+
+        <section className="finance-card">
+          <div className="admin-card-head compact">
+            <h3>Margin estimate</h3>
+            <p>Simple ops estimate, not accounting close.</p>
+          </div>
+          <div className="finance-row-list">
+            <div><span>Product COGS</span><strong>{formatMoney(summary.estimatedProductCost)}</strong></div>
+            <div><span>Packaging</span><strong>{formatMoney(summary.estimatedPackagingCost)}</strong></div>
+            <div><span>Estimated margin</span><strong>{formatMoney(summary.estimatedGrossMargin)}</strong></div>
+          </div>
+          <p className="finance-assumption">Assumption: S/{summary.assumptions.cogsPerBagel.toFixed(2)} per bagel + S/{summary.assumptions.packagingPerPack.toFixed(2)} packaging per pack. Delivery is treated as pass-through.</p>
+        </section>
+      </div>
+    </section>
+  );
 }
 
 function WhatsAppQueue({ followUps }: { followUps: { order: Order; intent: AdminWhatsAppIntent }[] }) {
@@ -655,6 +741,7 @@ export default async function AdminPage({
   const orders = filterAndSortOrders(baseOrders, searchQuery, statusFilter, sort);
   const stats = getDashboardStats(activeOrders);
   const delivery = getDeliverySummary(activeOrders);
+  const finance = getFinancialSummary(currentBatch, activeOrders);
   const productionOps = getProductionOpsPlan(currentBatch, activeOrders);
   const routePlan = getDeliveryRoutePlan(activeOrders);
   const paidOrders = activeOrders.filter(isPaid);
@@ -768,6 +855,8 @@ export default async function AdminPage({
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
           <Stat icon={MessageCircle} label="WhatsApp queue" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
+
+        <FinancialPanel summary={finance} />
 
         <BatchManagementPanel batch={currentBatch} stats={batchStats} />
 

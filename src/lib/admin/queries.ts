@@ -291,6 +291,120 @@ export type ProductionOpsPlan = {
   stages: ProductionStage[];
 };
 
+export const financialEstimateAssumptions = {
+  cogsPerBagel: 3.2,
+  packagingPerPack: 1.5,
+} as const;
+
+export type FinancialPackMetric = {
+  packSlug: string;
+  packName: string;
+  reservedPacks: number;
+  confirmedPacks: number;
+  pendingPacks: number;
+  deliveredPacks: number;
+  bagels: number;
+  confirmedSales: number;
+};
+
+export type FinancialSummary = {
+  batchId: string;
+  batchName: string;
+  confirmedSales: number;
+  confirmedProductSales: number;
+  pendingSales: number;
+  deliveryCollected: number;
+  deliveryPending: number;
+  confirmedPacks: number;
+  pendingPacks: number;
+  reservedPacks: number;
+  confirmedBagels: number;
+  estimatedProductCost: number;
+  estimatedPackagingCost: number;
+  estimatedGrossMargin: number;
+  estimatedGrossMarginRate: number;
+  packMetrics: FinancialPackMetric[];
+  assumptions: typeof financialEstimateAssumptions;
+};
+
+function parseDeliveryFeeFromNotes(notes: string | null | undefined) {
+  const match = notes?.match(/Delivery:\s*S\/\s*(\d+(?:\.\d+)?)/i);
+  return match ? Number(match[1]) : null;
+}
+
+export function getOrderDeliveryFee(order: Pick<Order, "delivery_notes" | "district" | "total_amount">) {
+  const parsed = parseDeliveryFeeFromNotes(order.delivery_notes);
+  const fee = Number.isFinite(parsed) && parsed !== null ? parsed : getDeliveryFee(order.district);
+  return Math.min(Math.max(0, fee), Math.max(0, Number(order.total_amount)));
+}
+
+function getOrderProductRevenue(order: Pick<Order, "delivery_notes" | "district" | "total_amount">) {
+  return Math.max(0, Number(order.total_amount) - getOrderDeliveryFee(order));
+}
+
+function isPendingFinancialOrder(order: Pick<Order, "status">) {
+  return order.status === "payment_pending_review" || order.status === "needs_correction";
+}
+
+export function getFinancialSummary(batch: Pick<Batch, "id" | "name">, orders: Order[]): FinancialSummary {
+  const activeOrders = filterActiveOrders(orders).filter((order) => order.status !== "cancelled");
+  const batchOrders = activeOrders.filter((order) => order.batch_id === batch.id);
+  const confirmedOrders = batchOrders.filter((order) => productionStatuses.includes(order.status as (typeof productionStatuses)[number]));
+  const pendingOrders = batchOrders.filter(isPendingFinancialOrder);
+  const packMap = new Map<string, FinancialPackMetric>();
+
+  for (const order of batchOrders) {
+    const pack = packMap.get(order.pack_slug) ?? {
+      packSlug: order.pack_slug,
+      packName: order.pack_name,
+      reservedPacks: 0,
+      confirmedPacks: 0,
+      pendingPacks: 0,
+      deliveredPacks: 0,
+      bagels: 0,
+      confirmedSales: 0,
+    };
+
+    pack.reservedPacks += 1;
+    if (productionStatuses.includes(order.status as (typeof productionStatuses)[number])) {
+      pack.confirmedPacks += 1;
+      pack.bagels += Number(order.pack_units);
+      pack.confirmedSales += Number(order.total_amount);
+    }
+    if (isPendingFinancialOrder(order)) pack.pendingPacks += 1;
+    if (order.status === "delivered") pack.deliveredPacks += 1;
+    packMap.set(order.pack_slug, pack);
+  }
+
+  const deliveryCollected = confirmedOrders.reduce((sum, order) => sum + getOrderDeliveryFee(order), 0);
+  const confirmedSales = confirmedOrders.reduce((sum, order) => sum + Number(order.total_amount), 0);
+  const confirmedProductSales = confirmedOrders.reduce((sum, order) => sum + getOrderProductRevenue(order), 0);
+  const confirmedBagels = confirmedOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
+  const estimatedProductCost = confirmedBagels * financialEstimateAssumptions.cogsPerBagel;
+  const estimatedPackagingCost = confirmedOrders.length * financialEstimateAssumptions.packagingPerPack;
+  const estimatedGrossMargin = confirmedProductSales - estimatedProductCost - estimatedPackagingCost;
+
+  return {
+    batchId: batch.id,
+    batchName: batch.name,
+    confirmedSales,
+    confirmedProductSales,
+    pendingSales: pendingOrders.reduce((sum, order) => sum + Number(order.total_amount), 0),
+    deliveryCollected,
+    deliveryPending: pendingOrders.reduce((sum, order) => sum + getOrderDeliveryFee(order), 0),
+    confirmedPacks: confirmedOrders.length,
+    pendingPacks: pendingOrders.length,
+    reservedPacks: batchOrders.length,
+    confirmedBagels,
+    estimatedProductCost,
+    estimatedPackagingCost,
+    estimatedGrossMargin,
+    estimatedGrossMarginRate: confirmedProductSales ? Math.round((estimatedGrossMargin / confirmedProductSales) * 100) : 0,
+    packMetrics: Array.from(packMap.values()).sort((a, b) => b.confirmedPacks - a.confirmedPacks || b.reservedPacks - a.reservedPacks || a.packName.localeCompare(b.packName, "es")),
+    assumptions: financialEstimateAssumptions,
+  };
+}
+
 function isDeliveryRouteOrder(order: Order) {
   return productionStatuses.includes(order.status as (typeof productionStatuses)[number]);
 }
