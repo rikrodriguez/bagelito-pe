@@ -89,6 +89,8 @@ const sortOptions = [
   { value: "amount_asc", label: "Lowest amount" },
 ] as const;
 
+const districtPieColors = ["#ed4a98", "#ffa12b", "#5ec7bc", "#825ddd", "#06143d", "#f4c64d", "#3b9ee6", "#7ac45d"];
+
 const adminSections = [
   "overview",
   "customers",
@@ -445,6 +447,113 @@ function getDistrictStats(orders: Order[]) {
   }
 
   return Array.from(map.values()).sort((a, b) => b.orders - a.orders || a.district.localeCompare(b.district));
+}
+
+type DistrictPieMetric = "bagels" | "revenue";
+type DistrictPieItem = { district: string; orders: number; bagels: number; revenue: number; fill: string };
+
+function getDistrictPieStats(orders: Order[]) {
+  const map = new Map<string, Omit<DistrictPieItem, "fill">>();
+
+  for (const order of orders) {
+    if (order.status === "cancelled") continue;
+    const current = map.get(order.district) ?? { district: order.district, orders: 0, bagels: 0, revenue: 0 };
+    current.orders += 1;
+    current.bagels += Number(order.pack_units);
+    if (isPaid(order)) current.revenue += Number(order.total_amount);
+    map.set(order.district, current);
+  }
+
+  return Array.from(map.values())
+    .sort((a, b) => b.bagels - a.bagels || b.revenue - a.revenue || a.district.localeCompare(b.district, "es"))
+    .map((item, index) => ({ ...item, fill: districtPieColors[index % districtPieColors.length] }));
+}
+
+function getDistrictPieDisplayItems(items: DistrictPieItem[], metric: DistrictPieMetric) {
+  const sorted = [...items]
+    .filter((item) => item[metric] > 0)
+    .sort((a, b) => b[metric] - a[metric] || b.orders - a.orders || a.district.localeCompare(b.district, "es"));
+
+  if (sorted.length <= 7) return sorted;
+
+  const visible = sorted.slice(0, 6);
+  const rest = sorted.slice(6).reduce(
+    (total, item) => ({
+      bagels: total.bagels + item.bagels,
+      orders: total.orders + item.orders,
+      revenue: total.revenue + item.revenue,
+    }),
+    { bagels: 0, orders: 0, revenue: 0 },
+  );
+
+  return [...visible, { district: "Other districts", fill: "#9aa5b5", ...rest }];
+}
+
+function buildDistrictPieGradient(items: DistrictPieItem[], metric: DistrictPieMetric) {
+  const total = items.reduce((sum, item) => sum + item[metric], 0);
+  if (!total) return "#eef2f7";
+
+  let cursor = 0;
+  const segments = items.map((item) => {
+    const next = cursor + (item[metric] / total) * 100;
+    const segment = `${item.fill} ${cursor.toFixed(2)}% ${next.toFixed(2)}%`;
+    cursor = next;
+    return segment;
+  });
+
+  return `conic-gradient(${segments.join(", ")})`;
+}
+
+function DistrictPieChart({
+  emptyLabel,
+  helper,
+  items,
+  metric,
+  title,
+  valueLabel,
+  valueFormatter,
+}: {
+  emptyLabel: string;
+  helper: string;
+  items: DistrictPieItem[];
+  metric: DistrictPieMetric;
+  title: string;
+  valueLabel: string;
+  valueFormatter: (value: number) => string;
+}) {
+  const displayItems = getDistrictPieDisplayItems(items, metric);
+  const total = displayItems.reduce((sum, item) => sum + item[metric], 0);
+
+  return (
+    <section className="admin-card district-pie-card">
+      <div className="admin-card-head compact">
+        <div>
+          <h2>{title}</h2>
+          <p>{helper}</p>
+        </div>
+      </div>
+      <div className="district-pie-layout">
+        <div className="district-pie-visual" style={{ background: buildDistrictPieGradient(displayItems, metric) }}>
+          <div>
+            <strong>{valueFormatter(total)}</strong>
+            <span>{valueLabel}</span>
+          </div>
+        </div>
+        <div className="district-pie-list">
+          {displayItems.length ? displayItems.map((item) => {
+            const value = item[metric];
+            return (
+              <div className="district-pie-row" key={`${metric}-${item.district}`}>
+                <span><i style={{ background: item.fill }} /> {item.district}</span>
+                <strong>{valueFormatter(value)}</strong>
+                <small>{percent(value, total)}% · {item.orders} orders</small>
+              </div>
+            );
+          }) : <div className="empty-state compact">{emptyLabel}</div>}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 function getFlavorText(order: Order) {
@@ -1108,6 +1217,7 @@ export default async function AdminPage({
   const packStats = getPackStats(activeOrders);
   const packTypeStats = getPackTypeStats(activeOrders);
   const districtStats = getDistrictStats(activeOrders);
+  const districtPieStats = getDistrictPieStats(activeOrders);
   const batchStats = getBatchStats(currentBatch, activeOrders);
   const whatsappFollowUps = getAdminWhatsAppFollowUps(activeOrders);
   const whatsappOrder = whatsappIntent && whatsappOrderCode
@@ -1307,6 +1417,29 @@ export default async function AdminPage({
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
           <Stat icon={MessageCircle} label="Customer comms" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
+        ) : null}
+
+        {activeSection === "overview" ? (
+          <div className="district-pie-grid">
+            <DistrictPieChart
+              emptyLabel="No reserved bagels by district yet."
+              helper="Active reservations grouped by delivery district."
+              items={districtPieStats}
+              metric="bagels"
+              title="Bagels by district"
+              valueFormatter={(value) => `${value} bagels`}
+              valueLabel="reserved"
+            />
+            <DistrictPieChart
+              emptyLabel="No confirmed money by district yet."
+              helper="Paid and production-ready orders only."
+              items={districtPieStats}
+              metric="revenue"
+              title="Money by district"
+              valueFormatter={formatMoney}
+              valueLabel="confirmed"
+            />
+          </div>
         ) : null}
 
         {activeSection === "crm" ? <CustomerCrmPanel profiles={customerProfiles} stats={customerCrmStats} /> : null}
