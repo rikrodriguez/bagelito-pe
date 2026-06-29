@@ -960,6 +960,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
   const activeStages = plan.stages.filter((stage) => stage.key !== "done");
   const donePercent = percent(doneStage?.packs ?? 0, plan.totalPacks);
   const deliveryDate = plan.deliveryDate ? formatBatchDate(plan.deliveryDate) : "Not set";
+  const flavorSummary = [...plan.packingList].sort((a, b) => b.quantity - a.quantity || a.flavorName.localeCompare(b.flavorName, "es"));
 
   return (
     <section className="admin-card production-ops-card" id="production-ops">
@@ -967,7 +968,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
         <div>
           <p className="kicker">Production ops</p>
           <h2>{plan.batchName}</h2>
-          <p>Packing list by flavor, total batch count, and the operating checklist for baking, packing, and delivery.</p>
+          <p>Bagels por sabor, total del batch y checklist operativo para hornear, empacar y entregar.</p>
         </div>
         <a className="status-action export" href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
       </div>
@@ -983,20 +984,46 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
         <div className="empty-state">No paid orders in the current batch yet. Confirm payments first, then this checklist will populate.</div>
       ) : null}
 
+      <section className="production-flavor-summary">
+        <div className="admin-card-head compact">
+          <h3>Bagels por sabor</h3>
+          <p>Este es el conteo confirmado para producción. Cada número es cantidad de bagels, no packs.</p>
+        </div>
+        {flavorSummary.length ? (
+          <div className="production-flavor-summary-grid">
+            {flavorSummary.map((item) => {
+              const orderCount = new Set(item.orderCodes).size;
+              const share = percent(item.quantity, plan.totalBagels);
+
+              return (
+                <div className="production-flavor-tile" key={item.flavorName}>
+                  <span>{item.flavorName}</span>
+                  <strong>{item.quantity}</strong>
+                  <small>{share}% del batch · {orderCount} {orderCount === 1 ? "pedido" : "pedidos"}</small>
+                  <i aria-hidden="true"><b style={{ width: `${share}%` }} /></i>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="production-stage-empty">No hay sabores confirmados para producir todavía.</div>
+        )}
+      </section>
+
       <div className="production-ops-grid">
         <section>
           <div className="admin-card-head compact">
-            <h3>Packing list by flavor</h3>
-            <p>Use this to bake and count each flavor before packing.</p>
+            <h3>Detalle por sabor</h3>
+            <p>Ordenes relacionadas para validar antes de empacar.</p>
           </div>
           <div className="production-flavor-list">
-            {plan.packingList.length ? plan.packingList.map((item) => (
+            {flavorSummary.length ? flavorSummary.map((item) => (
               <div className="production-flavor-row" key={item.flavorName}>
                 <div>
                   <strong>{item.flavorName}</strong>
                   <small>{[...new Set(item.orderCodes)].join(", ")}</small>
                 </div>
-                <b>{item.quantity}</b>
+                <b>{item.quantity} bagels</b>
               </div>
             )) : <div className="production-stage-empty">No flavors to prep yet.</div>}
           </div>
