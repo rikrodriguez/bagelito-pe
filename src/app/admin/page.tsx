@@ -4,6 +4,7 @@ import {
   ArrowUpDown,
   Archive,
   CalendarClock,
+  Calculator,
   CheckCircle2,
   Clock3,
   CreditCard,
@@ -60,10 +61,12 @@ import {
   parseAdminWhatsAppIntent,
   type AdminWhatsAppIntent,
 } from "@/lib/admin/whatsapp-messages";
+import type { CostScenarioState } from "@/lib/bagelito-costing";
 import { getMissingAdminEnv } from "@/lib/env";
 import { getWhatsAppHrefForPhone } from "@/lib/whatsapp";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
+import { CostCalculator } from "./CostCalculator";
 import { closeCurrentBatch, quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
 
 const paidStatuses = new Set<string>(productionStatuses);
@@ -96,6 +99,7 @@ const adminSections = [
   "customers",
   "crm",
   "finance",
+  "calculator",
   "batch",
   "waitlist",
   "comms",
@@ -127,6 +131,11 @@ const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; i
     eyebrow: "Finance",
     title: "Financial snapshot",
     intro: "Confirmed sales, pending value, delivery variance, editable costs, and net profit.",
+  },
+  calculator: {
+    eyebrow: "Calculadora",
+    title: "Cost, margin, and scale calculator",
+    intro: "Simulate pack volume, unit economics, fixed-cost dilution, and margin before changing the batch.",
   },
   batch: {
     eyebrow: "Batch",
@@ -430,6 +439,35 @@ function getPackTypeStats(orders: Order[]) {
   }
 
   return Array.from(map.values()).map((item) => ({ ...item, percent: percent(item.count, orders.length) }));
+}
+
+function getCalculatorInitialScenario(orders: Order[]): Partial<CostScenarioState> {
+  const quantities: CostScenarioState["quantities"] = {
+    mixed6: 0,
+    mixed12: 0,
+    single6: 0,
+    single12: 0,
+  };
+  let firstSingleFlavorSlug = "average";
+
+  for (const order of orders) {
+    if (order.pack_slug === "6-mixed") quantities.mixed6 += 1;
+    if (order.pack_slug === "12-mixed") quantities.mixed12 += 1;
+    if (order.pack_slug === "6-single") quantities.single6 += 1;
+    if (order.pack_slug === "12-single") quantities.single12 += 1;
+
+    if (
+      firstSingleFlavorSlug === "average" &&
+      (order.pack_slug === "6-single" || order.pack_slug === "12-single")
+    ) {
+      firstSingleFlavorSlug = order.order_items?.[0]?.flavor_slug ?? "average";
+    }
+  }
+
+  return {
+    quantities,
+    singleFlavorSlug: firstSingleFlavorSlug,
+  };
 }
 
 function getDistrictStats(orders: Order[]) {
@@ -1216,6 +1254,7 @@ export default async function AdminPage({
   const marketingOptIns = activeOrders.filter((order) => order.marketing_opt_in).length;
   const packStats = getPackStats(activeOrders);
   const packTypeStats = getPackTypeStats(activeOrders);
+  const calculatorInitialScenario = getCalculatorInitialScenario(activeOrders);
   const districtStats = getDistrictStats(activeOrders);
   const districtPieStats = getDistrictPieStats(activeOrders);
   const batchStats = getBatchStats(currentBatch, activeOrders);
@@ -1278,6 +1317,13 @@ export default async function AdminPage({
       helper: formatMoney(finance.estimatedNetProfit),
       href: buildAdminHref({ section: "finance", q: "", status: "all", sort: "newest" }),
       icon: CreditCard,
+    },
+    {
+      section: "calculator",
+      label: "Calculadora",
+      helper: "pack margin",
+      href: buildAdminHref({ section: "calculator", q: "", status: "all", sort: "newest" }),
+      icon: Calculator,
     },
     {
       section: "batch",
@@ -1445,6 +1491,8 @@ export default async function AdminPage({
         {activeSection === "crm" ? <CustomerCrmPanel profiles={customerProfiles} stats={customerCrmStats} /> : null}
 
         {activeSection === "finance" ? <FinancialPanel summary={finance} /> : null}
+
+        {activeSection === "calculator" ? <CostCalculator initialScenario={calculatorInitialScenario} /> : null}
 
         {activeSection === "batch" ? <BatchManagementPanel batch={currentBatch} stats={batchStats} /> : null}
 
