@@ -139,8 +139,8 @@ export function CulqiCheckoutButton({
       cardNumber: "Número de tarjeta",
       confirming: "Confirmando el pago con Culqi...",
       cvv: "CVV",
-      demoError: "No pudimos completar la demostración. Inténtalo nuevamente.",
-      demoStatus: "Checkout preparado para activarse con Culqi",
+      demoError: "No pudimos completar el checkout. Inténtalo nuevamente.",
+      demoStatus: "Checkout online listo para confirmar tu pedido",
       disabled: "Pagos online temporalmente no disponibles",
       disabledDetail: "Esta es la vista del checkout. El formulario se habilitará de forma segura dentro de Culqi.",
       email: "Correo electrónico",
@@ -154,6 +154,7 @@ export function CulqiCheckoutButton({
       preparing: "Preparando tu pedido...",
       retry: "Reintentar checkout seguro",
       secure: "Los datos de pago se ingresan y procesan únicamente en el entorno seguro de Culqi",
+      checkoutTerms: "Delivery en la fecha programada. El repartidor espera hasta 10 minutos; la reentrega depende de disponibilidad y puede tener costo adicional. Bagelito no responde por datos incorrectos o ausencia del cliente.",
       terms: "Acepta los términos para habilitar el checkout seguro.",
       wallets: "Yape / QR",
       walletsMore: "Apple Pay / Google Pay",
@@ -164,8 +165,8 @@ export function CulqiCheckoutButton({
       cardNumber: "Card number",
       confirming: "Confirming payment with Culqi...",
       cvv: "CVV",
-      demoError: "We could not complete the demo. Please try again.",
-      demoStatus: "Checkout prepared to activate with Culqi",
+      demoError: "We could not complete checkout. Please try again.",
+      demoStatus: "Online checkout ready to confirm your order",
       disabled: "Online payments are temporarily unavailable",
       disabledDetail: "This is the checkout preview. The form will be securely enabled inside Culqi.",
       email: "Email address",
@@ -179,6 +180,7 @@ export function CulqiCheckoutButton({
       preparing: "Preparing your order...",
       retry: "Retry secure checkout",
       secure: "Payment data is entered and processed only in Culqi's secure environment",
+      checkoutTerms: "Delivery is made on the scheduled date. The driver waits up to 10 minutes; re-delivery depends on availability and may cost extra. Bagelito is not responsible for incorrect details or customer absence.",
       terms: "Accept the terms to enable secure checkout.",
       wallets: "Yape / QR",
       walletsMore: "Apple Pay / Google Pay",
@@ -512,6 +514,7 @@ export function CulqiCheckoutButton({
               <span>{copy.email}</span>
               <input autoComplete="off" defaultValue={customerEmail} name="demo-email" placeholder="nombre@email.com" required type="email" />
             </label>
+            <p className="culqi-checkout-terms-note">{copy.checkoutTerms}</p>
             <button className="culqi-preview-pay" type="submit">
               {state === "confirming" ? copy.confirming : copy.pay}
             </button>
@@ -542,6 +545,7 @@ export function CulqiCheckoutButton({
             <span>{copy.email}</span>
             <strong>{customerEmail || "nombre@email.com"}</strong>
           </div>
+          <p className="culqi-checkout-terms-note">{copy.checkoutTerms}</p>
           <button className="culqi-preview-pay" type="button" disabled>{copy.pay}</button>
           <div className="culqi-availability-note" role="status"><strong>{copy.terms}</strong><span>{copy.secure}</span></div>
         </div>

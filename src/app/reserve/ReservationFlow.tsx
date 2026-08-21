@@ -134,8 +134,6 @@ export function ReservationFlow({
     : batchAvailability.batchName;
   const culqiText = locale === "es"
     ? {
-      demoPending: "Demostración: no se realizará ningún cobro",
-      demoTerms: "Entiendo que este checkout está en modo demostración: no realizará ni confirmará ningún cobro y no creará un pedido real. Los pedidos reales quedarán separados únicamente cuando el proveedor de pagos confirme la transacción.",
       hero: "Elige tu pack, sabores y delivery. Al final pagarás de forma segura y tu reserva se confirmará automáticamente.",
       intro: "Revisa el total, agrega el pack extra si lo deseas y confirma los datos de tu pedido antes de continuar al checkout.",
       method: "Checkout online",
@@ -146,8 +144,6 @@ export function ReservationFlow({
       unavailable: "Los pagos online están temporalmente fuera de servicio.",
     }
     : {
-      demoPending: "Demo: no charge will be made",
-      demoTerms: "I understand that this checkout is in demo mode: it will not make or confirm a charge and it will not create a real order. Real orders are secured only after the payment provider confirms the transaction.",
       hero: "Choose your pack, flavors, and delivery. At the end you will pay securely and your reservation will be confirmed automatically.",
       intro: "Review the total, add the extra pack if you want it, and confirm your order details before continuing to checkout.",
       method: "Online checkout",
@@ -818,7 +814,7 @@ export function ReservationFlow({
               {extraPackAdded ? <div><span>{extraPackText.extraPack}</span><strong>{extraPackText.savings}</strong></div> : null}
               <div><span>{r.reviewLabels.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
               <div><span>{r.reviewLabels.totalAmount}</span><strong>S/{totalAmount}</strong></div>
-              <div><span>{r.reviewLabels.statusAfterSubmit}</span><strong>{paymentConfig.enabled ? culqiText.pending : culqiText.demoPending}</strong></div>
+              <div><span>{r.reviewLabels.statusAfterSubmit}</span><strong>{culqiText.pending}</strong></div>
               <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
               <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>
               <div><span>{r.reviewLabels.email}</span><strong>{details.email}</strong></div>
@@ -829,7 +825,7 @@ export function ReservationFlow({
             </div>
             <label className="terms-box">
               <input type="checkbox" checked={termsAccepted} disabled={termsAccepted && paymentConfig.enabled} onChange={(event) => setTermsAccepted(event.target.checked)} />
-              <span>{paymentConfig.enabled ? culqiText.terms : culqiText.demoTerms} <Link className="inline-terms-link" href="/legal" target="_blank">{r.termsLink}</Link></span>
+              <span>{culqiText.terms} <Link className="inline-terms-link" href="/legal" target="_blank">{r.termsLink}</Link></span>
             </label>
             <CulqiCheckoutButton
               key={`${selectedPack.slug}-${extraPackAdded ? "extra" : "single"}`}
