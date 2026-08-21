@@ -155,6 +155,7 @@ export function CulqiCheckoutButton({
       retry: "Reintentar checkout seguro",
       secure: "Los datos de pago se ingresan y procesan únicamente en el entorno seguro de Culqi",
       checkoutTerms: "Delivery en la fecha programada. El repartidor espera hasta 10 minutos; la reentrega depende de disponibilidad y puede tener costo adicional. Bagelito no responde por datos incorrectos o ausencia del cliente.",
+      checkoutTermsLink: "Leer las políticas legales completas.",
       terms: "Acepta los términos para habilitar el checkout seguro.",
       wallets: "Yape / QR",
       walletsMore: "Apple Pay / Google Pay",
@@ -181,6 +182,7 @@ export function CulqiCheckoutButton({
       retry: "Retry secure checkout",
       secure: "Payment data is entered and processed only in Culqi's secure environment",
       checkoutTerms: "Delivery is made on the scheduled date. The driver waits up to 10 minutes; re-delivery depends on availability and may cost extra. Bagelito is not responsible for incorrect details or customer absence.",
+      checkoutTermsLink: "Read the full legal policies.",
       terms: "Accept the terms to enable secure checkout.",
       wallets: "Yape / QR",
       walletsMore: "Apple Pay / Google Pay",
@@ -514,7 +516,7 @@ export function CulqiCheckoutButton({
               <span>{copy.email}</span>
               <input autoComplete="off" defaultValue={customerEmail} name="demo-email" placeholder="nombre@email.com" required type="email" />
             </label>
-            <p className="culqi-checkout-terms-note">{copy.checkoutTerms}</p>
+            <p className="culqi-checkout-terms-note">{copy.checkoutTerms} <a href="/legal" target="_blank" rel="noreferrer">{copy.checkoutTermsLink}</a></p>
             <button className="culqi-preview-pay" type="submit">
               {state === "confirming" ? copy.confirming : copy.pay}
             </button>
@@ -545,7 +547,7 @@ export function CulqiCheckoutButton({
             <span>{copy.email}</span>
             <strong>{customerEmail || "nombre@email.com"}</strong>
           </div>
-          <p className="culqi-checkout-terms-note">{copy.checkoutTerms}</p>
+          <p className="culqi-checkout-terms-note">{copy.checkoutTerms} <a href="/legal" target="_blank" rel="noreferrer">{copy.checkoutTermsLink}</a></p>
           <button className="culqi-preview-pay" type="button" disabled>{copy.pay}</button>
           <div className="culqi-availability-note" role="status"><strong>{copy.terms}</strong><span>{copy.secure}</span></div>
         </div>
