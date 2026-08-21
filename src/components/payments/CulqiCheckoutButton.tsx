@@ -139,9 +139,8 @@ export function CulqiCheckoutButton({
       cardNumber: "Número de tarjeta",
       confirming: "Confirmando el pago con Culqi...",
       cvv: "CVV",
-      demoDetail: "Modo de demostración: este formulario no envía ni guarda datos y no realiza ningún cobro. No ingreses información real.",
       demoError: "No pudimos completar la demostración. Inténtalo nuevamente.",
-      demoStatus: "Checkout habilitado para revisión",
+      demoStatus: "Checkout preparado para activarse con Culqi",
       disabled: "Pagos online temporalmente no disponibles",
       disabledDetail: "Esta es la vista del checkout. El formulario se habilitará de forma segura dentro de Culqi.",
       email: "Correo electrónico",
@@ -165,9 +164,8 @@ export function CulqiCheckoutButton({
       cardNumber: "Card number",
       confirming: "Confirming payment with Culqi...",
       cvv: "CVV",
-      demoDetail: "Demo mode: this form does not send or store data and makes no charge. Do not enter real information.",
       demoError: "We could not complete the demo. Please try again.",
-      demoStatus: "Checkout enabled for review",
+      demoStatus: "Checkout prepared to activate with Culqi",
       disabled: "Online payments are temporarily unavailable",
       disabledDetail: "This is the checkout preview. The form will be securely enabled inside Culqi.",
       email: "Email address",
@@ -521,7 +519,7 @@ export function CulqiCheckoutButton({
 
           <div className="culqi-availability-note" role="status">
             <strong>{disabled ? copy.terms : copy.demoStatus}</strong>
-            <span>{disabled ? copy.terms : copy.demoDetail}</span>
+            {disabled ? <span>{copy.terms}</span> : null}
           </div>
         </form>
       ) : showLockedPreview ? (
