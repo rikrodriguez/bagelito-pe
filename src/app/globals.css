@@ -810,8 +810,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
 .review-grid > div { display: grid; gap: 6px; border-radius: 12px; background: #fff7df; padding: 14px; }
 .review-grid span { font-size: .82rem; font-weight: 850; color: var(--blue); }
 .review-grid strong { line-height: 1.3; }
-.terms-box { display: flex; gap: 12px; align-items: flex-start; margin-top: 20px; border-radius: 14px; background: #eefaf6; padding: 16px; font-weight: 850; line-height: 1.45; }
-.terms-box input { width: auto; margin-top: 4px; }
 .submit-button { margin-top: 20px; width: 100%; }
 .reserve-nav { display: flex; justify-content: space-between; gap: 16px; margin-top: 20px; }
 .reserve-nav button:disabled { opacity: .45; cursor: not-allowed; }
@@ -6230,7 +6228,6 @@ html[data-admin-nav-collapsed="1"] .admin-workspace {
 
   .payment-summary-grid div,
   .review-grid > div,
-  .terms-box,
   .marketing-box,
   .handoff-box,
   .payment-method-box,

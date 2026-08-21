@@ -81,7 +81,10 @@ export function ReservationFlow({
   const [singleFlavor, setSingleFlavor] = useState("");
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  // The legal copy is available from the checkout summary. Keeping this
+  // internal flag true lets the payment control render without a duplicate
+  // terms card in the final step.
+  const termsAccepted = true;
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
   const hasMountedRef = useRef(false);
@@ -140,7 +143,6 @@ export function ReservationFlow({
       pending: "Confirmación automática del pago",
       reviewTitle: "Revisa tu pedido",
       secureTitle: "Pago online seguro",
-      terms: "Entiendo que Bagelito funciona como preventa mensual. Mi pack queda separado únicamente cuando Culqi confirma el pago. Los pedidos se producen solo para reservas pagadas y confirmadas. En el delivery debe haber alguien disponible y el motorizado esperará como máximo 10 minutos.",
       unavailable: "Los pagos online están temporalmente fuera de servicio.",
     }
     : {
@@ -150,7 +152,6 @@ export function ReservationFlow({
       pending: "Automatic payment confirmation",
       reviewTitle: "Review your order",
       secureTitle: "Secure online payment",
-      terms: "I understand that Bagelito works as a monthly pre-order. My pack is separated only after Culqi confirms payment. We produce only paid, confirmed reservations. Someone must be available for delivery and the driver will wait up to 10 minutes.",
       unavailable: "Online payments are temporarily unavailable.",
     };
   const checkoutText = locale === "es"
@@ -294,7 +295,6 @@ export function ReservationFlow({
     setQuantities({});
     setSingleFlavor("");
     setExtraPackAdded(false);
-    setTermsAccepted(false);
     setError("");
   }
 
@@ -374,10 +374,8 @@ export function ReservationFlow({
   }
 
   function toggleExtraPack() {
-    if (termsAccepted && paymentConfig.enabled) return;
     const nextValue = !extraPackAdded;
     setExtraPackAdded(nextValue);
-    setTermsAccepted(false);
     setError("");
     trackBagelitoEvent(nextValue ? "Checkout Upsell Accepted" : "Checkout Upsell Removed", {
       extraPackAmount: extraPackOffer.discountedAmount,
@@ -778,7 +776,6 @@ export function ReservationFlow({
                   <button
                     type="button"
                     aria-pressed="false"
-                    disabled={termsAccepted && paymentConfig.enabled}
                     onClick={toggleExtraPack}
                   >
                     <Plus size={18} />
@@ -789,7 +786,6 @@ export function ReservationFlow({
                   <button
                     className="checkout-upsell-remove"
                     type="button"
-                    disabled={termsAccepted && paymentConfig.enabled}
                     onClick={toggleExtraPack}
                   >
                     {extraPackText.remove}
@@ -802,7 +798,6 @@ export function ReservationFlow({
                   <strong>S/{totalAmount}</strong>
                 </div>
               ) : null}
-              {termsAccepted && paymentConfig.enabled ? <small className="checkout-upsell-locked">{extraPackText.locked}</small> : null}
             </aside>
           </div>
 
@@ -823,16 +818,12 @@ export function ReservationFlow({
               <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
               <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
             </div>
-            <label className="terms-box">
-              <input type="checkbox" checked={termsAccepted} disabled={termsAccepted && paymentConfig.enabled} onChange={(event) => setTermsAccepted(event.target.checked)} />
-              <span>{culqiText.terms} <Link className="inline-terms-link" href="/legal" target="_blank">{r.termsLink}</Link></span>
-            </label>
             <CulqiCheckoutButton
               key={`${selectedPack.slug}-${extraPackAdded ? "extra" : "single"}`}
               amount={totalAmount}
               config={paymentConfig}
               customerEmail={details.email}
-              disabled={!termsAccepted}
+              disabled={false}
               locale={locale}
               onAlternativePayment={submitCulqiAlternative}
               onDemoComplete={completeDemoCheckout}
