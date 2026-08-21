@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BatchInfo } from "@/components/BatchInfo";
+import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { FlavorStrip } from "@/components/FlavorStrip";
@@ -11,7 +12,6 @@ import { MobileStickyReserveCTA } from "@/components/MobileStickyReserveCTA";
 import { Packs } from "@/components/Packs";
 import { Testimonials } from "@/components/Testimonials";
 import { WhyMonthly } from "@/components/WhyMonthly";
-import { getReservationBatchAvailability } from "@/lib/reservations/service";
 
 export const metadata: Metadata = {
   alternates: {
@@ -19,17 +19,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function HomePage() {
-  const batchAvailability = await getReservationBatchAvailability();
-
+export default function HomePage() {
   return (
     <>
       <Header />
       <main>
-        <Hero acceptingReservations={batchAvailability.accepting} />
+        <Hero />
+        <ConversionTrustStrip />
         <BatchInfo />
         <HowMonthlyWorks />
-        <Packs acceptingReservations={batchAvailability.accepting} />
+        <Packs />
         <WhyMonthly />
         <FlavorStrip />
         <Testimonials />
@@ -37,7 +36,7 @@ export default async function HomePage() {
         <FinalCTA />
       </main>
       <Footer />
-      <MobileStickyReserveCTA acceptingReservations={batchAvailability.accepting} />
+      <MobileStickyReserveCTA />
     </>
   );
 }

@@ -1,23 +1,42 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, MessageCircle, Minus, Plus, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgePercent, BookOpenCheck, Check, CreditCard, Gift, MessageCircle, Minus, Plus, ShieldCheck, Truck } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
+import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
+import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  CulqiCheckoutButton,
+  type CulqiCheckoutSession,
+  type CulqiTokenSubmission,
+} from "@/components/payments/CulqiCheckoutButton";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import { getDeliveryFee } from "@/lib/delivery-pricing";
+import { checkoutExtraPackDiscountPercent, getCheckoutExtraPackOffer } from "@/lib/checkout-upsell";
 import { flavorCopy, packCopy } from "@/lib/i18n";
+import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
 import { districtOptions } from "@/lib/reservations/schema";
-import type { BatchAvailability } from "@/lib/reservations/service";
+import { siteServiceArea } from "@/lib/site";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 type Props = {
-  batchAvailability: BatchAvailability;
   packs: Pack[];
   flavors: Flavor[];
   initialPackSlug: PackSlug;
+  paymentConfig: PublicPaymentConfig;
+  checkoutPage?: boolean;
+};
+
+const packImages: Record<PackSlug, string> = {
+  "12-mixed": "/images/pack-12-mixed.webp",
+  "6-mixed": "/images/pack-6-mixed.webp",
+  "12-single": "/images/pack-12-single.webp",
+  "6-single": "/images/pack-6-single.webp",
 };
 
 type Details = {
@@ -32,14 +51,6 @@ type Details = {
   marketingOptIn: boolean;
 };
 
-type PaymentDetails = {
-  paymentMethod: "Yape" | "Plin";
-  paymentTransactionNumber: string;
-  paymentHolderName: string;
-  paymentPhoneNumber: string;
-  exactAmountConfirmed: boolean;
-};
-
 const initialDetails: Details = {
   customerName: "",
   whatsapp: "",
@@ -52,47 +63,49 @@ const initialDetails: Details = {
   marketingOptIn: false,
 };
 
-const initialPaymentDetails: PaymentDetails = {
-  paymentMethod: "Yape",
-  paymentTransactionNumber: "",
-  paymentHolderName: "",
-  paymentPhoneNumber: "",
-  exactAmountConfirmed: false,
-};
+const initialBotTrap = "";
 
-const allowedPaymentTypes = new Set(["image/png", "image/jpeg", "image/jpg", "image/webp"]);
-const maxPaymentFileSize = 5 * 1024 * 1024;
-const paymentRecipient = {
-  yapeNumber: "917 547 745",
-  plinNumber: "917 547 745",
-  holder: "Dawn Brookes",
-};
-
-export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailability }: Props) {
+export function ReservationFlow({
+  packs,
+  flavors,
+  initialPackSlug,
+  paymentConfig,
+  checkoutPage = false,
+}: Props) {
   const { locale, copy } = useLanguage();
+  const batchAvailability = useBatchAvailability();
   const r = copy.reserve;
   const [step, setStep] = useState(1);
   const [packSlug, setPackSlug] = useState<PackSlug>(initialPackSlug);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [singleFlavor, setSingleFlavor] = useState("");
   const [details, setDetails] = useState<Details>(initialDetails);
-  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>(initialPaymentDetails);
-  const [paymentScreenshot, setPaymentScreenshot] = useState<File | null>(null);
+  const [extraPackAdded, setExtraPackAdded] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const hasMountedRef = useRef(false);
+  const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
 
   const selectedPack = packs.find((pack) => pack.slug === packSlug) ?? packs[0];
+  const upgradePackSlug: PackSlug | null = selectedPack.slug === "6-mixed"
+    ? "12-mixed"
+    : selectedPack.slug === "6-single"
+      ? "12-single"
+      : null;
+  const upgradePack = upgradePackSlug
+    ? packs.find((pack) => pack.slug === upgradePackSlug) ?? null
+    : null;
+  const upgradeExtra = upgradePack ? upgradePack.amount - selectedPack.amount : 0;
+  const upgradeSavings = upgradePack ? Math.max(0, selectedPack.amount * 2 - upgradePack.amount) : 0;
   const localizedSelectedPack = packCopy[locale][selectedPack.slug];
   const deliveryFee = getDeliveryFee(details.district);
-  const totalAmount = selectedPack.amount + deliveryFee;
+  const extraPackOffer = getCheckoutExtraPackOffer(selectedPack.amount);
+  const productSubtotal = selectedPack.amount + (extraPackAdded ? extraPackOffer.discountedAmount : 0);
+  const totalAmount = productSubtotal + deliveryFee;
+  const checkoutPackCount = extraPackAdded ? 2 : 1;
+  const checkoutBagelCount = selectedPack.units * checkoutPackCount;
   const selectedTotal = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
-  const paymentConfig = {
-    yapeNumber: paymentRecipient.yapeNumber,
-    plinNumber: paymentRecipient.plinNumber,
-    holder: paymentRecipient.holder,
-  };
   const batchText = locale === "es"
     ? {
       closed: "Este batch está cerrado",
@@ -116,6 +129,96 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
       remaining: "spots left",
       unavailable: "We are closing or producing this batch. Join the waitlist and we will notify you when the next drop opens.",
     };
+  const localizedBatchName = batchAvailability.batchName === "Next Bagelito Batch"
+    ? locale === "es" ? "Próximo batch Bagelito" : batchAvailability.batchName
+    : batchAvailability.batchName;
+  const culqiText = locale === "es"
+    ? {
+      demoPending: "Demostración: no se realizará ningún cobro",
+      demoTerms: "Entiendo que este checkout está en modo demostración: no realizará ni confirmará ningún cobro y no creará un pedido real. Los pedidos reales quedarán separados únicamente cuando el proveedor de pagos confirme la transacción.",
+      hero: "Elige tu pack, sabores y delivery. Al final pagarás de forma segura y tu reserva se confirmará automáticamente.",
+      intro: "Revisa el total, agrega el pack extra si lo deseas y confirma los datos de tu pedido antes de continuar al checkout.",
+      method: "Checkout online",
+      pending: "Confirmación automática del pago",
+      reviewTitle: "Revisa tu pedido",
+      secureTitle: "Pago online seguro",
+      terms: "Entiendo que Bagelito funciona como preventa mensual. Mi pack queda separado únicamente cuando Culqi confirma el pago. Los pedidos se producen solo para reservas pagadas y confirmadas. En el delivery debe haber alguien disponible y el motorizado esperará como máximo 10 minutos.",
+      unavailable: "Los pagos online están temporalmente fuera de servicio.",
+    }
+    : {
+      demoPending: "Demo: no charge will be made",
+      demoTerms: "I understand that this checkout is in demo mode: it will not make or confirm a charge and it will not create a real order. Real orders are secured only after the payment provider confirms the transaction.",
+      hero: "Choose your pack, flavors, and delivery. At the end you will pay securely and your reservation will be confirmed automatically.",
+      intro: "Review the total, add the extra pack if you want it, and confirm your order details before continuing to checkout.",
+      method: "Online checkout",
+      pending: "Automatic payment confirmation",
+      reviewTitle: "Review your order",
+      secureTitle: "Secure online payment",
+      terms: "I understand that Bagelito works as a monthly pre-order. My pack is separated only after Culqi confirms payment. We produce only paid, confirmed reservations. Someone must be available for delivery and the driver will wait up to 10 minutes.",
+      unavailable: "Online payments are temporarily unavailable.",
+    };
+  const checkoutText = locale === "es"
+    ? {
+      address: `Zona de atención: ${siteServiceArea}`,
+      complaints: "Libro de Reclamaciones",
+      contact: "Ayuda por WhatsApp",
+      delivery: "Delivery",
+      edit: "Editar pack",
+      eyebrow: "Checkout seguro",
+      intro: "Compra como invitado, sin crear una cuenta. Elige tu pack, sabores y delivery; revisa el total completo antes de pagar.",
+      pack: "Pack",
+      policy: "Términos, delivery y devoluciones",
+      secure: "Bagelito.pe no almacena datos de tarjeta; el proveedor de pagos los maneja en su entorno seguro.",
+      summary: "Tu pedido",
+      title: "Completa tu pedido Bagelito",
+      total: "Total",
+    }
+    : {
+      address: "Service area: Lima, Peru",
+      complaints: "Complaints Book",
+      contact: "WhatsApp support",
+      delivery: "Delivery",
+      edit: "Edit pack",
+      eyebrow: "Secure checkout",
+      intro: "Check out as a guest, with no account required. Choose your pack, flavors, and delivery, then review the full total before payment.",
+      pack: "Pack",
+      policy: "Terms, delivery, and refunds",
+      secure: "Bagelito.pe does not store card data; the payment provider handles it in its secure environment.",
+      summary: "Your order",
+      title: "Complete your Bagelito order",
+      total: "Total",
+    };
+  const extraPackText = locale === "es"
+    ? {
+      add: `Agregar pack por S/${extraPackOffer.discountedAmount}`,
+      added: "Pack extra agregado",
+      badge: `${checkoutExtraPackDiscountPercent}% DSCTO.`,
+      basePack: "Pack principal",
+      body: "Recibe un segundo pack con los mismos sabores. El delivery se cobra una sola vez.",
+      extraPack: `Pack extra (-${checkoutExtraPackDiscountPercent}%)`,
+      kicker: "Oferta exclusiva del checkout",
+      locked: "El pago ya fue iniciado. Edita el pedido para cambiar esta oferta.",
+      newTotal: "Nuevo total",
+      packsSubtotal: "Subtotal de packs",
+      remove: "Quitar pack extra",
+      savings: `Ahorras S/${extraPackOffer.savingsAmount}`,
+      title: "Duplica este pack",
+    }
+    : {
+      add: `Add pack for S/${extraPackOffer.discountedAmount}`,
+      added: "Extra pack added",
+      badge: `${checkoutExtraPackDiscountPercent}% OFF`,
+      basePack: "Main pack",
+      body: "Get a second pack with the same flavors. Delivery is charged only once.",
+      extraPack: `Extra pack (-${checkoutExtraPackDiscountPercent}%)`,
+      kicker: "Checkout-only offer",
+      locked: "Payment has started. Edit the order to change this offer.",
+      newTotal: "New total",
+      packsSubtotal: "Packs subtotal",
+      remove: "Remove extra pack",
+      savings: `Save S/${extraPackOffer.savingsAmount}`,
+      title: "Double this pack",
+    };
   const selectedItems = useMemo(() => {
     if (selectedPack.packType === "single") {
       return singleFlavor ? [{ flavorSlug: singleFlavor, quantity: selectedPack.units }] : [];
@@ -126,7 +229,12 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
       .map(([flavorSlug, quantity]) => ({ flavorSlug, quantity }));
   }, [quantities, selectedPack, singleFlavor]);
 
-  const flavorSummary = selectedItems.map((item) => {
+  const checkoutItems = useMemo(() => selectedItems.map((item) => ({
+    ...item,
+    quantity: item.quantity * checkoutPackCount,
+  })), [checkoutPackCount, selectedItems]);
+
+  const flavorSummary = checkoutItems.map((item) => {
     const flavor = flavors.find((candidate) => candidate.slug === item.flavorSlug);
     return {
       ...item,
@@ -157,8 +265,12 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
   }, [step]);
 
   useEffect(() => {
-    document.body.classList.toggle("reservation-review-active", step === 5);
-    return () => document.body.classList.remove("reservation-review-active");
+    document.body.classList.toggle("reservation-review-active", step === 4);
+    document.body.classList.toggle("reservation-payment-active", step >= 4);
+    return () => {
+      document.body.classList.remove("reservation-review-active");
+      document.body.classList.remove("reservation-payment-active");
+    };
   }, [step]);
 
   useEffect(() => {
@@ -185,11 +297,13 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
     setPackSlug(nextSlug);
     setQuantities({});
     setSingleFlavor("");
+    setExtraPackAdded(false);
+    setTermsAccepted(false);
     setError("");
   }
 
   function goToStep(nextStep: number) {
-    setStep(Math.max(1, Math.min(5, nextStep)));
+    setStep(Math.max(1, Math.min(4, nextStep)));
   }
 
   function changeQuantity(flavorSlug: string, delta: number) {
@@ -209,19 +323,6 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
     return Boolean(details.customerName && details.whatsapp && details.email && details.deliveryAddress && details.district);
   }
 
-  function getPaymentValidationError() {
-    if (!paymentDetails.paymentTransactionNumber.trim() || !paymentDetails.paymentHolderName.trim() || !paymentDetails.paymentPhoneNumber.trim()) {
-      return r.errors.paymentRequired;
-    }
-
-    if (!paymentScreenshot) return r.errors.paymentScreenshotRequired;
-    if (!allowedPaymentTypes.has(paymentScreenshot.type)) return r.errors.paymentScreenshotType;
-    if (paymentScreenshot.size > maxPaymentFileSize) return r.errors.paymentScreenshotSize;
-    if (!paymentDetails.exactAmountConfirmed) return r.errors.exactAmount;
-
-    return "";
-  }
-
   function goNext() {
     setError("");
     if (step === 2 && !validateFlavorStep()) {
@@ -239,79 +340,219 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
       return;
     }
 
-    if (step === 4) {
-      const paymentError = getPaymentValidationError();
-      if (paymentError) {
-        trackBagelitoEvent("Reserve Validation Error", { step, reason: "payment_required" });
-        setError(paymentError);
-        return;
-      }
-    }
-
     trackBagelitoEvent("Reserve Continue", { step, pack: selectedPack.slug });
     goToStep(step + 1);
   }
 
-  function handlePaymentScreenshotChange(file: File | null) {
-    setError("");
-    setPaymentScreenshot(null);
-    if (!file) return;
-
-    if (!allowedPaymentTypes.has(file.type)) {
-      setError(r.errors.paymentScreenshotType);
-      return;
-    }
-
-    if (file.size > maxPaymentFileSize) {
-      setError(r.errors.paymentScreenshotSize);
-      return;
-    }
-
-    setPaymentScreenshot(file);
+  function getCulqiReservationPayload(checkoutSessionId: string) {
+    return {
+      ...details,
+      checkoutSessionId,
+      extraPack: extraPackAdded,
+      items: checkoutItems,
+      packSlug: selectedPack.slug,
+      termsAccepted,
+      website,
+    };
   }
 
-  async function submitReservation() {
-    setError("");
-    const paymentError = getPaymentValidationError();
-    if (paymentError) {
-      trackBagelitoEvent("Reserve Validation Error", { step: 5, reason: "payment_required" });
-      setError(paymentError);
-      goToStep(4);
-      return;
+  function getCheckoutSessionId() {
+    const fingerprint = JSON.stringify({
+      details,
+      extraPack: extraPackAdded,
+      items: checkoutItems,
+      packSlug: selectedPack.slug,
+    });
+
+    if (
+      !checkoutSessionRef.current.id
+      || checkoutSessionRef.current.fingerprint !== fingerprint
+    ) {
+      checkoutSessionRef.current = {
+        fingerprint,
+        id: window.crypto.randomUUID(),
+      };
     }
 
+    return checkoutSessionRef.current.id;
+  }
+
+  function toggleExtraPack() {
+    if (termsAccepted && paymentConfig.enabled) return;
+    const nextValue = !extraPackAdded;
+    setExtraPackAdded(nextValue);
+    setTermsAccepted(false);
+    setError("");
+    trackBagelitoEvent(nextValue ? "Checkout Upsell Accepted" : "Checkout Upsell Removed", {
+      extraPackAmount: extraPackOffer.discountedAmount,
+      pack: selectedPack.slug,
+      savingsAmount: extraPackOffer.savingsAmount,
+    });
+  }
+
+  function redirectToSuccess(orderCode: string, payment: "demo" | "paid" | "pending") {
+    const params = new URLSearchParams({
+      amount: String(totalAmount),
+      order: orderCode,
+      pack: extraPackAdded ? `2 x ${selectedPack.name}` : selectedPack.name,
+      packSlug: selectedPack.slug,
+      payment,
+    });
+    window.location.href = `/reserve/success?${params.toString()}`;
+  }
+
+  async function prepareCulqiCheckout(): Promise<CulqiCheckoutSession> {
     if (!termsAccepted) {
-      trackBagelitoEvent("Reserve Validation Error", { step: 5, reason: "terms_required" });
-      setError(r.errors.terms);
-      return;
+      throw new Error(r.errors.terms);
+    }
+    if (!paymentConfig.enabled) {
+      throw new Error(culqiText.unavailable);
     }
 
-    const formData = new FormData();
-    formData.set("packSlug", selectedPack.slug);
-    formData.set("items", JSON.stringify(selectedItems));
-    Object.entries(details).forEach(([key, value]) => formData.set(key, String(value)));
-    Object.entries(paymentDetails).forEach(([key, value]) => formData.set(key, String(value)));
-    if (paymentScreenshot) formData.set("paymentScreenshot", paymentScreenshot);
-    formData.set("termsAccepted", String(termsAccepted));
+    const checkoutSessionId = getCheckoutSessionId();
+    const reservationResponse = await fetch("/api/reservations/culqi", {
+      body: JSON.stringify(getCulqiReservationPayload(checkoutSessionId)),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    });
+    const reservation = await reservationResponse.json() as {
+      amount?: number;
+      error?: string;
+      expiresAt?: string;
+      ok?: boolean;
+      orderCode?: string;
+    };
 
-    setSubmitting(true);
-    trackBagelitoEvent("Reservation Submit Attempt", { pack: selectedPack.slug, amount: totalAmount });
-    try {
-      const response = await fetch("/api/reservations", { method: "POST", body: formData });
-      const result = await response.json() as { ok?: boolean; orderCode?: string; error?: string };
-      if (!response.ok || !result.ok || !result.orderCode) {
-        throw new Error(result.error ?? r.errors.submit);
-      }
-      trackBagelitoEvent("Reservation Submitted", { pack: selectedPack.slug, amount: totalAmount });
-      window.location.href = "/reserve/success?order=" + encodeURIComponent(result.orderCode) + "&pack=" + encodeURIComponent(selectedPack.name) + "&packSlug=" + encodeURIComponent(selectedPack.slug) + "&amount=" + totalAmount;
-    } catch (submitError) {
-      trackBagelitoEvent("Reservation Submit Error", { pack: selectedPack.slug, step: 5 });
-      setError(submitError instanceof Error ? submitError.message : r.errors.submit);
-      setSubmitting(false);
+    if (!reservationResponse.ok || !reservation.ok || !reservation.orderCode) {
+      throw new Error(reservation.error ?? r.errors.submit);
     }
+
+    const orderResponse = await fetch("/api/payments/culqi/order", {
+      body: JSON.stringify({
+        email: details.email,
+        orderCode: reservation.orderCode,
+      }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    });
+    const order = await orderResponse.json() as {
+      amount?: number;
+      error?: string;
+      expiresAt?: string | null;
+      ok?: boolean;
+      orderId?: string;
+    };
+
+    if (!orderResponse.ok || !order.ok || !order.orderId || !order.amount) {
+      throw new Error(order.error ?? r.errors.submit);
+    }
+
+    trackBagelitoEvent("Culqi Checkout Prepared", {
+      amount: Number(reservation.amount ?? totalAmount),
+      orderCode: reservation.orderCode,
+      pack: selectedPack.slug,
+    });
+
+    return {
+      amountMinor: order.amount,
+      expiresAt: order.expiresAt ?? reservation.expiresAt ?? null,
+      orderCode: reservation.orderCode,
+      orderId: order.orderId,
+    };
   }
 
-  if (!batchAvailability.accepting) {
+  async function waitForVerifiedPayment(session: CulqiCheckoutSession) {
+    const checkoutSessionId = checkoutSessionRef.current.id;
+
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      if (attempt > 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, 1500));
+      }
+
+      const response = await fetch("/api/payments/culqi/status", {
+        body: JSON.stringify({
+          checkoutSessionId,
+          orderCode: session.orderCode,
+        }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      const result = await response.json() as {
+        ok?: boolean;
+        paymentStatus?: string;
+      };
+
+      if (response.ok && result.ok && result.paymentStatus === "paid") {
+        return "paid" as const;
+      }
+      if (response.ok && result.ok && (result.paymentStatus === "failed" || result.paymentStatus === "expired")) {
+        return "pending" as const;
+      }
+    }
+
+    return "pending" as const;
+  }
+
+  async function submitCulqiToken(
+    session: CulqiCheckoutSession,
+    sourceId: string,
+    security: {
+      authentication3DS?: CulqiAuthentication3DS;
+      deviceId?: string;
+    },
+  ): Promise<CulqiTokenSubmission> {
+    const response = await fetch("/api/payments/culqi/charge", {
+      body: JSON.stringify({
+        authentication3DS: security.authentication3DS,
+        deviceId: security.deviceId,
+        email: details.email,
+        orderCode: session.orderCode,
+        sourceId,
+      }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    });
+    const result = await response.json() as {
+      error?: string;
+      ok?: boolean;
+      requires3DS?: boolean;
+    };
+
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error ?? r.errors.submit);
+    }
+
+    if (result.requires3DS) {
+      return "requires_3ds";
+    }
+
+    const verifiedStatus = await waitForVerifiedPayment(session);
+    trackBagelitoEvent("Culqi Payment Submitted", {
+      orderCode: session.orderCode,
+      pack: selectedPack.slug,
+      verifiedStatus,
+    });
+    redirectToSuccess(session.orderCode, verifiedStatus);
+    return "submitted";
+  }
+
+  async function submitCulqiAlternative(session: CulqiCheckoutSession) {
+    trackBagelitoEvent("Culqi Alternative Payment Created", {
+      orderCode: session.orderCode,
+      pack: selectedPack.slug,
+    });
+    redirectToSuccess(session.orderCode, "pending");
+  }
+
+  function completeDemoCheckout() {
+    trackBagelitoEvent("Checkout Demo Completed", {
+      amount: totalAmount,
+      pack: selectedPack.slug,
+    });
+    redirectToSuccess("BAG-DEMO", "demo");
+  }
+
+  if (!batchAvailability.accepting && !checkoutPage) {
     return (
       <section className="reserve-shell">
         <div className="reserve-herolet">
@@ -325,7 +566,7 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
 
         <div className="reserve-closed-card">
           <div>
-            <span>{batchAvailability.batchName}</span>
+            <span>{localizedBatchName}</span>
             <strong>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</strong>
             <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
           </div>
@@ -339,20 +580,20 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
   }
 
   return (
-    <section className="reserve-shell">
+    <section className={`reserve-shell${checkoutPage ? " checkout-flow-shell" : ""}`}>
       <div className="reserve-herolet">
         <div>
-          <p className="kicker">{r.heroKicker}</p>
-          <h1>{r.heroTitle}</h1>
-          <p>{r.heroText}</p>
+          <p className="kicker">{checkoutPage ? checkoutText.eyebrow : r.heroKicker}</p>
+          <h1>{checkoutPage ? checkoutText.title : r.heroTitle}</h1>
+          <p>{checkoutPage ? checkoutText.intro : culqiText.hero}</p>
         </div>
         <RollingBagel variant="rainbow" size="md" />
       </div>
 
-      <div className="reserve-batch-card">
+      <div className={`reserve-batch-card${batchAvailability.accepting ? "" : " is-closed"}`}>
         <div>
-          <span>{batchAvailability.batchName}</span>
-          <strong>{batchText.open}</strong>
+          <span>{localizedBatchName}</span>
+          <strong>{batchAvailability.accepting ? batchText.open : batchText.closed}</strong>
         </div>
         <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
         <p>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</p>
@@ -362,6 +603,8 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
             : `${batchAvailability.remainingPacks} ${batchText.remaining}`}
         </p>
       </div>
+
+      <ConversionTrustStrip compact />
 
       <div className="reserve-progress">
         {r.steps.map((label, index) => {
@@ -374,22 +617,59 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
         })}
       </div>
 
-      {error ? <div className="reserve-alert">{error}</div> : null}
+      <div className={checkoutPage || step === 4 ? "checkout-workspace" : "reserve-workspace"}>
+        <div className={checkoutPage || step === 4 ? "checkout-stage" : "reserve-stage"}>
+          {error ? <div className="reserve-alert">{error}</div> : null}
 
       {step === 1 ? (
-        <div className="reserve-card-grid">
-          {packs.map((pack) => {
-            const localizedPack = packCopy[locale][pack.slug];
-            return (
-              <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} onClick={() => selectPack(pack.slug)}>
-                <span>{pack.units} {r.bagels}</span>
-                <strong>{localizedPack.name}</strong>
-                <b>S/{pack.amount}</b>
-                <small>{localizedPack.typeLabel}</small>
+        <>
+          <div className="reserve-card-grid">
+            {packs.map((pack) => {
+              const localizedPack = packCopy[locale][pack.slug];
+              const unitPrice = (pack.amount / pack.units).toFixed(2);
+              return (
+                <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} onClick={() => selectPack(pack.slug)}>
+                  {pack.mostWanted ? <span className="reserve-value-badge">{copy.conversion.bestValue}</span> : null}
+                  <span>{pack.units} {r.bagels}</span>
+                  <strong>{localizedPack.name}</strong>
+                  <b>S/{pack.amount}</b>
+                  <small>{localizedPack.typeLabel}</small>
+                  <small className="reserve-unit-price">S/{unitPrice} {copy.packs.perBagel}</small>
+                </button>
+              );
+            })}
+          </div>
+          {upgradePack ? (
+            <aside className="pack-upgrade-offer">
+              <div>
+                <span>{copy.conversion.upsell.kicker}</span>
+                <strong>{selectedPack.packType === "mixed" ? copy.conversion.upsell.mixedTitle : copy.conversion.upsell.singleTitle}</strong>
+                <p>
+                  {(selectedPack.packType === "mixed"
+                    ? copy.conversion.upsell.mixedText
+                    : copy.conversion.upsell.singleText)
+                    .replace("{extra}", String(upgradeExtra))
+                    .replace("{savings}", String(upgradeSavings))}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="pill-button pink"
+                onClick={() => {
+                  trackBagelitoEvent("Pack Upsell Accepted", {
+                    fromPack: selectedPack.slug,
+                    toPack: upgradePack.slug,
+                    extraAmount: upgradeExtra,
+                  });
+                  selectPack(upgradePack.slug);
+                }}
+              >
+                {copy.conversion.upsell.cta}
+                <ArrowRight size={17} />
               </button>
-            );
-          })}
-        </div>
+            </aside>
+          ) : null}
+        </>
       ) : null}
 
       {step === 2 ? (
@@ -427,6 +707,10 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
         <div className="reserve-card form-card">
           <h2>{r.deliveryDetails}</h2>
           <div className="form-grid">
+            <label className="bot-trap-field" aria-hidden="true">
+              Website
+              <input autoComplete="off" name="website" tabIndex={-1} value={website} onChange={(event) => setWebsite(event.target.value)} />
+            </label>
             <label>{r.fields.fullName}<input required value={details.customerName} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
             <label>{r.fields.whatsapp}<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
             <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
@@ -456,81 +740,172 @@ export function ReservationFlow({ packs, flavors, initialPackSlug, batchAvailabi
       ) : null}
 
       {step === 4 ? (
-        <div className="reserve-card form-card payment-card">
-          <div className="reserve-step-title">
-            <h2>{r.payment.title}</h2>
-            <span>{r.payment.total}: S/{totalAmount}</span>
-          </div>
-          <p className="payment-intro">{r.payment.instruction}</p>
-          <div className="payment-summary-grid">
-            <div><span>{r.payment.packSubtotal}</span><strong>S/{selectedPack.amount}</strong></div>
-            <div><span>{r.payment.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
-            <div><span>{r.payment.total}</span><strong>S/{totalAmount}</strong></div>
-            <div><span>{r.payment.yapeNumber}</span><strong>{paymentConfig.yapeNumber}</strong></div>
-            <div><span>{r.payment.plinNumber}</span><strong>{paymentConfig.plinNumber}</strong></div>
-            <div><span>{r.payment.holder}</span><strong>{paymentConfig.holder}</strong></div>
-          </div>
-          <div className="payment-method-box" role="radiogroup" aria-label={r.payment.method}>
-            <span>{r.payment.method}</span>
-            <div className="payment-method-options">
-              {(["Yape", "Plin"] as const).map((method) => (
-                <button key={method} type="button" className={"payment-method-option " + (paymentDetails.paymentMethod === method ? "active" : "")} onClick={() => setPaymentDetails({ ...paymentDetails, paymentMethod: method })}>
-                  {paymentDetails.paymentMethod === method ? <Check size={16} /> : null}
-                  <strong>{method}</strong>
-                </button>
-              ))}
+        <div className="checkout-final-stage">
+          <div className="reserve-card form-card payment-card">
+            <div className="reserve-step-title">
+              <div>
+                <span className="checkout-section-kicker">{checkoutText.eyebrow}</span>
+                <h2>{culqiText.secureTitle}</h2>
+              </div>
+              <span>{r.payment.total}: S/{totalAmount}</span>
             </div>
+            <p className="payment-intro">{culqiText.intro}</p>
+            <div className="payment-summary-grid culqi-summary-grid">
+              <div><span>{extraPackAdded ? extraPackText.packsSubtotal : r.payment.packSubtotal}</span><strong>S/{productSubtotal}</strong></div>
+              <div><span>{r.payment.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
+              <div><span>{r.payment.total}</span><strong>S/{totalAmount}</strong></div>
+            </div>
+            <aside className={`checkout-upsell${extraPackAdded ? " is-added" : ""}`} aria-label={extraPackText.title}>
+              <div className="checkout-upsell-heading">
+                <span><BadgePercent size={16} /> {extraPackText.kicker}</span>
+                <strong>{extraPackText.badge}</strong>
+              </div>
+              <div className="checkout-upsell-content">
+                <span className="checkout-upsell-icon"><Gift size={25} /></span>
+                <div>
+                  <h3>{extraPackText.title}</h3>
+                  <p>{extraPackText.body}</p>
+                  <div className="checkout-upsell-price">
+                    <del>S/{extraPackOffer.originalAmount}</del>
+                    <strong>S/{extraPackOffer.discountedAmount}</strong>
+                    <span>{extraPackText.savings}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="checkout-upsell-action">
+                {extraPackAdded ? (
+                  <div className="checkout-upsell-added" role="status">
+                    <Check size={18} />
+                    {extraPackText.added}
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    aria-pressed="false"
+                    disabled={termsAccepted && paymentConfig.enabled}
+                    onClick={toggleExtraPack}
+                  >
+                    <Plus size={18} />
+                    {extraPackText.add}
+                  </button>
+                )}
+                {extraPackAdded ? (
+                  <button
+                    className="checkout-upsell-remove"
+                    type="button"
+                    disabled={termsAccepted && paymentConfig.enabled}
+                    onClick={toggleExtraPack}
+                  >
+                    {extraPackText.remove}
+                  </button>
+                ) : null}
+              </div>
+              {extraPackAdded ? (
+                <div className="checkout-upsell-total">
+                  <span>{extraPackText.newTotal}</span>
+                  <strong>S/{totalAmount}</strong>
+                </div>
+              ) : null}
+              {termsAccepted && paymentConfig.enabled ? <small className="checkout-upsell-locked">{extraPackText.locked}</small> : null}
+            </aside>
           </div>
-          <div className="form-grid payment-form-grid">
-            <label>{r.payment.transactionNumber}<input required value={paymentDetails.paymentTransactionNumber} onChange={(event) => setPaymentDetails({ ...paymentDetails, paymentTransactionNumber: event.target.value })} /></label>
-            <label>{r.payment.paymentHolderName}<input required value={paymentDetails.paymentHolderName} onChange={(event) => setPaymentDetails({ ...paymentDetails, paymentHolderName: event.target.value })} /></label>
-            <label>{r.payment.paymentPhoneNumber}<input required value={paymentDetails.paymentPhoneNumber} onChange={(event) => setPaymentDetails({ ...paymentDetails, paymentPhoneNumber: event.target.value })} /></label>
-            <label className="upload-box wide">
-              <span><Upload size={18} /> {r.payment.screenshot}</span>
-              <input type="file" accept="image/png,image/jpeg,image/jpg,image/webp" onChange={(event) => handlePaymentScreenshotChange(event.target.files?.[0] ?? null)} />
-              <small>{paymentScreenshot ? paymentScreenshot.name : r.payment.screenshotHint}</small>
+
+          <div className="reserve-card review-card checkout-review-card">
+            <h2>{culqiText.reviewTitle}</h2>
+            <div className="review-grid">
+              <div><span>{r.reviewLabels.pack}</span><strong>{checkoutPackCount} × {localizedSelectedPack.name}</strong></div>
+              <div><span>{extraPackAdded ? extraPackText.packsSubtotal : r.reviewLabels.packSubtotal}</span><strong>S/{productSubtotal}</strong></div>
+              {extraPackAdded ? <div><span>{extraPackText.extraPack}</span><strong>{extraPackText.savings}</strong></div> : null}
+              <div><span>{r.reviewLabels.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
+              <div><span>{r.reviewLabels.totalAmount}</span><strong>S/{totalAmount}</strong></div>
+              <div><span>{r.reviewLabels.statusAfterSubmit}</span><strong>{paymentConfig.enabled ? culqiText.pending : culqiText.demoPending}</strong></div>
+              <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
+              <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>
+              <div><span>{r.reviewLabels.email}</span><strong>{details.email}</strong></div>
+              <div><span>{r.reviewLabels.paymentMethod}</span><strong>{culqiText.method}</strong></div>
+              <div><span>{r.reviewLabels.deliveryHandoff}</span><strong>{details.deliveryHandoff === "porteria" ? r.deliveryHandoff.porter : r.deliveryHandoff.receive}</strong></div>
+              <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
+              <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
+            </div>
+            <label className="terms-box">
+              <input type="checkbox" checked={termsAccepted} disabled={termsAccepted && paymentConfig.enabled} onChange={(event) => setTermsAccepted(event.target.checked)} />
+              <span>{paymentConfig.enabled ? culqiText.terms : culqiText.demoTerms} <Link className="inline-terms-link" href="/legal" target="_blank">{r.termsLink}</Link></span>
             </label>
+            <CulqiCheckoutButton
+              key={`${selectedPack.slug}-${extraPackAdded ? "extra" : "single"}`}
+              amount={totalAmount}
+              config={paymentConfig}
+              customerEmail={details.email}
+              disabled={!termsAccepted}
+              locale={locale}
+              onAlternativePayment={submitCulqiAlternative}
+              onDemoComplete={completeDemoCheckout}
+              onError={setError}
+              onToken={submitCulqiToken}
+              prepareCheckout={prepareCulqiCheckout}
+            />
           </div>
-          <label className="terms-box payment-confirmation">
-            <input type="checkbox" checked={paymentDetails.exactAmountConfirmed} onChange={(event) => setPaymentDetails({ ...paymentDetails, exactAmountConfirmed: event.target.checked })} />
-            {r.payment.exactAmount}
-          </label>
-          <p className="payment-note">{r.payment.officialSeparation}</p>
         </div>
       ) : null}
 
-      {step === 5 ? (
-        <div className="reserve-card review-card">
-          <h2>{r.reviewTitle}</h2>
-          <div className="review-grid">
-            <div><span>{r.reviewLabels.pack}</span><strong>{localizedSelectedPack.name}</strong></div>
-            <div><span>{r.reviewLabels.packSubtotal}</span><strong>S/{selectedPack.amount}</strong></div>
-            <div><span>{r.reviewLabels.deliveryFee}</span><strong>S/{deliveryFee}</strong></div>
-            <div><span>{r.reviewLabels.totalAmount}</span><strong>S/{totalAmount}</strong></div>
-            <div><span>{r.reviewLabels.statusAfterSubmit}</span><strong>{r.statusPending}</strong></div>
-            <div><span>{r.reviewLabels.customer}</span><strong>{details.customerName}</strong></div>
-            <div><span>{r.reviewLabels.whatsapp}</span><strong>{details.whatsapp}</strong></div>
-            <div><span>{r.reviewLabels.email}</span><strong>{details.email}</strong></div>
-            <div><span>{r.reviewLabels.paymentMethod}</span><strong>{paymentDetails.paymentMethod}</strong></div>
-            <div><span>{r.reviewLabels.paymentTransaction}</span><strong>{paymentDetails.paymentTransactionNumber}</strong></div>
-            <div><span>{r.reviewLabels.paymentHolder}</span><strong>{paymentDetails.paymentHolderName}</strong></div>
-            <div><span>{r.reviewLabels.paymentPhone}</span><strong>{paymentDetails.paymentPhoneNumber}</strong></div>
-            <div><span>{r.reviewLabels.paymentScreenshot}</span><strong>{paymentScreenshot?.name ?? r.payment.screenshot}</strong></div>
-            <div><span>{r.reviewLabels.deliveryHandoff}</span><strong>{details.deliveryHandoff === "porteria" ? r.deliveryHandoff.porter : r.deliveryHandoff.receive}</strong></div>
-            <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
-            <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
+          <div className="reserve-nav">
+            <button className="pill-button outline" type="button" onClick={() => goToStep(step - 1)} disabled={step === 1}><ArrowLeft size={17} /> {r.back}</button>
+            {step < 4 ? <button className="pill-button pink" type="button" onClick={goNext}>{r.continue} <ArrowRight size={17} /></button> : null}
           </div>
-          <label className="terms-box">
-            <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} />
-            <span>{r.terms} <Link className="inline-terms-link" href="/legal" target="_blank">{r.termsLink}</Link></span>
-          </label>
-          <button className="pill-button pink submit-button" type="button" disabled={submitting} onClick={submitReservation}>{submitting ? r.submitting : r.submit}</button>
         </div>
-      ) : null}
 
-      <div className="reserve-nav">
-        <button className="pill-button outline" type="button" onClick={() => goToStep(step - 1)} disabled={step === 1}><ArrowLeft size={17} /> {r.back}</button>
-        {step < 5 ? <button className="pill-button pink" type="button" onClick={goNext}>{r.continue} <ArrowRight size={17} /></button> : null}
+        {checkoutPage || step === 4 ? (
+          <aside className="checkout-order-summary" aria-label={checkoutText.summary}>
+            <div className="checkout-summary-heading">
+              <div>
+                <span>{checkoutText.summary}</span>
+                <h2>{extraPackAdded ? `${checkoutPackCount} × ${localizedSelectedPack.name}` : localizedSelectedPack.name}</h2>
+              </div>
+              <button type="button" onClick={() => goToStep(1)}>{checkoutText.edit}</button>
+            </div>
+
+            <div className="checkout-summary-product">
+              <div className="checkout-summary-image">
+                <Image
+                  src={packImages[selectedPack.slug]}
+                  alt={localizedSelectedPack.trayLabel}
+                  width={960}
+                  height={540}
+                  sizes="(max-width: 760px) 30vw, 136px"
+                />
+              </div>
+              <div>
+                <strong>{checkoutBagelCount} {r.bagels}</strong>
+                {extraPackAdded ? <span>{checkoutPackCount} × {localizedSelectedPack.name}</span> : null}
+                <span>{localizedSelectedPack.typeLabel}</span>
+                <small>S/{(selectedPack.amount / selectedPack.units).toFixed(2)} {copy.packs.perBagel}</small>
+              </div>
+            </div>
+
+            <div className="checkout-summary-totals">
+              <div><span>{extraPackText.basePack}</span><strong>S/{selectedPack.amount}</strong></div>
+              {extraPackAdded ? <div className="checkout-summary-discount"><span>{extraPackText.extraPack}</span><strong>S/{extraPackOffer.discountedAmount}</strong></div> : null}
+              <div><span>{checkoutText.delivery}</span><strong>S/{deliveryFee}</strong></div>
+              <div className="checkout-summary-total"><span>{checkoutText.total}</span><strong>S/{totalAmount}</strong></div>
+            </div>
+
+            <div className="checkout-summary-detail">
+              <Truck size={18} aria-hidden="true" />
+              <span>{formatPublicDate(batchAvailability.deliveryDate)}</span>
+            </div>
+            <div className="checkout-summary-detail">
+              <ShieldCheck size={18} aria-hidden="true" />
+              <span>{checkoutText.secure}</span>
+            </div>
+
+            <div className="checkout-summary-links">
+              <Link href="/legal"><CreditCard size={16} /> {checkoutText.policy}</Link>
+              <Link href="/libro-de-reclamaciones"><BookOpenCheck size={16} /> {checkoutText.complaints}</Link>
+              <a href={getWhatsAppHref()} target="_blank" rel="noreferrer"><MessageCircle size={16} /> {checkoutText.contact}</a>
+            </div>
+            <p className="checkout-business-address">{checkoutText.address}</p>
+          </aside>
+        ) : null}
       </div>
     </section>
   );

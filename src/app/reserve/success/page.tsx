@@ -12,18 +12,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function SuccessPage({ searchParams }: { searchParams?: Promise<{ order?: string; pack?: string; packSlug?: string; amount?: string }> }) {
+export default async function SuccessPage({ searchParams }: { searchParams?: Promise<{ order?: string; pack?: string; packSlug?: string; amount?: string; payment?: string }> }) {
   const params = await searchParams;
   const order = params?.order ?? "BAG-PENDING";
   const pack = params?.pack ?? "";
   const packSlug = params?.packSlug;
   const amount = params?.amount ?? "";
+  const payment = params?.payment ?? "manual";
 
   return (
     <>
       <Header />
       <main className="success-page">
-        <ReservationSuccessContent order={order} pack={pack} packSlug={packSlug} amount={amount} />
+        <ReservationSuccessContent order={order} pack={pack} packSlug={packSlug} amount={amount} payment={payment} />
       </main>
       <Footer />
     </>

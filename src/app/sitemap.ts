@@ -3,8 +3,10 @@ import { siteUrl } from "@/lib/site";
 
 const routes = [
   { path: "/", changeFrequency: "weekly", priority: 1 },
+  { path: "/checkout", changeFrequency: "weekly", priority: 0.95 },
   { path: "/reserve", changeFrequency: "weekly", priority: 0.9 },
   { path: "/waitlist", changeFrequency: "weekly", priority: 0.85 },
+  { path: "/libro-de-reclamaciones", changeFrequency: "yearly", priority: 0.5 },
   { path: "/legal", changeFrequency: "yearly", priority: 0.4 },
 ] as const;
 

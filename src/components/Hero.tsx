@@ -2,13 +2,15 @@
 
 import { Archive, CalendarDays, LockKeyhole, MessageCircle, Truck } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
 
 const badgeIcons = [CalendarDays, LockKeyhole, Archive, Truck];
 
-export function Hero({ acceptingReservations = true }: { acceptingReservations?: boolean }) {
+export function Hero() {
   const { copy } = useLanguage();
+  const { accepting: acceptingReservations } = useBatchAvailability();
   const primaryHref = acceptingReservations ? "#packs" : "/waitlist";
   const primaryLabel = acceptingReservations ? copy.hero.primaryCta : copy.hero.waitlistCta;
 

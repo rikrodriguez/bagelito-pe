@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   calculateCostScenario,
   cheddarSliceAssumption,
   costFlavorCatalog,
   defaultCostScenario,
+  ingredientSourceCatalog,
   type CostScenarioState,
   packModes,
   type PackModeKey,
@@ -13,6 +14,13 @@ import {
 
 type CostCalculatorProps = {
   initialScenario?: Partial<CostScenarioState>;
+};
+
+type CostCalculatorDraftState = {
+  quantities: Record<PackModeKey, string>;
+  prices: Record<PackModeKey, string>;
+  fixedCosts: Record<keyof CostScenarioState["fixedCosts"], string>;
+  mermaPct: string;
 };
 
 const moneyFormatter = new Intl.NumberFormat("es-PE", {
@@ -40,10 +48,51 @@ function percent(value: number) {
   return percentFormatter.format(Number.isFinite(value) ? value : 0);
 }
 
+function splitSourceLinks(link: string) {
+  return link
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function shortLinkLabel(link: string, index: number, total: number) {
+  try {
+    const host = new URL(link).hostname.replace(/^www\./, "");
+    return total > 1 ? `${host} ${index + 1}` : host;
+  } catch {
+    return total > 1 ? `Source ${index + 1}` : "Source";
+  }
+}
+
 function cleanNumber(value: string) {
-  const parsed = Number(value);
+  const parsed = Number(value.replace(",", "."));
   if (!Number.isFinite(parsed) || parsed < 0) return 0;
   return parsed;
+}
+
+function createDraftState(scenario: CostScenarioState): CostCalculatorDraftState {
+  return {
+    quantities: Object.fromEntries(
+      packModes.map((mode) => [mode.key, String(scenario.quantities[mode.key])]),
+    ) as Record<PackModeKey, string>,
+    prices: Object.fromEntries(
+      packModes.map((mode) => [mode.key, String(scenario.prices[mode.key])]),
+    ) as Record<PackModeKey, string>,
+    fixedCosts: {
+      luz: String(scenario.fixedCosts.luz),
+      publicidad: String(scenario.fixedCosts.publicidad),
+      manoObra: String(scenario.fixedCosts.manoObra),
+    },
+    mermaPct: String(scenario.mermaPct),
+  };
+}
+
+function isIntegerDraft(value: string) {
+  return /^\d*$/.test(value);
+}
+
+function isDecimalDraft(value: string) {
+  return /^\d*(?:[.,]\d*)?$/.test(value);
 }
 
 function mergeScenario(initialScenario?: Partial<CostScenarioState>): CostScenarioState {
@@ -69,12 +118,40 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
   const [scenario, setScenario] = useState<CostScenarioState>(() =>
     mergeScenario(initialScenario),
   );
+  const [draft, setDraft] = useState<CostCalculatorDraftState>(() =>
+    createDraftState(mergeScenario(initialScenario)),
+  );
   const [quickMode, setQuickMode] = useState<PackModeKey>("mixed6");
   const model = useMemo(() => calculateCostScenario(scenario), [scenario]);
   const cheddarWithMerma =
     cheddarSliceAssumption.pricePerSlice * (1 + scenario.mermaPct / 100);
+  const includedIngredientsText =
+    "Flour, sugar, salt, yeast, and baking soda are always included. Depending on the flavor, the model adds cheddar, sesame, everything seeds, raisins, blueberries, cinnamon, jalapenos, onion, or food coloring.";
+  const mixedCostText = `Mixed packs use the current average across ${integer(
+    costFlavorCatalog.length,
+  )} flavors in the current catalog.`;
+  const selectedSingleFlavorLabel =
+    scenario.singleFlavorSlug === "average"
+      ? "Catalog average"
+      : costFlavorCatalog.find((flavor) => flavor.slug === scenario.singleFlavorSlug)?.name ??
+        "Catalog average";
+
+  useEffect(() => {
+    setDraft(createDraftState(scenario));
+  }, [scenario]);
 
   function setQuantity(mode: PackModeKey, value: string) {
+    if (!isIntegerDraft(value)) return;
+    setDraft((current) => ({
+      ...current,
+      quantities: {
+        ...current.quantities,
+        [mode]: value,
+      },
+    }));
+  }
+
+  function commitQuantity(mode: PackModeKey, value = draft.quantities[mode]) {
     setScenario((current) => ({
       ...current,
       quantities: {
@@ -85,6 +162,17 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
   }
 
   function setPrice(mode: PackModeKey, value: string) {
+    if (!isDecimalDraft(value)) return;
+    setDraft((current) => ({
+      ...current,
+      prices: {
+        ...current.prices,
+        [mode]: value,
+      },
+    }));
+  }
+
+  function commitPrice(mode: PackModeKey, value = draft.prices[mode]) {
     setScenario((current) => ({
       ...current,
       prices: {
@@ -95,12 +183,41 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
   }
 
   function setFixedCost(field: keyof CostScenarioState["fixedCosts"], value: string) {
+    if (!isDecimalDraft(value)) return;
+    setDraft((current) => ({
+      ...current,
+      fixedCosts: {
+        ...current.fixedCosts,
+        [field]: value,
+      },
+    }));
+  }
+
+  function commitFixedCost(
+    field: keyof CostScenarioState["fixedCosts"],
+    value = draft.fixedCosts[field],
+  ) {
     setScenario((current) => ({
       ...current,
       fixedCosts: {
         ...current.fixedCosts,
         [field]: cleanNumber(value),
       },
+    }));
+  }
+
+  function setMerma(value: string) {
+    if (!isDecimalDraft(value)) return;
+    setDraft((current) => ({
+      ...current,
+      mermaPct: value,
+    }));
+  }
+
+  function commitMerma(value = draft.mermaPct) {
+    setScenario((current) => ({
+      ...current,
+      mermaPct: cleanNumber(value),
     }));
   }
 
@@ -136,18 +253,18 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
   const fixedSpreadText = model.totals.totalBagels
     ? `${money(model.fixedTotal)} / ${integer(model.totals.totalBagels)} bagels = ${money(
         model.fixedPerBagel,
-      )} por bagel. Escenario: ${integer(model.totals.totalPacks)} packs.`
-    : `${money(model.fixedTotal)} de fijos todavia no se reparte porque el escenario tiene 0 bagels.`;
+      )} per bagel. Scenario: ${integer(model.totals.totalPacks)} packs.`
+    : `${money(model.fixedTotal)} in fixed costs is not allocated yet because the scenario has 0 bagels.`;
 
   return (
     <section className="admin-card cost-calculator-panel">
       <div className="admin-card-head">
         <div>
-          <p className="kicker">Calculadora</p>
-          <h2>Costos, ingresos y utilidad por pack</h2>
+          <p className="kicker">Calculator</p>
+          <h2>Cost, revenue, and profit by pack</h2>
           <p>
-            Simula desde 1 pack hasta volumen mayorista. Delivery queda fuera; los fijos se
-            reparten solo contra los bagels del escenario activo.
+            Simulate from 1 pack to wholesale volume. Delivery stays outside this model, and
+            fixed costs are spread only across the bagels in the active scenario.
           </p>
         </div>
         <span className="status-pill neutral">{integer(model.totals.totalPacks)} packs</span>
@@ -155,22 +272,22 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
 
       <div className="calculator-hero-grid">
         <div className="calculator-main-kpi">
-          <span>Utilidad neta</span>
+          <span>Net profit</span>
           <strong>{money(model.totals.netProfit)}</strong>
-          <small>{percent(model.totals.netMarginPct)} margen neto despues de fijos</small>
+          <small>{percent(model.totals.netMarginPct)} net margin after fixed costs</small>
         </div>
         <div>
-          <span>Ingresos</span>
+          <span>Revenue</span>
           <strong>{money(model.totals.revenue)}</strong>
-          <small>{integer(model.totals.totalBagels)} bagels vendidos</small>
+          <small>{integer(model.totals.totalBagels)} bagels sold</small>
         </div>
         <div>
-          <span>Costo variable</span>
+          <span>Variable cost</span>
           <strong>{money(model.totals.variableCost)}</strong>
-          <small>{percent(model.totals.contributionMarginPct)} margen contribucion</small>
+          <small>{percent(model.totals.contributionMarginPct)} contribution margin</small>
         </div>
         <div>
-          <span>Fijos repartidos</span>
+          <span>Fixed spread</span>
           <strong>{money(model.fixedPerBagel)}</strong>
           <small>{fixedSpreadText}</small>
         </div>
@@ -179,8 +296,8 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
       <div className="calculator-layout">
         <section className="calculator-control-card">
           <div className="admin-card-head compact">
-            <h3>Simula volumen</h3>
-            <p>Elige formato, cantidad, precios y sabor base para packs de un sabor.</p>
+            <h3>Simulate volume</h3>
+            <p>Choose format, quantity, prices, and the base flavor for single-flavor packs.</p>
           </div>
 
           <div className="quick-volume-box">
@@ -211,17 +328,22 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
                 <span>{mode.shortLabel}</span>
                 <input
                   inputMode="numeric"
-                  min={0}
                   onChange={(event) => setQuantity(mode.key, event.target.value)}
-                  type="number"
-                  value={scenario.quantities[mode.key]}
+                  onBlur={(event) => commitQuantity(mode.key, event.currentTarget.value)}
+                  onFocus={(event) => event.currentTarget.select()}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") event.currentTarget.blur();
+                  }}
+                  spellCheck={false}
+                  type="text"
+                  value={draft.quantities[mode.key]}
                 />
               </label>
             ))}
           </div>
 
           <label className="calculator-wide-field">
-            <span>Sabor para packs de un sabor</span>
+            <span>Flavor for single-flavor packs</span>
             <select
               onChange={(event) =>
                 setScenario((current) => ({
@@ -231,7 +353,7 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
               }
               value={scenario.singleFlavorSlug}
             >
-              <option value="average">Promedio de sabores</option>
+              <option value="average">Catalog average</option>
               {costFlavorCatalog.map((flavor) => (
                 <option key={flavor.slug} value={flavor.slug}>
                   {flavor.name}
@@ -243,14 +365,18 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
           <div className="calculator-input-grid price-grid">
             {packModes.map((mode) => (
               <label key={mode.key}>
-                <span>Precio {mode.shortLabel}</span>
+                <span>Price {mode.shortLabel}</span>
                 <input
                   inputMode="decimal"
-                  min={0}
                   onChange={(event) => setPrice(mode.key, event.target.value)}
-                  step="0.01"
-                  type="number"
-                  value={scenario.prices[mode.key]}
+                  onBlur={(event) => commitPrice(mode.key, event.currentTarget.value)}
+                  onFocus={(event) => event.currentTarget.select()}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") event.currentTarget.blur();
+                  }}
+                  spellCheck={false}
+                  type="text"
+                  value={draft.prices[mode.key]}
                 />
               </label>
             ))}
@@ -258,80 +384,97 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
 
           <div className="calculator-action-row">
             <button className="status-action paid" onClick={loadCurrentScenario} type="button">
-              Pedidos actuales
+              Current orders
             </button>
             <button className="mini-link" onClick={clearScenario} type="button">
-              Limpiar volumen
+              Clear volume
             </button>
           </div>
         </section>
 
         <section className="calculator-control-card">
           <div className="admin-card-head compact">
-            <h3>Costos base</h3>
-            <p>Fijos mensuales y merma. No incluye delivery.</p>
+            <h3>Base costs</h3>
+            <p>Monthly fixed costs and waste. Delivery is excluded.</p>
           </div>
 
           <div className="calculator-input-grid">
             <label>
-              <span>Luz</span>
+              <span>Electricity</span>
               <input
-                min={0}
                 onChange={(event) => setFixedCost("luz", event.target.value)}
-                step="0.01"
-                type="number"
-                value={scenario.fixedCosts.luz}
+                onBlur={(event) => commitFixedCost("luz", event.currentTarget.value)}
+                onFocus={(event) => event.currentTarget.select()}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+                spellCheck={false}
+                type="text"
+                value={draft.fixedCosts.luz}
               />
             </label>
             <label>
-              <span>Publicidad</span>
+              <span>Marketing</span>
               <input
-                min={0}
                 onChange={(event) => setFixedCost("publicidad", event.target.value)}
-                step="0.01"
-                type="number"
-                value={scenario.fixedCosts.publicidad}
+                onBlur={(event) => commitFixedCost("publicidad", event.currentTarget.value)}
+                onFocus={(event) => event.currentTarget.select()}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+                spellCheck={false}
+                type="text"
+                value={draft.fixedCosts.publicidad}
               />
             </label>
             <label>
-              <span>Mano obra</span>
+              <span>Labor</span>
               <input
-                min={0}
                 onChange={(event) => setFixedCost("manoObra", event.target.value)}
-                step="0.01"
-                type="number"
-                value={scenario.fixedCosts.manoObra}
+                onBlur={(event) => commitFixedCost("manoObra", event.currentTarget.value)}
+                onFocus={(event) => event.currentTarget.select()}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+                spellCheck={false}
+                type="text"
+                value={draft.fixedCosts.manoObra}
               />
             </label>
             <label>
-              <span>Merma %</span>
+              <span>Waste %</span>
               <input
-                min={0}
-                onChange={(event) =>
-                  setScenario((current) => ({
-                    ...current,
-                    mermaPct: cleanNumber(event.target.value),
-                  }))
-                }
-                step="0.1"
-                type="number"
-                value={scenario.mermaPct}
+                onChange={(event) => setMerma(event.target.value)}
+                onBlur={(event) => commitMerma(event.currentTarget.value)}
+                onFocus={(event) => event.currentTarget.select()}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+                spellCheck={false}
+                type="text"
+                value={draft.mermaPct}
               />
             </label>
           </div>
 
-          <div className="calculator-cheddar-note">
-            <span>Cheddar</span>
-            <strong>{money(cheddarSliceAssumption.pricePerSlice)} por rodaja</strong>
-            <small>
-              Crystal Farms {integer(cheddarSliceAssumption.slicesPerPack)} rodajas /{" "}
-              {money(cheddarSliceAssumption.packPrice)}. Con merma:{" "}
-              {money(cheddarWithMerma)} por bagel con cheddar.
-            </small>
+          <div className="calculator-ingredient-note">
+            <span>Included ingredients</span>
+            <strong>Base dough + flavor add-ons</strong>
+            <small>{includedIngredientsText}</small>
+            <small>{mixedCostText}</small>
+            <div className="calculator-assumption-inline">
+              <b>Cheddar</b>
+              <p>
+                Special case: {money(cheddarSliceAssumption.pricePerSlice)} per slice using
+                Crystal Farms {integer(cheddarSliceAssumption.slicesPerPack)} slices /{" "}
+                {money(cheddarSliceAssumption.packPrice)}. With waste applied:{" "}
+                {money(cheddarWithMerma)} per cheddar bagel.
+              </p>
+            </div>
           </div>
 
           <div className="calculator-fixed-note">
-            <strong>Como leer los fijos</strong>
+            <strong>How to read fixed costs</strong>
             <p>{fixedSpreadText}</p>
           </div>
         </section>
@@ -341,14 +484,14 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
         <table className="calculator-table">
           <thead>
             <tr>
-              <th>Formato</th>
-              <th>Cant.</th>
-              <th>Ingreso</th>
-              <th>Costo variable / pack</th>
-              <th>Costo real / pack</th>
-              <th>Utilidad / pack</th>
-              <th>Utilidad / bagel</th>
-              <th>Margen neto</th>
+              <th>Format</th>
+              <th>Qty.</th>
+              <th>Revenue</th>
+              <th>Variable cost / pack</th>
+              <th>Real cost / pack</th>
+              <th>Profit / pack</th>
+              <th>Profit / bagel</th>
+              <th>Net margin</th>
               <th>Break-even</th>
             </tr>
           </thead>
@@ -367,7 +510,7 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
                   {money(row.netProfitPerBagel)}
                 </td>
                 <td>{percent(row.netMarginPct)}</td>
-                <td>{row.breakEvenPacks ? `${integer(row.breakEvenPacks)} packs` : "No cubre"}</td>
+                <td>{row.breakEvenPacks ? `${integer(row.breakEvenPacks)} packs` : "Not covered"}</td>
               </tr>
             ))}
           </tbody>
@@ -376,8 +519,8 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
 
       <div className="calculator-flavor-card">
         <div className="admin-card-head compact">
-          <h3>Costo unitario por sabor</h3>
-          <p>Variable por bagel y contribucion para vender packs de un sabor sin fijos.</p>
+          <h3>Unit cost by flavor</h3>
+          <p>Variable cost per bagel and contribution margin for selling single-flavor packs before fixed costs.</p>
         </div>
         <div className="flavor-profit-grid">
           {model.flavorRows.map((flavor) => (
@@ -398,6 +541,100 @@ export function CostCalculator({ initialScenario }: CostCalculatorProps) {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="calculator-source-card">
+        <div className="admin-card-head compact">
+          <div>
+            <h3>Ingredient cost sources</h3>
+            <p>
+              Operating reference for the model: base cost, supplier, and source used to
+              calculate each flavor.
+            </p>
+          </div>
+        </div>
+
+        <div className="calculator-source-meta">
+          <div>
+            <span>Ingredients modeled</span>
+            <strong>{integer(ingredientSourceCatalog.length)}</strong>
+            <small>Base dough, toppings, and colors in the current catalog.</small>
+          </div>
+          <div>
+            <span>Mixed packs</span>
+            <strong>{integer(costFlavorCatalog.length)} flavors</strong>
+            <small>{mixedCostText}</small>
+          </div>
+          <div>
+            <span>Single flavor</span>
+            <strong>{selectedSingleFlavorLabel}</strong>
+            <small>This selector changes the cost for single-flavor packs.</small>
+          </div>
+          <div>
+            <span>Delivery</span>
+            <strong>Excluded</strong>
+            <small>This table only covers ingredients and sourcing references.</small>
+          </div>
+        </div>
+
+        <div className="calculator-supplier-wrap">
+          <table className="calculator-supplier-table">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Base cost</th>
+                <th>Supplier</th>
+                <th>Used for</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ingredientSourceCatalog.map((source) => {
+                const links = splitSourceLinks(source.link);
+
+                return (
+                  <tr key={source.ingredient}>
+                    <td>
+                      <strong>{source.ingredient}</strong>
+                      <small>{source.note}</small>
+                    </td>
+                    <td>
+                      <strong>{money(source.pricePerKg)} / kg</strong>
+                      {source.ingredient === "Cheddar cheese" ? (
+                        <small>{money(cheddarSliceAssumption.pricePerSlice)} / slice</small>
+                      ) : null}
+                    </td>
+                    <td>
+                      <strong>{source.provider}</strong>
+                      <small>
+                        {source.product}
+                        <br />
+                        {source.format}
+                      </small>
+                    </td>
+                    <td>
+                      <strong>{source.appliesTo}</strong>
+                    </td>
+                    <td>
+                      <div className="calculator-link-stack">
+                        {links.map((link, index) => (
+                          <a
+                            href={link}
+                            key={`${source.ingredient}-${index}`}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {shortLinkLabel(link, index, links.length)}
+                          </a>
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>

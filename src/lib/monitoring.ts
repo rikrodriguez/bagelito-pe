@@ -1,11 +1,16 @@
+import { after } from "next/server";
+import { dispatchMonitoringAlert } from "./monitoring-alerts";
+
 type LogValue = string | number | boolean | null | undefined;
-type LogContext = Record<string, LogValue>;
+export type LogContext = Record<string, LogValue>;
 
 function cleanContext(context: LogContext) {
   return Object.fromEntries(Object.entries(context).filter(([, value]) => value !== undefined));
 }
 
-function writeStructuredLog(level: "info" | "warn" | "error", msg: string, context: LogContext = {}) {
+type LogLevel = "info" | "warn" | "error";
+
+function writeStructuredLog(level: LogLevel, msg: string, context: LogContext = {}) {
   const payload = {
     level,
     msg,
@@ -27,6 +32,21 @@ function writeStructuredLog(level: "info" | "warn" | "error", msg: string, conte
   console.info(line);
 }
 
+function normalizeError(error: unknown) {
+  return {
+    errorMessage: error instanceof Error ? error.message : String(error),
+    errorName: error instanceof Error ? error.name : typeof error,
+  };
+}
+
+function scheduleMonitoringAlert(input: Parameters<typeof dispatchMonitoringAlert>[0]) {
+  try {
+    after(() => dispatchMonitoringAlert(input));
+  } catch {
+    void dispatchMonitoringAlert(input);
+  }
+}
+
 export function getRequestId(request: Request) {
   return request.headers.get("x-vercel-id") ?? request.headers.get("x-request-id") ?? undefined;
 }
@@ -41,12 +61,44 @@ export function logInfo(msg: string, context?: LogContext) {
 
 export function logWarn(msg: string, context?: LogContext) {
   writeStructuredLog("warn", msg, context);
+  scheduleMonitoringAlert({
+    context: context ?? {},
+    level: "warn",
+    msg,
+  });
 }
 
 export function logError(msg: string, error: unknown, context: LogContext = {}) {
+  const { errorMessage, errorName } = normalizeError(error);
+
   writeStructuredLog("error", msg, {
     ...context,
-    error: error instanceof Error ? error.message : String(error),
-    errorName: error instanceof Error ? error.name : typeof error,
+    error: errorMessage,
+    errorName,
+  });
+  scheduleMonitoringAlert({
+    context,
+    error: errorMessage,
+    errorName,
+    level: "error",
+    msg,
+  });
+}
+
+export async function logErrorAndFlush(msg: string, error: unknown, context: LogContext = {}) {
+  const { errorMessage, errorName } = normalizeError(error);
+
+  writeStructuredLog("error", msg, {
+    ...context,
+    error: errorMessage,
+    errorName,
+  });
+
+  await dispatchMonitoringAlert({
+    context,
+    error: errorMessage,
+    errorName,
+    level: "error",
+    msg,
   });
 }

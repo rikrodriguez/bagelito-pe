@@ -15,22 +15,33 @@ export type CostScenarioState = {
 };
 
 type IngredientName =
-  | "Harina"
-  | "Azucar"
-  | "Sal"
-  | "Levadura"
-  | "Bicarbonato de sodio"
-  | "Queso cheddar"
-  | "Pasas"
+  | "Flour"
+  | "Sugar"
+  | "Salt"
+  | "Yeast"
+  | "Baking soda"
+  | "Cheddar cheese"
+  | "Raisins"
   | "Blueberries"
-  | "Canela en polvo"
+  | "Ground cinnamon"
   | "Jalapenos"
   | "Everything seeds"
-  | "Sesamo / ajonjoli"
-  | "Onion / cebolla"
-  | "Colorantes";
+  | "Sesame seeds"
+  | "Onion flakes"
+  | "Food coloring";
 
 type Recipe = Partial<Record<IngredientName, number>>;
+
+export type IngredientSource = {
+  ingredient: IngredientName;
+  provider: string;
+  product: string;
+  format: string;
+  pricePerKg: number;
+  link: string;
+  note: string;
+  appliesTo: string;
+};
 
 const FLOUR_PER_BAGEL_KG = 1 / 12;
 const CHEDDAR_PACK_PRICE = 21.9;
@@ -48,20 +59,124 @@ export const cheddarSliceAssumption = {
 };
 
 export const defaultIngredientPrices: Record<IngredientName, number> = {
-  Harina: 2.04,
-  Azucar: 2.16,
-  Sal: 0.64,
-  Levadura: 18.6,
-  "Bicarbonato de sodio": 4.65,
-  "Queso cheddar": cheddarSliceAssumption.pricePerKg,
-  Pasas: 13,
+  Flour: 2.04,
+  Sugar: 2.16,
+  Salt: 0.64,
+  Yeast: 18.6,
+  "Baking soda": 4.65,
+  "Cheddar cheese": cheddarSliceAssumption.pricePerKg,
+  Raisins: 13,
   Blueberries: 14.9,
-  "Canela en polvo": 54,
+  "Ground cinnamon": 54,
   Jalapenos: 57.3427,
   "Everything seeds": 12.11,
-  "Sesamo / ajonjoli": 7,
-  "Onion / cebolla": 18,
-  Colorantes: 66.6667,
+  "Sesame seeds": 7,
+  "Onion flakes": 18,
+  "Food coloring": 66.6667,
+};
+
+const ingredientSupplierMeta: Record<
+  IngredientName,
+  Omit<IngredientSource, "ingredient" | "pricePerKg" | "appliesTo">
+> = {
+  Flour: {
+    provider: "Alimentos Cielo",
+    product: "Harina Especial Panadera Del Cielo",
+    format: "50 kg sack",
+    link: "https://alimentoscielo.com/p/harina-especial-panadera-del-cielo-50-kg/",
+    note: "Best clean public price found for bread flour.",
+  },
+  Sugar: {
+    provider: "Makro",
+    product: "Azucar Rubia San Jacinto",
+    format: "50 kg sack",
+    link: "https://www.makro.plazavea.com.pe/abarrotes/azucar-y-endulzantes/san-jacinto",
+    note: "Best verified public price found for brown sugar.",
+  },
+  Salt: {
+    provider: "Mundo Abarrotes",
+    product: "Sal Yodada La Nueva Milagrosa",
+    format: "50 kg sack",
+    link: "https://mundoabarrotes.com/producto/sal-yodada-la-nueva-milagrosa-50kg/",
+    note: "Very strong bulk price; listing appears geared to industrial use.",
+  },
+  Yeast: {
+    provider: "Makro",
+    product: "Levadura Instantanea Nicolini",
+    format: "500 g bag",
+    link: "https://www.makro.plazavea.com.pe/panaderia-y-pasteleria/nicolini/instant",
+    note: "Best verified public price found for instant yeast suitable for bakery use.",
+  },
+  "Baking soda": {
+    provider: "Campo Grande Peru",
+    product: "Bicarbonato de sodio",
+    format: "25 kg",
+    link: "https://campograndeperu.com/producto/bicarbonato-de-sodio/",
+    note: "Best public bulk price found among the checked options.",
+  },
+  "Cheddar cheese": {
+    provider: "Tottus",
+    product: "Queso cheddar en laminas Crystal Farms",
+    format: "198 g pack / 10 slices",
+    link: "https://www.tottus.com.pe/tottus-pe/articulo/145813801/queso-cheddar-en-laminas-crystal-farms-empaque-198-g/145813802",
+    note: "Target quality chosen by Ricardo. Each cheddar bagel uses one full slice.",
+  },
+  Raisins: {
+    provider: "La Peregrina",
+    product: "Pasa Sultanina Argentina Mediana Santis Frut",
+    format: "10 kg box",
+    link: "https://laperegrina.pe/producto/pasa-sultanina-argentina-mediana-santis-frut-x-10-kg/",
+    note: "Best clearly usable public price found for volume raisins.",
+  },
+  Blueberries: {
+    provider: "The Greens",
+    product: "Arandanos congelados",
+    format: "1 kg promo",
+    link: "https://www.instagram.com/reel/DZ_W8bXMTci/",
+    note: "Best public price found without negotiation; promo validity should be checked.",
+  },
+  "Ground cinnamon": {
+    provider: "Tanas Frut",
+    product: "Canela molida puro",
+    format: "1 kg bag",
+    link: "https://tanasfrutperu.com/producto/canela-molida-puro-x-1kg/",
+    note: "Best clean public price found for ground cinnamon.",
+  },
+  Jalapenos: {
+    provider: "Corporacion Lider Peru",
+    product: "Valle Fertil jalapenos en rodajas",
+    format: "290 g jar",
+    link: "https://corporacionliderperu.com/conservas-/16749-valle-fertil-jalapenos-x-290-gr-en-rodajas.html",
+    note: "Best direct public price found for jarred jalapenos.",
+  },
+  "Everything seeds": {
+    provider: "Combinado Tanas + Mundo Abarrotes",
+    product: "House blend base without poppy seeds",
+    format: "35% white sesame + 15% black sesame + 20% onion + 20% garlic + 10% salt",
+    link: "https://tanasfrutperu.com/producto/ajonjoli-extra-x-1kg/ | https://tanasfrutperu.com/ | https://tanasfrutperu.com/producto/cebolla-molida-x-1kg/ | https://tanasfrutperu.com/producto/ajos-molido-x-1kg/ | https://mundoabarrotes.com/producto/sal-yodada-la-nueva-milagrosa-50kg/",
+    note: "The house blend is the lowest-cost route for bagels and does not include poppy seeds.",
+  },
+  "Sesame seeds": {
+    provider: "Tanas Frut",
+    product: "Ajonjoli blanco",
+    format: "5 kg",
+    link: "https://tanasfrutperu.com/producto/ajonjoli-extra-x-1kg/",
+    note: "Best public price found for white sesame.",
+  },
+  "Onion flakes": {
+    provider: "Tanas Frut",
+    product: "Cebolla molida",
+    format: "1 kg bag",
+    link: "https://tanasfrutperu.com/producto/cebolla-molida-x-1kg/",
+    note: "Best clean public price found for dehydrated ground onion.",
+  },
+  "Food coloring": {
+    provider: "JL DecoStore",
+    product: "Colorante liquido Quality",
+    format: "30 ml bottle",
+    link: "https://www.jldecostore.com.pe/producto/colorante-liquido-30ml-quality/",
+    note: "Best public multi-color option found for rainbow at the lowest cost.",
+  },
 };
 
 export const costFlavorCatalog = flavors.map((flavor) => ({
@@ -70,22 +185,22 @@ export const costFlavorCatalog = flavors.map((flavor) => ({
 }));
 
 const baseRecipe: Recipe = {
-  Harina: FLOUR_PER_BAGEL_KG,
-  Azucar: 0.004,
-  Sal: 0.002,
-  Levadura: 0.001,
-  "Bicarbonato de sodio": 0.0015,
+  Flour: FLOUR_PER_BAGEL_KG,
+  Sugar: 0.004,
+  Salt: 0.002,
+  Yeast: 0.001,
+  "Baking soda": 0.0015,
 };
 
 export const recipeByFlavor: Record<string, Recipe> = {
   plain: baseRecipe,
   cheddar: {
     ...baseRecipe,
-    "Queso cheddar": CHEDDAR_SLICE_WEIGHT_KG,
+    "Cheddar cheese": CHEDDAR_SLICE_WEIGHT_KG,
   },
   sesame: {
     ...baseRecipe,
-    "Sesamo / ajonjoli": 0.005,
+    "Sesame seeds": 0.005,
   },
   "everything-bagel": {
     ...baseRecipe,
@@ -93,9 +208,9 @@ export const recipeByFlavor: Record<string, Recipe> = {
   },
   "cinnamon-raisin": {
     ...baseRecipe,
-    Azucar: 0.006,
-    Pasas: 0.015,
-    "Canela en polvo": 0.0012,
+    Sugar: 0.006,
+    Raisins: 0.015,
+    "Ground cinnamon": 0.0012,
   },
   blueberry: {
     ...baseRecipe,
@@ -103,53 +218,78 @@ export const recipeByFlavor: Record<string, Recipe> = {
   },
   "jalapeno-cheddar": {
     ...baseRecipe,
-    "Queso cheddar": CHEDDAR_SLICE_WEIGHT_KG,
+    "Cheddar cheese": CHEDDAR_SLICE_WEIGHT_KG,
     Jalapenos: 0.006,
   },
   "classic-onion": {
     ...baseRecipe,
-    "Onion / cebolla": 0.0035,
+    "Onion flakes": 0.0035,
   },
   "rainbow-custom-colors": {
     ...baseRecipe,
-    Colorantes: 0.0004,
+    "Food coloring": 0.0004,
   },
   snickerdoodle: {
     ...baseRecipe,
-    Azucar: 0.009,
-    "Canela en polvo": 0.0012,
+    Sugar: 0.009,
+    "Ground cinnamon": 0.0012,
   },
 };
+
+function getIngredientUsageLabel(ingredient: IngredientName) {
+  const matchingFlavors = flavors
+    .filter((flavor) => (recipeByFlavor[flavor.slug] ?? baseRecipe)[ingredient])
+    .map((flavor) => flavor.name);
+
+  if (matchingFlavors.length === 0) {
+    return "Reference only";
+  }
+
+  if (matchingFlavors.length === flavors.length) {
+    return "All flavors";
+  }
+
+  return matchingFlavors.join(", ");
+}
+
+export const ingredientSourceCatalog: IngredientSource[] = (
+  Object.keys(defaultIngredientPrices) as IngredientName[]
+).map((ingredient) => ({
+  ingredient,
+  pricePerKg: defaultIngredientPrices[ingredient],
+  appliesTo: getIngredientUsageLabel(ingredient),
+  ...ingredientSupplierMeta[ingredient],
+}));
 
 export const packModes = [
   {
     key: "mixed6",
-    label: "Pack 6 mixtos",
-    shortLabel: "6 mixtos",
+    label: "Pack 6 mixed",
+    shortLabel: "6 mixed",
     units: 6,
     type: "mixed",
     packSlug: "6-mixed",
   },
   {
     key: "mixed12",
-    label: "Pack 12 mixtos",
-    shortLabel: "12 mixtos",
+    label: "Pack 12 mixed",
+    shortLabel: "12 mixed",
     units: 12,
     type: "mixed",
     packSlug: "12-mixed",
   },
   {
     key: "single6",
-    label: "Pack 6 un sabor",
-    shortLabel: "6 un sabor",
+    label: "Pack 6 single flavor",
+    shortLabel: "6 single flavor",
     units: 6,
     type: "single",
     packSlug: "6-single",
   },
   {
     key: "single12",
-    label: "Pack 12 un sabor",
-    shortLabel: "12 un sabor",
+    label: "Pack 12 single flavor",
+    shortLabel: "12 single flavor",
     units: 12,
     type: "single",
     packSlug: "12-single",

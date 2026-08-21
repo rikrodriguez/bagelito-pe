@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import type { BatchAvailability } from "@/lib/reservations/service";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
 
 const initialTimeLeft = {
@@ -12,10 +13,6 @@ const initialTimeLeft = {
   hours: "--",
   minutes: "--",
   seconds: "--",
-};
-
-type BatchDeadlineBannerProps = {
-  batchAvailability: BatchAvailability;
 };
 
 function getTimeLeft(deadline: number | null) {
@@ -34,7 +31,7 @@ function getTimeLeft(deadline: number | null) {
   };
 }
 
-function getReservedPercent(batchAvailability: BatchDeadlineBannerProps["batchAvailability"]) {
+function getReservedPercent(batchAvailability: BatchAvailability) {
   if (batchAvailability.capacityPacks) {
     return Math.min(100, Math.round((batchAvailability.reservedPacks / batchAvailability.capacityPacks) * 100));
   }
@@ -46,9 +43,13 @@ function getReservedPercent(batchAvailability: BatchDeadlineBannerProps["batchAv
   return 0;
 }
 
-export function BatchDeadlineBanner({ batchAvailability }: BatchDeadlineBannerProps) {
+export function BatchDeadlineBanner() {
   const { locale, copy } = useLanguage();
-  const deadline = batchAvailability.ordersCloseAt ? new Date(batchAvailability.ordersCloseAt).getTime() : null;
+  const batchAvailability = useBatchAvailability();
+  const deadline = batchAvailability.accepting && batchAvailability.ordersCloseAt
+    ? new Date(batchAvailability.ordersCloseAt).getTime()
+    : null;
+  const hasFixedCapacity = Boolean(batchAvailability.capacityPacks || batchAvailability.capacityBagels);
   const reservedPercent = getReservedPercent(batchAvailability);
   const availablePercent = batchAvailability.accepting ? 100 - reservedPercent : 0;
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
@@ -80,12 +81,27 @@ export function BatchDeadlineBanner({ batchAvailability }: BatchDeadlineBannerPr
 
       <div className="batch-availability">
         <div className="availability-label">
-          <span><Gauge size={17} /> {batchAvailability.accepting ? `${reservedPercent}% ${copy.deadline.reserved}` : copy.deadline.closedStatus}</span>
-          <strong>{batchAvailability.accepting ? `${availablePercent}% ${copy.deadline.available}` : copy.deadline.closedBody}</strong>
+          <span>
+            <Gauge size={17} />
+            {batchAvailability.accepting
+              ? hasFixedCapacity
+                ? `${reservedPercent}% ${copy.deadline.reserved}`
+                : `${batchAvailability.reservedPacks} ${copy.deadline.packsReserved}`
+              : copy.deadline.closedStatus}
+          </span>
+          <strong>
+            {batchAvailability.accepting
+              ? hasFixedCapacity
+                ? `${availablePercent}% ${copy.deadline.available}`
+                : copy.deadline.noFixedLimit
+              : copy.deadline.closedBody}
+          </strong>
         </div>
-        <div className="availability-track" aria-hidden="true">
-          <span style={{ width: `${reservedPercent}%` }} />
-        </div>
+        {hasFixedCapacity ? (
+          <div className="availability-track" aria-hidden="true">
+            <span style={{ width: `${reservedPercent}%` }} />
+          </div>
+        ) : null}
       </div>
 
       <Link className="deadline-cta" href={ctaHref} onClick={() => trackBagelitoEvent("CTA Click", { location: "deadline_banner", target: batchAvailability.accepting ? "packs" : "waitlist" })}>

@@ -3,7 +3,7 @@ const minimumDeliveryFee = 8;
 const longDistanceDiscountThreshold = 15;
 const longDistanceDiscountRate = 0.3;
 
-// Approximate route distance from Jiron Sinchi Roca 2560, Lince to each district center.
+// Internal approximate route distances used to price each Lima delivery zone.
 export const districtDeliveryDistancesKm = {
   Lince: 1.3,
   "Jesus Maria": 1.5,

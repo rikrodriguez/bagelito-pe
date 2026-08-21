@@ -6,9 +6,11 @@ import {
   fetchOrderByCode,
   fetchOrders,
   findCustomerProfileForOrder,
+  getCustomerDeliveryNote,
   getOrderArchiveState,
   hasUploadedPaymentProof,
   isManualPaymentPending,
+  getPaymentDisplay,
   isOrderArchived,
   type CustomerProfile,
   type Order,
@@ -48,7 +50,12 @@ function formatMoney(value: number) {
 }
 
 function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("es-PE", { day: "2-digit", month: "short", year: "numeric" });
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+    timeZone: "America/Lima",
+    year: "numeric",
+  });
 }
 
 function getFlavorText(order: Order) {
@@ -153,12 +160,23 @@ export default async function OrderDetailPage({
   const customerProfile = findCustomerProfileForOrder(order, allOrders);
   const archived = isOrderArchived(order);
   const archiveState = getOrderArchiveState(order);
+  const customerDeliveryNote = getCustomerDeliveryNote(order);
   const whatsappIntent = parseAdminWhatsAppIntent(query?.whatsapp);
+  const availableStatuses = order.payment_provider === "culqi"
+    ? statuses.filter((status) => (
+      status === order.status
+      || status === "cancelled"
+      || (
+        order.payment_status === "paid"
+        && ["in_production", "ready_for_delivery", "delivered"].includes(status)
+      )
+    ))
+    : statuses;
 
   return (
     <main className="admin-page">
       <section className="admin-shell">
-        <Link className="mini-link" href="/admin"><ArrowLeft size={16} /> Back to CRM</Link>
+        <Link className="mini-link" href="/admin?section=customers"><ArrowLeft size={16} /> Back to customers</Link>
         <div className="admin-topbar"><div><p className="kicker">Order detail</p><h1>{order.order_code}</h1></div><span className={`status-pill ${archived ? "archived" : order.status === "delivered" ? "received" : ""}`}>{archived ? "archived" : statusLabel(order.status)}</span></div>
         {whatsappIntent ? (
           <AdminWhatsAppNotice
@@ -178,15 +196,15 @@ export default async function OrderDetailPage({
         ) : null}
         <div className="admin-panels detail-panels">
           <div className="admin-card"><h2>Customer</h2><p>{order.customer_name}</p><p>{order.whatsapp}</p><p>{order.email}</p></div>
-          <div className="admin-card"><h2>Delivery</h2><p>{order.delivery_address}</p><p>{order.district}</p><p>{order.address_reference}</p><p>{order.delivery_notes}</p></div>
-          <div className="admin-card"><h2>Pack</h2><p>{order.pack_name}</p><p>S/{Number(order.total_amount)}</p><ul>{order.order_items?.map((item) => <li key={item.id}>{item.quantity} x {item.flavor_name}</li>)}</ul></div>
+          <div className="admin-card"><h2>Delivery</h2><p>{order.delivery_address}</p><p>{order.district}</p><p>{order.address_reference ?? "No address reference"}</p><p>{customerDeliveryNote ?? "No customer note"}</p></div>
+          <div className="admin-card"><h2>Pack</h2><p>{order.pack_name}</p><p>{formatMoney(Number(order.total_amount))}</p><ul>{order.order_items?.map((item) => <li key={item.id}>{item.quantity} x {item.flavor_name}</li>)}</ul></div>
           <div className="admin-card"><h2>Payment</h2><PaymentDetail order={order} /></div>
           <div className="admin-card"><h2>Customer received?</h2><p><span className={`handoff-status ${order.status === "delivered" ? "received" : "pending"}`}>{order.status === "delivered" ? "Yes, received by customer" : "Not marked received yet"}</span></p><p>Set status to “received by customer” after delivery handoff is confirmed.</p></div>
         </div>
         {customerProfile ? <CustomerHistoryCard currentOrderCode={order.order_code} profile={customerProfile} /> : null}
         <div className="admin-panels detail-panels">
-          <div className="admin-card"><h2>Status</h2><form className="admin-detail-form" action={updateOrderStatus}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><select name="status" defaultValue={order.status}>{statuses.map((status) => <option key={status} value={status}>{statusLabel(status)}</option>)}</select><button className="pill-button pink" type="submit">Update status</button></form></div>
-          <div className="admin-card whatsapp-zone"><h2>Customer comms</h2><p>Open and log the right WhatsApp message for each stage: post-compra, delivery reminder, received and feedback.</p><div className="admin-detail-actions"><WhatsAppDetailAction order={order} intent="order_received" label="Order received" loggedLabel="Order message logged" blockedLabel="Order not active" /><WhatsAppDetailAction order={order} intent="payment_confirmed" label="Payment message" loggedLabel="Payment message logged" blockedLabel="Confirm payment first" /><WhatsAppDetailAction order={order} intent="delivery_reminder" label="Delivery reminder" loggedLabel="Delivery reminder logged" blockedLabel="Set ready for delivery first" /><WhatsAppDetailAction order={order} intent="delivered" label="Received message" loggedLabel="Received message logged" blockedLabel="Mark received first" /><WhatsAppDetailAction order={order} intent="feedback_request" label="Feedback request" loggedLabel="Feedback request logged" blockedLabel="Send received first" /></div></div>
+          <div className="admin-card"><h2>Status</h2>{order.payment_provider === "culqi" ? <p><small>Payment states are webhook-controlled. Admin can cancel an unpaid order or advance a paid order through production and delivery.</small></p> : null}<form className="admin-detail-form" action={updateOrderStatus}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><select name="status" defaultValue={order.status}>{availableStatuses.map((status) => <option key={status} value={status}>{statusLabel(status)}</option>)}</select><button className="pill-button pink" type="submit">Update status</button></form></div>
+          <div className="admin-card whatsapp-zone"><h2>Customer comms</h2><p>Open and log the right WhatsApp message for each stage: post-purchase, delivery reminder, received, and feedback.</p><div className="admin-detail-actions"><WhatsAppDetailAction order={order} intent="order_received" label="Order received" loggedLabel="Order message logged" blockedLabel="Order not active" /><WhatsAppDetailAction order={order} intent="payment_confirmed" label="Payment message" loggedLabel="Payment message logged" blockedLabel="Confirm payment first" /><WhatsAppDetailAction order={order} intent="delivery_reminder" label="Delivery reminder" loggedLabel="Delivery reminder logged" blockedLabel="Set ready for delivery first" /><WhatsAppDetailAction order={order} intent="delivered" label="Received message" loggedLabel="Received message logged" blockedLabel="Mark received first" /><WhatsAppDetailAction order={order} intent="feedback_request" label="Feedback request" loggedLabel="Feedback request logged" blockedLabel="Send received first" /></div></div>
           <div className="admin-card"><h2>Admin notes</h2><form className="admin-detail-form" action={updateAdminNote}><input type="hidden" name="orderId" value={order.id} /><input type="hidden" name="orderCode" value={order.order_code} /><textarea name="adminNotes" defaultValue={order.admin_notes ?? ""} rows={5} /><button className="pill-button pink" type="submit">Save note</button></form></div>
           <div className="admin-card archive-zone"><h2>{archived ? "Restore customer" : "Archive customer"}</h2><p>{archived ? `Archived${archiveState.archivedAt ? ` on ${new Date(archiveState.archivedAt).toLocaleString("en-US")}` : ""}. Restore it when it should return to daily operations.` : "Use this for day-to-day cleanup. The order stays in records, but leaves production, delivery, and active CRM views."}</p><ArchiveOrderForm archived={archived} orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} returnTo={`/admin/orders/${order.order_code}`} /></div>
           <div className="admin-card danger-zone"><h2>Delete customer</h2><p><ShieldCheck size={16} /> Before deleting, download the full CSV backup. This permanently removes the customer, order items, status history, and uploaded payment proof.</p><DeleteOrderForm orderId={order.id} orderCode={order.order_code} customerName={order.customer_name} label="Delete permanently" /></div>
@@ -200,6 +218,10 @@ export default async function OrderDetailPage({
 function PaymentDetail({ order }: { order: Order }) {
   if (isManualPaymentPending(order)) {
     return <><p><strong>Legacy order without voucher</strong></p><p>Ask the customer to submit a Yape or Plin payment proof before confirming production.</p><p>No uploaded payment proof yet.</p></>;
+  }
+
+  if (order.payment_provider === "culqi") {
+    return <><p>{getPaymentDisplay(order)}</p><p>Culqi order: {order.payment_order_id ?? "Pending"}</p><p>Charge: {order.payment_charge_id ?? "Pending"}</p><p>Paid at: {order.payment_paid_at ?? "Pending"}</p>{order.payment_failure_message ? <p><strong>Last payment issue:</strong> {order.payment_failure_message}{order.payment_failure_code ? ` (${order.payment_failure_code})` : ""}</p> : null}<p><small>Paid status is updated only by the verified Culqi webhook.</small></p></>;
   }
 
   return <><p>{order.payment_method}</p><p>Transaction: {order.payment_transaction_number}</p><p>Name: {order.payment_holder_name}</p><p>Phone: {order.payment_phone_number}</p>{hasUploadedPaymentProof(order) ? <a className="mini-link" href={`/admin/payment-proof/${order.order_code}`} target="_blank" rel="noreferrer"><Eye size={16} /> View screenshot</a> : <p>No uploaded payment proof yet.</p>}</>;

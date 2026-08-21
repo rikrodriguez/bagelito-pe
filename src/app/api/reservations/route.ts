@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getDurationMs, getRequestId, logError, logInfo, logWarn } from "@/lib/monitoring";
+import { PublicApiError, enforcePublicApiSecurity } from "@/lib/public-api-security";
 import { trackBagelitoServerEvent } from "@/lib/server-analytics";
 import { createReservation } from "@/lib/reservations/service";
 
@@ -18,6 +19,13 @@ export async function POST(request: Request) {
 
   try {
     const formData = await request.formData();
+    await enforcePublicApiSecurity({
+      email: String(formData.get("email") ?? ""),
+      request,
+      scope: "reservations",
+      trapValue: String(formData.get("website") ?? ""),
+      whatsapp: String(formData.get("whatsapp") ?? ""),
+    });
     const { amount, orderCode, packSlug } = await createReservation(formData);
     await trackBagelitoServerEvent("Reservation Created", { pack: packSlug, amount }, request);
     logInfo("reservation_api_success", {
@@ -31,21 +39,31 @@ export async function POST(request: Request) {
     });
     return NextResponse.json({ ok: true, orderCode });
   } catch (error) {
-    const errorType = error instanceof ZodError ? "validation" : "server";
+    const status = error instanceof PublicApiError ? error.status : 400;
+    const errorType = error instanceof ZodError
+      ? "validation"
+      : error instanceof PublicApiError
+        ? error.code
+        : "server";
 
     await trackBagelitoServerEvent("Reservation API Error", {
-      status: 400,
+      status,
       type: errorType,
     }, request);
     const context = {
       durationMs: getDurationMs(startedAt),
       requestId,
       route: "/api/reservations",
-      status: 400,
+      status,
       type: errorType,
     };
 
-    if (errorType === "validation") {
+    if (error instanceof PublicApiError) {
+      logWarn("reservation_api_public_blocked", {
+        ...context,
+        retryAfterSeconds: error.retryAfterSeconds ?? undefined,
+      });
+    } else if (errorType === "validation") {
       logWarn("reservation_api_validation_failed", context);
     } else {
       logError("reservation_api_failed", error, context);
@@ -57,6 +75,14 @@ export async function POST(request: Request) {
         ? error.message
         : "Could not submit reservation.";
 
-    return NextResponse.json({ ok: false, error: message }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: message },
+      {
+        headers: error instanceof PublicApiError && error.retryAfterSeconds
+          ? { "Retry-After": String(error.retryAfterSeconds) }
+          : undefined,
+        status,
+      },
+    );
   }
 }

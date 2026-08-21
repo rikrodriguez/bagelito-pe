@@ -26,7 +26,7 @@ export async function GET() {
     [
       "Stop",
       "District",
-      "Km from Lince",
+      "Route estimate (km)",
       "Estimated delivery fee",
       "Delivered check",
       "Order code",

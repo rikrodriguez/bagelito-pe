@@ -34,6 +34,8 @@ Bagelito.pe is positioned as the monthly bagel drop in Lima: customers reserve p
 - [Customer comms](docs/customer-comms.md): post-purchase, payment, delivery, received, and feedback WhatsApp message cadence.
 - [Customer CRM](docs/customer-crm.md): customer history, repeat buyers, last purchase, total spend, and flavor preferences.
 - [Finanzas reales](docs/finanzas-reales.md): editable batch costs, margin by pack, delivery variance, and net profit.
+- [Monitoreo y alertas](docs/monitoreo-alertas.md): webhook alerts, healthcheck, runtime crash capture, and alert deduplication.
+- [Integración Culqi](docs/culqi-integracion.md): feature flag manual/Culqi, migración de pagos y webhook de confirmación.
 
 ## Production
 

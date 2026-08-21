@@ -3,8 +3,8 @@ import {
   AlertCircle,
   ArrowUpDown,
   Archive,
+  BookOpenCheck,
   CalendarClock,
-  Calculator,
   CheckCircle2,
   Clock3,
   CreditCard,
@@ -17,12 +17,12 @@ import {
   MessageCircle,
   Package,
   Phone,
+  PlayCircle,
   ReceiptText,
   Search,
   Send,
   ShieldCheck,
   type LucideIcon,
-  UserPlus,
   Users,
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
@@ -34,6 +34,7 @@ import {
   filterActiveOrders,
   filterArchivedOrders,
   getBatchStats,
+  getCustomerDeliveryNote,
   getCustomerCrmStats,
   getCustomerProfiles,
   getDashboardStats,
@@ -41,6 +42,7 @@ import {
   getDeliverySummary,
   getFinancialSummary,
   getOrderArchiveState,
+  getPaymentDisplay,
   getProductionOpsPlan,
   hasUploadedPaymentProof,
   isManualPaymentPending,
@@ -64,10 +66,13 @@ import {
 import type { CostScenarioState } from "@/lib/bagelito-costing";
 import { getMissingAdminEnv } from "@/lib/env";
 import { getWhatsAppHrefForPhone } from "@/lib/whatsapp";
+import { AdminSectionNav, type AdminSection } from "./AdminSectionNav";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
 import { CostCalculator } from "./CostCalculator";
+import { CustomerProfileActions } from "./CustomerProfileActions";
 import { closeCurrentBatch, quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
+import { WaitlistLeadActions } from "./WaitlistLeadActions";
 
 const paidStatuses = new Set<string>(productionStatuses);
 const statusFilterOptions = [
@@ -75,7 +80,7 @@ const statusFilterOptions = [
   { value: "pending_attention", label: "Pending attention" },
   { value: "payment_pending_review", label: "Payment pending" },
   { value: "needs_correction", label: "Needs correction" },
-  { value: "payment_confirmed", label: "Paid confirmed" },
+  { value: "payment_confirmed", label: "Payment confirmed" },
   { value: "in_production", label: "In production" },
   { value: "ready_for_delivery", label: "Ready for delivery" },
   { value: "paid_not_delivered", label: "Paid, not received" },
@@ -109,12 +114,10 @@ const adminSections = [
   "archive",
 ] as const;
 
-type AdminSection = (typeof adminSections)[number];
-
 const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; intro: string }> = {
   overview: {
     eyebrow: "Dashboard",
-    title: "Main dashboard overview",
+    title: "Operations overview",
     intro: "Daily operating snapshot for reservations, payments, production, delivery, and follow-ups.",
   },
   customers: {
@@ -133,7 +136,7 @@ const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; i
     intro: "Confirmed sales, pending value, delivery variance, editable costs, and net profit.",
   },
   calculator: {
-    eyebrow: "Calculadora",
+    eyebrow: "Calculator",
     title: "Cost, margin, and scale calculator",
     intro: "Simulate pack volume, unit economics, fixed-cost dilution, and margin before changing the batch.",
   },
@@ -148,8 +151,8 @@ const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; i
     intro: "People waiting for the next batch, grouped by signup date with WhatsApp and email follow-up links.",
   },
   comms: {
-    eyebrow: "Customer comms",
-    title: "WhatsApp queue",
+    eyebrow: "Messaging",
+    title: "Customer messaging",
     intro: "Post-purchase, confirmation, delivery reminder, and feedback messages ready to send.",
   },
   production: {
@@ -177,6 +180,9 @@ const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; i
 type AdminSearchParams = {
   batch?: string;
   deleted?: string;
+  deletedCustomer?: string;
+  archivedCustomer?: string;
+  customerActionError?: string;
   archived?: string;
   restored?: string;
   section?: string;
@@ -186,6 +192,9 @@ type AdminSearchParams = {
   whatsappError?: string;
   whatsappSent?: string;
   finance?: string;
+  waitlist?: string;
+  waitlistError?: string;
+  waitlistView?: string;
   q?: string;
   status?: string;
   sort?: string;
@@ -203,7 +212,12 @@ function formatMoney(value: number) {
 }
 
 function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("es-PE", { day: "2-digit", month: "short", year: "numeric" });
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+    timeZone: "America/Lima",
+    year: "numeric",
+  });
 }
 
 function formatCostInput(value: number) {
@@ -235,7 +249,7 @@ function isDelivered(order: Order) {
 function paymentStatusLabel(order: Order) {
   if (isOrderArchived(order)) return "Archived";
   if (isDelivered(order)) return "Received by customer";
-  if (isPaid(order)) return "Paid confirmed";
+  if (isPaid(order)) return "Payment confirmed";
   if (order.status === "needs_correction") return "Needs correction";
   if (order.status === "cancelled") return "Cancelled";
   return "Not confirmed";
@@ -298,7 +312,7 @@ function matchesStatusFilter(order: Order, statusFilter: string) {
     case "paid_not_delivered":
       return isPaid(order) && !isDelivered(order);
     case "no_proof":
-      return !hasUploadedPaymentProof(order);
+      return order.payment_provider !== "culqi" && !hasUploadedPaymentProof(order);
     default:
       return order.status === statusFilter;
   }
@@ -361,55 +375,28 @@ function formatDateTimeInput(value: string | null) {
 
 function formatBatchDate(value: string | null) {
   if (!value) return "Not set";
-  return new Date(value).toLocaleString("es-PE", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Lima" });
+  return new Date(value).toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "America/Lima",
+  });
 }
 
 function PaymentCell({ order }: { order: Order }) {
   if (isManualPaymentPending(order)) return <span>Manual proof pending</span>;
-  return <span>{order.payment_method} - {order.payment_transaction_number}</span>;
+  return <span>{getPaymentDisplay(order)}</span>;
 }
 
 function Stat({ label, value, helper, icon: Icon }: { label: string; value: string | number; helper?: string; icon: LucideIcon }) {
   return (
     <div className="stat-card crm-stat-card">
-      <div className="stat-icon"><Icon size={18} /></div>
-      <span>{label}</span>
+      <div className="stat-card-heading">
+        <div className="stat-icon"><Icon size={18} /></div>
+        <span>{label}</span>
+      </div>
       <strong>{value}</strong>
       {helper ? <small>{helper}</small> : null}
     </div>
-  );
-}
-
-function AdminSectionNav({
-  activeSection,
-  items,
-}: {
-  activeSection: AdminSection;
-  items: { section: AdminSection; label: string; helper: string; href: string; icon: LucideIcon }[];
-}) {
-  return (
-    <aside className="admin-side-nav" aria-label="Admin sections">
-      <div className="admin-side-nav-head">
-        <span>Admin menu</span>
-        <strong>Bagelito Ops</strong>
-      </div>
-      <nav>
-        {items.map((item) => {
-          const Icon = item.icon;
-          const active = item.section === activeSection;
-
-          return (
-            <Link aria-current={active ? "page" : undefined} className={active ? "active" : ""} href={item.href} key={item.section}>
-              <Icon size={17} />
-              <span>
-                {item.label}
-                <small>{item.helper}</small>
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
   );
 }
 
@@ -631,6 +618,16 @@ function getCustomerFlavorSummary(profile: CustomerProfile) {
   return profile.favoriteFlavors.slice(0, 3).map((item) => `${item.flavorName} (${item.quantity})`).join(" · ");
 }
 
+function customerProfileHasOperationalOrders(profile: CustomerProfile) {
+  return profile.orders.some((order) => [
+    "payment_pending_review",
+    "payment_confirmed",
+    "needs_correction",
+    "in_production",
+    "ready_for_delivery",
+  ].includes(order.status));
+}
+
 function CustomerCrmPanel({ profiles, stats }: { profiles: CustomerProfile[]; stats: ReturnType<typeof getCustomerCrmStats> }) {
   const topProfiles = profiles.slice(0, 8);
 
@@ -701,7 +698,14 @@ function CustomerCrmPanel({ profiles, stats }: { profiles: CustomerProfile[]; st
                   ))}
                 </div>
 
-                {latestOrder ? <Link className="mini-link" href={`/admin/orders/${latestOrder.order_code}`}><Eye size={15} /> Latest order</Link> : null}
+                <div className="customer-profile-actions">
+                  {latestOrder ? <Link className="mini-link" href={`/admin/orders/${latestOrder.order_code}`}><Eye size={15} /> Latest order</Link> : null}
+                  <CustomerProfileActions
+                    blocked={customerProfileHasOperationalOrders(profile)}
+                    customerKey={profile.key}
+                    customerName={profile.customerName}
+                  />
+                </div>
               </article>
             );
           })}
@@ -836,7 +840,7 @@ function CustomerCommsQueue({ followUps, returnTo }: { followUps: { order: Order
     <section className="admin-card whatsapp-queue-card">
       <div className="admin-card-head">
         <div>
-          <p className="kicker">Customer comms</p>
+          <p className="kicker">Messaging</p>
           <h2>WhatsApp message queue</h2>
           <p>Post-purchase, payment confirmation, delivery reminders, and feedback/testimonial requests.</p>
         </div>
@@ -882,23 +886,37 @@ function getWaitlistMailto(signups: WaitlistSignup[], batch: Batch) {
   return emails.length ? `mailto:?bcc=${emails.map(encodeURIComponent).join(",")}&subject=${subject}&body=${body}` : "";
 }
 
-function WaitlistPanel({ batch, schemaReady, signups }: { batch: Batch; schemaReady: boolean; signups: WaitlistSignup[] }) {
-  const groupedByDate = signups.reduce((map, signup) => {
+function WaitlistPanel({
+  batch,
+  schemaReady,
+  signups,
+  view,
+}: {
+  batch: Batch;
+  schemaReady: boolean;
+  signups: WaitlistSignup[];
+  view: "active" | "archived";
+}) {
+  const activeSignups = signups.filter((signup) => signup.status !== "archived");
+  const archivedSignups = signups.filter((signup) => signup.status === "archived");
+  const visibleSignups = view === "archived" ? archivedSignups : activeSignups;
+  const groupedByDate = visibleSignups.reduce((map, signup) => {
     const current = map.get(signup.list_date) ?? [];
     current.push(signup);
     map.set(signup.list_date, current);
     return map;
   }, new Map<string, WaitlistSignup[]>());
   const latestGroup = Array.from(groupedByDate.entries()).sort((a, b) => b[0].localeCompare(a[0]))[0];
-  const mailtoHref = getWaitlistMailto(signups, batch);
+  const mailtoHref = getWaitlistMailto(activeSignups, batch);
+  const returnTo = `/admin?section=waitlist${view === "archived" ? "&waitlistView=archived" : ""}`;
 
   return (
     <section className="admin-card waitlist-panel">
       <div className="admin-card-head">
         <div>
           <p className="kicker">Waitlist</p>
-          <h2>Batch waitlist leads</h2>
-          <p>Each signup is stored with a list date so you can notify the right cohort when orders open.</p>
+          <h2>{view === "archived" ? "Archived waitlist leads" : "Active waitlist leads"}</h2>
+          <p>{view === "archived" ? "Restore a lead when it should return to follow-up, or delete it permanently." : "Notify each cohort, then archive leads you no longer need in the active list."}</p>
         </div>
         <div className="admin-export-row compact">
           <a href="/admin/export/waitlist"><FileDown size={16} /> Waitlist CSV</a>
@@ -910,14 +928,19 @@ function WaitlistPanel({ batch, schemaReady, signups }: { batch: Batch; schemaRe
         <div className="admin-flash warning">Waitlist table is not configured yet. Run `supabase/add-waitlist-signups.sql` in Supabase.</div>
       ) : null}
 
+      <nav aria-label="Waitlist lead views" className="waitlist-view-tabs">
+        <Link className={view === "active" ? "active" : ""} href="/admin?section=waitlist">Active <b>{activeSignups.length}</b></Link>
+        <Link className={view === "archived" ? "active" : ""} href="/admin?section=waitlist&waitlistView=archived">Archived <b>{archivedSignups.length}</b></Link>
+      </nav>
+
       <div className="waitlist-admin-kpis">
-        <div><span>Total leads</span><strong>{signups.length}</strong><small>{groupedByDate.size} signup dates</small></div>
+        <div><span>{view === "archived" ? "Archived leads" : "Active leads"}</span><strong>{visibleSignups.length}</strong><small>{groupedByDate.size} signup dates</small></div>
         <div><span>Latest list</span><strong>{latestGroup?.[0] ?? "None"}</strong><small>{latestGroup?.[1].length ?? 0} leads</small></div>
-        <div><span>WhatsApp preferred</span><strong>{signups.filter((signup) => signup.contact_preference !== "email").length}</strong><small>Can be contacted manually</small></div>
-        <div><span>Email preferred</span><strong>{signups.filter((signup) => signup.contact_preference !== "whatsapp").length}</strong><small>Use BCC export/email</small></div>
+        <div><span>WhatsApp preferred</span><strong>{visibleSignups.filter((signup) => signup.contact_preference !== "email").length}</strong><small>Can be contacted manually</small></div>
+        <div><span>Email preferred</span><strong>{visibleSignups.filter((signup) => signup.contact_preference !== "whatsapp").length}</strong><small>Use BCC export/email</small></div>
       </div>
 
-      {signups.length ? (
+      {visibleSignups.length ? (
         <div className="waitlist-admin-list">
           {Array.from(groupedByDate.entries()).sort((a, b) => b[0].localeCompare(a[0])).map(([listDate, entries]) => (
             <section className="waitlist-date-group" key={listDate}>
@@ -939,8 +962,18 @@ function WaitlistPanel({ batch, schemaReady, signups }: { batch: Batch; schemaRe
                       {signup.notes ? <small>Notes: {signup.notes}</small> : null}
                     </div>
                     <div className="waitlist-row-actions">
-                      <a className="status-action whatsapp" href={getWhatsAppHrefForPhone(signup.whatsapp, getWaitlistMessage(signup, batch))} target="_blank" rel="noreferrer"><MessageCircle size={15} /> WhatsApp</a>
-                      <a className="mini-link" href={`mailto:${encodeURIComponent(signup.email)}?subject=${encodeURIComponent(`Bagelito batch is open: ${batch.name}`)}&body=${encodeURIComponent(getWaitlistMessage(signup, batch))}`}><Mail size={15} /> Email</a>
+                      {view === "active" ? (
+                        <>
+                          <a className="status-action whatsapp" href={getWhatsAppHrefForPhone(signup.whatsapp, getWaitlistMessage(signup, batch))} target="_blank" rel="noreferrer"><MessageCircle size={15} /> WhatsApp</a>
+                          <a className="mini-link" href={`mailto:${encodeURIComponent(signup.email)}?subject=${encodeURIComponent(`Bagelito batch is open: ${batch.name}`)}&body=${encodeURIComponent(getWaitlistMessage(signup, batch))}`}><Mail size={15} /> Email</a>
+                        </>
+                      ) : null}
+                      <WaitlistLeadActions
+                        archived={signup.status === "archived"}
+                        customerName={signup.customer_name}
+                        leadId={signup.id}
+                        returnTo={returnTo}
+                      />
                     </div>
                   </article>
                 ))}
@@ -949,7 +982,7 @@ function WaitlistPanel({ batch, schemaReady, signups }: { batch: Batch; schemaRe
           ))}
         </div>
       ) : (
-        <div className="empty-state">{schemaReady ? "No waitlist signups yet. Leads will appear after customers submit the waitlist form." : "Waitlist leads will appear here after the Supabase table is created."}</div>
+        <div className="empty-state">{schemaReady ? (view === "archived" ? "No archived leads. Archived contacts will remain recoverable here." : "No active waitlist signups yet. Leads will appear after customers submit the waitlist form.") : "Waitlist leads will appear here after the Supabase table is created."}</div>
       )}
     </section>
   );
@@ -960,7 +993,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
   const activeStages = plan.stages.filter((stage) => stage.key !== "done");
   const donePercent = percent(doneStage?.packs ?? 0, plan.totalPacks);
   const deliveryDate = plan.deliveryDate ? formatBatchDate(plan.deliveryDate) : "Not set";
-  const flavorSummary = [...plan.packingList].sort((a, b) => b.quantity - a.quantity || a.flavorName.localeCompare(b.flavorName, "es"));
+  const flavorSummary = [...plan.packingList].sort((a, b) => b.quantity - a.quantity || a.flavorName.localeCompare(b.flavorName, "en"));
 
   return (
     <section className="admin-card production-ops-card" id="production-ops">
@@ -968,7 +1001,7 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
         <div>
           <p className="kicker">Production ops</p>
           <h2>{plan.batchName}</h2>
-          <p>Bagels por sabor, total del batch y checklist operativo para hornear, empacar y entregar.</p>
+          <p>Bagels by flavor, total batch volume, and the operating checklist for baking, packing, and delivery.</p>
         </div>
         <a className="status-action export" href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
       </div>
@@ -986,8 +1019,8 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
 
       <section className="production-flavor-summary">
         <div className="admin-card-head compact">
-          <h3>Bagels por sabor</h3>
-          <p>Este es el conteo confirmado para producción. Cada número es cantidad de bagels, no packs.</p>
+          <h3>Bagels by flavor</h3>
+          <p>This is the confirmed production count. Each number is bagels, not packs.</p>
         </div>
         {flavorSummary.length ? (
           <div className="production-flavor-summary-grid">
@@ -999,22 +1032,22 @@ function ProductionOpsPanel({ plan, returnTo }: { plan: ProductionOpsPlan; retur
                 <div className="production-flavor-tile" key={item.flavorName}>
                   <span>{item.flavorName}</span>
                   <strong>{item.quantity}</strong>
-                  <small>{share}% del batch · {orderCount} {orderCount === 1 ? "pedido" : "pedidos"}</small>
+                  <small>{share}% of batch · {orderCount} {orderCount === 1 ? "order" : "orders"}</small>
                   <i aria-hidden="true"><b style={{ width: `${share}%` }} /></i>
                 </div>
               );
             })}
           </div>
         ) : (
-          <div className="production-stage-empty">No hay sabores confirmados para producir todavía.</div>
+          <div className="production-stage-empty">No flavors are confirmed for production yet.</div>
         )}
       </section>
 
       <div className="production-ops-grid">
         <section>
           <div className="admin-card-head compact">
-            <h3>Detalle por sabor</h3>
-            <p>Ordenes relacionadas para validar antes de empacar.</p>
+            <h3>Flavor detail</h3>
+            <p>Related orders to verify before packing.</p>
           </div>
           <div className="production-flavor-list">
             {flavorSummary.length ? flavorSummary.map((item) => (
@@ -1130,7 +1163,7 @@ function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnTyp
         <div>
           <span>Delivery date</span>
           <strong>{formatBatchDate(batch.delivery_date)}</strong>
-          <small>Lima timezone</small>
+          <small>Lima time</small>
         </div>
       </div>
 
@@ -1140,9 +1173,19 @@ function BatchManagementPanel({ batch, stats }: { batch: Batch; stats: ReturnTyp
         <label>Status<select name="status" defaultValue={batch.status}>{batchStatuses.map((status) => <option key={status} value={status}>{batchStatusLabel(status)}</option>)}</select></label>
         <label>Capacity packs<input min={0} name="capacityPacks" type="number" defaultValue={batch.capacity_packs ?? ""} placeholder="No limit" /></label>
         <label>Capacity bagels<input min={0} name="capacityBagels" type="number" defaultValue={batch.capacity_bagels ?? ""} placeholder="No limit" /></label>
+        <label>Orders open at<input name="ordersOpenAt" type="datetime-local" defaultValue={formatDateTimeInput(batch.orders_open_at)} /></label>
         <label>Orders close at<input name="ordersCloseAt" type="datetime-local" defaultValue={formatDateTimeInput(batch.orders_close_at)} /></label>
         <label>Delivery date<input name="deliveryDate" type="datetime-local" defaultValue={formatDateTimeInput(batch.delivery_date)} /></label>
-        <button className="pill-button pink" type="submit"><CalendarClock size={17} /> Save batch</button>
+        <div className="batch-settings-actions">
+          <button className="pill-button pink" name="intent" type="submit" value="save">
+            <CalendarClock size={17} /> Save only
+          </button>
+          {!stats.acceptingReservations ? (
+            <button className="pill-button mint" name="intent" type="submit" value="open">
+              <PlayCircle size={17} /> Open batch and save
+            </button>
+          ) : null}
+        </div>
       </form>
 
       <form action={closeCurrentBatch} className="batch-close-form">
@@ -1169,7 +1212,7 @@ function DeliveryOpsPanel({ routePlan, returnTo }: { routePlan: DeliveryRouteSto
         <div>
           <p className="kicker">Delivery ops</p>
           <h2>Driver route by district</h2>
-          <p>Suggested route from Jr. Sinchi Roca 2560, Lince: nearby districts first, then farther stops.</p>
+          <p>Suggested route by configured delivery-zone distance: nearby districts first, then farther stops.</p>
         </div>
         <a className="status-action export" href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
       </div>
@@ -1189,7 +1232,7 @@ function DeliveryOpsPanel({ routePlan, returnTo }: { routePlan: DeliveryRouteSto
                 <span>Stop {String(stop.stopNumber).padStart(2, "0")}</span>
                 <div>
                   <h3>{stop.district}</h3>
-                  <p>{stop.distanceKm.toFixed(1)} km from Lince · approx. S/{stop.deliveryFee} delivery fee</p>
+                  <p>{stop.distanceKm.toFixed(1)} km route estimate · grouped delivery stop</p>
                 </div>
                 <strong>{stop.pendingHandoff} pending / {stop.orders.length} orders</strong>
               </div>
@@ -1197,6 +1240,7 @@ function DeliveryOpsPanel({ routePlan, returnTo }: { routePlan: DeliveryRouteSto
               <div className="delivery-checklist">
                 {stop.orders.map((order) => {
                   const delivered = isDelivered(order);
+                  const customerDeliveryNote = getCustomerDeliveryNote(order);
 
                   return (
                     <div className={`delivery-check-item ${delivered ? "received" : ""}`} key={order.id}>
@@ -1208,7 +1252,7 @@ function DeliveryOpsPanel({ routePlan, returnTo }: { routePlan: DeliveryRouteSto
                         </div>
                         <p><Home size={14} /> {order.delivery_address}</p>
                         <p>{order.address_reference ? `Ref: ${order.address_reference}` : "No reference"} · {getReceptionText(order)}</p>
-                        {order.delivery_notes ? <p>Notes: {order.delivery_notes}</p> : null}
+                        {customerDeliveryNote ? <p>Notes: {customerDeliveryNote}</p> : null}
                         <p><Phone size={14} /> {order.whatsapp} · {getFlavorText(order)}</p>
                       </div>
                       <div className="delivery-check-actions">
@@ -1239,7 +1283,13 @@ export default async function AdminPage({
   const params = await searchParams;
   const batchMessage = params?.batch;
   const financeMessage = params?.finance;
+  const waitlistMessage = params?.waitlist;
+  const waitlistError = params?.waitlistError;
+  const waitlistView = params?.waitlistView === "archived" ? "archived" : "active";
   const deletedOrderCode = params?.deleted;
+  const deletedCustomer = params?.deletedCustomer;
+  const archivedCustomer = params?.archivedCustomer;
+  const customerActionError = params?.customerActionError;
   const archivedOrderCode = params?.archived;
   const restoredOrderCode = params?.restored;
   const whatsappError = params?.whatsappError;
@@ -1260,9 +1310,10 @@ export default async function AdminPage({
   const allOrders = await fetchOrders();
   const currentBatch = await fetchCurrentBatch();
   const waitlistData = await fetchWaitlistSignups();
-  const customerProfiles = getCustomerProfiles(allOrders);
-  const customerCrmStats = getCustomerCrmStats(customerProfiles);
+  const activeWaitlistLeadCount = waitlistData.signups.filter((signup) => signup.status !== "archived").length;
   const activeOrders = filterActiveOrders(allOrders);
+  const customerProfiles = getCustomerProfiles(activeOrders);
+  const customerCrmStats = getCustomerCrmStats(customerProfiles);
   const archivedOrders = filterArchivedOrders(allOrders);
   const baseOrders = showingArchived ? archivedOrders : activeOrders;
   const orders = filterAndSortOrders(baseOrders, searchQuery, statusFilter, sort);
@@ -1277,7 +1328,7 @@ export default async function AdminPage({
   const pendingOrders = activeOrders.filter((order) => order.status === "payment_pending_review" || order.status === "needs_correction");
   const pendingValue = pendingOrders.reduce((sum, order) => sum + Number(order.total_amount), 0);
   const totalBagels = activeOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
-  const missingProofs = activeOrders.filter((order) => !hasUploadedPaymentProof(order)).length;
+  const missingProofs = activeOrders.filter((order) => order.payment_provider !== "culqi" && !hasUploadedPaymentProof(order)).length;
   const marketingOptIns = activeOrders.filter((order) => order.marketing_opt_in).length;
   const packStats = getPackStats(activeOrders);
   const packTypeStats = getPackTypeStats(activeOrders);
@@ -1313,7 +1364,7 @@ export default async function AdminPage({
   const appendCurrentListQuery = (key: string, value: string) => appendAdminQuery(currentListHref, key, value);
   const activeFilterCount = Number(Boolean(searchQuery)) + Number(statusFilter !== "all") + Number(sort !== "newest");
   const pendingAttentionCount = activeOrders.filter(isPendingAttention).length;
-  const noProofCount = activeOrders.filter((order) => !hasUploadedPaymentProof(order)).length;
+  const noProofCount = activeOrders.filter((order) => order.payment_provider !== "culqi" && !hasUploadedPaymentProof(order)).length;
   const selectedStatusLabel = statusFilterOptions.find((option) => option.value === statusFilter)?.label ?? "All statuses";
   const selectedSortLabel = sortOptions.find((option) => option.value === sort)?.label ?? "Newest first";
   const adminNavItems = [
@@ -1322,86 +1373,86 @@ export default async function AdminPage({
       label: "Overview",
       helper: `${stats.pending} pending`,
       href: buildAdminHref({ section: "overview", q: "", status: "all", sort: "newest" }),
-      icon: Home,
+      icon: "overview",
     },
     {
       section: "customers",
       label: "Customers",
       helper: `${activeOrders.length} active`,
       href: buildAdminHref({ section: "customers", q: "", status: "all", sort: "newest" }),
-      icon: Users,
+      icon: "customers",
     },
     {
       section: "crm",
       label: "Customer CRM",
       helper: `${customerProfiles.length} profiles`,
       href: buildAdminHref({ section: "crm", q: "", status: "all", sort: "newest" }),
-      icon: ReceiptText,
+      icon: "crm",
     },
     {
       section: "finance",
       label: "Finance",
       helper: formatMoney(finance.estimatedNetProfit),
       href: buildAdminHref({ section: "finance", q: "", status: "all", sort: "newest" }),
-      icon: CreditCard,
+      icon: "finance",
     },
     {
       section: "calculator",
-      label: "Calculadora",
-      helper: "pack margin",
+      label: "Calculator",
+      helper: "profit model",
       href: buildAdminHref({ section: "calculator", q: "", status: "all", sort: "newest" }),
-      icon: Calculator,
+      icon: "calculator",
     },
     {
       section: "batch",
       label: "Batch",
       helper: batchStatusLabel(currentBatch.status),
       href: buildAdminHref({ section: "batch", q: "", status: "all", sort: "newest" }),
-      icon: CalendarClock,
+      icon: "batch",
     },
     {
       section: "waitlist",
       label: "Waitlist",
-      helper: `${waitlistData.signups.length} leads`,
+      helper: `${activeWaitlistLeadCount} active`,
       href: buildAdminHref({ section: "waitlist", q: "", status: "all", sort: "newest" }),
-      icon: UserPlus,
+      icon: "waitlist",
     },
     {
       section: "comms",
-      label: "Comms",
+      label: "Messaging",
       helper: `${whatsappFollowUps.length} pending`,
       href: buildAdminHref({ section: "comms", q: "", status: "all", sort: "newest" }),
-      icon: MessageCircle,
+      icon: "comms",
     },
     {
       section: "production",
       label: "Production",
       helper: `${productionOps.totalPacks} packs`,
       href: buildAdminHref({ section: "production", q: "", status: "all", sort: "newest" }),
-      icon: Package,
+      icon: "production",
     },
     {
       section: "delivery",
       label: "Delivery",
       helper: `${routePlan.length} stops`,
       href: buildAdminHref({ section: "delivery", q: "", status: "all", sort: "newest" }),
-      icon: MapPin,
+      icon: "delivery",
     },
     {
       section: "insights",
       label: "Insights",
       helper: `${districtStats.length} districts`,
       href: buildAdminHref({ section: "insights", q: "", status: "all", sort: "newest" }),
-      icon: ArrowUpDown,
+      icon: "insights",
     },
     {
       section: "archive",
       label: "Archive",
       helper: `${archivedOrders.length} hidden`,
       href: buildAdminHref({ section: "archive", q: "", status: "all", sort: "newest" }),
-      icon: Archive,
+      icon: "archive",
     },
-  ] satisfies { section: AdminSection; label: string; helper: string; href: string; icon: LucideIcon }[];
+  ] satisfies { section: AdminSection; label: string; helper: string; href: string; icon: "overview" | "customers" | "crm" | "finance" | "calculator" | "batch" | "waitlist" | "comms" | "production" | "delivery" | "insights" | "archive" }[];
 
   return (
     <main className="admin-page">
@@ -1418,6 +1469,7 @@ export default async function AdminPage({
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>
             <a href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
             <a href="/admin/export/waitlist"><FileDown size={16} /> Waitlist CSV</a>
+            <Link href="/admin/reclamaciones"><BookOpenCheck size={16} /> Reclamaciones</Link>
           </div>
         </div>
 
@@ -1442,8 +1494,40 @@ export default async function AdminPage({
           </div>
         ) : null}
 
+        {deletedCustomer ? (
+          <div className="admin-flash success">
+            {deletedCustomer === "missing" ? "That customer profile was already deleted." : "Customer and all linked records deleted permanently."}
+          </div>
+        ) : null}
+
+        {archivedCustomer ? (
+          <div className="admin-flash success">
+            {archivedCustomer === "missing" ? "That customer profile was already archived." : "Customer archived. Their orders remain recoverable in Archive."}
+          </div>
+        ) : null}
+
+        {customerActionError === "confirmation" ? (
+          <div className="admin-flash warning">Permanent deletion was cancelled because the typed customer name did not match.</div>
+        ) : null}
+
+        {customerActionError === "active" ? (
+          <div className="admin-flash warning">Complete or cancel every active order before archiving or permanently deleting this customer.</div>
+        ) : null}
+
         {batchMessage === "updated" ? (
           <div className="admin-flash success">Batch settings updated.</div>
+        ) : null}
+
+        {batchMessage === "opened" ? (
+          <div className="admin-flash success">Batch opened. The storefront and checkout now accept reservations.</div>
+        ) : null}
+
+        {batchMessage === "invalid-close" ? (
+          <div className="admin-flash warning">Set an orders-close date and time in the future before opening the batch.</div>
+        ) : null}
+
+        {batchMessage === "invalid-delivery" ? (
+          <div className="admin-flash warning">Set a delivery date and time after the orders-close deadline.</div>
         ) : null}
 
         {batchMessage === "closed" ? (
@@ -1452,6 +1536,19 @@ export default async function AdminPage({
 
         {financeMessage === "updated" ? (
           <div className="admin-flash success">Finance costs updated.</div>
+        ) : null}
+
+        {activeSection === "waitlist" && waitlistMessage ? (
+          <div className="admin-flash success">
+            {waitlistMessage === "archived" ? "Lead archived. It is now in the Archived view and can be restored." : null}
+            {waitlistMessage === "restored" ? "Lead restored to the active waitlist." : null}
+            {waitlistMessage === "deleted" ? "Lead deleted permanently." : null}
+            {waitlistMessage === "missing" ? "That waitlist lead no longer exists." : null}
+          </div>
+        ) : null}
+
+        {activeSection === "waitlist" && waitlistError === "confirmation" ? (
+          <div className="admin-flash warning">Permanent deletion was cancelled because the typed customer name did not match.</div>
         ) : null}
 
         {archivedOrderCode ? (
@@ -1480,15 +1577,15 @@ export default async function AdminPage({
 
         {activeSection === "overview" ? (
         <div className="stat-grid crm-stat-grid">
-          <Stat icon={Users} label="Clients / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
-          <Stat icon={CheckCircle2} label="Paid confirmed" value={paidOrders.length} helper={`${percent(paidOrders.length, activeOrders.length)}% of active reservations`} />
+          <Stat icon={Users} label="Customers / reservations" value={stats.total} helper={`${totalBagels} bagels reserved`} />
+          <Stat icon={CheckCircle2} label="Payment confirmed" value={paidOrders.length} helper={`${percent(paidOrders.length, activeOrders.length)}% of active reservations`} />
           <Stat icon={Clock3} label="Not confirmed" value={stats.pending} helper="Payment pending review" />
           <Stat icon={AlertCircle} label="Needs correction" value={stats.needsCorrection} helper="Follow up via WhatsApp" />
           <Stat icon={CreditCard} label="Confirmed revenue" value={formatMoney(stats.confirmedRevenue)} helper="Only paid statuses" />
           <Stat icon={ReceiptText} label="Pending value" value={formatMoney(pendingValue)} helper="Pending + correction" />
           <Stat icon={Package} label="Confirmed bagels" value={stats.confirmedBagels} helper="Production-ready units" />
           <Stat icon={CheckCircle2} label="Received by customer" value={deliveredOrders.length} helper={`${percent(deliveredOrders.length, paidOrders.length)}% of paid orders`} />
-          <Stat icon={MessageCircle} label="Customer comms" value={whatsappFollowUps.length} helper="Messages pending" />
+          <Stat icon={MessageCircle} label="Customer messages" value={whatsappFollowUps.length} helper="Messages pending" />
         </div>
         ) : null}
 
@@ -1523,7 +1620,7 @@ export default async function AdminPage({
 
         {activeSection === "batch" ? <BatchManagementPanel batch={currentBatch} stats={batchStats} /> : null}
 
-        {activeSection === "waitlist" ? <WaitlistPanel batch={currentBatch} schemaReady={waitlistData.schemaReady} signups={waitlistData.signups} /> : null}
+        {activeSection === "waitlist" ? <WaitlistPanel batch={currentBatch} schemaReady={waitlistData.schemaReady} signups={waitlistData.signups} view={waitlistView} /> : null}
 
         {activeSection === "comms" ? <CustomerCommsQueue followUps={whatsappFollowUps} returnTo={commsReturnHref} /> : null}
 
@@ -1640,6 +1737,7 @@ export default async function AdminPage({
             {orders.length ? orders.map((order) => {
               const archived = isOrderArchived(order);
               const archiveState = getOrderArchiveState(order);
+              const customerDeliveryNote = getCustomerDeliveryNote(order);
 
               return (
               <article className="customer-card" key={order.id}>
@@ -1677,7 +1775,7 @@ export default async function AdminPage({
                     <small>Delivery form data</small>
                     <strong><Home size={14} /> {order.delivery_address}</strong>
                     <span>{order.address_reference ? `Reference: ${order.address_reference}` : "No address reference"}</span>
-                    <span>{getReceptionText(order)}{order.delivery_notes ? ` · ${order.delivery_notes}` : ""}</span>
+                    <span>{getReceptionText(order)}{customerDeliveryNote ? ` · ${customerDeliveryNote}` : ""}</span>
                     <span className={`handoff-status ${isDelivered(order) ? "received" : "pending"}`}>
                       {isDelivered(order) ? "Received by customer" : isPaid(order) ? "Paid, not received yet" : "Waiting for paid confirmation"}
                     </span>
@@ -1685,12 +1783,25 @@ export default async function AdminPage({
                   <div className="data-block">
                     <small>Payment</small>
                     <strong><PaymentCell order={order} /></strong>
-                    <span>Name: {order.payment_holder_name}</span>
-                    <span>Phone: {order.payment_phone_number}</span>
+                    {order.payment_provider === "culqi" ? (
+                      <>
+                        <span>Order: {order.payment_order_id ?? "Pending"}</span>
+                        <span>Charge: {order.payment_charge_id ?? "Pending"}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Name: {order.payment_holder_name}</span>
+                        <span>Phone: {order.payment_phone_number}</span>
+                      </>
+                    )}
                   </div>
                   <div className="data-block">
                     <small>Proof</small>
-                    {hasUploadedPaymentProof(order) ? <a href={`/admin/payment-proof/${order.order_code}`} target="_blank" rel="noreferrer">View private signed proof</a> : <strong>No proof uploaded yet</strong>}
+                    {order.payment_provider === "culqi"
+                      ? <strong>No voucher required · webhook verified</strong>
+                      : hasUploadedPaymentProof(order)
+                        ? <a href={`/admin/payment-proof/${order.order_code}`} target="_blank" rel="noreferrer">View private signed proof</a>
+                        : <strong>No proof uploaded yet</strong>}
                     <span>{order.marketing_opt_in ? "Marketing updates: yes" : "Marketing updates: no"}</span>
                   </div>
                 </div>
@@ -1706,9 +1817,15 @@ export default async function AdminPage({
                     />
                   ) : (
                     <>
-                      <StatusAction order={order} returnTo={currentListHref} status="payment_confirmed" label="Confirm paid" tone="paid" />
-                      <StatusAction order={order} returnTo={currentListHref} status="payment_pending_review" label="Not confirmed" tone="pending" />
-                      <StatusAction order={order} returnTo={currentListHref} status="needs_correction" label="Needs correction" tone="warning" />
+                      {order.payment_provider === "culqi" ? (
+                        <span className="status-pill pending">Payment managed by Culqi webhook</span>
+                      ) : (
+                        <>
+                          <StatusAction order={order} returnTo={currentListHref} status="payment_confirmed" label="Confirm paid" tone="paid" />
+                          <StatusAction order={order} returnTo={currentListHref} status="payment_pending_review" label="Not confirmed" tone="pending" />
+                          <StatusAction order={order} returnTo={currentListHref} status="needs_correction" label="Needs correction" tone="warning" />
+                        </>
+                      )}
                       {isPaid(order) ? <StatusAction order={order} returnTo={currentListHref} status="delivered" label={isDelivered(order) ? "Received" : "Mark received"} tone="received" /> : null}
                       {(order.status === "payment_pending_review" || order.status === "needs_correction") && !hasAdminWhatsAppMessageSent(order, "order_received") ? <AdminWhatsAppLink order={order} intent="order_received" label="Msg order" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}
                       {isPaid(order) && !hasAdminWhatsAppMessageSent(order, "payment_confirmed") ? <AdminWhatsAppLink order={order} intent="payment_confirmed" label="Msg paid" returnTo={appendCurrentListQuery("whatsappSent", order.order_code)} /> : null}

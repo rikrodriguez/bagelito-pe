@@ -8,6 +8,7 @@ export const waitlistPayloadSchema = z.object({
   customerName: z.string().trim().min(2, "Full name is required."),
   whatsapp: z.string().trim().min(7, "WhatsApp number is required."),
   email: z.string().trim().email("Enter a valid email."),
+  website: z.string().trim().max(0, "Invalid submission.").optional().default(""),
   preferredPackSlug: z.string().trim().optional().default("").refine((value) => !value || isPackSlug(value), "Invalid pack selected."),
   contactPreference: z.enum(waitlistContactPreferences).default("whatsapp"),
   locale: z.enum(["en", "es"]).default(defaultLocale),

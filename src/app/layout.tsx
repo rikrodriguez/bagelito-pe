@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { BatchAvailabilityProvider } from "@/components/BatchAvailabilityProvider";
 import { BatchDeadlineBanner } from "@/components/BatchDeadlineBanner";
+import { PurchaseActivityToast } from "@/components/PurchaseActivityToast";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { StructuredData } from "@/components/StructuredData";
 import { getReservationBatchAvailability } from "@/lib/reservations/service";
+import { getPublicPurchaseActivity } from "@/lib/conversion/purchase-activity";
 import { siteDescription, siteName, siteOgImage, siteTitle, siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -61,18 +64,24 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const batchAvailability = await getReservationBatchAvailability();
+  const [batchAvailability, purchaseActivity] = await Promise.all([
+    getReservationBatchAvailability(),
+    getPublicPurchaseActivity(),
+  ]);
 
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <StructuredData />
         <LanguageProvider>
-          <BatchDeadlineBanner batchAvailability={batchAvailability} />
-          {children}
-          <FloatingWhatsApp />
-          <Analytics />
-          <SpeedInsights />
+          <BatchAvailabilityProvider initialBatch={batchAvailability}>
+            <BatchDeadlineBanner />
+            {children}
+            <PurchaseActivityToast events={purchaseActivity} />
+            <FloatingWhatsApp />
+            <Analytics />
+            <SpeedInsights />
+          </BatchAvailabilityProvider>
         </LanguageProvider>
       </body>
     </html>

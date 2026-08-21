@@ -7,12 +7,11 @@ import { packs, type PackSlug } from "@/data/packs";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import { isPackSlug } from "@/lib/catalog";
 import { packCopy } from "@/lib/i18n";
+import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
 import { RollingBagel } from "@/components/RollingBagel";
-import type { BatchAvailability } from "@/lib/reservations/service";
 
 type WaitlistFormProps = {
-  batchAvailability: BatchAvailability;
   initialPackSlug?: PackSlug;
 };
 
@@ -27,8 +26,9 @@ function getTodayLabel(locale: "en" | "es") {
   });
 }
 
-export function WaitlistForm({ batchAvailability, initialPackSlug }: WaitlistFormProps) {
+export function WaitlistForm({ initialPackSlug }: WaitlistFormProps) {
   const { locale, copy } = useLanguage();
+  const batchAvailability = useBatchAvailability();
   const w = copy.waitlist;
   const [customerName, setCustomerName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
@@ -37,6 +37,7 @@ export function WaitlistForm({ batchAvailability, initialPackSlug }: WaitlistFor
   const [contactPreference, setContactPreference] = useState<ContactPreference>("whatsapp");
   const [notes, setNotes] = useState("");
   const [consentAccepted, setConsentAccepted] = useState(false);
+  const [website, setWebsite] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState<{ listDate: string; listLabel: string } | null>(null);
@@ -68,6 +69,7 @@ export function WaitlistForm({ batchAvailability, initialPackSlug }: WaitlistFor
           notes,
           preferredPackSlug,
           source: "waitlist_page",
+          website,
           whatsapp,
         }),
         headers: { "Content-Type": "application/json" },
@@ -130,6 +132,10 @@ export function WaitlistForm({ batchAvailability, initialPackSlug }: WaitlistFor
         {error ? <div className="reserve-alert">{error}</div> : null}
 
         <div className="form-grid">
+          <label className="bot-trap-field" aria-hidden="true">
+            Website
+            <input autoComplete="off" name="website" tabIndex={-1} value={website} onChange={(event) => setWebsite(event.target.value)} />
+          </label>
           <label>{w.fields.fullName}<input required value={customerName} onChange={(event) => setCustomerName(event.target.value)} /></label>
           <label>{w.fields.whatsapp}<input required value={whatsapp} onChange={(event) => setWhatsapp(event.target.value)} /></label>
           <label>{w.fields.email}<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} /></label>

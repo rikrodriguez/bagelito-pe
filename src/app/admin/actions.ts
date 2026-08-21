@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { batchStatuses, defaultFinancialCosts, hasUploadedPaymentProof } from "@/lib/admin/queries";
+import { batchStatuses, defaultFinancialCosts, getCustomerKey, hasUploadedPaymentProof, isOrderArchived, type StatusHistory } from "@/lib/admin/queries";
+import { ordersOpenStatus } from "@/lib/batch-availability";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getDurationMs, logError, logInfo, logWarn } from "@/lib/monitoring";
 
@@ -65,8 +66,25 @@ async function setOrderStatus(orderId: string, status: string) {
   const nextStatus = parseOrderStatus(status);
   const supabase = createSupabaseAdminClient();
 
-  const { data: current, error: readError } = await supabase.from("orders").select("status").eq("id", orderId).single();
+  const { data: current, error: readError } = await supabase
+    .from("orders")
+    .select("status, payment_provider, payment_status")
+    .eq("id", orderId)
+    .single();
   if (readError) throw new Error(readError.message);
+  if (current.status === nextStatus) return;
+
+  if (current.payment_provider === "culqi") {
+    if (["payment_pending_review", "payment_confirmed", "needs_correction"].includes(nextStatus)) {
+      throw new Error("Culqi payment status can only be changed by the verified webhook.");
+    }
+    if (
+      ["in_production", "ready_for_delivery", "delivered"].includes(nextStatus)
+      && current.payment_status !== "paid"
+    ) {
+      throw new Error("A Culqi order cannot enter production before the webhook confirms payment.");
+    }
+  }
 
   const { error } = await supabase.from("orders").update({ status: nextStatus }).eq("id", orderId);
   if (error) throw new Error(error.message);
@@ -107,7 +125,7 @@ async function readOrderForAdminMutation(orderId: string, orderCode: string) {
   const supabase = createSupabaseAdminClient();
   const { data: order, error } = await supabase
     .from("orders")
-    .select("id, order_code, status, payment_screenshot_path, order_status_history(*)")
+    .select("id, order_code, status, payment_order_id, payment_charge_id, payment_screenshot_path, order_status_history(*)")
     .eq("id", orderId)
     .maybeSingle();
 
@@ -119,6 +137,54 @@ async function readOrderForAdminMutation(orderId: string, orderCode: string) {
   }
 
   return { supabase, order };
+}
+
+async function readCustomerOrdersForAdminMutation(customerKey: string) {
+  if (!customerKey) throw new Error("Missing customer key");
+
+  const supabase = createSupabaseAdminClient();
+  const { data: orders, error } = await supabase
+    .from("orders")
+    .select("id, order_code, customer_name, whatsapp, email, status, payment_order_id, payment_charge_id, payment_screenshot_path, created_at, order_status_history(*)")
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(error.message);
+
+  const customerOrders = (orders ?? []).filter((order) => getCustomerKey(order) === customerKey);
+  const visibleOrders = customerOrders.filter((order) => order.status !== "cancelled" && !isOrderArchived(order));
+
+  return {
+    customerName: visibleOrders[0]?.customer_name ?? customerOrders[0]?.customer_name ?? "Customer",
+    customerOrders,
+    supabase,
+  };
+}
+
+const operationalCustomerStatuses = new Set([
+  "payment_pending_review",
+  "payment_confirmed",
+  "needs_correction",
+  "in_production",
+  "ready_for_delivery",
+]);
+
+function customerHasOperationalOrders(orders: { status: string; order_status_history?: StatusHistory[] }[]) {
+  return orders.some((order) => !isOrderArchived(order) && operationalCustomerStatuses.has(order.status));
+}
+
+async function readMatchingWaitlistIds(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  customerKey: string,
+) {
+  const { data: waitlistSignups, error } = await supabase
+    .from("waitlist_signups")
+    .select("id, whatsapp, email");
+  const schemaMissing = error?.code === "42P01" || error?.message.toLowerCase().includes("waitlist_signups");
+  if (error && !schemaMissing) throw new Error(error.message);
+
+  return (waitlistSignups ?? [])
+    .filter((signup) => getCustomerKey(signup) === customerKey)
+    .map((signup) => signup.id);
 }
 
 async function setOrderArchiveState(formData: FormData, archived: boolean) {
@@ -268,6 +334,123 @@ export async function restoreOrder(formData: FormData) {
   await setOrderArchiveState(formData, false);
 }
 
+async function readWaitlistLeadForAdminMutation(leadId: string) {
+  if (!leadId) throw new Error("Missing waitlist lead ID");
+
+  const supabase = createSupabaseAdminClient();
+  const { data: lead, error } = await supabase
+    .from("waitlist_signups")
+    .select("id, customer_name, status")
+    .eq("id", leadId)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return { lead, supabase };
+}
+
+async function setWaitlistLeadArchiveState(formData: FormData, archived: boolean) {
+  const startedAt = Date.now();
+  await requireAdmin();
+  const leadId = String(formData.get("leadId") ?? "");
+  const returnTo = getSafeAdminReturnTo(formData, "/admin?section=waitlist");
+  const action = archived ? "archive" : "restore";
+
+  logInfo("admin_waitlist_lead_archive_start", { action, leadId });
+  const { lead, supabase } = await readWaitlistLeadForAdminMutation(leadId);
+  if (!lead) {
+    logWarn("admin_waitlist_lead_archive_missing", {
+      action,
+      durationMs: getDurationMs(startedAt),
+      leadId,
+    });
+    revalidatePath("/admin");
+    redirect(appendAdminQuery(returnTo, "waitlist", "missing"));
+  }
+
+  const nextStatus = archived ? "archived" : "new";
+  try {
+    if (lead.status !== nextStatus) {
+      const { data: updated, error } = await supabase
+        .from("waitlist_signups")
+        .update({ status: nextStatus })
+        .eq("id", lead.id)
+        .select("status")
+        .single();
+
+      if (error) throw new Error(error.message);
+      if (updated.status !== nextStatus) throw new Error("Waitlist lead status was not saved.");
+    }
+  } catch (error) {
+    logError("admin_waitlist_lead_archive_failed", error, {
+      action,
+      durationMs: getDurationMs(startedAt),
+      leadId,
+    });
+    throw error;
+  }
+
+  logInfo("admin_waitlist_lead_archive_success", {
+    action,
+    durationMs: getDurationMs(startedAt),
+    leadId,
+  });
+  revalidatePath("/admin");
+  redirect(appendAdminQuery(returnTo, "waitlist", archived ? "archived" : "restored"));
+}
+
+export async function archiveWaitlistLead(formData: FormData) {
+  await setWaitlistLeadArchiveState(formData, true);
+}
+
+export async function restoreWaitlistLead(formData: FormData) {
+  await setWaitlistLeadArchiveState(formData, false);
+}
+
+export async function deleteWaitlistLead(formData: FormData) {
+  const startedAt = Date.now();
+  await requireAdmin();
+  const leadId = String(formData.get("leadId") ?? "");
+  const confirmCustomerName = String(formData.get("confirmCustomerName") ?? "").trim();
+  const returnTo = getSafeAdminReturnTo(formData, "/admin?section=waitlist");
+
+  logWarn("admin_waitlist_lead_delete_start", { leadId });
+  const { lead, supabase } = await readWaitlistLeadForAdminMutation(leadId);
+  if (!lead) {
+    logWarn("admin_waitlist_lead_delete_missing", {
+      durationMs: getDurationMs(startedAt),
+      leadId,
+    });
+    revalidatePath("/admin");
+    redirect(appendAdminQuery(returnTo, "waitlist", "missing"));
+  }
+
+  if (confirmCustomerName !== lead.customer_name.trim()) {
+    logWarn("admin_waitlist_lead_delete_confirmation_failed", {
+      durationMs: getDurationMs(startedAt),
+      leadId,
+    });
+    redirect(appendAdminQuery(returnTo, "waitlistError", "confirmation"));
+  }
+
+  try {
+    const { error } = await supabase.from("waitlist_signups").delete().eq("id", lead.id);
+    if (error) throw new Error(error.message);
+  } catch (error) {
+    logError("admin_waitlist_lead_delete_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      leadId,
+    });
+    throw error;
+  }
+
+  logWarn("admin_waitlist_lead_delete_success", {
+    durationMs: getDurationMs(startedAt),
+    leadId,
+  });
+  revalidatePath("/admin");
+  redirect(appendAdminQuery(returnTo, "waitlist", "deleted"));
+}
+
 export async function updateAdminNote(formData: FormData) {
   const startedAt = Date.now();
   await requireAdmin();
@@ -299,17 +482,31 @@ export async function updateBatchSettings(formData: FormData) {
   await requireAdmin();
   const batchId = String(formData.get("batchId") ?? "");
   const name = String(formData.get("name") ?? "").trim() || "Next Bagelito Batch";
-  const status = parseBatchStatus(String(formData.get("status") ?? ""));
+  const intent = String(formData.get("intent") ?? "save");
+  const status = intent === "open"
+    ? ordersOpenStatus
+    : parseBatchStatus(String(formData.get("status") ?? ""));
   const capacityPacks = parseNullableInteger(formData.get("capacityPacks"));
   const capacityBagels = parseNullableInteger(formData.get("capacityBagels"));
+  const ordersOpenAt = parseLimaDateTime(formData.get("ordersOpenAt"));
   const ordersCloseAt = parseLimaDateTime(formData.get("ordersCloseAt"));
   const deliveryDate = parseLimaDateTime(formData.get("deliveryDate"));
-  const statusAcceptsOrders = status === "orders_open";
-  const nextOrdersCloseAt = statusAcceptsOrders && ordersCloseAt && new Date(ordersCloseAt).getTime() <= Date.now()
-    ? null
-    : ordersCloseAt;
+  const statusAcceptsOrders = status === ordersOpenStatus;
 
   if (!batchId) throw new Error("Missing batch ID");
+
+  if (statusAcceptsOrders) {
+    const closeTime = ordersCloseAt ? new Date(ordersCloseAt).getTime() : Number.NaN;
+    const deliveryTime = deliveryDate ? new Date(deliveryDate).getTime() : Number.NaN;
+
+    if (!Number.isFinite(closeTime) || closeTime <= Date.now()) {
+      redirect("/admin?section=batch&batch=invalid-close");
+    }
+
+    if (!Number.isFinite(deliveryTime) || deliveryTime <= closeTime) {
+      redirect("/admin?section=batch&batch=invalid-delivery");
+    }
+  }
 
   const supabase = createSupabaseAdminClient();
   logInfo("admin_batch_update_start", {
@@ -322,7 +519,7 @@ export async function updateBatchSettings(formData: FormData) {
   try {
     const { data: existing, error: readError } = await supabase
       .from("batches")
-      .select("orders_open_at")
+      .select("orders_open_at, status")
       .eq("id", batchId)
       .single();
 
@@ -334,23 +531,37 @@ export async function updateBatchSettings(formData: FormData) {
       delivery_date: string | null;
       name: string;
       orders_close_at: string | null;
-      orders_open_at?: string;
+      orders_open_at: string | null;
       status: string;
     } = {
       capacity_bagels: capacityBagels,
       capacity_packs: capacityPacks,
       delivery_date: deliveryDate,
       name,
-      orders_close_at: status === "closed" && !nextOrdersCloseAt ? new Date().toISOString() : nextOrdersCloseAt,
+      orders_close_at: status === "closed" && !ordersCloseAt ? new Date().toISOString() : ordersCloseAt,
+      orders_open_at: ordersOpenAt ?? (existing as { orders_open_at?: string | null } | null)?.orders_open_at ?? null,
       status,
     };
 
-    if (status === "orders_open" && !(existing as { orders_open_at?: string | null } | null)?.orders_open_at) {
+    if (
+      statusAcceptsOrders
+      && (
+        intent === "open"
+        || (existing as { status?: string } | null)?.status !== ordersOpenStatus
+        || !(existing as { orders_open_at?: string | null } | null)?.orders_open_at
+      )
+    ) {
       update.orders_open_at = new Date().toISOString();
     }
 
-    const { error } = await supabase.from("batches").update(update).eq("id", batchId);
+    const { data: updated, error } = await supabase
+      .from("batches")
+      .update(update)
+      .eq("id", batchId)
+      .select("status")
+      .single();
     if (error) throw new Error(error.message);
+    if (updated?.status !== status) throw new Error("Batch status was not saved.");
   } catch (error) {
     logError("admin_batch_update_failed", error, {
       batchId,
@@ -367,8 +578,9 @@ export async function updateBatchSettings(formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/reserve");
+  revalidatePath("/waitlist");
   revalidatePath("/admin");
-  redirect("/admin?section=batch&batch=updated");
+  redirect(`/admin?section=batch&batch=${intent === "open" ? "opened" : "updated"}`);
 }
 
 export async function closeCurrentBatch(formData: FormData) {
@@ -380,15 +592,18 @@ export async function closeCurrentBatch(formData: FormData) {
   logInfo("admin_batch_close_start", { batchId });
 
   try {
-    const { error } = await createSupabaseAdminClient()
+    const { data: updated, error } = await createSupabaseAdminClient()
       .from("batches")
       .update({
         orders_close_at: new Date().toISOString(),
         status: "closed",
       })
-      .eq("id", batchId);
+      .eq("id", batchId)
+      .select("status")
+      .single();
 
     if (error) throw new Error(error.message);
+    if (updated?.status !== "closed") throw new Error("Batch status was not closed.");
   } catch (error) {
     logError("admin_batch_close_failed", error, {
       batchId,
@@ -584,6 +799,16 @@ export async function deleteOrder(formData: FormData) {
       if (storageError) throw new Error("Could not delete payment proof: " + storageError.message);
     }
 
+    for (const providerResourceId of [order.payment_order_id, order.payment_charge_id]) {
+      if (!providerResourceId) continue;
+      const { error: webhookDeleteError } = await supabase
+        .from("payment_webhook_events")
+        .delete()
+        .eq("provider", "culqi")
+        .eq("provider_order_id", providerResourceId);
+      if (webhookDeleteError) throw new Error(webhookDeleteError.message);
+    }
+
     const { error: deleteError } = await supabase.from("orders").delete().eq("id", order.id);
     if (deleteError) throw new Error(deleteError.message);
   } catch (error) {
@@ -603,4 +828,147 @@ export async function deleteOrder(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${order.order_code}`);
   redirect(`/admin?deleted=${encodeURIComponent(order.order_code)}`);
+}
+
+export async function archiveCustomerProfile(formData: FormData) {
+  const startedAt = Date.now();
+  await requireAdmin();
+  const customerKey = String(formData.get("customerKey") ?? "");
+
+  logInfo("admin_customer_archive_start", { customerKeyType: customerKey.split(":", 1)[0] });
+  const { customerOrders, supabase } = await readCustomerOrdersForAdminMutation(customerKey);
+  if (!customerOrders.length) {
+    logWarn("admin_customer_archive_missing", { durationMs: getDurationMs(startedAt) });
+    revalidatePath("/admin");
+    redirect("/admin?section=crm&archivedCustomer=missing");
+  }
+
+  if (customerHasOperationalOrders(customerOrders)) {
+    logWarn("admin_customer_archive_blocked_active_order", {
+      durationMs: getDurationMs(startedAt),
+      orderCount: customerOrders.length,
+    });
+    redirect("/admin?section=crm&customerActionError=active");
+  }
+
+  const ordersToArchive = customerOrders.filter((order) => !isOrderArchived(order));
+  try {
+    const waitlistIds = await readMatchingWaitlistIds(supabase, customerKey);
+
+    if (ordersToArchive.length) {
+      const { error: archiveError } = await supabase.from("order_status_history").insert(
+        ordersToArchive.map((order) => ({
+          order_id: order.id,
+          old_status: order.status,
+          new_status: "archived",
+          changed_by: "admin customer archive",
+        })),
+      );
+      if (archiveError) throw new Error(archiveError.message);
+    }
+
+    if (waitlistIds.length) {
+      const { error: waitlistArchiveError } = await supabase
+        .from("waitlist_signups")
+        .update({ status: "archived" })
+        .in("id", waitlistIds);
+      if (waitlistArchiveError) throw new Error(waitlistArchiveError.message);
+    }
+  } catch (error) {
+    logError("admin_customer_archive_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      orderCount: customerOrders.length,
+    });
+    throw error;
+  }
+
+  logInfo("admin_customer_archive_success", {
+    durationMs: getDurationMs(startedAt),
+    orderCount: customerOrders.length,
+  });
+  revalidatePath("/admin");
+  for (const order of customerOrders) revalidatePath(`/admin/orders/${order.order_code}`);
+  redirect("/admin?section=crm&archivedCustomer=success");
+}
+
+export async function deleteCustomerProfile(formData: FormData) {
+  const startedAt = Date.now();
+  await requireAdmin();
+  const customerKey = String(formData.get("customerKey") ?? "");
+  const confirmCustomerName = String(formData.get("confirmCustomerName") ?? "");
+
+  logWarn("admin_customer_delete_start", { customerKeyType: customerKey.split(":", 1)[0] });
+  const { customerName, customerOrders, supabase } = await readCustomerOrdersForAdminMutation(customerKey);
+  if (!customerOrders.length) {
+    logWarn("admin_customer_delete_missing", { durationMs: getDurationMs(startedAt) });
+    revalidatePath("/admin");
+    redirect("/admin?section=crm&deletedCustomer=missing");
+  }
+
+  if (confirmCustomerName !== customerName) {
+    logWarn("admin_customer_delete_confirmation_failed", {
+      durationMs: getDurationMs(startedAt),
+      orderCount: customerOrders.length,
+    });
+    redirect("/admin?section=crm&customerActionError=confirmation");
+  }
+
+  if (customerHasOperationalOrders(customerOrders)) {
+    logWarn("admin_customer_delete_blocked_active_order", {
+      durationMs: getDurationMs(startedAt),
+      orderCount: customerOrders.length,
+    });
+    redirect("/admin?section=crm&customerActionError=active");
+  }
+
+  try {
+    const waitlistIds = await readMatchingWaitlistIds(supabase, customerKey);
+    const paymentProofPaths = Array.from(new Set(
+      customerOrders
+        .filter(hasUploadedPaymentProof)
+        .map((order) => order.payment_screenshot_path)
+        .filter((path): path is string => Boolean(path)),
+    ));
+    if (paymentProofPaths.length) {
+      const { error: storageError } = await supabase.storage.from("payment-proofs").remove(paymentProofPaths);
+      if (storageError) throw new Error("Could not delete payment proofs: " + storageError.message);
+    }
+
+    const providerResourceIds = Array.from(new Set(
+      customerOrders
+        .flatMap((order) => [order.payment_order_id, order.payment_charge_id])
+        .filter((id): id is string => Boolean(id)),
+    ));
+    if (providerResourceIds.length) {
+      const { error: webhookDeleteError } = await supabase
+        .from("payment_webhook_events")
+        .delete()
+        .eq("provider", "culqi")
+        .in("provider_order_id", providerResourceIds);
+      if (webhookDeleteError) throw new Error(webhookDeleteError.message);
+    }
+
+    const orderIds = customerOrders.map((order) => order.id);
+    const { error: deleteError } = await supabase.from("orders").delete().in("id", orderIds);
+    if (deleteError) throw new Error(deleteError.message);
+
+    if (waitlistIds.length) {
+      const { error: waitlistDeleteError } = await supabase.from("waitlist_signups").delete().in("id", waitlistIds);
+      if (waitlistDeleteError) throw new Error(waitlistDeleteError.message);
+    }
+  } catch (error) {
+    logError("admin_customer_delete_failed", error, {
+      durationMs: getDurationMs(startedAt),
+      orderCount: customerOrders.length,
+    });
+    throw error;
+  }
+
+  logWarn("admin_customer_delete_success", {
+    durationMs: getDurationMs(startedAt),
+    orderCount: customerOrders.length,
+  });
+  revalidatePath("/admin");
+  for (const order of customerOrders) revalidatePath(`/admin/orders/${order.order_code}`);
+  redirect("/admin?section=crm&deletedCustomer=success");
 }

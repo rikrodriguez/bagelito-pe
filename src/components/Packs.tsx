@@ -6,6 +6,7 @@ import { MessageCircle } from "lucide-react";
 import { packs, type PackSlug } from "@/data/packs";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import { packCopy } from "@/lib/i18n";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
 
 const packImages: Record<PackSlug, string> = {
@@ -15,8 +16,9 @@ const packImages: Record<PackSlug, string> = {
   "6-single": "/images/pack-6-single.webp",
 };
 
-export function Packs({ acceptingReservations = true }: { acceptingReservations?: boolean }) {
+export function Packs() {
   const { locale, copy } = useLanguage();
+  const { accepting: acceptingReservations } = useBatchAvailability();
 
   return (
     <section id="packs" className="packs-section section-pad" aria-labelledby="packs-title">
@@ -37,7 +39,10 @@ export function Packs({ acceptingReservations = true }: { acceptingReservations?
 
               <div className="pack-title-block">
                 <h3>{localizedPack.name}</h3>
-                <strong>S/{pack.amount}</strong>
+                <div>
+                  <strong>S/{pack.amount}</strong>
+                  <small>S/{(pack.amount / pack.units).toFixed(2)} {copy.packs.perBagel}</small>
+                </div>
               </div>
 
               <div className="clean-pack-image-wrap">

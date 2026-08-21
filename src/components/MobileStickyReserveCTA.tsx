@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
 
-export function MobileStickyReserveCTA({ acceptingReservations = true }: { acceptingReservations?: boolean }) {
+export function MobileStickyReserveCTA() {
   const { copy } = useLanguage();
+  const { accepting: acceptingReservations } = useBatchAvailability();
   const [isVisible, setIsVisible] = useState(false);
   const href = acceptingReservations ? "/#packs" : "/waitlist";
   const label = acceptingReservations ? copy.stickyReserveCta.label : copy.stickyReserveCta.waitlistLabel;

@@ -1,5 +1,6 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
+import { isBatchAcceptingOrders } from "@/lib/batch-availability";
 
 export const productionStatuses = ["payment_confirmed", "in_production", "ready_for_delivery", "delivered"] as const;
 export const batchStatuses = ["waitlist_open", "orders_open", "closed", "in_production", "delivered"] as const;
@@ -54,11 +55,20 @@ export type Order = {
   delivery_notes: string | null;
   marketing_opt_in: boolean;
   total_amount: number;
-  payment_method: string;
-  payment_transaction_number: string;
-  payment_holder_name: string;
-  payment_phone_number: string;
-  payment_screenshot_path: string;
+  payment_method: string | null;
+  payment_transaction_number: string | null;
+  payment_holder_name: string | null;
+  payment_phone_number: string | null;
+  payment_screenshot_path: string | null;
+  payment_provider?: "manual" | "culqi" | string | null;
+  payment_status?: "pending" | "paid" | "failed" | "expired" | "refunded" | string | null;
+  payment_order_id?: string | null;
+  payment_charge_id?: string | null;
+  payment_amount_minor?: number | null;
+  payment_paid_at?: string | null;
+  payment_expires_at?: string | null;
+  payment_failure_code?: string | null;
+  payment_failure_message?: string | null;
   status: string;
   admin_notes: string | null;
   created_at: string;
@@ -164,7 +174,7 @@ export async function fetchCurrentBatch() {
 
   const { data: created, error: createError } = await supabase
     .from("batches")
-    .insert({ name: "Next Bagelito Batch", status: "orders_open", orders_open_at: new Date().toISOString() })
+    .insert({ name: "Next Bagelito Batch", status: "waitlist_open" })
     .select("*")
     .single();
 
@@ -184,11 +194,38 @@ export async function fetchOrderByCode(orderCode: string) {
 }
 
 export function isManualPaymentPending(order: Order) {
-  return order.payment_transaction_number === "PENDING_PAYMENT";
+  return order.payment_provider !== "culqi" && order.payment_transaction_number === "PENDING_PAYMENT";
 }
 
 export function hasUploadedPaymentProof(order: Pick<Order, "payment_screenshot_path">) {
-  return Boolean(order.payment_screenshot_path) && !order.payment_screenshot_path.startsWith("payment-pending/");
+  const path = order.payment_screenshot_path ?? "";
+  return Boolean(path) && !path.startsWith("payment-pending/");
+}
+
+export function getPaymentDisplay(order: Pick<Order, "payment_method" | "payment_transaction_number" | "payment_provider" | "payment_status">) {
+  if (order.payment_provider === "culqi") {
+    const status = order.payment_status === "paid" ? "confirmed" : order.payment_status ?? "pending";
+    return `Culqi · ${status}`;
+  }
+
+  if (order.payment_transaction_number === "PENDING_PAYMENT") return "Manual proof pending";
+  return [order.payment_method, order.payment_transaction_number].filter(Boolean).join(" - ") || "Payment pending";
+}
+
+export function getCustomerDeliveryNote(order: Pick<Order, "delivery_notes"> | string | null | undefined) {
+  const rawNotes = typeof order === "string" || order == null ? order : order.delivery_notes;
+  if (!rawNotes) return null;
+
+  const cleaned = rawNotes
+    .split("|")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .filter((part) => !/^delivery:/i.test(part))
+    .filter((part) => !/^recepci[oó]n:/i.test(part))
+    .filter((part) => !/^reception:/i.test(part))
+    .join(" | ");
+
+  return cleaned || null;
 }
 
 export type CustomerFlavorPreference = {
@@ -236,7 +273,7 @@ function normalizeCustomerEmail(value: string | null | undefined) {
   return (value ?? "").trim().toLowerCase();
 }
 
-function getCustomerKey(order: Pick<Order, "email" | "id" | "whatsapp">) {
+export function getCustomerKey(order: Pick<Order, "email" | "id" | "whatsapp">) {
   const phone = normalizeCustomerPhone(order.whatsapp);
   if (phone) return `phone:${phone}`;
 
@@ -388,9 +425,7 @@ export function getDashboardStats(orders: Order[]) {
 }
 
 export function isBatchAcceptingReservations(batch: Pick<Batch, "orders_close_at" | "status">) {
-  const statusOpen = batch.status === "waitlist_open" || batch.status === "orders_open";
-  const beforeClose = !batch.orders_close_at || Date.now() < new Date(batch.orders_close_at).getTime();
-  return statusOpen && beforeClose;
+  return isBatchAcceptingOrders(batch.status, batch.orders_close_at);
 }
 
 export function getBatchStats(batch: Batch, orders: Order[]) {
