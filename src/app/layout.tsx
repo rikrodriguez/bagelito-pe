@@ -14,6 +14,12 @@ import "./globals.css";
 
 const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
+// The active batch is operational data. Keep the first server-rendered HTML
+// aligned with Supabase so crawlers, link previews, and new visitors do not
+// receive a stale deadline or availability state from a cached layout.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: siteName,

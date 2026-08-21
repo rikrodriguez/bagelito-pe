@@ -1,6 +1,6 @@
 export const siteUrl = "https://bagelito.pe";
 export const siteName = "Bagelito.pe";
-export const siteLegalName = "Bagelito SAC";
+export const siteLegalName = "Bagelito";
 export const siteTitle = "Bagelito.pe | The Monthly Bagel Drop in Lima";
 export const siteDescription =
   "Handmade bagels in Lima. Nostalgia with the perfect chew, opened once a month by reservation.";
