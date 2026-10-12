@@ -37,6 +37,7 @@ export async function POST(request: Request) {
     if (orderError) throw new Error(orderError.message);
     if (!order) return NextResponse.json({ ok: false, error: "Order not found." }, { status: 404 });
     if (order.email.trim().toLowerCase() !== email) return NextResponse.json({ ok: false, error: "Order not found." }, { status: 404 });
+    if (order.payment_provider !== "culqi") return NextResponse.json({ ok: false, error: "This is not a Culqi reservation." }, { status: 409 });
     if (order.status === "cancelled" || order.status === "delivered") {
       return NextResponse.json({ ok: false, error: "This order cannot accept payment." }, { status: 409 });
     }
@@ -71,8 +72,10 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!order.payment_expires_at) return NextResponse.json({ ok: false, error: "Reservation expiry is missing." }, { status: 409 });
+
     const existingOrderId = typeof order.payment_order_id === "string" ? order.payment_order_id : "";
-    if (existingOrderId && order.payment_provider === "culqi" && order.payment_status === "pending") {
+    if (existingOrderId && order.payment_provider === "culqi") {
       return NextResponse.json({
         ok: true,
         amount: toPaymentMinorUnits(Number(order.total_amount)),
@@ -85,40 +88,20 @@ export async function POST(request: Request) {
 
     const culqiOrder = await createCulqiOrder({
       amount: Number(order.total_amount),
+      expirationDate: new Date(order.payment_expires_at),
       customerEmail: order.email,
       customerName: order.customer_name,
       orderCode: order.order_code,
       phoneNumber: order.whatsapp,
     });
 
-    const { error: updateError } = await supabase
-      .from("orders")
-      .update({
-        payment_amount_minor: culqiOrder.amount,
-        payment_currency: culqiOrder.currency_code,
-        payment_expires_at: culqiOrder.expiresAt,
-        payment_metadata: culqiOrder.metadata ?? null,
-        payment_order_id: culqiOrder.id,
-        payment_provider: "culqi",
-        payment_status: "pending",
-        payment_method: "Culqi",
-        status: "payment_pending_review",
-      })
-      .eq("id", order.id);
-    if (updateError) throw new Error(updateError.message);
-
-    const { error: attemptError } = await supabase.from("payment_attempts").upsert({
-      amount_minor: culqiOrder.amount,
-      currency_code: culqiOrder.currency_code,
-      expires_at: culqiOrder.expiresAt,
-      order_id: order.id,
-      payment_method: "Culqi",
-      provider: "culqi",
-      provider_order_id: culqiOrder.id,
-      provider_payload: culqiOrder,
-      status: "pending",
-    }, { onConflict: "provider,provider_order_id" });
-    if (attemptError) throw new Error(attemptError.message);
+    const { data: attached, error: attachError } = await supabase.rpc("attach_culqi_order", {
+      p_order_id: order.id, p_provider_order: culqiOrder,
+    });
+    if (attachError) throw new Error(attachError.message);
+    if (!attached || attached.paid) {
+      return NextResponse.json({ ok: false, error: "The order is already paid or could not be attached." }, { status: 409 });
+    }
 
     return NextResponse.json({
       ok: true,
@@ -136,3 +119,4 @@ export async function POST(request: Request) {
     }, { status });
   }
 }
+
