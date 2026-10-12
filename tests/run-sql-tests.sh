@@ -28,6 +28,7 @@ done
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/legacy-attempt.sql"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-checkout-safety.sql" >> "$WORK/schema.log" 2>&1
 export PGOPTIONS='-c bagelito.test_mode=on'
+"$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/admin-login-rate-limit.sql"
 for file in reservation-window.sql charge-claim.sql charge-concurrency.sql prepare-concurrency.sql; do
  "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/$file"
 done
@@ -62,6 +63,15 @@ wait "$a"; wait "$b"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/capacity-race-reserve.sql" > "$WORK/capacity-reserve" & b=$!
 wait "$a"; wait "$b"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/capacity-race-assert.sql"
+# Seed one persistent global counter, then race both connections for the last slot.
+"$PG_BIN/psql" -v ON_ERROR_STOP=1 -c "select * from consume_api_rate_limit('admin_login_concurrency','fixture',2,900);" > "$WORK/admin-seed"
+admin="select allowed from consume_api_rate_limit('admin_login_concurrency','fixture',2,900);"
+"$PG_BIN/psql" -At -v ON_ERROR_STOP=1 -c "begin; $admin select pg_sleep(0.2); commit;" > "$WORK/admin-one" & a=$!
+"$PG_BIN/psql" -At -v ON_ERROR_STOP=1 -c "$admin" > "$WORK/admin-two" & b=$!
+wait "$a"; wait "$b"
+[[ $(cat "$WORK/admin-one" "$WORK/admin-two" | grep -c '^t$') -eq 1 ]]
+[[ $(cat "$WORK/admin-one" "$WORK/admin-two" | grep -c '^f$') -eq 1 ]]
+echo 'PASS: persistent admin limits, expiry recovery, role restrictions and concurrent last slot'
 echo 'PASS: verified failure wins over late response; wall-clock expiry enforced; payment race cannot oversell capacity'
 echo 'PASS: atomic rollback after history failure; metadata/source binding; duplicate event race; fulfillment preservation; late-payment quarantine'
 echo 'PASS: scheduled opening; legacy lane blocked; reusable token-only session; single charge claim; 3DS binding; concurrent card/Yape sessions allow exactly one claim'
