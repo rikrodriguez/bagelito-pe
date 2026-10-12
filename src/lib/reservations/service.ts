@@ -5,7 +5,7 @@ import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
 import { getMissingReservationEnv } from "@/lib/env";
 import { logError, logWarn } from "@/lib/monitoring";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { isBatchAcceptingOrders, ordersOpenStatus } from "@/lib/batch-availability";
+import { consumesBatchCapacity, isBatchAcceptingOrders, ordersOpenStatus } from "@/lib/batch-availability";
 import {
   culqiReservationPayloadSchema,
   parseItems,
@@ -157,12 +157,7 @@ async function getBatchCapacityUsage(supabase: ReturnType<typeof createSupabaseA
   if (error) throw new Error("Could not read batch capacity: " + error.message);
 
   const now = Date.now();
-  const orders = ((data ?? []) as CapacityOrderRow[]).filter((order) => !(
-    order.payment_provider === "culqi"
-    && (order.payment_status === "pending" || order.payment_status === "failed")
-    && order.payment_expires_at
-    && new Date(order.payment_expires_at).getTime() <= now
-  ));
+  const orders = ((data ?? []) as CapacityOrderRow[]).filter((order) => consumesBatchCapacity(order, now));
   return {
     reservedBagels: orders.reduce((sum, order) => sum + Number(order.pack_units), 0),
     reservedPacks: orders.length,
@@ -174,7 +169,7 @@ function getBatchBlockReason(batch: CurrentBatchRow, usage: { reservedBagels: nu
     return "This Bagelito batch is currently closed. Join the waitlist for the next opening.";
   }
 
-  if (!isBatchAcceptingOrders(batch.status, batch.orders_close_at)) {
+  if (!isBatchAcceptingOrders(batch.status, batch.orders_close_at, Date.now(), batch.orders_open_at)) {
     return "This Bagelito batch has already closed. Join the waitlist for the next batch.";
   }
 

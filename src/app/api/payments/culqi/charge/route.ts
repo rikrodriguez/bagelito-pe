@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   createCulqiCharge,
-  getPaymentConfig,
+  isCulqiRequestAllowed,
   type CulqiAuthentication3DS,
 } from "@/lib/payments";
 import { coordinateCulqiCharge } from "@/lib/payments/charge-coordinator";
@@ -26,6 +26,7 @@ type ChargeOrder = {
   id: string;
   order_code: string;
   payment_order_id: string | null;
+  payment_lane: string;
   payment_expires_at: string | null;
   payment_status: string | null;
   status: string;
@@ -68,7 +69,7 @@ function parseAuthentication3DS(value: unknown): CulqiAuthentication3DS | undefi
 }
 
 export async function POST(request: Request) {
-  if (!getPaymentConfig().enabled) {
+  if (!isCulqiRequestAllowed(request)) {
     return NextResponse.json(
       { ok: false, error: "Culqi payments are not enabled yet." },
       { status: 503 },
@@ -83,6 +84,9 @@ export async function POST(request: Request) {
     const email = String(payload.email ?? "").trim().toLowerCase();
     const sourceId = String(payload.sourceId ?? "").trim();
     const deviceId = String(payload.deviceId ?? "").trim();
+    if (sourceId.startsWith("ype_") && payload.authentication3DS != null) {
+      return NextResponse.json({ ok: false, error: "Card 3DS is not supported for Yape." }, { status: 400 });
+    }
     const authentication3DS = parseAuthentication3DS(payload.authentication3DS);
 
     if (
@@ -90,6 +94,7 @@ export async function POST(request: Request) {
       || !email
       || !isCulqiSourceId(sourceId)
       || (sourceId.startsWith("tkn_") && !isDeviceId(deviceId))
+      || (sourceId.startsWith("ype_") && payload.authentication3DS != null)
     ) {
       return NextResponse.json(
         { ok: false, error: "Valid order, email, Culqi token, and card security fingerprint are required." },
@@ -107,7 +112,7 @@ export async function POST(request: Request) {
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("orders")
-      .select("id, order_code, customer_name, email, whatsapp, delivery_address, district, total_amount, status, payment_status, payment_order_id, payment_expires_at")
+      .select("id, order_code, customer_name, email, whatsapp, delivery_address, district, total_amount, status, payment_status, payment_lane, payment_order_id, payment_expires_at")
       .eq("order_code", orderCode)
       .maybeSingle();
 
@@ -136,11 +141,15 @@ export async function POST(request: Request) {
         { status: 410 },
       );
     }
-    if (!order.payment_order_id) {
+    if (order.payment_order_id || order.payment_lane !== "token") {
       return NextResponse.json(
-        { ok: false, error: "Culqi checkout order has not been prepared." },
+        { ok: false, error: "This reservation cannot accept token charges." },
         { status: 409 },
       );
+    }
+
+    if (sourceId.startsWith("ype_") && Number(order.total_amount) > 2000) {
+      return NextResponse.json({ ok: false, error: "Yape supports a maximum of S/ 2000 per payment." }, { status: 400 });
     }
 
     const chargeOrder = order;
@@ -180,4 +189,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

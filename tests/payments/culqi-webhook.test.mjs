@@ -5,11 +5,11 @@ import { stripTypeScriptTypes } from 'node:module';
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib/payments/verification.ts';
 const source = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const body = stripTypeScriptTypes(source.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
-const load = new Function('NextResponse', 'fetchCulqiEvent', 'getPaymentConfig', 'createSupabaseAdminClient', 'parseCulqiEventResource', 'verifyCulqiEventIdentity', `${body}; return POST;`);
+const load = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient', 'parseCulqiEventResource', 'verifyCulqiEventIdentity', `${body}; return POST;`);
 const id = 'evt_test_12345678';
 async function execute({ event = {}, resource = { id: 'chr_test_12345678', amount: 6800, currency_code: 'PEN' }, error = null, data = { status: 'paid' }, enabled = true } = {}) {
   const calls = [];
-  const post = load({ json: (payload, init = {}) => ({ payload, status: init.status ?? 200 }) }, async () => ({ id, type: 'charge.creation.succeeded', data: resource, ...event }), () => ({ enabled }), () => ({ rpc: async (name, args) => { calls.push({ name, args }); return { data, error }; } }), parseCulqiEventResource, verifyCulqiEventIdentity);
+  const post = load({ json: (payload, init = {}) => ({ payload, status: init.status ?? 200 }) }, async () => ({ id, type: 'charge.creation.succeeded', data: resource, ...event }), () => enabled, () => ({ rpc: async (name, args) => { calls.push({ name, args }); return { data, error }; } }), parseCulqiEventResource, verifyCulqiEventIdentity);
   const response = await post(new Request('https://fixture.invalid', { method: 'POST', body: JSON.stringify({ id, type: 'charge.creation.succeeded' }) }));
   return { response, calls };
 }
@@ -49,4 +49,9 @@ test('duplicate transaction result is returned without extra writes', async () =
 test('disabled provider makes no transaction call', async () => {
   const { response, calls } = await execute({ enabled: false });
   assert.equal(response.status, 503); assert.equal(calls.length, 0);
+});
+test('refund events require reconciliation and never reach payment transaction', async () => {
+ for(const event of [{type:'refund.creation.succeeded'},{type:'charge.creation.succeeded',data:{object:'refund',id:'ref_test_fixture123'}}]) {
+  const {response,calls}=await execute({event});assert.equal(response.status,501);assert.equal(calls.length,0);
+ }
 });

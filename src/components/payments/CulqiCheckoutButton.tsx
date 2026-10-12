@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { CreditCard, LoaderCircle, LockKeyhole, ShieldCheck } from "lucide-react";
 import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
@@ -9,7 +9,7 @@ export type CulqiCheckoutSession = {
   amountMinor: number;
   expiresAt: string | null;
   orderCode: string;
-  orderId: string;
+  sessionId: string;
 };
 
 export type CulqiTokenSubmission = "requires_3ds" | "submitted";
@@ -82,8 +82,6 @@ type Props = {
   customerEmail: string;
   disabled?: boolean;
   locale: "en" | "es";
-  onAlternativePayment: (session: CulqiCheckoutSession) => Promise<void>;
-  onDemoComplete: () => Promise<void> | void;
   onError: (message: string) => void;
   onToken: (
     session: CulqiCheckoutSession,
@@ -97,7 +95,6 @@ type Props = {
 };
 
 type CheckoutState = "idle" | "preparing" | "ready" | "charging" | "authenticating" | "confirming" | "error";
-type DemoPaymentMethod = "card" | "mobile" | "wallet";
 
 function errorMessage(error: unknown, fallback: string) {
   return error instanceof Error && error.message ? error.message : fallback;
@@ -113,8 +110,6 @@ export function CulqiCheckoutButton({
   customerEmail,
   disabled = false,
   locale,
-  onAlternativePayment,
-  onDemoComplete,
   onError,
   onToken,
   prepareCheckout,
@@ -122,7 +117,6 @@ export function CulqiCheckoutButton({
   const [checkoutScriptReady, setCheckoutScriptReady] = useState(false);
   const [threeDSScriptReady, setThreeDSScriptReady] = useState(false);
   const [state, setState] = useState<CheckoutState>("idle");
-  const [demoPaymentMethod, setDemoPaymentMethod] = useState<DemoPaymentMethod>("card");
   const actionRunningRef = useRef(false);
   const checkoutRef = useRef<CulqiCheckoutInstance | null>(null);
   const deviceIdRef = useRef("");
@@ -157,7 +151,7 @@ export function CulqiCheckoutButton({
       checkoutTerms: "Delivery en la fecha programada. El repartidor espera hasta 10 minutos; la reentrega depende de disponibilidad y puede tener costo adicional. Bagelito no responde por datos incorrectos o ausencia del cliente.",
       checkoutTermsLink: "Leer las políticas legales completas.",
       terms: "Acepta los términos para habilitar el checkout seguro.",
-      wallets: "Yape / QR",
+      wallets: "Yape",
       walletsMore: "Apple Pay / Google Pay",
     }
     : {
@@ -184,7 +178,7 @@ export function CulqiCheckoutButton({
       checkoutTerms: "Delivery is made on the scheduled date. The driver waits up to 10 minutes; re-delivery depends on availability and may cost extra. Bagelito is not responsible for incorrect details or customer absence.",
       checkoutTermsLink: "Read the full legal policies.",
       terms: "Accept the terms to enable secure checkout.",
-      wallets: "Yape / QR",
+      wallets: "Yape",
       walletsMore: "Apple Pay / Google Pay",
     };
 
@@ -194,21 +188,6 @@ export function CulqiCheckoutButton({
     setState("error");
     onError(errorMessage(error, copy.error));
   }, [copy.error, onError]);
-
-  async function handleDemoSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (disabled || state === "confirming") return;
-
-    onError("");
-    setState("confirming");
-    event.currentTarget.reset();
-
-    try {
-      await onDemoComplete();
-    } catch (error) {
-      setCheckoutError(new Error(errorMessage(error, copy.demoError)));
-    }
-  }
 
   const getDeviceId = useCallback(async () => {
     if (deviceIdRef.current) return deviceIdRef.current;
@@ -278,19 +257,18 @@ export function CulqiCheckoutButton({
           lang: locale,
           modal: false,
           paymentMethods: {
-            agente: true,
-            bancaMovil: true,
-            billetera: true,
-            cuotealo: true,
+            agente: false,
+            bancaMovil: false,
+            billetera: false,
+            cuotealo: false,
             tarjeta: true,
-            yape: true,
+            yape: session.amountMinor <= 200000,
           },
-          paymentMethodsSort: ["tarjeta", "yape", "billetera", "bancaMovil", "agente", "cuotealo"],
+          paymentMethodsSort: ["yape", "tarjeta"],
         },
         settings: {
           amount: session.amountMinor,
           currency: config.currency,
-          order: session.orderId,
           rsapublickey: config.rsaPublicKey.replace(/\\n/g, "\n"),
           title: "Bagelito.pe",
           xculqirsaid: config.rsaId,
@@ -312,7 +290,7 @@ export function CulqiCheckoutButton({
               const result = await onToken(session, tokenId, { deviceId: deviceId || undefined });
 
               if (result === "requires_3ds") {
-                if (!window.Culqi3DS) throw new Error(copy.error);
+                if (!tokenId.startsWith("tkn_") || !window.Culqi3DS) throw new Error(copy.error);
                 pending3DSRef.current = { deviceId, session, tokenId };
                 setState("authenticating");
                 window.Culqi3DS.settings = {
@@ -332,10 +310,7 @@ export function CulqiCheckoutButton({
             }
 
             if (checkout.order?.id) {
-              checkout.close();
-              setState("confirming");
-              await onAlternativePayment(session);
-              return;
+              throw new Error("Alternative payment orders are disabled.");
             }
 
             const checkoutError = checkout.error;
@@ -363,8 +338,7 @@ export function CulqiCheckoutButton({
     customerEmail,
     getDeviceId,
     locale,
-    onAlternativePayment,
-    onError,
+      onError,
     onToken,
     prepareCheckout,
     setCheckoutError,
@@ -425,7 +399,6 @@ export function CulqiCheckoutButton({
         : state === "confirming"
           ? copy.confirming
           : copy.loading;
-  const showDemo = !config.enabled;
   const showLockedPreview = config.enabled && disabled;
   const showBusy = config.enabled && !disabled && state !== "ready" && state !== "error";
 
@@ -457,76 +430,17 @@ export function CulqiCheckoutButton({
         <div className="culqi-checkout-lock"><LockKeyhole size={16} /> SSL</div>
       </div>
 
-      {showDemo ? (
-        <form className="culqi-preview culqi-preview-form" onSubmit={handleDemoSubmit}>
-          <div className="culqi-preview-tabs" role="tablist" aria-label={locale === "es" ? "Método de pago" : "Payment method"}>
-            <button className={demoPaymentMethod === "card" ? "active" : ""} type="button" role="tab" aria-selected={demoPaymentMethod === "card"} onClick={() => setDemoPaymentMethod("card")}>
-              <CreditCard size={16} /> {copy.card}
-            </button>
-            <button className={demoPaymentMethod === "mobile" ? "active" : ""} type="button" role="tab" aria-selected={demoPaymentMethod === "mobile"} onClick={() => setDemoPaymentMethod("mobile")}>
-              {copy.wallets}
-            </button>
-            <button className={demoPaymentMethod === "wallet" ? "active" : ""} type="button" role="tab" aria-selected={demoPaymentMethod === "wallet"} onClick={() => setDemoPaymentMethod("wallet")}>
-              {copy.walletsMore}
-            </button>
-          </div>
-
-          <fieldset className="culqi-demo-fieldset" disabled={disabled || state === "confirming"}>
-            {demoPaymentMethod === "card" ? (
-              <>
-                <label className="culqi-preview-field wide">
-                  <span>{copy.cardNumber}</span>
-                  <input autoComplete="off" inputMode="numeric" name="demo-card-number" pattern="[0-9 ]{13,23}" placeholder="0000 0000 0000 0000" required />
-                  <small>VISA &nbsp; MC &nbsp; AMEX &nbsp; DINERS</small>
-                </label>
-                <div className="culqi-preview-fields">
-                  <label className="culqi-preview-field">
-                    <span>{copy.expires}</span>
-                    <input autoComplete="off" inputMode="numeric" name="demo-expiry" pattern="(0[1-9]|1[0-2])/[0-9]{2}" placeholder="MM/AA" required />
-                  </label>
-                  <label className="culqi-preview-field">
-                    <span>{copy.cvv}</span>
-                    <input autoComplete="off" inputMode="numeric" name="demo-cvv" pattern="[0-9]{3,4}" placeholder="000" required />
-                  </label>
-                </div>
-              </>
-            ) : demoPaymentMethod === "mobile" ? (
-              <div className="culqi-preview-fields">
-                <label className="culqi-preview-field">
-                  <span>{copy.mobilePhone}</span>
-                  <input autoComplete="off" inputMode="tel" name="demo-mobile" pattern="[0-9 +]{9,16}" placeholder="999 999 999" required />
-                </label>
-                <label className="culqi-preview-field">
-                  <span>{copy.mobileCode}</span>
-                  <input autoComplete="off" inputMode="numeric" name="demo-approval-code" pattern="[0-9]{6}" placeholder="000000" required />
-                </label>
-              </div>
-            ) : (
-              <div className="culqi-demo-options" role="radiogroup" aria-label={copy.walletsMore}>
-                {["Apple Pay", "Google Pay", "PagoEfectivo", "Cuotéalo BCP"].map((method, index) => (
-                  <label className="culqi-demo-option" key={method}>
-                    <input defaultChecked={index === 0} name="demo-wallet" type="radio" value={method} />
-                    <span>{method}</span>
-                  </label>
-                ))}
-              </div>
-            )}
-
-            <label className="culqi-preview-field wide">
-              <span>{copy.email}</span>
-              <input autoComplete="off" defaultValue={customerEmail} name="demo-email" placeholder="nombre@email.com" required type="email" />
-            </label>
-            <p className="culqi-checkout-terms-note">{copy.checkoutTerms} <a href="/legal" target="_blank" rel="noreferrer">{copy.checkoutTermsLink}</a></p>
-            <button className="culqi-preview-pay" type="submit">
-              {state === "confirming" ? copy.confirming : copy.pay}
-            </button>
-          </fieldset>
-
-          <div className="culqi-availability-note" role="status">
-            <strong>{disabled ? copy.terms : copy.demoStatus}</strong>
-            {disabled ? <span>{copy.terms}</span> : null}
-          </div>
-        </form>
+      {config.mode === "sandbox" && config.enabled ? (
+        <div className="culqi-availability-note" role="status">
+          <strong>{locale === "es" ? "PRUEBAS · No se realizan cobros reales" : "TEST MODE · No real charges"}</strong>
+          <span>{locale === "es" ? "Utiliza únicamente los datos de prueba oficiales de Culqi." : "Use only official Culqi test data."}</span>
+        </div>
+      ) : null}
+      {!config.enabled ? (
+        <div className="culqi-availability-note" role="status">
+          <strong>{copy.disabled}</strong>
+          <span>{locale === "es" ? "No ingreses datos de tarjeta. El pago se habilitará cuando esté configurado y verificado." : "Do not enter card details. Payment will be available after setup and verification."}</span>
+        </div>
       ) : showLockedPreview ? (
         <div className="culqi-preview" aria-disabled="true">
           <div className="culqi-preview-tabs" aria-hidden="true">
@@ -575,7 +489,7 @@ export function CulqiCheckoutButton({
         </div>
       )}
 
-      {!showDemo ? (
+      {config.enabled ? (
         <p className="culqi-security-note">
           <ShieldCheck size={16} />
           {copy.secure}

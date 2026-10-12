@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchCulqiEvent, getPaymentConfig } from "@/lib/payments";
+import { fetchCulqiEvent, isCulqiRequestAllowed } from "@/lib/payments";
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from "@/lib/payments/verification";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
@@ -10,7 +10,7 @@ const eventTypes = new Set([
 ]);
 
 export async function POST(request: Request) {
-  if (!getPaymentConfig().enabled) {
+  if (!isCulqiRequestAllowed(request)) {
     return NextResponse.json({ ok: false, error: "Culqi payments are not enabled yet." }, { status: 503 });
   }
   try {
@@ -21,8 +21,11 @@ export async function POST(request: Request) {
     }
     const verified = await fetchCulqiEvent(eventId);
     const eventType = verifyCulqiEventIdentity(eventId, verified);
-    if (!eventTypes.has(eventType)) return NextResponse.json({ ok: true, ignored: true });
     const resource = parseCulqiEventResource(verified.data);
+    if (eventType.startsWith("refund.") || resource?.object === "refund") {
+      return NextResponse.json({ ok: false, error: "Refund reconciliation is not implemented." }, { status: 501 });
+    }
+    if (!eventTypes.has(eventType)) return NextResponse.json({ ok: true, ignored: true });
     if (!resource || typeof resource.id !== "string" || !resource.id) {
       return NextResponse.json({ ok: false, error: "Webhook payment data is missing." }, { status: 400 });
     }

@@ -384,7 +384,7 @@ export function ReservationFlow({
     });
   }
 
-  function redirectToSuccess(orderCode: string, payment: "demo" | "paid" | "pending") {
+  function redirectToSuccess(orderCode: string, payment: "paid" | "pending") {
     const params = new URLSearchParams({
       amount: String(totalAmount),
       order: orderCode,
@@ -434,10 +434,10 @@ export function ReservationFlow({
       error?: string;
       expiresAt?: string | null;
       ok?: boolean;
-      orderId?: string;
+      sessionId?: string;
     };
 
-    if (!orderResponse.ok || !order.ok || !order.orderId || !order.amount) {
+    if (!orderResponse.ok || !order.ok || !order.sessionId || !order.amount) {
       throw new Error(order.error ?? r.errors.submit);
     }
 
@@ -451,7 +451,7 @@ export function ReservationFlow({
       amountMinor: order.amount,
       expiresAt: order.expiresAt ?? reservation.expiresAt ?? null,
       orderCode: reservation.orderCode,
-      orderId: order.orderId,
+      sessionId: order.sessionId,
     };
   }
 
@@ -474,8 +474,14 @@ export function ReservationFlow({
       const result = await response.json() as {
         ok?: boolean;
         paymentStatus?: string;
+        reconciliationRequired?: boolean;
       };
 
+      if (response.ok && result.ok && result.reconciliationRequired) {
+        throw new Error(locale === "es"
+          ? `El pago del pedido ${session.orderCode} necesita revisión. No vuelvas a pagar; contáctanos con ese código.`
+          : `Payment for order ${session.orderCode} needs review. Do not pay again; contact us with this code.`);
+      }
       if (response.ok && result.ok && result.paymentStatus === "paid") {
         return "paid" as const;
       }
@@ -528,22 +534,6 @@ export function ReservationFlow({
     });
     redirectToSuccess(session.orderCode, verifiedStatus);
     return "submitted";
-  }
-
-  async function submitCulqiAlternative(session: CulqiCheckoutSession) {
-    trackBagelitoEvent("Culqi Alternative Payment Created", {
-      orderCode: session.orderCode,
-      pack: selectedPack.slug,
-    });
-    redirectToSuccess(session.orderCode, "pending");
-  }
-
-  function completeDemoCheckout() {
-    trackBagelitoEvent("Checkout Demo Completed", {
-      amount: totalAmount,
-      pack: selectedPack.slug,
-    });
-    redirectToSuccess("BAG-DEMO", "demo");
   }
 
   if (!batchAvailability.accepting && !checkoutPage) {
@@ -825,8 +815,6 @@ export function ReservationFlow({
               customerEmail={details.email}
               disabled={false}
               locale={locale}
-              onAlternativePayment={submitCulqiAlternative}
-              onDemoComplete={completeDemoCheckout}
               onError={setError}
               onToken={submitCulqiToken}
               prepareCheckout={prepareCulqiCheckout}

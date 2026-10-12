@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { getPaymentConfig } from "@/lib/payments";
+import { isCulqiRequestAllowed } from "@/lib/payments";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  if (!getPaymentConfig().enabled) {
+  if (!isCulqiRequestAllowed(request)) {
     return NextResponse.json(
       { ok: false, error: "Culqi payments are not enabled yet." },
       { status: 503 },
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("orders")
-      .select("id, order_code, payment_status, payment_expires_at, payment_order_id, status")
+      .select("id, order_code, payment_status, payment_expires_at, payment_order_id, payment_reconciliation_required, status")
       .eq("order_code", orderCode)
       .eq("checkout_session_id", checkoutSessionId)
       .maybeSingle();
@@ -75,6 +75,7 @@ export async function POST(request: Request) {
         orderCode: data.order_code,
         orderStatus,
         paymentStatus,
+        reconciliationRequired: Boolean(data.payment_reconciliation_required),
       },
       { headers: { "Cache-Control": "no-store" } },
     );

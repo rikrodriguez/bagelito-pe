@@ -2,16 +2,6 @@ import { assertCulqiEnabled } from "./config";
 
 const culqiApiUrl = "https://api.culqi.com/v2";
 
-type CulqiOrderResponse = {
-  id: string;
-  amount: number;
-  currency_code: string;
-  expiration_date?: number;
-  metadata?: Record<string, string> | null;
-  order_number?: string;
-  state?: string;
-};
-
 type CulqiEventResponse = {
   id: string;
   type: string;
@@ -125,51 +115,6 @@ async function culqiRequest<T>(path: string, init: RequestInit = {}) {
   return response.payload;
 }
 
-export async function createCulqiOrder({
-  amount,
-  customerEmail,
-  customerName,
-  orderCode,
-  phoneNumber,
-  expirationDate,
-}: {
-  amount: number;
-  customerEmail: string;
-  customerName: string;
-  orderCode: string;
-  phoneNumber: string;
-  expirationDate?: Date;
-}) {
-  const expiration = expirationDate ?? new Date(Date.now() + 30 * 60 * 1000);
-  const { firstName, lastName } = splitCustomerName(customerName);
-  const order = await culqiRequest<CulqiOrderResponse>("/orders", {
-    body: JSON.stringify({
-      amount: toMinorUnits(amount),
-      currency_code: "PEN",
-      confirm: false,
-      description: `Bagelito batch - ${orderCode}`,
-      order_number: orderCode,
-      client_details: {
-        email: customerEmail,
-        first_name: firstName,
-        last_name: lastName,
-        phone_number: normalizePhoneNumber(phoneNumber),
-      },
-      expiration_date: Math.floor(expiration.getTime() / 1000),
-      metadata: {
-        bagelito_order_code: orderCode,
-      },
-    }),
-    method: "POST",
-  });
-
-  return {
-    ...order,
-    amount: Number(order.amount),
-    expiresAt: expiration.toISOString(),
-  };
-}
-
 function splitCustomerName(customerName: string) {
   const parts = customerName.trim().split(/\s+/).filter(Boolean);
   const firstName = parts.shift() ?? "Cliente";
@@ -208,6 +153,9 @@ export async function createCulqiCharge({
   phoneNumber: string;
   sourceId: string;
 }) {
+  if (sourceId.startsWith("ype_") && (authentication3DS || amount > 2000)) {
+    throw new Error("Yape does not support card 3DS or payments above PEN 2000.");
+  }
   const { firstName, lastName } = splitCustomerName(customerName);
   const chargePayload = {
       amount: toMinorUnits(amount),
@@ -237,6 +185,7 @@ export async function createCulqiCharge({
   });
 
   if (status === 200 && charge?.action_code === "REVIEW") {
+    if (!sourceId.startsWith("tkn_")) throw new Error("Unexpected card authentication for non-card source.");
     return {
       requires3DS: true,
       response: charge,

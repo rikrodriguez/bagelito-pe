@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { getPaymentConfig } from "@/lib/payments";
+import { isCulqiRequestAllowed } from "@/lib/payments";
 import { PublicApiError, enforcePublicApiSecurity } from "@/lib/public-api-security";
 import { createCulqiReservation } from "@/lib/reservations/service";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  if (!getPaymentConfig().enabled) {
+  if (!isCulqiRequestAllowed(request)) {
     return NextResponse.json(
       { ok: false, error: "Culqi payments are not enabled yet." },
       { status: 503 },
