@@ -35,37 +35,17 @@ export async function POST(request: Request) {
     if (error) throw new Error(error.message);
     if (!data) return NextResponse.json({ ok: false, error: "Payment not found." }, { status: 404 });
 
-    let paymentStatus = String(data.payment_status ?? "pending");
-    let orderStatus = String(data.status);
     const expiresAt = data.payment_expires_at ? String(data.payment_expires_at) : null;
-
-    if (
-      paymentStatus === "pending"
-      && !data.payment_order_id
-      && expiresAt
-      && new Date(expiresAt).getTime() <= Date.now()
-    ) {
-      const { data: expiredOrder, error: expireError } = await supabase
-        .from("orders")
-        .update({
-          payment_status: "expired",
-          status: "cancelled",
-        })
-        .eq("id", data.id)
-        .eq("payment_status", "pending")
-        .select("id")
-        .maybeSingle();
-
-      if (!expireError && expiredOrder?.id) {
-        await supabase.from("order_status_history").insert({
-          changed_by: "payment expiry",
-          new_status: "cancelled",
-          old_status: orderStatus,
-          order_id: data.id,
-        });
-        paymentStatus = "expired";
-        orderStatus = "cancelled";
-      }
+    // The database re-reads under the same batch/order locks as payment events.
+    // Never cancel from a stale snapshot or infer a charge outcome from time.
+    const { data: payment, error: expiryError } = await supabase.rpc("expire_culqi_token_session", {
+      p_order_id: data.id,
+      p_checkout_session_id: checkoutSessionId,
+    });
+    if (expiryError || !payment || typeof payment !== "object" || Array.isArray(payment)
+      || typeof payment.paymentStatus !== "string" || typeof payment.orderStatus !== "string"
+      || typeof payment.reconciliationRequired !== "boolean") {
+      throw new Error("Could not verify payment state.");
     }
 
     return NextResponse.json(
@@ -73,17 +53,17 @@ export async function POST(request: Request) {
         expiresAt,
         ok: true,
         orderCode: data.order_code,
-        orderStatus,
-        paymentStatus,
-        reconciliationRequired: Boolean(data.payment_reconciliation_required),
+        orderStatus: payment.orderStatus,
+        paymentStatus: payment.paymentStatus,
+        reconciliationRequired: payment.reconciliationRequired,
       },
       { headers: { "Cache-Control": "no-store" } },
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         ok: false,
-        error: error instanceof Error ? error.message : "Could not read payment status.",
+        error: "Could not read payment status.",
       },
       {
         headers: { "Cache-Control": "no-store" },
