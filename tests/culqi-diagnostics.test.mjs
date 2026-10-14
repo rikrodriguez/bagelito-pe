@@ -2,17 +2,19 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
-import { generateKeyPairSync } from 'node:crypto';
+import { createPublicKey, generateKeyPairSync } from 'node:crypto';
 import {
   CULQI_DIAGNOSTIC_ORIGIN,
   culqiDiagnosticFormScope,
   culqiDiagnosticScope,
   diagnoseCulqiConfiguration,
+  inspectRsaSize,
 } from '../src/lib/payments/culqi-diagnostics.ts';
 
 // Generated fixtures remain in memory. No provider, database or network is used.
 const rsa = generateKeyPairSync('rsa', { modulusLength: 2048 });
 const weakRsa = generateKeyPairSync('rsa', { modulusLength: 1024 });
+const largerRsa = generateKeyPairSync('rsa', { modulusLength: 3072 });
 const ec = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
 const rsaPem = rsa.publicKey.export({ type: 'spki', format: 'pem' }).toString();
 const weakRsaPem = weakRsa.publicKey.export({ type: 'spki', format: 'pem' }).toString();
@@ -72,6 +74,34 @@ const nextConfigSource = await readFile(new URL('../next.config.ts', import.meta
 const nextConfigBody = stripTypeScriptTypes(nextConfigSource.replace(/^import .*;\n/gm, ''))
   .replace(/export default nextConfig;/, 'return nextConfig;');
 const loadNextConfig = new Function('process', nextConfigBody);
+const diagnosticSource = await readFile(new URL('../src/lib/payments/culqi-diagnostics.ts', import.meta.url), 'utf8');
+const diagnosticBody = stripTypeScriptTypes(diagnosticSource.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
+const loadDiagnostic = new Function('createPublicKey', diagnosticBody + ';return diagnoseCulqiConfiguration;');
+
+function observedKey(key, overrides = {}) {
+  return {
+    asymmetricKeyType: key.asymmetricKeyType,
+    get asymmetricKeyDetails() {
+      if (overrides.metadataError) throw new Error('raw-private-metadata-error');
+      return Object.hasOwn(overrides, 'metadata') ? overrides.metadata : key.asymmetricKeyDetails;
+    },
+    export(options) {
+      if (options.format === 'jwk') {
+        if (overrides.exportError) throw new Error('raw-private-jwk-error');
+        if (Object.hasOwn(overrides, 'jwk')) return overrides.jwk;
+      }
+      return key.export(options);
+    },
+  };
+}
+
+function assertUnverifiedSize(checks) {
+  assertBooleanReport(checks);
+  assert.equal(checks.rsaSizeMetadataMatchesComputed, false);
+  assert.equal(checks.rsaBelow2048Bits, false);
+  assert.equal(checks.rsaAtLeast2048Bits, false);
+  assert.equal(checks.rsaSizeUnverified, true);
+}
 
 async function runRoute({ env = environment(), authenticated = true, req, method = 'POST', failAt } = {}) {
   const reads = [], logs = [], events = [];
@@ -145,7 +175,8 @@ function assertFormResponse(result) {
   assert.doesNotMatch(result.html, /<script\b|\bon\w+\s*=|<input\b/i);
   for (const value of [
     'pk_test_fixture123', 'sk_test_fixture123', 'fixture-rsa-id', 'BEGIN PUBLIC KEY',
-    'offlineConfigurationValid', 'rsaAssociationVerified', snapshotName, database,
+    'offlineConfigurationValid', 'rsaAssociationVerified', 'rsaBelow2048Bits',
+    'rsaSizeUnverified', 'rsaCompatibilityUnverified', snapshotName, database,
     'fix/culqi-payment-coordination-20261012', 'prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0',
   ]) assert.equal(result.html.includes(value), false);
   assert.deepEqual(result.logs, []);
@@ -207,6 +238,13 @@ test('successful POST authenticates before reads, logs only booleans and keeps r
   assertBooleanReport(result.logs[0][1]);
   assert.equal(result.logs[0][1].offlineConfigurationValid, true);
   assert.equal(result.logs[0][1].rsaAssociationVerified, false);
+  assert.equal(result.logs[0][1].rsaCompatibilityUnverified, true);
+  assert.equal(result.logs[0][1].rsaSizeMetadataAvailable, true);
+  assert.equal(result.logs[0][1].rsaComputedSizeAvailable, true);
+  assert.equal(result.logs[0][1].rsaSizeMetadataMatchesComputed, true);
+  assert.equal(result.logs[0][1].rsaSizeUnverified, false);
+  assert.equal(result.logs[0][1].rsaBelow2048Bits, false);
+  assert.equal(result.logs[0][1].checkoutBlockedByFeatureFlag, true);
   assert.equal(result.logs[0][1].diagnosticCompleted, true);
   assert.equal(result.route.runtime, 'nodejs');
   assert.equal(result.route.dynamic, 'force-dynamic');
@@ -376,7 +414,8 @@ test('missing Culqi configuration produces only private boolean checks', async (
   assert.equal(result.logs[0][1].offlineConfigurationValid, false);
   const empty = diagnoseCulqiConfiguration({}, {});
   assertBooleanReport(empty);
-  assert.ok(Object.values(empty).every(value => value === false));
+  const informationalTrue = new Set(['rsaSizeUnverified', 'rsaCompatibilityUnverified', 'checkoutBlockedByFeatureFlag']);
+  for (const [name, value] of Object.entries(empty)) assert.equal(value, informationalTrue.has(name));
 });
 
 test('absent or empty public build snapshot cannot fall back to valid runtime keys', async () => {
@@ -451,6 +490,10 @@ test('valid test prefixes do not claim RSA association or require enabling payme
   assert.equal(checks.secretTestKeyPresent, true);
   assert.equal(checks.offlineConfigurationValid, true);
   assert.equal(checks.rsaAssociationVerified, false);
+  assert.equal(checks.rsaCompatibilityUnverified, true);
+  assert.equal(checks.rsaSizeUnverified, false);
+  assert.equal(checks.rsaBelow2048Bits, false);
+  assert.equal(checks.checkoutBlockedByFeatureFlag, true);
   assert.equal(env.CULQI_ENABLED, 'false');
 });
 
@@ -489,6 +532,10 @@ test('RSA rejects private, EC, absent, malformed, certificate and oversized mate
     assertBooleanReport(checks);
     assert.equal(checks.rsaPublicKeyParseable, false);
     assert.equal(checks.rsaAtLeast2048Bits, false);
+    assert.equal(checks.rsaSizeMetadataAvailable, false);
+    assert.equal(checks.rsaComputedSizeAvailable, false);
+    assert.equal(checks.rsaBelow2048Bits, false);
+    assert.equal(checks.rsaSizeUnverified, true);
     assert.equal(checks.rsaPublicKeyMatchesBundle, false);
     assert.equal(checks.offlineConfigurationValid, false);
   }
@@ -500,6 +547,11 @@ test('RSA strength is distinct from parseability and PEM encodings compare by pu
   assert.equal(weakChecks.rsaPublicKeyParseable, true);
   assert.equal(weakChecks.rsaPublicKeyMatchesBundle, true);
   assert.equal(weakChecks.rsaAtLeast2048Bits, false);
+  assert.equal(weakChecks.rsaSizeMetadataAvailable, true);
+  assert.equal(weakChecks.rsaComputedSizeAvailable, true);
+  assert.equal(weakChecks.rsaSizeMetadataMatchesComputed, true);
+  assert.equal(weakChecks.rsaBelow2048Bits, true);
+  assert.equal(weakChecks.rsaSizeUnverified, false);
   assert.equal(weakChecks.offlineConfigurationValid, false);
   const env = environment({ NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY: rsaPem.replaceAll('\n', '\\n') });
   for (const pem of [
@@ -511,6 +563,141 @@ test('RSA strength is distinct from parseability and PEM encodings compare by pu
     assert.equal(checks.rsaAtLeast2048Bits, true);
     assert.equal(checks.rsaPublicKeyMatchesBundle, true);
     assert.equal(checks.offlineConfigurationValid, true);
+  }
+});
+
+test('generated RSA sizes agree across metadata, JWK calculation and supported PEM formats', () => {
+  for (const [key, belowMinimum] of [[weakRsa.publicKey, true], [rsa.publicKey, false], [largerRsa.publicKey, false]]) {
+    const spki = key.export({ type: 'spki', format: 'pem' }).toString();
+    for (const pem of [
+      spki, key.export({ type: 'pkcs1', format: 'pem' }).toString(),
+      spki.replaceAll('\n', '\r\n'), spki.replaceAll('\n', '\\n'),
+    ]) {
+      const parsed = createPublicKey(pem.replaceAll('\\n', '\n').trim());
+      const size = inspectRsaSize(parsed);
+      assertBooleanReport(size);
+      assert.equal(size.rsaSizeMetadataAvailable, true);
+      assert.equal(size.rsaComputedSizeAvailable, true);
+      assert.equal(size.rsaSizeMetadataMatchesComputed, true);
+      assert.equal(size.rsaBelow2048Bits, belowMinimum);
+      assert.equal(size.rsaAtLeast2048Bits, !belowMinimum);
+      assert.equal(size.rsaSizeUnverified, false);
+      const env = environment({ NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY: pem });
+      const checks = diagnoseCulqiConfiguration(env, bundled(env));
+      assertBooleanReport(checks);
+      assert.equal(checks.rsaPublicKeyParseable, true);
+      assert.equal(checks.rsaPublicKeyMatchesBundle, true);
+      assert.equal(checks.offlineConfigurationValid, !belowMinimum);
+      assert.equal(checks.rsaCompatibilityUnverified, true);
+      assert.equal(checks.rsaAssociationVerified, false);
+    }
+  }
+});
+
+test('missing or invalid RSA size metadata stays unknown even with a computed strong modulus', () => {
+  const unavailableMetadata = [
+    undefined, null, {}, { modulusLength: undefined }, { modulusLength: null },
+    ...[NaN, Infinity, -Infinity, 0, -1, 2048.5, '2048', Number.MAX_SAFE_INTEGER + 1]
+      .map(modulusLength => ({ modulusLength })),
+  ];
+  for (const metadata of unavailableMetadata) {
+    const size = inspectRsaSize(observedKey(rsa.publicKey, { metadata }));
+    assertUnverifiedSize(size);
+    assert.equal(size.rsaSizeMetadataAvailable, false);
+    assert.equal(size.rsaComputedSizeAvailable, true);
+  }
+  const thrownMetadata = inspectRsaSize(observedKey(rsa.publicKey, { metadataError: true }));
+  assertUnverifiedSize(thrownMetadata);
+  assert.equal(thrownMetadata.rsaSizeMetadataAvailable, false);
+  assert.equal(thrownMetadata.rsaComputedSizeAvailable, true);
+});
+
+test('missing, invalid or unsupported JWK export never produces a size pass', () => {
+  const modulus = rsa.publicKey.export({ format: 'jwk' }).n;
+  const invalidJwk = [
+    undefined, null, {}, { kty: 'EC', n: modulus },
+    ...[undefined, null, '', 123, '!', 'g', 'gA==', 'gA+', 'gA/', 'gB', 'AA']
+      .map(n => ({ kty: 'RSA', n })),
+  ];
+  for (const jwk of invalidJwk) {
+    const size = inspectRsaSize(observedKey(rsa.publicKey, { jwk }));
+    assertUnverifiedSize(size);
+    assert.equal(size.rsaSizeMetadataAvailable, true);
+    assert.equal(size.rsaComputedSizeAvailable, false);
+  }
+  const thrownExport = inspectRsaSize(observedKey(rsa.publicKey, { exportError: true }));
+  assertUnverifiedSize(thrownExport);
+  assert.equal(thrownExport.rsaSizeMetadataAvailable, true);
+  assert.equal(thrownExport.rsaComputedSizeAvailable, false);
+  for (const key of [null, ec.publicKey]) {
+    const size = inspectRsaSize(key);
+    assertUnverifiedSize(size);
+    assert.equal(size.rsaSizeMetadataAvailable, false);
+    assert.equal(size.rsaComputedSizeAvailable, false);
+  }
+});
+
+test('disagreeing RSA metadata and computed size cannot classify below or above the minimum', () => {
+  for (const [key, modulusLength] of [
+    [rsa.publicKey, 1024], [rsa.publicKey, 3072], [weakRsa.publicKey, 2048],
+  ]) {
+    const size = inspectRsaSize(observedKey(key, { metadata: { modulusLength } }));
+    assertUnverifiedSize(size);
+    assert.equal(size.rsaSizeMetadataAvailable, true);
+    assert.equal(size.rsaComputedSizeAvailable, true);
+  }
+});
+
+test('computed RSA size counts significant bits rather than bytes or leading zeros', () => {
+  for (const [modulusLength, firstByte] of [[2047, 64], [2048, 128]]) {
+    const bytes = Buffer.alloc(256);
+    bytes[0] = firstByte;
+    for (const n of [bytes.toString('base64url'), Buffer.concat([Buffer.from([0, 0]), bytes]).toString('base64url')]) {
+      const size = inspectRsaSize(observedKey(rsa.publicKey, {
+        metadata: { modulusLength }, jwk: { kty: 'RSA', n },
+      }));
+      assertBooleanReport(size);
+      assert.equal(size.rsaSizeMetadataMatchesComputed, true);
+      assert.equal(size.rsaSizeUnverified, false);
+      assert.equal(size.rsaBelow2048Bits, modulusLength === 2047);
+      assert.equal(size.rsaAtLeast2048Bits, modulusLength === 2048);
+    }
+  }
+});
+
+test('unverified size keeps offline validation false despite parseability and matching bundle', () => {
+  const env = environment();
+  for (const overrides of [
+    { metadata: undefined }, { metadata: {} }, { metadata: { modulusLength: NaN } },
+    { metadata: { modulusLength: 1024 } }, { metadataError: true },
+    { jwk: { kty: 'RSA', n: '!' } }, { exportError: true },
+  ]) {
+    const diagnose = loadDiagnostic(pem => observedKey(createPublicKey(pem), overrides));
+    const checks = diagnose(env, bundled(env));
+    assertUnverifiedSize(checks);
+    assert.equal(checks.rsaPublicKeyParseable, true);
+    assert.equal(checks.rsaPublicKeyMatchesBundle, true);
+    assert.equal(checks.publicTestKeyPresent, true);
+    assert.equal(checks.secretTestKeyPresent, true);
+    assert.equal(checks.offlineConfigurationValid, false);
+    assert.equal(checks.rsaCompatibilityUnverified, true);
+    assert.equal(checks.rsaAssociationVerified, false);
+    assert.equal(checks.checkoutBlockedByFeatureFlag, true);
+  }
+});
+
+test('informational negative and unverified flags stay outside the strict offline aggregate', () => {
+  for (const flag of [undefined, 'false', 'true']) {
+    const env = environment({ CULQI_ENABLED: flag });
+    const checks = diagnoseCulqiConfiguration(env, bundled(env));
+    assertBooleanReport(checks);
+    assert.equal(checks.offlineConfigurationValid, true);
+    assert.equal(checks.rsaAtLeast2048Bits, true);
+    assert.equal(checks.rsaBelow2048Bits, false);
+    assert.equal(checks.rsaSizeUnverified, false);
+    assert.equal(checks.rsaCompatibilityUnverified, true);
+    assert.equal(checks.rsaAssociationVerified, false);
+    assert.equal(checks.checkoutBlockedByFeatureFlag, flag !== 'true');
   }
 });
 

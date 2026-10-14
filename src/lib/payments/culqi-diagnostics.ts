@@ -1,4 +1,4 @@
-import { createPublicKey } from "node:crypto";
+import { createPublicKey, type KeyObject } from "node:crypto";
 
 // Fixed to the inspected PR1 Preview. Never derive the allowed origin from headers.
 export const CULQI_DIAGNOSTIC_ORIGIN = "https://bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app";
@@ -69,6 +69,38 @@ function publicRsa(value: string | undefined) {
   } catch { return null; }
 }
 
+// Only boolean observations leave this function. Modulus/key material stays in
+// memory; independently derive its bit length to check Node's metadata.
+export function inspectRsaSize(key: KeyObject | null): Record<string, boolean> {
+  let metadataBits: number | null = null;
+  let computedBits: number | null = null;
+  if (key?.asymmetricKeyType === "rsa") {
+    try {
+      const value = key.asymmetricKeyDetails?.modulusLength;
+      if (typeof value === "number" && Number.isSafeInteger(value) && value > 0) metadataBits = value;
+    } catch { /* An unavailable observation remains unknown, never a pass. */ }
+    try {
+      const jwk = key.export({ format: "jwk" });
+      if (jwk.kty === "RSA" && typeof jwk.n === "string" && /^[A-Za-z0-9_-]+$/.test(jwk.n)) {
+        const modulus = Buffer.from(jwk.n, "base64url");
+        if (modulus.toString("base64url") === jwk.n) {
+          const first = modulus.findIndex((byte) => byte !== 0);
+          if (first !== -1) computedBits = (modulus.length - first - 1) * 8 + 32 - Math.clz32(modulus[first]);
+        }
+      }
+    } catch { /* Invalid or unsupported export remains unknown. */ }
+  }
+  const consistent = metadataBits !== null && computedBits !== null && metadataBits === computedBits;
+  return {
+    rsaSizeMetadataAvailable: metadataBits !== null,
+    rsaComputedSizeAvailable: computedBits !== null,
+    rsaSizeMetadataMatchesComputed: consistent,
+    rsaBelow2048Bits: consistent && computedBits! < 2048,
+    rsaAtLeast2048Bits: consistent && computedBits! >= 2048,
+    rsaSizeUnverified: !consistent,
+  };
+}
+
 // Offline preflight only. No provider/client imports, network, DB, cookies or env writes.
 export function diagnoseCulqiConfiguration(env: Environment, bundled: CulqiDiagnosticPublicConfig): Record<string, boolean> {
   const publicKey = text(env.NEXT_PUBLIC_CULQI_PUBLIC_KEY);
@@ -76,13 +108,16 @@ export function diagnoseCulqiConfiguration(env: Environment, bundled: CulqiDiagn
   const rsaId = text(env.NEXT_PUBLIC_CULQI_RSA_ID, 128);
   const rsaKey = publicRsa(env.NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY);
   const bundledRsa = publicRsa(bundled.rsaPublicKey);
+  const rsaSize = inspectRsaSize(rsaKey);
   const checks = {
     providerIsCulqi: env.PAYMENT_PROVIDER === "culqi",
     publicTestKeyPresent: /^pk_test_[A-Za-z0-9]+$/.test(publicKey),
     secretTestKeyPresent: /^sk_test_[A-Za-z0-9]+$/.test(secretKey),
     rsaIdPresent: /^[A-Za-z0-9_-]+$/.test(rsaId),
     rsaPublicKeyParseable: rsaKey !== null,
-    rsaAtLeast2048Bits: (rsaKey?.asymmetricKeyDetails?.modulusLength ?? 0) >= 2048,
+    // Conservative LOCAL policy, not a documented Culqi size requirement.
+    // Missing or inconsistent observations cannot satisfy this control.
+    rsaAtLeast2048Bits: rsaSize.rsaAtLeast2048Bits,
     publicKeyMatchesBundle: Boolean(publicKey) && publicKey === text(bundled.publicKey),
     rsaIdMatchesBundle: Boolean(rsaId) && rsaId === text(bundled.rsaId, 128),
     rsaPublicKeyMatchesBundle: Boolean(rsaKey && bundledRsa
@@ -94,7 +129,12 @@ export function diagnoseCulqiConfiguration(env: Environment, bundled: CulqiDiagn
   };
   return {
     ...checks,
+    ...rsaSize,
     offlineConfigurationValid: Object.values(checks).every(Boolean),
+    // Mirrors the existing checkout gate; RSA size is not used by that gate.
+    checkoutBlockedByFeatureFlag: env.CULQI_ENABLED !== "true",
+    // No provider verification is performed; parsing alone cannot prove compatibility.
+    rsaCompatibilityUnverified: true,
     // An opaque RSA ID cannot be bound to a PEM offline. The owner must check CulqiPanel.
     rsaAssociationVerified: false,
   };

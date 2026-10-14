@@ -31,9 +31,26 @@ Las respuestas usan `private, no-store, max-age=0`, `Vercel-CDN-Cache-Control: n
 
 ## Interpretación de los booleanos privados
 
-Los indicadores de alcance deben ser `true` antes de inspeccionar configuración. Los demás comprueban proveedor Culqi; formatos `pk_test_…`/`sk_test_…`; ID RSA presente; PEM pública RSA parseable de al menos 2048 bits (saltos reales o `\\n` como en el checkout); y correspondencia de llave pública, ID RSA, PEM RSA, origen y URL sandbox entre runtime y valores públicos compilados por Next.js. `next.config.ts` incluye siempre un snapshot de esos cinco valores públicos, incluso vacío cuando faltan al compilar: así su ausencia en build nunca se sustituye por claves de runtime. No incluye `CULQI_SECRET_KEY`, secretos de administración ni service role. PEM privada, certificados, claves EC o material mal formado se rechazan, aunque Node pueda convertir alguno de esos formatos a clave pública.
+Los indicadores de alcance deben ser `true` antes de inspeccionar configuración. Los demás comprueban proveedor Culqi; formatos `pk_test_…`/`sk_test_…`; ID RSA presente; PEM pública RSA parseable (saltos reales o `\\n` como en el checkout); y correspondencia de llave pública, ID RSA, PEM RSA, origen y URL sandbox entre runtime y valores públicos compilados por Next.js. `next.config.ts` incluye siempre un snapshot de esos cinco valores públicos, incluso vacío cuando faltan al compilar: así su ausencia en build nunca se sustituye por claves de runtime. No incluye `CULQI_SECRET_KEY`, secretos de administración ni service role. PEM privada, certificados, claves EC o material mal formado se rechazan, aunque Node pueda convertir alguno de esos formatos a clave pública.
 
-`offlineConfigurationValid=true` significa que estos controles locales pasan. No verifica autenticidad, vigencia o asociación de las API keys en Culqi. `rsaAssociationVerified` permanece siempre `false`: un ID opaco y una PEM no permiten comprobar offline que corresponden al mismo registro de CulqiPanel. El titular debe comprobar esa asociación en el panel sin compartir los valores. Una configuración ausente produce booleanos `false`, sin errores crudos.
+El umbral de 2048 bits fue añadido como criterio conservador **local** del diagnóstico. No se acreditó como requisito Culqi en las fuentes primarias revisadas: [Checkout v4](https://docs.culqi.com/es/documentacion/checkout/v4), [SDK Python README](https://github.com/culqi/culqi-python/blob/846c69d410528244282bc2b46d2c7f50e5219a90/README.md) y su [encoder](https://github.com/culqi/culqi-python/blob/846c69d410528244282bc2b46d2c7f50e5219a90/culqi/utils/encoder.py). Esta ausencia no demuestra que Culqi acepte cualquier tamaño. API Docs requiere contenido dinámico que no se pudo verificar en esta auditoría.
+
+El diagnóstico ahora contrasta `asymmetricKeyDetails.modulusLength` de Node con un cálculo independiente del módulo RSA exportado como JWK, únicamente en memoria. [Node documenta ese metadato en bits](https://nodejs.org/docs/latest-v24.x/api/crypto.html#keyobjectasymmetrickeydetails). No se registran tamaño numérico, módulo, PEM, hash ni huella. Los resultados distinguen:
+
+| Booleano privado | Interpretación |
+| --- | --- |
+| `rsaSizeMetadataAvailable` | Node proporcionó un tamaño entero positivo válido. |
+| `rsaComputedSizeAvailable` | Se pudo calcular el tamaño desde el módulo público, sin exponerlo. |
+| `rsaSizeMetadataMatchesComputed` | Ambos tamaños están disponibles y concuerdan. |
+| `rsaBelow2048Bits` | Ambos concuerdan y el tamaño es inferior al umbral local. No afirma incompatibilidad Culqi. |
+| `rsaAtLeast2048Bits` | Ambos concuerdan y se cumple el umbral local. |
+| `rsaSizeUnverified` | Faltan observaciones o no concuerdan. Ambos indicadores de umbral quedan `false`; desconocido no equivale a tamaño pequeño ni PASS. |
+| `rsaCompatibilityUnverified` | Siempre `true`: no se verificó aceptación de esa clave por Culqi. |
+| `checkoutBlockedByFeatureFlag` | El flag existente no es `true`; ese flag bloquea actualmente el checkout. El tamaño RSA no es un gate del checkout existente. |
+
+`offlineConfigurationValid=true` significa únicamente que los once controles locales pasan, incluido el umbral conservador con tamaño conocido y concordante. Los indicadores informativos de la tabla no se agregan como condiciones independientes. Un tamaño desconocido, discordante o inferior mantiene la validación local en `false`. No verifica autenticidad, vigencia o asociación de las API keys en Culqi. `rsaAssociationVerified` permanece siempre `false`: un ID opaco y una PEM no permiten comprobar offline que corresponden al mismo registro de CulqiPanel. El titular debe comprobar esa asociación en el panel sin compartir los valores. No rotar credenciales ni bajar el umbral por un booleano aislado. Una configuración ausente produce controles fallidos e indicadores explícitos de incertidumbre, sin errores crudos.
+
+El diagnóstico real comunicado por el responsable a las 20:03:26.220Z del 14 de octubre de 2026 completó correctamente, con parseabilidad RSA y correspondencia build/runtime en `true`; el único control local fallido fue el umbral original. Aquella versión convertía metadatos ausentes en cero y no permitía distinguir ausencia de tamaño inferior. La corrección añade esa distinción sin retirar controles ni modificar claves. No se repitió el POST durante esta auditoría.
 
 Mantener pagos deshabilitados hasta que el responsable compruebe los requisitos externos y autorice por separado las siguientes pruebas sandbox. No llamar APIs de cobro para resolver un `false`; este mecanismo únicamente inspecciona configuración en memoria.
 
