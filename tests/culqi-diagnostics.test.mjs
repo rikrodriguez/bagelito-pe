@@ -136,12 +136,17 @@ function assertFormResponse(result) {
   const form = result.html.match(/<form\b([^>]*)>/i);
   assert.ok(form);
   assert.match(form[1], /method="post"/i);
-  assert.match(form[1], /action="\/admin\/diagnostics\/culqi"/);
+  const action = form[1].match(/\baction="([^"]*)"/);
+  assert.ok(action);
+  assert.equal(action[1], origin + '/admin/diagnostics/culqi');
+  assert.equal(result.html.split(origin).length - 1, 1);
+  assert.equal(result.html.replace('action="' + action[1] + '"', 'action=""').includes(origin), false);
   assert.match(result.html, /<button type="submit">/);
   assert.doesNotMatch(result.html, /<script\b|\bon\w+\s*=|<input\b/i);
   for (const value of [
     'pk_test_fixture123', 'sk_test_fixture123', 'fixture-rsa-id', 'BEGIN PUBLIC KEY',
-    'offlineConfigurationValid', 'rsaAssociationVerified', snapshotName, origin, database,
+    'offlineConfigurationValid', 'rsaAssociationVerified', snapshotName, database,
+    'fix/culqi-payment-coordination-20261012', 'prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0',
   ]) assert.equal(result.html.includes(value), false);
   assert.deepEqual(result.logs, []);
   assert.equal(result.diagnoses, 0);
@@ -274,6 +279,23 @@ test('authenticated GET without Origin serves a static form without reading keys
   const missing = await runRoute({ method: 'GET', env: missingConfiguration });
   assertFormResponse(missing);
   assert.equal(missing.html, result.html);
+});
+
+test('GET form action is an absolute HTTPS URL for the same fixed canonical endpoint', async () => {
+  const result = await runRoute({ method: 'GET' });
+  assertFormResponse(result);
+  const action = result.html.match(/<form\b[^>]*\baction="([^"]*)"/i)[1];
+  const destination = new URL(action);
+  assert.equal(destination.protocol, 'https:');
+  assert.equal(destination.hostname, new URL(origin).hostname);
+  assert.equal(destination.origin, origin);
+  assert.equal(destination.pathname, '/admin/diagnostics/culqi');
+  assert.equal(destination.port, '');
+  assert.equal(destination.username, '');
+  assert.equal(destination.password, '');
+  assert.equal(destination.search, '');
+  assert.equal(destination.hash, '');
+  assert.equal(destination.href, new URL('/admin/diagnostics/culqi', origin).href);
 });
 
 test('GET permits direct and same-origin navigation with absent or exact Origin only', async () => {

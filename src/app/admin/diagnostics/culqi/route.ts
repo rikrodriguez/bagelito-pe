@@ -54,7 +54,7 @@ export async function GET(request: Request) {
 <body><main>
 <h1>Diagnóstico Culqi</h1>
 <p>Ejecuta la comprobación de configuración sandbox. Los resultados se registran en logs privados. No habilita pagos.</p>
-<form method="post" action="/admin/diagnostics/culqi">
+<form method="post" action="https://bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app/admin/diagnostics/culqi">
 <button type="submit">Ejecutar diagnóstico</button>
 </form>
 <p><a href="/admin">Volver a administración</a></p>
