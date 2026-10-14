@@ -2,7 +2,7 @@
 
 PR4 conecta la ruta existente `POST /api/payments/culqi/status` con `createCulqiStatusRecovery`, el parser real y una confirmación SQL genérica para futuros pedidos QA. No añade worker, cron ni otra ruta. PR3 sigue congelado en `0e308de525a8604b082ef7a5d2629b66ceeba2b1`; su adaptador administrativo de tres pedidos permanece desconectado y con APPLICATION false.
 
-El código y las pruebas ficticias están autorizados. **La ejecución remota permanece deshabilitada**: falta instalar la migración QA, desplegar el commit revisado en la rama sandbox original y aprobar explícitamente la activación/aplicación. No se han realizado esas operaciones, GET reales, cobros ni cambios de credenciales.
+El GO coordinado posterior autorizó e instaló esta migración en QA, trasladó `8bac3922ea937443bd7c1433ec3dbf2b497864e8` al Preview original y activó allí la bandera y policy independientes. Las consultas de los tres cargos existentes quedaron pendientes porque el checkout no conservaba sus referencias en el navegador disponible. El ajuste de UI admin descrito abajo está implementado y probado para revisión; **su nuevo commit no se despliega antes de revisar diff/SHA/CI**. No crea ni repite cargos ni cambia credenciales o permisos persistentes.
 
 ## Contrato de captura
 
@@ -48,10 +48,22 @@ La respuesta conserva los campos de estado anteriores y añade sólo `recoverySt
 
 No hay conciliación eventual garantizada si se borra storage, cambia de dispositivo o se cierra el navegador y no vuelve a consultarse. Tampoco se inventa un cargo cuando una creación incierta no dejó ID persistido: queda en revisión. No se infiere rechazo de la ausencia de eventos.
 
+## Consulta admin de los tres pedidos existentes
+
+La página `/admin/orders/{orderCode}` añade **Consultar estado Culqi** en Payment únicamente para BAG-000001, BAG-000002 y BAG-000004 y el scope QA aprobado. Es un botón hidratado con resultado local; no refresca el dashboard, modifica fulfillment ni abre checkout.
+
+`runCulqiExistingOrderStatus` autentica con `requireAdmin()` antes de headers/config/DB. Comprueba las cabeceras reales de la Server Action y conserva CSRF nativo de Next; no completa Origin/Host ausentes ni normaliza valores inválidos. Repite scope/bandera/prefijos test y rechaza códigos o campos adicionales. Sólo entonces SELECT de `order_code,checkout_session_id` con límite absoluto de dos segundos; la referencia permanece en servidor y no aparece en HTML/RSC/props/inputs/DTO.
+
+La acción invoca **localmente el mismo handler POST existente** con URL canónica, JSON mínimo y whitelist de headers originales ya validados. No usa fetch contra el hosting, copia cookies/Authorization, llama una RPC financiera directamente ni añade una API de confirmación. Toda decisión financiera, limitador, GET/parser, locks y lectura final sigue en el recorrido status ya revisado. El resultado sólo incluye estados cerrados y booleanos; `ok` no implica pago.
+
+Sin sesión admin, CSRF/origen/scope/bandera/config válidos o código autorizado hay cero consulta de pares y cero llamadas a status. BAG-000003 y cualquier otro pedido quedan excluidos. El parser, SQL, grants, policy y flags no cambian con esta UI.
+
 ## Pruebas y GO pendiente
 
 `tests/culqi-status-recovery-http.mjs` levanta Next compilado y ejecuta la ruta real, helper y parser sin sustituciones positivas. Un bridge local limita fetch a la proyección PostgREST/RPC y el GET fixture; las RPC se ejecutan con service_role sobre PostgreSQL 17 efímero, sin red ni puertos publicados. No llama Culqi ni Supabase reales. La policy se abre únicamente en fixtures sintéticos; cada otro destino falla cerrado.
 
 La suite cubre pago normal, repetición y solapamiento real con throttle, scope/origen/capacidad inválidos, cuerpo limitado, campos financieros adversos, devolución conocida justo antes de confirmar, RPC de rate ausente, gates cerrados, webhook durante GET, fulfillment conservado, captura tardía/capacidad reutilizada y rollback del historial. La suite SQL añade carreras bloqueadas de confirmación duplicada, vencimiento posterior al lock, capacidad, claim cambiado, plazo original del intento y devolución persistida antes del lock; prueba importes dinámicos, roles y tipos/null.
 
-Tras revisar el commit y CI exactos, el GO coordinado debe autorizar por separado: instalación de `supabase/add-culqi-status-charge-recovery.sql` sólo en QA; traslado/despliegue al Preview de la **rama sandbox original**; activación de bandera privada y policy por propietario; y consultas/aplicación para el próximo caso sandbox autorizado. No desplegar directamente PR3/PR4 ni usar una ruta alternativa. `CULQI_ENABLED` por sí solo no abre esta recuperación.
+La instalación/Preview/activación de `8bac392` ya recibió GO y se ejecutó sólo en QA. El nuevo delta admin se entrega en draft PR con diff/SHA/CI antes de trasladarlo al Preview de la **rama sandbox original**. Tras revisión coordinada, el navegador cloud autorizado podrá pulsar el botón en las tres páginas, observar pago cancelado en revisión y repetir; verificar receipts/historial/fechas y capacidad mediante la lectura QA existente. No desplegar directamente PR3/PR4 ni usar una ruta alternativa. `CULQI_ENABLED` por sí solo no abre esta recuperación.
+
+La suite `tests/culqi-admin-status-http.mjs` ejecuta la Server Action compilada, auth real sintética, el POST/helper/parser intactos y PostgreSQL aislado real. Comprueba HTML/RSC/DTO sin capacidades, los tres pagos vencidos, repetición idéntica de todas las filas/fechas, veintiséis gates de solicitud y veinte de configuración sin transportes/efectos. Sólo sustituye transportes de Supabase/proveedor; no modifica positivamente fuente, parser o SQL.

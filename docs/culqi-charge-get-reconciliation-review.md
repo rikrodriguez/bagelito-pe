@@ -1,6 +1,6 @@
 # Revisión de conciliación Culqi mediante GET
 
-La revisión de política parte de PR3 `0e308de525a8604b082ef7a5d2629b66ceeba2b1`, sin cambiar ese SHA durante su revisión independiente. Ambas ramas conservan despliegues Git deshabilitados. El motor administrativo de tres pedidos y su adaptador HTTP de pruebas permanecen desconectados. PR4 añade por separado la recuperación normal desde status, con bandera privada y policy SQL independientes deshabilitadas por defecto. Sin despliegue, instalación SQL o conciliación real.
+La revisión de política parte de PR3 `0e308de525a8604b082ef7a5d2629b66ceeba2b1`, sin cambiar ese SHA durante su revisión independiente. Ambas ramas conservan despliegues Git deshabilitados. El motor administrativo de tres pedidos y su adaptador HTTP de pruebas permanecen desconectados. PR4 añade por separado la recuperación normal desde status, con bandera privada y policy SQL independientes deshabilitadas por defecto. El GO posterior instaló y habilitó esa recuperación en QA y desplegó `8bac392` sólo en la rama original; el nuevo botón admin se entrega para revisión antes de otro despliegue.
 
 ## Qué significó el diagnóstico existente
 
@@ -24,7 +24,7 @@ Los GET `/v2/charges/{cargo persistido}` no tuvieron filtro temporal: incluyeron
 
 [Devoluciones](https://docs.culqi.com/es/documentacion/pagos-online/operaciones/devoluciones) y [riesgos](https://docs.culqi.com/es/documentacion/pagos-online/fraude/riesgos/) describen hechos posteriores a la captura original. No se exige garantizar ausencia de un reverso futuro, `operations` vacío o un listado exhaustivo de refunds del comercio. El webhook actual tampoco exige esas garantías para registrar un cargo original; refunds aún responden 501 y `charge.expired` posterior marca revisión sin borrar el pago original.
 
-La política mínima revisada para un pedido pendiente exige captura true, monto original y actual iguales al persistido, devuelto cero y disputa false, además de todos los vínculos. Información crítica ausente o contradictoria bloquea sólo ese caso. Una devolución pendiente conocida de ese cargo requiere revisión; rechazada no equivale a dinero devuelto. La política describe la instantánea observada, no el futuro. El parser real implementa estos cotejos. **La aplicación remota sigue sin aprobar y deshabilitada**; sólo fixtures sintéticos ejecutan la RPC local.
+La política mínima revisada para un pedido pendiente exige captura true, monto original y actual iguales al persistido, devuelto cero y disputa false, además de todos los vínculos. Información crítica ausente o contradictoria bloquea sólo ese caso. Una devolución pendiente conocida de ese cargo requiere revisión; rechazada no equivale a dinero devuelto. La política describe la instantánea observada, no el futuro. El parser real implementa estos cotejos. El GO posterior aprobó la aplicación QA mediante status para los tres cargos existentes; el motor administrativo fijo descrito aquí mantiene APPLICATION false.
 
 ## Mecanismo preparado
 
