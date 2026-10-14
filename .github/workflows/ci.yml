@@ -5,9 +5,11 @@ on:
     branches:
       - fix/culqi-expiry-quarantine-20261014
       - fix/culqi-charge-reconciliation-20261014
+      - fix/culqi-capture-policy-20261014
   pull_request:
     branches:
       - fix/culqi-payment-coordination-20261012
+      - fix/culqi-charge-reconciliation-20261014
     types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
@@ -23,7 +25,8 @@ jobs:
     if: >-
       github.event_name == 'push' ||
       ((github.event.pull_request.head.ref == 'fix/culqi-expiry-quarantine-20261014' ||
-        github.event.pull_request.head.ref == 'fix/culqi-charge-reconciliation-20261014') &&
+        github.event.pull_request.head.ref == 'fix/culqi-charge-reconciliation-20261014' ||
+        github.event.pull_request.head.ref == 'fix/culqi-capture-policy-20261014') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -51,13 +54,16 @@ jobs:
         run: npm run build
       - name: Verify the administrative diagnostic HTTP boundary locally
         run: node tests/culqi-readonly-http.mjs
+      - name: Verify the unpublished reconciliation HTTP adapter with the real parser
+        run: node tests/culqi-reconciliation-http.mjs
 
   sql:
     name: SQL transaction tests (PostgreSQL 17)
     if: >-
       github.event_name == 'push' ||
       ((github.event.pull_request.head.ref == 'fix/culqi-expiry-quarantine-20261014' ||
-        github.event.pull_request.head.ref == 'fix/culqi-charge-reconciliation-20261014') &&
+        github.event.pull_request.head.ref == 'fix/culqi-charge-reconciliation-20261014' ||
+        github.event.pull_request.head.ref == 'fix/culqi-capture-policy-20261014') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 10
