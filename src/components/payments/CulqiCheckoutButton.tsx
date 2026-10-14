@@ -414,8 +414,9 @@ export function CulqiCheckoutButton({
             onReady={() => setCheckoutScriptReady(true)}
             onError={() => setCheckoutError(new Error(copy.error))}
           />
+          {/* Culqi3DS reserves #culqi-3ds for its challenge UI mount. */}
           <Script
-            id="culqi-3ds"
+            id="culqi-3ds-script"
             src="https://3ds.culqi.com"
             strategy="afterInteractive"
             onLoad={() => setThreeDSScriptReady(true)}
