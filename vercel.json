@@ -2,7 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
-      "fix/culqi-expiry-quarantine-20261014": false
+      "fix/culqi-expiry-quarantine-20261014": false,
+      "fix/culqi-charge-reconciliation-20261014": false
     }
   }
 }

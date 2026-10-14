@@ -28,6 +28,7 @@ done
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/legacy-attempt.sql"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-checkout-safety.sql" >> "$WORK/schema.log" 2>&1
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-session-expiry.sql" >> "$WORK/schema.log" 2>&1
+"$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-charge-get-reconciliation.sql" >> "$WORK/schema.log" 2>&1
 export PGOPTIONS='-c bagelito.test_mode=on'
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/admin-login-rate-limit.sql"
 for file in reservation-window.sql charge-claim.sql charge-concurrency.sql prepare-concurrency.sql; do
@@ -61,6 +62,9 @@ wait "$a"; wait "$b"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/transaction-expiry-clock.sql"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/session-expiry.sql"
 bash "$ROOT/tests/payments/sql/session-expiry-races.sh"
+"$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/charge-get-reconciliation.sql"
+echo 'PASS: charge GET disabled policy, typed evidence, role isolation, atomic history, already-paid and webhook preservation'
+bash "$ROOT/tests/payments/sql/charge-get-reconciliation-races.sh"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/capacity-race-setup.sql"
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/capacity-race-webhook.sql" > "$WORK/capacity-webhook" & a=$!
 "$PG_BIN/psql" -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/capacity-race-reserve.sql" > "$WORK/capacity-reserve" & b=$!

@@ -1,9 +1,10 @@
-name: Culqi expiry draft CI
+name: Culqi sandbox draft CI
 
 on:
   push:
     branches:
       - fix/culqi-expiry-quarantine-20261014
+      - fix/culqi-charge-reconciliation-20261014
   pull_request:
     branches:
       - fix/culqi-payment-coordination-20261012
@@ -13,7 +14,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: culqi-expiry-ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  group: culqi-sandbox-ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -21,7 +22,8 @@ jobs:
     name: Node tests, lint and build
     if: >-
       github.event_name == 'push' ||
-      (github.event.pull_request.head.ref == 'fix/culqi-expiry-quarantine-20261014' &&
+      ((github.event.pull_request.head.ref == 'fix/culqi-expiry-quarantine-20261014' ||
+        github.event.pull_request.head.ref == 'fix/culqi-charge-reconciliation-20261014') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -54,7 +56,8 @@ jobs:
     name: SQL transaction tests (PostgreSQL 17)
     if: >-
       github.event_name == 'push' ||
-      (github.event.pull_request.head.ref == 'fix/culqi-expiry-quarantine-20261014' &&
+      ((github.event.pull_request.head.ref == 'fix/culqi-expiry-quarantine-20261014' ||
+        github.event.pull_request.head.ref == 'fix/culqi-charge-reconciliation-20261014') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 10
