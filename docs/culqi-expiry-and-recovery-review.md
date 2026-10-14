@@ -12,15 +12,23 @@ Antes de desplegar la nueva ruta se necesita revisar e instalar `supabase/add-cu
 
 El alcance de permisos propuesto es únicamente `public.expire_culqi_token_session(uuid, uuid)`: `REVOKE ALL` para `PUBLIC`, `anon` y `authenticated`, y `GRANT EXECUTE` para `service_role`. No concede permisos sobre tablas, esquemas u otras funciones ni cambia RLS. El propietario de la función conserva sus privilegios propios de PostgreSQL. La versión anterior no llama a esta función y sigue siendo compatible con su instalación aditiva.
 
+## Checkout pendiente o en revisión
+
+Antes de enviar un cargo, el navegador guarda únicamente versión, código de pedido, UUID de checkout y estado pendiente/revisión. No guarda datos del cliente, tokens, dispositivo o parámetros 3DS. Si no puede guardar esa referencia, no envía el cargo. La revisión tiene un estado explícito y conserva el pedido para consultar su estado; no ofrece reintento de pago, edición o upsell que produzcan otro UUID/pedido.
+
+La recarga y la navegación recuperan esa referencia en el mismo almacenamiento del navegador y permiten únicamente consultar el estado. Un error HTTP, una respuesta incompleta o `reconciliationRequired=true` mantienen el bloqueo. Sólo un estado terminal del servidor sin revisión pendiente libera la referencia correspondiente; una respuesta tardía de otro pedido no puede borrarla. Después de un resultado fallido confirmado, crear otro pedido requiere una acción explícita del usuario.
+
+La continuación 3DS sólo funciona con el contexto original todavía en memoria: mismo checkout, pedido, token y dispositivo. No se reconstruye desde almacenamiento tras recargar. Los callbacks de un SDK desmontado se invalidan antes de enviar un cargo. Esta protección local no identifica al cliente entre dispositivos/perfiles, no reconstruye intentos anteriores sin referencia y no garantiza exclusión atómica entre pestañas ni resistencia al borrado del almacenamiento. Los límites transaccionales del servidor siguen protegiendo el pedido y sesión correspondientes.
+
 ## Diagnóstico del webhook
 
-Cada respuesta emite una línea privada `culqi_webhook_diagnostic` con exactamente siete campos: `stage`, `reason`, `httpStatus`, `eventVerified`, `transactionAttempted`, `paymentState` y `duplicate`. Las etapas, causas y estados son valores de una lista fija. Los errores desconocidos se convierten en una causa genérica.
+Cada respuesta emite una línea privada `culqi_webhook_diagnostic` con exactamente siete campos: `stage`, `reason`, `httpStatus`, `eventVerified`, `transactionAttempted`, `eventPaymentState` y `duplicate`. El estado describe el resultado del evento, no el estado efectivo guardado del pedido. Las etapas, causas y estados son valores de una lista fija. Los errores desconocidos se convierten en una causa genérica.
 
 No registra identificadores, payloads, cabeceras, mensajes del proveedor, datos personales, tarjetas o claves. Tampoco llama al sistema de alertas externas. Conserva la consulta autenticada del evento, su identidad, la validación transaccional y los errores HTTP reintentables.
 
-## Propuesta de recuperación, aún sin implementar
+## Evidencia de lectura y propuesta de recuperación
 
-Primero realizar un dry-run de sólo lectura con la configuración ya presente en el servidor: consultar los cargos persistidos y un listado de eventos acotado por tipo y fechas; cotejar `data` como objeto o JSON serializado. Verificar cada candidato mediante `GET /v2/events/{id}`. Acreditar las unidades de fecha y la semántica de cursores; no asumir `has_more` ni que `paid=false` contradiga una captura. La evidencia de captura procede del contrato documentado de `capture` y `capture_date`, no de `AUT0000` por sí solo.
+El [adaptador administrativo de sólo lectura](./culqi-readonly-diagnostic.md) está implementado para una ejecución posterior aprobada con la configuración ya presente en el servidor. Consulta tres cargos persistidos fijados y un listado de eventos acotado por tipo y fechas; coteja `data` como objeto o JSON serializado y verifica cada candidato mediante `GET /v2/events/{id}`. No se ejecutó contra Culqi. Las unidades de fecha y la semántica de cursores deben seguir su contrato: no asumir `has_more` ni que `paid=false` contradiga una captura. La presencia de `capture` y `capture_date` se registra como observación, sin confirmar pago; `AUT0000` por sí solo tampoco confirma captura.
 
 Después de revisar el dry-run, la recuperación puede usar eventos reales verificados con la transacción existente, o una RPC separada para una consulta autenticada del cargo. Esa RPC debe validar cargo, cuenta/modo conforme al contrato del proveedor, importe entero, moneda, pedido, fuente e intento; releer bajo los mismos bloqueos y rechazar observaciones de intentos antiguos. Mantener idempotencia, historial atómico, pagos confirmados sin regresión y pagos tardíos en revisión. No fabricar IDs de evento, reenviar webhooks, aceptar estados del cliente ni iniciar cargos nuevos.
 

@@ -73,6 +73,8 @@ import { CostCalculator } from "./CostCalculator";
 import { CustomerProfileActions } from "./CustomerProfileActions";
 import { closeCurrentBatch, quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
 import { WaitlistLeadActions } from "./WaitlistLeadActions";
+import { CulqiReadonlyDiagnosticButton } from "./CulqiReadonlyDiagnosticButton";
+import { getCulqiReadonlyDiagnosticScope } from "@/lib/payments/culqi-readonly-diagnostic";
 
 const paidStatuses = new Set<string>(productionStatuses);
 const statusFilterOptions = [
@@ -1279,6 +1281,8 @@ export default async function AdminPage({
   searchParams?: Promise<AdminSearchParams>;
 }) {
   await requireAdmin();
+  // Metadata only; never read payment keys or run the diagnostic while rendering.
+  const showCulqiReadonlyDiagnostic = Object.values(getCulqiReadonlyDiagnosticScope(process.env)).every(Boolean);
   const missing = getMissingAdminEnv();
   const params = await searchParams;
   const batchMessage = params?.batch;
@@ -1304,7 +1308,7 @@ export default async function AdminPage({
   const sort = sortOptions.some((option) => option.value === params?.sort) ? params?.sort ?? "newest" : "newest";
 
   if (missing.length) {
-    return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p></section></main>;
+    return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p>{showCulqiReadonlyDiagnostic ? <CulqiReadonlyDiagnosticButton /> : null}</section></main>;
   }
 
   const allOrders = await fetchOrders();
@@ -1464,6 +1468,7 @@ export default async function AdminPage({
             <p className="admin-intro">{sectionMeta.intro}</p>
           </div>
           <div className="admin-export-row">
+            {showCulqiReadonlyDiagnostic ? <CulqiReadonlyDiagnosticButton /> : null}
             <a href="/admin/export/orders"><FileDown size={16} /> Full backup CSV</a>
             <a href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>

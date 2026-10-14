@@ -7,6 +7,7 @@ import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments
 
 export type CulqiCheckoutSession = {
   amountMinor: number;
+  checkoutSessionId: string;
   expiresAt: string | null;
   orderCode: string;
   sessionId: string;
@@ -83,6 +84,7 @@ type Props = {
   disabled?: boolean;
   locale: "en" | "es";
   onError: (message: string) => void;
+  onPaymentUnresolved?: () => void;
   onToken: (
     session: CulqiCheckoutSession,
     tokenId: string,
@@ -94,7 +96,7 @@ type Props = {
   prepareCheckout: () => Promise<CulqiCheckoutSession>;
 };
 
-type CheckoutState = "idle" | "preparing" | "ready" | "charging" | "authenticating" | "confirming" | "error";
+type CheckoutState = "idle" | "preparing" | "ready" | "charging" | "authenticating" | "confirming" | "error" | "review";
 
 function errorMessage(error: unknown, fallback: string) {
   return error instanceof Error && error.message ? error.message : fallback;
@@ -111,6 +113,7 @@ export function CulqiCheckoutButton({
   disabled = false,
   locale,
   onError,
+  onPaymentUnresolved,
   onToken,
   prepareCheckout,
 }: Props) {
@@ -121,6 +124,9 @@ export function CulqiCheckoutButton({
   const checkoutRef = useRef<CulqiCheckoutInstance | null>(null);
   const deviceIdRef = useRef("");
   const initializedRef = useRef(false);
+  const paymentAttemptStartedRef = useRef(false);
+  const reviewRequiredRef = useRef(false);
+  const lifecycleRef = useRef({ alive: true, generation: 0 });
   const pending3DSRef = useRef<{
     deviceId: string;
     session: CulqiCheckoutSession;
@@ -147,6 +153,7 @@ export function CulqiCheckoutButton({
       pay: `Pagar S/${amount}`,
       preparing: "Preparando tu pedido...",
       retry: "Reintentar checkout seguro",
+      review: "El resultado del pago necesita revisión. No vuelvas a pagar; consulta el estado de tu pedido.",
       secure: "Los datos de pago se ingresan y procesan únicamente en el entorno seguro de Culqi",
       checkoutTerms: "Delivery en la fecha programada. El repartidor espera hasta 10 minutos; la reentrega depende de disponibilidad y puede tener costo adicional. Bagelito no responde por datos incorrectos o ausencia del cliente.",
       checkoutTermsLink: "Leer las políticas legales completas.",
@@ -174,6 +181,7 @@ export function CulqiCheckoutButton({
       pay: `Pay S/${amount}`,
       preparing: "Preparing your order...",
       retry: "Retry secure checkout",
+      review: "The payment result needs review. Do not pay again; check your order status.",
       secure: "Payment data is entered and processed only in Culqi's secure environment",
       checkoutTerms: "Delivery is made on the scheduled date. The driver waits up to 10 minutes; re-delivery depends on availability and may cost extra. Bagelito is not responsible for incorrect details or customer absence.",
       checkoutTermsLink: "Read the full legal policies.",
@@ -183,11 +191,22 @@ export function CulqiCheckoutButton({
     };
 
   const setCheckoutError = useCallback((error: unknown) => {
+    if (!lifecycleRef.current.alive) return;
+    if (paymentAttemptStartedRef.current || (error instanceof Error && error.name === "CheckoutReviewError")) {
+      reviewRequiredRef.current = true;
+      actionRunningRef.current = true;
+      pending3DSRef.current = null;
+      try { checkoutRef.current?.close(); } catch { /* Keep the payment locked. */ }
+      setState("review");
+      onError(copy.review);
+      onPaymentUnresolved?.();
+      return;
+    }
     actionRunningRef.current = false;
     initializedRef.current = false;
     setState("error");
     onError(errorMessage(error, copy.error));
-  }, [copy.error, onError]);
+  }, [copy.error, copy.review, onError, onPaymentUnresolved]);
 
   const getDeviceId = useCallback(async () => {
     if (deviceIdRef.current) return deviceIdRef.current;
@@ -209,14 +228,19 @@ export function CulqiCheckoutButton({
   }, [config.publicKey, copy.error, setCheckoutError, threeDSScriptReady]);
 
   const initializeCheckout = useCallback(async () => {
+    if (reviewRequiredRef.current || !lifecycleRef.current.alive) return;
     onError("");
     if (!config.enabled || !window.CulqiCheckout || initializedRef.current) return;
 
     initializedRef.current = true;
+    const generation = ++lifecycleRef.current.generation;
+    const isCurrent = () => lifecycleRef.current.alive && lifecycleRef.current.generation === generation
+      && !reviewRequiredRef.current;
     setState("preparing");
 
     try {
       const session = await prepareCheckout();
+      if (!isCurrent()) return;
       if (!Number.isInteger(session.amountMinor) || session.amountMinor < 100) {
         throw new Error("Invalid checkout amount.");
       }
@@ -277,7 +301,7 @@ export function CulqiCheckoutButton({
       checkoutRef.current = checkout;
       actionRunningRef.current = false;
       checkout.culqi = () => {
-        if (actionRunningRef.current) return;
+        if (!isCurrent() || actionRunningRef.current || reviewRequiredRef.current) return;
         actionRunningRef.current = true;
 
         void (async () => {
@@ -287,7 +311,10 @@ export function CulqiCheckoutButton({
               setState("charging");
               const tokenId = checkout.token.id;
               const deviceId = tokenId.startsWith("tkn_") ? await getDeviceId() : "";
+              if (!isCurrent() || reviewRequiredRef.current) return;
+              paymentAttemptStartedRef.current = true;
               const result = await onToken(session, tokenId, { deviceId: deviceId || undefined });
+              if (!isCurrent() || reviewRequiredRef.current) return;
 
               if (result === "requires_3ds") {
                 if (!tokenId.startsWith("tkn_") || !window.Culqi3DS) throw new Error(copy.error);
@@ -321,7 +348,7 @@ export function CulqiCheckoutButton({
                 ?? copy.error,
             );
           } catch (error) {
-            setCheckoutError(error);
+            if (isCurrent()) setCheckoutError(error);
           }
         })();
       };
@@ -329,7 +356,7 @@ export function CulqiCheckoutButton({
       setState("ready");
       checkout.open();
     } catch (error) {
-      setCheckoutError(error);
+      if (isCurrent()) setCheckoutError(error);
     }
   }, [
     amount,
@@ -343,6 +370,27 @@ export function CulqiCheckoutButton({
     prepareCheckout,
     setCheckoutError,
   ]);
+
+  useEffect(() => {
+    const lifecycle = lifecycleRef.current;
+    if (!lifecycle.alive && !paymentAttemptStartedRef.current) {
+      initializedRef.current = false;
+      actionRunningRef.current = false;
+      setState("idle");
+    }
+    lifecycle.alive = true;
+    return () => {
+      lifecycle.alive = false;
+      lifecycle.generation += 1;
+      actionRunningRef.current = true;
+      pending3DSRef.current = null;
+      const checkout = checkoutRef.current;
+      if (checkout) {
+        checkout.culqi = undefined;
+        try { checkout.close(); } catch { /* Never restart a disposed checkout. */ }
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (
@@ -361,7 +409,8 @@ export function CulqiCheckoutButton({
     function handle3DSMessage(event: MessageEvent) {
       if (event.origin !== window.location.origin || !is3DSMessage(event.data)) return;
       const pending = pending3DSRef.current;
-      if (!pending) return;
+      if (!pending || reviewRequiredRef.current || !lifecycleRef.current.alive) return;
+      const generation = lifecycleRef.current.generation;
 
       if (event.data.error) {
         window.Culqi3DS?.reset();
@@ -379,10 +428,13 @@ export function CulqiCheckoutButton({
           deviceId: pending.deviceId,
         })
           .then(() => {
+            if (!lifecycleRef.current.alive || lifecycleRef.current.generation !== generation) return;
             setState("confirming");
             window.Culqi3DS?.reset();
           })
-          .catch(setCheckoutError);
+          .catch(error => {
+            if (lifecycleRef.current.alive && lifecycleRef.current.generation === generation) setCheckoutError(error);
+          });
       }
     }
 
@@ -400,7 +452,7 @@ export function CulqiCheckoutButton({
           ? copy.confirming
           : copy.loading;
   const showLockedPreview = config.enabled && disabled;
-  const showBusy = config.enabled && !disabled && state !== "ready" && state !== "error";
+  const showBusy = config.enabled && !disabled && state !== "ready" && state !== "error" && state !== "review";
 
   return (
     <div className="culqi-checkout-panel">
@@ -468,6 +520,7 @@ export function CulqiCheckoutButton({
         </div>
       ) : (
         <div className="culqi-embed-shell">
+          {state === "review" ? <div className="culqi-busy" role="alert">{copy.review}</div> : null}
           {showBusy ? (
             <div className="culqi-busy" role="status">
               <LoaderCircle className="spin" size={21} />

@@ -57,13 +57,15 @@ export async function POST(request: Request) {
   let transactionAttempted = false;
   const respond = (httpStatus: number, payload: Record<string, unknown>, reason: DiagnosticReason) => {
     const allowedStates = new Set(["paid", "pending", "failed", "expired"]);
-    const paymentState = !eventVerified ? "none"
+    // The RPC reports this event's outcome, which can differ from the order's
+    // persisted state (for example, a late failed event after a paid event).
+    const eventPaymentState = !eventVerified ? "none"
       : typeof payload.status === "string" && allowedStates.has(payload.status) ? payload.status : "unknown";
     // Private runtime logs contain only fixed labels, numbers and booleans.
     // Avoid the monitoring helper: it can notify an external webhook and write DB rows.
     console.info("culqi_webhook_diagnostic", {
       stage, reason, httpStatus, eventVerified, transactionAttempted,
-      paymentState, duplicate: payload.duplicate === true,
+      eventPaymentState, duplicate: payload.duplicate === true,
     });
     return NextResponse.json(payload, { status: httpStatus, headers: { "Cache-Control": "no-store" } });
   };

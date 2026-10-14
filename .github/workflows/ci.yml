@@ -47,6 +47,8 @@ jobs:
         run: npm run lint
       - name: Build and validate types
         run: npm run build
+      - name: Verify the administrative diagnostic HTTP boundary locally
+        run: node tests/culqi-readonly-http.mjs
 
   sql:
     name: SQL transaction tests (PostgreSQL 17)

@@ -11,7 +11,7 @@ async function execute({
   event = {}, resource = { id: 'chr_test_12345678', amount: 6800, currency_code: 'PEN' },
   error = null, data = { status: 'paid' }, enabled = true, receivedType = 'charge.creation.succeeded',
   requestBody = JSON.stringify({ id, type: receivedType }), requestHeaders = {},
-  fetchError = null, clientError = null, rpcError = null,
+  fetchError = null, clientError = null, rpcError = null, rpcImplementation = null,
 } = {}) {
   const calls = [], fetchCalls = [], clientCalls = [], logs = [];
   const post = load({ json: (payload, init = {}) => ({ payload, status: init.status ?? 200 }) }, async (eventId) => {
@@ -24,6 +24,7 @@ async function execute({
     return { rpc: async (name, args) => {
       calls.push({ name, args });
       if (rpcError) throw rpcError;
+      if (rpcImplementation) return rpcImplementation(name, args);
       return { data, error };
     } };
   }, parseCulqiEventResource, verifyCulqiEventIdentity, {
@@ -130,7 +131,7 @@ const diagnosticReasons = new Set([
   'order_missing', 'source_mismatch', 'payment_attempt_missing', 'legacy_requires_review',
   'rpc_failure', 'invalid_rpc_result', 'applied', 'duplicate', 'unexpected_failure',
 ]);
-const diagnosticPaymentStates = new Set(['none', 'unknown', 'paid', 'pending', 'failed', 'expired']);
+const diagnosticEventPaymentStates = new Set(['none', 'unknown', 'paid', 'pending', 'failed', 'expired']);
 function assertOneSafeDiagnostic(result) {
   assert.equal(result.logs.length, 1, 'Every handled webhook must produce one bounded diagnostic');
   const [{ level, args }] = result.logs;
@@ -139,11 +140,11 @@ function assertOneSafeDiagnostic(result) {
   assert.equal(args[0], 'culqi_webhook_diagnostic');
   assert.ok(args[1] && typeof args[1] === 'object' && !Array.isArray(args[1]));
   assert.deepEqual(Object.keys(args[1]).sort(), [
-    'stage', 'reason', 'httpStatus', 'eventVerified', 'transactionAttempted', 'paymentState', 'duplicate',
+    'stage', 'reason', 'httpStatus', 'eventVerified', 'transactionAttempted', 'eventPaymentState', 'duplicate',
   ].sort(), 'No dynamic field may be added to the private diagnostic');
   assert.ok(diagnosticStages.has(args[1].stage), 'Stage must be a fixed local enum');
   assert.ok(diagnosticReasons.has(args[1].reason), 'Reason must be a fixed local enum');
-  assert.ok(diagnosticPaymentStates.has(args[1].paymentState), 'Payment state must be normalized to a fixed enum');
+  assert.ok(diagnosticEventPaymentStates.has(args[1].eventPaymentState), 'Payment state must be normalized to a fixed enum');
   assert.equal(args[1].httpStatus, result.response.status);
   assert.equal(typeof args[1].eventVerified, 'boolean');
   assert.equal(typeof args[1].transactionAttempted, 'boolean');
@@ -204,8 +205,8 @@ test('success diagnostics omit request, authenticated resource and RPC result pr
   assert.deepEqual(result.logs, baseline.logs, 'Private request, event and RPC fields cannot alter the diagnostic');
 });
 
-test('diagnostics report verified transaction outcomes and normalize unknown or forged states', async () => {
-  for (const [data, paymentState, duplicate, reason] of [
+test('diagnostics report verified event outcomes and normalize unknown or forged states', async () => {
+  for (const [data, eventPaymentState, duplicate, reason] of [
     [{ status: 'paid' }, 'paid', false, 'applied'],
     [{ status: 'pending' }, 'pending', false, 'applied'],
     [{ status: 'failed' }, 'failed', false, 'applied'],
@@ -220,10 +221,35 @@ test('diagnostics report verified transaction outcomes and normalize unknown or 
     assert.equal(result.response.status, 200);
     assert.equal(diagnostic.stage, 'transaction');
     assert.equal(diagnostic.eventVerified, true);
-    assert.equal(diagnostic.paymentState, paymentState);
+    assert.equal(diagnostic.eventPaymentState, eventPaymentState);
     assert.equal(diagnostic.duplicate, duplicate);
     assert.equal(diagnostic.reason, reason);
   }
+});
+
+test('a late failed event reports its event outcome while the effective paid order remains unchanged', async () => {
+  const effectiveOrder = { payment_status: 'paid', order_status: 'payment_confirmed' };
+  const result = await execute({
+    event: { type: 'charge.creation.failed' },
+    rpcImplementation: async (name, args) => {
+      assert.equal(name, 'apply_culqi_payment_event');
+      assert.equal(args.p_event_type, 'charge.creation.failed');
+      assert.equal(effectiveOrder.payment_status, 'paid');
+      // Model the installed RPC's protected late-event behavior: its result is
+      // the event's failed outcome, while the paid order is not downgraded.
+      return { data: { status: 'failed' }, error: null };
+    },
+  });
+  assert.equal(result.response.status, 200);
+  assert.deepEqual(result.response.payload, { ok: true, status: 'failed' });
+  assert.deepEqual(effectiveOrder, { payment_status: 'paid', order_status: 'payment_confirmed' });
+  assert.equal(result.calls.length, 1);
+  const diagnostic = assertOneSafeDiagnostic(result);
+  assert.equal(diagnostic.eventPaymentState, 'failed');
+  assert.equal(Object.hasOwn(diagnostic, 'paymentState'), false);
+  assert.equal(diagnostic.reason, 'applied');
+  assert.equal(diagnostic.eventVerified, true);
+  assert.equal(diagnostic.transactionAttempted, true);
 });
 
 test('failed request and unverified provider identity cannot claim verified payment progress', async () => {
@@ -240,7 +266,7 @@ test('failed request and unverified provider identity cannot claim verified paym
     assert.equal(diagnostic.reason, reason);
     assert.equal(diagnostic.eventVerified, false);
     assert.equal(diagnostic.transactionAttempted, false);
-    assert.equal(diagnostic.paymentState, 'none');
+    assert.equal(diagnostic.eventPaymentState, 'none');
     assert.equal(diagnostic.duplicate, false);
   }
 });
@@ -257,7 +283,7 @@ test('provider HTTP failures map only to allowlisted diagnostic reasons while re
     assert.equal(diagnostic.stage, 'event_lookup');
     assert.equal(diagnostic.reason, reason);
     assert.equal(diagnostic.eventVerified, false);
-    assert.equal(diagnostic.paymentState, 'none');
+    assert.equal(diagnostic.eventPaymentState, 'none');
   }
 });
 
@@ -275,7 +301,7 @@ test('verified but unsupported or malformed resources remain bounded and never i
     assert.equal(diagnostic.reason, reason);
     assert.equal(diagnostic.eventVerified, true);
     assert.equal(diagnostic.transactionAttempted, false);
-    assert.equal(diagnostic.paymentState, 'unknown');
+    assert.equal(diagnostic.eventPaymentState, 'unknown');
     assert.equal(diagnostic.duplicate, false);
   }
 });
@@ -300,7 +326,7 @@ test('known database codes and exact local validation messages become enum reaso
     assert.equal(diagnostic.reason, reason);
     assert.equal(diagnostic.eventVerified, true);
     assert.equal(diagnostic.transactionAttempted, true);
-    assert.equal(diagnostic.paymentState, 'unknown');
+    assert.equal(diagnostic.eventPaymentState, 'unknown');
   }
 });
 

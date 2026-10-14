@@ -11,6 +11,12 @@ import { batchStatuses, defaultFinancialCosts, getCustomerKey, hasUploadedPaymen
 import { ordersOpenStatus } from "@/lib/batch-availability";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getDurationMs, logError, logInfo, logWarn } from "@/lib/monitoring";
+import { runAdminCulqiReadonlyDiagnostic } from "@/lib/payments/culqi-readonly-adapter";
+
+export async function runCulqiReadonlyDiagnostic(): Promise<{ ok: boolean }> {
+  // Ignore all action arguments. No redirect, cache revalidation or DB mutation.
+  return runAdminCulqiReadonlyDiagnostic();
+}
 
 const allowedOrderStatuses = [
   "payment_pending_review",
