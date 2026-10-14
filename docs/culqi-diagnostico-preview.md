@@ -15,7 +15,7 @@ Se eligió la ruta autorizada porque el proyecto Vercel existente no tenía sesi
 - `NEXT_PUBLIC_SUPABASE_URL` corresponde exactamente a `https://qaahskendqdkynwtylho.supabase.co`, sin credenciales, path, query o fragmento. Solo comprueba la URL; no verifica estado, esquema o permisos de la base.
 - `CULQI_MODE=sandbox`, `CULQI_ENABLED=false` explícito y `CULQI_LIVE_APPROVED` no activado. Este código no cambia ninguno de estos flags.
 
-Ante incumplimiento responde `404 {"ok":false}`, sin leer claves ni emitir resultados. Si las variables de sistema no están expuestas, también falla cerrado: coordinar con el responsable del proyecto, sin cambiar su configuración desde este diagnóstico. `GET` autenticado responde `405`; no ejecuta diagnóstico. Fallos inesperados responden `503 {"ok":false}`, sin mensajes de excepción.
+Ante incumplimiento responde `404 {"ok":false}`, sin leer claves ni emitir resultados. Si las variables de sistema no están expuestas, también falla cerrado: coordinar con el responsable del proyecto, sin cambiar su configuración desde este diagnóstico. `GET` autenticado sirve únicamente un formulario HTML estático tras los mismos controles de Preview/proyecto/rama/origen/base/flags; no lee claves ni ejecuta diagnóstico. La navegación GET puede omitir `Origin`, pero la URL debe ser canónica; si hay `Origin`, debe coincidir, y `Sec-Fetch-Site` solo permite `none`, `same-origin` o ausencia. El POST exige siempre `Origin` canónico. Fallos inesperados responden `503 {"ok":false}`, sin mensajes de excepción.
 
 ## Ejecutar desde hosting
 
@@ -24,23 +24,10 @@ Primero coordinar la publicación del commit con el responsable del Preview: el 
 Después de que el Preview muestre el commit nuevo:
 
 1. Abrir **solo** `https://bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app/admin/login` en el navegador habitual. Usar el acceso administrativo existente y la excepción de dominio de rama ya coordinada. No exportar la sesión.
-2. Desde una página `/admin` de ese mismo origen, ejecutar en la consola del navegador esta petición sin body, tokens ni datos personales:
-
-   ```js
-   await fetch('/admin/diagnostics/culqi', {
-     method: 'POST',
-     credentials: 'same-origin',
-     cache: 'no-store',
-     redirect: 'error',
-   }).then(async response => ({
-     status: response.status,
-     ...await response.json(),
-   }));
-   ```
-
+2. Abrir `https://bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app/admin/diagnostics/culqi` en ese mismo navegador y pulsar **Ejecutar diagnóstico**. El formulario HTML hace un POST normal a la misma ruta; no necesita JavaScript, tokens, campos de configuración ni datos personales. La cookie administrativa permanece dentro del navegador.
 3. `200 {"ok":true}` significa que el diagnóstico se ejecutó. Sus resultados **no** están en la respuesta. En Vercel → proyecto `bagelito-pe` → deployment Preview del commit → Runtime Logs, filtrar `/admin/diagnostics/culqi` o `culqi_configuration_diagnostic`. Leer los booleanos dentro del hosting privado. No compartir el registro general de la petición: la plataforma puede añadir metadatos propios. El código solo emite booleanos con nombres constantes; no emite cookies, IDs de sesión, claves, hashes, huellas, excepciones o datos de usuarios.
 
-Las respuestas usan `private, no-store, max-age=0`, `Vercel-CDN-Cache-Control: no-store`, `CDN-Cache-Control: no-store`, `Vary: Cookie, Origin` y ejecución dinámica. Una sesión Vercel o un bypass de protección de deployment **no** sustituye `requireAdmin()`.
+Las respuestas usan `private, no-store, max-age=0`, `Vercel-CDN-Cache-Control: no-store`, `CDN-Cache-Control: no-store`, `Vary: Cookie, Origin` y ejecución dinámica. El formulario agrega `Sec-Fetch-Site` a `Vary`, CSP con `form-action 'self'`, bloqueo de scripts/recursos externos y de frames, y `Referrer-Policy: same-origin`, que preserva el encabezado `Origin` del POST normal sin enviar referrer a otros orígenes. El HTML no contiene resultados, valores de configuración ni secretos. Una sesión Vercel o un bypass de protección de deployment **no** sustituye `requireAdmin()`.
 
 ## Interpretación de los booleanos privados
 

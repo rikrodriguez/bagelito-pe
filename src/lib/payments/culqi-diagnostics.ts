@@ -41,6 +41,20 @@ export function culqiDiagnosticScope(request: Request, env: Environment): Record
   };
 }
 
+// A normal GET navigation may omit Origin. It serves only a static form and
+// never runs a diagnostic; POST continues to require the exact Origin header.
+export function culqiDiagnosticFormScope(request: Request, env: Environment): Record<string, boolean> {
+  const origin = request.headers.get("origin");
+  const fetchSite = request.headers.get("sec-fetch-site");
+  return {
+    ...culqiDiagnosticScope(request, env),
+    requestOriginMatches: request.method === "GET"
+      && new URL(request.url).origin === CULQI_DIAGNOSTIC_ORIGIN
+      && (origin === null || origin === CULQI_DIAGNOSTIC_ORIGIN)
+      && (fetchSite === null || fetchSite === "none" || fetchSite === "same-origin"),
+  };
+}
+
 function text(value: string | undefined, maxLength = 4096): string {
   return typeof value === "string" && value.length <= maxLength ? value.trim() : "";
 }

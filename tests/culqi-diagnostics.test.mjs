@@ -5,6 +5,7 @@ import { stripTypeScriptTypes } from 'node:module';
 import { generateKeyPairSync } from 'node:crypto';
 import {
   CULQI_DIAGNOSTIC_ORIGIN,
+  culqiDiagnosticFormScope,
   culqiDiagnosticScope,
   diagnoseCulqiConfiguration,
 } from '../src/lib/payments/culqi-diagnostics.ts';
@@ -50,10 +51,10 @@ function bundled(env, overrides = {}) {
   };
 }
 
-function request({ url = origin, originHeader = origin, method = 'POST', headers = {} } = {}) {
+function request({ url = origin, originHeader = origin, method = 'POST', headers = {}, body } = {}) {
   const allHeaders = new Headers(headers);
   if (originHeader !== null) allHeaders.set('origin', originHeader);
-  return new Request(url + '/admin/diagnostics/culqi', { method, headers: allHeaders });
+  return new Request(url + '/admin/diagnostics/culqi', { method, headers: allHeaders, body });
 }
 
 function assertBooleanReport(report) {
@@ -64,7 +65,7 @@ function assertBooleanReport(report) {
 const routeSource = await readFile(new URL('../src/app/admin/diagnostics/culqi/route.ts', import.meta.url), 'utf8');
 const routeBody = stripTypeScriptTypes(routeSource.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
 const loadRoute = new Function(
-  'requireAdmin', 'culqiDiagnosticScope', 'diagnoseCulqiConfiguration', 'process', 'console',
+  'requireAdmin', 'culqiDiagnosticFormScope', 'culqiDiagnosticScope', 'diagnoseCulqiConfiguration', 'process', 'console',
   routeBody + ';return {POST,GET,runtime,dynamic,revalidate,fetchCache};',
 );
 const nextConfigSource = await readFile(new URL('../next.config.ts', import.meta.url), 'utf8');
@@ -72,9 +73,10 @@ const nextConfigBody = stripTypeScriptTypes(nextConfigSource.replace(/^import .*
   .replace(/export default nextConfig;/, 'return nextConfig;');
 const loadNextConfig = new Function('process', nextConfigBody);
 
-async function runRoute({ env = environment(), authenticated = true, req = request(), method = 'POST', failAt } = {}) {
+async function runRoute({ env = environment(), authenticated = true, req, method = 'POST', failAt } = {}) {
   const reads = [], logs = [], events = [];
   let authenticationComplete = false;
+  let diagnoses = 0;
   // Model the public build snapshot independently from runtime env. An explicit
   // undefined/blank override must remain absent/blank to exercise regressions.
   const runtimeEnv = Object.hasOwn(env, snapshotName)
@@ -92,25 +94,58 @@ async function runRoute({ env = environment(), authenticated = true, req = reque
     events.push('auth');
     if (!authenticated) throw new Error('raw-private-auth-error');
     authenticationComplete = true;
-  }, culqiDiagnosticScope, diagnoseCulqiConfiguration, { env: observedEnv }, {
+  }, culqiDiagnosticFormScope, culqiDiagnosticScope, (...args) => {
+    diagnoses++;
+    return diagnoseCulqiConfiguration(...args);
+  }, { env: observedEnv }, {
     info: (...args) => logs.push(args),
     warn: () => { throw new Error('unexpected warning log'); },
     error: () => { throw new Error('unexpected error log'); },
   });
-  const response = await route[method](req);
-  const payload = await response.json();
-  return { response, payload, reads, logs, events, route };
+  const response = await route[method](req ?? request({ method, originHeader: method === 'GET' ? null : origin }));
+  const isHtml = response.headers.get('content-type')?.startsWith('text/html');
+  const html = isHtml ? await response.text() : undefined;
+  const payload = isHtml ? undefined : await response.json();
+  return { response, payload, html, reads, logs, events, route, diagnoses };
+}
+
+function assertNoStoreHeaders(result, vary = 'Cookie, Origin') {
+  assert.equal(result.response.headers.get('cache-control'), 'private, no-store, max-age=0');
+  assert.equal(result.response.headers.get('vercel-cdn-cache-control'), 'no-store');
+  assert.equal(result.response.headers.get('cdn-cache-control'), 'no-store');
+  assert.equal(result.response.headers.get('vary'), vary);
+  assert.equal(result.response.headers.get('x-content-type-options'), 'nosniff');
 }
 
 function assertResponse(result, status, ok) {
   assert.equal(result.response.status, status);
   assert.deepEqual(result.payload, { ok });
-  assert.equal(result.response.headers.get('cache-control'), 'private, no-store, max-age=0');
-  assert.equal(result.response.headers.get('vercel-cdn-cache-control'), 'no-store');
-  assert.equal(result.response.headers.get('cdn-cache-control'), 'no-store');
-  assert.equal(result.response.headers.get('vary'), 'Cookie, Origin');
-  assert.equal(result.response.headers.get('x-content-type-options'), 'nosniff');
+  assertNoStoreHeaders(result);
   assert.match(result.response.headers.get('content-type'), /^application\/json/);
+}
+
+function assertFormResponse(result) {
+  assert.equal(result.response.status, 200);
+  assertNoStoreHeaders(result, 'Cookie, Origin, Sec-Fetch-Site');
+  assert.equal(result.response.headers.get('content-type'), 'text/html; charset=utf-8');
+  assert.equal(result.response.headers.get('content-security-policy'), "default-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
+  assert.equal(result.response.headers.get('referrer-policy'), 'same-origin');
+  assert.equal(result.response.headers.get('x-frame-options'), 'DENY');
+  assert.equal(result.payload, undefined);
+  assert.match(result.html, /^<!doctype html>/i);
+  const form = result.html.match(/<form\b([^>]*)>/i);
+  assert.ok(form);
+  assert.match(form[1], /method="post"/i);
+  assert.match(form[1], /action="\/admin\/diagnostics\/culqi"/);
+  assert.match(result.html, /<button type="submit">/);
+  assert.doesNotMatch(result.html, /<script\b|\bon\w+\s*=|<input\b/i);
+  for (const value of [
+    'pk_test_fixture123', 'sk_test_fixture123', 'fixture-rsa-id', 'BEGIN PUBLIC KEY',
+    'offlineConfigurationValid', 'rsaAssociationVerified', snapshotName, origin, database,
+  ]) assert.equal(result.html.includes(value), false);
+  assert.deepEqual(result.logs, []);
+  assert.equal(result.diagnoses, 0);
+  assert.deepEqual(result.reads.filter(name => keyNames.has(name) || name === snapshotName || name === 'PAYMENT_PROVIDER'), []);
 }
 
 test('fixed branch origin and scoped Preview remain valid with production Node runtime', () => {
@@ -174,7 +209,7 @@ test('successful POST authenticates before reads, logs only booleans and keeps r
   assert.equal(result.route.fetchCache, 'force-no-store');
 });
 
-test('wrong hosting, project, branch, origin, database, mode or flag never reads Culqi keys', async () => {
+test('wrong hosting, project, branch, origin, database, mode or flag blocks GET and POST before key reads', async () => {
   const invalidScopes = [
     { VERCEL: undefined }, { VERCEL: '0' }, { VERCEL_ENV: 'production' },
     { VERCEL_ENV: undefined }, { VERCEL_TARGET_ENV: 'staging' },
@@ -195,10 +230,13 @@ test('wrong hosting, project, branch, origin, database, mode or flag never reads
     { CULQI_ENABLED: '' }, { CULQI_ENABLED: 'False' },
   ];
   for (const overrides of invalidScopes) {
-    const result = await runRoute({ env: environment(overrides) });
-    assertResponse(result, 404, false);
-    assert.deepEqual(result.reads.filter(name => keyNames.has(name)), []);
-    assert.deepEqual(result.logs, []);
+    for (const method of ['GET', 'POST']) {
+      const result = await runRoute({ env: environment(overrides), method });
+      assertResponse(result, 404, false);
+      assert.deepEqual(result.reads.filter(name => keyNames.has(name) || name === snapshotName), []);
+      assert.deepEqual(result.logs, []);
+      assert.equal(result.diagnoses, 0);
+    }
   }
 });
 
@@ -222,11 +260,84 @@ test('missing, foreign and forged request origins cannot inspect configuration',
   }
 });
 
-test('GET authenticates but never evaluates configuration', async () => {
+test('authenticated GET without Origin serves a static form without reading keys or diagnosing', async () => {
   const result = await runRoute({ method: 'GET' });
-  assertResponse(result, 405, false);
-  assert.deepEqual(result.reads, []);
+  assertFormResponse(result);
+  assert.deepEqual(result.events, ['auth']);
+  for (const failAt of [...keyNames, snapshotName, 'PAYMENT_PROVIDER']) {
+    const protectedRead = await runRoute({ method: 'GET', failAt });
+    assertFormResponse(protectedRead);
+    assert.equal(protectedRead.html, result.html);
+  }
+  const missingConfiguration = environment({ PAYMENT_PROVIDER: undefined, [snapshotName]: 'malformed-json' });
+  for (const name of keyNames) delete missingConfiguration[name];
+  const missing = await runRoute({ method: 'GET', env: missingConfiguration });
+  assertFormResponse(missing);
+  assert.equal(missing.html, result.html);
+});
+
+test('GET permits direct and same-origin navigation with absent or exact Origin only', async () => {
+  for (const originHeader of [null, origin]) {
+    for (const fetchSite of [undefined, 'none', 'same-origin']) {
+      const headers = fetchSite === undefined ? {} : { 'sec-fetch-site': fetchSite };
+      const result = await runRoute({ method: 'GET', req: request({ method: 'GET', originHeader, headers }) });
+      assertFormResponse(result);
+    }
+  }
+});
+
+test('GET rejects foreign URL, Origin and fetch metadata without reading diagnostic configuration', async () => {
+  const invalidRequests = [
+    request({ method: 'GET', originHeader: '' }),
+    request({ method: 'GET', originHeader: 'null' }),
+    request({ method: 'GET', originHeader: 'https://evil.example.invalid' }),
+    request({ method: 'GET', originHeader: origin + ':444' }),
+    request({ method: 'GET', originHeader: origin + '/path' }),
+    request({ method: 'GET', originHeader: null, url: 'https://bagelito.pe' }),
+    request({ method: 'GET', originHeader: null, url: 'https://another-deployment.vercel.app', headers: { 'x-forwarded-host': new URL(origin).hostname } }),
+    request({ method: 'GET', originHeader: null, url: origin.replace('https:', 'http:') }),
+    request({ method: 'GET', originHeader: null, url: origin + ':444' }),
+    request({ method: 'POST', originHeader: origin }),
+    ...['cross-site', 'same-site', '', 'invalid', 'none, same-origin'].map(fetchSite => request({
+      method: 'GET', originHeader: null, headers: { 'sec-fetch-site': fetchSite },
+    })),
+  ];
+  for (const req of invalidRequests) {
+    const result = await runRoute({ method: 'GET', req });
+    assertResponse(result, 404, false);
+    assert.deepEqual(result.reads.filter(name => keyNames.has(name) || name === snapshotName), []);
+    assert.deepEqual(result.logs, []);
+    assert.equal(result.diagnoses, 0);
+  }
+  assert.equal(culqiDiagnosticFormScope(request(), environment()).requestOriginMatches, false);
+});
+
+test('ordinary form POST needs exact Origin and retains private boolean diagnostic results', async () => {
+  for (const body of [undefined, '', new URLSearchParams()]) {
+    const result = await runRoute({ req: request({ body, headers: { 'sec-fetch-site': 'same-origin' } }) });
+    assertResponse(result, 200, true);
+    assert.equal(result.diagnoses, 1);
+    assert.equal(result.logs.length, 1);
+    assertBooleanReport(result.logs[0][1]);
+    assert.equal(result.logs[0][1].offlineConfigurationValid, true);
+  }
+  for (const originHeader of [null, 'null', 'https://evil.example.invalid']) {
+    const result = await runRoute({ req: request({
+      originHeader, body: new URLSearchParams(), headers: { 'sec-fetch-site': 'cross-site' },
+    }) });
+    assertResponse(result, 404, false);
+    assert.deepEqual(result.reads.filter(name => keyNames.has(name) || name === snapshotName), []);
+    assert.deepEqual(result.logs, []);
+    assert.equal(result.diagnoses, 0);
+  }
+});
+
+test('GET scope failures remain generic with no HTML, diagnosis or raw error log', async () => {
+  const result = await runRoute({ method: 'GET', failAt: 'VERCEL_PROJECT_ID' });
+  assertResponse(result, 503, false);
+  assert.equal(result.html, undefined);
   assert.deepEqual(result.logs, []);
+  assert.equal(result.diagnoses, 0);
 });
 
 test('missing Culqi configuration produces only private boolean checks', async () => {
