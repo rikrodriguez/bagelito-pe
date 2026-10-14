@@ -56,6 +56,10 @@ jobs:
         run: node tests/culqi-readonly-http.mjs
       - name: Verify the unpublished reconciliation HTTP adapter with the real parser
         run: node tests/culqi-reconciliation-http.mjs
+      - name: Pull the pinned PostgreSQL fixture image
+        run: docker pull --platform linux/amd64 postgres:17.11-bookworm@sha256:66aafa11cf15800a3c94763f7e11d1e7b2e37e5e84bc4ce027cb6e1e4bfaf4df
+      - name: Verify native status HTTP recovery with isolated real SQL transactions
+        run: node tests/culqi-status-recovery-http.mjs
 
   sql:
     name: SQL transaction tests (PostgreSQL 17)

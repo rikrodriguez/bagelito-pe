@@ -21,7 +21,7 @@ import { checkoutExtraPackDiscountPercent, getCheckoutExtraPackOffer } from "@/l
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
 import {
-  beginCheckoutPayment, checkoutRecoveryOutcome, CheckoutReviewError,
+  beginCheckoutPayment, checkoutRecoveryOutcome, checkoutRecoveryRetryDelay, CheckoutReviewError,
   clearCheckoutRecovery, markCheckoutPaymentReview, readCheckoutRecovery,
   CHECKOUT_RECOVERY_STORAGE_KEY, type CheckoutRecovery,
 } from "@/lib/payments/checkout-recovery";
@@ -506,9 +506,13 @@ export function ReservationFlow({
       throw new CheckoutReviewError();
     }
 
-    for (let attempt = 0; attempt < 6; attempt += 1) {
+    const deadline = Date.now() + 60_000;
+    let delay = 1500;
+    let recoveryPolling = false;
+    for (let attempt = 0; attempt < 6 && Date.now() < deadline; attempt += 1) {
       if (attempt > 0) {
-        await new Promise((resolve) => window.setTimeout(resolve, 1500));
+        if (Date.now() + delay >= deadline) break;
+        await new Promise((resolve) => window.setTimeout(resolve, delay));
       }
 
       const response = await fetch("/api/payments/culqi/status", {
@@ -518,11 +522,15 @@ export function ReservationFlow({
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
+        cache: "no-store",
+        signal: AbortSignal.timeout(Math.min(20_000, deadline - Date.now())),
       });
       const result = await response.json() as {
         ok?: boolean;
         paymentStatus?: string;
         reconciliationRequired?: boolean;
+        recoveryState?: string;
+        retryAfterSeconds?: number;
       };
       if (!isCurrentRecovery(reference)) throw new CheckoutReviewError();
 
@@ -531,6 +539,10 @@ export function ReservationFlow({
         throw new CheckoutReviewError();
       }
       const outcome = checkoutRecoveryOutcome(result);
+      if (response.ok && outcome === "review") {
+        markPaymentForReview();
+        throw new CheckoutReviewError();
+      }
       if (response.ok && outcome === "paid") {
         clearCheckoutRecovery(window.localStorage, reference);
         recoveryRef.current = null;
@@ -543,8 +555,11 @@ export function ReservationFlow({
         setRecovery(null);
         return "released" as const;
       }
+      recoveryPolling ||= result.recoveryState !== undefined;
+      delay = checkoutRecoveryRetryDelay(result);
     }
 
+    if (recoveryPolling) markPaymentForReview();
     return "pending" as const;
   }
 
@@ -667,12 +682,12 @@ export function ReservationFlow({
     setError("");
     try {
       const response = await fetch("/api/payments/culqi/status", {
-        method: "POST", cache: "no-store", signal: AbortSignal.timeout(10000),
+        method: "POST", cache: "no-store", signal: AbortSignal.timeout(20000),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ checkoutSessionId: current.checkoutSessionId, orderCode: current.orderCode }),
       });
       const result = await response.json() as {
-        ok?: boolean; paymentStatus?: string; reconciliationRequired?: boolean;
+        ok?: boolean; paymentStatus?: string; reconciliationRequired?: boolean; recoveryState?: string;
       };
       if (!isCurrentRecovery(current)) throw new CheckoutReviewError();
       if (!response.ok || result.ok !== true) throw new CheckoutReviewError();

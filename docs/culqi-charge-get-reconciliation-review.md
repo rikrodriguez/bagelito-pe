@@ -1,6 +1,6 @@
 # Revisión de conciliación Culqi mediante GET
 
-La revisión de política parte de PR3 `0e308de525a8604b082ef7a5d2629b66ceeba2b1`, sin cambiar ese SHA durante su revisión independiente. Ambas ramas conservan despliegues Git deshabilitados. El motor y su nuevo adaptador HTTP de pruebas no están conectados a una ruta, Server Action, botón, cron, webhook o continuación del diagnóstico. No crean ni capturan cargos. Sin despliegue, instalación SQL o conciliación real.
+La revisión de política parte de PR3 `0e308de525a8604b082ef7a5d2629b66ceeba2b1`, sin cambiar ese SHA durante su revisión independiente. Ambas ramas conservan despliegues Git deshabilitados. El motor administrativo de tres pedidos y su adaptador HTTP de pruebas permanecen desconectados. PR4 añade por separado la recuperación normal desde status, con bandera privada y policy SQL independientes deshabilitadas por defecto. Sin despliegue, instalación SQL o conciliación real.
 
 ## Qué significó el diagnóstico existente
 
@@ -24,7 +24,7 @@ Los GET `/v2/charges/{cargo persistido}` no tuvieron filtro temporal: incluyeron
 
 [Devoluciones](https://docs.culqi.com/es/documentacion/pagos-online/operaciones/devoluciones) y [riesgos](https://docs.culqi.com/es/documentacion/pagos-online/fraude/riesgos/) describen hechos posteriores a la captura original. No se exige garantizar ausencia de un reverso futuro, `operations` vacío o un listado exhaustivo de refunds del comercio. El webhook actual tampoco exige esas garantías para registrar un cargo original; refunds aún responden 501 y `charge.expired` posterior marca revisión sin borrar el pago original.
 
-La política mínima revisada para un pedido pendiente exige captura true, monto original y actual iguales al persistido, devuelto cero y disputa false, además de todos los vínculos. Información crítica ausente o contradictoria bloquea sólo ese caso. Una devolución pendiente conocida de ese cargo requiere revisión; rechazada no equivale a dinero devuelto. La política describe la instantánea observada, no el futuro. El parser real implementa estos cotejos. **La aplicación sigue sin aprobar y deshabilitada**: ningún caso alcanza una RPC real.
+La política mínima revisada para un pedido pendiente exige captura true, monto original y actual iguales al persistido, devuelto cero y disputa false, además de todos los vínculos. Información crítica ausente o contradictoria bloquea sólo ese caso. Una devolución pendiente conocida de ese cargo requiere revisión; rechazada no equivale a dinero devuelto. La política describe la instantánea observada, no el futuro. El parser real implementa estos cotejos. **La aplicación remota sigue sin aprobar y deshabilitada**; sólo fixtures sintéticos ejecutan la RPC local.
 
 ## Mecanismo preparado
 
@@ -42,13 +42,13 @@ La transacción bloquea batch → pedido → token attempt; vuelve a comprobar l
 
 Una nueva confirmación de captura tardía conserva o establece el pedido cancelado y exige revisión por `payment_after_reservation_release`; no reactiva la reserva ni recupera capacidad ya liberada. Estados financieros o de fulfillment incompatibles requieren revisión sin efectos. No se escriben eventos webhook ni se invoca `apply_culqi_payment_event` con evidencia GET.
 
-## Alcance administrativo y recuperación futura del producto
+## Alcance administrativo y recuperación desde status
 
-Esta entrega prepara **una recuperación administrativa acotada a los tres pedidos fijados**. Ni siquiera esa recuperación está ejecutada o expuesta: los pedidos actuales no cambian. No es una solución automática para los futuros cargos que no reciban webhook; la allowlist fija, el motor desconectado y las barreras cerradas lo impiden deliberadamente.
+El motor descrito arriba prepara **una recuperación administrativa acotada a los tres pedidos fijados**. Esa recuperación no está ejecutada o expuesta: los pedidos actuales no cambian.
 
-El [diseño mínimo desde status](culqi-status-recovery-mvp-design.md) propone consultar el cargo persistido dentro de la ruta de estado existente, con limitador estricto y una RPC genérica idempotente bajo locks. No requiere outbox, worker ni columnas de lease para ese recorrido. Conserva el checkout y puede terminar el próximo pago elegible en la consulta normal del cliente; exige cambios de runtime/SQL/UI, revisión y autorización independientes. Sin una nueva consulta después de cerrar el navegador, este MVP no garantiza conciliación eventual.
+La [recuperación mínima desde status](culqi-status-recovery-mvp-design.md) implementa por separado la consulta del cargo persistido dentro de la ruta existente, limitador estricto y RPC genérica idempotente bajo locks. Conserva el checkout y puede terminar el próximo pago QA elegible mediante una consulta normal después del GO remoto. No requiere worker ni lease. Su código y pruebas están autorizados; sólo instalación QA, despliegue y activación/aplicación requieren el GO coordinado. Sin nueva consulta después de cerrar el navegador, no garantiza conciliación eventual.
 
-No hay integración con el flujo normal o política SQL generalizada en este commit. El adaptador HTTP administrativo sólo sirve para pruebas aisladas del parser real; no permite afirmar que la futura ruta de estado ya esté conectada.
+El adaptador HTTP administrativo sigue sirviendo sólo para pruebas aisladas. La conexión de status se verifica mediante otra suite HTTP de Next compilado, parser real y PostgreSQL aislado; usa policy y receipts genéricos independientes y deshabilitados por defecto. No abre la allowlist de tres pedidos.
 
 ## Pruebas y futura autorización
 

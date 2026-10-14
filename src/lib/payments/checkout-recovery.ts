@@ -65,12 +65,22 @@ export function checkoutRecoveryOutcome(result: {
   ok?: boolean;
   paymentStatus?: string;
   reconciliationRequired?: boolean;
+  recoveryState?: string;
 }): "paid" | "released" | "pending" | "review" {
   if (result.ok !== true) return "pending";
   // A paid-but-cancelled reservation requiring review stays locked too.
   if (result.reconciliationRequired === true) return "review";
   if (result.reconciliationRequired !== false) return "pending";
   if (result.paymentStatus === "paid") return "paid";
+  if (result.recoveryState === "review_required") return "review";
   if (result.paymentStatus === "failed" || result.paymentStatus === "expired") return "released";
   return "pending";
+}
+
+export function checkoutRecoveryRetryDelay(result: { recoveryState?: string; retryAfterSeconds?: number }): number {
+  if (result.recoveryState === undefined) return 1500;
+  const hint = result.retryAfterSeconds;
+  // The server limits provider lookups across tabs. A malformed hint must not
+  // cause a busy loop; the small margin avoids querying before window reset.
+  return (Number.isInteger(hint) && hint! >= 1 && hint! <= 15 ? hint! : 15) * 1000 + 100;
 }
