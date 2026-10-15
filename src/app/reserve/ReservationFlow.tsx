@@ -466,6 +466,7 @@ export function ReservationFlow({
 
     const orderResponse = await fetch("/api/payments/culqi/order", {
       body: JSON.stringify({
+        checkoutSessionId,
         email: details.email,
         orderCode: reservation.orderCode,
       }),
@@ -617,6 +618,7 @@ export function ReservationFlow({
         const response = await fetch("/api/payments/culqi/charge", {
           body: JSON.stringify({
             authentication3DS: security.authentication3DS,
+            checkoutSessionId: session.checkoutSessionId,
             deviceId: security.deviceId,
             email: details.email,
             orderCode: session.orderCode,

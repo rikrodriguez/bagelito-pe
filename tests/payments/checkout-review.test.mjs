@@ -260,6 +260,10 @@ test('SDK token automatically reserves, charges once, verifies paid and redirect
       '/api/payments/culqi/charge', '/api/payments/culqi/status',
     ]);
     assert.equal(readCheckoutRecovery(store).state, 'pending');
+    assert.equal(calls.find(call => call.url.endsWith('/charge')).payload.checkoutSessionId, checkoutSessionId,
+      'initial Yape charge must carry the checkout ownership capability');
+    assert.equal(calls.find(call => call.url.endsWith('/order')).payload.checkoutSessionId, checkoutSessionId,
+      'token-session preparation must carry the same capability as reservation and charge');
     assert.equal(window.location.href, 'https://fixture.invalid/checkout', 'charge response cannot establish paid');
     releaseStatus({ ok: true, paymentStatus: 'pending', reconciliationRequired: false });
     await flushCallbacks();
@@ -481,6 +485,8 @@ test('timeout during the real SDK 3DS continuation locks the same source and nev
     assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
     assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
     for (const charge of calls.filter(call => call.url.endsWith('/charge'))) {
+      assert.equal(charge.payload.checkoutSessionId, checkoutSessionId,
+        'initial card and 3DS continuation must keep the same checkout capability');
       assert.equal(charge.payload.orderCode, reference.orderCode);
       assert.equal(charge.payload.sourceId, 'tkn_test_continuation123');
       assert.equal(charge.payload.deviceId, 'device_synthetic');
@@ -615,11 +621,17 @@ test('only the current in-memory 3DS source may continue; storage never retains 
   try {
     flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
     const security = { authentication3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } };
+    assert.equal(calls.find(call => call.url.endsWith('/order')).payload.checkoutSessionId, session.checkoutSessionId);
     assert.equal(await checkout.onToken(session, 'tkn_test_original123', {}), 'requires_3ds');
     await assert.rejects(() => checkout.onToken(session, 'tkn_test_newtoken123', security), CheckoutReviewError);
     assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
     assert.equal(await checkout.onToken(session, 'tkn_test_original123', security), 'submitted');
     assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+    for (const charge of calls.filter(call => call.url.endsWith('/charge'))) {
+      assert.equal(charge.payload.checkoutSessionId, session.checkoutSessionId);
+      assert.notEqual(charge.payload.checkoutSessionId, session.sessionId,
+        'payment attempt ID must not substitute for checkout ownership');
+    }
     await assert.rejects(() => checkout.onToken(session, 'tkn_test_original123', security), CheckoutReviewError);
     assert.doesNotMatch(store.getItem(CHECKOUT_RECOVERY_STORAGE_KEY), /tkn_test|cavv|eci|xid|protocolVersion/);
   } finally { flow.cleanup(); env.restore(); }
