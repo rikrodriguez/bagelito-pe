@@ -18,6 +18,29 @@ type DiagnosticReason = "scope_rejected" | "invalid_event_id" | "malformed_reque
   | "amount_currency_mismatch" | "order_missing" | "source_mismatch"
   | "payment_attempt_missing" | "legacy_requires_review" | "rpc_failure"
   | "invalid_rpc_result" | "applied" | "duplicate" | "unexpected_failure";
+type UpstreamFailureDiagnostic = {
+  upstreamHttpStatus: number | null;
+  upstreamFailureClass: "none" | "http" | "timeout" | "transport_or_unknown";
+};
+
+function eventLookupFailureDiagnostic(error: unknown): UpstreamFailureDiagnostic {
+  let status: unknown;
+  let name: unknown;
+  if (error && typeof error === "object") {
+    // Read only the two needed fields; hostile accessors must not interrupt
+    // the bounded response. Never inspect messages, payloads or nested causes.
+    try { status = (error as { status?: unknown }).status; } catch { /* Unknown transport failure. */ }
+    if (typeof status === "number" && Number.isInteger(status) && status >= 100 && status <= 599) {
+      return { upstreamHttpStatus: status, upstreamFailureClass: "http" };
+    }
+    try { name = (error as { name?: unknown }).name; } catch { /* Unknown transport failure. */ }
+  }
+  return {
+    upstreamHttpStatus: null,
+    // AbortError can describe cancellation; it does not prove a timeout.
+    upstreamFailureClass: name === "TimeoutError" ? "timeout" : "transport_or_unknown",
+  };
+}
 
 function rpcFailureReason(error: unknown): DiagnosticReason {
   if (!error || typeof error !== "object") return "rpc_failure";
@@ -36,16 +59,15 @@ function rpcFailureReason(error: unknown): DiagnosticReason {
   }
 }
 
-function exceptionReason(stage: DiagnosticStage, error: unknown): DiagnosticReason {
+function exceptionReason(stage: DiagnosticStage, error: unknown, upstreamHttpStatus: number | null): DiagnosticReason {
   if (stage === "request") return "malformed_request";
   if (stage === "event_identity") return "event_identity_mismatch";
   if (stage === "database_client") return "database_client_failure";
   if (stage === "transaction") return rpcFailureReason(error);
   if (stage === "event_lookup") {
-    const status = error && typeof error === "object" ? (error as { status?: unknown }).status : undefined;
-    if (status === 401 || status === 403) return "upstream_unauthorized";
-    if (status === 404) return "upstream_not_found";
-    if (status === 429) return "upstream_rate_limited";
+    if (upstreamHttpStatus === 401 || upstreamHttpStatus === 403) return "upstream_unauthorized";
+    if (upstreamHttpStatus === 404) return "upstream_not_found";
+    if (upstreamHttpStatus === 429) return "upstream_rate_limited";
     return "upstream_failure";
   }
   return "unexpected_failure";
@@ -55,6 +77,7 @@ export async function POST(request: Request) {
   let stage: DiagnosticStage = "scope";
   let eventVerified = false;
   let transactionAttempted = false;
+  let upstreamFailure: UpstreamFailureDiagnostic = { upstreamHttpStatus: null, upstreamFailureClass: "none" };
   const respond = (httpStatus: number, payload: Record<string, unknown>, reason: DiagnosticReason) => {
     const allowedStates = new Set(["paid", "pending", "failed", "expired"]);
     // The RPC reports this event's outcome, which can differ from the order's
@@ -66,6 +89,8 @@ export async function POST(request: Request) {
     console.info("culqi_webhook_diagnostic", {
       stage, reason, httpStatus, eventVerified, transactionAttempted,
       eventPaymentState, duplicate: payload.duplicate === true,
+      upstreamHttpStatus: upstreamFailure.upstreamHttpStatus,
+      upstreamFailureClass: upstreamFailure.upstreamFailureClass,
     });
     return NextResponse.json(payload, { status: httpStatus, headers: { "Cache-Control": "no-store" } });
   };
@@ -111,6 +136,7 @@ export async function POST(request: Request) {
     return respond(200, { ok: true, ...data }, data.duplicate === true ? "duplicate" : "applied");
   } catch (error) {
     // Retriable failure; do not acknowledge an event whose transaction failed.
-    return respond(500, { ok: false, error: "Could not process Culqi webhook." }, exceptionReason(stage, error));
+    if (stage === "event_lookup") upstreamFailure = eventLookupFailureDiagnostic(error);
+    return respond(500, { ok: false, error: "Could not process Culqi webhook." }, exceptionReason(stage, error, upstreamFailure.upstreamHttpStatus));
   }
 }
