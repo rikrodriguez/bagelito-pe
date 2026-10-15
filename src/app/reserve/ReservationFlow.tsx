@@ -70,6 +70,43 @@ const initialDetails: Details = {
 
 const initialBotTrap = "";
 
+type PaymentStatusResult = {
+  ok?: boolean;
+  paymentStatus?: string;
+  reconciliationRequired?: boolean;
+  recoveryState?: string;
+  retryAfterSeconds?: number;
+};
+
+async function readCheckoutPaymentStatus(
+  reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">,
+  timeoutMs = 20_000,
+) {
+  if (timeoutMs <= 0) throw new CheckoutReviewError();
+  const controller = new AbortController();
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timeout = setTimeout(() => {
+      reject(new CheckoutReviewError());
+      controller.abort();
+    }, timeoutMs);
+  });
+  // Bound headers and JSON together, including transports that ignore abort.
+  // A late result completes this read only; it cannot unlock the checkout.
+  const status = (async () => {
+    const response = await fetch("/api/payments/culqi/status", {
+      body: JSON.stringify({ checkoutSessionId: reference.checkoutSessionId, orderCode: reference.orderCode }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      cache: "no-store",
+      signal: controller.signal,
+    });
+    const result = await response.json() as PaymentStatusResult;
+    return { response, result };
+  })();
+  return Promise.race([status, deadline]).finally(() => clearTimeout(timeout));
+}
+
 export function ReservationFlow({
   packs,
   flavors,
@@ -516,23 +553,7 @@ export function ReservationFlow({
         await new Promise((resolve) => window.setTimeout(resolve, delay));
       }
 
-      const response = await fetch("/api/payments/culqi/status", {
-        body: JSON.stringify({
-          checkoutSessionId,
-          orderCode: session.orderCode,
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        cache: "no-store",
-        signal: AbortSignal.timeout(Math.min(20_000, deadline - Date.now())),
-      });
-      const result = await response.json() as {
-        ok?: boolean;
-        paymentStatus?: string;
-        reconciliationRequired?: boolean;
-        recoveryState?: string;
-        retryAfterSeconds?: number;
-      };
+      const { response, result } = await readCheckoutPaymentStatus(reference, Math.min(20_000, deadline - Date.now()));
       if (!isCurrentRecovery(reference)) throw new CheckoutReviewError();
 
       if (response.ok && result.ok && result.reconciliationRequired) {
@@ -709,14 +730,7 @@ export function ReservationFlow({
     setCheckingPayment(true);
     setError("");
     try {
-      const response = await fetch("/api/payments/culqi/status", {
-        method: "POST", cache: "no-store", signal: AbortSignal.timeout(20000),
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ checkoutSessionId: current.checkoutSessionId, orderCode: current.orderCode }),
-      });
-      const result = await response.json() as {
-        ok?: boolean; paymentStatus?: string; reconciliationRequired?: boolean; recoveryState?: string;
-      };
+      const { response, result } = await readCheckoutPaymentStatus(current);
       if (!isCurrentRecovery(current)) throw new CheckoutReviewError();
       if (!response.ok || result.ok !== true) throw new CheckoutReviewError();
       const outcome = checkoutRecoveryOutcome(result);
