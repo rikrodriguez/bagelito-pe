@@ -4,7 +4,8 @@
     "deploymentEnabled": {
       "fix/culqi-expiry-quarantine-20261014": false,
       "fix/culqi-charge-reconciliation-20261014": false,
-      "fix/culqi-capture-policy-20261014": false
+      "fix/culqi-capture-policy-20261014": false,
+      "fix/culqi-payment-status-copy-20261015": false
     }
   }
 }
