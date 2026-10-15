@@ -56,14 +56,25 @@ type CulqiErrorPayload = {
   merchant_message?: string;
   message?: string;
   object?: string;
+  type?: unknown;
   user_message?: string;
 };
+
+export type CulqiErrorType = "invalid_request_error" | "authentication_error" | "parameter_error"
+  | "card_error" | "limit_api_error" | "resource_error" | "api_error" | "unknown";
+
+const culqiErrorTypes = new Set<CulqiErrorType>([
+  "invalid_request_error", "authentication_error", "parameter_error", "card_error",
+  "limit_api_error", "resource_error", "api_error",
+]);
 
 export class CulqiApiError extends Error {
   chargeId: string | null;
   code: string | null;
   status: number;
   userMessage: string;
+  readonly errorType: CulqiErrorType;
+  readonly eventModeMatchesConfig: boolean | null = null;
 
   constructor(payload: CulqiErrorPayload | null, status: number) {
     const userMessage = payload?.user_message
@@ -76,6 +87,10 @@ export class CulqiApiError extends Error {
     this.code = payload?.decline_code ?? payload?.code ?? null;
     this.status = status;
     this.userMessage = userMessage;
+    let errorType: unknown;
+    try { errorType = payload?.type; } catch { /* An unreadable provider type is unknown. */ }
+    this.errorType = typeof errorType === "string" && culqiErrorTypes.has(errorType as CulqiErrorType)
+      ? errorType as CulqiErrorType : "unknown";
   }
 }
 
@@ -203,7 +218,29 @@ export async function createCulqiCharge({
 }
 
 export async function fetchCulqiEvent(eventId: string) {
-  return culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`);
+  const { mode } = assertCulqiEnabled();
+  const environment = mode === "sandbox" ? "test" : mode === "live" ? "live" : null;
+  if (!environment) throw new Error("Culqi event environment is not configured.");
+  // Match the official SDK's event lookup contract without changing charge requests.
+  try {
+    return await culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "x-api-version": "2",
+        "x-culqi-env": environment,
+      },
+    });
+  } catch (error) {
+    if (error instanceof CulqiApiError) {
+      // Event-only context contains no ID or provider payload. It is immutable
+      // and does not change ID acceptance, authentication or transaction rules.
+      Object.defineProperty(error, "eventModeMatchesConfig", {
+        value: eventId.startsWith(`evt_${environment}_`), writable: false, configurable: false,
+      });
+    }
+    throw error;
+  }
 }
 
 export function toPaymentMinorUnits(amount: number) {

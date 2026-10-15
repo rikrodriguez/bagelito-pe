@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchCulqiEvent, isCulqiRequestAllowed } from "@/lib/payments";
+import { fetchCulqiEvent, isCulqiRequestAllowed, type CulqiErrorType } from "@/lib/payments";
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from "@/lib/payments/verification";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
@@ -21,17 +21,33 @@ type DiagnosticReason = "scope_rejected" | "invalid_event_id" | "malformed_reque
 type UpstreamFailureDiagnostic = {
   upstreamHttpStatus: number | null;
   upstreamFailureClass: "none" | "http" | "timeout" | "transport_or_unknown";
+  upstreamErrorType: CulqiErrorType | "none";
+  eventModeMatchesConfig: boolean | null;
 };
 
 function eventLookupFailureDiagnostic(error: unknown): UpstreamFailureDiagnostic {
   let status: unknown;
   let name: unknown;
+  let errorType: unknown;
+  let eventModeMatches: unknown;
+  let eventModeMatchesConfig: boolean | null = null;
+  const allowedTypes = new Set<CulqiErrorType>([
+    "invalid_request_error", "authentication_error", "parameter_error", "card_error",
+    "limit_api_error", "resource_error", "api_error",
+  ]);
+  let upstreamErrorType: CulqiErrorType = "unknown";
   if (error && typeof error === "object") {
-    // Read only the two needed fields; hostile accessors must not interrupt
+    // Read only bounded classification fields; hostile accessors must not interrupt
     // the bounded response. Never inspect messages, payloads or nested causes.
+    try { errorType = (error as { errorType?: unknown }).errorType; } catch { /* Unknown provider error type. */ }
+    if (typeof errorType === "string" && allowedTypes.has(errorType as CulqiErrorType)) {
+      upstreamErrorType = errorType as CulqiErrorType;
+    }
+    try { eventModeMatches = (error as { eventModeMatchesConfig?: unknown }).eventModeMatchesConfig; } catch { /* Unknown event environment context. */ }
+    if (typeof eventModeMatches === "boolean") eventModeMatchesConfig = eventModeMatches;
     try { status = (error as { status?: unknown }).status; } catch { /* Unknown transport failure. */ }
     if (typeof status === "number" && Number.isInteger(status) && status >= 100 && status <= 599) {
-      return { upstreamHttpStatus: status, upstreamFailureClass: "http" };
+      return { upstreamHttpStatus: status, upstreamFailureClass: "http", upstreamErrorType, eventModeMatchesConfig };
     }
     try { name = (error as { name?: unknown }).name; } catch { /* Unknown transport failure. */ }
   }
@@ -39,6 +55,8 @@ function eventLookupFailureDiagnostic(error: unknown): UpstreamFailureDiagnostic
     upstreamHttpStatus: null,
     // AbortError can describe cancellation; it does not prove a timeout.
     upstreamFailureClass: name === "TimeoutError" ? "timeout" : "transport_or_unknown",
+    upstreamErrorType,
+    eventModeMatchesConfig: null,
   };
 }
 
@@ -77,7 +95,9 @@ export async function POST(request: Request) {
   let stage: DiagnosticStage = "scope";
   let eventVerified = false;
   let transactionAttempted = false;
-  let upstreamFailure: UpstreamFailureDiagnostic = { upstreamHttpStatus: null, upstreamFailureClass: "none" };
+  let upstreamFailure: UpstreamFailureDiagnostic = {
+    upstreamHttpStatus: null, upstreamFailureClass: "none", upstreamErrorType: "none", eventModeMatchesConfig: null,
+  };
   const respond = (httpStatus: number, payload: Record<string, unknown>, reason: DiagnosticReason) => {
     const allowedStates = new Set(["paid", "pending", "failed", "expired"]);
     // The RPC reports this event's outcome, which can differ from the order's
@@ -91,6 +111,8 @@ export async function POST(request: Request) {
       eventPaymentState, duplicate: payload.duplicate === true,
       upstreamHttpStatus: upstreamFailure.upstreamHttpStatus,
       upstreamFailureClass: upstreamFailure.upstreamFailureClass,
+      upstreamErrorType: upstreamFailure.upstreamErrorType,
+      eventModeMatchesConfig: upstreamFailure.eventModeMatchesConfig,
     });
     return NextResponse.json(payload, { status: httpStatus, headers: { "Cache-Control": "no-store" } });
   };
