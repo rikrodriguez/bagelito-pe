@@ -1322,10 +1322,11 @@ export default async function AdminPage({
   const baseOrders = showingArchived ? archivedOrders : activeOrders;
   const orders = filterAndSortOrders(baseOrders, searchQuery, statusFilter, sort);
   const stats = getDashboardStats(activeOrders);
-  const delivery = getDeliverySummary(activeOrders);
+  const currentBatchOrders = activeOrders.filter((order) => order.batch_id === currentBatch.id);
+  const delivery = getDeliverySummary(currentBatchOrders);
   const finance = getFinancialSummary(currentBatch, activeOrders);
   const productionOps = getProductionOpsPlan(currentBatch, activeOrders);
-  const routePlan = getDeliveryRoutePlan(activeOrders);
+  const routePlan = getDeliveryRoutePlan(currentBatchOrders);
   const paidOrders = activeOrders.filter(isPaid);
   const deliveredOrders = activeOrders.filter(isDelivered);
   const paidNotDeliveredOrders = paidOrders.filter((order) => !isDelivered(order));

@@ -7,7 +7,7 @@ import { consumeAdminLoginLimit, adminLoginOriginAllowed } from "@/lib/admin/log
 import { isAdminSessionConfigured } from "@/lib/admin/session-security";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { batchStatuses, defaultFinancialCosts, getCustomerKey, hasUploadedPaymentProof, isOrderArchived, type StatusHistory } from "@/lib/admin/queries";
+import { batchStatuses, getCustomerKey, hasUploadedPaymentProof, isOrderArchived, type StatusHistory } from "@/lib/admin/queries";
 import { ordersOpenStatus } from "@/lib/batch-availability";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getDurationMs, logError, logInfo, logWarn } from "@/lib/monitoring";
@@ -664,9 +664,9 @@ export async function updateBatchFinancialCosts(formData: FormData) {
       .from("batches")
       .update({
         actual_delivery_cost: actualDeliveryCost,
-        ingredient_cost_per_bagel: ingredientCostPerBagel || defaultFinancialCosts.ingredientCostPerBagel,
+        ingredient_cost_per_bagel: ingredientCostPerBagel,
         other_batch_cost: otherBatchCost,
-        packaging_cost_per_pack: packagingCostPerPack || defaultFinancialCosts.packagingCostPerPack,
+        packaging_cost_per_pack: packagingCostPerPack,
       })
       .eq("id", batchId);
 

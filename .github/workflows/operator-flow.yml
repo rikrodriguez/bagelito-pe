@@ -1,0 +1,46 @@
+name: Isolated operator flow draft CI
+on:
+  push:
+    branches: [test/operator-flow-isolated-20261016]
+  pull_request:
+    branches: [fix/culqi-capture-policy-20261014]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+concurrency:
+  group: operator-flow-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  operator:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event.pull_request.head.ref == 'test/operator-flow-isolated-20261016' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      CULQI_ENABLED: 'false'
+    steps:
+      - name: Check out the exact requested commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run all synthetic Node tests
+        run: npm test
+      - name: Lint
+        run: npm run lint
+      - name: Build and validate types
+        run: npm run build
+      - name: Pull the pinned isolated PostgreSQL image
+        run: docker pull --platform linux/amd64 postgres:17.11-bookworm@sha256:66aafa11cf15800a3c94763f7e11d1e7b2e37e5e84bc4ce027cb6e1e4bfaf4df
+      - name: Execute the native operator runbook and tracking/export checks
+        run: node tests/operator-flow-http.mjs
