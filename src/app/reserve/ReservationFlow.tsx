@@ -21,7 +21,7 @@ import { checkoutExtraPackDiscountPercent, getCheckoutExtraPackOffer } from "@/l
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
 import {
-  beginCheckoutPayment, checkoutRecoveryOutcome, CheckoutReviewError,
+  beginCheckoutPayment, checkoutRecoveryOutcome, checkoutRecoveryRetryDelay, CheckoutReviewError,
   clearCheckoutRecovery, markCheckoutPaymentReview, readCheckoutRecovery,
   CHECKOUT_RECOVERY_STORAGE_KEY, type CheckoutRecovery,
 } from "@/lib/payments/checkout-recovery";
@@ -69,6 +69,43 @@ const initialDetails: Details = {
 };
 
 const initialBotTrap = "";
+
+type PaymentStatusResult = {
+  ok?: boolean;
+  paymentStatus?: string;
+  reconciliationRequired?: boolean;
+  recoveryState?: string;
+  retryAfterSeconds?: number;
+};
+
+async function readCheckoutPaymentStatus(
+  reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">,
+  timeoutMs = 20_000,
+) {
+  if (timeoutMs <= 0) throw new CheckoutReviewError();
+  const controller = new AbortController();
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timeout = setTimeout(() => {
+      reject(new CheckoutReviewError());
+      controller.abort();
+    }, timeoutMs);
+  });
+  // Bound headers and JSON together, including transports that ignore abort.
+  // A late result completes this read only; it cannot unlock the checkout.
+  const status = (async () => {
+    const response = await fetch("/api/payments/culqi/status", {
+      body: JSON.stringify({ checkoutSessionId: reference.checkoutSessionId, orderCode: reference.orderCode }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      cache: "no-store",
+      signal: controller.signal,
+    });
+    const result = await response.json() as PaymentStatusResult;
+    return { response, result };
+  })();
+  return Promise.race([status, deadline]).finally(() => clearTimeout(timeout));
+}
 
 export function ReservationFlow({
   packs,
@@ -466,6 +503,7 @@ export function ReservationFlow({
 
     const orderResponse = await fetch("/api/payments/culqi/order", {
       body: JSON.stringify({
+        checkoutSessionId,
         email: details.email,
         orderCode: reservation.orderCode,
       }),
@@ -506,24 +544,16 @@ export function ReservationFlow({
       throw new CheckoutReviewError();
     }
 
-    for (let attempt = 0; attempt < 6; attempt += 1) {
+    const deadline = Date.now() + 60_000;
+    let delay = 1500;
+    let recoveryPolling = false;
+    for (let attempt = 0; attempt < 6 && Date.now() < deadline; attempt += 1) {
       if (attempt > 0) {
-        await new Promise((resolve) => window.setTimeout(resolve, 1500));
+        if (Date.now() + delay >= deadline) break;
+        await new Promise((resolve) => window.setTimeout(resolve, delay));
       }
 
-      const response = await fetch("/api/payments/culqi/status", {
-        body: JSON.stringify({
-          checkoutSessionId,
-          orderCode: session.orderCode,
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      });
-      const result = await response.json() as {
-        ok?: boolean;
-        paymentStatus?: string;
-        reconciliationRequired?: boolean;
-      };
+      const { response, result } = await readCheckoutPaymentStatus(reference, Math.min(20_000, deadline - Date.now()));
       if (!isCurrentRecovery(reference)) throw new CheckoutReviewError();
 
       if (response.ok && result.ok && result.reconciliationRequired) {
@@ -531,6 +561,10 @@ export function ReservationFlow({
         throw new CheckoutReviewError();
       }
       const outcome = checkoutRecoveryOutcome(result);
+      if (response.ok && outcome === "review") {
+        markPaymentForReview();
+        throw new CheckoutReviewError();
+      }
       if (response.ok && outcome === "paid") {
         clearCheckoutRecovery(window.localStorage, reference);
         recoveryRef.current = null;
@@ -543,8 +577,11 @@ export function ReservationFlow({
         setRecovery(null);
         return "released" as const;
       }
+      recoveryPolling ||= result.recoveryState !== undefined;
+      delay = checkoutRecoveryRetryDelay(result);
     }
 
+    if (recoveryPolling) markPaymentForReview();
     return "pending" as const;
   }
 
@@ -584,24 +621,47 @@ export function ReservationFlow({
       setPaymentInProgress(true);
     }
 
+    const submittedReference = recoveryRef.current;
+    if (!submittedReference) throw new CheckoutReviewError();
     try {
-      const response = await fetch("/api/payments/culqi/charge", {
-        body: JSON.stringify({
-          authentication3DS: security.authentication3DS,
-          deviceId: security.deviceId,
-          email: details.email,
-          orderCode: session.orderCode,
-          sourceId,
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
+      const controller = new AbortController();
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      const deadline = new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => {
+          reject(new CheckoutReviewError());
+          controller.abort();
+        }, 30_000);
       });
-      const result = await response.json() as {
-        ok?: boolean;
-        paymentStatus?: string;
-        requires3DS?: boolean;
-      };
+      // A lost response cannot establish whether the provider charged. Bound
+      // headers and JSON together, even if a transport ignores AbortSignal.
+      // Late transport results only finish this read; they cannot advance UI.
+      const charge = (async () => {
+        const response = await fetch("/api/payments/culqi/charge", {
+          body: JSON.stringify({
+            authentication3DS: security.authentication3DS,
+            checkoutSessionId: session.checkoutSessionId,
+            deviceId: security.deviceId,
+            email: details.email,
+            orderCode: session.orderCode,
+            sourceId,
+          }),
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          signal: controller.signal,
+        });
+        const result = await response.json() as {
+          ok?: boolean;
+          paymentStatus?: string;
+          requires3DS?: boolean;
+        };
+        return { response, result };
+      })();
+      const { response, result } = await Promise.race([charge, deadline])
+        .finally(() => clearTimeout(timeout));
 
+      if (!isCurrentRecovery(submittedReference) || recoveryRef.current?.state !== "pending") {
+        throw new CheckoutReviewError();
+      }
       if (!response.ok || !result.ok || result.paymentStatus === "reconciliation_required") {
         throw new CheckoutReviewError();
       }
@@ -623,7 +683,11 @@ export function ReservationFlow({
       else if (!recoveryRef.current) redirectToSuccess(session.orderCode, verifiedStatus);
       return "submitted";
     } catch {
-      markPaymentForReview();
+      if (isCurrentRecovery(submittedReference)) markPaymentForReview();
+      else {
+        activePaymentRef.current = null;
+        setPaymentInProgress(false);
+      }
       throw new CheckoutReviewError();
     }
   }
@@ -655,7 +719,7 @@ export function ReservationFlow({
     setPaymentInProgress(false);
   }
 
-  function isCurrentRecovery(reference: CheckoutRecovery) {
+  function isCurrentRecovery(reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">) {
     const current = recoveryRef.current;
     return current?.checkoutSessionId === reference.checkoutSessionId && current?.orderCode === reference.orderCode;
   }
@@ -666,14 +730,7 @@ export function ReservationFlow({
     setCheckingPayment(true);
     setError("");
     try {
-      const response = await fetch("/api/payments/culqi/status", {
-        method: "POST", cache: "no-store", signal: AbortSignal.timeout(10000),
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ checkoutSessionId: current.checkoutSessionId, orderCode: current.orderCode }),
-      });
-      const result = await response.json() as {
-        ok?: boolean; paymentStatus?: string; reconciliationRequired?: boolean;
-      };
+      const { response, result } = await readCheckoutPaymentStatus(current);
       if (!isCurrentRecovery(current)) throw new CheckoutReviewError();
       if (!response.ok || result.ok !== true) throw new CheckoutReviewError();
       const outcome = checkoutRecoveryOutcome(result);
@@ -1008,7 +1065,10 @@ export function ReservationFlow({
               disabled={false}
               locale={locale}
               onError={setError}
-              onPaymentUnresolved={markPaymentForReview}
+              onPaymentUnresolved={() => {
+                const active = activePaymentRef.current;
+                if (active && isCurrentRecovery(active)) markPaymentForReview();
+              }}
               onToken={submitCulqiToken}
               prepareCheckout={prepareCulqiCheckout}
             />

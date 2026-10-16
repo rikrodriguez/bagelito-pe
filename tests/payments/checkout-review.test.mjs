@@ -51,7 +51,12 @@ function hooks() {
         return slots[index];
       },
       useMemo(factory) { cursor++; return factory(); },
-      useCallback(callback) { cursor++; return callback; },
+      useCallback(callback, deps) {
+        const index = cursor++;
+        const prior = slots[index];
+        if (!prior || !equalDeps(prior.deps, deps)) slots[index] = { deps, callback };
+        return slots[index].callback;
+      },
       useEffect(effect, deps) {
         const index = cursor++;
         const prior = slots[index];
@@ -104,6 +109,7 @@ function compileComponent(filename, source, customRequire) {
 }
 function Placeholder() { return null; }
 function FixtureCheckout() { return null; }
+const futureExpiry = () => new Date(Date.now() + 30 * 60_000).toISOString();
 const config = { enabled: true, mode: 'sandbox', provider: 'culqi', currency: 'PEN', publicKey: 'pk_test_fixture', rsaId: 'fixture', rsaPublicKey: 'fixture' };
 
 function browser(store) {
@@ -121,7 +127,8 @@ function browser(store) {
     },
     removeEventListener(name, listener) { listeners.get(name)?.delete(listener); },
   };
-  globalThis.document = { documentElement: {}, body: { classList: { toggle() {}, remove() {} } } };
+  globalThis.document = { documentElement: {}, body: { classList: { toggle() {}, remove() {} } },
+    visibilityState: 'visible', addEventListener: window.addEventListener, removeEventListener: window.removeEventListener };
   return {
     get uuidCalls() { return uuidCalls; },
     dispatch(name, event) { listeners.get(name)?.forEach(listener => listener(event)); },
@@ -168,7 +175,7 @@ function flowHarness(paymentConfig = config) {
   };
 }
 
-function serverFixture(store, { charge = { ok: false, paymentStatus: 'reconciliation_required' }, status = { ok: true, paymentStatus: 'pending', reconciliationRequired: true }, failCharge = false } = {}) {
+function serverFixture(store, { charge = { ok: false, paymentStatus: 'reconciliation_required' }, status = { ok: true, paymentStatus: 'pending', reconciliationRequired: true }, failCharge = false, expiresAt = futureExpiry() } = {}) {
   const calls = [];
   globalThis.fetch = async (url, init) => {
     const payload = JSON.parse(init.body);
@@ -177,14 +184,647 @@ function serverFixture(store, { charge = { ok: false, paymentStatus: 'reconcilia
       assert.equal(readCheckoutRecovery(store)?.orderCode, reference.orderCode, 'recovery must be durable before the charge request');
       if (failCharge) throw new Error('synthetic network failure');
     }
-    const result = url === '/api/reservations/culqi' ? { ok: true, orderCode: reference.orderCode, amount: 66 }
-      : url.endsWith('/order') ? { ok: true, sessionId: 'synthetic-local-payment-session', amount: 6600 }
+    const result = url === '/api/reservations/culqi' ? { ok: true, orderCode: reference.orderCode, amount: 66, expiresAt }
+      : url.endsWith('/order') ? { ok: true, sessionId: 'synthetic-local-payment-session', amount: 6600, expiresAt }
         : url.endsWith('/charge') ? (typeof charge === 'function' ? charge(calls.filter(call => call.url.endsWith('/charge')).length) : charge)
           : status;
     return { ok: result.ok, json: async () => result };
   };
   return calls;
 }
+
+const flushCallbacks = () => new Promise(resolve => setImmediate(resolve));
+
+// Both components and their actual callbacks execute with deterministic hooks
+// and synthetic SDK, transport and browser dependencies.
+async function sdkHarness(props) {
+  const h = hooks();
+  const { CulqiCheckoutButton } = compileComponent(buttonFilename, buttonSource, specifier => {
+    if (specifier === 'react') return { ...React, ...h.api };
+    if (specifier === 'next/script') return { __esModule: true, default: Placeholder };
+  });
+  const instances = [];
+  window.CulqiCheckout = class {
+    constructor() { instances.push(this); }
+    opens = 0; closes = 0;
+    open() { this.opens++; } close() { this.closes++; }
+  };
+  let tree = h.render(CulqiCheckoutButton, props);
+  for (const id of ['culqi-custom-checkout', 'culqi-3ds-script']) {
+    nodes(tree).find(node => node?.props?.id === id).props.onReady();
+  }
+  tree = h.render(CulqiCheckoutButton, props);
+  await flushCallbacks();
+  return {
+    sdk: instances[0], instances, cleanup: h.cleanup,
+    render: () => h.render(CulqiCheckoutButton, props),
+  };
+}
+
+function deadlineClock({ wallClock = false } = {}) {
+  const previous = { setTimeout: globalThis.setTimeout, clearTimeout: globalThis.clearTimeout };
+  const previousNow = Date.now;
+  const startedAt = Date.now();
+  const timers = new Map();
+  let now = 0; let next = 0;
+  if (wallClock) Date.now = () => startedAt + now;
+  globalThis.setTimeout = (callback, delay) => {
+    const id = ++next;
+    timers.set(id, { callback, due: now + delay });
+    return id;
+  };
+  globalThis.clearTimeout = id => timers.delete(id);
+  return {
+    get pending() { return timers.size; },
+    jump(ms) { now += ms; },
+    tick(ms) {
+      now += ms;
+      for (const [id, timer] of [...timers]) {
+        if (timer.due <= now) { timers.delete(id); timer.callback(); }
+      }
+    },
+    restore() { Object.assign(globalThis, previous); Date.now = previousNow; },
+  };
+}
+
+function expiryProps(expiresAt, overrides = {}) {
+  return { amount: 66, config, customerEmail: 'qa@example.invalid', locale: 'es', disabled: false,
+    onError() {}, onToken: async () => 'submitted',
+    prepareCheckout: async () => ({ amountMinor: 6600, checkoutSessionId, orderCode: reference.orderCode,
+      sessionId: 'synthetic-expiry-attempt', expiresAt }), ...overrides };
+}
+const embed = tree => nodes(tree).find(node => node?.props?.id === 'culqi-checkout-container');
+
+for (const locale of ['es', 'en']) {
+  test(`idle reservation expiry closes the SDK and removes its payment embed (${locale})`, async () => {
+    const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
+    let preparations = 0; let submissions = 0; let unresolved = 0;
+    const props = expiryProps(new Date(Date.now() + 20_000).toISOString(), {
+      locale, onPaymentUnresolved() { unresolved++; }, onToken: async () => { submissions++; return 'submitted'; },
+    });
+    const prepare = props.prepareCheckout; props.prepareCheckout = () => { preparations++; return prepare(); };
+    let sdk;
+    try {
+      sdk = await sdkHarness(props); const staleCallback = sdk.sdk.culqi;
+      assert.ok(embed(sdk.render())); clock.tick(19_999); assert.ok(embed(sdk.render()));
+      clock.tick(1); await flushCallbacks(); const tree = sdk.render();
+      assert.match(text(tree), locale === 'es' ? /reserva venció/ : /reservation expired/);
+      assert.equal(embed(tree), undefined); assert.ok(sdk.sdk.closes >= 1);
+      assert.equal(sdk.sdk.culqi, undefined); assert.equal(clock.pending, 0);
+      assert.equal(nodes(tree).find(node => node?.type === 'a' && node.props.href === '/reserve')?.props.href, '/reserve');
+      sdk.sdk.token = { id: 'ype_test_lateexpiry123' }; staleCallback(); await flushCallbacks();
+      assert.equal(submissions, 0); assert.equal(unresolved, 0); assert.equal(preparations, 1);
+      assert.equal(button(tree, 'Reintentar checkout'), undefined);
+    } finally { sdk?.cleanup(); clock.restore(); env.restore(); }
+  });
+}
+
+for (const event of ['focus', 'pageshow', 'visibilitychange', 'sdk callback']) {
+  test(`reservation expiry is rechecked on ${event} even when its timer was throttled`, async () => {
+    const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
+    let submissions = 0; let sdk;
+    try {
+      sdk = await sdkHarness(expiryProps(new Date(Date.now() + 20_000).toISOString(), {
+        onToken: async () => { submissions++; return 'submitted'; },
+      }));
+      const stale = sdk.sdk.culqi; clock.jump(20_000);
+      if (event === 'sdk callback') { sdk.sdk.token = { id: 'ype_test_throttled123' }; stale(); }
+      else env.dispatch(event, {});
+      await flushCallbacks(); const tree = sdk.render();
+      assert.match(text(tree), /reserva venció/); assert.equal(embed(tree), undefined);
+      assert.equal(submissions, 0); assert.equal(clock.pending, 0);
+    } finally { sdk?.cleanup(); clock.restore(); env.restore(); }
+  });
+}
+
+for (const expiry of ['past', 'missing', 'malformed']) {
+  test(`${expiry} session expiry cannot open the SDK or accept a payment`, async () => {
+    const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
+    let sdk;
+    try {
+      const expiresAt = expiry === 'past' ? new Date(Date.now() - 1).toISOString()
+        : expiry === 'missing' ? null : 'not-a-date';
+      sdk = await sdkHarness(expiryProps(expiresAt));
+      assert.equal(sdk.instances.length, 0); assert.equal(clock.pending, 0);
+      if (expiry === 'past') assert.match(text(sdk.render()), /reserva venció/);
+    } finally { sdk?.cleanup(); clock.restore(); env.restore(); }
+  });
+}
+
+test('expiry during device collection prevents the later source from reaching charge submission', async () => {
+  const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
+  let release; const device = new Promise(resolve => { release = resolve; });
+  let submissions = 0; let sdk;
+  window.Culqi3DS = { publicKey: '', options: {}, generateDevice: () => device, reset() {} };
+  try {
+    sdk = await sdkHarness(expiryProps(new Date(Date.now() + 20_000).toISOString(), {
+      onToken: async () => { submissions++; return 'submitted'; },
+    }));
+    sdk.sdk.token = { id: 'tkn_test_expirydevice123' }; sdk.sdk.culqi(); await flushCallbacks();
+    clock.tick(20_000); release('device_synthetic'); await flushCallbacks();
+    assert.equal(submissions, 0); assert.match(text(sdk.render()), /reserva venció/);
+    assert.equal(embed(sdk.render()), undefined); assert.equal(clock.pending, 0);
+  } finally { release('device_synthetic'); await flushCallbacks(); sdk?.cleanup(); clock.restore(); env.restore(); }
+});
+
+for (const lateResult of ['paid', 'requires_3ds', 'rejection']) {
+  test(`expiry during a pending charge preserves recovery despite late ${lateResult}`, async () => {
+    const store = storage(); const env = browser(store); const clock = deadlineClock({ wallClock: true });
+    const calls = serverFixture(store, { expiresAt: new Date(Date.now() + 20_000).toISOString() });
+    const fixtureFetch = globalThis.fetch; let release; let reject;
+    const gate = new Promise((resolve, fail) => { release = resolve; reject = fail; });
+    globalThis.fetch = async (url, init) => {
+      if (!url.endsWith('/charge')) return fixtureFetch(url, init);
+      calls.push({ url, payload: JSON.parse(init.body) }); return gate;
+    };
+    let authentications = 0;
+    window.Culqi3DS = { publicKey: '', options: {}, settings: {}, reset() {},
+      generateDevice: async () => 'device_synthetic', initAuthentication: async () => { authentications++; } };
+    const flow = flowHarness(); let sdk;
+    try {
+      flow.reviewStage(); sdk = await sdkHarness(flow.checkout());
+      sdk.sdk.token = { id: 'tkn_test_expirycharge123' }; sdk.sdk.culqi(); await flushCallbacks();
+      assert.deepEqual(readCheckoutRecovery(store), reference);
+      clock.tick(20_000); await flushCallbacks(); flow.render();
+      assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+      assert.match(text(sdk.render()), /resultado del pago necesita revisión/);
+      assert.equal(embed(sdk.render()), undefined);
+      if (lateResult === 'rejection') reject(new Error('synthetic late failure'));
+      else release({ ok: true, json: async () => ({ ok: true, paymentStatus: 'paid', requires3DS: lateResult === 'requires_3ds' }) });
+      await flushCallbacks(); flow.render();
+      assert.equal(authentications, 0); assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+      assert.equal(calls.filter(c => c.url.endsWith('/charge')).length, 1);
+      assert.equal(calls.filter(c => c.url.endsWith('/status')).length, 0);
+      assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+    } finally {
+      release({ ok: false, json: async () => ({ ok: false }) }); await flushCallbacks();
+      sdk?.cleanup(); flow.cleanup(); clock.restore(); env.restore();
+    }
+  });
+}
+
+test('expired 3DS cannot continue charging or offer a fresh reservation while payment is unresolved', async () => {
+  const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
+  let submissions = 0; let unresolved = 0; let sdk;
+  window.Culqi3DS = { publicKey: '', options: {}, settings: {}, reset() {},
+    generateDevice: async () => 'device_synthetic', initAuthentication: async () => {} };
+  try {
+    sdk = await sdkHarness(expiryProps(new Date(Date.now() + 20_000).toISOString(), {
+      onToken: async () => { submissions++; return 'requires_3ds'; }, onPaymentUnresolved() { unresolved++; },
+    }));
+    sdk.sdk.token = { id: 'tkn_test_expiry3ds123' }; sdk.sdk.culqi(); await flushCallbacks();
+    clock.jump(20_000);
+    env.dispatch('message', { origin: window.location.origin, data: { parameters3DS: { cavv: 'synthetic' } } });
+    await flushCallbacks(); const tree = sdk.render();
+    assert.equal(submissions, 1); assert.equal(unresolved, 1); assert.equal(embed(tree), undefined);
+    assert.match(text(tree), /resultado del pago necesita revisión/);
+    assert.equal(nodes(tree).some(node => node?.type === 'a' && node.props.href === '/reserve'), false);
+    assert.equal(clock.pending, 0);
+  } finally { sdk?.cleanup(); clock.restore(); env.restore(); }
+});
+
+test('unmount clears the reservation timer and ignores foreground events', async () => {
+  const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
+  let sdk; let errors = 0;
+  try {
+    sdk = await sdkHarness(expiryProps(new Date(Date.now() + 20_000).toISOString(), { onError() { errors++; } }));
+    sdk.cleanup(); const previousErrors = errors;
+    assert.equal(clock.pending, 0); clock.tick(20_000); env.dispatch('focus', {}); await flushCallbacks();
+    assert.equal(errors, previousErrors);
+  } finally { sdk?.cleanup(); clock.restore(); env.restore(); }
+});
+
+test('SDK token automatically reserves, charges once, verifies paid and redirects without a status button', async () => {
+  const store = storage(); const env = browser(store); const clock = deadlineClock();
+  const calls = serverFixture(store, { charge: { ok: true, paymentStatus: 'paid' } });
+  const fixtureFetch = globalThis.fetch;
+  let releaseStatus;
+  const statusGate = new Promise(resolve => { releaseStatus = resolve; });
+  globalThis.fetch = async (url, init) => {
+    if (!url.endsWith('/status')) return fixtureFetch(url, init);
+    calls.push({ url, payload: JSON.parse(init.body) });
+    const result = calls.filter(call => call.url.endsWith('/status')).length === 1
+      ? await statusGate : { ok: true, paymentStatus: 'paid', reconciliationRequired: false };
+    return { ok: true, json: async () => result };
+  };
+  const flow = flowHarness(); let sdkFlow;
+  try {
+    flow.reviewStage(); sdkFlow = await sdkHarness(flow.checkout());
+    assert.ok(sdkFlow.sdk?.culqi);
+    sdkFlow.sdk.token = { id: 'ype_test_automatic123' };
+    sdkFlow.sdk.culqi();
+    await flushCallbacks();
+    assert.deepEqual(calls.map(call => call.url), [
+      '/api/reservations/culqi', '/api/payments/culqi/order',
+      '/api/payments/culqi/charge', '/api/payments/culqi/status',
+    ]);
+    assert.equal(readCheckoutRecovery(store).state, 'pending');
+    assert.equal(calls.find(call => call.url.endsWith('/charge')).payload.checkoutSessionId, checkoutSessionId,
+      'initial Yape charge must carry the checkout ownership capability');
+    assert.equal(calls.find(call => call.url.endsWith('/order')).payload.checkoutSessionId, checkoutSessionId,
+      'token-session preparation must carry the same capability as reservation and charge');
+    assert.equal(window.location.href, 'https://fixture.invalid/checkout', 'charge response cannot establish paid');
+    releaseStatus({ ok: true, paymentStatus: 'pending', reconciliationRequired: false });
+    await flushCallbacks();
+    const destination = new URL(window.location.href, 'https://fixture.invalid');
+    assert.equal(destination.pathname, '/reserve/success');
+    assert.equal(destination.searchParams.get('order'), reference.orderCode);
+    assert.equal(destination.searchParams.get('payment'), 'paid');
+    assert.equal(readCheckoutRecovery(store), null);
+    assert.equal(clock.pending, 0, 'successful charge must clear its deadline');
+    for (const lookup of calls.filter(call => call.url.endsWith('/status'))) {
+      assert.deepEqual(lookup.payload, { checkoutSessionId, orderCode: reference.orderCode });
+    }
+    sdkFlow.sdk.culqi(); await flushCallbacks();
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
+    assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+  } finally { releaseStatus({ ok: true, paymentStatus: 'pending', reconciliationRequired: false }); sdkFlow?.cleanup(); flow.cleanup(); clock.restore(); env.restore(); }
+});
+
+for (const mode of ['automatic', 'manual']) {
+  for (const stage of ['fetch', 'body']) {
+    test(`${mode} status ${stage} timeout preserves recovery and ignores a late paid result`, async () => {
+      const store = storage();
+      if (mode === 'manual') beginCheckoutPayment(store, reference);
+      const env = browser(store); const clock = deadlineClock();
+      const calls = serverFixture(store, {
+        charge: { ok: true }, status: { ok: true, paymentStatus: 'paid', reconciliationRequired: false },
+      });
+      const fixtureFetch = globalThis.fetch;
+      let release; let releaseHeaders; let signal;
+      const gate = new Promise(resolve => { release = resolve; });
+      const headers = new Promise(resolve => { releaseHeaders = resolve; });
+      globalThis.fetch = async (url, init) => {
+        if (!url.endsWith('/status')) return fixtureFetch(url, init);
+        assert.equal(url, '/api/payments/culqi/status');
+        calls.push({ url, payload: JSON.parse(init.body) }); signal = init.signal;
+        // Headers or body may ignore cancellation, as with a broken transport.
+        return stage === 'fetch' ? gate : headers;
+      };
+      const flow = flowHarness(); let submission; let outcome = 'pending';
+      try {
+        if (mode === 'automatic') {
+          flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
+          submission = checkout.onToken(session, 'ype_test_statusdeadline123', {}).then(
+            () => { outcome = 'submitted'; },
+            error => { assert.ok(error instanceof CheckoutReviewError); outcome = 'review'; },
+          );
+        } else button(flow.tree, 'Consultar estado').props.onClick();
+        await flushCallbacks(); flow.render();
+        if (stage === 'body') {
+          clock.tick(12_000);
+          releaseHeaders({ ok: true, json: () => gate }); await flushCallbacks();
+          clock.tick(7_999);
+        } else clock.tick(19_999);
+        await flushCallbacks();
+        assert.equal(signal.aborted, false);
+        if (mode === 'automatic') assert.equal(outcome, 'pending');
+        else assert.equal(button(flow.tree, 'Consultando').props.disabled, true);
+        clock.tick(1); await flushCallbacks(); flow.render();
+        assert.equal(signal.aborted, true, 'status headers and body have a finite 20-second deadline');
+        assert.equal(clock.pending, 0);
+        if (mode === 'automatic') {
+          assert.equal(outcome, 'review');
+          assert.match(text(flow.tree), /Tu pago necesita revisión/);
+        } else {
+          assert.equal(button(flow.tree, 'Consultar estado').props.disabled, false);
+          assert.match(text(flow.tree), /No pudimos consultar el estado/);
+        }
+        const retained = { ...reference, state: mode === 'automatic' ? 'review' : 'pending' };
+        assert.deepEqual(readCheckoutRecovery(store), retained);
+        assert.equal(flow.checkout(), undefined);
+        assert.equal(button(flow.tree, 'Crear nuevo pedido'), undefined);
+
+        const paid = { ok: true, paymentStatus: 'paid', reconciliationRequired: false };
+        release(stage === 'fetch' ? { ok: true, json: async () => paid } : paid);
+        await flushCallbacks(); flow.render();
+        assert.deepEqual(readCheckoutRecovery(store), retained, 'a response after the deadline cannot clear the lock');
+        assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+
+        globalThis.fetch = fixtureFetch;
+        button(flow.tree, 'Consultar estado').props.onClick(); await flushCallbacks(); flow.render();
+        assert.equal(readCheckoutRecovery(store), null);
+        assert.match(text(flow.tree), /Pago confirmado/);
+        assert.equal(flow.checkout(), undefined);
+        assert.ok(calls.filter(call => call.url.endsWith('/status')).every(call =>
+          call.payload.checkoutSessionId === checkoutSessionId && call.payload.orderCode === reference.orderCode));
+        assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, mode === 'automatic' ? 1 : 0);
+        assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, mode === 'automatic' ? 1 : 0);
+        assert.equal(clock.pending, 0);
+      } finally {
+        releaseHeaders({ ok: false, json: () => gate });
+        release(stage === 'fetch' ? { ok: false, json: async () => ({ ok: false }) } : { ok: false });
+        await submission; await flushCallbacks(); flow.cleanup(); clock.restore(); env.restore();
+      }
+    });
+  }
+}
+
+test('automatic status reads share the existing 60-second budget across successful pending responses', async () => {
+  const store = storage(); const env = browser(store); const clock = deadlineClock({ wallClock: true });
+  const calls = serverFixture(store, { charge: { ok: true } }); const fixtureFetch = globalThis.fetch;
+  const reads = [];
+  globalThis.fetch = async (url, init) => {
+    if (!url.endsWith('/status')) return fixtureFetch(url, init);
+    calls.push({ url, payload: JSON.parse(init.body) });
+    return new Promise((resolve, reject) => reads.push({ resolve, reject, signal: init.signal }));
+  };
+  const flow = flowHarness(); let submission; let outcome = 'pending';
+  try {
+    flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
+    submission = checkout.onToken(session, 'ype_test_statusbudget123', {}).then(
+      () => { outcome = 'submitted'; }, error => { assert.ok(error instanceof CheckoutReviewError); outcome = 'review'; },
+    );
+    await flushCallbacks();
+    for (let i = 0; i < 3; i++) {
+      assert.equal(reads.length, i + 1);
+      clock.tick(19_000);
+      reads[i].resolve({ ok: true, json: async () => ({ ok: true, paymentStatus: 'pending', reconciliationRequired: false }) });
+      await flushCallbacks();
+      assert.equal(reads[i].signal.aborted, false);
+    }
+    assert.equal(reads.length, 4);
+    clock.tick(2_999); await flushCallbacks(); assert.equal(outcome, 'pending');
+    clock.tick(1); await flushCallbacks(); flow.render();
+    assert.equal(outcome, 'review');
+    assert.equal(reads[3].signal.aborted, true);
+    assert.equal(clock.pending, 0);
+    assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+    reads[3].resolve({ ok: true, json: async () => ({ ok: true, paymentStatus: 'paid', reconciliationRequired: false }) });
+    await flushCallbacks();
+    assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
+    assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+  } finally {
+    reads.forEach(read => read.reject(new Error('synthetic cleanup')));
+    await submission; flow.cleanup(); clock.restore(); env.restore();
+  }
+});
+
+for (const mode of ['automatic', 'manual']) {
+  for (const fault of ['transport', 'invalid JSON', 'HTTP 429', 'HTTP 503', 'null JSON', 'untyped paid']) {
+    test(`${mode} status ${fault} cannot unlock or replace the pending checkout`, async () => {
+      const store = storage();
+      if (mode === 'manual') beginCheckoutPayment(store, reference);
+      const env = browser(store); const clock = deadlineClock();
+      const calls = serverFixture(store, { charge: { ok: true } }); const fixtureFetch = globalThis.fetch;
+      const marker = 'synthetic-private-provider-error';
+      globalThis.fetch = async (url, init) => {
+        if (!url.endsWith('/status')) return fixtureFetch(url, init);
+        assert.equal(url, '/api/payments/culqi/status');
+        calls.push({ url, payload: JSON.parse(init.body) });
+        if (fault === 'transport') throw new Error(marker);
+        return { ok: !fault.startsWith('HTTP'), json: async () => {
+          if (fault === 'invalid JSON') throw new SyntaxError(marker);
+          if (fault === 'null JSON') return null;
+          return { ok: fault === 'untyped paid' ? 'true' : true, paymentStatus: 'paid', reconciliationRequired: false };
+        } };
+      };
+      const flow = flowHarness(); let restored;
+      try {
+        if (mode === 'automatic') {
+          flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
+          await checkout.onToken(session, 'ype_test_statusfault123', {}).catch(error => {
+            assert.ok(error instanceof CheckoutReviewError);
+          });
+        } else { button(flow.tree, 'Consultar estado').props.onClick(); await flushCallbacks(); }
+        flow.render();
+        const retained = readCheckoutRecovery(store);
+        assert.equal(retained.orderCode, reference.orderCode);
+        assert.equal(retained.checkoutSessionId, checkoutSessionId);
+        assert.equal(flow.checkout(), undefined);
+        assert.equal(button(flow.tree, 'Crear nuevo pedido'), undefined);
+        assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+        assert.doesNotMatch(text(flow.tree), new RegExp(marker));
+        assert.equal(clock.pending, 0, 'failed reads release their timers');
+        restored = flowHarness();
+        assert.equal(restored.checkout(), undefined);
+        assert.match(text(restored.tree), /BAG-TEST-1/);
+        assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, mode === 'automatic' ? 1 : 0);
+        assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, mode === 'automatic' ? 1 : 0);
+        assert.ok(calls.filter(call => call.url.endsWith('/status')).length <= (mode === 'automatic' ? 6 : 1));
+      } finally { restored?.cleanup(); flow.cleanup(); clock.restore(); env.restore(); }
+    });
+  }
+}
+
+for (const stage of ['fetch', 'body']) {
+  for (const lateResult of ['paid', 'requires_3ds', 'rejection']) {
+    test(`charge ${stage} timeout keeps the same order locked despite late ${lateResult}`, async () => {
+      const store = storage(); const env = browser(store); const clock = deadlineClock();
+      const calls = serverFixture(store);
+      const fixtureFetch = globalThis.fetch;
+      let release; let reject; let signal;
+      const gate = new Promise((resolve, rejectGate) => { release = resolve; reject = rejectGate; });
+      globalThis.fetch = async (url, init) => {
+        if (!url.endsWith('/charge')) return fixtureFetch(url, init);
+        calls.push({ url, payload: JSON.parse(init.body) });
+        assert.deepEqual(readCheckoutRecovery(store), reference);
+        signal = init.signal;
+        // Deliberately ignore AbortSignal, including the response body.
+        return stage === 'fetch' ? gate : { ok: true, json: () => gate };
+      };
+      const flow = flowHarness(); let restored; let submission;
+      try {
+        flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
+        let outcome = 'pending';
+        submission = checkout.onToken(session, 'ype_test_timeout123', {}).then(
+          () => { outcome = 'submitted'; },
+          error => { assert.ok(error instanceof CheckoutReviewError); outcome = 'review'; },
+        );
+        await flushCallbacks();
+        clock.tick(29_999); await flushCallbacks();
+        assert.equal(outcome, 'pending');
+        clock.tick(1); await flushCallbacks();
+        assert.equal(outcome, 'review', 'uncertain charge must stop waiting within 30 seconds');
+        await submission; flow.render();
+        assert.equal(signal.aborted, true);
+        assert.equal(clock.pending, 0);
+        assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+        assert.match(text(flow.tree), /Tu pago necesita revisión/);
+        assert.equal(flow.checkout(), undefined);
+        assert.equal(button(flow.tree, 'Crear nuevo pedido'), undefined);
+        assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+
+        restored = flowHarness();
+        assert.equal(restored.checkout(), undefined);
+        assert.match(text(restored.tree), /BAG-TEST-1/);
+        await assert.rejects(() => checkout.prepareCheckout(), CheckoutReviewError);
+        await assert.rejects(() => checkout.onToken(session, 'ype_test_another123', {}), CheckoutReviewError);
+
+        const result = { ok: true, paymentStatus: 'paid', requires3DS: lateResult === 'requires_3ds' };
+        if (lateResult === 'rejection') reject(new Error('synthetic late transport error'));
+        else release(stage === 'fetch' ? { ok: true, json: async () => result } : result);
+        await flushCallbacks(); flow.render(); restored.render();
+        assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+        assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+        await assert.rejects(() => checkout.onToken(session, 'ype_test_timeout123', {
+          authentication3DS: { cavv: 'synthetic' },
+        }), CheckoutReviewError);
+        assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0, 'late charge cannot start automatic confirmation');
+        assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
+        assert.equal(calls.filter(call => call.url.endsWith('/order')).length, 1);
+        assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+        assert.equal(env.uuidCalls, 1);
+      } finally {
+        release(stage === 'fetch' ? { ok: false, json: async () => ({ ok: false }) } : { ok: false });
+        await submission; restored?.cleanup(); flow.cleanup(); clock.restore(); env.restore();
+      }
+    });
+  }
+}
+
+for (const completion of ['timeout', 'requires_3ds']) {
+  test(`an obsolete charge ${completion} cannot mark another pending order for review or start 3DS`, async () => {
+    const store = storage(); const env = browser(store); const clock = deadlineClock();
+    const calls = serverFixture(store);
+    const fixtureFetch = globalThis.fetch;
+    let release;
+    const gate = new Promise(resolve => { release = resolve; });
+    globalThis.fetch = async (url, init) => {
+      if (!url.endsWith('/charge')) return fixtureFetch(url, init);
+      calls.push({ url, payload: JSON.parse(init.body) });
+      return gate;
+    };
+    let authentications = 0;
+    window.Culqi3DS = {
+      publicKey: '', options: {}, settings: {}, reset() {},
+      generateDevice: async () => 'device_synthetic',
+      initAuthentication: async () => { authentications++; },
+    };
+    const flow = flowHarness(); let sdkFlow;
+    const replacement = {
+      ...reference, checkoutSessionId: '00000000-0000-4000-8000-000000000002',
+      orderCode: 'BAG-TEST-2', state: 'pending',
+    };
+    try {
+      flow.reviewStage(); sdkFlow = await sdkHarness(flow.checkout());
+      sdkFlow.sdk.token = { id: 'tkn_test_obsolete123' }; sdkFlow.sdk.culqi();
+      await flushCallbacks();
+      store.setItem(CHECKOUT_RECOVERY_STORAGE_KEY, JSON.stringify(replacement));
+      env.dispatch('storage', { key: CHECKOUT_RECOVERY_STORAGE_KEY });
+      if (completion === 'timeout') clock.tick(30_000);
+      else release({ ok: true, json: async () => ({ ok: true, requires3DS: true }) });
+      await flushCallbacks(); flow.render();
+      assert.deepEqual(readCheckoutRecovery(store), replacement, 'a stale charge must leave the current order unchanged');
+      assert.equal(authentications, 0, 'an obsolete source cannot start bank authentication');
+      assert.match(text(sdkFlow.render()), /resultado del pago necesita revisión/);
+      assert.equal(button(sdkFlow.render(), 'Reintentar checkout'), undefined);
+      assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+      assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
+      assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
+    } finally {
+      release({ ok: false, json: async () => ({ ok: false }) }); await flushCallbacks();
+      sdkFlow?.cleanup(); flow.cleanup(); clock.restore(); env.restore();
+    }
+  });
+}
+
+test('SDK charge headers and JSON share one deadline; reload checks the same uncertain order without a new charge', async () => {
+  const store = storage(); const env = browser(store); const clock = deadlineClock();
+  const calls = serverFixture(store, {
+    status: { ok: true, paymentStatus: 'paid', reconciliationRequired: false },
+  });
+  const fixtureFetch = globalThis.fetch;
+  let releaseHeaders; let releaseBody; let signal;
+  const headersGate = new Promise(resolve => { releaseHeaders = resolve; });
+  const bodyGate = new Promise(resolve => { releaseBody = resolve; });
+  globalThis.fetch = async (url, init) => {
+    if (!url.endsWith('/charge')) return fixtureFetch(url, init);
+    calls.push({ url, payload: JSON.parse(init.body) }); signal = init.signal;
+    return headersGate;
+  };
+  const flow = flowHarness(); let sdkFlow; let restored;
+  try {
+    flow.reviewStage(); sdkFlow = await sdkHarness(flow.checkout());
+    sdkFlow.sdk.token = { id: 'ype_test_shareddeadline123' }; sdkFlow.sdk.culqi();
+    await flushCallbacks(); clock.tick(20_000);
+    releaseHeaders({ ok: true, json: () => bodyGate }); await flushCallbacks();
+    clock.tick(9_999); await flushCallbacks(); flow.render();
+    assert.deepEqual(readCheckoutRecovery(store), reference);
+    clock.tick(1); await flushCallbacks(); flow.render();
+    assert.equal(signal.aborted, true);
+    assert.equal(clock.pending, 0);
+    assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+    assert.match(text(sdkFlow.render()), /resultado del pago necesita revisión/);
+    assert.equal(button(sdkFlow.render(), 'Reintentar checkout'), undefined);
+    assert.equal(flow.checkout(), undefined);
+    assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
+    sdkFlow.sdk.culqi(); await flushCallbacks();
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
+
+    restored = flowHarness();
+    assert.equal(restored.checkout(), undefined);
+    button(restored.tree, 'Consultar estado').props.onClick(); await flushCallbacks(); restored.render();
+    assert.match(text(restored.tree), /Pago confirmado/);
+    assert.equal(readCheckoutRecovery(store), null);
+    assert.deepEqual(calls.filter(call => call.url.endsWith('/status')).at(-1).payload, {
+      checkoutSessionId, orderCode: reference.orderCode,
+    });
+    releaseBody({ ok: true, requires3DS: true }); await flushCallbacks();
+    assert.equal(window.location.href, 'https://fixture.invalid/checkout', 'late charge response cannot redirect after recovery');
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
+    assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+  } finally {
+    releaseHeaders({ ok: false, json: async () => ({ ok: false }) }); releaseBody({ ok: false });
+    await flushCallbacks(); restored?.cleanup(); sdkFlow?.cleanup(); flow.cleanup(); clock.restore(); env.restore();
+  }
+});
+
+test('timeout during the real SDK 3DS continuation locks the same source and never sends a third charge', async () => {
+  const store = storage(); const env = browser(store); const clock = deadlineClock();
+  const calls = serverFixture(store, { charge: { ok: true, requires3DS: true } });
+  const fixtureFetch = globalThis.fetch;
+  let release;
+  const gate = new Promise(resolve => { release = resolve; });
+  globalThis.fetch = async (url, init) => {
+    if (!url.endsWith('/charge') || !JSON.parse(init.body).authentication3DS) return fixtureFetch(url, init);
+    calls.push({ url, payload: JSON.parse(init.body) });
+    return gate;
+  };
+  let authentications = 0;
+  window.Culqi3DS = {
+    publicKey: '', options: {}, settings: {}, reset() {},
+    generateDevice: async () => 'device_synthetic',
+    initAuthentication: async () => { authentications++; },
+  };
+  const flow = flowHarness(); let sdkFlow;
+  const message = {
+    origin: window.location.origin,
+    data: { parameters3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } },
+  };
+  try {
+    flow.reviewStage(); sdkFlow = await sdkHarness(flow.checkout());
+    sdkFlow.sdk.token = { id: 'tkn_test_continuation123' }; sdkFlow.sdk.culqi(); await flushCallbacks();
+    assert.equal(authentications, 1);
+    assert.equal(clock.pending, 1, 'the initial charge deadline clears while the reservation expiry remains watched');
+    env.dispatch('message', message); await flushCallbacks();
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+    clock.tick(30_000); await flushCallbacks(); flow.render();
+    assert.equal(clock.pending, 0);
+    assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+    assert.match(text(sdkFlow.render()), /resultado del pago necesita revisión/);
+    assert.equal(button(sdkFlow.render(), 'Reintentar checkout'), undefined);
+    assert.equal(flow.checkout(), undefined);
+    env.dispatch('message', message); sdkFlow.sdk.culqi(); await flushCallbacks();
+    release({ ok: true, json: async () => ({ ok: true }) }); await flushCallbacks();
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+    assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
+    for (const charge of calls.filter(call => call.url.endsWith('/charge'))) {
+      assert.equal(charge.payload.checkoutSessionId, checkoutSessionId,
+        'initial card and 3DS continuation must keep the same checkout capability');
+      assert.equal(charge.payload.orderCode, reference.orderCode);
+      assert.equal(charge.payload.sourceId, 'tkn_test_continuation123');
+      assert.equal(charge.payload.deviceId, 'device_synthetic');
+    }
+    assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+    assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+    assert.doesNotMatch(store.getItem(CHECKOUT_RECOVERY_STORAGE_KEY), /tkn_test|cavv|eci|device|protocolVersion/);
+  } finally {
+    release({ ok: false, json: async () => ({ ok: false }) }); await flushCallbacks();
+    sdkFlow?.cleanup(); flow.cleanup(); clock.restore(); env.restore();
+  }
+});
 
 test('recovery persistence contains only order/session/state and survives navigation without a second start', () => {
   const store = storage();
@@ -307,11 +947,17 @@ test('only the current in-memory 3DS source may continue; storage never retains 
   try {
     flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
     const security = { authentication3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } };
+    assert.equal(calls.find(call => call.url.endsWith('/order')).payload.checkoutSessionId, session.checkoutSessionId);
     assert.equal(await checkout.onToken(session, 'tkn_test_original123', {}), 'requires_3ds');
     await assert.rejects(() => checkout.onToken(session, 'tkn_test_newtoken123', security), CheckoutReviewError);
     assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 1);
     assert.equal(await checkout.onToken(session, 'tkn_test_original123', security), 'submitted');
     assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+    for (const charge of calls.filter(call => call.url.endsWith('/charge'))) {
+      assert.equal(charge.payload.checkoutSessionId, session.checkoutSessionId);
+      assert.notEqual(charge.payload.checkoutSessionId, session.sessionId,
+        'payment attempt ID must not substitute for checkout ownership');
+    }
     await assert.rejects(() => checkout.onToken(session, 'tkn_test_original123', security), CheckoutReviewError);
     assert.doesNotMatch(store.getItem(CHECKOUT_RECOVERY_STORAGE_KEY), /tkn_test|cavv|eci|xid|protocolVersion/);
   } finally { flow.cleanup(); env.restore(); }
@@ -331,7 +977,7 @@ test('the real SDK button latches review after submission errors and never rende
   };
   const props = { amount: 66, config, customerEmail: '', locale: 'es', disabled: false,
     onError() {}, onPaymentUnresolved() { reviews++; },
-    prepareCheckout: async () => { preparations++; return { amountMinor: 6600, orderCode: reference.orderCode, sessionId: 'synthetic', expiresAt: null }; },
+    prepareCheckout: async () => { preparations++; return { amountMinor: 6600, orderCode: reference.orderCode, sessionId: 'synthetic', expiresAt: futureExpiry() }; },
     onToken: async () => { submissions++; throw new CheckoutReviewError(); },
   };
   try {
@@ -414,7 +1060,7 @@ for (const stage of ['prepare', 'device']) {
       open() {} close() { closed++; }
     };
     window.Culqi3DS = { publicKey: '', options: {}, generateDevice: () => gate };
-    const session = { amountMinor: 6600, checkoutSessionId, orderCode: reference.orderCode, sessionId: 'synthetic', expiresAt: null };
+    const session = { amountMinor: 6600, checkoutSessionId, orderCode: reference.orderCode, sessionId: 'synthetic', expiresAt: futureExpiry() };
     const props = { amount: 66, config, customerEmail: '', locale: 'es', disabled: false,
       onError() {}, prepareCheckout: () => stage === 'prepare' ? gate : Promise.resolve(session),
       onToken: async () => { submissions++; return 'submitted'; },
@@ -457,7 +1103,7 @@ for (const earlyReview of [false, true]) {
       generateDevice: async () => 'device_synthetic',
       initAuthentication: async () => { authentications++; },
     };
-    const session = { amountMinor: 6600, checkoutSessionId, orderCode: reference.orderCode, sessionId: 'synthetic', expiresAt: null };
+    const session = { amountMinor: 6600, checkoutSessionId, orderCode: reference.orderCode, sessionId: 'synthetic', expiresAt: futureExpiry() };
     const props = { amount: 66, config, customerEmail: '', locale: 'es', disabled: false,
       onError() {}, onPaymentUnresolved() {}, prepareCheckout: async () => session,
       onToken: async () => { submissions++; return submissions === 1 ? gate : 'submitted'; },

@@ -12,6 +12,7 @@ export const runtime = "nodejs";
 
 type ChargePayload = {
   authentication3DS?: unknown;
+  checkoutSessionId?: unknown;
   deviceId?: unknown;
   email?: unknown;
   orderCode?: unknown;
@@ -19,6 +20,7 @@ type ChargePayload = {
 };
 
 type ChargeOrder = {
+  checkout_session_id: string | null;
   customer_name: string;
   delivery_address: string;
   district: string;
@@ -80,6 +82,7 @@ export async function POST(request: Request) {
 
   try {
     const payload = await request.json() as ChargePayload;
+    const checkoutSessionId = typeof payload.checkoutSessionId === "string" ? payload.checkoutSessionId.trim().toLowerCase() : "";
     const orderCode = String(payload.orderCode ?? "").trim().toUpperCase();
     const email = String(payload.email ?? "").trim().toLowerCase();
     const sourceId = String(payload.sourceId ?? "").trim();
@@ -92,12 +95,13 @@ export async function POST(request: Request) {
     if (
       !orderCode
       || !email
+      || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(checkoutSessionId)
       || !isCulqiSourceId(sourceId)
       || (sourceId.startsWith("tkn_") && !isDeviceId(deviceId))
       || (sourceId.startsWith("ype_") && payload.authentication3DS != null)
     ) {
       return NextResponse.json(
-        { ok: false, error: "Valid order, email, Culqi token, and card security fingerprint are required." },
+        { ok: false, error: "Valid order, checkout session, email, Culqi token, and card security fingerprint are required." },
         { status: 400 },
       );
     }
@@ -112,14 +116,17 @@ export async function POST(request: Request) {
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("orders")
-      .select("id, order_code, customer_name, email, whatsapp, delivery_address, district, total_amount, status, payment_status, payment_lane, payment_order_id, payment_expires_at")
+      .select("id, order_code, checkout_session_id, customer_name, email, whatsapp, delivery_address, district, total_amount, status, payment_status, payment_lane, payment_order_id, payment_expires_at")
       .eq("order_code", orderCode)
+      .eq("checkout_session_id", checkoutSessionId)
       .maybeSingle();
 
     if (error) throw new Error(error.message);
     order = data as ChargeOrder | null;
 
-    if (!order || order.email.trim().toLowerCase() !== email) {
+    if (!order || order.order_code !== orderCode
+      || typeof order.checkout_session_id !== "string" || order.checkout_session_id.toLowerCase() !== checkoutSessionId
+      || order.email.trim().toLowerCase() !== email) {
       return NextResponse.json({ ok: false, error: "Order not found." }, { status: 404 });
     }
     if (order.status === "cancelled" || order.status === "delivered") {
@@ -173,7 +180,7 @@ export async function POST(request: Request) {
     return NextResponse.json(result, { status: result.ok ? 200 : 409 });
   } catch (error) {
     const status = error instanceof PublicApiError ? error.status : 500;
-    const message = error instanceof Error ? error.message : "Could not process Culqi payment.";
+    const message = error instanceof PublicApiError ? error.message : "Could not process Culqi payment.";
 
     return NextResponse.json(
       { ok: false, error: message },

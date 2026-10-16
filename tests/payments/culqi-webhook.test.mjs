@@ -132,6 +132,9 @@ const diagnosticReasons = new Set([
   'rpc_failure', 'invalid_rpc_result', 'applied', 'duplicate', 'unexpected_failure',
 ]);
 const diagnosticEventPaymentStates = new Set(['none', 'unknown', 'paid', 'pending', 'failed', 'expired']);
+const diagnosticUpstreamFailureClasses = new Set(['none', 'http', 'timeout', 'transport_or_unknown']);
+const diagnosticUpstreamErrorTypes = new Set(['none', 'unknown', 'invalid_request_error', 'authentication_error',
+  'parameter_error', 'card_error', 'limit_api_error', 'resource_error', 'api_error']);
 function assertOneSafeDiagnostic(result) {
   assert.equal(result.logs.length, 1, 'Every handled webhook must produce one bounded diagnostic');
   const [{ level, args }] = result.logs;
@@ -141,17 +144,32 @@ function assertOneSafeDiagnostic(result) {
   assert.ok(args[1] && typeof args[1] === 'object' && !Array.isArray(args[1]));
   assert.deepEqual(Object.keys(args[1]).sort(), [
     'stage', 'reason', 'httpStatus', 'eventVerified', 'transactionAttempted', 'eventPaymentState', 'duplicate',
+    'upstreamHttpStatus', 'upstreamFailureClass', 'upstreamErrorType', 'eventModeMatchesConfig',
   ].sort(), 'No dynamic field may be added to the private diagnostic');
   assert.ok(diagnosticStages.has(args[1].stage), 'Stage must be a fixed local enum');
   assert.ok(diagnosticReasons.has(args[1].reason), 'Reason must be a fixed local enum');
   assert.ok(diagnosticEventPaymentStates.has(args[1].eventPaymentState), 'Payment state must be normalized to a fixed enum');
+  assert.ok(diagnosticUpstreamFailureClasses.has(args[1].upstreamFailureClass), 'Upstream failure class must be a fixed local enum');
+  assert.ok(diagnosticUpstreamErrorTypes.has(args[1].upstreamErrorType), 'Provider error type must be a fixed local enum');
+  assert.ok(args[1].eventModeMatchesConfig === null || typeof args[1].eventModeMatchesConfig === 'boolean',
+    'Event/configured environment agreement is only a boolean or null');
+  assert.ok(args[1].upstreamHttpStatus === null || (Number.isInteger(args[1].upstreamHttpStatus)
+    && args[1].upstreamHttpStatus >= 100 && args[1].upstreamHttpStatus <= 599), 'Upstream HTTP status must be a bounded integer or null');
+  assert.equal(args[1].upstreamFailureClass === 'http', args[1].upstreamHttpStatus !== null);
+  if (args[1].stage !== 'event_lookup') {
+    assert.equal(args[1].upstreamHttpStatus, null, 'Other stages cannot claim a provider HTTP status');
+    assert.equal(args[1].upstreamFailureClass, 'none', 'Successful lookup or other stages cannot claim an upstream failure');
+    assert.equal(args[1].upstreamErrorType, 'none', 'Other stages cannot claim a provider error type');
+    assert.equal(args[1].eventModeMatchesConfig, null, 'Other stages cannot claim event/configured environment agreement');
+  }
   assert.equal(args[1].httpStatus, result.response.status);
   assert.equal(typeof args[1].eventVerified, 'boolean');
   assert.equal(typeof args[1].transactionAttempted, 'boolean');
   assert.equal(typeof args[1].duplicate, 'boolean');
   assert.equal(args[1].transactionAttempted, result.calls.length > 0, 'Transaction flag describes an actual mocked RPC invocation');
-  for (const value of Object.values(args[1])) {
-    assert.ok(['string', 'number', 'boolean'].includes(typeof value), 'No error, payload, header or nested object may enter logs');
+  for (const [key, value] of Object.entries(args[1])) {
+    assert.ok((['upstreamHttpStatus', 'eventModeMatchesConfig'].includes(key) && value === null) || ['string', 'number', 'boolean'].includes(typeof value),
+      'No error, payload, header or nested object may enter logs');
   }
   const serialized = JSON.stringify(result.logs);
   for (const marker of [...sensitiveMarkers, id, 'chr_test_12345678', 'tkn_test_fixture123', 'FIXTURE-ORDER']) {
@@ -284,6 +302,159 @@ test('provider HTTP failures map only to allowlisted diagnostic reasons while re
     assert.equal(diagnostic.reason, reason);
     assert.equal(diagnostic.eventVerified, false);
     assert.equal(diagnostic.eventPaymentState, 'none');
+  }
+});
+
+test('lookup diagnostics distinguish the observed HTTP 400, HTTP 500 and transport failures', async () => {
+  for (const [fetchError, upstreamHttpStatus, upstreamFailureClass] of [
+    [Object.assign(hostileError(), { status: 400 }), 400, 'http'],
+    [Object.assign(hostileError(), { status: 500 }), 500, 'http'],
+    [new TypeError(sensitiveText), null, 'transport_or_unknown'],
+  ]) {
+    const result = await execute({ fetchError });
+    assert.equal(result.logs[0].args[1].reason, 'upstream_failure', 'The existing failure reason is preserved');
+    assert.equal(result.logs[0].args[1].upstreamHttpStatus, upstreamHttpStatus);
+    assert.equal(result.logs[0].args[1].upstreamFailureClass, upstreamFailureClass);
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.equal(diagnostic.eventVerified, false);
+    assert.equal(diagnostic.transactionAttempted, false);
+    assert.deepEqual(result.clientCalls, []);
+    assert.deepEqual(result.calls, []);
+    assert.equal(result.response.status, 500);
+    assert.deepEqual(result.response.payload, { ok: false, error: 'Could not process Culqi webhook.' });
+  }
+});
+
+test('lookup error types are fixed labels and never read raw upstream error fields', async () => {
+  const knownTypes = [...diagnosticUpstreamErrorTypes].filter((type) => !['none', 'unknown'].includes(type));
+  for (const errorType of [...knownTypes, 'unknown', 'none', sensitiveText, 'parameter_error ',
+    undefined, null, ['parameter_error'], { secret: sensitiveText }, Symbol(sensitiveText)]) {
+    let paramReads = 0, payloadReads = 0, codeReads = 0;
+    const fetchError = Object.assign(hostileError(), { status: 400, errorType });
+    Object.defineProperties(fetchError, {
+      param: { get() { paramReads++; throw new Error(sensitiveText); } },
+      payload: { get() { payloadReads++; throw new Error(sensitiveText); } },
+      code: { get() { codeReads++; throw new Error(sensitiveText); } },
+    });
+    const result = await execute({ fetchError });
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.equal(diagnostic.upstreamErrorType, knownTypes.includes(errorType) ? errorType : 'unknown');
+    assert.equal(diagnostic.upstreamHttpStatus, 400);
+    assert.equal(result.response.status, 500);
+    assert.deepEqual(result.clientCalls, []);
+    assert.deepEqual(result.calls, []);
+    assert.equal(paramReads + payloadReads + codeReads, 0);
+  }
+  let typeReads = 0;
+  const fetchError = Object.assign(hostileError(), { status: 400 });
+  Object.defineProperty(fetchError, 'errorType', { get() { typeReads++; throw new Error(sensitiveText); } });
+  const result = await execute({ fetchError });
+  assert.equal(assertOneSafeDiagnostic(result).upstreamErrorType, 'unknown');
+  assert.equal(typeReads, 1);
+  assert.equal(result.response.status, 500);
+});
+
+test('event mode diagnostics normalize hostile fields without exposing IDs or changing lookup rejection', async () => {
+  for (const eventModeMatchesConfig of [true, false, undefined, null, 'true', 'false', sensitiveText,
+    { id, private: sensitiveText }, [true], 1, 0, Symbol(sensitiveText)]) {
+    const result = await execute({ fetchError: Object.assign(hostileError(), { status: 400, eventModeMatchesConfig }) });
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.equal(diagnostic.eventModeMatchesConfig,
+      typeof eventModeMatchesConfig === 'boolean' ? eventModeMatchesConfig : null);
+    assert.equal(result.response.status, 500);
+    assert.deepEqual(result.clientCalls, []);
+    assert.deepEqual(result.calls, []);
+  }
+  let modeReads = 0;
+  const fetchError = Object.assign(hostileError(), { status: 400 });
+  Object.defineProperty(fetchError, 'eventModeMatchesConfig', { get() { modeReads++; throw new Error(sensitiveText); } });
+  const result = await execute({ fetchError });
+  assert.equal(assertOneSafeDiagnostic(result).eventModeMatchesConfig, null);
+  assert.equal(modeReads, 1);
+  const transportResult = await execute({ fetchError: Object.assign(hostileError(), { eventModeMatchesConfig: true }) });
+  assert.equal(assertOneSafeDiagnostic(transportResult).eventModeMatchesConfig, null,
+    'A transport error cannot claim context from a provider HTTP response');
+});
+
+test('lookup diagnostics accept only numeric integer upstream HTTP statuses from 100 through 599', async () => {
+  for (const status of [100, 400, 500, 599]) {
+    const result = await execute({ fetchError: Object.assign(hostileError(), { status, name: sensitiveText }) });
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.equal(diagnostic.upstreamHttpStatus, status);
+    assert.equal(diagnostic.upstreamFailureClass, 'http');
+    assert.equal(result.response.status, 500);
+  }
+  for (const status of [99, 600, -1, 400.5, NaN, Infinity, -Infinity, null, undefined,
+    '400', sensitiveText, { private: sensitiveText }, [500], true, 500n, Symbol(sensitiveText)]) {
+    const result = await execute({ fetchError: Object.assign(hostileError(), { status, name: sensitiveText }) });
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.equal(diagnostic.upstreamHttpStatus, null);
+    assert.equal(diagnostic.upstreamFailureClass, 'transport_or_unknown');
+    assert.equal(diagnostic.reason, 'upstream_failure');
+    assert.equal(result.response.status, 500);
+  }
+});
+
+test('lookup timeout labels never serialize untrusted names or nested causes', async () => {
+  for (const [name, upstreamFailureClass] of [
+    ['TimeoutError', 'timeout'],
+    ['AbortError', 'transport_or_unknown'],
+    ['TypeError', 'transport_or_unknown'],
+    [sensitiveText, 'transport_or_unknown'],
+    [{ private: sensitiveText }, 'transport_or_unknown'],
+  ]) {
+    let causeReads = 0;
+    const fetchError = Object.assign(hostileError(), { name });
+    Object.defineProperty(fetchError, 'cause', { get() { causeReads++; throw new Error(sensitiveText); } });
+    const result = await execute({ fetchError });
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.equal(diagnostic.upstreamHttpStatus, null);
+    assert.equal(diagnostic.upstreamFailureClass, upstreamFailureClass);
+    assert.equal(diagnostic.reason, 'upstream_failure');
+    assert.equal(causeReads, 0, 'Nested causes must not be inspected');
+    assert.equal(JSON.stringify(result.logs).includes('TimeoutError'), false, 'Raw error names must not enter logs');
+  }
+  const result = await execute({ fetchError: Object.assign(hostileError(), { status: 504, name: 'TimeoutError' }) });
+  const diagnostic = assertOneSafeDiagnostic(result);
+  assert.equal(diagnostic.upstreamHttpStatus, 504);
+  assert.equal(diagnostic.upstreamFailureClass, 'http', 'An HTTP response takes precedence over an error name');
+});
+
+test('hostile upstream status and name accessors cannot throw or add raw diagnostics', async () => {
+  let statusReads = 0, nameReads = 0, causeReads = 0;
+  const fetchError = hostileError();
+  Object.defineProperties(fetchError, {
+    status: { get() { statusReads++; throw new Error(sensitiveText); } },
+    name: { get() { nameReads++; throw new Error(sensitiveText); } },
+    cause: { get() { causeReads++; throw new Error(sensitiveText); } },
+  });
+  const result = await execute({ fetchError });
+  const diagnostic = assertOneSafeDiagnostic(result);
+  assert.equal(diagnostic.upstreamHttpStatus, null);
+  assert.equal(diagnostic.upstreamFailureClass, 'transport_or_unknown');
+  assert.equal(diagnostic.reason, 'upstream_failure');
+  assert.equal(statusReads, 1, 'Read an upstream error status at most once');
+  assert.equal(nameReads, 1);
+  assert.equal(causeReads, 0);
+  assert.equal(result.response.status, 500);
+  assert.deepEqual(result.response.payload, { ok: false, error: 'Could not process Culqi webhook.' });
+});
+
+test('successful lookup and failures at other stages never claim an upstream HTTP status or failure', async () => {
+  const hostileFields = { status: 500, name: 'TimeoutError', cause: { private: sensitiveText } };
+  for (const options of [
+    {}, { data: { duplicate: true } }, { enabled: false }, { requestBody: '{' },
+    { event: { id: 'different', ...hostileFields } }, { resource: '{}' },
+    { event: { type: 'fixture.ignored', ...hostileFields } },
+    { clientError: Object.assign(hostileError(), hostileFields) },
+    { rpcError: Object.assign(hostileError(), hostileFields) },
+    { error: hostileFields },
+  ]) {
+    const result = await execute(options);
+    const diagnostic = assertOneSafeDiagnostic(result);
+    assert.notEqual(diagnostic.stage, 'event_lookup');
+    assert.equal(diagnostic.upstreamHttpStatus, null);
+    assert.equal(diagnostic.upstreamFailureClass, 'none');
   }
 });
 

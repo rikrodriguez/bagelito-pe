@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { stripTypeScriptTypes } from "node:module";
 import { getCulqiReadonlyDiagnosticScope } from "../../src/lib/payments/culqi-readonly-diagnostic.ts";
+import { validateCulqiCapturedCharge } from "../../src/lib/payments/culqi-capture-evidence.ts";
 
 // All capabilities are mocks. Neither loader reads configuration nor performs I/O
 // other than reading the source under test. Unexpected network is a test failure.
@@ -36,6 +37,7 @@ const snapshotFixture = (i) => ({
     payment_charge_source_id: `${i === 0 ? "ype" : "tkn"}_test_OFFLINESource${i}`,
     payment_amount_minor: 6600, payment_currency: "PEN", payment_charge_state: "submitted",
     payment_status: "pending", status: "payment_pending_review",
+    payment_reconciliation_required: false, payment_reconciliation_reason: null,
   },
   attempt: {
     id: uuid("4", i), order_id: uuid("1", i), provider: "culqi", provider_order_id: null,
@@ -51,27 +53,21 @@ const chargeFixture = (i) => ({
   outcome: { code: "AUT0000", message: piiSentinel },
 });
 
-// This parser is exclusively a synthetic test contract. It is never installed
-// into the module's real immutable private adapter, and makes no Culqi claim.
-function parseSyntheticEvidence(charge) {
-  if (charge.capture !== true || charge.current_amount !== 6600
-    || charge.amount_refunded !== 0 || charge.dispute !== false) return null;
-  return { currentAmountMinor: 6600, amountRefundedMinor: 0, dispute: false };
-}
-
-function loadFactory({ contract = false, application = false } = {}) {
+function loadFactory({ unverifiedContract = false, application = false } = {}) {
   let body = stripTypeScriptTypes(source.replace(/^import\s[\s\S]*?;\s*/gm, ""));
   assert.equal((body.match(/\/\/ BEGIN_CAPTURE_CONTRACT/g) ?? []).length, 1);
   assert.equal((body.match(/\/\/ BEGIN_APPLICATION_APPROVAL/g) ?? []).length, 1);
-  if (contract) body = body.replace(/\/\/ BEGIN_CAPTURE_CONTRACT[\s\S]*?\/\/ END_CAPTURE_CONTRACT/, `
-    const CAPTURE_CONTRACT = Object.freeze({ verified: true, marker: ${JSON.stringify(marker)}, parse: parseSyntheticEvidence });
+  if (unverifiedContract) body = body.replace(/\/\/ BEGIN_CAPTURE_CONTRACT[\s\S]*?\/\/ END_CAPTURE_CONTRACT/, `
+    const CAPTURE_CONTRACT = Object.freeze({ verified: false, marker: null, parse: () => null });
   `);
   if (application) body = body.replace(/\/\/ BEGIN_APPLICATION_APPROVAL[\s\S]*?\/\/ END_APPLICATION_APPROVAL/, "const APPLICATION_APPROVED = true;");
   body = body.replace(/^export /gm, "");
-  return new Function("getCulqiReadonlyDiagnosticScope", "parseSyntheticEvidence", `${body}; return createCulqiChargeReconciliation;`)(getCulqiReadonlyDiagnosticScope, parseSyntheticEvidence);
+  return new Function("getCulqiReadonlyDiagnosticScope", "validateCulqiCapturedCharge", `${body}; return createCulqiChargeReconciliation;`)(getCulqiReadonlyDiagnosticScope, validateCulqiCapturedCharge);
 }
 const realFactory = loadFactory();
-const fixtureFactory = loadFactory({ contract: true, application: true });
+// Test-only operational approval is replaced in memory. The capture policy
+// remains the actual pure validator; no source file or deployed flag is changed.
+const fixtureFactory = loadFactory({ application: true });
 
 function harness(change = {}, factory = realFactory) {
   const state = { steps: [], calls: [], reads: [], applications: [], logs: [], snapshots: codes.map((_, i) => snapshotFixture(i)) };
@@ -118,7 +114,6 @@ function noLeak(report, state) {
   assert.equal(report.captureDefinitionVerified, true);
   assert.equal(typeof report.automaticConfirmationContractVerified, "boolean");
   for (const result of Object.values(report.results)) {
-    assert.equal(result.operationsVerified, false);
     for (const [key, value] of Object.entries(result)) {
       if (key !== "status") assert.equal(typeof value, "boolean");
     }
@@ -129,35 +124,36 @@ function noApplications(report, state) {
   noLeak(report, state);
 }
 
-test("real capture contract and application approval stay private, immutable and blocked", async () => {
-  assert.match(source, /BEGIN_CAPTURE_CONTRACT[\s\S]*?verified:\s*false/);
+test("reviewed capture policy never overrides private operational approval", async () => {
+  assert.match(source, /BEGIN_CAPTURE_CONTRACT[\s\S]*?verified:\s*true/);
   assert.match(source, /BEGIN_APPLICATION_APPROVAL[\s\S]*?APPLICATION_APPROVED\s*=\s*false/);
   const h = harness(); const report = await h.run(request);
   noApplications(report, h.state);
-  assert.equal(report.automaticConfirmationContractVerified, false);
+  assert.equal(report.automaticConfirmationContractVerified, true);
   assert.equal(report.applicationApproved, false);
   for (const result of Object.values(report.results)) {
-    assert.equal(result.status, "capture_contract_unverified");
+    assert.equal(result.status, "approval_required");
+    assert.equal(result.captureContractVerified, true);
+    assert.equal(result.captureEvidenceVerified, true);
+    assert.equal(result.transactionAttempted, false);
     assert.equal(result.currentAmountPresent, true); assert.equal(result.currentAmountMatches, true);
     assert.equal(result.amountRefundedPresent, true); assert.equal(result.amountRefundedZero, true);
     assert.equal(result.disputePresent, true); assert.equal(result.disputeClear, true);
-    assert.equal(result.operationsVerified, false);
   }
 });
 
-test("complete fields do not establish absence of pending operations in the real contract", async () => {
+test("absence of arbitrary operation fields is not a universal absence proof or an operational approval", async () => {
   const h = harness(); const original = h.deps.fetch;
   h.deps.fetch = async (url, init) => url.endsWith(chargeIds[0])
     ? Response.json({ ...chargeFixture(0), operations: [{ type: "refund", state: "pending" }], pending_refund: true })
     : original(url, init);
   const report = await h.run(request);
-  assert.equal(report.results.qa_yape.status, "capture_contract_unverified");
-  assert.equal(report.results.qa_yape.operationsVerified, false);
+  assert.equal(report.results.qa_yape.status, "approval_required");
   noApplications(report, h.state);
 });
 
 test("caller or dependency flags cannot approve the real contract or alter fixed targets", async () => {
-  const h = harness({ contractVerified: true, applicationApproved: true, captureContract: { verified: true, parse: parseSyntheticEvidence }, targets: [{ chargeId: "../../malicious.invalid" }] });
+  const h = harness({ contractVerified: true, applicationApproved: true, captureContract: { verified: true, parse: () => ({ currentAmountMinor: 6600, amountRefundedMinor: 0, dispute: false }) }, targets: [{ chargeId: "../../malicious.invalid" }] });
   const input = { ...request, contractVerified: true, applicationApproved: true, chargeId: "chr_live_HOSTILE", targets: [{ chargeId: "../../malicious.invalid" }] };
   Object.defineProperty(input, "body", { get() { throw new Error("caller body accessed"); } });
   const report = await h.run(input);
@@ -302,7 +298,7 @@ test("valid financial pairs include pending cancelled and paid fulfilled orders"
     assert.equal(report.results.qa_yape.snapshotMatchesPins, true);
     assert.equal(report.results.qa_yape.chargeFetched, true);
     assert.equal(report.results.qa_yape.attemptStable, true);
-    assert.equal(report.results.qa_yape.status, "capture_contract_unverified");
+    assert.equal(report.results.qa_yape.status, "approval_required");
     noApplications(report, h.state);
   }
 });
@@ -317,7 +313,7 @@ test("accurate attempt and charge-claim UUID values may coincide without an inve
   noLeak(report, h.state);
 });
 
-test("approved synthetic contract rereads stable bindings before one application per fixed reference", async () => {
+test("test-only operational approval uses the actual validator and rereads stable bindings before each application", async () => {
   const h = harness({}, fixtureFactory); const report = await h.run(request);
   assert.equal(h.state.calls.length, 3); assert.equal(h.state.applications.length, 3);
   for (let i = 0; i < codes.length; i++) {
@@ -347,13 +343,146 @@ test("approved synthetic contract rereads stable bindings before one application
   noLeak(report, h.state);
 });
 
-test("synthetic contract approval alone cannot override private operational refusal", async () => {
-  const h = harness({}, loadFactory({ contract: true })); const report = await h.run(request);
+test("known refunds bound to the queried charge block only that reference", async () => {
+  for (const state of ["pending", "completed", "unknown"]) {
+    const h = harness({}, fixtureFactory);
+    h.state.snapshots[0].knownRefund = { chargeId: chargeIds[0], state };
+    const report = await h.run(request);
+    assert.equal(report.results.qa_yape.captureEvidenceVerified, false);
+    assert.equal(report.results.qa_yape.transactionAttempted, false);
+    assert.equal(h.state.applications.some((input) => input.observation.chargeId === chargeIds[0]), false);
+    assert.equal(h.state.applications.length, 2);
+    noLeak(report, h.state);
+  }
+});
+
+test("a rejected known refund does not invent returned money for this charge", async () => {
+  const h = harness({}, fixtureFactory);
+  h.state.snapshots[0].knownRefund = { chargeId: chargeIds[0], state: "rejected" };
+  const report = await h.run(request);
+  assert.equal(report.results.qa_yape.captureEvidenceVerified, true);
+  assert.equal(h.state.applications.some((input) => input.observation.chargeId === chargeIds[0]), true);
+  noLeak(report, h.state);
+});
+
+test("a supplied refund context for another charge is rejected without blocking unrelated references", async () => {
+  const h = harness({}, fixtureFactory);
+  h.state.snapshots[0].knownRefund = { chargeId: "chr_test_OTHERCharge", state: "pending" };
+  const report = await h.run(request);
+  assert.equal(report.results.qa_yape.captureEvidenceVerified, false);
+  assert.equal(report.results.qa_yape.status, "evidence_incomplete");
+  assert.equal(report.results.qa_yape.transactionAttempted, false);
+  assert.equal(h.state.applications.some((input) => input.observation.chargeId === chargeIds[0]), false);
+  assert.equal(h.state.applications.length, 2);
+  noLeak(report, h.state);
+});
+
+test("a newly observed bound pending refund prevents applying after the provider GET", async () => {
+  const h = harness({}, fixtureFactory); const original = h.deps.readPersistedOrder;
+  let reads = 0;
+  h.deps.readPersistedOrder = async (code) => {
+    const row = await original(code);
+    if (code === codes[0] && ++reads === 2) row.knownRefund = { chargeId: chargeIds[0], state: "pending" };
+    return row;
+  };
+  const report = await h.run(request);
+  assert.equal(report.results.qa_yape.chargeFetched, true);
+  assert.equal(report.results.qa_yape.transactionAttempted, false);
+  assert.equal(h.state.applications.some((input) => input.observation.chargeId === chargeIds[0]), false);
+  noLeak(report, h.state);
+});
+
+test("uncertain charge review is admitted only with the explicit pending state and matching reason", async () => {
+  const h = harness();
+  const row = h.state.snapshots[0];
+  row.order.status = "needs_correction";
+  row.order.payment_charge_state = "uncertain";
+  row.order.payment_reconciliation_required = true;
+  row.order.payment_reconciliation_reason = "charge_result_uncertain";
+  const report = await h.run(request);
+  assert.equal(report.results.qa_yape.snapshotMatchesPins, true);
+  assert.equal(report.results.qa_yape.attemptStable, true);
+  assert.equal(report.results.qa_yape.captureEvidenceVerified, true);
+  assert.equal(report.results.qa_yape.status, "approval_required");
   noApplications(report, h.state);
 });
 
-test("synthetic operational approval alone cannot override the unverified real capture contract", async () => {
-  const h = harness({}, loadFactory({ application: true })); const report = await h.run(request);
+test("needs_correction manual reasons and invalid reconciliation flag shapes remain blocked before GET", async () => {
+  for (const patch of [
+    { status: "needs_correction", payment_reconciliation_required: false, payment_reconciliation_reason: "charge_result_uncertain" },
+    { status: "needs_correction", payment_reconciliation_required: true, payment_reconciliation_reason: "manual_review" },
+    { status: "needs_correction", payment_reconciliation_required: true, payment_reconciliation_reason: null },
+    { payment_reconciliation_required: undefined },
+    { payment_reconciliation_required: "true" },
+    { payment_reconciliation_reason: undefined },
+    { payment_reconciliation_reason: {} },
+  ]) {
+    const h = harness({}, fixtureFactory); Object.assign(h.state.snapshots[0].order, patch);
+    const report = await h.run(request);
+    assert.equal(report.results.qa_yape.status, "blocked");
+    assert.equal(h.state.calls.some((call) => call.url.endsWith(chargeIds[0])), false);
+    assert.equal(h.state.applications.some((input) => input.observation.chargeId === chargeIds[0]), false);
+    noLeak(report, h.state);
+  }
+});
+
+test("pending and cancelled orders preserve existing manual, expiry and release review reasons", async () => {
+  for (const [status, reason] of [
+    ["payment_pending_review", "manual_review"],
+    ["cancelled", "payment_expired"],
+    ["cancelled", "capacity_released"],
+  ]) {
+    const h = harness({ applyVerifiedCharge: async (input) => {
+      h.state.applications.push(input);
+      return { applied: true, duplicate: false, alreadyPaid: false, requiresReview: true,
+        paymentState: "paid", orderState: status === "cancelled" ? "cancelled" : "payment_confirmed" };
+    } }, fixtureFactory);
+    for (const snapshot of h.state.snapshots) {
+      snapshot.order.status = status;
+      snapshot.order.payment_reconciliation_required = true;
+      snapshot.order.payment_reconciliation_reason = reason;
+    }
+    const report = await h.run(request);
+    assert.equal(h.state.applications.length, 3);
+    for (const result of Object.values(report.results)) {
+      assert.equal(result.snapshotMatchesPins, true); assert.equal(result.attemptStable, true);
+      assert.equal(result.status, "applied"); assert.equal(result.requiresReview, true);
+    }
+    for (const snapshot of h.state.snapshots) {
+      assert.equal(snapshot.order.payment_reconciliation_required, true);
+      assert.equal(snapshot.order.payment_reconciliation_reason, reason);
+    }
+    noLeak(report, h.state);
+  }
+});
+
+test("a manual review reason introduced after GET makes the current attempt stale", async () => {
+  const h = harness({}, fixtureFactory); const original = h.deps.readPersistedOrder;
+  h.state.snapshots[0].order.status = "needs_correction";
+  h.state.snapshots[0].order.payment_reconciliation_required = true;
+  h.state.snapshots[0].order.payment_reconciliation_reason = "charge_result_uncertain";
+  let reads = 0;
+  h.deps.readPersistedOrder = async (code) => {
+    const row = await original(code);
+    if (code === codes[0] && ++reads === 2) row.order.payment_reconciliation_reason = "manual_review";
+    return row;
+  };
+  const report = await h.run(request);
+  assert.equal(report.results.qa_yape.status, "stale_attempt");
+  assert.equal(report.results.qa_yape.chargeFetched, true);
+  assert.equal(report.results.qa_yape.transactionAttempted, false);
+  assert.equal(h.state.applications.some((input) => input.observation.chargeId === chargeIds[0]), false);
+  noLeak(report, h.state);
+});
+
+test("real validator approval alone cannot override private operational refusal", async () => {
+  const h = harness(); const report = await h.run(request);
+  noApplications(report, h.state);
+});
+
+test("operational approval cannot override an explicitly unverified capture contract fixture", async () => {
+  const h = harness({}, loadFactory({ unverifiedContract: true, application: true })); const report = await h.run(request);
+  for (const result of Object.values(report.results)) assert.equal(result.status, "capture_contract_unverified");
   noApplications(report, h.state);
 });
 
@@ -428,6 +557,8 @@ test("fresh persisted binding changes stop that reference before the transaction
     (row) => { row.order.payment_charge_id = "chr_test_OTHERCharge"; },
     (row) => { row.order.payment_amount_minor = 6601; },
     (row) => { row.order.payment_currency = "USD"; },
+    (row) => { row.order.payment_reconciliation_required = true; },
+    (row) => { row.order.payment_reconciliation_reason = "manual_review"; },
     (row) => { row.attempt.id = uuid("5", 0); },
     (row) => { row.attempt.provider_charge_id = "chr_test_OTHERCharge"; },
   ]) {

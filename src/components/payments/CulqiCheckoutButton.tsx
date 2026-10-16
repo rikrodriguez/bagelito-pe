@@ -96,7 +96,7 @@ type Props = {
   prepareCheckout: () => Promise<CulqiCheckoutSession>;
 };
 
-type CheckoutState = "idle" | "preparing" | "ready" | "charging" | "authenticating" | "confirming" | "error" | "review";
+type CheckoutState = "idle" | "preparing" | "ready" | "charging" | "authenticating" | "confirming" | "error" | "review" | "expired";
 
 function errorMessage(error: unknown, fallback: string) {
   return error instanceof Error && error.message ? error.message : fallback;
@@ -126,6 +126,9 @@ export function CulqiCheckoutButton({
   const initializedRef = useRef(false);
   const paymentAttemptStartedRef = useRef(false);
   const reviewRequiredRef = useRef(false);
+  const reservationExpiredRef = useRef(false);
+  const reservationExpiresAtRef = useRef<number | null>(null);
+  const reservationTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const lifecycleRef = useRef({ alive: true, generation: 0 });
   const pending3DSRef = useRef<{
     deviceId: string;
@@ -153,6 +156,8 @@ export function CulqiCheckoutButton({
       pay: `Pagar S/${amount}`,
       preparing: "Preparando tu pedido...",
       retry: "Reintentar checkout seguro",
+      reservationExpired: "Tu reserva venció. El formulario de pago está cerrado; los cupos ya no están garantizados.",
+      restartReservation: "Iniciar otra reserva",
       review: "El resultado del pago necesita revisión. No vuelvas a pagar; consulta el estado de tu pedido.",
       secure: "Los datos de pago se ingresan y procesan únicamente en el entorno seguro de Culqi",
       checkoutTerms: "Delivery en la fecha programada. El repartidor espera hasta 10 minutos; la reentrega depende de disponibilidad y puede tener costo adicional. Bagelito no responde por datos incorrectos o ausencia del cliente.",
@@ -181,6 +186,8 @@ export function CulqiCheckoutButton({
       pay: `Pay S/${amount}`,
       preparing: "Preparing your order...",
       retry: "Retry secure checkout",
+      reservationExpired: "Your reservation expired. The payment form is closed; availability is no longer guaranteed.",
+      restartReservation: "Start a new reservation",
       review: "The payment result needs review. Do not pay again; check your order status.",
       secure: "Payment data is entered and processed only in Culqi's secure environment",
       checkoutTerms: "Delivery is made on the scheduled date. The driver waits up to 10 minutes; re-delivery depends on availability and may cost extra. Bagelito is not responsible for incorrect details or customer absence.",
@@ -190,9 +197,48 @@ export function CulqiCheckoutButton({
       walletsMore: "Apple Pay / Google Pay",
     };
 
+  const clearReservationTimer = useCallback(() => {
+    clearTimeout(reservationTimerRef.current);
+    reservationTimerRef.current = undefined;
+  }, []);
+
+  const expireReservation = useCallback(() => {
+    if (!lifecycleRef.current.alive || reservationExpiredRef.current) return;
+    reservationExpiredRef.current = true;
+    lifecycleRef.current.generation += 1;
+    actionRunningRef.current = true;
+    pending3DSRef.current = null;
+    clearReservationTimer();
+    const checkout = checkoutRef.current;
+    if (checkout) {
+      checkout.culqi = undefined;
+      try { checkout.close(); } catch { /* The removed embed stays unavailable. */ }
+    }
+    try { window.Culqi3DS?.reset(); } catch { /* A pending payment still needs review. */ }
+    if (paymentAttemptStartedRef.current || reviewRequiredRef.current) {
+      reviewRequiredRef.current = true;
+      setState("review");
+      onError(copy.review);
+      onPaymentUnresolved?.();
+    } else {
+      setState("expired");
+      onError("");
+    }
+  }, [clearReservationTimer, copy.review, onError, onPaymentUnresolved]);
+
+  const checkReservationExpiry = useCallback(() => {
+    if (reservationExpiredRef.current) return true;
+    if (reservationExpiresAtRef.current !== null && Date.now() >= reservationExpiresAtRef.current) {
+      expireReservation();
+      return true;
+    }
+    return false;
+  }, [expireReservation]);
+
   const setCheckoutError = useCallback((error: unknown) => {
-    if (!lifecycleRef.current.alive) return;
+    if (!lifecycleRef.current.alive || reservationExpiredRef.current) return;
     if (paymentAttemptStartedRef.current || (error instanceof Error && error.name === "CheckoutReviewError")) {
+      clearReservationTimer();
       reviewRequiredRef.current = true;
       actionRunningRef.current = true;
       pending3DSRef.current = null;
@@ -206,7 +252,7 @@ export function CulqiCheckoutButton({
     initializedRef.current = false;
     setState("error");
     onError(errorMessage(error, copy.error));
-  }, [copy.error, copy.review, onError, onPaymentUnresolved]);
+  }, [clearReservationTimer, copy.error, copy.review, onError, onPaymentUnresolved]);
 
   const getDeviceId = useCallback(async () => {
     if (deviceIdRef.current) return deviceIdRef.current;
@@ -228,14 +274,14 @@ export function CulqiCheckoutButton({
   }, [config.publicKey, copy.error, setCheckoutError, threeDSScriptReady]);
 
   const initializeCheckout = useCallback(async () => {
-    if (reviewRequiredRef.current || !lifecycleRef.current.alive) return;
+    if (reviewRequiredRef.current || reservationExpiredRef.current || !lifecycleRef.current.alive) return;
     onError("");
     if (!config.enabled || !window.CulqiCheckout || initializedRef.current) return;
 
     initializedRef.current = true;
     const generation = ++lifecycleRef.current.generation;
     const isCurrent = () => lifecycleRef.current.alive && lifecycleRef.current.generation === generation
-      && !reviewRequiredRef.current;
+      && !reviewRequiredRef.current && !reservationExpiredRef.current;
     setState("preparing");
 
     try {
@@ -244,6 +290,16 @@ export function CulqiCheckoutButton({
       if (!Number.isInteger(session.amountMinor) || session.amountMinor < 100) {
         throw new Error("Invalid checkout amount.");
       }
+      const expiresAt = typeof session.expiresAt === "string" ? Date.parse(session.expiresAt) : NaN;
+      if (!Number.isFinite(expiresAt)) throw new Error(copy.error);
+      reservationExpiresAtRef.current = expiresAt;
+      if (checkReservationExpiry()) return;
+      clearReservationTimer();
+      const watchExpiry = () => {
+        reservationTimerRef.current = undefined;
+        if (!isCurrent() || checkReservationExpiry()) return;
+        reservationTimerRef.current = setTimeout(watchExpiry, Math.min(expiresAt - Date.now(), 2_147_483_647));
+      };
 
       const checkout = new window.CulqiCheckout(config.publicKey, {
         appearance: {
@@ -301,7 +357,7 @@ export function CulqiCheckoutButton({
       checkoutRef.current = checkout;
       actionRunningRef.current = false;
       checkout.culqi = () => {
-        if (!isCurrent() || actionRunningRef.current || reviewRequiredRef.current) return;
+        if (checkReservationExpiry() || !isCurrent() || actionRunningRef.current || reviewRequiredRef.current) return;
         actionRunningRef.current = true;
 
         void (async () => {
@@ -311,10 +367,10 @@ export function CulqiCheckoutButton({
               setState("charging");
               const tokenId = checkout.token.id;
               const deviceId = tokenId.startsWith("tkn_") ? await getDeviceId() : "";
-              if (!isCurrent() || reviewRequiredRef.current) return;
+              if (checkReservationExpiry() || !isCurrent() || reviewRequiredRef.current) return;
               paymentAttemptStartedRef.current = true;
               const result = await onToken(session, tokenId, { deviceId: deviceId || undefined });
-              if (!isCurrent() || reviewRequiredRef.current) return;
+              if (checkReservationExpiry() || !isCurrent() || reviewRequiredRef.current) return;
 
               if (result === "requires_3ds") {
                 if (!tokenId.startsWith("tkn_") || !window.Culqi3DS) throw new Error(copy.error);
@@ -332,6 +388,7 @@ export function CulqiCheckoutButton({
               }
 
               setState("confirming");
+              clearReservationTimer();
               window.Culqi3DS?.reset();
               return;
             }
@@ -353,13 +410,17 @@ export function CulqiCheckoutButton({
         })();
       };
 
+      if (checkReservationExpiry() || !isCurrent()) return;
       setState("ready");
       checkout.open();
+      watchExpiry();
     } catch (error) {
       if (isCurrent()) setCheckoutError(error);
     }
   }, [
     amount,
+    checkReservationExpiry,
+    clearReservationTimer,
     config,
     copy.error,
     customerEmail,
@@ -373,7 +434,7 @@ export function CulqiCheckoutButton({
 
   useEffect(() => {
     const lifecycle = lifecycleRef.current;
-    if (!lifecycle.alive && !paymentAttemptStartedRef.current) {
+    if (!lifecycle.alive && !paymentAttemptStartedRef.current && !reservationExpiredRef.current) {
       initializedRef.current = false;
       actionRunningRef.current = false;
       setState("idle");
@@ -381,6 +442,7 @@ export function CulqiCheckoutButton({
     lifecycle.alive = true;
     return () => {
       lifecycle.alive = false;
+      clearReservationTimer();
       lifecycle.generation += 1;
       actionRunningRef.current = true;
       pending3DSRef.current = null;
@@ -390,7 +452,20 @@ export function CulqiCheckoutButton({
         try { checkout.close(); } catch { /* Never restart a disposed checkout. */ }
       }
     };
-  }, []);
+  }, [clearReservationTimer]);
+
+  useEffect(() => {
+    const onForeground = () => { checkReservationExpiry(); };
+    const onVisibility = () => { if (document.visibilityState === "visible") checkReservationExpiry(); };
+    window.addEventListener("focus", onForeground);
+    window.addEventListener("pageshow", onForeground);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("focus", onForeground);
+      window.removeEventListener("pageshow", onForeground);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [checkReservationExpiry]);
 
   useEffect(() => {
     if (
@@ -408,6 +483,7 @@ export function CulqiCheckoutButton({
   useEffect(() => {
     function handle3DSMessage(event: MessageEvent) {
       if (event.origin !== window.location.origin || !is3DSMessage(event.data)) return;
+      if (checkReservationExpiry()) return;
       const pending = pending3DSRef.current;
       if (!pending || reviewRequiredRef.current || !lifecycleRef.current.alive) return;
       const generation = lifecycleRef.current.generation;
@@ -428,7 +504,8 @@ export function CulqiCheckoutButton({
           deviceId: pending.deviceId,
         })
           .then(() => {
-            if (!lifecycleRef.current.alive || lifecycleRef.current.generation !== generation) return;
+            if (checkReservationExpiry() || !lifecycleRef.current.alive || lifecycleRef.current.generation !== generation) return;
+            clearReservationTimer();
             setState("confirming");
             window.Culqi3DS?.reset();
           })
@@ -440,7 +517,7 @@ export function CulqiCheckoutButton({
 
     window.addEventListener("message", handle3DSMessage);
     return () => window.removeEventListener("message", handle3DSMessage);
-  }, [onToken, setCheckoutError]);
+  }, [checkReservationExpiry, clearReservationTimer, onToken, setCheckoutError]);
 
   const busyLabel = state === "preparing"
     ? copy.preparing
@@ -452,7 +529,7 @@ export function CulqiCheckoutButton({
           ? copy.confirming
           : copy.loading;
   const showLockedPreview = config.enabled && disabled;
-  const showBusy = config.enabled && !disabled && state !== "ready" && state !== "error" && state !== "review";
+  const showBusy = config.enabled && !disabled && state !== "ready" && state !== "error" && state !== "review" && state !== "expired";
 
   return (
     <div className="culqi-checkout-panel">
@@ -519,7 +596,13 @@ export function CulqiCheckoutButton({
           <div className="culqi-availability-note" role="status"><strong>{copy.terms}</strong><span>{copy.secure}</span></div>
         </div>
       ) : (
-        <div className="culqi-embed-shell">
+        <div className={`culqi-embed-shell${state === "expired" || state === "review" ? " is-closed" : ""}`}>
+          {state === "expired" ? (
+            <div className="culqi-busy" role="alert">
+              <p>{copy.reservationExpired}</p>
+              <a className="pill-button pink" href="/reserve">{copy.restartReservation}</a>
+            </div>
+          ) : null}
           {state === "review" ? <div className="culqi-busy" role="alert">{copy.review}</div> : null}
           {showBusy ? (
             <div className="culqi-busy" role="status">
@@ -539,7 +622,7 @@ export function CulqiCheckoutButton({
               </button>
             </div>
           ) : null}
-          <div id="culqi-checkout-container" className="culqi-embed" aria-live="polite" />
+          {state !== "expired" && state !== "review" ? <div id="culqi-checkout-container" className="culqi-embed" aria-live="polite" /> : null}
         </div>
       )}
 

@@ -1,5 +1,7 @@
 import { getCulqiReadonlyDiagnosticScope } from "./culqi-readonly-diagnostic";
 import type { CulqiReadonlyDiagnosticRequest } from "./culqi-readonly-diagnostic";
+import { validateCulqiCapturedCharge } from "./culqi-capture-evidence";
+import type { CulqiCaptureBinding, CulqiCaptureEvidenceResult, CulqiKnownRefund } from "./culqi-capture-evidence";
 
 // Unwired server routine proposal. No environment, DB client or global fetch is
 // accessed here. No browser IDs, provider payloads or approval knobs are inputs.
@@ -36,6 +38,8 @@ export type CulqiReconciliationSnapshot = {
     payment_currency: string | null;
     payment_charge_state: string;
     payment_status: string;
+    payment_reconciliation_required: boolean;
+    payment_reconciliation_reason: string | null;
     status: string;
   };
   attempt: {
@@ -48,6 +52,9 @@ export type CulqiReconciliationSnapshot = {
     currency_code: string;
     status: string;
   };
+  // Optional internal evidence for this case; absence is not a global claim
+  // that no refund exists or will ever occur. Never accept this from a caller.
+  knownRefund?: CulqiKnownRefund | null;
 };
 
 // Closed evidence envelope for a future service-role RPC. No entire provider
@@ -72,22 +79,19 @@ export type CulqiChargeGetEvidence = {
   };
 };
 
-type NetCaptureEvidence = { currentAmountMinor: 6600; amountRefundedMinor: 0; dispute: false };
 type CaptureContract = {
   verified: boolean;
   marker: string | null;
-  parse(charge: Readonly<Record<string, unknown>>): NetCaptureEvidence | null;
+  parse(charge: unknown, expected: CulqiCaptureBinding, knownRefund?: CulqiKnownRefund | null): CulqiCaptureEvidenceResult;
 };
 
 // BEGIN_CAPTURE_CONTRACT
-// capture=true describes capture in the official GET schema. The complete
-// automatic confirmation contract remains unapproved: pending refund timing
-// and exhaustive operation visibility are not established. Net observations
-// below are prerequisites, not proof that no other operation is in progress.
+// Reviewed point-in-time capture evidence. This does not assert absence of
+// future adverse operations, and needs no operations-empty or date-unit claim.
 const CAPTURE_CONTRACT: CaptureContract = Object.freeze({
-  verified: false,
-  marker: null,
-  parse: () => null,
+  verified: true,
+  marker: "culqi_charge_get_reviewed_net_v1",
+  parse: validateCulqiCapturedCharge,
 });
 // END_CAPTURE_CONTRACT
 
@@ -186,6 +190,10 @@ function requestAllowed(request: CulqiReadonlyDiagnosticRequest) {
 
 function snapshotCopy(value: CulqiReconciliationSnapshot | null): CulqiReconciliationSnapshot | null {
   if (!record(value) || !record(value.order) || !record(value.attempt)) return null;
+  if (value.knownRefund != null && (!record(value.knownRefund)
+    || typeof value.knownRefund.chargeId !== "string"
+    || !/^chr_test_[A-Za-z0-9_-]{8,100}$/.test(value.knownRefund.chargeId)
+    || !["pending", "completed", "rejected", "unknown"].includes(value.knownRefund.state))) return null;
   const { order, attempt } = value;
   return Object.freeze({
     order: Object.freeze({
@@ -195,12 +203,15 @@ function snapshotCopy(value: CulqiReconciliationSnapshot | null): CulqiReconcili
       payment_charge_attempt_id: order.payment_charge_attempt_id, payment_charge_source_id: order.payment_charge_source_id,
       payment_amount_minor: order.payment_amount_minor, payment_currency: order.payment_currency,
       payment_charge_state: order.payment_charge_state, payment_status: order.payment_status, status: order.status,
+      payment_reconciliation_required: order.payment_reconciliation_required,
+      payment_reconciliation_reason: order.payment_reconciliation_reason,
     }),
     attempt: Object.freeze({
       id: attempt.id, order_id: attempt.order_id, provider: attempt.provider,
       provider_order_id: attempt.provider_order_id, provider_charge_id: attempt.provider_charge_id,
       amount_minor: attempt.amount_minor, currency_code: attempt.currency_code, status: attempt.status,
     }),
+    knownRefund: value.knownRefund ? Object.freeze({ chargeId: value.knownRefund.chargeId, state: value.knownRefund.state }) : null,
   });
 }
 
@@ -209,8 +220,11 @@ function snapshotAllowed(snapshot: CulqiReconciliationSnapshot | null, target: T
   const { order, attempt } = snapshot;
   // Stable identifiers alone do not authorize a financial transition. A
   // reversal or mismatched attempt committed during GET must fail closed.
+  const pendingOrderStateAllowed = ["payment_pending_review", "cancelled"].includes(order.status)
+    || order.status === "needs_correction" && order.payment_reconciliation_required === true
+      && order.payment_reconciliation_reason === "charge_result_uncertain";
   const financialStateAllowed = order.payment_status === "pending" && attempt.status === "pending"
-    && ["payment_pending_review", "cancelled"].includes(order.status)
+    && pendingOrderStateAllowed
     || order.payment_status === "paid" && attempt.status === "paid" && ORDER_STATES.has(order.status);
   return typeof order.id === "string" && UUID.test(order.id)
     && typeof order.checkout_session_id === "string" && UUID.test(order.checkout_session_id)
@@ -220,6 +234,8 @@ function snapshotAllowed(snapshot: CulqiReconciliationSnapshot | null, target: T
     && order.payment_charge_id === target.chargeId
     && typeof order.payment_charge_source_id === "string" && SOURCE_ID.test(order.payment_charge_source_id)
     && order.payment_amount_minor === 6600 && order.payment_currency === "PEN"
+    && typeof order.payment_reconciliation_required === "boolean"
+    && (order.payment_reconciliation_reason === null || typeof order.payment_reconciliation_reason === "string")
     && ["submitted", "uncertain"].includes(order.payment_charge_state)
     && typeof attempt.id === "string" && UUID.test(attempt.id)
     && attempt.order_id === order.id && attempt.provider === "culqi" && attempt.provider_order_id === null
@@ -228,12 +244,17 @@ function snapshotAllowed(snapshot: CulqiReconciliationSnapshot | null, target: T
 }
 
 function attemptStable(before: CulqiReconciliationSnapshot, after: CulqiReconciliationSnapshot) {
+  const beforeRefund = before.knownRefund?.chargeId === before.order.payment_charge_id ? before.knownRefund : null;
+  const afterRefund = after.knownRefund?.chargeId === after.order.payment_charge_id ? after.knownRefund : null;
   return before.order.id === after.order.id
     && before.order.checkout_session_id === after.order.checkout_session_id
     && before.order.payment_charge_attempt_id === after.order.payment_charge_attempt_id
     && before.order.payment_charge_source_id === after.order.payment_charge_source_id
     && before.order.payment_charge_id === after.order.payment_charge_id
-    && before.attempt.id === after.attempt.id && before.attempt.provider_charge_id === after.attempt.provider_charge_id;
+    && before.attempt.id === after.attempt.id && before.attempt.provider_charge_id === after.attempt.provider_charge_id
+    && before.order.payment_reconciliation_required === after.order.payment_reconciliation_required
+    && before.order.payment_reconciliation_reason === after.order.payment_reconciliation_reason
+    && beforeRefund?.chargeId === afterRefund?.chargeId && beforeRefund?.state === afterRefund?.state;
 }
 
 function paymentMatches(charge: Record<string, unknown>, snapshot: CulqiReconciliationSnapshot, target: Target) {
@@ -391,8 +412,14 @@ export function createCulqiChargeReconciliation(dependencies: CulqiChargeReconci
         if (!CAPTURE_CONTRACT.verified || !CAPTURE_CONTRACT.marker) {
           result.status = "capture_contract_unverified"; continue;
         }
-        const net = CAPTURE_CONTRACT.parse(charge);
-        if (!net || net.currentAmountMinor !== 6600 || net.amountRefundedMinor !== 0 || net.dispute !== false) {
+        const evaluation = CAPTURE_CONTRACT.parse(charge, {
+          chargeId: target.chargeId, sourceId: after.order.payment_charge_source_id!,
+          orderCode: after.order.order_code, amountMinor: after.order.payment_amount_minor!, currencyCode: "PEN",
+        }, after.knownRefund);
+        if (!evaluation.verified || evaluation.evidence.currentAmountMinor !== 6600
+          || evaluation.evidence.amountMinor !== 6600 || evaluation.evidence.currencyCode !== "PEN"
+          || evaluation.evidence.capture !== true || evaluation.evidence.amountRefundedMinor !== 0
+          || evaluation.evidence.dispute !== false) {
           result.status = "evidence_incomplete"; continue;
         }
         result.captureEvidenceVerified = true;
@@ -400,7 +427,7 @@ export function createCulqiChargeReconciliation(dependencies: CulqiChargeReconci
         if (!APPLICATION_APPROVED) { result.status = "approval_required"; continue; }
         if (!dependencies.applyVerifiedCharge) { result.status = "adapter_unavailable"; continue; }
 
-        // All operational/contract barriers above are closed in this source.
+        // Operational application approval remains closed in this source.
         // The future SQL adapter must revalidate identities under its locks;
         // this fresh read is useful evidence, never a substitute for that lock.
         const observedAt = now();

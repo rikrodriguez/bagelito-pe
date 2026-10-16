@@ -1,6 +1,7 @@
 -- PROPOSED ONLY. No remote installation or approval is authorized here.
 -- Run after add-checkout-safety.sql and add-culqi-session-expiry.sql.
--- The net/refund/operation contract is unapproved; every pilot is disabled.
+-- The capture policy is reviewed; operational application remains unapproved.
+-- Every pilot is disabled. Future reversal absence is not a capture requirement.
 begin;
 do $$ begin
   if current_user in ('anon','authenticated','service_role') then
