@@ -1,9 +1,9 @@
 name: Integrated delivery candidate CI
 on:
   push:
-    branches: [integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016]
+    branches: [integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016]
   pull_request:
-    branches: [main, integration/delivery-candidate-20261016]
+    branches: [main, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
 permissions:
   contents: read
@@ -15,7 +15,8 @@ jobs:
     if: >-
       github.event_name == 'push' ||
       ((github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
-        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016') &&
+        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
+        github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -47,7 +48,7 @@ jobs:
         run: node tests/culqi-reconciliation-http.mjs
       - name: Pull pinned isolated PostgreSQL image
         run: docker pull --platform linux/amd64 postgres:17.11-bookworm@sha256:66aafa11cf15800a3c94763f7e11d1e7b2e37e5e84bc4ce027cb6e1e4bfaf4df
-      - name: Verify native status recovery with isolated SQL
+      - name: Verify native status and webhook failures/settlement with isolated SQL
         run: node tests/culqi-status-recovery-http.mjs
       - name: Verify native administrative status boundary
         run: node tests/culqi-admin-status-http.mjs
@@ -57,7 +58,8 @@ jobs:
     if: >-
       github.event_name == 'push' ||
       ((github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
-        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016') &&
+        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
+        github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 10

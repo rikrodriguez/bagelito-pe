@@ -80,7 +80,8 @@ async function bootDatabase() {
 }
 
 let sequence = 0;
-function seed({ state = "pending", expired = false } = {}) {
+function seed({ state = "pending", expired = false, amountMinor = 6600, units = 6 } = {}) {
+  assert.ok([6600, 12300].includes(amountMinor) && [6, 12].includes(units));
   sequence++;
   const tag = String(sequence).padStart(3, "0");
   const code = `BAG-HTTP-${tag}`;
@@ -89,12 +90,12 @@ function seed({ state = "pending", expired = false } = {}) {
   return sql(`
     do $$ declare b uuid; o uuid; claim jsonb; begin
       insert into public.batches(name,status,capacity_packs,capacity_bagels)
-        values('SYNTHETIC HTTP','orders_open',1,6) returning id into b;
+        values('SYNTHETIC HTTP','orders_open',1,${units}) returning id into b;
       insert into public.orders(batch_id,checkout_session_id,order_code,pack_slug,pack_name,pack_units,pack_type,
         customer_name,whatsapp,email,delivery_address,district,total_amount,payment_provider,payment_status,
         payment_lane,payment_amount_minor,payment_currency,payment_expires_at,status)
-      values(b,gen_random_uuid(),${quote(code)},'6-single','6 single',6,'single','Synthetic','000000000',
-        'synthetic@example.invalid','Synthetic','Lince',66,'culqi','pending','token',6600,'PEN',
+      values(b,gen_random_uuid(),${quote(code)},${quote(units === 12 ? '12-mixed' : '6-single')},'Synthetic pack',${units},${quote(units === 12 ? 'mixed' : 'single')},'Synthetic','000000000',
+        'synthetic@example.invalid','Synthetic','Lince',${amountMinor / 100},'culqi','pending','token',${amountMinor},'PEN',
         clock_timestamp()+interval '30 minutes','payment_pending_review') returning id into o;
       perform public.prepare_culqi_token_session(o);
       claim:=public.claim_culqi_charge(o,${quote(source)},'',false);
@@ -114,6 +115,7 @@ function state(row) {
     'attemptPaid',(select count(*) from public.payment_attempts where order_id=o.id and status='paid'),
     'receipts',(select count(*) from public.culqi_status_charge_receipts where order_id=o.id),
     'history',(select count(*) from public.order_status_history where order_id=o.id and changed_by='culqi status charge GET'),
+    'webhookHistory',(select count(*) from public.order_status_history where order_id=o.id and changed_by='culqi webhook'),
     'events',(select count(*) from public.payment_webhook_events),
     'capacity',(select count(*) from public.orders x where x.batch_id=o.batch_id and x.status<>'cancelled'
       and (x.payment_status='paid' or x.payment_status='pending' and x.payment_expires_at>clock_timestamp())))
@@ -177,7 +179,7 @@ async function runtime(overrides, run) {
       if (child.exitCode !== null || Date.now() >= deadline) throw new Error("Native Next HTTP fixture failed to start");
       await pause(25);
     }
-    await run(port);
+    await run(port, () => logs);
     assert.equal([baseEnv.CULQI_SECRET_KEY, baseEnv.SUPABASE_SERVICE_ROLE_KEY, "PRIVATE_SYNTHETIC_HTTP_ERROR"]
       .some((value) => logs.includes(value)), false, "Native runtime logs must not reveal fixture secrets or raw errors");
   } finally {
@@ -186,11 +188,12 @@ async function runtime(overrides, run) {
     await rm(cwd, { recursive: true, force: true });
   }
 }
-function call(port, row, { headers = {}, body, method = "POST" } = {}) {
+function call(port, row, { headers = {}, body, method = "POST", route = "/api/payments/culqi/status" } = {}) {
+  assert.ok(["/api/payments/culqi/status", "/api/webhooks/culqi"].includes(route));
   return new Promise((resolve, reject) => {
     const fields = { host, origin, "x-forwarded-host": host, "x-forwarded-proto": "https", "sec-fetch-site": "same-origin",
       "content-type": "application/json", ...headers };
-    const request = httpRequest({ hostname: "127.0.0.1", port, path: "/api/payments/culqi/status", method,
+    const request = httpRequest({ hostname: "127.0.0.1", port, path: route, method,
       headers: Object.fromEntries(Object.entries(fields).filter(([, value]) => value != null)), timeout: 15_000 }, (response) => {
       let text = ""; response.setEncoding("utf8"); response.on("data", (chunk) => { text += chunk; });
       response.on("end", () => resolve({ status: response.statusCode, headers: response.headers, text,
@@ -213,7 +216,7 @@ try {
   await setMode();
   // Test execution below deliberately waits for a build containing the actual
   // recovery implementation; an old /status build must fail its positive case.
-  await runtime({}, async (port) => {
+  await runtime({}, async (port, logs) => {
     const row = seed();
     const response = await call(port, row); privateResponse(response, row);
     assert.equal(response.status, 200); assert.equal(response.data.paymentStatus, "paid",
@@ -230,6 +233,53 @@ try {
     const again = await call(port, row); privateResponse(again, row);
     assert.equal(again.data.paymentStatus, "paid"); assert.deepEqual(state(row), persisted);
     assert.equal((await audit()).filter((kind) => kind === "provider_get").length, 0);
+
+    // Faithful only to the recorded money/lane/provenance: no real order, event,
+    // capability or provider response is reused or claimed to be certified.
+    const observed = seed({ amountMinor: 12300, units: 12 });
+    await setMode();
+    assert.equal((await call(port, observed)).data.paymentStatus, 'paid');
+    const afterGet = state(observed);
+    assert.equal(afterGet.receipts, 1); assert.equal(afterGet.webhookHistory, 0);
+    const eventId = observed.charge.replace('chr_test_', 'evt_test_');
+    const callback = row => ({ route: '/api/webhooks/culqi', body: JSON.stringify({
+      id: row.charge.replace('chr_test_', 'evt_test_'), paid: true,
+      data: { amount: 1, currency_code: 'USD', id: 'untrusted-caller-resource' },
+    }) });
+    for (const mode of ['event_400', 'event_identity_mismatch', 'event_stall']) {
+      await setMode(mode);
+      const failed = await call(port, observed, callback(observed));
+      privateResponse(failed, observed);
+      assert.equal(failed.status, 500);
+      assert.deepEqual(failed.data, { ok: false, error: 'Could not process Culqi webhook.' });
+      assert.deepEqual(state(observed), afterGet, 'Rejected/unverified event cannot touch paid state, receipts, history or capacity');
+      assert.deepEqual(await audit(), ['event_get'], 'Failed event lookup/identity cannot invoke an application DB transaction');
+    }
+    assert.ok(logs().includes('parameter_error') && logs().includes('timeout'), 'Native diagnostics must classify the observed400 and local deadline separately');
+    await setMode('event_amount_mismatch');
+    const badMoney = await call(port, observed, callback(observed)); privateResponse(badMoney, observed);
+    assert.equal(badMoney.status, 500);
+    assert.deepEqual(await audit(), ['event_get', 'event_apply']);
+    assert.deepEqual(state(observed), afterGet, 'A verified event with wrong money must roll back its marker and preserve settlement');
+    await setMode();
+    const accepted = await call(port, observed, callback(observed)); privateResponse(accepted, observed);
+    assert.equal(accepted.status, 200);
+    const afterWebhook = state(observed);
+    assert.deepEqual(afterWebhook, { ...afterGet, events: afterGet.events + 1 });
+    assert.deepEqual(await audit(), ['event_get', 'event_apply']);
+    const marker = sql(`select jsonb_build_object('count',count(*),'processed',bool_and(processed_at is not null),
+      'resourceMatches',bool_and(provider_order_id=${quote(observed.charge)})) from public.payment_webhook_events where provider_event_id=${quote(eventId)};`, { json: true });
+    assert.deepEqual(marker, { count: 1, processed: true, resourceMatches: true });
+    await setMode();
+    const duplicate = await call(port, observed, callback(observed)); privateResponse(duplicate, observed);
+    assert.equal(duplicate.status, 200); assert.equal(duplicate.data.duplicate, true);
+    assert.deepEqual(state(observed), afterWebhook, 'Repeated verified fixture event cannot duplicate settlement or history');
+    const pendingWebhook = seed({ amountMinor: 12300, units: 12 });
+    const beforeWebhook = state(pendingWebhook); await setMode();
+    const confirmed = await call(port, pendingWebhook, callback(pendingWebhook)); privateResponse(confirmed, pendingWebhook);
+    assert.equal(confirmed.status, 200);
+    assert.deepEqual(state(pendingWebhook), { ...beforeWebhook, payment: 'paid', status: 'payment_confirmed', attemptPaid: 1,
+      webhookHistory: 1, events: beforeWebhook.events + 1 });
 
     for (const headers of [
       { origin: undefined }, { origin: "null" }, { origin: "https://wrong.invalid" },
@@ -357,6 +407,10 @@ try {
     const row = seed(); const before = state(row); await setMode();
     const blocked = await call(port, row); privateResponse(blocked, row);
     assert.equal(blocked.status, 503); assert.deepEqual(await audit(), []); assert.deepEqual(state(row), before);
+    if (overrides.VERCEL_ENV === 'production' || overrides.CULQI_SECRET_KEY || overrides.NEXT_PUBLIC_CULQI_PUBLIC_KEY === '') {
+      const webhook = await call(port, row, { route: '/api/webhooks/culqi', body: JSON.stringify({ id: 'evt_test_SYNTHETICHttp001' }) });
+      assert.equal(webhook.status, 503); assert.deepEqual(await audit(), []); assert.deepEqual(state(row), before);
+    }
   });
   for (const CULQI_STATUS_RECOVERY_APPROVED of ["false", ""]) {
     await runtime({ CULQI_STATUS_RECOVERY_APPROVED }, async (port) => {
@@ -367,6 +421,7 @@ try {
     });
   }
   console.log("PASS: native Next status HTTP + actual local PostgreSQL confirmation; real parser, synthetic provider GET, no external network.");
+  console.log("PASS: native webhook observed400/deadline/identity fail without settlement; verified synthetic event applies atomically after GET or from pending and repeats idempotently; this is not provider certification.");
 } finally {
   // Cleanup remains local even when setup/assertions fail. No workers, ports,
   // persisted database, credentials or cookies survive this fixture.

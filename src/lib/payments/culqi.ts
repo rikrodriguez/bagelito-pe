@@ -221,16 +221,27 @@ export async function fetchCulqiEvent(eventId: string) {
   const { mode } = assertCulqiEnabled();
   const environment = mode === "sandbox" ? "test" : mode === "live" ? "live" : null;
   if (!environment) throw new Error("Culqi event environment is not configured.");
+  const controller = new AbortController();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      const error = new DOMException("Culqi event lookup deadline exceeded.", "TimeoutError");
+      reject(error);
+      controller.abort(error);
+    }, 10_000);
+  });
   // Match the official SDK's event lookup contract without changing charge requests.
   try {
-    return await culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
+    // Bound headers and JSON together, even when a transport ignores abort.
+    return await Promise.race([culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
       method: "GET",
+      signal: controller.signal,
       headers: {
         Accept: "application/json",
         "x-api-version": "2",
         "x-culqi-env": environment,
       },
-    });
+    }), deadline]);
   } catch (error) {
     if (error instanceof CulqiApiError) {
       // Event-only context contains no ID or provider payload. It is immutable
@@ -240,6 +251,8 @@ export async function fetchCulqiEvent(eventId: string) {
       });
     }
     throw error;
+  } finally {
+    clearTimeout(timer);
   }
 }
 

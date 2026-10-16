@@ -106,6 +106,48 @@ test('SDK-contract transport fixture reaches the real verification handler and o
   assert.equal(fixture.logs[0][1].upstreamErrorType, 'none');
 });
 
+const flush = () => new Promise(resolve => setImmediate(resolve));
+for (const phase of ['headers', 'body']) {
+  test(`event lookup bounds stalled ${phase} and ignores its late response`, async (t) => {
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    let headers, body;
+    const fixture = setup({ transport: () => new Promise(resolve => { headers = resolve; }) });
+    let settled = false;
+    const pending = fixture.post().then(response => { settled = true; return response; });
+    await flush();
+    assert.equal(fixture.requests.length, 1);
+    if (phase === 'body') {
+      t.mock.timers.tick(6000);
+      headers({ ok: true, status: 200, json: () => new Promise(resolve => { body = resolve; }) });
+      await flush();
+      t.mock.timers.tick(3999);
+    } else t.mock.timers.tick(9999);
+    await flush(); assert.equal(settled, false);
+    t.mock.timers.tick(1); await flush();
+    assert.equal(settled, true, 'The event GET and JSON body must share one 10-second deadline, even if abort is ignored');
+    assertSafeFailure(fixture, await pending);
+    assert.equal(fixture.logs[0][1].upstreamFailureClass, 'timeout');
+    assert.equal(fixture.logs[0][1].upstreamHttpStatus, null);
+    assert.equal(fixture.requests[0].init.signal.aborted, true);
+    if (phase === 'body') body(verifiedEvent);
+    else headers({ ok: true, status: 200, json: async () => verifiedEvent });
+    await flush();
+    assert.deepEqual(fixture.rpcCalls, []);
+    assert.equal(fixture.logs.length, 1, 'A late response cannot continue to verification or settlement');
+  });
+}
+
+test('a completed event lookup clears its deadline without cancelling the successful response', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const fixture = setup();
+  assert.equal((await fixture.post()).status, 200);
+  assert.ok(fixture.requests[0].init.signal instanceof AbortSignal, 'Event GET must carry its owned cancellation signal');
+  t.mock.timers.tick(20000); await flush();
+  assert.equal(fixture.requests[0].init.signal.aborted, false);
+  assert.equal(fixture.rpcCalls.length, 1);
+  assert.equal(fixture.logs.length, 1);
+});
+
 test('each SDK error type is classified without acknowledging caller payment claims or opening DB', async () => {
   for (const type of errorTypes) {
     const fixture = setup({ status: 400, payload: { type, param: 'raw-param', code: 'raw-code',
