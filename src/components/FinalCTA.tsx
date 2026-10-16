@@ -6,16 +6,17 @@ import { trackBagelitoEvent } from "@/lib/analytics";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
-import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
+import { usePacksCampaignHref, useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 export function FinalCTA() {
   const { copy } = useLanguage();
   const { accepting } = useBatchAvailability();
   const waitlistHref = useWaitlistCampaignHref();
+  const packsHref = usePacksCampaignHref();
   const title = accepting ? copy.finalCta.openTitle : copy.finalCta.title;
   const text = accepting ? copy.finalCta.openText : copy.finalCta.text;
   const cta = accepting ? copy.finalCta.openCta : copy.finalCta.cta;
-  const href = accepting ? "/#packs" : waitlistHref();
+  const href = accepting ? packsHref : waitlistHref();
   const target = accepting ? "packs" : "waitlist";
 
   return (

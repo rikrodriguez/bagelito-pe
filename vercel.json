@@ -7,7 +7,8 @@
       "fix/culqi-capture-policy-20261014": false,
       "test/operator-flow-isolated-20261016": false,
       "fix/waitlist-campaign-attribution-20261016": false,
-      "integration/delivery-candidate-20261016": false
+      "integration/delivery-candidate-20261016": false,
+      "fix/waitlist-reserve-attribution-20261016": false
     }
   }
 }

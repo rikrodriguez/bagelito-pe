@@ -1,9 +1,9 @@
 name: Integrated delivery candidate CI
 on:
   push:
-    branches: [integration/delivery-candidate-20261016]
+    branches: [integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016]
   pull_request:
-    branches: [main]
+    branches: [main, integration/delivery-candidate-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
 permissions:
   contents: read
@@ -14,7 +14,8 @@ jobs:
   application:
     if: >-
       github.event_name == 'push' ||
-      (github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' &&
+      ((github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
+        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -55,7 +56,8 @@ jobs:
   sql:
     if: >-
       github.event_name == 'push' ||
-      (github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' &&
+      ((github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
+        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 10

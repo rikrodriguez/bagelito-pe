@@ -5,7 +5,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { sourceModule } from '../helpers/load-ts.mjs';
 const { WaitlistSource } = sourceModule('src/components/WaitlistSource.tsx');
-const sources = ['utm:v1:utm_source=instagram&utm_medium=social&utm_campaign=october&utm_content=reel-1', 'utm:v1:utm_source=tiktok&utm_medium=social&utm_campaign=october&utm_content=video-2', 'waitlist_page'];
+const { isWaitlistSource } = sourceModule('src/lib/waitlist/attribution.ts');
+const args = process.argv.slice(2);
+if (args.length && (args.length !== 2 || args[0] !== '--source' || !isWaitlistSource(args[1]))) throw new Error('Expected one valid synthetic --source');
+const sources = args.length ? [args[1]] : ['utm:v1:utm_source=instagram&utm_medium=social&utm_campaign=october&utm_content=reel-1', 'utm:v1:utm_source=tiktok&utm_medium=social&utm_campaign=october&utm_content=video-2', 'waitlist_page'];
 const rows = sources.map((source, i) => renderToStaticMarkup(React.createElement('article', { className: 'waitlist-admin-row', key: i }, React.createElement('div', null,
   React.createElement('strong', null, 'QA Synthetic ' + (i + 1)),
   React.createElement('span', null, '000000000 · qa@example.invalid'),

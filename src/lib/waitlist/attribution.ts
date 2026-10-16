@@ -50,10 +50,22 @@ export function isWaitlistSource(source: string): boolean {
   return source.length <= 80 && /^[a-z0-9][a-z0-9 ._-]*$/i.test(source);
 }
 
-export function waitlistCampaignHref(campaign: WaitlistCampaign | null, pack?: string): string {
+function campaignHref(path: '/' | '/reserve' | '/waitlist', campaign: WaitlistCampaign | null, pack?: string): string {
   const params = new URLSearchParams();
   if (pack && /^(6|12)-(single|mixed)$/.test(pack)) params.set("pack", pack);
   for (const [key, value] of campaignParams(readWaitlistCampaign(campaign))) params.set(key, value);
   const query = params.toString();
-  return query ? `/waitlist?${query}` : "/waitlist";
+  return query ? `${path}?${query}` : path;
+}
+
+export function waitlistCampaignHref(campaign: WaitlistCampaign | null, pack?: string): string {
+  return campaignHref('/waitlist', campaign, pack);
+}
+
+export function reserveCampaignHref(campaign: WaitlistCampaign | null, pack?: string): string {
+  return campaignHref('/reserve', campaign, pack);
+}
+
+export function packsCampaignHref(campaign: WaitlistCampaign | null): string {
+  return campaignHref('/', campaign) + '#packs';
 }

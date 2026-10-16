@@ -40,7 +40,7 @@ for (const name of ['Hero', 'Packs', 'FinalCTA', 'BatchDeadlineBanner', 'MobileS
   });
 }
 
-test('open-batch CTA destinations remain unchanged', () => {
+test('open-batch CTAs retain campaign on the way to packs and reservation', () => {
   for (const name of ['Hero', 'Packs', 'FinalCTA', 'BatchDeadlineBanner', 'MobileStickyReserveCTA']) {
     const deps = overrides();
     deps['./BatchAvailabilityProvider'] = { useBatchAvailability: () => ({ accepting: true }) };
@@ -49,8 +49,29 @@ test('open-batch CTA destinations remain unchanged', () => {
     const html = renderToStaticMarkup(React.createElement(Component));
     assert.ok(!html.includes('href="/waitlist'));
     if (name === 'Hero') assert.ok(html.includes('href="#packs"'));
-    else if (name === 'Packs') assert.ok(html.includes('href="/reserve?pack=12-mixed"'));
-    else assert.ok(html.includes('href="/#packs"'));
+    else {
+      const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map(m => m[1].replaceAll('&amp;', '&'));
+      const target = hrefs.find(href => href.startsWith(name === 'Packs' ? '/reserve?pack=12-mixed' : '/?'));
+      assert.ok(target, name);
+      const url = new URL(target, 'https://synthetic.invalid');
+      assert.equal(url.searchParams.get('utm_source'), 'instagram');
+      if (name !== 'Packs') assert.equal(url.hash, '#packs');
+    }
+  }
+});
+
+test('open-batch links keep their original destinations when no valid campaign exists', () => {
+  for (const query of ['', 'token=synthetic-private', 'utm_source=%3Cscript%3E', 'utm_source=instagram&utm_source=tiktok']) {
+    for (const name of ['Hero', 'Packs', 'FinalCTA', 'BatchDeadlineBanner', 'MobileStickyReserveCTA']) {
+      const deps = overrides('en', query);
+      deps['./BatchAvailabilityProvider'] = { useBatchAvailability: () => ({ accepting: true }) };
+      if (name === 'MobileStickyReserveCTA') deps.react = { ...React, useState: () => [true, () => {}] };
+      const Component = sourceModule(`src/components/${name}.tsx`, deps)[name];
+      const html = renderToStaticMarkup(React.createElement(Component));
+      const expected = name === 'Hero' ? '#packs' : name === 'Packs' ? '/reserve?pack=12-mixed' : '/#packs';
+      assert.ok(html.includes(`href="${expected}"`));
+      assert.ok(!html.includes('synthetic-private'));
+    }
   }
 });
 
