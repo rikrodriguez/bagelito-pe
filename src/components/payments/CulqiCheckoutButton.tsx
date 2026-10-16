@@ -274,7 +274,7 @@ export function CulqiCheckoutButton({
   }, [config.publicKey, copy.error, setCheckoutError, threeDSScriptReady]);
 
   const initializeCheckout = useCallback(async () => {
-    if (reviewRequiredRef.current || reservationExpiredRef.current || !lifecycleRef.current.alive) return;
+    if (reviewRequiredRef.current || !lifecycleRef.current.alive || checkReservationExpiry()) return;
     onError("");
     if (!config.enabled || !window.CulqiCheckout || initializedRef.current) return;
 

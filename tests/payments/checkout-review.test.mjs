@@ -142,14 +142,14 @@ function browser(store) {
   };
 }
 
-function flowHarness(paymentConfig = config) {
+function flowHarness(paymentConfig = config, locale = 'es') {
   const h = hooks();
   const { ReservationFlow } = compileComponent(flowFilename, flowSource, specifier => {
     if (specifier === 'react') return { ...React, ...h.api };
     if (specifier === 'next/image' || specifier === 'next/link') return { __esModule: true, default: Placeholder };
     if (specifier === 'lucide-react') return new Proxy({}, { get: () => Placeholder });
     if (specifier === '@/components/payments/CulqiCheckoutButton') return { CulqiCheckoutButton: FixtureCheckout };
-    if (specifier === '@/components/LanguageProvider') return { useLanguage: () => ({ locale: 'es', copy: translations.es }) };
+    if (specifier === '@/components/LanguageProvider') return { useLanguage: () => ({ locale, copy: translations[locale] }) };
     if (specifier === '@/components/BatchAvailabilityProvider') return { useBatchAvailability: () => ({ accepting: true, batchName: 'Synthetic', remainingPacks: 10, deliveryDate: null, ordersCloseAt: null }) };
     if (specifier === '@/components/RollingBagel') return { RollingBagel: Placeholder };
     if (specifier === '@/components/ConversionTrustStrip') return { ConversionTrustStrip: Placeholder };
@@ -299,6 +299,63 @@ for (const event of ['focus', 'pageshow', 'visibilitychange', 'sdk callback']) {
     } finally { sdk?.cleanup(); clock.restore(); env.restore(); }
   });
 }
+
+for (const locale of ['es', 'en']) {
+  test(`retry after a pre-charge SDK error rechecks a throttled reservation deadline before preparation (${locale})`, async () => {
+    const store = storage(); const env = browser(store); const clock = deadlineClock({ wallClock: true });
+    const calls = serverFixture(store, { expiresAt: new Date(Date.now() + 20_000).toISOString() });
+    const flow = flowHarness(config, locale); let sdk;
+    try {
+      flow.reviewStage(); sdk = await sdkHarness(flow.checkout());
+      const staleSdkCallback = sdk.sdk.culqi;
+      sdk.sdk.error = { user_message: 'Synthetic pre-charge SDK error' };
+      sdk.sdk.culqi(); await flushCallbacks();
+      const retry = button(sdk.render(), locale === 'es' ? 'Reintentar checkout' : 'Retry secure checkout');
+      assert.ok(retry, 'A pre-charge error must remain retryable before expiry');
+      assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+      assert.equal(calls.filter(call => call.url.endsWith('/order')).length, 1);
+      clock.jump(20_000); // Do not deliver timer/focus/visibility events before clicking.
+      retry.props.onClick(); await flushCallbacks();
+      const tree = sdk.render();
+      assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1,
+        'Retrying an expired reservation must not prepare/reserve it again');
+      assert.equal(calls.filter(call => call.url.endsWith('/order')).length, 1);
+      assert.match(text(tree), locale === 'es' ? /reserva venció/ : /reservation expired/);
+      assert.equal(embed(tree), undefined); assert.equal(clock.pending, 0);
+      assert.equal(sdk.sdk.culqi, undefined); assert.ok(sdk.sdk.closes >= 1);
+      assert.equal(sdk.instances.length, 1);
+      assert.equal(button(tree, locale === 'es' ? 'Reintentar checkout' : 'Retry secure checkout'), undefined);
+      assert.equal(nodes(tree).find(node => node?.type === 'a' && node.props.href === '/reserve')?.props.href, '/reserve');
+      retry.props.onClick();
+      sdk.sdk.token = { id: 'ype_test_syntheticExpiredRetry' }; staleSdkCallback(); await flushCallbacks();
+      assert.equal(calls.length, 2, 'Stale retry/token handlers cannot make reservation, preparation, charge or status requests');
+      assert.equal(readCheckoutRecovery(store), null, 'No unsubmitted payment may acquire an uncertain-payment recovery lock');
+    } finally { sdk?.cleanup(); flow.cleanup(); clock.restore(); env.restore(); }
+  });
+}
+
+test('retry before expiry preserves the same hold and still expires at its original deadline', async () => {
+  const store = storage(); const env = browser(store); const clock = deadlineClock({ wallClock: true });
+  const calls = serverFixture(store, { expiresAt: new Date(Date.now() + 20_000).toISOString() });
+  const flow = flowHarness(); let sdk;
+  try {
+    flow.reviewStage(); sdk = await sdkHarness(flow.checkout());
+    sdk.sdk.error = { user_message: 'Synthetic pre-charge SDK error' };
+    sdk.sdk.culqi(); await flushCallbacks();
+    const retry = button(sdk.render(), 'Reintentar checkout'); assert.ok(retry);
+    clock.jump(19_999); retry.props.onClick(); await flushCallbacks();
+    assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 2);
+    assert.equal(calls.filter(call => call.url.endsWith('/order')).length, 2);
+    assert.equal(new Set(calls.map(call => call.payload.checkoutSessionId)).size, 1,
+      'A safe pre-expiry retry must reuse the existing checkout capability, not create another hold');
+    assert.equal(sdk.instances.length, 2); assert.ok(embed(sdk.render()));
+    clock.tick(1); await flushCallbacks();
+    assert.match(text(sdk.render()), /reserva venció/);
+    assert.equal(embed(sdk.render()), undefined); assert.equal(clock.pending, 0);
+    assert.equal(sdk.instances[1].culqi, undefined);
+    assert.equal(calls.length, 4); assert.equal(readCheckoutRecovery(store), null);
+  } finally { sdk?.cleanup(); flow.cleanup(); clock.restore(); env.restore(); }
+});
 
 for (const expiry of ['past', 'missing', 'malformed']) {
   test(`${expiry} session expiry cannot open the SDK or accept a payment`, async () => {
