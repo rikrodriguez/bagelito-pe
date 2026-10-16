@@ -28,6 +28,7 @@ import {
 import { districtOptions } from "@/lib/reservations/schema";
 import { siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
+import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 type Props = {
   packs: Pack[];
@@ -116,6 +117,7 @@ export function ReservationFlow({
 }: Props) {
   const { locale, copy } = useLanguage();
   const batchAvailability = useBatchAvailability();
+  const waitlistHref = useWaitlistCampaignHref();
   const r = copy.reserve;
   const [step, setStep] = useState(1);
   const [packSlug, setPackSlug] = useState<PackSlug>(initialPackSlug);
@@ -801,7 +803,7 @@ export function ReservationFlow({
             <strong>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</strong>
             <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
           </div>
-          <Link className="pill-button pink" href={`/waitlist?pack=${selectedPack.slug}`}>
+          <Link className="pill-button pink" href={waitlistHref(selectedPack.slug)}>
             <MessageCircle size={18} />
             {batchText.joinWaitlist}
           </Link>

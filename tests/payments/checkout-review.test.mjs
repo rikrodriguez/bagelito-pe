@@ -6,6 +6,7 @@ import Module from 'node:module';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 import React from 'react';
+import { sourceModule } from '../helpers/load-ts.mjs';
 import {
   beginCheckoutPayment, checkoutRecoveryOutcome, CheckoutReviewError,
   clearCheckoutRecovery, markCheckoutPaymentReview, readCheckoutRecovery,
@@ -93,6 +94,7 @@ const buttonFilename = fileURLToPath(new URL('../../src/components/payments/Culq
 const flowSource = await readFile(flowFilename, 'utf8');
 const buttonSource = await readFile(buttonFilename, 'utf8');
 const recoveryModule = await import('../../src/lib/payments/checkout-recovery.ts');
+const campaignHooks = sourceModule('src/lib/waitlist/use-campaign-href.ts', { 'next/navigation': { useSearchParams: () => new URLSearchParams() } });
 function compileComponent(filename, source, customRequire) {
   const compiled = ts.transpileModule(source, {
     compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
@@ -152,6 +154,7 @@ function flowHarness(paymentConfig = config) {
     if (specifier === '@/components/RollingBagel') return { RollingBagel: Placeholder };
     if (specifier === '@/components/ConversionTrustStrip') return { ConversionTrustStrip: Placeholder };
     if (specifier === '@/lib/payments/checkout-recovery') return recoveryModule;
+    if (specifier === '@/lib/waitlist/use-campaign-href') return campaignHooks;
     if (specifier === '@/lib/analytics') return { trackBagelitoEvent() {} };
     if (specifier === '@/lib/delivery-pricing') return { getDeliveryFee: () => 8 };
     if (specifier === '@/lib/checkout-upsell') return { checkoutExtraPackDiscountPercent: 10, getCheckoutExtraPackOffer: amount => ({ originalAmount: amount, discountedAmount: amount * .9, savingsAmount: amount * .1 }) };

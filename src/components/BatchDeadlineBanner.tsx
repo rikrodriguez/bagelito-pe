@@ -7,7 +7,7 @@ import { trackBagelitoEvent } from "@/lib/analytics";
 import type { BatchAvailability } from "@/lib/reservations/service";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
-import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
+import { usePacksCampaignHref, useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 const initialTimeLeft = {
   days: "--",
@@ -59,7 +59,8 @@ export function BatchDeadlineBanner() {
     : copy.deadline.close;
   const ctaLabel = batchAvailability.accepting ? copy.deadline.cta : copy.deadline.closedCta;
   const waitlistHref = useWaitlistCampaignHref();
-  const ctaHref = batchAvailability.accepting ? "/#packs" : waitlistHref();
+  const packsHref = usePacksCampaignHref();
+  const ctaHref = batchAvailability.accepting ? packsHref : waitlistHref();
 
   useEffect(() => {
     setTimeLeft(getTimeLeft(deadline));
