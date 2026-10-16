@@ -1,0 +1,41 @@
+name: Waitlist attribution draft CI
+on:
+  push:
+    branches: [fix/waitlist-campaign-attribution-20261016]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+concurrency:
+  group: waitlist-attribution-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  application:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event.pull_request.head.ref == 'fix/waitlist-campaign-attribution-20261016' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Check out the exact requested commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run synthetic waitlist tests
+        run: node --test tests/*.test.mjs
+      - name: Lint
+        run: npm run lint
+      - name: Build and validate types
+        run: npm run build

@@ -1244,6 +1244,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   justify-content: space-between;
   gap: 14px;
 }
+.waitlist-attribution { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 0; font-size: .78rem; }
+.waitlist-attribution > div { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.waitlist-attribution dt { color: var(--blue); font-weight: 850; }
+.waitlist-attribution dd { margin: 0; overflow-wrap: anywhere; }
 .waitlist-date-head strong {
   display: block;
   color: var(--navy);
