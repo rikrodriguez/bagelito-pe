@@ -8,6 +8,7 @@ import { trackBagelitoEvent } from "@/lib/analytics";
 import { packCopy } from "@/lib/i18n";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
+import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 const packImages: Record<PackSlug, string> = {
   "12-mixed": "/images/pack-12-mixed.webp",
@@ -19,6 +20,7 @@ const packImages: Record<PackSlug, string> = {
 export function Packs() {
   const { locale, copy } = useLanguage();
   const { accepting: acceptingReservations } = useBatchAvailability();
+  const waitlistHref = useWaitlistCampaignHref();
 
   return (
     <section id="packs" className="packs-section section-pad" aria-labelledby="packs-title">
@@ -30,7 +32,7 @@ export function Packs() {
       <div className="pack-grid clean-pack-grid" aria-label={copy.packs.title}>
         {packs.map((pack) => {
           const localizedPack = packCopy[locale][pack.slug];
-          const ctaHref = acceptingReservations ? `/reserve?pack=${pack.slug}` : `/waitlist?pack=${pack.slug}`;
+          const ctaHref = acceptingReservations ? `/reserve?pack=${pack.slug}` : waitlistHref(pack.slug);
           const ctaLabel = acceptingReservations ? copy.packs.button : copy.packs.waitlistButton;
 
           return (

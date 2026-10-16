@@ -73,6 +73,7 @@ import { CostCalculator } from "./CostCalculator";
 import { CustomerProfileActions } from "./CustomerProfileActions";
 import { closeCurrentBatch, quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
 import { WaitlistLeadActions } from "./WaitlistLeadActions";
+import { WaitlistSource } from "@/components/WaitlistSource";
 
 const paidStatuses = new Set<string>(productionStatuses);
 const statusFilterOptions = [
@@ -960,6 +961,7 @@ function WaitlistPanel({
                       <span>{signup.whatsapp} · {signup.email}</span>
                       <small>{signup.preferred_pack_name ?? "No pack preference"} · {signup.contact_preference} · {formatDate(signup.created_at)}</small>
                       {signup.notes ? <small>Notes: {signup.notes}</small> : null}
+                      <WaitlistSource source={signup.source} />
                     </div>
                     <div className="waitlist-row-actions">
                       {view === "active" ? (
