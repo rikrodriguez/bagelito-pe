@@ -1806,7 +1806,7 @@ export default async function AdminPage({
                   <div className="data-block">
                     <small>Proof</small>
                     {order.payment_provider === "culqi"
-                      ? <strong>No voucher required · webhook verified</strong>
+                      ? <strong>No voucher required · managed by Culqi</strong>
                       : hasUploadedPaymentProof(order)
                         ? <a href={`/admin/payment-proof/${order.order_code}`} target="_blank" rel="noreferrer">View private signed proof</a>
                         : <strong>No proof uploaded yet</strong>}

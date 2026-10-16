@@ -10,7 +10,8 @@
       "integration/delivery-candidate-20261016": false,
       "fix/waitlist-reserve-attribution-20261016": false,
       "fix/culqi-webhook-event-deadline-20261016": false,
-      "fix/checkout-expired-retry-20261016": false
+      "fix/checkout-expired-retry-20261016": false,
+      "fix/admin-culqi-proof-label-20261016": false
     }
   }
 }

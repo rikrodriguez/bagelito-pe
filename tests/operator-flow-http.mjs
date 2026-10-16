@@ -153,6 +153,30 @@ try {
         assert.equal(sql('select to_jsonb(count(*)) from public.waitlist_signups where consent_accepted;', true), 2);
         restoration.attributionAfterRestore = true;
     }
+    // Natural hold expiry releases capacity without mutating persisted payment
+    // state. A read-only admin render must preserve that distinction and must
+    // not claim a webhook was verified merely because the provider is Culqi.
+    const beforeExpiredView = data();
+    const expiredOrder = beforeExpiredView.orders.find(order => order.order_code === 'BAG-OPS-EXPIRED');
+    assert.equal(expiredOrder.status, 'payment_pending_review');
+    assert.equal(expiredOrder.payment_status, 'pending');
+    assert.equal(expiredOrder.payment_charge_state, 'idle');
+    assert.equal(expiredOrder.payment_charge_id, null);
+    assert.equal(q.getPaymentDisplay(expiredOrder), 'Culqi · pending');
+    assert.equal(q.getBatchStats(beforeExpiredView.batch, [expiredOrder]).reservedPacks, 0);
+    assert.equal(q.getDashboardStats([expiredOrder]).confirmedRevenue, 0);
+    assert.equal(q.getProductionOpsPlan(beforeExpiredView.batch, [expiredOrder]).totalPacks, 0);
+    assert.equal(q.getFinancialSummary(beforeExpiredView.batch, [expiredOrder]).pendingSales, 58);
+    const beforeExpiredViewWrites = bridge.writes.length;
+    const expiredView = await call('/admin?section=customers&q=BAG-OPS-EXPIRED');
+    assert.equal(expiredView.status, 200);
+    assert.ok(expiredView.text.includes('BAG-OPS-EXPIRED'));
+    assert.ok(expiredView.text.includes('Not confirmed'));
+    assert.ok(expiredView.text.includes('Culqi · pending'));
+    assert.equal(bridge.writes.length, beforeExpiredViewWrites);
+    assert.deepEqual(data(), beforeExpiredView, 'Viewing an expired idle hold must not cancel, renew or settle it');
+    assert.ok(!expiredView.text.includes('webhook verified'), 'An expired pending hold without payment evidence must not claim webhook verification');
+    assert.ok(expiredView.text.includes('No voucher required · managed by Culqi'));
     const costs = { batchId: current, ingredientCostPerBagel: '2', packagingCostPerPack: '3', actualDeliveryCost: '20', otherBatchCost: '5' };
     let response = await action('updateBatchFinancialCosts', costs, false);
     assert.ok([303, 307].includes(response.status));
