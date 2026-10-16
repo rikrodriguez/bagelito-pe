@@ -8,7 +8,8 @@
       "test/operator-flow-isolated-20261016": false,
       "fix/waitlist-campaign-attribution-20261016": false,
       "integration/delivery-candidate-20261016": false,
-      "fix/waitlist-reserve-attribution-20261016": false
+      "fix/waitlist-reserve-attribution-20261016": false,
+      "fix/culqi-webhook-event-deadline-20261016": false
     }
   }
 }

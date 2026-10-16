@@ -79,6 +79,19 @@ function selected(url, headers) {
 function rpc(name, body, headers) {
   if (!body || typeof body !== "object" || Array.isArray(body)) throw new Error("Unapproved fixture RPC body");
   const keys = Object.keys(body).sort().join(",");
+  if (name === "apply_culqi_payment_event") {
+    if (keys !== "p_event_id,p_event_type,p_resource,p_verified_payload"
+      || !/^evt_test_SYNTHETICHttp[0-9]{3}$/.test(body.p_event_id)
+      || body.p_event_type !== "charge.creation.succeeded"
+      || body.p_verified_payload?.id !== body.p_event_id
+      || body.p_verified_payload?.type !== body.p_event_type
+      || JSON.stringify(body.p_resource) !== body.p_verified_payload?.data) throw new Error("Unapproved synthetic event transaction");
+    audit("event_apply");
+    try {
+      return Response.json(sql(`select public.apply_culqi_payment_event(${quote(body.p_event_id)},${quote(body.p_event_type)},
+        ${quote(JSON.stringify(body.p_resource))}::jsonb,${quote(JSON.stringify(body.p_verified_payload))}::jsonb);`));
+    } catch { return Response.json({ code: 'P0001', message: 'Synthetic event transaction rejected' }, { status: 400 }); }
+  }
   if (name === "consume_api_rate_limit") {
     if (keys !== "p_identifier,p_limit,p_scope,p_window_seconds"
       || !/^culqi_status[a-z_]{0,70}$/.test(body.p_scope)
@@ -137,6 +150,26 @@ globalThis.fetch = async (input, init) => {
       if (request.method === "POST" && /^\/rest\/v1\/rpc\/[a-z_]+$/.test(url.pathname) && !url.search) {
         return rpc(url.pathname.split("/").at(-1), await request.json(), request.headers);
       }
+    }
+    if (url.origin === "https://api.culqi.com" && request.method === "GET" && !url.search && !url.hash
+      && /^\/v2\/events\/evt_test_SYNTHETICHttp[0-9]{3}$/.test(url.pathname)
+      && request.headers.get("authorization") === `Bearer ${process.env.CULQI_SECRET_KEY}`) {
+      if (request.headers.get("accept") !== "application/json"
+        || request.headers.get("x-api-version") !== "2" || request.headers.get("x-culqi-env") !== "test") throw new Error("Unexpected event request contract");
+      audit("event_get");
+      const { mode } = control();
+      if (mode === "event_400") return Response.json({ type: "parameter_error", param: "PRIVATE_SYNTHETIC_HTTP_ERROR",
+        merchant_message: "PRIVATE_SYNTHETIC_HTTP_ERROR" }, { status: 400 });
+      if (mode === "event_stall") return new Promise(() => {}); // Deliberately ignores abort; no socket or external fetch.
+      const id = url.pathname.split("/").at(-1);
+      const charge = id.replace('evt_test_', 'chr_test_');
+      const row = sql(`select jsonb_build_object('object','charge','id',payment_charge_id,'amount',payment_amount_minor,
+        'currency_code',payment_currency,'source',jsonb_build_object('id',payment_charge_source_id),
+        'metadata',jsonb_build_object('bagelito_order_code',order_code)) from public.orders where payment_charge_id=${quote(charge)};`);
+      if (!row) throw new Error("Unknown synthetic event resource");
+      if (mode === "event_amount_mismatch") row.amount++;
+      return Response.json({ id: mode === "event_identity_mismatch" ? "evt_test_SYNTHETICWrongId" : id,
+        type: "charge.creation.succeeded", data: JSON.stringify(row) });
     }
     if (url.origin === "https://api.culqi.com" && request.method === "GET" && !url.search && !url.hash
       && /^\/v2\/charges\/chr_test_SYNTHETICHttp[A-Z0-9]+$/.test(url.pathname)
