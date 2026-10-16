@@ -1,9 +1,9 @@
 name: Integrated delivery candidate CI
 on:
   push:
-    branches: [integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016]
+    branches: [integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016, fix/admin-culqi-proof-label-20261016]
   pull_request:
-    branches: [main, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016]
+    branches: [main, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
 permissions:
   contents: read
@@ -17,7 +17,8 @@ jobs:
       ((github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
         github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
         github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016' ||
-        github.event.pull_request.head.ref == 'fix/checkout-expired-retry-20261016') &&
+        github.event.pull_request.head.ref == 'fix/checkout-expired-retry-20261016' ||
+        github.event.pull_request.head.ref == 'fix/admin-culqi-proof-label-20261016') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -61,7 +62,8 @@ jobs:
       ((github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
         github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
         github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016' ||
-        github.event.pull_request.head.ref == 'fix/checkout-expired-retry-20261016') &&
+        github.event.pull_request.head.ref == 'fix/checkout-expired-retry-20261016' ||
+        github.event.pull_request.head.ref == 'fix/admin-culqi-proof-label-20261016') &&
        github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 10
