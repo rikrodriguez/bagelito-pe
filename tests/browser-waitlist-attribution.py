@@ -3,13 +3,16 @@ Run after npm run build, with the app on http://127.0.0.1:3107 and no app creden
 All POSTs are intercepted; all external requests are blocked. No paid browser service.
 """
 import json
+import argparse
 import subprocess
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs/waitlist-attribution/screenshots"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--output-dir", type=Path, default=ROOT / "docs/waitlist-attribution/screenshots")
+OUT = parser.parse_args().output_dir.resolve()
 OUT.mkdir(parents=True, exist_ok=True)
 BASE = "http://127.0.0.1:3107"
 admin_html = subprocess.check_output(["node", "tests/fixtures/waitlist-admin-preview.mjs"], cwd=ROOT, text=True)

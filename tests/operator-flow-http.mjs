@@ -10,7 +10,10 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { operatorPostgrest } from './fixtures/operator-postgrest.mjs';
+import { restoreOperatorFixture } from './fixtures/operator-backup-restore.mjs';
 import { sourceModule } from './helpers/load-ts.mjs';
+assert.ok(process.argv.length === 2 || (process.argv.length === 3 && process.argv[2] === '--backup-restore'), 'Usage: node tests/operator-flow-http.mjs [--backup-restore]');
+const backupRestore = process.argv[2] === '--backup-restore';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const work = await mkdtemp(path.join(tmpdir(), 'bagelito-operator-http-'));
 await mkdir(path.join(work, 'docker-config'));
@@ -24,8 +27,9 @@ function docker(args, input, allowFailure = false) {
         throw new Error('Isolated operator PostgreSQL failed: ' + r.stderr.slice(-600));
     return r;
 }
+let database = 'bagelito_test';
 function sql(statement, json = false) {
-    const r = docker(['exec', '-i', container, '/usr/lib/postgresql/17/bin/psql', '-X', '-qAt', '-h', '/tmp', '-U', 'postgres', '-d', 'bagelito_test', '-v', 'ON_ERROR_STOP=1', '-f', '-'], statement);
+    const r = docker(['exec', '-i', container, '/usr/lib/postgresql/17/bin/psql', '-X', '-qAt', '-h', '/tmp', '-U', 'postgres', '-d', database, '-v', 'ON_ERROR_STOP=1', '-f', '-'], statement);
     return json ? JSON.parse(r.stdout.trim()) : r.stdout;
 }
 let bridge, child;
@@ -64,6 +68,7 @@ try {
     sql("update public.batches set status='closed';");
     const serviceKey = 'synthetic-operator-' + randomBytes(20).toString('hex');
     sql('grant usage on schema public to service_role; grant select on public.batches,public.orders,public.order_items,public.order_status_history,public.waitlist_signups to service_role; grant update on public.batches,public.orders to service_role; grant insert on public.order_status_history to service_role;');
+    const restoration = backupRestore ? restoreOperatorFixture({ docker, container, sql, selectDatabase(value) { assert.equal(value, 'bagelito_restored_test'); database = value; } }) : {};
     bridge = await operatorPostgrest((statement, json) => sql('set role service_role; ' + statement, json), serviceKey);
     const socket = createServer();
     await new Promise(resolve => socket.listen(0, '127.0.0.1', resolve));
@@ -129,12 +134,25 @@ try {
         return d;
     }
     const beforeWrites = bridge.writes.length;
-    for (const kind of ['production', 'delivery', 'driver', 'orders']) {
+    for (const kind of ['production', 'delivery', 'driver', 'orders', 'waitlist']) {
         const denied = await call('/admin/export/' + kind, { auth: false });
         assert.ok([303, 307].includes(denied.status));
         assert.ok(denied.headers.location.includes('/admin/login'));
     }
     assert.equal(bridge.writes.length, beforeWrites);
+    if (backupRestore) {
+        const waitlist = await call('/admin?section=waitlist');
+        assert.equal(waitlist.status, 200);
+        for (const label of ['Instagram', 'delivery-fixture', 'reel-1', 'Direct / waitlist']) assert.ok(waitlist.text.includes(label));
+        const exported = await call('/admin/export/waitlist');
+        assert.equal(exported.status, 200);
+        const csv = exported.text.split('\n').map(line => line.split(','));
+        assert.deepEqual(csv[0].slice(-5), ['UTM source', 'UTM medium', 'UTM campaign', 'UTM content', 'UTM term']);
+        assert.deepEqual(csv.find(row => row.includes('QA Restored Campaign')).slice(-5), ['instagram', 'social', 'delivery-fixture', 'reel-1', '']);
+        assert.deepEqual(csv.find(row => row.includes('QA Restored Direct')).slice(-5), ['', '', '', '', '']);
+        assert.equal(sql('select to_jsonb(count(*)) from public.waitlist_signups where consent_accepted;', true), 2);
+        restoration.attributionAfterRestore = true;
+    }
     const costs = { batchId: current, ingredientCostPerBagel: '2', packagingCostPerPack: '3', actualDeliveryCost: '20', otherBatchCost: '5' };
     let response = await action('updateBatchFinancialCosts', costs, false);
     assert.ok([303, 307].includes(response.status));
@@ -224,7 +242,7 @@ try {
     const final = data();
     const finalFinance = q.getFinancialSummary(final.batch, final.orders);
     const finalCapacity = q.getBatchStats(final.batch, final.orders);
-    console.log(JSON.stringify({ fixture: 'operator-runbook', paidOrders: 2, productionBagels: 18, confirmedSales: finalFinance.confirmedSales, netProfit: finalFinance.estimatedNetProfit, reservedPacks: finalCapacity.reservedPacks, reservedBagels: finalCapacity.reservedBagels, received: 2, externalFetchAttempts: 0, notificationsSent: 0, hostedDatabaseAccess: false }));
+    console.log(JSON.stringify({ fixture: 'operator-runbook', ...restoration, paidOrders: 2, productionBagels: 18, confirmedSales: finalFinance.confirmedSales, netProfit: finalFinance.estimatedNetProfit, reservedPacks: finalCapacity.reservedPacks, reservedBagels: finalCapacity.reservedBagels, received: 2, externalFetchAttempts: 0, notificationsSent: 0, hostedDatabaseAccess: false }));
     console.log('PASS: native operator batch open/close -> production -> packing -> delivery/received; independent tracking, authenticated CSV/current-batch isolation, capacity and financial invariants, zero costs, unpaid/auth guards; isolated PostgreSQL17, no hosted data or external transport.');
 }
 catch (error) {
