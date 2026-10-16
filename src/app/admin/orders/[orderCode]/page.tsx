@@ -17,10 +17,14 @@ import {
 } from "@/lib/admin/queries";
 import { canSendAdminWhatsAppIntent, hasAdminWhatsAppMessageSent, parseAdminWhatsAppIntent, type AdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getMissingAdminEnv } from "@/lib/env";
+import { getCulqiAdminStatusUiScope, isCulqiAdminStatusOrderCodeAllowed } from "@/lib/payments/culqi-admin-status-adapter";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "../../AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "../../ArchiveOrderForm";
+import { CulqiExistingStatusButton } from "../../CulqiExistingStatusButton";
 import { DeleteOrderForm } from "../../DeleteOrderForm";
 import { updateAdminNote, updateOrderStatus } from "../../actions";
+
+export const dynamic = "force-dynamic";
 
 const statuses = ["payment_pending_review", "payment_confirmed", "needs_correction", "in_production", "ready_for_delivery", "delivered", "cancelled"];
 const statusLabels: Record<string, string> = {
@@ -162,6 +166,8 @@ export default async function OrderDetailPage({
   const archiveState = getOrderArchiveState(order);
   const customerDeliveryNote = getCustomerDeliveryNote(order);
   const whatsappIntent = parseAdminWhatsAppIntent(query?.whatsapp);
+  const showCulqiExistingStatus = isCulqiAdminStatusOrderCodeAllowed(orderCode)
+    && Object.values(getCulqiAdminStatusUiScope(process.env)).every(Boolean);
   const availableStatuses = order.payment_provider === "culqi"
     ? statuses.filter((status) => (
       status === order.status
@@ -198,7 +204,7 @@ export default async function OrderDetailPage({
           <div className="admin-card"><h2>Customer</h2><p>{order.customer_name}</p><p>{order.whatsapp}</p><p>{order.email}</p></div>
           <div className="admin-card"><h2>Delivery</h2><p>{order.delivery_address}</p><p>{order.district}</p><p>{order.address_reference ?? "No address reference"}</p><p>{customerDeliveryNote ?? "No customer note"}</p></div>
           <div className="admin-card"><h2>Pack</h2><p>{order.pack_name}</p><p>{formatMoney(Number(order.total_amount))}</p><ul>{order.order_items?.map((item) => <li key={item.id}>{item.quantity} x {item.flavor_name}</li>)}</ul></div>
-          <div className="admin-card"><h2>Payment</h2><PaymentDetail order={order} /></div>
+          <div className="admin-card"><h2>Payment</h2><PaymentDetail order={order} />{showCulqiExistingStatus ? <CulqiExistingStatusButton orderCode={orderCode} /> : null}</div>
           <div className="admin-card"><h2>Customer received?</h2><p><span className={`handoff-status ${order.status === "delivered" ? "received" : "pending"}`}>{order.status === "delivered" ? "Yes, received by customer" : "Not marked received yet"}</span></p><p>Set status to “received by customer” after delivery handoff is confirmed.</p></div>
         </div>
         {customerProfile ? <CustomerHistoryCard currentOrderCode={order.order_code} profile={customerProfile} /> : null}

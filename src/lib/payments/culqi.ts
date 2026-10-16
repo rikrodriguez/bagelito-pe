@@ -2,16 +2,6 @@ import { assertCulqiEnabled } from "./config";
 
 const culqiApiUrl = "https://api.culqi.com/v2";
 
-type CulqiOrderResponse = {
-  id: string;
-  amount: number;
-  currency_code: string;
-  expiration_date?: number;
-  metadata?: Record<string, string> | null;
-  order_number?: string;
-  state?: string;
-};
-
 type CulqiEventResponse = {
   id: string;
   type: string;
@@ -66,14 +56,25 @@ type CulqiErrorPayload = {
   merchant_message?: string;
   message?: string;
   object?: string;
+  type?: unknown;
   user_message?: string;
 };
+
+export type CulqiErrorType = "invalid_request_error" | "authentication_error" | "parameter_error"
+  | "card_error" | "limit_api_error" | "resource_error" | "api_error" | "unknown";
+
+const culqiErrorTypes = new Set<CulqiErrorType>([
+  "invalid_request_error", "authentication_error", "parameter_error", "card_error",
+  "limit_api_error", "resource_error", "api_error",
+]);
 
 export class CulqiApiError extends Error {
   chargeId: string | null;
   code: string | null;
   status: number;
   userMessage: string;
+  readonly errorType: CulqiErrorType;
+  readonly eventModeMatchesConfig: boolean | null = null;
 
   constructor(payload: CulqiErrorPayload | null, status: number) {
     const userMessage = payload?.user_message
@@ -86,6 +87,10 @@ export class CulqiApiError extends Error {
     this.code = payload?.decline_code ?? payload?.code ?? null;
     this.status = status;
     this.userMessage = userMessage;
+    let errorType: unknown;
+    try { errorType = payload?.type; } catch { /* An unreadable provider type is unknown. */ }
+    this.errorType = typeof errorType === "string" && culqiErrorTypes.has(errorType as CulqiErrorType)
+      ? errorType as CulqiErrorType : "unknown";
   }
 }
 
@@ -123,51 +128,6 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}) {
 async function culqiRequest<T>(path: string, init: RequestInit = {}) {
   const response = await culqiRequestWithStatus<T>(path, init);
   return response.payload;
-}
-
-export async function createCulqiOrder({
-  amount,
-  customerEmail,
-  customerName,
-  orderCode,
-  phoneNumber,
-  expirationDate,
-}: {
-  amount: number;
-  customerEmail: string;
-  customerName: string;
-  orderCode: string;
-  phoneNumber: string;
-  expirationDate?: Date;
-}) {
-  const expiration = expirationDate ?? new Date(Date.now() + 30 * 60 * 1000);
-  const { firstName, lastName } = splitCustomerName(customerName);
-  const order = await culqiRequest<CulqiOrderResponse>("/orders", {
-    body: JSON.stringify({
-      amount: toMinorUnits(amount),
-      currency_code: "PEN",
-      confirm: false,
-      description: `Bagelito batch - ${orderCode}`,
-      order_number: orderCode,
-      client_details: {
-        email: customerEmail,
-        first_name: firstName,
-        last_name: lastName,
-        phone_number: normalizePhoneNumber(phoneNumber),
-      },
-      expiration_date: Math.floor(expiration.getTime() / 1000),
-      metadata: {
-        bagelito_order_code: orderCode,
-      },
-    }),
-    method: "POST",
-  });
-
-  return {
-    ...order,
-    amount: Number(order.amount),
-    expiresAt: expiration.toISOString(),
-  };
 }
 
 function splitCustomerName(customerName: string) {
@@ -208,6 +168,9 @@ export async function createCulqiCharge({
   phoneNumber: string;
   sourceId: string;
 }) {
+  if (sourceId.startsWith("ype_") && (authentication3DS || amount > 2000)) {
+    throw new Error("Yape does not support card 3DS or payments above PEN 2000.");
+  }
   const { firstName, lastName } = splitCustomerName(customerName);
   const chargePayload = {
       amount: toMinorUnits(amount),
@@ -237,6 +200,7 @@ export async function createCulqiCharge({
   });
 
   if (status === 200 && charge?.action_code === "REVIEW") {
+    if (!sourceId.startsWith("tkn_")) throw new Error("Unexpected card authentication for non-card source.");
     return {
       requires3DS: true,
       response: charge,
@@ -254,7 +218,29 @@ export async function createCulqiCharge({
 }
 
 export async function fetchCulqiEvent(eventId: string) {
-  return culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`);
+  const { mode } = assertCulqiEnabled();
+  const environment = mode === "sandbox" ? "test" : mode === "live" ? "live" : null;
+  if (!environment) throw new Error("Culqi event environment is not configured.");
+  // Match the official SDK's event lookup contract without changing charge requests.
+  try {
+    return await culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "x-api-version": "2",
+        "x-culqi-env": environment,
+      },
+    });
+  } catch (error) {
+    if (error instanceof CulqiApiError) {
+      // Event-only context contains no ID or provider payload. It is immutable
+      // and does not change ID acceptance, authentication or transaction rules.
+      Object.defineProperty(error, "eventModeMatchesConfig", {
+        value: eventId.startsWith(`evt_${environment}_`), writable: false, configurable: false,
+      });
+    }
+    throw error;
+  }
 }
 
 export function toPaymentMinorUnits(amount: number) {

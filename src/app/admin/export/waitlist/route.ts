@@ -1,5 +1,6 @@
 import { requireAdmin } from "@/lib/admin/auth";
 import { fetchWaitlistSignups } from "@/lib/admin/queries";
+import { campaignFromWaitlistSource } from "@/lib/waitlist/attribution";
 
 export const runtime = "nodejs";
 
@@ -29,10 +30,16 @@ export async function GET() {
       "Notes",
       "Contacted at",
       "Batch ID",
+      "UTM source",
+      "UTM medium",
+      "UTM campaign",
+      "UTM content",
+      "UTM term",
     ],
   ];
 
   for (const signup of signups) {
+    const campaign = campaignFromWaitlistSource(signup.source);
     rows.push([
       signup.id,
       signup.list_date,
@@ -50,6 +57,11 @@ export async function GET() {
       signup.notes ?? "",
       signup.contacted_at ?? "",
       signup.batch_id ?? "",
+      campaign?.utm_source ?? "",
+      campaign?.utm_medium ?? "",
+      campaign?.utm_campaign ?? "",
+      campaign?.utm_content ?? "",
+      campaign?.utm_term ?? "",
     ]);
   }
 

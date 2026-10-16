@@ -149,6 +149,7 @@ Checklist:
 - Revisar orden por distancia desde Lince.
 - Descargar `Driver CSV` para ruta accionable.
 - Descargar `Delivery CSV` para resumen por distrito.
+- `Delivery ops`, `Driver CSV` y `Delivery CSV` corresponden al batch actual; los pedidos de otros batches siguen disponibles en el backup completo y tracking.
 - Confirmar que cada pedido tenga direccion, referencia, WhatsApp y handoff claro.
 - Revisar si el pedido es para cliente o porteria.
 
@@ -303,6 +304,7 @@ Antes de cerrar el batch:
 - Actualizar `Packaging / pack` con empaque, bolsa, caja o etiqueta.
 - Actualizar `Real delivery cost` con lo pagado al driver/courier.
 - Usar `Other batch costs` para merma, compras urgentes, comisiones o extras.
+- Un costo explícito de `0` se conserva como cero; no se sustituye por el valor predeterminado.
 - Revisar `Margin by pack` para ver que packs dejan mejor margen.
 - Revisar `Net profit` antes de archivar o cerrar la operacion.
 

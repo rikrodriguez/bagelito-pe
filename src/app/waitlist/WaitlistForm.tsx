@@ -10,9 +10,11 @@ import { packCopy } from "@/lib/i18n";
 import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
 import { RollingBagel } from "@/components/RollingBagel";
+import { WAITLIST_DIRECT_SOURCE } from "@/lib/waitlist/attribution";
 
 type WaitlistFormProps = {
   initialPackSlug?: PackSlug;
+  source?: string;
 };
 
 type ContactPreference = "whatsapp" | "email" | "both";
@@ -26,7 +28,7 @@ function getTodayLabel(locale: "en" | "es") {
   });
 }
 
-export function WaitlistForm({ initialPackSlug }: WaitlistFormProps) {
+export function WaitlistForm({ initialPackSlug, source = WAITLIST_DIRECT_SOURCE }: WaitlistFormProps) {
   const { locale, copy } = useLanguage();
   const batchAvailability = useBatchAvailability();
   const w = copy.waitlist;
@@ -68,7 +70,7 @@ export function WaitlistForm({ initialPackSlug }: WaitlistFormProps) {
           locale,
           notes,
           preferredPackSlug,
-          source: "waitlist_page",
+          source,
           website,
           whatsapp,
         }),
