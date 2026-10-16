@@ -803,6 +803,8 @@ section[id] { scroll-margin-top: 24px; }
 .culqi-embed { width: 100%; min-height: 560px; }
 .culqi-embed iframe { width: 100% !important; min-height: 560px !important; border: 0 !important; }
 .culqi-busy { position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; justify-items: center; gap: 10px; background: rgba(255,255,255,.92); color: var(--navy); padding: 24px; font-weight: 900; text-align: center; }
+.culqi-embed-shell.is-closed { min-height: 0 !important; }
+.culqi-embed-shell.is-closed .culqi-busy { position: static; }
 .culqi-retry-button { margin: 0; }
 .culqi-security-note { display: flex; align-items: flex-start; justify-content: center; gap: 7px; margin: 0; border-top: 1px solid rgba(80,54,213,.1); background: #f8fbfa; color: var(--blue); padding: 13px 18px; font-size: .78rem; font-weight: 850; line-height: 1.35; text-align: center; }
 .culqi-security-note svg { flex: 0 0 auto; color: #1a9b72; }

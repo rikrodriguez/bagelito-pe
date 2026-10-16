@@ -2,8 +2,9 @@
 
 Revisión del 15 de octubre de 2026, a partir de PR4 y del commit
 `c462ec864a8cbecf23fe552045678788a9f80afc`. El Preview conocido
-`dpl_3iJJG6T6y6dEfJ6oFJ19EqjsAVv9` sirve ese commit. La corrección del plazo de
-status descrita aquí pertenece a la rama de PR4; no se ha desplegado en ese Preview.
+`dpl_6T8kiuYTzdukJQxLN8FGH4KyQ45a` sirve el commit posterior4254fe3, con el
+plazo de status corregido. La nueva corrección del iframe vencido descrita abajo
+pertenece a la rama de PR4 y todavía no se ha desplegado.
 PR4 continúa en borrador. Las pruebas siguientes usan datos ficticios y mocks,
 sin CulqiPanel, llamadas reales al proveedor, reenvíos ni escrituras remotas.
 
@@ -45,6 +46,33 @@ sin errores. Lint conserva un aviso anterior de no-unused-expressions en
 Las cuatro regresiones de timeout fallaron antes de la corrección y pasaron
 después. Se reutilizaron las dependencias ya instaladas del mismo lockfile, sin
 instalar paquetes nuevos. La CI del nuevo SHA debe comprobarse por separado.
+
+## Formulario Culqi tras el vencimiento
+
+La capacidad excluye reservas pendientes vencidas al calcular disponibilidad;
+eso no implica que un SELECT actualice su estado persistido o que el navegador
+cierre un iframe externo. El cliente recibía expiresAt, pero no lo comprobaba.
+
+El componente ahora valida el vencimiento antes de abrir el SDK, programa su
+cierre y comprueba de nuevo al recuperar foco/visibilidad, volver con pageshow,
+recibir un token, terminar la colección de dispositivo y continuar3DS. Elimina
+el contenedor del iframe y muestra un aviso. Fechas ausentes o inválidas impiden
+abrir el SDK. El reloj de la BD y las validaciones del servidor siguen siendo
+autoritativos; el cierre de la UI no escribe estado ni ejecuta expiración.
+
+Si no se inició una solicitud de pago, el aviso permite iniciar otra reserva
+mediante navegación explícita; no renueva ni crea un pedido automáticamente.
+Si un pago/3DS ya estaba iniciado o requería revisión, conserva ese bloqueo y
+la referencia de recuperación. Una respuesta tardía no inicia otro cargo/3DS ni
+libera la referencia; la confirmación debe venir del estado autoritativo.
+
+Quince casos sintéticos nuevos cubren vencimiento idle en es/en, timers
+throttled/foreground/callback, fecha pasada/ausente/inválida, dispositivo pendiente,
+tres resultados tardíos durante charge,3DS vencido y limpieza al desmontar. Se
+ejercitan los componentes reales con SDK/reloj/transportes ficticios, sin red ni BD.
+Los fixtures previos ahora aportan el expiresAt real del contrato. El warning del
+SDK sobre origen o la ausencia de tarjeta son observaciones separadas; esta
+corrección no les atribuye causalidad.
 
 ## Evidencia todavía necesaria
 
