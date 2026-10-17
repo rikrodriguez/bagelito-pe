@@ -486,57 +486,83 @@ export function ReservationFlow({
     }
 
     const checkoutSessionId = getCheckoutSessionId();
-    const reservationResponse = await fetch("/api/reservations/culqi", {
-      body: JSON.stringify(getCulqiReservationPayload(checkoutSessionId)),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
+    const preparationDeadline = Date.now() + 20_000;
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const deadline = new Promise<never>((_, reject) => {
+      timeout = setTimeout(() => {
+        reject(new Error(r.errors.submit));
+        controller.abort();
+      }, 20_000);
     });
-    const reservation = await reservationResponse.json() as {
-      amount?: number;
-      error?: string;
-      expiresAt?: string;
-      ok?: boolean;
-      orderCode?: string;
+    const assertPreparationActive = () => {
+      if (controller.signal.aborted || Date.now() >= preparationDeadline) {
+        controller.abort();
+        throw new Error(r.errors.submit);
+      }
     };
+    // One budget covers reservation/session headers and JSON. A transport that
+    // ignores cancellation must not continue preparing or open a late SDK.
+    const preparation = (async () => {
+      const reservationResponse = await fetch("/api/reservations/culqi", {
+        body: JSON.stringify(getCulqiReservationPayload(checkoutSessionId)),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        signal: controller.signal,
+      });
+      assertPreparationActive();
+      const reservation = await reservationResponse.json() as {
+        amount?: number;
+        error?: string;
+        expiresAt?: string;
+        ok?: boolean;
+        orderCode?: string;
+      };
+      assertPreparationActive();
 
-    if (!reservationResponse.ok || !reservation.ok || !reservation.orderCode) {
-      throw new Error(reservation.error ?? r.errors.submit);
-    }
+      if (!reservationResponse.ok || !reservation.ok || !reservation.orderCode) {
+        throw new Error(reservation.error ?? r.errors.submit);
+      }
 
-    const orderResponse = await fetch("/api/payments/culqi/order", {
-      body: JSON.stringify({
-        checkoutSessionId,
-        email: details.email,
+      const orderResponse = await fetch("/api/payments/culqi/order", {
+        body: JSON.stringify({
+          checkoutSessionId,
+          email: details.email,
+          orderCode: reservation.orderCode,
+        }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        signal: controller.signal,
+      });
+      assertPreparationActive();
+      const order = await orderResponse.json() as {
+        amount?: number;
+        error?: string;
+        expiresAt?: string | null;
+        ok?: boolean;
+        sessionId?: string;
+      };
+      assertPreparationActive();
+
+      if (!orderResponse.ok || !order.ok || !order.sessionId || !order.amount) {
+        throw new Error(order.error ?? r.errors.submit);
+      }
+
+      trackBagelitoEvent("Culqi Checkout Prepared", {
+        amount: Number(reservation.amount ?? totalAmount),
         orderCode: reservation.orderCode,
-      }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    });
-    const order = await orderResponse.json() as {
-      amount?: number;
-      error?: string;
-      expiresAt?: string | null;
-      ok?: boolean;
-      sessionId?: string;
-    };
+        pack: selectedPack.slug,
+      });
 
-    if (!orderResponse.ok || !order.ok || !order.sessionId || !order.amount) {
-      throw new Error(order.error ?? r.errors.submit);
-    }
-
-    trackBagelitoEvent("Culqi Checkout Prepared", {
-      amount: Number(reservation.amount ?? totalAmount),
-      orderCode: reservation.orderCode,
-      pack: selectedPack.slug,
-    });
-
-    return {
-      amountMinor: order.amount,
-      checkoutSessionId,
-      expiresAt: order.expiresAt ?? reservation.expiresAt ?? null,
-      orderCode: reservation.orderCode,
-      sessionId: order.sessionId,
-    };
+      return {
+        amountMinor: order.amount,
+        checkoutSessionId,
+        expiresAt: order.expiresAt ?? reservation.expiresAt ?? null,
+        orderCode: reservation.orderCode,
+        sessionId: order.sessionId,
+      };
+    })();
+    return Promise.race([preparation, deadline]).finally(() => clearTimeout(timeout));
   }
 
   async function waitForVerifiedPayment(session: CulqiCheckoutSession) {
