@@ -11,9 +11,10 @@ export default async function AdminLoginPage({ searchParams }: { searchParams?: 
         <p className="kicker">Private Admin</p>
         <h1>Bagelito Admin</h1>
         <p>Enter the admin password to manage reservations, production, delivery, and customer follow-up.</p>
-        {params?.error === "missing-password" ? <div className="reserve-alert">ADMIN_PASSWORD is not configured.</div> : null}
+        {params?.error === "unavailable" ? <div className="reserve-alert">Sign-in is temporarily unavailable. Please try later.</div> : null}
+        {params?.error === "limited" ? <div className="reserve-alert">Too many sign-in attempts. Please try again in 15 minutes.</div> : null}
         {params?.error === "invalid" ? <div className="reserve-alert">Invalid admin password.</div> : null}
-        <label>Admin password<input type="password" name="password" required autoComplete="current-password" /></label>
+        <label>Admin password<input type="password" name="password" maxLength={1024} required autoComplete="current-password" /></label>
         <button className="pill-button pink" type="submit">Open Admin</button>
       </form>
     </main>

@@ -1,5 +1,5 @@
 import { requireAdmin } from "@/lib/admin/auth";
-import { fetchOrders, getDeliverySummary } from "@/lib/admin/queries";
+import { fetchCurrentBatch, fetchOrders, getDeliverySummary } from "@/lib/admin/queries";
 
 export const runtime = "nodejs";
 
@@ -10,7 +10,8 @@ function csvEscape(value: unknown) {
 
 export async function GET() {
   await requireAdmin();
-  const groups = getDeliverySummary(await fetchOrders());
+  const [batch, orders] = await Promise.all([fetchCurrentBatch(), fetchOrders()]);
+  const groups = getDeliverySummary(orders.filter((order) => order.batch_id === batch.id));
   const rows = [["District", "Orders", "Packs", "Bagels", "Customers", "WhatsApp", "Addresses", "Statuses"]];
   for (const group of groups) {
     rows.push([
