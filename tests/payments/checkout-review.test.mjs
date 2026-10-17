@@ -258,6 +258,89 @@ function expiryProps(expiresAt, overrides = {}) {
 }
 const embed = tree => nodes(tree).find(node => node?.props?.id === 'culqi-checkout-container');
 
+test('an overdue preparation response cannot continue when the browser delays its timer', async () => {
+  const store = storage(); const env = browser(store); const clock = deadlineClock({ wallClock: true });
+  const calls = serverFixture(store); const fixtureFetch = globalThis.fetch;
+  let release; let signal;
+  const gate = new Promise(resolve => { release = resolve; });
+  globalThis.fetch = async (url, init) => {
+    const response = await fixtureFetch(url, init);
+    if (url === '/api/reservations/culqi') { signal = init.signal; await gate; }
+    return response;
+  };
+  const flow = flowHarness(); let sdk;
+  try {
+    flow.reviewStage(); sdk = await sdkHarness(flow.checkout());
+    clock.jump(20_000); release(); await flushCallbacks();
+    assert.equal(sdk.instances.length, 0, 'Elapsed preparation time must be checked before opening a late SDK');
+    assert.ok(button(sdk.render(), 'Reintentar checkout'));
+    assert.equal(signal.aborted, true);
+    assert.equal(calls.length, 1, 'An overdue reservation must not start session preparation');
+    assert.equal(readCheckoutRecovery(store), null);
+    assert.equal(clock.pending, 0);
+  } finally { sdk?.cleanup(); flow.cleanup(); release(); await flushCallbacks(); clock.restore(); env.restore(); }
+});
+
+for (const endpoint of ['reservation', 'order']) {
+  for (const phase of ['headers', 'body']) {
+    test(`checkout preparation bounds ${endpoint} ${phase}, ignores late results and safely retries the same hold`, async () => {
+      const store = storage(); const env = browser(store); const clock = deadlineClock();
+      const calls = serverFixture(store); const fixtureFetch = globalThis.fetch;
+      const target = endpoint === 'reservation' ? '/api/reservations/culqi' : '/api/payments/culqi/order';
+      let releaseReservation; let releaseHeaders; let releaseBody; let signal;
+      const reservationGate = new Promise(resolve => { releaseReservation = resolve; });
+      const headersGate = new Promise(resolve => { releaseHeaders = resolve; });
+      const bodyGate = new Promise(resolve => { releaseBody = resolve; });
+      let targetResponse;
+      globalThis.fetch = async (url, init) => {
+        const response = await fixtureFetch(url, init);
+        if (endpoint === 'order' && url === '/api/reservations/culqi') {
+          await reservationGate;
+          return response;
+        }
+        if (url !== target) return response;
+        targetResponse = response; signal = init.signal;
+        await headersGate;
+        return phase === 'body' ? { ok: true, json: () => bodyGate } : response;
+      };
+      const flow = flowHarness(); let sdk;
+      try {
+        flow.reviewStage(); sdk = await sdkHarness(flow.checkout());
+        let elapsed = 0;
+        if (endpoint === 'order') {
+          clock.tick(12_000); elapsed += 12_000;
+          releaseReservation(); await flushCallbacks();
+        }
+        if (phase === 'body') {
+          const headersTime = endpoint === 'order' ? 3_000 : 12_000;
+          clock.tick(headersTime); elapsed += headersTime;
+          releaseHeaders(); await flushCallbacks();
+        }
+        clock.tick(19_999 - elapsed); await flushCallbacks();
+        assert.equal(button(sdk.render(), 'Reintentar checkout'), undefined);
+        clock.tick(1); await flushCallbacks();
+        assert.ok(button(sdk.render(), 'Reintentar checkout'), 'Preparation must stop loading at one shared 20-second deadline');
+        assert.equal(signal.aborted, true);
+        assert.equal(sdk.instances.length, 0);
+        assert.equal(clock.pending, 0);
+        assert.equal(readCheckoutRecovery(store), null, 'No charge was started');
+        const requestsAtDeadline = calls.length;
+        releaseHeaders(); releaseBody(await targetResponse.json()); await flushCallbacks();
+        assert.equal(calls.length, requestsAtDeadline, 'Late preparation cannot start the next request');
+        assert.equal(sdk.instances.length, 0, 'Late preparation cannot open the SDK');
+        globalThis.fetch = fixtureFetch;
+        button(sdk.render(), 'Reintentar checkout').props.onClick(); await flushCallbacks();
+        assert.equal(sdk.instances.length, 1);
+        assert.equal(new Set(calls.map(call => call.payload.checkoutSessionId)).size, 1);
+        assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 0);
+      } finally {
+        sdk?.cleanup(); flow.cleanup(); releaseReservation(); releaseHeaders();
+        releaseBody({ ok: false }); await flushCallbacks(); clock.restore(); env.restore();
+      }
+    });
+  }
+}
+
 for (const locale of ['es', 'en']) {
   test(`idle reservation expiry closes the SDK and removes its payment embed (${locale})`, async () => {
     const env = browser(storage()); const clock = deadlineClock({ wallClock: true });
