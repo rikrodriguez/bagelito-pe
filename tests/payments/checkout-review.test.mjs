@@ -969,6 +969,97 @@ test('timeout during the real SDK 3DS continuation locks the same source and nev
   }
 });
 
+for (const continuation of [false, true]) for (const phase of ['headers', 'body']) {
+  test(`elapsed charge deadline rejects late ${phase} before delayed timers (${continuation ? '3DS continuation' : 'initial charge'})`, async () => {
+    const store = storage(); const env = browser(store); const clock = deadlineClock({ wallClock: true });
+    const status = { ok: true, paymentStatus: 'paid', reconciliationRequired: false };
+    const calls = serverFixture(store, {
+      charge: count => !continuation || count === 1 ? { ok: true, requires3DS: true } : { ok: true, paymentStatus: 'paid' },
+      status,
+    });
+    const fixtureFetch = globalThis.fetch;
+    const targetCharge = continuation ? 2 : 1;
+    let chargeCount = 0; let releaseHeaders; let releaseBody; let chargeSignal; let bodyReads = 0;
+    const headersGate = new Promise(resolve => { releaseHeaders = resolve; });
+    const bodyGate = new Promise(resolve => { releaseBody = resolve; });
+    globalThis.fetch = async (url, init) => {
+      const response = await fixtureFetch(url, init);
+      if (!url.endsWith('/charge') || ++chargeCount !== targetCharge) return response;
+      chargeSignal = init.signal;
+      await headersGate;
+      return { ...response, json: async () => {
+        bodyReads++;
+        if (phase === 'body') await bodyGate;
+        return response.json();
+      } };
+    };
+    let authentications = 0;
+    window.Culqi3DS = {
+      publicKey: '', options: {}, settings: {}, reset() {},
+      generateDevice: async () => 'device_synthetic',
+      initAuthentication: async () => { authentications++; },
+    };
+    const message = {
+      origin: window.location.origin,
+      data: { parameters3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } },
+    };
+    const flow = flowHarness(); let sdkFlow; let restored;
+    try {
+      flow.reviewStage(); sdkFlow = await sdkHarness(flow.checkout());
+      sdkFlow.sdk.token = { id: 'tkn_test_elapsed123' }; sdkFlow.sdk.culqi(); await flushCallbacks();
+      if (continuation) {
+        assert.equal(authentications, 1);
+        env.dispatch('message', message); await flushCallbacks();
+      }
+      assert.equal(chargeCount, targetCharge);
+      assert.equal(chargeSignal.aborted, false);
+      if (phase === 'body') {
+        clock.jump(12_000); releaseHeaders(); await flushCallbacks();
+        assert.equal(bodyReads, 1);
+        clock.jump(18_000); releaseBody();
+      } else {
+        clock.jump(30_000); releaseHeaders();
+      }
+      // No timers fire: the HTTP completion must enforce the elapsed budget itself.
+      await flushCallbacks(); flow.render();
+      assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+      assert.equal(chargeSignal.aborted, true);
+      assert.equal(bodyReads, phase === 'body' ? 1 : 0);
+      assert.equal(clock.pending, 0);
+      assert.equal(authentications, continuation ? 1 : 0, 'an overdue response cannot start another bank authentication');
+      assert.match(text(sdkFlow.render()), /resultado del pago necesita revisión/);
+      assert.equal(button(sdkFlow.render(), 'Reintentar checkout'), undefined);
+      assert.equal(flow.checkout(), undefined);
+      assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
+      assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+      env.dispatch('message', message); sdkFlow.sdk.culqi(); await flushCallbacks();
+      assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, targetCharge);
+      assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+      assert.equal(calls.filter(call => call.url.endsWith('/order')).length, 1);
+      for (const charge of calls.filter(call => call.url.endsWith('/charge'))) {
+        assert.equal(charge.payload.checkoutSessionId, checkoutSessionId);
+        assert.equal(charge.payload.orderCode, reference.orderCode);
+        assert.equal(charge.payload.sourceId, 'tkn_test_elapsed123');
+        assert.equal(charge.payload.deviceId, 'device_synthetic');
+      }
+      assert.doesNotMatch(store.getItem(CHECKOUT_RECOVERY_STORAGE_KEY), /tkn_test|cavv|eci|device|protocolVersion/);
+
+      sdkFlow.cleanup(); flow.cleanup();
+      status.paymentStatus = 'pending'; status.reconciliationRequired = true;
+      restored = flowHarness();
+      assert.equal(restored.checkout(), undefined);
+      const beforeReloadQuery = calls.length;
+      button(restored.tree, 'Consultar estado').props.onClick(); await flushCallbacks(); restored.render();
+      assert.deepEqual(calls.slice(beforeReloadQuery), [{ url: '/api/payments/culqi/status', payload: { checkoutSessionId, orderCode: reference.orderCode } }]);
+      assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+      assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+    } finally {
+      releaseHeaders(); releaseBody(); await flushCallbacks();
+      restored?.cleanup(); sdkFlow?.cleanup(); flow.cleanup(); clock.restore(); env.restore();
+    }
+  });
+}
+
 test('recovery persistence contains only order/session/state and survives navigation without a second start', () => {
   const store = storage();
   beginCheckoutPayment(store, reference);

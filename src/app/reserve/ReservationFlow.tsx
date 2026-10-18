@@ -652,6 +652,7 @@ export function ReservationFlow({
     const submittedReference = recoveryRef.current;
     if (!submittedReference) throw new CheckoutReviewError();
     try {
+      const chargeDeadline = Date.now() + 30_000;
       const controller = new AbortController();
       let timeout: ReturnType<typeof setTimeout> | undefined;
       const deadline = new Promise<never>((_, reject) => {
@@ -660,9 +661,15 @@ export function ReservationFlow({
           controller.abort();
         }, 30_000);
       });
+      const assertChargeActive = () => {
+        if (controller.signal.aborted || Date.now() >= chargeDeadline) {
+          controller.abort();
+          throw new CheckoutReviewError();
+        }
+      };
       // A lost response cannot establish whether the provider charged. Bound
       // headers and JSON together, even if a transport ignores AbortSignal.
-      // Late transport results only finish this read; they cannot advance UI.
+      // Check elapsed time too: a suspended browser can delay the timeout task.
       const charge = (async () => {
         const response = await fetch("/api/payments/culqi/charge", {
           body: JSON.stringify({
@@ -677,11 +684,13 @@ export function ReservationFlow({
           method: "POST",
           signal: controller.signal,
         });
+        assertChargeActive();
         const result = await response.json() as {
           ok?: boolean;
           paymentStatus?: string;
           requires3DS?: boolean;
         };
+        assertChargeActive();
         return { response, result };
       })();
       const { response, result } = await Promise.race([charge, deadline])
