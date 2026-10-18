@@ -47,6 +47,9 @@ export async function coordinateCulqiCharge({
   try {
     const result = await createCharge();
     if (result.requires3DS) {
+      // The authenticated continuation has already consumed its one claim.
+      // Another action cannot establish an outcome or authorize a new POST.
+      if (has3DS) throw new Error("Repeated 3DS requirement");
       const stored = await finish("requires_3ds", null, { action: result.response, stage: "requires_3ds" });
       if (stored.error) throw new Error(stored.error.message);
       return { ok: true, orderCode, paymentStatus: "requires_3ds", requires3DS: true };

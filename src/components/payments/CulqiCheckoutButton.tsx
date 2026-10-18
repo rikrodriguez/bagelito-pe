@@ -503,8 +503,13 @@ export function CulqiCheckoutButton({
           authentication3DS,
           deviceId: pending.deviceId,
         })
-          .then(() => {
+          .then(result => {
             if (checkReservationExpiry() || !lifecycleRef.current.alive || lifecycleRef.current.generation !== generation) return;
+            if (result !== "submitted") {
+              setCheckoutError(new Error(copy.review));
+              window.Culqi3DS?.reset();
+              return;
+            }
             clearReservationTimer();
             setState("confirming");
             window.Culqi3DS?.reset();
@@ -517,7 +522,7 @@ export function CulqiCheckoutButton({
 
     window.addEventListener("message", handle3DSMessage);
     return () => window.removeEventListener("message", handle3DSMessage);
-  }, [checkReservationExpiry, clearReservationTimer, onToken, setCheckoutError]);
+  }, [checkReservationExpiry, clearReservationTimer, copy.review, onToken, setCheckoutError]);
 
   const busyLabel = state === "preparing"
     ? copy.preparing

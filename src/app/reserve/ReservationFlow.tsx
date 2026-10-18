@@ -704,6 +704,9 @@ export function ReservationFlow({
       }
 
       if (result.requires3DS) {
+        // Older servers can still repeat the action after authentication.
+        // Keep that same payment in review instead of reopening continuation.
+        if (security.authentication3DS) throw new CheckoutReviewError();
         if (activePaymentRef.current) activePaymentRef.current.awaiting3DS = true;
         return "requires_3ds";
       }

@@ -1362,3 +1362,112 @@ for (const earlyReview of [false, true]) {
     } finally { h.cleanup(); env.restore(); }
   });
 }
+
+test('the page rejects a repeated 3DS requirement before it can authorize a third submission', async () => {
+  const store = storage(); const env = browser(store);
+  const calls = serverFixture(store, { charge: { ok: true, paymentStatus: 'requires_3ds', requires3DS: true } });
+  const flow = flowHarness();
+  try {
+    flow.reviewStage(); const checkout = flow.checkout(); const session = await checkout.prepareCheckout();
+    const initialSecurity = { deviceId: 'device_synthetic' };
+    const security = { ...initialSecurity,
+      authentication3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } };
+    assert.equal(await checkout.onToken(session, 'tkn_test_repeat3ds123', initialSecurity), 'requires_3ds');
+    await assert.rejects(() => checkout.onToken(session, 'tkn_test_repeat3ds123', security), CheckoutReviewError,
+      'An authenticated continuation that still requires 3DS must need status review');
+    assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+    await assert.rejects(() => checkout.onToken(session, 'tkn_test_repeat3ds123', security), CheckoutReviewError);
+    assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+    assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
+  } finally { flow.cleanup(); env.restore(); }
+});
+
+test('the SDK button honors a repeated 3DS requirement instead of displaying confirmation', async () => {
+  const env = browser(storage()); let sdk; let submissions = 0; let reviews = 0; let resets = 0;
+  window.Culqi3DS = {
+    publicKey: '', options: {}, settings: {}, reset() { resets++; },
+    generateDevice: async () => 'device_synthetic', initAuthentication: async () => {},
+  };
+  try {
+    sdk = await sdkHarness(expiryProps(futureExpiry(), {
+      onToken: async () => { submissions++; return 'requires_3ds'; },
+      onPaymentUnresolved() { reviews++; },
+    }));
+    sdk.sdk.token = { id: 'tkn_test_repeat3ds123' }; sdk.sdk.culqi(); await flushCallbacks();
+    const message = { origin: window.location.origin,
+      data: { parameters3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } } };
+    env.dispatch('message', message); await flushCallbacks();
+    assert.equal(submissions, 2);
+    const tree = sdk.render();
+    assert.match(text(tree), /resultado del pago necesita revisión/,
+      'The continuation callback result must be checked before displaying confirmation');
+    assert.equal(reviews, 1);
+    assert.ok(resets >= 1, 'Review must close the active bank authentication');
+    assert.equal(button(tree, 'Reintentar checkout'), undefined);
+    env.dispatch('message', message); sdk.sdk.culqi(); await flushCallbacks();
+    assert.equal(submissions, 2);
+  } finally { sdk?.cleanup(); env.restore(); }
+});
+
+for (const locale of ['es', 'en']) {
+  test(`repeated 3DS review survives reload and only authoritative status resolves it (${locale})`, async () => {
+    const store = storage(); const env = browser(store);
+    const status = { ok: true, paymentStatus: 'pending', reconciliationRequired: false };
+    const calls = serverFixture(store, { charge: { ok: true, paymentStatus: 'requires_3ds', requires3DS: true }, status });
+    const flow = flowHarness(config, locale); let sdk; let restored; let authentications = 0;
+    window.Culqi3DS = {
+      publicKey: '', options: {}, settings: {}, reset() {},
+      generateDevice: async () => 'device_synthetic',
+      initAuthentication: async () => { authentications++; },
+    };
+    try {
+      flow.reviewStage(); sdk = await sdkHarness(flow.checkout());
+      sdk.sdk.token = { id: 'tkn_test_repeat3ds123' }; sdk.sdk.culqi(); await flushCallbacks();
+      assert.equal(authentications, 1);
+      const message = { origin: window.location.origin,
+        data: { parameters3DS: { cavv: 'synthetic', eci: 'synthetic', xid: 'synthetic', protocolVersion: 'synthetic' } } };
+      env.dispatch('message', message); await flushCallbacks();
+      const chargeCalls = calls.filter(call => call.url.endsWith('/charge'));
+      assert.equal(chargeCalls.length, 2);
+      for (const { payload } of chargeCalls) {
+        assert.equal(payload.checkoutSessionId, checkoutSessionId);
+        assert.equal(payload.orderCode, reference.orderCode);
+        assert.equal(payload.sourceId, 'tkn_test_repeat3ds123');
+        assert.equal(payload.deviceId, 'device_synthetic');
+      }
+      assert.equal(chargeCalls[0].payload.authentication3DS, undefined);
+      assert.deepEqual(chargeCalls[1].payload.authentication3DS, message.data.parameters3DS);
+      const tree = sdk.render(); flow.render();
+      assert.match(text(tree), locale === 'es' ? /resultado del pago necesita revisión/ : /payment result needs review/,
+        'A second REVIEW response cannot be displayed as payment confirmation');
+      assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' });
+      assert.equal(flow.checkout(), undefined);
+      assert.equal(button(tree, locale === 'es' ? 'Reintentar checkout' : 'Retry secure checkout'), undefined);
+      assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 0);
+      env.dispatch('message', message); sdk.sdk.culqi(); await flushCallbacks();
+      assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+      assert.equal(authentications, 1);
+      assert.doesNotMatch(store.getItem(CHECKOUT_RECOVERY_STORAGE_KEY), /tkn_test|cavv|eci|xid|protocolVersion|device|email/);
+      sdk.cleanup(); flow.cleanup();
+
+      restored = flowHarness(config, locale);
+      assert.equal(restored.checkout(), undefined);
+      assert.match(text(restored.tree), /BAG-TEST-1/);
+      const lookupLabel = locale === 'es' ? 'Consultar estado' : 'Check payment status';
+      button(restored.tree, lookupLabel).props.onClick(); await flushCallbacks(); restored.render();
+      assert.deepEqual(calls.filter(call => call.url.endsWith('/status')).at(-1).payload,
+        { checkoutSessionId, orderCode: reference.orderCode });
+      assert.deepEqual(readCheckoutRecovery(store), { ...reference, state: 'review' },
+        'A pending status cannot release review or reopen the bank challenge');
+      status.paymentStatus = 'paid';
+      button(restored.tree, lookupLabel).props.onClick(); await flushCallbacks(); restored.render();
+      assert.equal(readCheckoutRecovery(store), null);
+      assert.match(text(restored.tree), locale === 'es' ? /Pago confirmado/ : /Payment confirmed/);
+      assert.equal(restored.checkout(), undefined);
+      assert.equal(calls.filter(call => call.url.endsWith('/charge')).length, 2);
+      assert.equal(calls.filter(call => call.url.endsWith('/status')).length, 2);
+      assert.equal(calls.filter(call => call.url === '/api/reservations/culqi').length, 1);
+      assert.equal(window.location.href, 'https://fixture.invalid/checkout');
+    } finally { restored?.cleanup(); sdk?.cleanup(); flow.cleanup(); env.restore(); }
+  });
+}

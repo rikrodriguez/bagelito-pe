@@ -68,6 +68,23 @@ test('3DS continuation requires matching source and fingerprint and runs once', 
   assert.ok(results.every(r => r.paymentStatus === 'awaiting_webhook'));
 });
 
+test('a repeated 3DS action after authentication closes the attempt and prevents a third provider call', async () => {
+  const db = database(); let calls = 0;
+  const review = async () => {
+    calls++;
+    return { requires3DS: true, response: { action_code: 'REVIEW', amount: 6800 } };
+  };
+  assert.equal((await coordinateCulqiCharge({ ...base, db, createCharge: review })).requires3DS, true);
+  const continuation = await coordinateCulqiCharge({ ...base, db, has3DS: true, createCharge: review });
+  assert.equal(continuation.paymentStatus, 'reconciliation_required');
+  assert.equal(continuation.ok, false);
+  assert.equal(db.row.state, 'uncertain');
+  const replay = await coordinateCulqiCharge({ ...base, db, has3DS: true, createCharge: review });
+  assert.equal(replay.paymentStatus, 'reconciliation_required');
+  assert.equal(db.row.state, 'uncertain');
+  assert.equal(calls, 2, 'a repeated action must not reopen authenticated charge submission');
+});
+
 test('post-charge database failure never triggers a second provider call', async () => {
   const db = database(); const original = db.rpc; let calls = 0;
   db.rpc = async (name, args) => name === 'finish_culqi_charge' ? { data: null, error: { message: 'database unavailable' } } : original(name, args);
