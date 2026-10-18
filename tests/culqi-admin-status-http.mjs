@@ -73,7 +73,7 @@ async function bootDatabase() {
   sql(`create schema storage;
     create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);`);
   for (const file of ["setup-bagelito-reservations.sql", "add-public-api-hardening.sql", "add-payment-provider.sql",
-    "add-checkout-safety.sql", "add-culqi-session-expiry.sql", "add-culqi-status-charge-recovery.sql"]) {
+    "add-checkout-safety.sql", "add-culqi-session-expiry.sql", "add-culqi-retry-pending-state.sql", "add-culqi-status-charge-recovery.sql"]) {
     // PG17 provides gen_random_uuid natively. This is the existing fixture-only
     // pgcrypto adaptation, not a change to any RPC implementation.
     const source = (await readFile(path.join(root, "supabase", file), "utf8"))

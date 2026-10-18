@@ -10,6 +10,7 @@ import { request as httpRequest } from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { checkoutRecoveryOutcome } from "../src/lib/payments/checkout-recovery.ts";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const origin = "https://bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app";
@@ -60,7 +61,7 @@ async function bootDatabase() {
   sql(`create schema storage;
     create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);`);
   for (const file of ["setup-bagelito-reservations.sql", "add-public-api-hardening.sql", "add-payment-provider.sql",
-    "add-checkout-safety.sql", "add-culqi-session-expiry.sql", "add-culqi-status-charge-recovery.sql"]) {
+    "add-checkout-safety.sql", "add-culqi-session-expiry.sql", "add-culqi-retry-pending-state.sql", "add-culqi-status-charge-recovery.sql"]) {
     // PG17 provides gen_random_uuid natively. This is the existing fixture-only
     // pgcrypto adaptation, not a change to any RPC implementation.
     const source = (await readFile(path.join(root, "supabase", file), "utf8"))
@@ -80,7 +81,7 @@ async function bootDatabase() {
 }
 
 let sequence = 0;
-function seed({ state = "pending", expired = false, amountMinor = 6600, units = 6 } = {}) {
+function seed({ state = "pending", expired = false, amountMinor = 6600, units = 6, retryAfterFailure = false } = {}) {
   assert.ok([6600, 12300].includes(amountMinor) && [6, 12].includes(units));
   sequence++;
   const tag = String(sequence).padStart(3, "0");
@@ -100,12 +101,22 @@ function seed({ state = "pending", expired = false, amountMinor = 6600, units = 
       perform public.prepare_culqi_token_session(o);
       claim:=public.claim_culqi_charge(o,${quote(source)},'',false);
       if claim->>'claimed' is distinct from 'true' then raise exception 'Synthetic claim failed'; end if;
-      perform public.finish_culqi_charge(o,(claim->>'attempt_id')::uuid,'submitted',${quote(charge)},'yape','{}');
+      ${retryAfterFailure ? `
+        -- Synthetic verified failure arrives before the first charge response.
+        -- The actual RPC releases that claim; no provider is contacted here.
+        perform public.apply_culqi_payment_event(${quote(`evt_test_SYNTHETICRetryFailure${tag}`)},'charge.creation.failed',
+          jsonb_build_object('id',${quote(`${charge}Failed`)},'amount',${amountMinor},'currency_code','PEN',
+            'source',jsonb_build_object('id',${quote(source)}),
+            'metadata',jsonb_build_object('bagelito_order_code',${quote(code)})),'{}');
+        perform public.prepare_culqi_token_session(o);
+        claim:=public.claim_culqi_charge(o,${quote(`${source}Retry`)},'',false);
+        if claim->>'claimed' is distinct from 'true' then raise exception 'Synthetic retry claim failed'; end if;
+      ` : `perform public.finish_culqi_charge(o,(claim->>'attempt_id')::uuid,'submitted',${quote(charge)},'yape','{}');`}
       ${expired ? "update public.orders set payment_expires_at=clock_timestamp()-interval '1 minute' where id=o; update public.payment_attempts set expires_at=clock_timestamp()-interval '1 minute' where order_id=o;" : ""}
       ${state === "cancelled" ? "update public.orders set status='cancelled',payment_reconciliation_required=true,payment_reconciliation_reason='payment_after_reservation_release' where id=o;" : ""}
       ${state === "fulfilled" ? "update public.orders set status='in_production',payment_status='paid',payment_paid_at=clock_timestamp() where id=o; update public.payment_attempts set status='paid',paid_at=clock_timestamp() where order_id=o;" : ""}
     end $$;
-    select jsonb_build_object('id',id,'session',checkout_session_id,'code',order_code,'charge',payment_charge_id,
+    select jsonb_build_object('id',id,'session',checkout_session_id,'code',order_code,'charge',${quote(charge)},
       'source',payment_charge_source_id,'batch',batch_id) from public.orders where order_code=${quote(code)};
   `, { json: true });
 }
@@ -233,6 +244,35 @@ try {
     const again = await call(port, row); privateResponse(again, row);
     assert.equal(again.data.paymentStatus, "paid"); assert.deepEqual(state(row), persisted);
     assert.equal((await audit()).filter((kind) => kind === "provider_get").length, 0);
+
+    // End-to-end regression for the previously accepted retry after a verified
+    // early failure: status must describe the active claim, not its predecessor.
+    const retried = seed({ retryAfterFailure: true });
+    await setMode();
+    const submitting = await call(port, retried); privateResponse(submitting, retried);
+    assert.equal(submitting.status, 200);
+    assert.equal(submitting.data.paymentStatus, "pending", "A new active charge must not inherit the old failed payment state");
+    assert.equal(checkoutRecoveryOutcome(submitting.data), "review", "The actual browser recovery policy must keep an active retry locked");
+    assert.equal((await audit()).includes("provider_get"), false, "A submitting retry has no persisted charge to look up yet");
+    const duringRetry = state(retried);
+    assert.equal(duringRetry.capacity, 1);
+    assert.equal(duringRetry.receipts, 0);
+    assert.equal(duringRetry.attemptPaid, 0);
+    sql(`select public.finish_culqi_charge(id,payment_charge_attempt_id,'submitted',${quote(retried.charge)},'yape','{}')
+      from public.orders where id=${quote(retried.id)}::uuid;`);
+    await setMode();
+    const recoveredRetry = await call(port, retried); privateResponse(recoveredRetry, retried);
+    assert.equal(recoveredRetry.data.paymentStatus, "paid");
+    assert.equal(recoveredRetry.data.recoveryState, "confirmed");
+    assert.equal(checkoutRecoveryOutcome(recoveredRetry.data), "paid");
+    const afterRetry = state(retried);
+    assert.deepEqual(afterRetry, { ...duringRetry, payment: "paid", status: "payment_confirmed", attemptPaid: 1, receipts: 1, history: 1 });
+    assert.equal((await audit()).filter(kind => kind === "provider_get").length, 1);
+    assert.equal((await audit()).filter(kind => kind === "confirm").length, 1);
+    await setMode();
+    assert.equal((await call(port, retried)).data.paymentStatus, "paid");
+    assert.deepEqual(state(retried), afterRetry, "The recovered retry must remain idempotent");
+    assert.equal((await audit()).includes("provider_get"), false);
 
     // Faithful only to the recorded money/lane/provenance: no real order, event,
     // capability or provider response is reused or claimed to be certified.
@@ -422,6 +462,7 @@ try {
   }
   console.log("PASS: native Next status HTTP + actual local PostgreSQL confirmation; real parser, synthetic provider GET, no external network.");
   console.log("PASS: native webhook observed400/deadline/identity fail without settlement; verified synthetic event applies atomically after GET or from pending and repeats idempotently; this is not provider certification.");
+  console.log("PASS: an accepted retry after verified early failure stays locked while submitting and recovers exactly once through native status + SQL with a synthetic charge GET.");
 } finally {
   // Cleanup remains local even when setup/assertions fail. No workers, ports,
   // persisted database, credentials or cookies survive this fixture.

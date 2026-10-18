@@ -124,6 +124,11 @@ assert_core_only_catalog
 expect_sql_failure "$ROOT/supabase/add-checkout-safety.sql" 23514 protected-original-replay.log \
  'Checkout safety replay would overwrite reconciliation evidence'
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/checkout-replay-guard-assert.sql"
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-retry-pending-state.sql" >> "$WORK/schema.log" 2>&1
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/verified-failure-retry.sql"
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-retry-pending-state.sql" >> "$WORK/retry-reapply.log" 2>&1
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/verified-failure-retry.sql"
+echo 'PASS: verified failure retry atomically restores pending state; stale events remain isolated; migration replay is safe'
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/compatible-intake-rollback.sql"
 echo 'PASS: core preflight rejects installed state; original replay aborts atomically; forward guard is idempotent; closed intake retains settlement'
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/admin-login-rate-limit.sql"

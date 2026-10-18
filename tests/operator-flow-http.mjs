@@ -49,7 +49,7 @@ try {
     assert.ok(ready, 'Owned local PostgreSQL must start');
     docker(['exec', '-i', container, '/usr/lib/postgresql/17/bin/psql', '-X', '-q', '-h', '/tmp', '-U', 'postgres', '-v', 'ON_ERROR_STOP=1', '-f', '-'], 'create role anon; create role authenticated; create role service_role bypassrls; create database bagelito_test;');
     sql('create schema storage; create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);');
-    for (const file of ['setup-bagelito-reservations.sql', 'add-public-api-hardening.sql', 'add-payment-provider.sql', 'add-checkout-safety.sql', 'add-culqi-session-expiry.sql', 'add-culqi-checkout-replay-guard.sql', 'add-batch-financial-costs.sql', 'add-monitoring-alerts.sql']) {
+    for (const file of ['setup-bagelito-reservations.sql', 'add-public-api-hardening.sql', 'add-payment-provider.sql', 'add-checkout-safety.sql', 'add-culqi-session-expiry.sql', 'add-culqi-checkout-replay-guard.sql', 'add-culqi-retry-pending-state.sql', 'add-batch-financial-costs.sql', 'add-monitoring-alerts.sql']) {
         sql((await readFile(path.join(root, 'supabase', file), 'utf8')).replace(/^create extension if not exists pgcrypto;\s*$/gm, ''));
     }
     sql(`truncate public.batches cascade;

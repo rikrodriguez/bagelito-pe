@@ -18,12 +18,14 @@ Los archivos de este repositorio son scripts SQL explícitos; no constituyen un 
 
 1. Inventariar por un canal ya autorizado el esquema y el historial del destino, y revisar las filas del backfill antes de una instalación inicial. Este paso no se ejecutó en entornos reales.
 2. Para una primera instalación, ejecutar `supabase/preflight-culqi-checkout-core.sql` con parada en el primer error. Es de solo lectura: rechaza core ya presente, un contrato boolean incompatible y colisiones de identidades. Sus mensajes son constantes y no enumeran pedidos ni identidades.
-3. Sólo si ese preflight y la revisión del destino pasan, aplicar una vez `add-checkout-safety.sql`, después `add-culqi-session-expiry.sql` y después la nueva protección. No ejecutar los scripts siguientes si falla alguno.
-4. Si el core ya está instalado, verificar sus contratos y aplicar sólo la nueva protección como cambio forward revisado. El preflight de primera instalación debe rechazar este destino; no se sortea su error repitiendo el core.
+3. Sólo si ese preflight y la revisión del destino pasan, aplicar una vez `add-checkout-safety.sql`, después `add-culqi-session-expiry.sql`, la protección `add-culqi-checkout-replay-guard.sql` y la corrección `add-culqi-retry-pending-state.sql`. No ejecutar los scripts siguientes si falla alguno.
+4. Si el core ya está instalado, verificar sus contratos y aplicar sólo los cambios forward pendientes revisados: la protección de replay y la corrección de estado de reintentos. El preflight de primera instalación debe rechazar este destino; no se sortea su error repitiendo el core.
 
 El preflight y el trigger cumplen funciones distintas. El primero bloquea el replay de la instalación incluso sin datos inciertos; el segundo protege las escrituras destructivas observadas si alguien omite ese procedimiento. El trigger no identifica cualquier posible ejecución de DDL ni convierte el archivo histórico en una migración universalmente idempotente. La nueva protección sí se prueba al repetir su propio archivo.
 
 Las migraciones `add-culqi-charge-get-reconciliation.sql` y `add-culqi-status-charge-recovery.sql` siguen siendo exclusivas de QA y se excluyen del perfil core. Ningún paso de este documento autoriza su instalación ni habilitación live.
+
+La migración `add-culqi-retry-pending-state.sql` reemplaza únicamente el RPC de claim. Al aceptar un nuevo intento después de un fallo verificado temprano, restaura atómicamente el pago y la sesión a `pending`, limpia el vínculo del cargo fallido y registra la vuelta de `needs_correction` a `payment_pending_review`. Conserva el vencimiento original y los eventos del fallo. No hace backfill, habilita pagos ni instala la recuperación GET de QA. Véase [la regresión de reintentos](culqi-verified-failure-retry.md).
 
 ## Rollback compatible: detener la entrada y conservar la liquidación
 
