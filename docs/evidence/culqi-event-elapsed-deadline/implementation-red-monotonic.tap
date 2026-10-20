@@ -1,0 +1,220 @@
+TAP version 13
+# (node:113112) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:113112) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: real event client uses the SDK GET contract for each existing configured mode
+ok 1 - real event client uses the SDK GET contract for each existing configured mode
+  ---
+  duration_ms: 6.556109
+  type: 'test'
+  ...
+# Subtest: SDK-contract transport fixture reaches the real verification handler and one unchanged RPC
+ok 2 - SDK-contract transport fixture reaches the real verification handler and one unchanged RPC
+  ---
+  duration_ms: 3.165656
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late headers at 10000ms before delayed timers
+not ok 3 - event lookup rejects late headers at 10000ms before delayed timers
+  ---
+  duration_ms: 11.55389
+  type: 'test'
+  location: '/workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:112:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 500
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    assertSafeFailure (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:58:10)
+    TestContext.<anonymous> (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:135:7)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: event lookup rejects late headers at 10001ms before delayed timers
+not ok 4 - event lookup rejects late headers at 10001ms before delayed timers
+  ---
+  duration_ms: 2.726144
+  type: 'test'
+  location: '/workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:112:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 500
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    assertSafeFailure (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:58:10)
+    TestContext.<anonymous> (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:135:7)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: event lookup accepts headers at 9999ms with its timer still queued
+ok 5 - event lookup accepts headers at 9999ms with its timer still queued
+  ---
+  duration_ms: 1.850035
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late body at 10000ms before delayed timers
+not ok 6 - event lookup rejects late body at 10000ms before delayed timers
+  ---
+  duration_ms: 1.122749
+  type: 'test'
+  location: '/workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:112:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 500
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    assertSafeFailure (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:58:10)
+    TestContext.<anonymous> (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:135:7)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: event lookup rejects late body at 10001ms before delayed timers
+not ok 7 - event lookup rejects late body at 10001ms before delayed timers
+  ---
+  duration_ms: 1.11811
+  type: 'test'
+  location: '/workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:112:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 500
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    assertSafeFailure (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:58:10)
+    TestContext.<anonymous> (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:135:7)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: event lookup accepts body at 9999ms with its timer still queued
+ok 8 - event lookup accepts body at 9999ms with its timer still queued
+  ---
+  duration_ms: 2.313616
+  type: 'test'
+  ...
+# Subtest: event lookup rejects an expired result when queued continuations resume
+not ok 9 - event lookup rejects an expired result when queued continuations resume
+  ---
+  duration_ms: 1.140587
+  type: 'test'
+  location: '/workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:162:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 500
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    assertSafeFailure (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:58:10)
+    TestContext.<anonymous> (file:///workspace/bagelito-culqi-deadline-review/tests/payments/culqi-event-lookup.test.mjs:173:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: event lookup bounds stalled headers and ignores its late response
+ok 10 - event lookup bounds stalled headers and ignores its late response
+  ---
+  duration_ms: 2.239161
+  type: 'test'
+  ...
+# Subtest: event lookup bounds stalled body and ignores its late response
+ok 11 - event lookup bounds stalled body and ignores its late response
+  ---
+  duration_ms: 1.655997
+  type: 'test'
+  ...
+# Subtest: a completed event lookup clears its deadline without cancelling the successful response
+ok 12 - a completed event lookup clears its deadline without cancelling the successful response
+  ---
+  duration_ms: 0.963151
+  type: 'test'
+  ...
+# Subtest: each SDK error type is classified without acknowledging caller payment claims or opening DB
+ok 13 - each SDK error type is classified without acknowledging caller payment claims or opening DB
+  ---
+  duration_ms: 3.87578
+  type: 'test'
+  ...
+# Subtest: HTTP lookup failures report only whether the event prefix matches the configured provider environment
+ok 14 - HTTP lookup failures report only whether the event prefix matches the configured provider environment
+  ---
+  duration_ms: 4.860077
+  type: 'test'
+  ...
+# Subtest: typed client errors normalize unknown, absent, and hostile types to a fixed safe classification
+ok 15 - typed client errors normalize unknown, absent, and hostile types to a fixed safe classification
+  ---
+  duration_ms: 0.475007
+  type: 'test'
+  ...
+# Subtest: unknown and malformed provider errors preserve a bounded retryable response
+ok 16 - unknown and malformed provider errors preserve a bounded retryable response
+  ---
+  duration_ms: 6.406921
+  type: 'test'
+  ...
+# Subtest: authenticated event identity mismatch never uses the claimed paid caller resource
+ok 17 - authenticated event identity mismatch never uses the claimed paid caller resource
+  ---
+  duration_ms: 0.473105
+  type: 'test'
+  ...
+# Subtest: invalid incoming IDs and disabled scope make zero provider or DB calls
+ok 18 - invalid incoming IDs and disabled scope make zero provider or DB calls
+  ---
+  duration_ms: 0.831753
+  type: 'test'
+  ...
+# Subtest: unrecognized configured modes and missing secret fail before event transport
+ok 19 - unrecognized configured modes and missing secret fail before event transport
+  ---
+  duration_ms: 0.63321
+  type: 'test'
+  ...
+# Subtest: event-only SDK headers cannot alter the existing single-charge request or body
+ok 20 - event-only SDK headers cannot alter the existing single-charge request or body
+  ---
+  duration_ms: 0.716765
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 15
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 260.071072

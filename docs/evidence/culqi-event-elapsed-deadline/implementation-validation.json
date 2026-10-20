@@ -1,0 +1,129 @@
+{
+  "baseHead": "b21e8217b7379c70bb86621f918f9fb936376ce3",
+  "sourceFixCommit": "4102a1d1fedb78f09ea16ebb01bb5367d9bc05e3",
+  "branch": "local/culqi-event-deadline-review",
+  "worktree": "/workspace/bagelito-culqi-deadline-review",
+  "protectedPr13": {
+    "path": "/workspace/bagelito-payment-fixes",
+    "head": "b21e8217b7379c70bb86621f918f9fb936376ce3",
+    "worktreeStatus": "clean"
+  },
+  "sourceHashes": {
+    "src/lib/payments/culqi.ts": "644a1ee1df7a6b94750772eddb250e1b041297ec6ae1437b39cc9bb7ed762dc3",
+    "tests/payments/culqi-event-lookup.test.mjs": "65ef6f0072ea079e5c004b6d7e2d898ba176a386ebc88b4aa0b689880487bbb3",
+    "package-lock.json": "d6829f902e695d2434e92198f413d41200a8ec8b3a44021c8826e1ab473471f5"
+  },
+  "environment": "env -i; synthetic keys/config/transport/DB only; existing dependency cache reused with matching package-lock; no install",
+  "redOriginal": {
+    "source": "unchanged b21e821",
+    "result": {
+      "tests": 19,
+      "pass": 15,
+      "fail": 4,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 276.17597
+    },
+    "expectedFailures": "Four late headers/body cases at 10000 and 10001ms returned 200 instead of 500"
+  },
+  "redMonotonic": {
+    "source": "intermediate Date.now checkpoint with final monotonic fixture",
+    "result": {
+      "tests": 20,
+      "pass": 15,
+      "fail": 5,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 260.071072
+    },
+    "expectedFailures": "Four late headers/body cases plus queued-continuation case returned 200 instead of 500"
+  },
+  "finalTargeted": {
+    "command": "node --test tests/payments/culqi-event-lookup.test.mjs tests/payments/culqi-webhook.test.mjs tests/payments/culqi-provider.test.mjs tests/payments/verification.test.mjs tests/payment-config.test.mjs tests/payments/culqi-readonly-diagnostic.test.mjs",
+    "exitCode": 0,
+    "result": {
+      "tests": 129,
+      "pass": 129,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 541.688377
+    }
+  },
+  "finalFullNode": {
+    "command": "node --test tests/*.test.mjs tests/payments/*.test.mjs",
+    "exitCode": 0,
+    "result": {
+      "tests": 597,
+      "pass": 597,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 16963.647064
+    }
+  },
+  "lint": {
+    "command": "node node_modules/eslint/bin/eslint.js .",
+    "exitCode": 0,
+    "errors": 0,
+    "knownWarnings": [
+      {
+        "file": "tests/payments/culqi-readonly-adapter.test.mjs",
+        "line": 99,
+        "column": 62,
+        "rule": "@typescript-eslint/no-unused-expressions"
+      }
+    ]
+  },
+  "types": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit --incremental false",
+    "exitCode": 0
+  },
+  "networkGuard": {
+    "path": "/workspace/bagelito-pending-audit/culqi-followup-20261020/independent-review/network-guard.mjs",
+    "sha256": "41b16a836f6777fb8d0e01c0d3b09f6c2839bc889303178e31bb4d007a4d5ee8",
+    "loadsAcrossAuditCommands": 82,
+    "blockedCallsAcrossAuditCommands": 0
+  },
+  "providerReal": {
+    "executed": false,
+    "historicalCulqi400Cause": "not established",
+    "lateAcceptanceFixExplains400": false
+  },
+  "artifacts": {
+    "implementation-red-original.tap": {
+      "sha256": "d8f54034e5dc4898ba1d9f60b21ee35e4f89d72badeae43ef13e5a915c338bcd",
+      "bytes": 7847
+    },
+    "implementation-red-monotonic.tap": {
+      "sha256": "f1f45155a8d03be3fe9f8e212482a6d84e4b5a1a5a1562878405e56dc6be505a",
+      "bytes": 8785
+    },
+    "implementation-targeted.tap": {
+      "sha256": "598e236c04658b6ef1c27a4b93647466aa806694fa93f35512fba32699d7c7df",
+      "bytes": 29597
+    },
+    "implementation-full-suite.tap": {
+      "sha256": "674abf86b7b606d5fea1b68fc7a1016d63f4f072cc08a26afd2d98863e2e9623",
+      "bytes": 137683
+    },
+    "implementation-lint.log": {
+      "sha256": "61a2575df18cef0923fd09ea3a29b603f3c6630a864322850fbd035701f325ba",
+      "bytes": 258
+    },
+    "implementation-types.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "implementation-network-guard.ndjson": {
+      "sha256": "087d0734977e39174e783190075489b445057497d6db15372bcc3da93b6af71a",
+      "bytes": 2624
+    }
+  },
+  "recordedAt": "2026-10-20T13:27:52.824046+00:00",
+  "verificationStage": "Tests executed before source-fix commit; hashes match committed sources"
+}

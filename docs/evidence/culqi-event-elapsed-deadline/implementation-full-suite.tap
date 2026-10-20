@@ -1,0 +1,3676 @@
+TAP version 13
+# (node:115264) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/admin/login-security.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115264) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: password minimum and bounds fail closed
+ok 1 - password minimum and bounds fail closed
+  ---
+  duration_ms: 0.842879
+  type: 'test'
+  ...
+# Subtest: only platform IP is trusted on Vercel; forwarded spoofing is ignored
+ok 2 - only platform IP is trusted on Vercel; forwarded spoofing is ignored
+  ---
+  duration_ms: 6.018316
+  type: 'test'
+  ...
+# Subtest: outside Vercel arbitrary forwarding headers cannot rotate bucket
+ok 3 - outside Vercel arbitrary forwarding headers cannot rotate bucket
+  ---
+  duration_ms: 2.868779
+  type: 'test'
+  ...
+# Subtest: missing malformed and list IPs share fallback; IPv6 normalizes
+ok 4 - missing malformed and list IPs share fallback; IPv6 normalizes
+  ---
+  duration_ms: 5.590399
+  type: 'test'
+  ...
+# Subtest: persistent budget blocks sixth attempt and recovers after window
+ok 5 - persistent budget blocks sixth attempt and recovers after window
+  ---
+  duration_ms: 1.000541
+  type: 'test'
+  ...
+# Subtest: global budget caps rotating IPs at20 and recovers
+ok 6 - global budget caps rotating IPs at20 and recovers
+  ---
+  duration_ms: 1.954669
+  type: 'test'
+  ...
+# Subtest: missing RPC, database error and malformed responses fail closed
+ok 7 - missing RPC, database error and malformed responses fail closed
+  ---
+  duration_ms: 2.557693
+  type: 'test'
+  ...
+# Subtest: action consumes limit before comparison and cookie issuance
+ok 8 - action consumes limit before comparison and cookie issuance
+  ---
+  duration_ms: 4.409752
+  type: 'test'
+  ...
+# Subtest: failed login counts; blocked and database failure never compare or issue cookie
+ok 9 - failed login counts; blocked and database failure never compare or issue cookie
+  ---
+  duration_ms: 4.000638
+  type: 'test'
+  ...
+# Subtest: weak configured password cannot login
+ok 10 - weak configured password cannot login
+  ---
+  duration_ms: 0.283227
+  type: 'test'
+  ...
+# Subtest: existing admin cookie cannot bypass weak configured password
+ok 11 - existing admin cookie cannot bypass weak configured password
+  ---
+  duration_ms: 26.955897
+  type: 'test'
+  ...
+# Subtest: signed session expires server-side at8h and rejects issuance in future
+ok 12 - signed session expires server-side at8h and rejects issuance in future
+  ---
+  duration_ms: 1.160553
+  type: 'test'
+  ...
+# Subtest: session rejects password-derived legacy cookie and tampering
+ok 13 - session rejects password-derived legacy cookie and tampering
+  ---
+  duration_ms: 3.495233
+  type: 'test'
+  ...
+# Subtest: password/secret rotation and origin isolation invalidate sessions
+ok 14 - password/secret rotation and origin isolation invalidate sessions
+  ---
+  duration_ms: 0.448732
+  type: 'test'
+  ...
+# Subtest: missing short or password-identical session secret fails closed
+ok 15 - missing short or password-identical session secret fails closed
+  ---
+  duration_ms: 0.116362
+  type: 'test'
+  ...
+# Subtest: explicit same-origin CSRF guard rejects cross-origin and forged forwarded host
+ok 16 - explicit same-origin CSRF guard rejects cross-origin and forged forwarded host
+  ---
+  duration_ms: 0.353964
+  type: 'test'
+  ...
+# Subtest: IP rejection does not exhaust global budget
+ok 17 - IP rejection does not exhaust global budget
+  ---
+  duration_ms: 0.499918
+  type: 'test'
+  ...
+# Subtest: admin cookie remains host-only, HttpOnly, Secure on deployment and scoped to admin
+ok 18 - admin cookie remains host-only, HttpOnly, Secure on deployment and scoped to admin
+  ---
+  duration_ms: 0.137703
+  type: 'test'
+  ...
+# (node:115265) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/batch-availability.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a scheduled opening is enforced before the cutoff
+ok 19 - a scheduled opening is enforced before the cutoff
+  ---
+  duration_ms: 14.476933
+  type: 'test'
+  ...
+# Subtest: open window accepts at opening and rejects at cutoff
+ok 20 - open window accepts at opening and rejects at cutoff
+  ---
+  duration_ms: 0.270813
+  type: 'test'
+  ...
+# (node:115266) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/batch-availability.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: archiving a reservation does not silently release its capacity
+ok 21 - archiving a reservation does not silently release its capacity
+  ---
+  duration_ms: 4.120607
+  type: 'test'
+  ...
+# Subtest: expired unpaid Culqi holds do not consume displayed capacity
+ok 22 - expired unpaid Culqi holds do not consume displayed capacity
+  ---
+  duration_ms: 0.308568
+  type: 'test'
+  ...
+# Subtest: disabled checkout renders no payment collection inputs or submit form
+ok 23 - disabled checkout renders no payment collection inputs or submit form
+  ---
+  duration_ms: 18.463973
+  type: 'test'
+  ...
+# Subtest: sandbox checkout displays persistent test-only warning
+ok 24 - sandbox checkout displays persistent test-only warning
+  ---
+  duration_ms: 7.30758
+  type: 'test'
+  ...
+# (node:115303) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-diagnostics.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115303) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: fixed branch origin and scoped Preview remain valid with production Node runtime
+ok 25 - fixed branch origin and scoped Preview remain valid with production Node runtime
+  ---
+  duration_ms: 7.606356
+  type: 'test'
+  ...
+# Subtest: Next build always embeds a snapshot of public fields even when configuration is absent
+ok 26 - Next build always embeds a snapshot of public fields even when configuration is absent
+  ---
+  duration_ms: 2.155522
+  type: 'test'
+  ...
+# Subtest: unauthenticated POST and GET cannot read any environment or emit logs
+ok 27 - unauthenticated POST and GET cannot read any environment or emit logs
+  ---
+  duration_ms: 13.116511
+  type: 'test'
+  ...
+# Subtest: successful POST authenticates before reads, logs only booleans and keeps results private
+ok 28 - successful POST authenticates before reads, logs only booleans and keeps results private
+  ---
+  duration_ms: 3.628924
+  type: 'test'
+  ...
+# Subtest: wrong hosting, project, branch, origin, database, mode or flag blocks GET and POST before key reads
+ok 29 - wrong hosting, project, branch, origin, database, mode or flag blocks GET and POST before key reads
+  ---
+  duration_ms: 49.957124
+  type: 'test'
+  ...
+# Subtest: missing, foreign and forged request origins cannot inspect configuration
+ok 30 - missing, foreign and forged request origins cannot inspect configuration
+  ---
+  duration_ms: 4.042526
+  type: 'test'
+  ...
+# Subtest: authenticated GET without Origin serves a static form without reading keys or diagnosing
+ok 31 - authenticated GET without Origin serves a static form without reading keys or diagnosing
+  ---
+  duration_ms: 6.438072
+  type: 'test'
+  ...
+# Subtest: GET form action is an absolute HTTPS URL for the same fixed canonical endpoint
+ok 32 - GET form action is an absolute HTTPS URL for the same fixed canonical endpoint
+  ---
+  duration_ms: 1.05144
+  type: 'test'
+  ...
+# Subtest: GET permits direct and same-origin navigation with absent or exact Origin only
+ok 33 - GET permits direct and same-origin navigation with absent or exact Origin only
+  ---
+  duration_ms: 7.923538
+  type: 'test'
+  ...
+# Subtest: GET rejects foreign URL, Origin and fetch metadata without reading diagnostic configuration
+ok 34 - GET rejects foreign URL, Origin and fetch metadata without reading diagnostic configuration
+  ---
+  duration_ms: 3.673582
+  type: 'test'
+  ...
+# Subtest: ordinary form POST needs exact Origin and retains private boolean diagnostic results
+ok 35 - ordinary form POST needs exact Origin and retains private boolean diagnostic results
+  ---
+  duration_ms: 7.323873
+  type: 'test'
+  ...
+# Subtest: GET scope failures remain generic with no HTML, diagnosis or raw error log
+ok 36 - GET scope failures remain generic with no HTML, diagnosis or raw error log
+  ---
+  duration_ms: 0.479555
+  type: 'test'
+  ...
+# Subtest: missing Culqi configuration produces only private boolean checks
+ok 37 - missing Culqi configuration produces only private boolean checks
+  ---
+  duration_ms: 1.03491
+  type: 'test'
+  ...
+# Subtest: absent or empty public build snapshot cannot fall back to valid runtime keys
+ok 38 - absent or empty public build snapshot cannot fall back to valid runtime keys
+  ---
+  duration_ms: 2.502055
+  type: 'test'
+  ...
+# Subtest: malformed or blank JSON build snapshot returns generic 503 without logs or key reads
+ok 39 - malformed or blank JSON build snapshot returns generic 503 without logs or key reads
+  ---
+  duration_ms: 2.628326
+  type: 'test'
+  ...
+# Subtest: route diagnoses mismatched build snapshot instead of comparing runtime keys with themselves
+ok 40 - route diagnoses mismatched build snapshot instead of comparing runtime keys with themselves
+  ---
+  duration_ms: 1.071076
+  type: 'test'
+  ...
+# Subtest: unexpected scope or configuration failures are generic and never logged
+ok 41 - unexpected scope or configuration failures are generic and never logged
+  ---
+  duration_ms: 0.95144
+  type: 'test'
+  ...
+# Subtest: valid test prefixes do not claim RSA association or require enabling payments
+ok 42 - valid test prefixes do not claim RSA association or require enabling payments
+  ---
+  duration_ms: 0.652597
+  type: 'test'
+  ...
+# Subtest: live, mixed, empty, malformed and oversized keys fail offline preflight
+ok 43 - live, mixed, empty, malformed and oversized keys fail offline preflight
+  ---
+  duration_ms: 3.68792
+  type: 'test'
+  ...
+# Subtest: RSA rejects private, EC, absent, malformed, certificate and oversized material
+ok 44 - RSA rejects private, EC, absent, malformed, certificate and oversized material
+  ---
+  duration_ms: 2.351842
+  type: 'test'
+  ...
+# Subtest: RSA strength is distinct from parseability and PEM encodings compare by public key
+ok 45 - RSA strength is distinct from parseability and PEM encodings compare by public key
+  ---
+  duration_ms: 25.232215
+  type: 'test'
+  ...
+# Subtest: generated RSA sizes agree across metadata, JWK calculation and supported PEM formats
+ok 46 - generated RSA sizes agree across metadata, JWK calculation and supported PEM formats
+  ---
+  duration_ms: 4.459874
+  type: 'test'
+  ...
+# Subtest: missing or invalid RSA size metadata stays unknown even with a computed strong modulus
+ok 47 - missing or invalid RSA size metadata stays unknown even with a computed strong modulus
+  ---
+  duration_ms: 0.689115
+  type: 'test'
+  ...
+# Subtest: missing, invalid or unsupported JWK export never produces a size pass
+ok 48 - missing, invalid or unsupported JWK export never produces a size pass
+  ---
+  duration_ms: 2.60755
+  type: 'test'
+  ...
+# Subtest: disagreeing RSA metadata and computed size cannot classify below or above the minimum
+ok 49 - disagreeing RSA metadata and computed size cannot classify below or above the minimum
+  ---
+  duration_ms: 0.224378
+  type: 'test'
+  ...
+# Subtest: computed RSA size counts significant bits rather than bytes or leading zeros
+ok 50 - computed RSA size counts significant bits rather than bytes or leading zeros
+  ---
+  duration_ms: 0.250433
+  type: 'test'
+  ...
+# Subtest: unverified size keeps offline validation false despite parseability and matching bundle
+ok 51 - unverified size keeps offline validation false despite parseability and matching bundle
+  ---
+  duration_ms: 2.844884
+  type: 'test'
+  ...
+# Subtest: informational negative and unverified flags stay outside the strict offline aggregate
+ok 52 - informational negative and unverified flags stay outside the strict offline aggregate
+  ---
+  duration_ms: 1.062591
+  type: 'test'
+  ...
+# Subtest: RSA ID must be present and bounded without implying panel association
+ok 53 - RSA ID must be present and bounded without implying panel association
+  ---
+  duration_ms: 5.388323
+  type: 'test'
+  ...
+# Subtest: runtime and bundled public key, RSA ID, RSA key, origin and sandbox DB must match
+ok 54 - runtime and bundled public key, RSA ID, RSA key, origin and sandbox DB must match
+  ---
+  duration_ms: 7.024867
+  type: 'test'
+  ...
+# Subtest: delivery CSV contains only the current batch, matching production
+ok 55 - delivery CSV contains only the current batch, matching production
+  ---
+  duration_ms: 32.662617
+  type: 'test'
+  ...
+# Subtest: driver CSV contains only the current batch, matching production
+ok 56 - driver CSV contains only the current batch, matching production
+  ---
+  duration_ms: 11.180093
+  type: 'test'
+  ...
+# Subtest: saving explicit zero costs preserves zero rather than replacing it with defaults
+ok 57 - saving explicit zero costs preserves zero rather than replacing it with defaults
+  ---
+  duration_ms: 317.574528
+  type: 'test'
+  ...
+# (node:115325) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/config.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: sandbox mode exposes its identity to the checkout
+ok 58 - sandbox mode exposes its identity to the checkout
+  ---
+  duration_ms: 1.909553
+  type: 'test'
+  ...
+# Subtest: missing mode fails closed even with keys configured
+ok 59 - missing mode fails closed even with keys configured
+  ---
+  duration_ms: 0.501652
+  type: 'test'
+  ...
+# Subtest: mismatched live/test credentials fail closed
+ok 60 - mismatched live/test credentials fail closed
+  ---
+  duration_ms: 0.529765
+  type: 'test'
+  ...
+# Subtest: sandbox cannot run on a production deployment
+ok 61 - sandbox cannot run on a production deployment
+  ---
+  duration_ms: 0.273683
+  type: 'test'
+  ...
+# Subtest: live mode requires explicit release approval
+ok 62 - live mode requires explicit release approval
+  ---
+  duration_ms: 0.275292
+  type: 'test'
+  ...
+# Subtest: approved matching live mode can run
+ok 63 - approved matching live mode can run
+  ---
+  duration_ms: 0.333927
+  type: 'test'
+  ...
+# Subtest: sandbox requires explicit localhost or preview site origin
+ok 64 - sandbox requires explicit localhost or preview site origin
+  ---
+  duration_ms: 0.390011
+  type: 'test'
+  ...
+# Subtest: sandbox request to the public site is rejected even if configured for localhost
+ok 65 - sandbox request to the public site is rejected even if configured for localhost
+  ---
+  duration_ms: 2.586313
+  type: 'test'
+  ...
+# Subtest: sandbox request must match the allowed configured origin
+ok 66 - sandbox request must match the allowed configured origin
+  ---
+  duration_ms: 0.968709
+  type: 'test'
+  ...
+# Subtest: matching preview host enables sandbox and mismatched preview host fails closed
+ok 67 - matching preview host enables sandbox and mismatched preview host fails closed
+  ---
+  duration_ms: 1.055935
+  type: 'test'
+  ...
+# Subtest: stable preview branch origin works across deployments but not another branch
+ok 68 - stable preview branch origin works across deployments but not another branch
+  ---
+  duration_ms: 1.272599
+  type: 'test'
+  ...
+# Subtest: branch URL never authorizes production, another origin or port
+ok 69 - branch URL never authorizes production, another origin or port
+  ---
+  duration_ms: 0.684293
+  type: 'test'
+  ...
+# (node:115332) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/charge-coordinator.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 20 concurrent requests produce only one provider charge call
+ok 70 - 20 concurrent requests produce only one provider charge call
+  ---
+  duration_ms: 7.199979
+  type: 'test'
+  ...
+# Subtest: timeout leaves a closed uncertain attempt and cannot re-charge
+ok 71 - timeout leaves a closed uncertain attempt and cannot re-charge
+  ---
+  duration_ms: 0.52712
+  type: 'test'
+  ...
+# Subtest: missing migration prevents calling Culqi
+ok 72 - missing migration prevents calling Culqi
+  ---
+  duration_ms: 21.085464
+  type: 'test'
+  ...
+# Subtest: 3DS continuation requires matching source and fingerprint and runs once
+ok 73 - 3DS continuation requires matching source and fingerprint and runs once
+  ---
+  duration_ms: 0.751298
+  type: 'test'
+  ...
+# Subtest: a repeated 3DS action after authentication closes the attempt and prevents a third provider call
+ok 74 - a repeated 3DS action after authentication closes the attempt and prevents a third provider call
+  ---
+  duration_ms: 0.444009
+  type: 'test'
+  ...
+# Subtest: post-charge database failure never triggers a second provider call
+ok 75 - post-charge database failure never triggers a second provider call
+  ---
+  duration_ms: 0.285483
+  type: 'test'
+  ...
+# (node:115342) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: matching customer reaches the coordinator once
+ok 76 - matching customer reaches the coordinator once
+  ---
+  duration_ms: 6.870449
+  type: 'test'
+  ...
+# Subtest: wrong email never claims or charges
+ok 77 - wrong email never claims or charges
+  ---
+  duration_ms: 1.017682
+  type: 'test'
+  ...
+# Subtest: disabled or forbidden origin never claims or charges
+ok 78 - disabled or forbidden origin never claims or charges
+  ---
+  duration_ms: 0.480834
+  type: 'test'
+  ...
+# Subtest: cancelled, delivered and expired reservations never claim
+ok 79 - cancelled, delivered and expired reservations never claim
+  ---
+  duration_ms: 7.362468
+  type: 'test'
+  ...
+# Subtest: already paid reservation returns paid without claiming
+ok 80 - already paid reservation returns paid without claiming
+  ---
+  duration_ms: 0.72467
+  type: 'test'
+  ...
+# Subtest: malformed source or missing fingerprint cannot claim
+ok 81 - malformed source or missing fingerprint cannot claim
+  ---
+  duration_ms: 0.889468
+  type: 'test'
+  ...
+# Subtest: legacy or alternate-order reservations never claim token charges
+ok 82 - legacy or alternate-order reservations never claim token charges
+  ---
+  duration_ms: 1.906207
+  type: 'test'
+  ...
+# Subtest: Yape token reaches coordinator without card fingerprint
+ok 83 - Yape token reaches coordinator without card fingerprint
+  ---
+  duration_ms: 0.418852
+  type: 'test'
+  ...
+# Subtest: Yape rejects card 3DS and amounts above PEN 2000
+ok 84 - Yape rejects card 3DS and amounts above PEN 2000
+  ---
+  duration_ms: 1.061973
+  type: 'test'
+  ...
+# Subtest: missing or malformed checkout capability never reads an order, coordinates or charges
+ok 85 - missing or malformed checkout capability never reads an order, coordinates or charges
+  ---
+  duration_ms: 4.053302
+  type: 'test'
+  ...
+# Subtest: wrong capability, another order capability or a mismatched selected row never coordinates or charges
+ok 86 - wrong capability, another order capability or a mismatched selected row never coordinates or charges
+  ---
+  duration_ms: 1.738673
+  type: 'test'
+  ...
+# Subtest: valid normalized capability binds the query and preserves initial card, Yape and same-session 3DS coordination
+ok 87 - valid normalized capability binds the query and preserves initial card, Yape and same-session 3DS coordination
+  ---
+  duration_ms: 0.641577
+  type: 'test'
+  ...
+# Subtest: an order lookup failure never echoes checkout capability in an error or reaches coordination
+ok 88 - an order lookup failure never echoes checkout capability in an error or reaches coordination
+  ---
+  duration_ms: 0.810166
+  type: 'test'
+  ...
+# (node:115350) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/checkout-recovery.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an overdue preparation response cannot continue when the browser delays its timer
+ok 89 - an overdue preparation response cannot continue when the browser delays its timer
+  ---
+  duration_ms: 766.741327
+  type: 'test'
+  ...
+# Subtest: checkout preparation bounds reservation headers, ignores late results and safely retries the same hold
+ok 90 - checkout preparation bounds reservation headers, ignores late results and safely retries the same hold
+  ---
+  duration_ms: 407.085434
+  type: 'test'
+  ...
+# Subtest: checkout preparation bounds reservation body, ignores late results and safely retries the same hold
+ok 91 - checkout preparation bounds reservation body, ignores late results and safely retries the same hold
+  ---
+  duration_ms: 773.365741
+  type: 'test'
+  ...
+# Subtest: checkout preparation bounds order headers, ignores late results and safely retries the same hold
+ok 92 - checkout preparation bounds order headers, ignores late results and safely retries the same hold
+  ---
+  duration_ms: 163.594358
+  type: 'test'
+  ...
+# Subtest: checkout preparation bounds order body, ignores late results and safely retries the same hold
+ok 93 - checkout preparation bounds order body, ignores late results and safely retries the same hold
+  ---
+  duration_ms: 183.404306
+  type: 'test'
+  ...
+# Subtest: idle reservation expiry closes the SDK and removes its payment embed (es)
+ok 94 - idle reservation expiry closes the SDK and removes its payment embed (es)
+  ---
+  duration_ms: 82.436641
+  type: 'test'
+  ...
+# Subtest: idle reservation expiry closes the SDK and removes its payment embed (en)
+ok 95 - idle reservation expiry closes the SDK and removes its payment embed (en)
+  ---
+  duration_ms: 104.208431
+  type: 'test'
+  ...
+# Subtest: reservation expiry is rechecked on focus even when its timer was throttled
+ok 96 - reservation expiry is rechecked on focus even when its timer was throttled
+  ---
+  duration_ms: 62.971123
+  type: 'test'
+  ...
+# Subtest: reservation expiry is rechecked on pageshow even when its timer was throttled
+ok 97 - reservation expiry is rechecked on pageshow even when its timer was throttled
+  ---
+  duration_ms: 53.085016
+  type: 'test'
+  ...
+# Subtest: reservation expiry is rechecked on visibilitychange even when its timer was throttled
+ok 98 - reservation expiry is rechecked on visibilitychange even when its timer was throttled
+  ---
+  duration_ms: 61.768859
+  type: 'test'
+  ...
+# Subtest: reservation expiry is rechecked on sdk callback even when its timer was throttled
+ok 99 - reservation expiry is rechecked on sdk callback even when its timer was throttled
+  ---
+  duration_ms: 46.949377
+  type: 'test'
+  ...
+# Subtest: retry after a pre-charge SDK error rechecks a throttled reservation deadline before preparation (es)
+ok 100 - retry after a pre-charge SDK error rechecks a throttled reservation deadline before preparation (es)
+  ---
+  duration_ms: 386.125511
+  type: 'test'
+  ...
+# Subtest: retry after a pre-charge SDK error rechecks a throttled reservation deadline before preparation (en)
+ok 101 - retry after a pre-charge SDK error rechecks a throttled reservation deadline before preparation (en)
+  ---
+  duration_ms: 198.118737
+  type: 'test'
+  ...
+# Subtest: retry before expiry preserves the same hold and still expires at its original deadline
+ok 102 - retry before expiry preserves the same hold and still expires at its original deadline
+  ---
+  duration_ms: 116.445
+  type: 'test'
+  ...
+# Subtest: past session expiry cannot open the SDK or accept a payment
+ok 103 - past session expiry cannot open the SDK or accept a payment
+  ---
+  duration_ms: 65.231588
+  type: 'test'
+  ...
+# Subtest: missing session expiry cannot open the SDK or accept a payment
+ok 104 - missing session expiry cannot open the SDK or accept a payment
+  ---
+  duration_ms: 32.490893
+  type: 'test'
+  ...
+# Subtest: malformed session expiry cannot open the SDK or accept a payment
+ok 105 - malformed session expiry cannot open the SDK or accept a payment
+  ---
+  duration_ms: 68.346204
+  type: 'test'
+  ...
+# Subtest: expiry during device collection prevents the later source from reaching charge submission
+ok 106 - expiry during device collection prevents the later source from reaching charge submission
+  ---
+  duration_ms: 19.398789
+  type: 'test'
+  ...
+# Subtest: expiry during a pending charge preserves recovery despite late paid
+ok 107 - expiry during a pending charge preserves recovery despite late paid
+  ---
+  duration_ms: 79.380779
+  type: 'test'
+  ...
+# Subtest: expiry during a pending charge preserves recovery despite late requires_3ds
+ok 108 - expiry during a pending charge preserves recovery despite late requires_3ds
+  ---
+  duration_ms: 133.918627
+  type: 'test'
+  ...
+# Subtest: expiry during a pending charge preserves recovery despite late rejection
+ok 109 - expiry during a pending charge preserves recovery despite late rejection
+  ---
+  duration_ms: 101.106777
+  type: 'test'
+  ...
+# Subtest: expired 3DS cannot continue charging or offer a fresh reservation while payment is unresolved
+ok 110 - expired 3DS cannot continue charging or offer a fresh reservation while payment is unresolved
+  ---
+  duration_ms: 35.623257
+  type: 'test'
+  ...
+# Subtest: unmount clears the reservation timer and ignores foreground events
+ok 111 - unmount clears the reservation timer and ignores foreground events
+  ---
+  duration_ms: 18.214423
+  type: 'test'
+  ...
+# Subtest: SDK token automatically reserves, charges once, verifies paid and redirects without a status button
+ok 112 - SDK token automatically reserves, charges once, verifies paid and redirects without a status button
+  ---
+  duration_ms: 119.043717
+  type: 'test'
+  ...
+# Subtest: automatic status fetch timeout preserves recovery and ignores a late paid result
+ok 113 - automatic status fetch timeout preserves recovery and ignores a late paid result
+  ---
+  duration_ms: 61.792506
+  type: 'test'
+  ...
+# Subtest: automatic status body timeout preserves recovery and ignores a late paid result
+ok 114 - automatic status body timeout preserves recovery and ignores a late paid result
+  ---
+  duration_ms: 63.52437
+  type: 'test'
+  ...
+# Subtest: manual status fetch timeout preserves recovery and ignores a late paid result
+ok 115 - manual status fetch timeout preserves recovery and ignores a late paid result
+  ---
+  duration_ms: 149.519167
+  type: 'test'
+  ...
+# Subtest: manual status body timeout preserves recovery and ignores a late paid result
+ok 116 - manual status body timeout preserves recovery and ignores a late paid result
+  ---
+  duration_ms: 82.331083
+  type: 'test'
+  ...
+# Subtest: automatic status reads share the existing 60-second budget across successful pending responses
+ok 117 - automatic status reads share the existing 60-second budget across successful pending responses
+  ---
+  duration_ms: 51.592859
+  type: 'test'
+  ...
+# Subtest: automatic status transport cannot unlock or replace the pending checkout
+ok 118 - automatic status transport cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 191.67361
+  type: 'test'
+  ...
+# Subtest: automatic status invalid JSON cannot unlock or replace the pending checkout
+ok 119 - automatic status invalid JSON cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 192.711061
+  type: 'test'
+  ...
+# Subtest: automatic status HTTP 429 cannot unlock or replace the pending checkout
+ok 120 - automatic status HTTP 429 cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 180.949705
+  type: 'test'
+  ...
+# Subtest: automatic status HTTP 503 cannot unlock or replace the pending checkout
+ok 121 - automatic status HTTP 503 cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 118.433437
+  type: 'test'
+  ...
+# Subtest: automatic status null JSON cannot unlock or replace the pending checkout
+ok 122 - automatic status null JSON cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 140.721604
+  type: 'test'
+  ...
+# Subtest: automatic status untyped paid cannot unlock or replace the pending checkout
+ok 123 - automatic status untyped paid cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 123.545047
+  type: 'test'
+  ...
+# Subtest: manual status transport cannot unlock or replace the pending checkout
+ok 124 - manual status transport cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 124.599082
+  type: 'test'
+  ...
+# Subtest: manual status invalid JSON cannot unlock or replace the pending checkout
+ok 125 - manual status invalid JSON cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 97.681746
+  type: 'test'
+  ...
+# Subtest: manual status HTTP 429 cannot unlock or replace the pending checkout
+ok 126 - manual status HTTP 429 cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 105.382015
+  type: 'test'
+  ...
+# Subtest: manual status HTTP 503 cannot unlock or replace the pending checkout
+ok 127 - manual status HTTP 503 cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 92.754382
+  type: 'test'
+  ...
+# Subtest: manual status null JSON cannot unlock or replace the pending checkout
+ok 128 - manual status null JSON cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 185.996511
+  type: 'test'
+  ...
+# Subtest: manual status untyped paid cannot unlock or replace the pending checkout
+ok 129 - manual status untyped paid cannot unlock or replace the pending checkout
+  ---
+  duration_ms: 98.559661
+  type: 'test'
+  ...
+# Subtest: charge fetch timeout keeps the same order locked despite late paid
+ok 130 - charge fetch timeout keeps the same order locked despite late paid
+  ---
+  duration_ms: 108.685206
+  type: 'test'
+  ...
+# Subtest: charge fetch timeout keeps the same order locked despite late requires_3ds
+ok 131 - charge fetch timeout keeps the same order locked despite late requires_3ds
+  ---
+  duration_ms: 159.853949
+  type: 'test'
+  ...
+# Subtest: charge fetch timeout keeps the same order locked despite late rejection
+ok 132 - charge fetch timeout keeps the same order locked despite late rejection
+  ---
+  duration_ms: 140.936335
+  type: 'test'
+  ...
+# Subtest: charge body timeout keeps the same order locked despite late paid
+ok 133 - charge body timeout keeps the same order locked despite late paid
+  ---
+  duration_ms: 118.092587
+  type: 'test'
+  ...
+# Subtest: charge body timeout keeps the same order locked despite late requires_3ds
+ok 134 - charge body timeout keeps the same order locked despite late requires_3ds
+  ---
+  duration_ms: 191.310845
+  type: 'test'
+  ...
+# Subtest: charge body timeout keeps the same order locked despite late rejection
+ok 135 - charge body timeout keeps the same order locked despite late rejection
+  ---
+  duration_ms: 174.550654
+  type: 'test'
+  ...
+# Subtest: an obsolete charge timeout cannot mark another pending order for review or start 3DS
+ok 136 - an obsolete charge timeout cannot mark another pending order for review or start 3DS
+  ---
+  duration_ms: 98.238503
+  type: 'test'
+  ...
+# Subtest: an obsolete charge requires_3ds cannot mark another pending order for review or start 3DS
+ok 137 - an obsolete charge requires_3ds cannot mark another pending order for review or start 3DS
+  ---
+  duration_ms: 117.204867
+  type: 'test'
+  ...
+# Subtest: SDK charge headers and JSON share one deadline; reload checks the same uncertain order without a new charge
+ok 138 - SDK charge headers and JSON share one deadline; reload checks the same uncertain order without a new charge
+  ---
+  duration_ms: 242.923441
+  type: 'test'
+  ...
+# Subtest: timeout during the real SDK 3DS continuation locks the same source and never sends a third charge
+ok 139 - timeout during the real SDK 3DS continuation locks the same source and never sends a third charge
+  ---
+  duration_ms: 144.277649
+  type: 'test'
+  ...
+# Subtest: elapsed charge deadline rejects late headers before delayed timers (initial charge)
+ok 140 - elapsed charge deadline rejects late headers before delayed timers (initial charge)
+  ---
+  duration_ms: 284.212322
+  type: 'test'
+  ...
+# Subtest: elapsed charge deadline rejects late body before delayed timers (initial charge)
+ok 141 - elapsed charge deadline rejects late body before delayed timers (initial charge)
+  ---
+  duration_ms: 323.674407
+  type: 'test'
+  ...
+# Subtest: elapsed charge deadline rejects late headers before delayed timers (3DS continuation)
+ok 142 - elapsed charge deadline rejects late headers before delayed timers (3DS continuation)
+  ---
+  duration_ms: 151.913466
+  type: 'test'
+  ...
+# Subtest: elapsed charge deadline rejects late body before delayed timers (3DS continuation)
+ok 143 - elapsed charge deadline rejects late body before delayed timers (3DS continuation)
+  ---
+  duration_ms: 176.245202
+  type: 'test'
+  ...
+# Subtest: recovery persistence contains only order/session/state and survives navigation without a second start
+ok 144 - recovery persistence contains only order/session/state and survives navigation without a second start
+  ---
+  duration_ms: 0.586775
+  type: 'test'
+  ...
+# Subtest: missing/malformed status cannot unlock recovery; paid requiring review remains locked
+ok 145 - missing/malformed status cannot unlock recovery; paid requiring review remains locked
+  ---
+  duration_ms: 0.196787
+  type: 'test'
+  ...
+# Subtest: corrupt storage and a failed persistence write fail before any charge can start
+ok 146 - corrupt storage and a failed persistence write fail before any charge can start
+  ---
+  duration_ms: 0.364128
+  type: 'test'
+  ...
+# Subtest: charge reconciliation_required locks retry, stale editing and upsell; reload only checks the same order
+ok 147 - charge reconciliation_required locks retry, stale editing and upsell; reload only checks the same order
+  ---
+  duration_ms: 148.313448
+  type: 'test'
+  ...
+# Subtest: verified status needs review locks retry, stale editing and upsell; reload only checks the same order
+ok 148 - verified status needs review locks retry, stale editing and upsell; reload only checks the same order
+  ---
+  duration_ms: 131.48513
+  type: 'test'
+  ...
+# Subtest: lost charge response locks retry, stale editing and upsell; reload only checks the same order
+ok 149 - lost charge response locks retry, stale editing and upsell; reload only checks the same order
+  ---
+  duration_ms: 152.907675
+  type: 'test'
+  ...
+# Subtest: pending submission also survives reload and cannot reinitialize checkout
+ok 150 - pending submission also survives reload and cannot reinitialize checkout
+  ---
+  duration_ms: 124.286426
+  type: 'test'
+  ...
+# Subtest: a verified terminal status clears only its reference and requires an explicit new-order action
+ok 151 - a verified terminal status clears only its reference and requires an explicit new-order action
+  ---
+  duration_ms: 85.097448
+  type: 'test'
+  ...
+# Subtest: only the current in-memory 3DS source may continue; storage never retains it
+ok 152 - only the current in-memory 3DS source may continue; storage never retains it
+  ---
+  duration_ms: 62.183147
+  type: 'test'
+  ...
+# Subtest: the real SDK button latches review after submission errors and never renders retry
+ok 153 - the real SDK button latches review after submission errors and never renders retry
+  ---
+  duration_ms: 27.545248
+  type: 'test'
+  ...
+# Subtest: a late paid result for A cannot clear another unresolved reference B
+ok 154 - a late paid result for A cannot clear another unresolved reference B
+  ---
+  duration_ms: 83.819495
+  type: 'test'
+  ...
+# Subtest: storage unavailable blocks enabled payments while a clean disabled checkout remains usable
+ok 155 - storage unavailable blocks enabled payments while a clean disabled checkout remains usable
+  ---
+  duration_ms: 122.56463
+  type: 'test'
+  ...
+# Subtest: a stored unresolved payment remains locked when the payment flag is disabled
+ok 156 - a stored unresolved payment remains locked when the payment flag is disabled
+  ---
+  duration_ms: 59.909958
+  type: 'test'
+  ...
+# Subtest: unmount during prepare invalidates old SDK callbacks before a charge
+ok 157 - unmount during prepare invalidates old SDK callbacks before a charge
+  ---
+  duration_ms: 25.933329
+  type: 'test'
+  ...
+# Subtest: unmount during device invalidates old SDK callbacks before a charge
+ok 158 - unmount during device invalidates old SDK callbacks before a charge
+  ---
+  duration_ms: 45.826245
+  type: 'test'
+  ...
+# Subtest: 3DS continuation completes the active generation once
+ok 159 - 3DS continuation completes the active generation once
+  ---
+  duration_ms: 34.336652
+  type: 'test'
+  ...
+# Subtest: 3DS continuation does not start after review
+ok 160 - 3DS continuation does not start after review
+  ---
+  duration_ms: 34.352241
+  type: 'test'
+  ...
+# Subtest: the page rejects a repeated 3DS requirement before it can authorize a third submission
+ok 161 - the page rejects a repeated 3DS requirement before it can authorize a third submission
+  ---
+  duration_ms: 70.265986
+  type: 'test'
+  ...
+# Subtest: the SDK button honors a repeated 3DS requirement instead of displaying confirmation
+ok 162 - the SDK button honors a repeated 3DS requirement instead of displaying confirmation
+  ---
+  duration_ms: 25.683262
+  type: 'test'
+  ...
+# Subtest: repeated 3DS review survives reload and only authoritative status resolves it (es)
+ok 163 - repeated 3DS review survives reload and only authoritative status resolves it (es)
+  ---
+  duration_ms: 177.547305
+  type: 'test'
+  ...
+# Subtest: repeated 3DS review survives reload and only authoritative status resolves it (en)
+ok 164 - repeated 3DS review survives reload and only authoritative status resolves it (en)
+  ---
+  duration_ms: 174.808934
+  type: 'test'
+  ...
+# (node:115362) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/checkout-recovery.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: authoritative paid clears pending recovery; later cancelled review remains locked
+ok 165 - authoritative paid clears pending recovery; later cancelled review remains locked
+  ---
+  duration_ms: 1.487664
+  type: 'test'
+  ...
+# Subtest: critical evidence requiring review locks this pending checkout without claiming paid
+ok 166 - critical evidence requiring review locks this pending checkout without claiming paid
+  ---
+  duration_ms: 0.193069
+  type: 'test'
+  ...
+# Subtest: provider cooldown hints and malformed hints cannot cause busy polling
+ok 167 - provider cooldown hints and malformed hints cannot cause busy polling
+  ---
+  duration_ms: 0.250786
+  type: 'test'
+  ...
+# Subtest: real checkout render gives the SDK loader a distinct id and leaves its mount unoccupied
+ok 168 - real checkout render gives the SDK loader a distinct id and leaves its mount unoccupied
+  ---
+  duration_ms: 31.871166
+  type: 'test'
+  ...
+# Subtest: SDK bootstrap provisions its reserved mount and collection input with the current render
+ok 169 - SDK bootstrap provisions its reserved mount and collection input with the current render
+  ---
+  duration_ms: 1.494284
+  type: 'test'
+  ...
+# Subtest: the former script id reproduces the exact skipped-mount null input failure
+ok 170 - the former script id reproduces the exact skipped-mount null input failure
+  ---
+  duration_ms: 2.28751
+  type: 'test'
+  ...
+# Subtest: repeated SDK bootstrap preserves its own UI instead of creating duplicate mounts
+ok 171 - repeated SDK bootstrap preserves its own UI instead of creating duplicate mounts
+  ---
+  duration_ms: 1.405
+  type: 'test'
+  ...
+# Subtest: disabled checkout never inserts the 3DS loader or occupies the SDK mount
+ok 172 - disabled checkout never inserts the 3DS loader or occupies the SDK mount
+  ---
+  duration_ms: 0.941118
+  type: 'test'
+  ...
+# (node:115382) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-readonly-diagnostic.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115382) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: signed admin resolves only the approved pair and invokes the status handler locally
+ok 173 - signed admin resolves only the approved pair and invokes the status handler locally
+  ---
+  duration_ms: 15.997197
+  type: 'test'
+  ...
+# Subtest: real admin authentication denies missing before request headers and configuration
+ok 174 - real admin authentication denies missing before request headers and configuration
+  ---
+  duration_ms: 1.165983
+  type: 'test'
+  ...
+# Subtest: real admin authentication denies tampered before request headers and configuration
+ok 175 - real admin authentication denies tampered before request headers and configuration
+  ---
+  duration_ms: 2.006048
+  type: 'test'
+  ...
+# Subtest: real admin authentication denies expired before request headers and configuration
+ok 176 - real admin authentication denies expired before request headers and configuration
+  ---
+  duration_ms: 1.157112
+  type: 'test'
+  ...
+# Subtest: real admin authentication denies foreign before request headers and configuration
+ok 177 - real admin authentication denies foreign before request headers and configuration
+  ---
+  duration_ms: 0.893496
+  type: 'test'
+  ...
+# Subtest: missing origin is denied before configuration and pair lookup
+ok 178 - missing origin is denied before configuration and pair lookup
+  ---
+  duration_ms: 1.162641
+  type: 'test'
+  ...
+# Subtest: opaque origin is denied before configuration and pair lookup
+ok 179 - opaque origin is denied before configuration and pair lookup
+  ---
+  duration_ms: 3.49777
+  type: 'test'
+  ...
+# Subtest: foreign origin is denied before configuration and pair lookup
+ok 180 - foreign origin is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.962995
+  type: 'test'
+  ...
+# Subtest: origin path is denied before configuration and pair lookup
+ok 181 - origin path is denied before configuration and pair lookup
+  ---
+  duration_ms: 2.515605
+  type: 'test'
+  ...
+# Subtest: origin port is denied before configuration and pair lookup
+ok 182 - origin port is denied before configuration and pair lookup
+  ---
+  duration_ms: 1.525206
+  type: 'test'
+  ...
+# Subtest: insecure origin is denied before configuration and pair lookup
+ok 183 - insecure origin is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.740497
+  type: 'test'
+  ...
+# Subtest: missing host is denied before configuration and pair lookup
+ok 184 - missing host is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.51673
+  type: 'test'
+  ...
+# Subtest: foreign host is denied before configuration and pair lookup
+ok 185 - foreign host is denied before configuration and pair lookup
+  ---
+  duration_ms: 2.651504
+  type: 'test'
+  ...
+# Subtest: foreign forwarded host is denied before configuration and pair lookup
+ok 186 - foreign forwarded host is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.958919
+  type: 'test'
+  ...
+# Subtest: forwarded host list is denied before configuration and pair lookup
+ok 187 - forwarded host list is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.982978
+  type: 'test'
+  ...
+# Subtest: foreign forwarded protocol is denied before configuration and pair lookup
+ok 188 - foreign forwarded protocol is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.478582
+  type: 'test'
+  ...
+# Subtest: forwarded protocol list is denied before configuration and pair lookup
+ok 189 - forwarded protocol list is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.831007
+  type: 'test'
+  ...
+# Subtest: cross site is denied before configuration and pair lookup
+ok 190 - cross site is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.629936
+  type: 'test'
+  ...
+# Subtest: same site is denied before configuration and pair lookup
+ok 191 - same site is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.590312
+  type: 'test'
+  ...
+# Subtest: none fetch site is denied before configuration and pair lookup
+ok 192 - none fetch site is denied before configuration and pair lookup
+  ---
+  duration_ms: 1.005245
+  type: 'test'
+  ...
+# Subtest: foreign referer is denied before configuration and pair lookup
+ok 193 - foreign referer is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.522936
+  type: 'test'
+  ...
+# Subtest: referer credentials is denied before configuration and pair lookup
+ok 194 - referer credentials is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.830348
+  type: 'test'
+  ...
+# Subtest: malformed referer is denied before configuration and pair lookup
+ok 195 - malformed referer is denied before configuration and pair lookup
+  ---
+  duration_ms: 0.438421
+  type: 'test'
+  ...
+# Subtest: missing optional request headers remain absent in the delegated request
+ok 196 - missing optional request headers remain absent in the delegated request
+  ---
+  duration_ms: 1.341692
+  type: 'test'
+  ...
+# Subtest: raw header values must pass exact checks before a new Headers object can normalize them
+ok 197 - raw header values must pass exact checks before a new Headers object can normalize them
+  ---
+  duration_ms: 0.739394
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {}
+ok 198 - closed gate prevents pair SELECT: {}
+  ---
+  duration_ms: 0.539947
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_STATUS_RECOVERY_APPROVED":"false"}
+ok 199 - closed gate prevents pair SELECT: {"CULQI_STATUS_RECOVERY_APPROVED":"false"}
+  ---
+  duration_ms: 19.776302
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_STATUS_RECOVERY_APPROVED":"TRUE"}
+ok 200 - closed gate prevents pair SELECT: {"CULQI_STATUS_RECOVERY_APPROVED":"TRUE"}
+  ---
+  duration_ms: 0.57907
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {}
+ok 201 - closed gate prevents pair SELECT: {}
+  ---
+  duration_ms: 0.439879
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_ENV":"production"}
+ok 202 - closed gate prevents pair SELECT: {"VERCEL_ENV":"production"}
+  ---
+  duration_ms: 0.627578
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_TARGET_ENV":"production"}
+ok 203 - closed gate prevents pair SELECT: {"VERCEL_TARGET_ENV":"production"}
+  ---
+  duration_ms: 1.243184
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_PROJECT_ID":"other"}
+ok 204 - closed gate prevents pair SELECT: {"VERCEL_PROJECT_ID":"other"}
+  ---
+  duration_ms: 0.61617
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_GIT_COMMIT_REF":"main"}
+ok 205 - closed gate prevents pair SELECT: {"VERCEL_GIT_COMMIT_REF":"main"}
+  ---
+  duration_ms: 0.584607
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_GIT_COMMIT_REF":"fix/culqi-capture-policy-20261014"}
+ok 206 - closed gate prevents pair SELECT: {"VERCEL_GIT_COMMIT_REF":"fix/culqi-capture-policy-20261014"}
+  ---
+  duration_ms: 1.249885
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_GIT_REPO_OWNER":"other"}
+ok 207 - closed gate prevents pair SELECT: {"VERCEL_GIT_REPO_OWNER":"other"}
+  ---
+  duration_ms: 1.01321
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_GIT_REPO_SLUG":"other"}
+ok 208 - closed gate prevents pair SELECT: {"VERCEL_GIT_REPO_SLUG":"other"}
+  ---
+  duration_ms: 0.654637
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"VERCEL_BRANCH_URL":"fixture.invalid"}
+ok 209 - closed gate prevents pair SELECT: {"VERCEL_BRANCH_URL":"fixture.invalid"}
+  ---
+  duration_ms: 0.433591
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"NEXT_PUBLIC_SITE_URL":"https://bagelito.pe"}
+ok 210 - closed gate prevents pair SELECT: {"NEXT_PUBLIC_SITE_URL":"https://bagelito.pe"}
+  ---
+  duration_ms: 0.492506
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"NEXT_PUBLIC_SUPABASE_URL":"https://fixture.invalid"}
+ok 211 - closed gate prevents pair SELECT: {"NEXT_PUBLIC_SUPABASE_URL":"https://fixture.invalid"}
+  ---
+  duration_ms: 0.975382
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"PAYMENT_PROVIDER":"manual"}
+ok 212 - closed gate prevents pair SELECT: {"PAYMENT_PROVIDER":"manual"}
+  ---
+  duration_ms: 0.724535
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_MODE":"live"}
+ok 213 - closed gate prevents pair SELECT: {"CULQI_MODE":"live"}
+  ---
+  duration_ms: 0.455094
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_LIVE_APPROVED":"true"}
+ok 214 - closed gate prevents pair SELECT: {"CULQI_LIVE_APPROVED":"true"}
+  ---
+  duration_ms: 0.675379
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_ENABLED":"false"}
+ok 215 - closed gate prevents pair SELECT: {"CULQI_ENABLED":"false"}
+  ---
+  duration_ms: 0.736681
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {}
+ok 216 - closed gate prevents pair SELECT: {}
+  ---
+  duration_ms: 0.479464
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {}
+ok 217 - closed gate prevents pair SELECT: {}
+  ---
+  duration_ms: 0.564066
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"NEXT_PUBLIC_CULQI_PUBLIC_KEY":"pk_live_OFFLINEInvalid"}
+ok 218 - closed gate prevents pair SELECT: {"NEXT_PUBLIC_CULQI_PUBLIC_KEY":"pk_live_OFFLINEInvalid"}
+  ---
+  duration_ms: 0.535394
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_SECRET_KEY":"sk_live_OFFLINEInvalid"}
+ok 219 - closed gate prevents pair SELECT: {"CULQI_SECRET_KEY":"sk_live_OFFLINEInvalid"}
+  ---
+  duration_ms: 0.471677
+  type: 'test'
+  ...
+# Subtest: closed gate prevents pair SELECT: {"CULQI_SECRET_KEY":"sk_test_Invalid\\r\\nBearer SYNTHETIC_PRIVATE_COOKIE_KEY_EMAIL_CHARGE_UUID"}
+ok 220 - closed gate prevents pair SELECT: {"CULQI_SECRET_KEY":"sk_test_Invalid\\r\\nBearer SYNTHETIC_PRIVATE_COOKIE_KEY_EMAIL_CHARGE_UUID"}
+  ---
+  duration_ms: 0.634441
+  type: 'test'
+  ...
+# Subtest: fixed allowlist accepts BAG-000001
+ok 221 - fixed allowlist accepts BAG-000001
+  ---
+  duration_ms: 1.342636
+  type: 'test'
+  ...
+# Subtest: fixed allowlist accepts BAG-000002
+ok 222 - fixed allowlist accepts BAG-000002
+  ---
+  duration_ms: 1.291597
+  type: 'test'
+  ...
+# Subtest: fixed allowlist accepts BAG-000004
+ok 223 - fixed allowlist accepts BAG-000004
+  ---
+  duration_ms: 1.300607
+  type: 'test'
+  ...
+# Subtest: unapproved codes and extra capability or financial fields are denied without SELECT or handler effects
+ok 224 - unapproved codes and extra capability or financial fields are denied without SELECT or handler effects
+  ---
+  duration_ms: 12.367028
+  type: 'test'
+  ...
+# Subtest: previous state cannot supply capabilities and is never inspected
+ok 225 - previous state cannot supply capabilities and is never inspected
+  ---
+  duration_ms: 1.140872
+  type: 'test'
+  ...
+# Subtest: missing or mismatched pairs and SELECT failures remain closed
+ok 226 - missing or mismatched pairs and SELECT failures remain closed
+  ---
+  duration_ms: 4.865138
+  type: 'test'
+  ...
+# Subtest: absolute two second pair deadline aborts even an uncooperative SELECT and never delegates later
+ok 227 - absolute two second pair deadline aborts even an uncooperative SELECT and never delegates later
+  ---
+  duration_ms: 2011.536321
+  type: 'test'
+  ...
+# Subtest: closed handler responses preserve late paid cancelled review without a reservation success signal
+ok 228 - closed handler responses preserve late paid cancelled review without a reservation success signal
+  ---
+  duration_ms: 1.524832
+  type: 'test'
+  ...
+# Subtest: failed and malformed handler replies cannot claim success or expose raw fields
+ok 229 - failed and malformed handler replies cannot claim success or expose raw fields
+  ---
+  duration_ms: 64.970527
+  type: 'test'
+  ...
+# Subtest: metadata UI gate checks every original QA scope without inspecting payment keys
+ok 230 - metadata UI gate checks every original QA scope without inspecting payment keys
+  ---
+  duration_ms: 0.3666
+  type: 'test'
+  ...
+# Subtest: loading action and factory performs no environment, header, database or handler work
+ok 231 - loading action and factory performs no environment, header, database or handler work
+  ---
+  duration_ms: 0.185085
+  type: 'test'
+  ...
+# Subtest: action remains server-only and adapter has no direct financial, network, logging or cache mutation capabilities
+ok 232 - action remains server-only and adapter has no direct financial, network, logging or cache mutation capabilities
+  ---
+  duration_ms: 0.487747
+  type: 'test'
+  ...
+# Subtest: initial render exposes an inert button without form fields
+ok 233 - initial render exposes an inert button without form fields
+  ---
+  duration_ms: 185.929702
+  type: 'test'
+  ...
+# Subtest: a click dispatches only the order code inside a transition
+ok 234 - a click dispatches only the order code inside a transition
+  ---
+  duration_ms: 24.191431
+  type: 'test'
+  ...
+# Subtest: pending disables the button and blocks duplicate dispatch
+ok 235 - pending disables the button and blocks duplicate dispatch
+  ---
+  duration_ms: 41.123849
+  type: 'test'
+  ...
+# Subtest: late paid cancelled orders stay visibly in review
+ok 236 - late paid cancelled orders stay visibly in review
+  ---
+  duration_ms: 20.698134
+  type: 'test'
+  ...
+# Subtest: a completed pending query does not claim a registered payment
+ok 237 - a completed pending query does not claim a registered payment
+  ---
+  duration_ms: 11.560768
+  type: 'test'
+  ...
+# Subtest: closed results render fixed messages without response details
+ok 238 - closed results render fixed messages without response details
+  ---
+  duration_ms: 120.722139
+  type: 'test'
+  ...
+# (node:115406) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-capture-evidence.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: documented capture accepts paid=false and makes no operations or future refund guarantee
+ok 239 - documented capture accepts paid=false and makes no operations or future refund guarantee
+  ---
+  duration_ms: 3.867823
+  type: 'test'
+  ...
+# Subtest: a future sandbox order uses its persisted amount instead of the pilot amount
+ok 240 - a future sandbox order uses its persisted amount instead of the pilot amount
+  ---
+  duration_ms: 0.290803
+  type: 'test'
+  ...
+# Subtest: partial refund blocks only this observation
+ok 241 - partial refund blocks only this observation
+  ---
+  duration_ms: 0.21692
+  type: 'test'
+  ...
+# Subtest: total refund blocks only this observation
+ok 242 - total refund blocks only this observation
+  ---
+  duration_ms: 0.131672
+  type: 'test'
+  ...
+# Subtest: refund despite stale current amount blocks only this observation
+ok 243 - refund despite stale current amount blocks only this observation
+  ---
+  duration_ms: 0.124866
+  type: 'test'
+  ...
+# Subtest: lower current amount blocks only this observation
+ok 244 - lower current amount blocks only this observation
+  ---
+  duration_ms: 0.087046
+  type: 'test'
+  ...
+# Subtest: higher current amount blocks only this observation
+ok 245 - higher current amount blocks only this observation
+  ---
+  duration_ms: 0.147369
+  type: 'test'
+  ...
+# Subtest: dispute blocks only this observation
+ok 246 - dispute blocks only this observation
+  ---
+  duration_ms: 0.08764
+  type: 'test'
+  ...
+# Subtest: authorization without capture blocks only this observation
+ok 247 - authorization without capture blocks only this observation
+  ---
+  duration_ms: 0.099895
+  type: 'test'
+  ...
+# Subtest: string capture blocks only this observation
+ok 248 - string capture blocks only this observation
+  ---
+  duration_ms: 0.169884
+  type: 'test'
+  ...
+# Subtest: string refund blocks only this observation
+ok 249 - string refund blocks only this observation
+  ---
+  duration_ms: 0.129733
+  type: 'test'
+  ...
+# Subtest: string current amount blocks only this observation
+ok 250 - string current amount blocks only this observation
+  ---
+  duration_ms: 0.085115
+  type: 'test'
+  ...
+# Subtest: string dispute blocks only this observation
+ok 251 - string dispute blocks only this observation
+  ---
+  duration_ms: 0.074289
+  type: 'test'
+  ...
+# Subtest: negative refund blocks only this observation
+ok 252 - negative refund blocks only this observation
+  ---
+  duration_ms: 0.098425
+  type: 'test'
+  ...
+# Subtest: fractional current amount blocks only this observation
+ok 253 - fractional current amount blocks only this observation
+  ---
+  duration_ms: 0.06171
+  type: 'test'
+  ...
+# Subtest: wrong amount blocks only this observation
+ok 254 - wrong amount blocks only this observation
+  ---
+  duration_ms: 0.067348
+  type: 'test'
+  ...
+# Subtest: numeric string gross blocks only this observation
+ok 255 - numeric string gross blocks only this observation
+  ---
+  duration_ms: 0.073889
+  type: 'test'
+  ...
+# Subtest: wrong currency blocks only this observation
+ok 256 - wrong currency blocks only this observation
+  ---
+  duration_ms: 0.098386
+  type: 'test'
+  ...
+# Subtest: conflicting currency alias blocks only this observation
+ok 257 - conflicting currency alias blocks only this observation
+  ---
+  duration_ms: 0.073173
+  type: 'test'
+  ...
+# Subtest: null currency code with valid alias blocks only this observation
+ok 258 - null currency code with valid alias blocks only this observation
+  ---
+  duration_ms: 0.049837
+  type: 'test'
+  ...
+# Subtest: wrong charge blocks only this observation
+ok 259 - wrong charge blocks only this observation
+  ---
+  duration_ms: 0.047368
+  type: 'test'
+  ...
+# Subtest: wrong object blocks only this observation
+ok 260 - wrong object blocks only this observation
+  ---
+  duration_ms: 0.058927
+  type: 'test'
+  ...
+# Subtest: wrong order blocks only this observation
+ok 261 - wrong order blocks only this observation
+  ---
+  duration_ms: 0.044237
+  type: 'test'
+  ...
+# Subtest: wrong source blocks only this observation
+ok 262 - wrong source blocks only this observation
+  ---
+  duration_ms: 0.06542
+  type: 'test'
+  ...
+# Subtest: current_amount absent or null cannot be inferred from capture, paid or outcome
+ok 263 - current_amount absent or null cannot be inferred from capture, paid or outcome
+  ---
+  duration_ms: 0.420082
+  type: 'test'
+  ...
+# Subtest: amount_refunded absent or null cannot be inferred from capture, paid or outcome
+ok 264 - amount_refunded absent or null cannot be inferred from capture, paid or outcome
+  ---
+  duration_ms: 0.070839
+  type: 'test'
+  ...
+# Subtest: dispute absent or null cannot be inferred from capture, paid or outcome
+ok 265 - dispute absent or null cannot be inferred from capture, paid or outcome
+  ---
+  duration_ms: 0.080481
+  type: 'test'
+  ...
+# Subtest: known pending or completed refund blocks; rejected refund is not returned money
+ok 266 - known pending or completed refund blocks; rejected refund is not returned money
+  ---
+  duration_ms: 0.18377
+  type: 'test'
+  ...
+# Subtest: no known refund observation is not an exhaustive absence requirement
+ok 267 - no known refund observation is not an exhaustive absence requirement
+  ---
+  duration_ms: 0.079767
+  type: 'test'
+  ...
+# Subtest: capture_date remains opaque and never establishes the financial decision
+ok 268 - capture_date remains opaque and never establishes the financial decision
+  ---
+  duration_ms: 0.182004
+  type: 'test'
+  ...
+# Subtest: only sandbox IDs and integral persisted amount are eligible
+ok 269 - only sandbox IDs and integral persisted amount are eligible
+  ---
+  duration_ms: 0.178933
+  type: 'test'
+  ...
+# Subtest: malformed input and throwing properties produce closed reasons without raw errors
+ok 270 - malformed input and throwing properties produce closed reasons without raw errors
+  ---
+  duration_ms: 0.175187
+  type: 'test'
+  ...
+# (node:115414) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-readonly-diagnostic.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115414) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: reviewed capture policy never overrides private operational approval
+ok 271 - reviewed capture policy never overrides private operational approval
+  ---
+  duration_ms: 41.042513
+  type: 'test'
+  ...
+# Subtest: absence of arbitrary operation fields is not a universal absence proof or an operational approval
+ok 272 - absence of arbitrary operation fields is not a universal absence proof or an operational approval
+  ---
+  duration_ms: 14.050743
+  type: 'test'
+  ...
+# Subtest: caller or dependency flags cannot approve the real contract or alter fixed targets
+ok 273 - caller or dependency flags cannot approve the real contract or alter fixed targets
+  ---
+  duration_ms: 1.799247
+  type: 'test'
+  ...
+# Subtest: unauthenticated invocation stops before CSRF, configuration, reads and provider
+ok 274 - unauthenticated invocation stops before CSRF, configuration, reads and provider
+  ---
+  duration_ms: 3.340314
+  type: 'test'
+  ...
+# Subtest: CSRF rejection or exception stops before configuration
+ok 275 - CSRF rejection or exception stops before configuration
+  ---
+  duration_ms: 1.061452
+  type: 'test'
+  ...
+# Subtest: wrong Origin is rejected before configuration
+ok 276 - wrong Origin is rejected before configuration
+  ---
+  duration_ms: 0.437066
+  type: 'test'
+  ...
+# Subtest: absent Origin is rejected before configuration
+ok 277 - absent Origin is rejected before configuration
+  ---
+  duration_ms: 0.3822
+  type: 'test'
+  ...
+# Subtest: wrong Host is rejected before configuration
+ok 278 - wrong Host is rejected before configuration
+  ---
+  duration_ms: 0.412594
+  type: 'test'
+  ...
+# Subtest: wrong forwarded Host is rejected before configuration
+ok 279 - wrong forwarded Host is rejected before configuration
+  ---
+  duration_ms: 0.451369
+  type: 'test'
+  ...
+# Subtest: cross-site is rejected before configuration
+ok 280 - cross-site is rejected before configuration
+  ---
+  duration_ms: 0.32614
+  type: 'test'
+  ...
+# Subtest: Fetch-Site none is rejected before configuration
+ok 281 - Fetch-Site none is rejected before configuration
+  ---
+  duration_ms: 0.246546
+  type: 'test'
+  ...
+# Subtest: GET invocation is rejected before configuration
+ok 282 - GET invocation is rejected before configuration
+  ---
+  duration_ms: 0.239591
+  type: 'test'
+  ...
+# Subtest: wrong Referer is rejected before configuration
+ok 283 - wrong Referer is rejected before configuration
+  ---
+  duration_ms: 0.241122
+  type: 'test'
+  ...
+# Subtest: production fails without payment key access
+ok 284 - production fails without payment key access
+  ---
+  duration_ms: 0.453166
+  type: 'test'
+  ...
+# Subtest: target production fails without payment key access
+ok 285 - target production fails without payment key access
+  ---
+  duration_ms: 6.6606
+  type: 'test'
+  ...
+# Subtest: wrong project fails without payment key access
+ok 286 - wrong project fails without payment key access
+  ---
+  duration_ms: 0.360551
+  type: 'test'
+  ...
+# Subtest: wrong branch fails without payment key access
+ok 287 - wrong branch fails without payment key access
+  ---
+  duration_ms: 0.243326
+  type: 'test'
+  ...
+# Subtest: wrong repo fails without payment key access
+ok 288 - wrong repo fails without payment key access
+  ---
+  duration_ms: 0.50391
+  type: 'test'
+  ...
+# Subtest: wrong branch origin fails without payment key access
+ok 289 - wrong branch origin fails without payment key access
+  ---
+  duration_ms: 0.387903
+  type: 'test'
+  ...
+# Subtest: production site fails without payment key access
+ok 290 - production site fails without payment key access
+  ---
+  duration_ms: 0.244139
+  type: 'test'
+  ...
+# Subtest: wrong QA fails without payment key access
+ok 291 - wrong QA fails without payment key access
+  ---
+  duration_ms: 0.414938
+  type: 'test'
+  ...
+# Subtest: live mode fails without payment key access
+ok 292 - live mode fails without payment key access
+  ---
+  duration_ms: 0.54461
+  type: 'test'
+  ...
+# Subtest: live approved fails without payment key access
+ok 293 - live approved fails without payment key access
+  ---
+  duration_ms: 0.372423
+  type: 'test'
+  ...
+# Subtest: disabled fails without payment key access
+ok 294 - disabled fails without payment key access
+  ---
+  duration_ms: 11.017534
+  type: 'test'
+  ...
+# Subtest: missing, live and header-injected keys fail before persisted reads and GET
+ok 295 - missing, live and header-injected keys fail before persisted reads and GET
+  ---
+  duration_ms: 1.193385
+  type: 'test'
+  ...
+# Subtest: persisted identity mismatches never issue a GET for that reference
+ok 296 - persisted identity mismatches never issue a GET for that reference
+  ---
+  duration_ms: 54.94633
+  type: 'test'
+  ...
+# Subtest: terminal or inconsistent financial states block before GET despite matching identities
+ok 297 - terminal or inconsistent financial states block before GET despite matching identities
+  ---
+  duration_ms: 27.286403
+  type: 'test'
+  ...
+# Subtest: terminal or inconsistent financial states appearing after GET block the transaction
+ok 298 - terminal or inconsistent financial states appearing after GET block the transaction
+  ---
+  duration_ms: 38.051502
+  type: 'test'
+  ...
+# Subtest: valid financial pairs include pending cancelled and paid fulfilled orders
+ok 299 - valid financial pairs include pending cancelled and paid fulfilled orders
+  ---
+  duration_ms: 30.412577
+  type: 'test'
+  ...
+# Subtest: accurate attempt and charge-claim UUID values may coincide without an invented distinctness rule
+ok 300 - accurate attempt and charge-claim UUID values may coincide without an invented distinctness rule
+  ---
+  duration_ms: 1.565566
+  type: 'test'
+  ...
+# Subtest: test-only operational approval uses the actual validator and rereads stable bindings before each application
+ok 301 - test-only operational approval uses the actual validator and rereads stable bindings before each application
+  ---
+  duration_ms: 1.010639
+  type: 'test'
+  ...
+# Subtest: known refunds bound to the queried charge block only that reference
+ok 302 - known refunds bound to the queried charge block only that reference
+  ---
+  duration_ms: 9.793091
+  type: 'test'
+  ...
+# Subtest: a rejected known refund does not invent returned money for this charge
+ok 303 - a rejected known refund does not invent returned money for this charge
+  ---
+  duration_ms: 6.669509
+  type: 'test'
+  ...
+# Subtest: a supplied refund context for another charge is rejected without blocking unrelated references
+ok 304 - a supplied refund context for another charge is rejected without blocking unrelated references
+  ---
+  duration_ms: 1.119199
+  type: 'test'
+  ...
+# Subtest: a newly observed bound pending refund prevents applying after the provider GET
+ok 305 - a newly observed bound pending refund prevents applying after the provider GET
+  ---
+  duration_ms: 0.900512
+  type: 'test'
+  ...
+# Subtest: uncertain charge review is admitted only with the explicit pending state and matching reason
+ok 306 - uncertain charge review is admitted only with the explicit pending state and matching reason
+  ---
+  duration_ms: 0.729508
+  type: 'test'
+  ...
+# Subtest: needs_correction manual reasons and invalid reconciliation flag shapes remain blocked before GET
+ok 307 - needs_correction manual reasons and invalid reconciliation flag shapes remain blocked before GET
+  ---
+  duration_ms: 13.548463
+  type: 'test'
+  ...
+# Subtest: pending and cancelled orders preserve existing manual, expiry and release review reasons
+ok 308 - pending and cancelled orders preserve existing manual, expiry and release review reasons
+  ---
+  duration_ms: 4.684996
+  type: 'test'
+  ...
+# Subtest: a manual review reason introduced after GET makes the current attempt stale
+ok 309 - a manual review reason introduced after GET makes the current attempt stale
+  ---
+  duration_ms: 1.343331
+  type: 'test'
+  ...
+# Subtest: real validator approval alone cannot override private operational refusal
+ok 310 - real validator approval alone cannot override private operational refusal
+  ---
+  duration_ms: 1.710788
+  type: 'test'
+  ...
+# Subtest: operational approval cannot override an explicitly unverified capture contract fixture
+ok 311 - operational approval cannot override an explicitly unverified capture contract fixture
+  ---
+  duration_ms: 11.438903
+  type: 'test'
+  ...
+# Subtest: AUT0000 and paid=true cannot substitute for current capture evidence
+ok 312 - AUT0000 and paid=true cannot substitute for current capture evidence
+  ---
+  duration_ms: 2.513573
+  type: 'test'
+  ...
+# Subtest: missing or mismatched net, refund or dispute evidence cannot apply a charge
+ok 313 - missing or mismatched net, refund or dispute evidence cannot apply a charge
+  ---
+  duration_ms: 12.66046
+  type: 'test'
+  ...
+# Subtest: raw capture date values are presence observations and never interpreted as timestamps
+ok 314 - raw capture date values are presence observations and never interpreted as timestamps
+  ---
+  duration_ms: 23.632569
+  type: 'test'
+  ...
+# Subtest: current GET must match source, amount, currency, charge ID and order metadata
+ok 315 - current GET must match source, amount, currency, charge ID and order metadata
+  ---
+  duration_ms: 6.368102
+  type: 'test'
+  ...
+# Subtest: fresh persisted binding changes stop that reference before the transaction
+ok 316 - fresh persisted binding changes stop that reference before the transaction
+  ---
+  duration_ms: 10.677007
+  type: 'test'
+  ...
+# Subtest: concurrent paid fulfillment progress alone is not treated as stale identity
+ok 317 - concurrent paid fulfillment progress alone is not treated as stale identity
+  ---
+  duration_ms: 1.476313
+  type: 'test'
+  ...
+# Subtest: repeat approved observations use the same immutable idempotency identities
+ok 318 - repeat approved observations use the same immutable idempotency identities
+  ---
+  duration_ms: 2.134465
+  type: 'test'
+  ...
+# Subtest: database and provider failures suppress raw errors and prevent applying the failed reference
+ok 319 - database and provider failures suppress raw errors and prevent applying the failed reference
+  ---
+  duration_ms: 2.716348
+  type: 'test'
+  ...
+# Subtest: transaction failure or malformed result cannot be reported as applied
+ok 320 - transaction failure or malformed result cannot be reported as applied
+  ---
+  duration_ms: 4.562457
+  type: 'test'
+  ...
+# Subtest: a first receipt for an already paid order does not claim a new payment application
+ok 321 - a first receipt for an already paid order does not claim a new payment application
+  ---
+  duration_ms: 1.517174
+  type: 'test'
+  ...
+# Subtest: duplicate receipt takes status priority with either boolean alreadyPaid outcome
+ok 322 - duplicate receipt takes status priority with either boolean alreadyPaid outcome
+  ---
+  duration_ms: 2.340827
+  type: 'test'
+  ...
+# Subtest: missing, mistyped and contradictory application outcome flags are rejected
+ok 323 - missing, mistyped and contradictory application outcome flags are rejected
+  ---
+  duration_ms: 25.957747
+  type: 'test'
+  ...
+# Subtest: an adapter cannot claim a new application or deny alreadyPaid after a fresh paid snapshot
+ok 324 - an adapter cannot claim a new application or deny alreadyPaid after a fresh paid snapshot
+  ---
+  duration_ms: 1.695023
+  type: 'test'
+  ...
+# Subtest: a paid race after the pending snapshot may return alreadyPaid without a new application
+ok 325 - a paid race after the pending snapshot may return alreadyPaid without a new application
+  ---
+  duration_ms: 1.334559
+  type: 'test'
+  ...
+# Subtest: a missing transaction adapter remains blocked even in the fully approved synthetic fixture
+ok 326 - a missing transaction adapter remains blocked even in the fully approved synthetic fixture
+  ---
+  duration_ms: 1.54727
+  type: 'test'
+  ...
+# Subtest: paid cancelled results require review and fulfilled order states remain distinct
+ok 327 - paid cancelled results require review and fulfilled order states remain distinct
+  ---
+  duration_ms: 7.013692
+  type: 'test'
+  ...
+# Subtest: the transport aborts or cancels invalid and oversized bodies without applying
+ok 328 - the transport aborts or cancels invalid and oversized bodies without applying
+  ---
+  duration_ms: 31.816299
+  type: 'test'
+  ...
+# Subtest: body overflow cancels an unclosed stream and does not await a hostile cancel callback
+ok 329 - body overflow cancels an unclosed stream and does not await a hostile cancel callback
+  ---
+  duration_ms: 1.775386
+  type: 'test'
+  ...
+# Subtest: deadline exhaustion prevents further transport calls and applications
+ok 330 - deadline exhaustion prevents further transport calls and applications
+  ---
+  duration_ms: 0.418708
+  type: 'test'
+  ...
+# Subtest: a body that never produces a chunk is aborted within the remaining global budget
+ok 331 - a body that never produces a chunk is aborted within the remaining global budget
+  ---
+  duration_ms: 49.75996
+  type: 'test'
+  ...
+# Subtest: logger exceptions cannot expose provider data or alter results
+ok 332 - logger exceptions cannot expose provider data or alter results
+  ---
+  duration_ms: 1.078072
+  type: 'test'
+  ...
+# (node:115426) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115426) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: real event client uses the SDK GET contract for each existing configured mode
+ok 333 - real event client uses the SDK GET contract for each existing configured mode
+  ---
+  duration_ms: 27.817188
+  type: 'test'
+  ...
+# Subtest: SDK-contract transport fixture reaches the real verification handler and one unchanged RPC
+ok 334 - SDK-contract transport fixture reaches the real verification handler and one unchanged RPC
+  ---
+  duration_ms: 6.457108
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late headers at 10000ms before delayed timers
+ok 335 - event lookup rejects late headers at 10000ms before delayed timers
+  ---
+  duration_ms: 22.238445
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late headers at 10001ms before delayed timers
+ok 336 - event lookup rejects late headers at 10001ms before delayed timers
+  ---
+  duration_ms: 2.358945
+  type: 'test'
+  ...
+# Subtest: event lookup accepts headers at 9999ms with its timer still queued
+ok 337 - event lookup accepts headers at 9999ms with its timer still queued
+  ---
+  duration_ms: 2.444653
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late body at 10000ms before delayed timers
+ok 338 - event lookup rejects late body at 10000ms before delayed timers
+  ---
+  duration_ms: 3.408536
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late body at 10001ms before delayed timers
+ok 339 - event lookup rejects late body at 10001ms before delayed timers
+  ---
+  duration_ms: 1.649866
+  type: 'test'
+  ...
+# Subtest: event lookup accepts body at 9999ms with its timer still queued
+ok 340 - event lookup accepts body at 9999ms with its timer still queued
+  ---
+  duration_ms: 1.723502
+  type: 'test'
+  ...
+# Subtest: event lookup rejects an expired result when queued continuations resume
+ok 341 - event lookup rejects an expired result when queued continuations resume
+  ---
+  duration_ms: 2.606262
+  type: 'test'
+  ...
+# Subtest: event lookup bounds stalled headers and ignores its late response
+ok 342 - event lookup bounds stalled headers and ignores its late response
+  ---
+  duration_ms: 2.664704
+  type: 'test'
+  ...
+# Subtest: event lookup bounds stalled body and ignores its late response
+ok 343 - event lookup bounds stalled body and ignores its late response
+  ---
+  duration_ms: 1.948589
+  type: 'test'
+  ...
+# Subtest: a completed event lookup clears its deadline without cancelling the successful response
+ok 344 - a completed event lookup clears its deadline without cancelling the successful response
+  ---
+  duration_ms: 2.126278
+  type: 'test'
+  ...
+# Subtest: each SDK error type is classified without acknowledging caller payment claims or opening DB
+ok 345 - each SDK error type is classified without acknowledging caller payment claims or opening DB
+  ---
+  duration_ms: 8.232335
+  type: 'test'
+  ...
+# Subtest: HTTP lookup failures report only whether the event prefix matches the configured provider environment
+ok 346 - HTTP lookup failures report only whether the event prefix matches the configured provider environment
+  ---
+  duration_ms: 10.588019
+  type: 'test'
+  ...
+# Subtest: typed client errors normalize unknown, absent, and hostile types to a fixed safe classification
+ok 347 - typed client errors normalize unknown, absent, and hostile types to a fixed safe classification
+  ---
+  duration_ms: 0.592088
+  type: 'test'
+  ...
+# Subtest: unknown and malformed provider errors preserve a bounded retryable response
+ok 348 - unknown and malformed provider errors preserve a bounded retryable response
+  ---
+  duration_ms: 27.594513
+  type: 'test'
+  ...
+# Subtest: authenticated event identity mismatch never uses the claimed paid caller resource
+ok 349 - authenticated event identity mismatch never uses the claimed paid caller resource
+  ---
+  duration_ms: 0.667494
+  type: 'test'
+  ...
+# Subtest: invalid incoming IDs and disabled scope make zero provider or DB calls
+ok 350 - invalid incoming IDs and disabled scope make zero provider or DB calls
+  ---
+  duration_ms: 1.319056
+  type: 'test'
+  ...
+# Subtest: unrecognized configured modes and missing secret fail before event transport
+ok 351 - unrecognized configured modes and missing secret fail before event transport
+  ---
+  duration_ms: 0.700741
+  type: 'test'
+  ...
+# Subtest: event-only SDK headers cannot alter the existing single-charge request or body
+ok 352 - event-only SDK headers cannot alter the existing single-charge request or body
+  ---
+  duration_ms: 0.921239
+  type: 'test'
+  ...
+# (node:115438) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: prepares only a local token session, with amount from locked RPC
+ok 353 - prepares only a local token session, with amount from locked RPC
+  ---
+  duration_ms: 30.805661
+  type: 'test'
+  ...
+# Subtest: manual and legacy provider-order reservations cannot enter token lane
+ok 354 - manual and legacy provider-order reservations cannot enter token lane
+  ---
+  duration_ms: 2.320439
+  type: 'test'
+  ...
+# Subtest: in-flight, uncertain, expired or paid session RPC rejection is fail closed
+ok 355 - in-flight, uncertain, expired or paid session RPC rejection is fail closed
+  ---
+  duration_ms: 1.092127
+  type: 'test'
+  ...
+# Subtest: wrong email and forbidden origin cannot prepare session
+ok 356 - wrong email and forbidden origin cannot prepare session
+  ---
+  duration_ms: 3.990984
+  type: 'test'
+  ...
+# Subtest: checkout never exposes an alternative payment order or methods
+ok 357 - checkout never exposes an alternative payment order or methods
+  ---
+  duration_ms: 18.28416
+  type: 'test'
+  ...
+# Subtest: missing or malformed checkout capability cannot read or prepare a local token session
+ok 358 - missing or malformed checkout capability cannot read or prepare a local token session
+  ---
+  duration_ms: 4.449168
+  type: 'test'
+  ...
+# Subtest: wrong capability or mismatched selected order cannot prepare or disclose a local token session
+ok 359 - wrong capability or mismatched selected order cannot prepare or disclose a local token session
+  ---
+  duration_ms: 4.717685
+  type: 'test'
+  ...
+# Subtest: valid normalized capability binds preparation to exactly the requested order and unchanged RPC
+ok 360 - valid normalized capability binds preparation to exactly the requested order and unchanged RPC
+  ---
+  duration_ms: 3.402635
+  type: 'test'
+  ...
+# Subtest: a preparation lookup failure cannot echo the checkout capability or disclose a session
+ok 361 - a preparation lookup failure cannot echo the checkout capability or disclose a session
+  ---
+  duration_ms: 0.880872
+  type: 'test'
+  ...
+# (node:115450) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Yape creates one charge from ype source, without order or card authentication
+ok 362 - Yape creates one charge from ype source, without order or card authentication
+  ---
+  duration_ms: 2.390026
+  type: 'test'
+  ...
+# Subtest: Yape rejects excessive amount or 3DS before contacting provider
+ok 363 - Yape rejects excessive amount or 3DS before contacting provider
+  ---
+  duration_ms: 2.862153
+  type: 'test'
+  ...
+# Subtest: unexpected REVIEW for Yape is not converted into a card 3DS flow
+ok 364 - unexpected REVIEW for Yape is not converted into a card 3DS flow
+  ---
+  duration_ms: 18.44842
+  type: 'test'
+  ...
+# Subtest: card REVIEW retains the verified 3DS continuation
+ok 365 - card REVIEW retains the verified 3DS continuation
+  ---
+  duration_ms: 0.317792
+  type: 'test'
+  ...
+# (node:115462) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/admin/login-security.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115462) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: actual signed admin fixture runs the existing action with server-only reads and acknowledgement
+ok 366 - actual signed admin fixture runs the existing action with server-only reads and acknowledgement
+  ---
+  duration_ms: 48.039675
+  type: 'test'
+  ...
+# Subtest: real session verification rejects missing before headers/config/provider/database
+ok 367 - real session verification rejects missing before headers/config/provider/database
+  ---
+  duration_ms: 1.69276
+  type: 'test'
+  ...
+# Subtest: real session verification rejects tampered before headers/config/provider/database
+ok 368 - real session verification rejects tampered before headers/config/provider/database
+  ---
+  duration_ms: 1.436451
+  type: 'test'
+  ...
+# Subtest: real session verification rejects expired before headers/config/provider/database
+ok 369 - real session verification rejects expired before headers/config/provider/database
+  ---
+  duration_ms: 2.172549
+  type: 'test'
+  ...
+# Subtest: real session verification rejects other_origin before headers/config/provider/database
+ok 370 - real session verification rejects other_origin before headers/config/provider/database
+  ---
+  duration_ms: 0.836254
+  type: 'test'
+  ...
+# Subtest: missing origin fails before configuration, keys, provider or DB access
+ok 371 - missing origin fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 3.886381
+  type: 'test'
+  ...
+# Subtest: opaque origin fails before configuration, keys, provider or DB access
+ok 372 - opaque origin fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.606636
+  type: 'test'
+  ...
+# Subtest: wrong origin fails before configuration, keys, provider or DB access
+ok 373 - wrong origin fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.599021
+  type: 'test'
+  ...
+# Subtest: origin path fails before configuration, keys, provider or DB access
+ok 374 - origin path fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.680987
+  type: 'test'
+  ...
+# Subtest: origin port fails before configuration, keys, provider or DB access
+ok 375 - origin port fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.548306
+  type: 'test'
+  ...
+# Subtest: insecure origin fails before configuration, keys, provider or DB access
+ok 376 - insecure origin fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.430132
+  type: 'test'
+  ...
+# Subtest: missing host fails before configuration, keys, provider or DB access
+ok 377 - missing host fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.403037
+  type: 'test'
+  ...
+# Subtest: wrong host fails before configuration, keys, provider or DB access
+ok 378 - wrong host fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.361489
+  type: 'test'
+  ...
+# Subtest: wrong forwarded host fails before configuration, keys, provider or DB access
+ok 379 - wrong forwarded host fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.326309
+  type: 'test'
+  ...
+# Subtest: forwarded host list fails before configuration, keys, provider or DB access
+ok 380 - forwarded host list fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 1.074109
+  type: 'test'
+  ...
+# Subtest: cross-site navigation fails before configuration, keys, provider or DB access
+ok 381 - cross-site navigation fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.578448
+  type: 'test'
+  ...
+# Subtest: same-site navigation fails before configuration, keys, provider or DB access
+ok 382 - same-site navigation fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.500678
+  type: 'test'
+  ...
+# Subtest: non-browser navigation fails before configuration, keys, provider or DB access
+ok 383 - non-browser navigation fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.551983
+  type: 'test'
+  ...
+# Subtest: wrong referer fails before configuration, keys, provider or DB access
+ok 384 - wrong referer fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.405231
+  type: 'test'
+  ...
+# Subtest: referer credentials fails before configuration, keys, provider or DB access
+ok 385 - referer credentials fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.312825
+  type: 'test'
+  ...
+# Subtest: malformed referer fails before configuration, keys, provider or DB access
+ok 386 - malformed referer fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.295076
+  type: 'test'
+  ...
+# Subtest: wrong forwarded protocol fails before configuration, keys, provider or DB access
+ok 387 - wrong forwarded protocol fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.511246
+  type: 'test'
+  ...
+# Subtest: forwarded protocol list fails before configuration, keys, provider or DB access
+ok 388 - forwarded protocol list fails before configuration, keys, provider or DB access
+  ---
+  duration_ms: 0.356427
+  type: 'test'
+  ...
+# Subtest: optional absent forwarded and navigation headers cannot replace required exact origin and host
+ok 389 - optional absent forwarded and navigation headers cannot replace required exact origin and host
+  ---
+  duration_ms: 4.041704
+  type: 'test'
+  ...
+# Subtest: pure request guard rejects methods outside native POST even with canonical server headers
+ok 390 - pure request guard rejects methods outside native POST even with canonical server headers
+  ---
+  duration_ms: 0.550351
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: VERCEL_ENV
+ok 391 - wrong sandbox scope fails before keys and clients: VERCEL_ENV
+  ---
+  duration_ms: 1.135504
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: VERCEL_TARGET_ENV
+ok 392 - wrong sandbox scope fails before keys and clients: VERCEL_TARGET_ENV
+  ---
+  duration_ms: 0.800645
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: VERCEL_PROJECT_ID
+ok 393 - wrong sandbox scope fails before keys and clients: VERCEL_PROJECT_ID
+  ---
+  duration_ms: 0.632939
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: VERCEL_GIT_COMMIT_REF
+ok 394 - wrong sandbox scope fails before keys and clients: VERCEL_GIT_COMMIT_REF
+  ---
+  duration_ms: 1.23901
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: VERCEL_GIT_REPO_SLUG
+ok 395 - wrong sandbox scope fails before keys and clients: VERCEL_GIT_REPO_SLUG
+  ---
+  duration_ms: 6.004759
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: NEXT_PUBLIC_SITE_URL
+ok 396 - wrong sandbox scope fails before keys and clients: NEXT_PUBLIC_SITE_URL
+  ---
+  duration_ms: 0.590696
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: NEXT_PUBLIC_SUPABASE_URL
+ok 397 - wrong sandbox scope fails before keys and clients: NEXT_PUBLIC_SUPABASE_URL
+  ---
+  duration_ms: 0.515321
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: CULQI_MODE
+ok 398 - wrong sandbox scope fails before keys and clients: CULQI_MODE
+  ---
+  duration_ms: 0.567687
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: CULQI_LIVE_APPROVED
+ok 399 - wrong sandbox scope fails before keys and clients: CULQI_LIVE_APPROVED
+  ---
+  duration_ms: 0.697325
+  type: 'test'
+  ...
+# Subtest: wrong sandbox scope fails before keys and clients: CULQI_ENABLED
+ok 400 - wrong sandbox scope fails before keys and clients: CULQI_ENABLED
+  ---
+  duration_ms: 0.454016
+  type: 'test'
+  ...
+# Subtest: missing, live or malformed Culqi keys stop before SELECT or provider requests
+ok 401 - missing, live or malformed Culqi keys stop before SELECT or provider requests
+  ---
+  duration_ms: 3.002259
+  type: 'test'
+  ...
+# Subtest: native action ignores hostile caller arguments and never forwards IDs or headers to the wrapper
+ok 402 - native action ignores hostile caller arguments and never forwards IDs or headers to the wrapper
+  ---
+  duration_ms: 3.250917
+  type: 'test'
+  ...
+# Subtest: extra, duplicate, mismatched, non-token or foreign order rows stop before provider lookup
+ok 403 - extra, duplicate, mismatched, non-token or foreign order rows stop before provider lookup
+  ---
+  duration_ms: 15.035858
+  type: 'test'
+  ...
+# Subtest: exceptions and failed SELECT remain generic and never leak raw details
+ok 404 - exceptions and failed SELECT remain generic and never leak raw details
+  ---
+  duration_ms: 9.338856
+  type: 'test'
+  ...
+# Subtest: public acknowledgement drops all report fields and only a strict boolean may report success
+ok 405 - public acknowledgement drops all report fields and only a strict boolean may report success
+  ---
+  duration_ms: 1.659324
+  type: 'test'
+  ...
+# Subtest: diagnostic adapter and thin action add no payment mutations, notifications or cache revalidation
+ok 406 - diagnostic adapter and thin action add no payment mutations, notifications or cache revalidation
+  ---
+  duration_ms: 0.511971
+  type: 'test'
+  ...
+# Subtest: read-only SELECT receives an abort signal with a ten second timeout
+ok 407 - read-only SELECT receives an abort signal with a ten second timeout
+  ---
+  duration_ms: 26.928877
+  type: 'test'
+  ...
+# (node:115469) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-readonly-diagnostic.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: exported metadata scope is boolean-only and never accesses payment keys
+ok 408 - exported metadata scope is boolean-only and never accesses payment keys
+  ---
+  duration_ms: 3.846877
+  type: 'test'
+  ...
+# Subtest: authenticated read is GET-only, bounded, local-pinned and never confirms payment
+ok 409 - authenticated read is GET-only, bounded, local-pinned and never confirms payment
+  ---
+  duration_ms: 29.985027
+  type: 'test'
+  ...
+# Subtest: unauthenticated request stops before CSRF/config/DB/provider, raw error is suppressed
+ok 410 - unauthenticated request stops before CSRF/config/DB/provider, raw error is suppressed
+  ---
+  duration_ms: 0.83206
+  type: 'test'
+  ...
+# Subtest: CSRF false or throwing stops before all config reads
+ok 411 - CSRF false or throwing stops before all config reads
+  ---
+  duration_ms: 1.434817
+  type: 'test'
+  ...
+# Subtest: wrong Origin fails before reading config
+ok 412 - wrong Origin fails before reading config
+  ---
+  duration_ms: 0.588775
+  type: 'test'
+  ...
+# Subtest: missing Origin fails before reading config
+ok 413 - missing Origin fails before reading config
+  ---
+  duration_ms: 3.791291
+  type: 'test'
+  ...
+# Subtest: null Origin fails before reading config
+ok 414 - null Origin fails before reading config
+  ---
+  duration_ms: 0.345019
+  type: 'test'
+  ...
+# Subtest: wrong Host fails before reading config
+ok 415 - wrong Host fails before reading config
+  ---
+  duration_ms: 0.263218
+  type: 'test'
+  ...
+# Subtest: wrong forwarded Host fails before reading config
+ok 416 - wrong forwarded Host fails before reading config
+  ---
+  duration_ms: 0.393145
+  type: 'test'
+  ...
+# Subtest: multiple forwarded Hosts fails before reading config
+ok 417 - multiple forwarded Hosts fails before reading config
+  ---
+  duration_ms: 0.33332
+  type: 'test'
+  ...
+# Subtest: cross-site request fails before reading config
+ok 418 - cross-site request fails before reading config
+  ---
+  duration_ms: 0.309819
+  type: 'test'
+  ...
+# Subtest: same-site foreign request fails before reading config
+ok 419 - same-site foreign request fails before reading config
+  ---
+  duration_ms: 0.43416
+  type: 'test'
+  ...
+# Subtest: Fetch-Site none request fails before reading config
+ok 420 - Fetch-Site none request fails before reading config
+  ---
+  duration_ms: 0.263133
+  type: 'test'
+  ...
+# Subtest: GET action fails before reading config
+ok 421 - GET action fails before reading config
+  ---
+  duration_ms: 0.307645
+  type: 'test'
+  ...
+# Subtest: wrong Referer fails before reading config
+ok 422 - wrong Referer fails before reading config
+  ---
+  duration_ms: 0.251386
+  type: 'test'
+  ...
+# Subtest: credentialed Referer fails before reading config
+ok 423 - credentialed Referer fails before reading config
+  ---
+  duration_ms: 0.243423
+  type: 'test'
+  ...
+# Subtest: canonical forwarded Host and same-origin Fetch-Site preserve authenticated reads
+ok 424 - canonical forwarded Host and same-origin Fetch-Site preserve authenticated reads
+  ---
+  duration_ms: 6.359192
+  type: 'test'
+  ...
+# Subtest: production fails before payment key access
+ok 425 - production fails before payment key access
+  ---
+  duration_ms: 0.533136
+  type: 'test'
+  ...
+# Subtest: target production fails before payment key access
+ok 426 - target production fails before payment key access
+  ---
+  duration_ms: 1.268222
+  type: 'test'
+  ...
+# Subtest: wrong project fails before payment key access
+ok 427 - wrong project fails before payment key access
+  ---
+  duration_ms: 0.376871
+  type: 'test'
+  ...
+# Subtest: wrong branch fails before payment key access
+ok 428 - wrong branch fails before payment key access
+  ---
+  duration_ms: 0.240449
+  type: 'test'
+  ...
+# Subtest: wrong repo fails before payment key access
+ok 429 - wrong repo fails before payment key access
+  ---
+  duration_ms: 0.256319
+  type: 'test'
+  ...
+# Subtest: wrong branch origin fails before payment key access
+ok 430 - wrong branch origin fails before payment key access
+  ---
+  duration_ms: 0.239404
+  type: 'test'
+  ...
+# Subtest: production site fails before payment key access
+ok 431 - production site fails before payment key access
+  ---
+  duration_ms: 0.408204
+  type: 'test'
+  ...
+# Subtest: wrong QA fails before payment key access
+ok 432 - wrong QA fails before payment key access
+  ---
+  duration_ms: 0.275445
+  type: 'test'
+  ...
+# Subtest: live mode fails before payment key access
+ok 433 - live mode fails before payment key access
+  ---
+  duration_ms: 0.198631
+  type: 'test'
+  ...
+# Subtest: live approved fails before payment key access
+ok 434 - live approved fails before payment key access
+  ---
+  duration_ms: 0.173002
+  type: 'test'
+  ...
+# Subtest: missing live flag fails before payment key access
+ok 435 - missing live flag fails before payment key access
+  ---
+  duration_ms: 0.165246
+  type: 'test'
+  ...
+# Subtest: disabled fails before payment key access
+ok 436 - disabled fails before payment key access
+  ---
+  duration_ms: 0.2212
+  type: 'test'
+  ...
+# Subtest: test prefixes reject CULQI_SECRET_KEY invalid/missing value
+ok 437 - test prefixes reject CULQI_SECRET_KEY invalid/missing value
+  ---
+  duration_ms: 0.31356
+  type: 'test'
+  ...
+# Subtest: test prefixes reject CULQI_SECRET_KEY invalid/missing value
+ok 438 - test prefixes reject CULQI_SECRET_KEY invalid/missing value
+  ---
+  duration_ms: 0.169646
+  type: 'test'
+  ...
+# Subtest: test prefixes reject NEXT_PUBLIC_CULQI_PUBLIC_KEY invalid/missing value
+ok 439 - test prefixes reject NEXT_PUBLIC_CULQI_PUBLIC_KEY invalid/missing value
+  ---
+  duration_ms: 0.171605
+  type: 'test'
+  ...
+# Subtest: test prefixes reject CULQI_SECRET_KEY invalid/missing value
+ok 440 - test prefixes reject CULQI_SECRET_KEY invalid/missing value
+  ---
+  duration_ms: 0.237286
+  type: 'test'
+  ...
+# Subtest: caller IDs/JSON/headers are ignored and never select a resource or leak
+ok 441 - caller IDs/JSON/headers are ignored and never select a resource or leak
+  ---
+  duration_ms: 4.647359
+  type: 'test'
+  ...
+# Subtest: dependencies.targets are ignored and cannot override fixed server charge IDs
+ok 442 - dependencies.targets are ignored and cannot override fixed server charge IDs
+  ---
+  duration_ms: 5.603679
+  type: 'test'
+  ...
+# Subtest: entire missing configuration fails closed without reads or provider GET
+ok 443 - entire missing configuration fails closed without reads or provider GET
+  ---
+  duration_ms: 0.494881
+  type: 'test'
+  ...
+# Subtest: current GET charge mismatches prevent listed and verified events from passing
+ok 444 - current GET charge mismatches prevent listed and verified events from passing
+  ---
+  duration_ms: 50.197782
+  type: 'test'
+  ...
+# Subtest: DB identity, live source, duplicate rows and provider mismatches fail before provider GET
+ok 445 - DB identity, live source, duplicate rows and provider mismatches fail before provider GET
+  ---
+  duration_ms: 4.635154
+  type: 'test'
+  ...
+# Subtest: AUT0000 alone, paid and capture flags never create approval
+ok 446 - AUT0000 alone, paid and capture flags never create approval
+  ---
+  duration_ms: 5.86729
+  type: 'test'
+  ...
+# Subtest: capture observations retain unknown semantics even with malformed date types
+ok 447 - capture observations retain unknown semantics even with malformed date types
+  ---
+  duration_ms: 15.173996
+  type: 'test'
+  ...
+# Subtest: serialized and object event data are accepted only after detail GET
+ok 448 - serialized and object event data are accepted only after detail GET
+  ---
+  duration_ms: 11.00028
+  type: 'test'
+  ...
+# Subtest: listed success cannot pass if authenticated GET returns mismatch
+ok 449 - listed success cannot pass if authenticated GET returns mismatch
+  ---
+  duration_ms: 73.049524
+  type: 'test'
+  ...
+# Subtest: seconds event timestamps, live IDs and malicious JSON never trigger candidate GET
+ok 450 - seconds event timestamps, live IDs and malicious JSON never trigger candidate GET
+  ---
+  duration_ms: 4.25676
+  type: 'test'
+  ...
+# Subtest: conflicting verified events remain in review and never reconcile
+ok 451 - conflicting verified events remain in review and never reconcile
+  ---
+  duration_ms: 5.625709
+  type: 'test'
+  ...
+# Subtest: candidate and request caps stop the scan without inferring absence
+ok 452 - candidate and request caps stop the scan without inferring absence
+  ---
+  duration_ms: 16.075783
+  type: 'test'
+  ...
+# Subtest: provider/DB errors, malformed JSON, excessive bodies and headers never leak
+ok 453 - provider/DB errors, malformed JSON, excessive bodies and headers never leak
+  ---
+  duration_ms: 57.486201
+  type: 'test'
+  ...
+# Subtest: stream limits cancel excessive charge, list and detail bodies before approval
+ok 454 - stream limits cancel excessive charge, list and detail bodies before approval
+  ---
+  duration_ms: 7.265828
+  type: 'test'
+  ...
+# Subtest: invalid UTF-8, non-object JSON and missing response bodies fail closed
+ok 455 - invalid UTF-8, non-object JSON and missing response bodies fail closed
+  ---
+  duration_ms: 3.888493
+  type: 'test'
+  ...
+# Subtest: malformed or oversized list envelopes cannot trigger event detail GET
+ok 456 - malformed or oversized list envelopes cannot trigger event detail GET
+  ---
+  duration_ms: 32.989196
+  type: 'test'
+  ...
+# Subtest: duplicate event IDs cause only one authenticated detail GET
+ok 457 - duplicate event IDs cause only one authenticated detail GET
+  ---
+  duration_ms: 9.429481
+  type: 'test'
+  ...
+# Subtest: deadline aborts subsequent requests, empty lists still are partial, logger errors suppressed
+ok 458 - deadline aborts subsequent requests, empty lists still are partial, logger errors suppressed
+  ---
+  duration_ms: 3.786796
+  type: 'test'
+  ...
+# Subtest: requests near the global deadline receive only the remaining time budget
+ok 459 - requests near the global deadline receive only the remaining time budget
+  ---
+  duration_ms: 2.15293
+  type: 'test'
+  ...
+# Subtest: body reads obey the remaining deadline abort and suppress raw stream errors
+ok 460 - body reads obey the remaining deadline abort and suppress raw stream errors
+  ---
+  duration_ms: 88.986666
+  type: 'test'
+  ...
+# Subtest: two valid empty pages report only bounded page absence, never an exhaustive scan
+ok 461 - two valid empty pages report only bounded page absence, never an exhaustive scan
+  ---
+  duration_ms: 2.312178
+  type: 'test'
+  ...
+# Subtest: a failed charge query identifies its reference and leaves later references unknown
+ok 462 - a failed charge query identifies its reference and leaves later references unknown
+  ---
+  duration_ms: 23.005377
+  type: 'test'
+  ...
+# Subtest: first or second list query failure never certifies absence for any charge
+ok 463 - first or second list query failure never certifies absence for any charge
+  ---
+  duration_ms: 3.400298
+  type: 'test'
+  ...
+# Subtest: invalid list envelopes mark that query failed despite valid HTTP and JSON
+ok 464 - invalid list envelopes mark that query failed despite valid HTTP and JSON
+  ---
+  duration_ms: 7.265698
+  type: 'test'
+  ...
+# Subtest: failed event detail GET remains unknown rather than declaring a rejected event
+ok 465 - failed event detail GET remains unknown rather than declaring a rejected event
+  ---
+  duration_ms: 2.645127
+  type: 'test'
+  ...
+# Subtest: a candidate for one reference does not hide bounded absence for the other two
+ok 466 - a candidate for one reference does not hide bounded absence for the other two
+  ---
+  duration_ms: 2.389311
+  type: 'test'
+  ...
+# Subtest: unclassifiable list entries keep absence unknown even after both page reads
+ok 467 - unclassifiable list entries keep absence unknown even after both page reads
+  ---
+  duration_ms: 5.849132
+  type: 'test'
+  ...
+# (node:115482) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-readonly-diagnostic.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: approval absent or off skips before payment keys and every extra DB/provider capability
+ok 468 - approval absent or off skips before payment keys and every extra DB/provider capability
+  ---
+  duration_ms: 9.808999
+  type: 'test'
+  ...
+# Subtest: dynamic BAG-000005 and 8500 PEN use persisted bindings, a strict rate grant and exact proof
+ok 469 - dynamic BAG-000005 and 8500 PEN use persisted bindings, a strict rate grant and exact proof
+  ---
+  duration_ms: 41.98151
+  type: 'test'
+  ...
+# Subtest: an already paid authoritative snapshot never consumes rate or fetches a charge
+ok 470 - an already paid authoritative snapshot never consumes rate or fetches a charge
+  ---
+  duration_ms: 1.500569
+  type: 'test'
+  ...
+# Subtest: production skips before keys, additional DB or provider
+ok 471 - production skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.7344
+  type: 'test'
+  ...
+# Subtest: target production skips before keys, additional DB or provider
+ok 472 - target production skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.348543
+  type: 'test'
+  ...
+# Subtest: wrong project skips before keys, additional DB or provider
+ok 473 - wrong project skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.427401
+  type: 'test'
+  ...
+# Subtest: wrong branch skips before keys, additional DB or provider
+ok 474 - wrong branch skips before keys, additional DB or provider
+  ---
+  duration_ms: 2.277966
+  type: 'test'
+  ...
+# Subtest: wrong repo skips before keys, additional DB or provider
+ok 475 - wrong repo skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.241722
+  type: 'test'
+  ...
+# Subtest: wrong branch origin skips before keys, additional DB or provider
+ok 476 - wrong branch origin skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.436988
+  type: 'test'
+  ...
+# Subtest: production site skips before keys, additional DB or provider
+ok 477 - production site skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.469481
+  type: 'test'
+  ...
+# Subtest: wrong QA skips before keys, additional DB or provider
+ok 478 - wrong QA skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.249152
+  type: 'test'
+  ...
+# Subtest: live mode skips before keys, additional DB or provider
+ok 479 - live mode skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.234318
+  type: 'test'
+  ...
+# Subtest: live approved skips before keys, additional DB or provider
+ok 480 - live approved skips before keys, additional DB or provider
+  ---
+  duration_ms: 0.244018
+  type: 'test'
+  ...
+# Subtest: live, absent or header-injected keys cannot reach the provider
+ok 481 - live, absent or header-injected keys cannot reach the provider
+  ---
+  duration_ms: 0.747235
+  type: 'test'
+  ...
+# Subtest: invalid context fails closed without reading any order or accepting caller charge IDs
+ok 482 - invalid context fails closed without reading any order or accepting caller charge IDs
+  ---
+  duration_ms: 0.764329
+  type: 'test'
+  ...
+# Subtest: caller extra IDs do not override the persisted charge or proof
+ok 483 - caller extra IDs do not override the persisted charge or proof
+  ---
+  duration_ms: 1.83245
+  type: 'test'
+  ...
+# Subtest: invalid persisted identities and financial states require review without provider GET
+ok 484 - invalid persisted identities and financial states require review without provider GET
+  ---
+  duration_ms: 3.807602
+  type: 'test'
+  ...
+# Subtest: terminal payment states skip before rate consumption or provider GET
+ok 485 - terminal payment states skip before rate consumption or provider GET
+  ---
+  duration_ms: 0.889772
+  type: 'test'
+  ...
+# Subtest: a truly idle session without a persisted charge or claim skips extra payment work
+ok 486 - a truly idle session without a persisted charge or claim skips extra payment work
+  ---
+  duration_ms: 0.370496
+  type: 'test'
+  ...
+# Subtest: existing manual or cancellation reviews remain eligible and authoritative SQL preserves their result
+ok 487 - existing manual or cancellation reviews remain eligible and authoritative SQL preserves their result
+  ---
+  duration_ms: 4.312261
+  type: 'test'
+  ...
+# Subtest: needs_correction without the explicit uncertain-review reason requires review before GET
+ok 488 - needs_correction without the explicit uncertain-review reason requires review before GET
+  ---
+  duration_ms: 0.74251
+  type: 'test'
+  ...
+# Subtest: rate grants accept only strict booleans, one hit and zero retry, including singleton arrays
+ok 489 - rate grants accept only strict booleans, one hit and zero retry, including singleton arrays
+  ---
+  duration_ms: 2.581577
+  type: 'test'
+  ...
+# Subtest: valid rate denial defers without querying the provider or confirming
+ok 490 - valid rate denial defers without querying the provider or confirming
+  ---
+  duration_ms: 1.382114
+  type: 'test'
+  ...
+# Subtest: missing, ambiguous or malformed rate responses never authorize a provider GET
+ok 491 - missing, ambiguous or malformed rate responses never authorize a provider GET
+  ---
+  duration_ms: 7.740856
+  type: 'test'
+  ...
+# Subtest: an uncaptured charge defers without interpreting paid or date units
+ok 492 - an uncaptured charge defers without interpreting paid or date units
+  ---
+  duration_ms: 2.211595
+  type: 'test'
+  ...
+# Subtest: missing or malformed financial evidence requires review without confirmation
+ok 493 - missing or malformed financial evidence requires review without confirmation
+  ---
+  duration_ms: 9.406574
+  type: 'test'
+  ...
+# Subtest: observed refund, net mismatch, dispute and bound known refunds require review
+ok 494 - observed refund, net mismatch, dispute and bound known refunds require review
+  ---
+  duration_ms: 4.944963
+  type: 'test'
+  ...
+# Subtest: a rejected known refund is not returned money, and a misbound refund context cannot confirm
+ok 495 - a rejected known refund is not returned money, and a misbound refund context cannot confirm
+  ---
+  duration_ms: 2.827516
+  type: 'test'
+  ...
+# Subtest: binding mismatch in a successful provider response cannot confirm
+ok 496 - binding mismatch in a successful provider response cannot confirm
+  ---
+  duration_ms: 3.868754
+  type: 'test'
+  ...
+# Subtest: fresh binding and review changes after GET stop confirmation
+ok 497 - fresh binding and review changes after GET stop confirmation
+  ---
+  duration_ms: 7.834128
+  type: 'test'
+  ...
+# Subtest: already paid during the fresh read is authoritative and skips confirmation
+ok 498 - already paid during the fresh read is authoritative and skips confirmation
+  ---
+  duration_ms: 18.897489
+  type: 'test'
+  ...
+# Subtest: a pending snapshot can receive an authoritative alreadyPaid or duplicate SQL result
+ok 499 - a pending snapshot can receive an authoritative alreadyPaid or duplicate SQL result
+  ---
+  duration_ms: 1.952298
+  type: 'test'
+  ...
+# Subtest: SQL review results remain review_required, including paid cancelled
+ok 500 - SQL review results remain review_required, including paid cancelled
+  ---
+  duration_ms: 2.290028
+  type: 'test'
+  ...
+# Subtest: a locked SQL guard may require review while the payment remains pending without applying
+ok 501 - a locked SQL guard may require review while the payment remains pending without applying
+  ---
+  duration_ms: 3.022671
+  type: 'test'
+  ...
+# Subtest: pending SQL envelopes cannot claim an application, receipt or fulfilled order
+ok 502 - pending SQL envelopes cannot claim an application, receipt or fulfilled order
+  ---
+  duration_ms: 9.778311
+  type: 'test'
+  ...
+# Subtest: DB, rate, GET and confirmation exceptions return sane unavailable results
+ok 503 - DB, rate, GET and confirmation exceptions return sane unavailable results
+  ---
+  duration_ms: 1.865812
+  type: 'test'
+  ...
+# Subtest: transient provider failures defer without raw errors or confirmation
+ok 504 - transient provider failures defer without raw errors or confirmation
+  ---
+  duration_ms: 1.973323
+  type: 'test'
+  ...
+# Subtest: malformed or contradictory SQL outcomes cannot claim confirmation
+ok 505 - malformed or contradictory SQL outcomes cannot claim confirmation
+  ---
+  duration_ms: 5.274407
+  type: 'test'
+  ...
+# Subtest: invalid JSON, UTF-8 and excessive bodies cannot reach confirmation
+ok 506 - invalid JSON, UTF-8 and excessive bodies cannot reach confirmation
+  ---
+  duration_ms: 12.407084
+  type: 'test'
+  ...
+# Subtest: overflow cancels an unclosed provider stream without awaiting a hostile source
+ok 507 - overflow cancels an unclosed provider stream without awaiting a hostile source
+  ---
+  duration_ms: 1.732798
+  type: 'test'
+  ...
+# Subtest: a throwing clock returns unavailable without escaping or exposing raw errors
+ok 508 - a throwing clock returns unavailable without escaping or exposing raw errors
+  ---
+  duration_ms: 0.271788
+  type: 'test'
+  ...
+# Subtest: a trusted configuration provider may return an object with a server-owned prototype
+ok 509 - a trusted configuration provider may return an object with a server-owned prototype
+  ---
+  duration_ms: 0.974294
+  type: 'test'
+  ...
+# Subtest: each request uses the absolute nine-second ceiling and a five-second GET ceiling
+ok 510 - each request uses the absolute nine-second ceiling and a five-second GET ceiling
+  ---
+  duration_ms: 4.156771
+  type: 'test'
+  ...
+# Subtest: a stalled provider body is aborted and cancelled within its GET ceiling
+ok 511 - a stalled provider body is aborted and cancelled within its GET ceiling
+  ---
+  duration_ms: 74.38025
+  type: 'test'
+  ...
+# Subtest: the absolute nine-second budget survives a frozen clock across otherwise valid steps
+ok 512 - the absolute nine-second budget survives a frozen clock across otherwise valid steps
+  ---
+  duration_ms: 9000.782628
+  type: 'test'
+  ...
+# (node:115494) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:115494) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: authenticated resource is passed once to the transaction RPC
+ok 513 - authenticated resource is passed once to the transaction RPC
+  ---
+  duration_ms: 32.698219
+  type: 'test'
+  ...
+# Subtest: documented JSON-string event data is parsed before transaction
+ok 514 - documented JSON-string event data is parsed before transaction
+  ---
+  duration_ms: 1.235707
+  type: 'test'
+  ...
+# Subtest: both selected charge events preserve object and JSON-string data through the mocked RPC
+ok 515 - both selected charge events preserve object and JSON-string data through the mocked RPC
+  ---
+  duration_ms: 3.970127
+  type: 'test'
+  ...
+# Subtest: invalid provider identity or absent provider type cannot use caller type
+ok 516 - invalid provider identity or absent provider type cannot use caller type
+  ---
+  duration_ms: 4.014297
+  type: 'test'
+  ...
+# Subtest: malformed resources never reach the transaction
+ok 517 - malformed resources never reach the transaction
+  ---
+  duration_ms: 2.35301
+  type: 'test'
+  ...
+# Subtest: missing migration or failed transaction is retryable, never success
+ok 518 - missing migration or failed transaction is retryable, never success
+  ---
+  duration_ms: 1.283263
+  type: 'test'
+  ...
+# Subtest: duplicate transaction result is returned without extra writes
+ok 519 - duplicate transaction result is returned without extra writes
+  ---
+  duration_ms: 0.64594
+  type: 'test'
+  ...
+# Subtest: disabled payments make no provider lookup, database client or transaction call for either charge event
+ok 520 - disabled payments make no provider lookup, database client or transaction call for either charge event
+  ---
+  duration_ms: 3.726389
+  type: 'test'
+  ...
+# Subtest: refund events require reconciliation and never reach payment transaction
+ok 521 - refund events require reconciliation and never reach payment transaction
+  ---
+  duration_ms: 2.463385
+  type: 'test'
+  ...
+# Subtest: invalid request bodies log a bounded failure without provider or database access
+ok 522 - invalid request bodies log a bounded failure without provider or database access
+  ---
+  duration_ms: 3.312292
+  type: 'test'
+  ...
+# Subtest: provider and database exceptions never log error messages, payloads or headers
+ok 523 - provider and database exceptions never log error messages, payloads or headers
+  ---
+  duration_ms: 2.903738
+  type: 'test'
+  ...
+# Subtest: success diagnostics omit request, authenticated resource and RPC result private fields
+ok 524 - success diagnostics omit request, authenticated resource and RPC result private fields
+  ---
+  duration_ms: 0.894224
+  type: 'test'
+  ...
+# Subtest: diagnostics report verified event outcomes and normalize unknown or forged states
+ok 525 - diagnostics report verified event outcomes and normalize unknown or forged states
+  ---
+  duration_ms: 1.786031
+  type: 'test'
+  ...
+# Subtest: a late failed event reports its event outcome while the effective paid order remains unchanged
+ok 526 - a late failed event reports its event outcome while the effective paid order remains unchanged
+  ---
+  duration_ms: 0.632608
+  type: 'test'
+  ...
+# Subtest: failed request and unverified provider identity cannot claim verified payment progress
+ok 527 - failed request and unverified provider identity cannot claim verified payment progress
+  ---
+  duration_ms: 1.484993
+  type: 'test'
+  ...
+# Subtest: provider HTTP failures map only to allowlisted diagnostic reasons while remaining retryable
+ok 528 - provider HTTP failures map only to allowlisted diagnostic reasons while remaining retryable
+  ---
+  duration_ms: 1.957489
+  type: 'test'
+  ...
+# Subtest: lookup diagnostics distinguish the observed HTTP 400, HTTP 500 and transport failures
+ok 529 - lookup diagnostics distinguish the observed HTTP 400, HTTP 500 and transport failures
+  ---
+  duration_ms: 2.098286
+  type: 'test'
+  ...
+# Subtest: lookup error types are fixed labels and never read raw upstream error fields
+ok 530 - lookup error types are fixed labels and never read raw upstream error fields
+  ---
+  duration_ms: 8.468343
+  type: 'test'
+  ...
+# Subtest: event mode diagnostics normalize hostile fields without exposing IDs or changing lookup rejection
+ok 531 - event mode diagnostics normalize hostile fields without exposing IDs or changing lookup rejection
+  ---
+  duration_ms: 6.598523
+  type: 'test'
+  ...
+# Subtest: lookup diagnostics accept only numeric integer upstream HTTP statuses from 100 through 599
+ok 532 - lookup diagnostics accept only numeric integer upstream HTTP statuses from 100 through 599
+  ---
+  duration_ms: 3.338548
+  type: 'test'
+  ...
+# Subtest: lookup timeout labels never serialize untrusted names or nested causes
+ok 533 - lookup timeout labels never serialize untrusted names or nested causes
+  ---
+  duration_ms: 1.876445
+  type: 'test'
+  ...
+# Subtest: hostile upstream status and name accessors cannot throw or add raw diagnostics
+ok 534 - hostile upstream status and name accessors cannot throw or add raw diagnostics
+  ---
+  duration_ms: 0.679326
+  type: 'test'
+  ...
+# Subtest: successful lookup and failures at other stages never claim an upstream HTTP status or failure
+ok 535 - successful lookup and failures at other stages never claim an upstream HTTP status or failure
+  ---
+  duration_ms: 3.044492
+  type: 'test'
+  ...
+# Subtest: verified but unsupported or malformed resources remain bounded and never invoke the transaction
+ok 536 - verified but unsupported or malformed resources remain bounded and never invoke the transaction
+  ---
+  duration_ms: 0.930238
+  type: 'test'
+  ...
+# Subtest: known database codes and exact local validation messages become enum reasons without raw details
+ok 537 - known database codes and exact local validation messages become enum reasons without raw details
+  ---
+  duration_ms: 2.724034
+  type: 'test'
+  ...
+# Subtest: every handled result logs one bounded diagnostic without changing its response or RPC behavior
+ok 538 - every handled result logs one bounded diagnostic without changing its response or RPC behavior
+  ---
+  duration_ms: 3.071191
+  type: 'test'
+  ...
+# Subtest: webhook diagnostics remain local and add no notification or extra write mechanism
+ok 539 - webhook diagnostics remain local and add no notification or extra write mechanism
+  ---
+  duration_ms: 0.380785
+  type: 'test'
+  ...
+# (node:115506) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: late paid reservation exposes review flag instead of hiding cancellation
+ok 540 - late paid reservation exposes review flag instead of hiding cancellation
+  ---
+  duration_ms: 18.861563
+  type: 'test'
+  ...
+# Subtest: ordinary verified payment has no review flag
+ok 541 - ordinary verified payment has no review flag
+  ---
+  duration_ms: 1.271256
+  type: 'test'
+  ...
+# Subtest: wrong checkout session cannot read payment or reconciliation state
+ok 542 - wrong checkout session cannot read payment or reconciliation state
+  ---
+  duration_ms: 8.134734
+  type: 'test'
+  ...
+# Subtest: disabled or forbidden origin and malformed sessions never access the database
+ok 543 - disabled or forbidden origin and malformed sessions never access the database
+  ---
+  duration_ms: 2.411712
+  type: 'test'
+  ...
+# Subtest: expired submitting, 3DS, submitted and uncertain charges return review without route writes
+ok 544 - expired submitting, 3DS, submitted and uncertain charges return review without route writes
+  ---
+  duration_ms: 3.242942
+  type: 'test'
+  ...
+# Subtest: the locked result wins if a verified webhook changed the initial pending snapshot
+ok 545 - the locked result wins if a verified webhook changed the initial pending snapshot
+  ---
+  duration_ms: 1.140397
+  type: 'test'
+  ...
+# Subtest: idle unpaid expiry uses the atomic cancellation result
+ok 546 - idle unpaid expiry uses the atomic cancellation result
+  ---
+  duration_ms: 0.8547
+  type: 'test'
+  ...
+# Subtest: missing or failed expiry RPC fails closed and never exposes raw errors
+ok 547 - missing or failed expiry RPC fails closed and never exposes raw errors
+  ---
+  duration_ms: 5.222144
+  type: 'test'
+  ...
+# Subtest: malformed transaction results cannot invent payment or reconciliation state
+ok 548 - malformed transaction results cannot invent payment or reconciliation state
+  ---
+  duration_ms: 7.241697
+  type: 'test'
+  ...
+# Subtest: lookup errors remain constant and status responses never cache
+ok 549 - lookup errors remain constant and status responses never cache
+  ---
+  duration_ms: 1.132087
+  type: 'test'
+  ...
+# Subtest: es: URL paid cannot certify payment, amount or selected products
+ok 550 - es: URL paid cannot certify payment, amount or selected products
+  ---
+  duration_ms: 239.405839
+  type: 'test'
+  ...
+# Subtest: es: URL pending cannot certify payment, amount or selected products
+ok 551 - es: URL pending cannot certify payment, amount or selected products
+  ---
+  duration_ms: 45.093043
+  type: 'test'
+  ...
+# Subtest: es: URL demo cannot certify payment, amount or selected products
+ok 552 - es: URL demo cannot certify payment, amount or selected products
+  ---
+  duration_ms: 44.473034
+  type: 'test'
+  ...
+# Subtest: es: URL manual cannot certify payment, amount or selected products
+ok 553 - es: URL manual cannot certify payment, amount or selected products
+  ---
+  duration_ms: 62.226725
+  type: 'test'
+  ...
+# Subtest: es: URL unknown cannot certify payment, amount or selected products
+ok 554 - es: URL unknown cannot certify payment, amount or selected products
+  ---
+  duration_ms: 33.592422
+  type: 'test'
+  ...
+# Subtest: es: missing or repeated order parameters remain an unverified lookup
+ok 555 - es: missing or repeated order parameters remain an unverified lookup
+  ---
+  duration_ms: 100.27153
+  type: 'test'
+  ...
+# Subtest: en: URL paid cannot certify payment, amount or selected products
+ok 556 - en: URL paid cannot certify payment, amount or selected products
+  ---
+  duration_ms: 22.210544
+  type: 'test'
+  ...
+# Subtest: en: URL pending cannot certify payment, amount or selected products
+ok 557 - en: URL pending cannot certify payment, amount or selected products
+  ---
+  duration_ms: 37.538598
+  type: 'test'
+  ...
+# Subtest: en: URL demo cannot certify payment, amount or selected products
+ok 558 - en: URL demo cannot certify payment, amount or selected products
+  ---
+  duration_ms: 20.633355
+  type: 'test'
+  ...
+# Subtest: en: URL manual cannot certify payment, amount or selected products
+ok 559 - en: URL manual cannot certify payment, amount or selected products
+  ---
+  duration_ms: 30.553919
+  type: 'test'
+  ...
+# Subtest: en: URL unknown cannot certify payment, amount or selected products
+ok 560 - en: URL unknown cannot certify payment, amount or selected products
+  ---
+  duration_ms: 17.965431
+  type: 'test'
+  ...
+# Subtest: en: missing or repeated order parameters remain an unverified lookup
+ok 561 - en: missing or repeated order parameters remain an unverified lookup
+  ---
+  duration_ms: 138.090373
+  type: 'test'
+  ...
+# (node:115526) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: accepts only the authenticated event identity and type
+ok 562 - accepts only the authenticated event identity and type
+  ---
+  duration_ms: 0.988456
+  type: 'test'
+  ...
+# Subtest: accepts the exact integer amount in PEN using either provider currency field
+ok 563 - accepts the exact integer amount in PEN using either provider currency field
+  ---
+  duration_ms: 2.982333
+  type: 'test'
+  ...
+# Subtest: rejects missing, nonnumeric, fractional, wrong and unsafe amounts
+ok 564 - rejects missing, nonnumeric, fractional, wrong and unsafe amounts
+  ---
+  duration_ms: 0.379288
+  type: 'test'
+  ...
+# Subtest: rejects absent, mismatched and conflicting currencies
+ok 565 - rejects absent, mismatched and conflicting currencies
+  ---
+  duration_ms: 0.309184
+  type: 'test'
+  ...
+# Subtest: a repeated paid event preserves every fulfillment stage
+ok 566 - a repeated paid event preserves every fulfillment stage
+  ---
+  duration_ms: 0.39388
+  type: 'test'
+  ...
+# Subtest: initial payment confirmation and other transitions remain compatible
+ok 567 - initial payment confirmation and other transitions remain compatible
+  ---
+  duration_ms: 0.124689
+  type: 'test'
+  ...
+# Subtest: a direct closed-reserve visit retains its validated campaign in the waitlist exit
+ok 568 - a direct closed-reserve visit retains its validated campaign in the waitlist exit
+  ---
+  duration_ms: 295.412198
+  type: 'test'
+  ...
+# Subtest: home -> reserve -> closed waitlist -> signup -> admin/CSV (instagram)
+ok 569 - home -> reserve -> closed waitlist -> signup -> admin/CSV (instagram)
+  ---
+  duration_ms: 488.879824
+  type: 'test'
+  ...
+# Subtest: home -> reserve -> closed waitlist -> signup -> admin/CSV (tiktok)
+ok 570 - home -> reserve -> closed waitlist -> signup -> admin/CSV (tiktok)
+  ---
+  duration_ms: 340.065273
+  type: 'test'
+  ...
+# Subtest: home -> reserve -> closed waitlist -> signup -> admin/CSV (direct)
+ok 571 - home -> reserve -> closed waitlist -> signup -> admin/CSV (direct)
+  ---
+  duration_ms: 323.85639
+  type: 'test'
+  ...
+# Subtest: home -> reserve -> closed waitlist -> signup -> admin/CSV (invalid source)
+ok 572 - home -> reserve -> closed waitlist -> signup -> admin/CSV (invalid source)
+  ---
+  duration_ms: 346.41
+  type: 'test'
+  ...
+# Subtest: home -> reserve -> closed waitlist -> signup -> admin/CSV (duplicate source)
+ok 573 - home -> reserve -> closed waitlist -> signup -> admin/CSV (duplicate source)
+  ---
+  duration_ms: 306.356315
+  type: 'test'
+  ...
+# Subtest: home -> reserve -> closed waitlist -> signup -> admin/CSV (invalid optional)
+ok 574 - home -> reserve -> closed waitlist -> signup -> admin/CSV (invalid optional)
+  ---
+  duration_ms: 385.779219
+  type: 'test'
+  ...
+# Subtest: all four pack choices survive entry and closed exit; invalid selections use the existing catalog fallback
+ok 575 - all four pack choices survive entry and closed exit; invalid selections use the existing catalog fallback
+  ---
+  duration_ms: 681.785897
+  type: 'test'
+  ...
+# Subtest: Instagram and TikTok sources survive a canonical URL/source round trip
+ok 576 - Instagram and TikTok sources survive a canonical URL/source round trip
+  ---
+  duration_ms: 4.152843
+  type: 'test'
+  ...
+# Subtest: direct visits, missing source and unknown parameters do not acquire attribution
+ok 577 - direct visits, missing source and unknown parameters do not acquire attribution
+  ---
+  duration_ms: 0.485985
+  type: 'test'
+  ...
+# Subtest: normalization is bounded and only five explicit campaign keys propagate
+ok 578 - normalization is bounded and only five explicit campaign keys propagate
+  ---
+  duration_ms: 0.649311
+  type: 'test'
+  ...
+# Subtest: ambiguous, untrusted and malformed labels cannot become a stored campaign
+ok 579 - ambiguous, untrusted and malformed labels cannot become a stored campaign
+  ---
+  duration_ms: 0.715424
+  type: 'test'
+  ...
+# Subtest: service persists the validated source, pack, language and consent (utm_source=instagram&u)
+ok 580 - service persists the validated source, pack, language and consent (utm_source=instagram&u)
+  ---
+  duration_ms: 152.501931
+  type: 'test'
+  ...
+# Subtest: service persists the validated source, pack, language and consent (utm_source=tiktok&utm_)
+ok 581 - service persists the validated source, pack, language and consent (utm_source=tiktok&utm_)
+  ---
+  duration_ms: 74.44549
+  type: 'test'
+  ...
+# Subtest: service persists the validated source, pack, language and consent ()
+ok 582 - service persists the validated source, pack, language and consent ()
+  ---
+  duration_ms: 78.192556
+  type: 'test'
+  ...
+# Subtest: service persists the validated source, pack, language and consent (omitted)
+ok 583 - service persists the validated source, pack, language and consent (omitted)
+  ---
+  duration_ms: 52.189003
+  type: 'test'
+  ...
+# Subtest: invalid source and missing consent fail before any simulated insert
+ok 584 - invalid source and missing consent fail before any simulated insert
+  ---
+  duration_ms: 53.919654
+  type: 'test'
+  ...
+# Subtest: admin source component decodes campaign labels and safely handles legacy sources
+ok 585 - admin source component decodes campaign labels and safely handles legacy sources
+  ---
+  duration_ms: 34.340786
+  type: 'test'
+  ...
+# Subtest: admin CSV exports raw source and decoded campaign columns without dropping existing fields
+ok 586 - admin CSV exports raw source and decoded campaign columns without dropping existing fields
+  ---
+  duration_ms: 21.297906
+  type: 'test'
+  ...
+# Subtest: unauthenticated CSV never reads signups
+ok 587 - unauthenticated CSV never reads signups
+  ---
+  duration_ms: 13.448233
+  type: 'test'
+  ...
+# Subtest: Hero preserves the campaign in every home-to-waitlist link
+ok 588 - Hero preserves the campaign in every home-to-waitlist link
+  ---
+  duration_ms: 91.885783
+  type: 'test'
+  ...
+# Subtest: Packs preserves the campaign in every home-to-waitlist link
+ok 589 - Packs preserves the campaign in every home-to-waitlist link
+  ---
+  duration_ms: 49.888493
+  type: 'test'
+  ...
+# Subtest: FinalCTA preserves the campaign in every home-to-waitlist link
+ok 590 - FinalCTA preserves the campaign in every home-to-waitlist link
+  ---
+  duration_ms: 17.55092
+  type: 'test'
+  ...
+# Subtest: BatchDeadlineBanner preserves the campaign in every home-to-waitlist link
+ok 591 - BatchDeadlineBanner preserves the campaign in every home-to-waitlist link
+  ---
+  duration_ms: 20.813726
+  type: 'test'
+  ...
+# Subtest: MobileStickyReserveCTA preserves the campaign in every home-to-waitlist link
+ok 592 - MobileStickyReserveCTA preserves the campaign in every home-to-waitlist link
+  ---
+  duration_ms: 20.119636
+  type: 'test'
+  ...
+# Subtest: open-batch CTAs retain campaign on the way to packs and reservation
+ok 593 - open-batch CTAs retain campaign on the way to packs and reservation
+  ---
+  duration_ms: 100.003565
+  type: 'test'
+  ...
+# Subtest: open-batch links keep their original destinations when no valid campaign exists
+ok 594 - open-batch links keep their original destinations when no valid campaign exists
+  ---
+  duration_ms: 343.246678
+  type: 'test'
+  ...
+# Subtest: waitlist page passes validated campaign source and pack to the form
+ok 595 - waitlist page passes validated campaign source and pack to the form
+  ---
+  duration_ms: 68.05405
+  type: 'test'
+  ...
+# Subtest: form preserves campaign, pack, language and explicit consent (es)
+ok 596 - form preserves campaign, pack, language and explicit consent (es)
+  ---
+  duration_ms: 62.588479
+  type: 'test'
+  ...
+# Subtest: form preserves campaign, pack, language and explicit consent (en)
+ok 597 - form preserves campaign, pack, language and explicit consent (en)
+  ---
+  duration_ms: 34.624394
+  type: 'test'
+  ...
+1..597
+# tests 597
+# suites 0
+# pass 597
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16963.647064
