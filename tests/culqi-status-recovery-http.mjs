@@ -15,6 +15,13 @@ import { checkoutRecoveryOutcome } from "../src/lib/payments/checkout-recovery.t
 const root = fileURLToPath(new URL("../", import.meta.url));
 const origin = "https://bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app";
 const host = new URL(origin).host;
+const buildSnapshot = JSON.parse(JSON.parse(await readFile(path.join(root, ".next/required-server-files.json"), "utf8"))
+  .config.env.CULQI_WEBHOOK_BUILD_IDENTITY);
+assert.equal(buildSnapshot.schema, 1);
+assert.match(buildSnapshot.sourceDigest, /^[a-f0-9]{64}$/);
+assert.match(buildSnapshot.commit, /^[a-f0-9]{40}$/);
+assert.equal(buildSnapshot.sourceMatchesCommit, true, "CI must build the selected modules from the exact checked out commit");
+const forgedRuntimeDigest = "f".repeat(64);
 const image = "postgres:17.11-bookworm@sha256:66aafa11cf15800a3c94763f7e11d1e7b2e37e5e84bc4ce027cb6e1e4bfaf4df";
 const container = `bagelito-status-http-${randomBytes(8).toString("hex")}`;
 const temporary = await mkdtemp(path.join(tmpdir(), "bagelito-status-http-"));
@@ -140,6 +147,8 @@ const baseEnv = {
   NEXT_PUBLIC_CULQI_RSA_ID: "synthetic-http-rsa", NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY: "synthetic-http-rsa-public",
   PAYMENT_PROVIDER: "culqi", CULQI_MODE: "sandbox", CULQI_ENABLED: "true", CULQI_LIVE_APPROVED: "false",
   CULQI_STATUS_RECOVERY_APPROVED: "true", // Explicit local child only; never a hosting change.
+  // A runtime override cannot replace the compiler-inlined identity.
+  CULQI_WEBHOOK_BUILD_IDENTITY: JSON.stringify({ schema: 1, commit: "e".repeat(40), sourceDigest: forgedRuntimeDigest, sourceMatchesCommit: true }),
   VERCEL: "1", VERCEL_ENV: "preview", VERCEL_TARGET_ENV: "preview",
   VERCEL_PROJECT_ID: "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
   VERCEL_GIT_COMMIT_REF: "fix/culqi-payment-coordination-20261012",
@@ -296,6 +305,9 @@ try {
       assert.deepEqual(await audit(), ['event_get'], 'Failed event lookup/identity cannot invoke an application DB transaction');
     }
     assert.ok(logs().includes('parameter_error') && logs().includes('timeout'), 'Native diagnostics must classify the observed400 and local deadline separately');
+    assert.ok(logs().includes(buildSnapshot.sourceDigest) && logs().includes(buildSnapshot.commit), 'Native private logs must identify the compiled build');
+    assert.equal(logs().includes(forgedRuntimeDigest), false, 'Runtime environment must not replace compiled webhook identity');
+    assert.match(logs(), /invocationId: '[a-f0-9-]{36}'/, 'Native invocations must have private server correlation');
     await setMode('event_amount_mismatch');
     const badMoney = await call(port, observed, callback(observed)); privateResponse(badMoney, observed);
     assert.equal(badMoney.status, 500);
@@ -462,6 +474,7 @@ try {
   }
   console.log("PASS: native Next status HTTP + actual local PostgreSQL confirmation; real parser, synthetic provider GET, no external network.");
   console.log("PASS: native webhook observed400/deadline/identity fail without settlement; verified synthetic event applies atomically after GET or from pending and repeats idempotently; this is not provider certification.");
+  console.log("PASS: private webhook build SHA/source digest stay compiler-inlined despite a forged runtime snapshot; correlation stays server-generated.");
   console.log("PASS: an accepted retry after verified early failure stays locked while submitting and recovers exactly once through native status + SQL with a synthetic charge GET.");
 } finally {
   // Cleanup remains local even when setup/assertions fail. No workers, ports,

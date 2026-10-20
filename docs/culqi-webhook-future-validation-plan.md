@@ -1,22 +1,22 @@
 # Plan mínimo de evidencia para aprobación futura
 
-**Propuesta, no ejecutada.** Mantiene las autorizaciones vigentes de desarrollo y PR; no ejecuta ni autoriza despliegues, reenvíos de webhooks, cargos nuevos, SQL remoto, cambios de credenciales/permisos ni operación de la laptop. La base revisada es PR13, SHA `a42d18c711a49b734947e66105c19843b4541685`.
+**Instrumentación implementada en código y pruebas, sin desplegar.** La [revisión de implementación](culqi-webhook-instrumentation-review.md) detalla el diagnóstico privado preparado sobre PR13 en `dcf6cc39518969033d6028bfb9a21e7902b6872b`. Mantiene las autorizaciones vigentes de desarrollo y PR; no ejecuta ni autoriza despliegues, reenvíos de webhooks, cargos nuevos, SQL remoto, cambios de credenciales/permisos ni operación de la laptop. Las acciones operativas de la sección 2 siguen siendo propuestas futuras.
 
 La evidencia del panel acredita token 201, cargo 201, consulta de cargo 200 y tres entregas webhook 500. No muestra un 400 en la lista completa visible. El supuesto upstream 400 sólo tiene una atribución histórica secundaria sin original recuperado. El objeto de cargo mostrado en Historial podría ser la notificación completa o una representación del recurso; no se presupone una envoltura ni se exige un `evt_test_…` ausente.
 
 Los eventos de Vercel del proyecto vinculan `80233bc` con el alias canónico a las 03:40:43.184 UTC del 16 de octubre y registran `aliases-assigned`, aliasCount=1, para el mismo despliegue a las 03:41:26.054. Sus logs de build muestran clonación de `80233bc`, build completo a las 03:41:20.765 y la ruta `/api/webhooks/culqi`. El bundle binario sigue inaccesible (árbol de archivos 404); tampoco se recuperó el log original del supuesto upstream 400. El contexto previo no está disponible en esta conversación y el historial consultable de la automatización devuelve last_run/latest_result nulos; eso no prueba que nunca hubiera ejecuciones.
 
-## 1. Instrumentación propuesta, sin cambiar decisiones de pago
+## 1. Instrumentación preparada, sin cambiar decisiones de pago
 
-Preparar un diff pequeño, revisable y separado del arreglo financiero: ampliar únicamente el diagnóstico privado del handler existente. No crear endpoint, pantalla o respuesta pública de depuración. No cambiar qué payloads se aceptan, cómo se autentica/verifica al proveedor ni cuándo se llama a la transacción.
+El diff amplía únicamente el diagnóstico privado del handler existente y añade su snapshot de fuentes durante el build. No crea endpoint, pantalla o respuesta pública de depuración. Conserva qué payloads se aceptan, cómo se autentica/verifica al proveedor y cuándo se llama a la transacción.
 
 Un registro final por invocación debe conservar los campos acotados actuales y añadir sólo:
 
-- Identidad del artefacto embebida durante el build: SHA revisado y digest del módulo/manifest correspondiente. Cotejarla con el deployment; una variable de rama o un alias móvil por sí solos no prueban el bundle.
+- Identidad de fuentes embebida durante el build: SHA de Git, digest de cinco archivos fijos y comprobación de coincidencia con ese commit. Es un fingerprint de fuentes seleccionadas, no del binario completo. Si Git no está disponible queda SHA nulo; nunca se sustituye por un alias o variable de runtime. Cotejarla con el deployment.
 - Correlación aleatoria generada por el servidor para esa invocación. No usar un ID entrante como autenticación ni registrar headers arbitrarios. No hacen falta hashes estables de IDs ni secretos nuevos.
 - Forma exterior, mediante enums/booleanos: objeto superior `charge/event/otro/ausente`, clase del ID `chr/evt/otro/ausente`, presencia de `data`, y tipo de `data` `objeto/string/otro/ausente`. Distinguir camelCase/snake_case mediante presencia de nombres de campo conocidos, sin valores.
-- Resultado de parseo e integridad de la observación: `completa/inválida/límite_excedido`. No truncar un payload para luego procesarlo como válido; no añadir un nuevo límite de negocio bajo la etiqueta de instrumentación.
-- Recurso efectivamente consultado `events/charges/ninguno`, clase del ID solicitado, status/fallo HTTP acotado y stage. Nunca URL completa con IDs, mensajes crudos del proveedor, body, claves, cookies, Authorization, fuente de pago ni datos personales.
+- Resultado de lectura/parseo: `not_read/parsed/read_or_parse_failed`. No afirma JSON inválido si pudo fallar el stream. No trunca el body, no repite su lectura ni añade límites o parsing de negocio.
+- Cliente invocado `events/none`, clase del ID y estado `not_attempted/started/returned/failed`, junto al fallo HTTP acotado y stage existentes. Invocar el cliente no prueba que se emitiera HTTP: puede rechazar antes por configuración o modo. Nunca URL completa con IDs, mensajes crudos del proveedor, body, claves, cookies, Authorization, fuente de pago ni datos personales.
 
 Antes de proponer despliegue: pruebas offline de cargo directo y envolturas sintéticas, parseo inválido, respuesta tardía y logging sin datos privados. Demostrar que el diff no añade consultas, no continúa tras fallos y no altera los controles ni la idempotencia. Identificar el SHA exacto y sus resultados; los mocks no certifican el contrato real.
 

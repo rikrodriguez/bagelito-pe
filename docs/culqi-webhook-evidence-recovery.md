@@ -1,5 +1,7 @@
 # Webhook Culqi: procedencia y límites de la evidencia
 
+**Actualización de desarrollo:** se preparó [instrumentación privada](culqi-webhook-instrumentation-review.md), todavía sin desplegar ni recibir un reenvío. La comparación de cinco fuentes y sus logs de abajo sigue siendo histórica: se limita a los SHA indicados, anteriores al nuevo diagnóstico.
+
 Esta revisión parte de PR13 en `a42d18c711a49b734947e66105c19843b4541685`. No cambia código de aplicación, autenticación, políticas de pago, SQL, credenciales, configuración ni despliegues. Las capturas aportadas confirman tres entregas webhook con HTTP 500; falta el resultado primario que sustente el upstream 400 descrito anteriormente.
 
 ## Lo confirmado y su alcance
