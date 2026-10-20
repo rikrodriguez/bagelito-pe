@@ -1,5 +1,7 @@
 # Culqi webhook: bounded lookup and confirmation checkpoint
 
+**Evidence update, 20 October 2026:** the upstream 400 below remains a historical attribution whose original runtime result has not been recovered. The complete provider API list supplied by the owner shows 201 / 201 / 200, while webhook history shows 500. See [current provenance and limits](culqi-webhook-evidence-recovery.md); the offline timeout fixes remain independently reproduced.
+
 This purchase/confirmation change starts at `8015614875aa8bce787f849b8d0cce9ed018795e`, preserving the completed campaign/operator/integrated work. Its draft branch `fix/culqi-webhook-event-deadline-20261016` has automatic deployment disabled. No deployment, live activation or new provider transaction is part of this review.
 
 ## Observed failure and proven correction

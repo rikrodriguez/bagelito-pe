@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
+import { randomUUID } from 'node:crypto';
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib/payments/verification.ts';
 const source = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const body = stripTypeScriptTypes(source.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
-const load = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient', 'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', `${body}; return POST;`);
+const load = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient', 'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', `${body}; return POST;`);
 const id = 'evt_test_12345678';
 async function execute({
   event = {}, resource = { id: 'chr_test_12345678', amount: 6800, currency_code: 'PEN' },
@@ -32,7 +33,7 @@ async function execute({
     warn: (...args) => logs.push({ level: 'warn', args }),
     error: () => assert.fail('Webhook must not log raw errors'),
     log: () => assert.fail('Webhook must use its bounded diagnostic logger'),
-  });
+  }, randomUUID);
   const response = await post(new Request('https://fixture.invalid', { method: 'POST', body: requestBody, headers: requestHeaders }));
   return { response, calls, fetchCalls, clientCalls, logs };
 }
@@ -145,6 +146,9 @@ function assertOneSafeDiagnostic(result) {
   assert.deepEqual(Object.keys(args[1]).sort(), [
     'stage', 'reason', 'httpStatus', 'eventVerified', 'transactionAttempted', 'eventPaymentState', 'duplicate',
     'upstreamHttpStatus', 'upstreamFailureClass', 'upstreamErrorType', 'eventModeMatchesConfig',
+    'diagnosticVersion', 'invocationId', 'buildCommit', 'buildSourceDigest', 'buildSourceMatchesCommit',
+    'requestParse', 'bodyKind', 'bodyObject', 'bodyIdKind', 'bodyHasData', 'bodyDataKind',
+    'bodyHasCamelFields', 'bodyHasSnakeFields', 'lookupResource', 'lookupIdKind', 'lookupState',
   ].sort(), 'No dynamic field may be added to the private diagnostic');
   assert.ok(diagnosticStages.has(args[1].stage), 'Stage must be a fixed local enum');
   assert.ok(diagnosticReasons.has(args[1].reason), 'Reason must be a fixed local enum');
@@ -166,9 +170,20 @@ function assertOneSafeDiagnostic(result) {
   assert.equal(typeof args[1].eventVerified, 'boolean');
   assert.equal(typeof args[1].transactionAttempted, 'boolean');
   assert.equal(typeof args[1].duplicate, 'boolean');
+  assert.equal(args[1].diagnosticVersion, 2);
+  assert.match(args[1].invocationId, /^[a-f0-9-]{36}$/);
+  assert.ok(['not_read', 'read_or_parse_failed', 'parsed'].includes(args[1].requestParse));
+  assert.ok(['not_read', 'object', 'null', 'array', 'other'].includes(args[1].bodyKind));
+  assert.ok(['not_read', 'missing', 'charge', 'event', 'other'].includes(args[1].bodyObject));
+  assert.ok(['not_read', 'missing', 'chr', 'evt', 'other'].includes(args[1].bodyIdKind));
+  assert.ok(['not_read', 'missing', 'object', 'array', 'null', 'string', 'other'].includes(args[1].bodyDataKind));
+  assert.ok(['none', 'events'].includes(args[1].lookupResource));
+  assert.ok(['none', 'evt'].includes(args[1].lookupIdKind));
+  assert.ok(['not_attempted', 'started', 'returned', 'failed'].includes(args[1].lookupState));
+  for (const key of ['bodyHasData', 'bodyHasCamelFields', 'bodyHasSnakeFields']) assert.equal(typeof args[1][key], 'boolean');
   assert.equal(args[1].transactionAttempted, result.calls.length > 0, 'Transaction flag describes an actual mocked RPC invocation');
   for (const [key, value] of Object.entries(args[1])) {
-    assert.ok((['upstreamHttpStatus', 'eventModeMatchesConfig'].includes(key) && value === null) || ['string', 'number', 'boolean'].includes(typeof value),
+    assert.ok((['upstreamHttpStatus', 'eventModeMatchesConfig', 'buildCommit', 'buildSourceDigest', 'buildSourceMatchesCommit'].includes(key) && value === null) || ['string', 'number', 'boolean'].includes(typeof value),
       'No error, payload, header or nested object may enter logs');
   }
   const serialized = JSON.stringify(result.logs);
@@ -220,7 +235,8 @@ test('success diagnostics omit request, authenticated resource and RPC result pr
   assert.equal(result.response.status, 200);
   assert.equal(result.calls.length, 1);
   assertOneSafeDiagnostic(result);
-  assert.deepEqual(result.logs, baseline.logs, 'Private request, event and RPC fields cannot alter the diagnostic');
+  const withoutCorrelation = (logs) => logs.map(({ level, args: [label, diagnostic] }) => ({ level, args: [label, { ...diagnostic, invocationId: null }] }));
+  assert.deepEqual(withoutCorrelation(result.logs), withoutCorrelation(baseline.logs), 'Private request, event and RPC fields cannot alter the diagnostic');
 });
 
 test('diagnostics report verified event outcomes and normalize unknown or forged states', async () => {

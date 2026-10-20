@@ -180,14 +180,20 @@ function matches(resource: Record<string, unknown> | null, order: CulqiReadonlyD
   };
 }
 
-function readChunk(reader: ReadableStreamDefaultReader<Uint8Array>, signal: AbortSignal): Promise<ReadableStreamReadResult<Uint8Array>> {
+function readWithAbort<T>(operation: () => Promise<T>, signal: AbortSignal): Promise<T> {
   return new Promise((resolve, reject) => {
-    const aborted = () => reject(new Error("read_failed"));
+    const aborted = () => {
+      signal.removeEventListener("abort", aborted);
+      reject(new Error("read_failed"));
+    };
     if (signal.aborted) { aborted(); return; }
     signal.addEventListener("abort", aborted, { once: true });
-    reader.read().then((chunk) => {
+    Promise.resolve().then(() => {
+      if (signal.aborted) throw new Error("read_failed");
+      return operation();
+    }).then((value) => {
       signal.removeEventListener("abort", aborted);
-      resolve(chunk);
+      resolve(value);
     }, () => {
       signal.removeEventListener("abort", aborted);
       reject(new Error("read_failed"));
@@ -202,7 +208,7 @@ async function limitedJson(response: Response, maxBytes: number, signal: AbortSi
   let size = 0;
   try {
     for (;;) {
-      const { done, value } = await readChunk(reader, signal);
+      const { done, value } = await readWithAbort(() => reader.read(), signal);
       if (done) break;
       if (!(value instanceof Uint8Array)) throw new Error("read_failed");
       size += value.byteLength;
@@ -292,7 +298,7 @@ export function createCulqiReadonlyDiagnostic(dependencies: CulqiReadonlyDiagnos
           || typeof row.payment_charge_source_id !== "string" || !SOURCE_ID.test(row.payment_charge_source_id);
       })) return finish();
 
-      const now = dependencies.now ?? Date.now;
+      const now = dependencies.now ?? (() => performance.now());
       const started = now();
       let calls = 0;
       const allowedPaths = new Set<string>(TARGETS.map((target) => `/v2/charges/${encodeURIComponent(target.chargeId)}`));
@@ -303,17 +309,29 @@ export function createCulqiReadonlyDiagnostic(dependencies: CulqiReadonlyDiagnos
       for (const path of listPaths) allowedPaths.add(path);
       const get = async (path: string, bodyLimit: number) => {
         if (!allowedPaths.has(path) && !eventPaths.has(path)) throw new Error("read_failed");
-        const remaining = 90_000 - (now() - started);
+        const requestStarted = now();
+        const remaining = 90_000 - (requestStarted - started);
         if (++calls > 25 || remaining <= 0 || !Number.isFinite(remaining)) throw new Error("read_failed");
         const controller = new AbortController();
         const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(Math.min(10_000, Math.ceil(remaining)))]);
+        const expiresAt = Math.min(requestStarted + 10_000, started + 90_000);
+        const assertInBudget = () => {
+          const current = now();
+          if (signal.aborted || !Number.isFinite(current) || current >= expiresAt) throw new Error("read_failed");
+        };
         try {
-          const response = await dependencies.fetch(`${API}${path}`, {
-            method: "GET", credentials: "omit", redirect: "error", cache: "no-store",
-            headers: { Authorization: `Bearer ${secretKey}`, Accept: "application/json" }, signal,
-          });
+          // Close our wait even if the transport ignores cancellation. A late
+          // timer must not authorize accepting headers or JSON outside budget.
+          const response = await readWithAbort(() => {
+            assertInBudget();
+            return dependencies.fetch(`${API}${path}`, {
+              method: "GET", credentials: "omit", redirect: "error", cache: "no-store",
+              headers: { Authorization: `Bearer ${secretKey}`, Accept: "application/json" }, signal,
+            });
+          }, signal);
+          assertInBudget();
           const payload = await limitedJson(response, bodyLimit, signal);
-          if (signal.aborted || now() - started >= 90_000) throw new Error("read_failed");
+          assertInBudget();
           return payload;
         } finally { controller.abort(); }
       };

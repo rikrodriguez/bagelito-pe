@@ -1,0 +1,19 @@
+{
+  "codeAndAuthoredReportWhitespaceCheck": {
+    "command": "git diff --check b21e821 HEAD -- src tests docs/culqi-event-elapsed-deadline-review.md",
+    "exitCode": 0
+  },
+  "wholeDiffWhitespaceCheck": {
+    "command": "git diff --check b21e821 HEAD",
+    "exitCode": 2,
+    "reason": "Raw Node TAP failure diagnostics include whitespace-only lines; raw ESLint output ends with a blank line. These are preserved byte-for-byte as executed evidence.",
+    "files": [
+      "implementation-lint.log",
+      "implementation-red-monotonic.tap",
+      "implementation-red-original.tap"
+    ],
+    "rawEvidenceRewritten": false
+  },
+  "sourceFixCommit": "4102a1d1fedb78f09ea16ebb01bb5367d9bc05e3",
+  "runtimeOrTestSourceChangesAfterFinalTests": false
+}

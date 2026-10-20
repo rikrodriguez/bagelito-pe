@@ -480,6 +480,160 @@ test("body reads obey the remaining deadline abort and suppress raw stream error
   } finally { clearTimeout(timer); }
 });
 
+function heldDiagnosticTimeouts() {
+  // A delayed timer callback is independent of the diagnostic's elapsed clock.
+  // These synthetic signals never expire until a test explicitly aborts one.
+  const original = AbortSignal.timeout;
+  const deadlines = [];
+  AbortSignal.timeout = (milliseconds) => {
+    const controller = new AbortController();
+    deadlines.push({ milliseconds, controller });
+    return controller.signal;
+  };
+  return { deadlines, restore: () => { AbortSignal.timeout = original; } };
+}
+
+test("aborting a diagnostic deadline closes headers that ignore cancellation", async () => {
+  const clock = heldDiagnosticTimeouts();
+  let releaseHeaders;
+  let announceFetch;
+  let fetchSignal;
+  const headers = new Promise((resolve) => { releaseHeaders = resolve; });
+  const fetchStarted = new Promise((resolve) => { announceFetch = resolve; });
+  const h = harness({
+    now: () => 0,
+    fetch: async (_url, init) => {
+      fetchSignal = init.signal;
+      announceFetch();
+      // Deliberately ignore the signal, as an uncooperative transport may do.
+      return headers;
+    },
+  });
+  const pending = h.run(request);
+  try {
+    await fetchStarted;
+    assert.equal(clock.deadlines.length, 1);
+    assert.equal(clock.deadlines[0].milliseconds, 10_000);
+    clock.deadlines[0].controller.abort(new DOMException("Synthetic deadline", "TimeoutError"));
+    assert.equal(fetchSignal.aborted, true);
+    // One event-loop turn drains the abort's promise continuations. It does not
+    // wait for the uncooperative transport or for ten seconds of wall time.
+    const observed = await Promise.race([
+      pending.then((report) => ({ report })),
+      new Promise((resolve) => setImmediate(() => resolve({ stillPending: true }))),
+    ]);
+    assert.equal(observed.stillPending, undefined,
+      "the diagnostic must finish after its signal aborts, even while headers remain pending");
+    assert.equal(observed.report.ok, false);
+    assert.equal(observed.report.stage, "charge_lookup");
+    assert.equal(observed.report.results.qa_yape.chargeQueryFailed, true);
+    assert.equal(observed.report.results.qa_yape.chargeFetched, false);
+    noLeak(observed.report, h.state);
+  } finally {
+    // Also releases the original broken implementation after the RED assertion.
+    releaseHeaders(Response.json(chargeFixture(0)));
+    await pending;
+    clock.restore();
+  }
+});
+
+for (const phase of ["headers", "body"]) {
+  for (const elapsed of [9_999, 10_000, 10_001]) {
+    test(`diagnostic ${phase} at ${elapsed}ms ${elapsed < 10_000 ? "remain valid" : "expire"} with delayed timer callbacks`, async () => {
+      const clock = heldDiagnosticTimeouts();
+      let monotonicNow = 0;
+      let firstRead = true;
+      const h = harness({ now: () => monotonicNow });
+      const fetchFixture = h.deps.fetch;
+      h.deps.fetch = async (url, init) => {
+        const response = await fetchFixture(url, init);
+        if (!firstRead) return response;
+        firstRead = false;
+        if (phase === "headers") {
+          monotonicNow = elapsed;
+          return response;
+        }
+        // Headers consume six seconds. A demand-driven real stream advances the
+        // same clock only when the diagnostic reads the JSON, not beforehand.
+        monotonicNow = 6_000;
+        return new Response(new ReadableStream({
+          pull(controller) {
+            monotonicNow = elapsed;
+            controller.enqueue(new TextEncoder().encode(JSON.stringify(chargeFixture(0))));
+            controller.close();
+          },
+        }, { highWaterMark: 0 }));
+      };
+      try {
+        const report = await h.run(request);
+        const valid = elapsed < 10_000;
+        noLeak(report, h.state);
+        assert.equal(report.ok, valid);
+        assert.equal(report.completed, valid);
+        assert.equal(report.results.qa_yape.chargeFetched, valid);
+        assert.equal(report.results.qa_yape.chargeQueryFailed, !valid);
+        assert.equal(report.stage, valid ? "complete_partial" : "charge_lookup");
+        assert.equal(h.state.calls.length, valid ? 8 : 1,
+          "a response outside its individual budget must not start later reads");
+      } finally { clock.restore(); }
+    });
+  }
+}
+
+test("a wall-clock adjustment does not expire a timely diagnostic", async (t) => {
+  let wallTime = 1_792_000_000_000;
+  t.mock.method(Date, "now", () => wallTime);
+  const h = harness();
+  const fetchFixture = h.deps.fetch;
+  h.deps.fetch = async (url, init) => {
+    const response = await fetchFixture(url, init);
+    wallTime += 3_600_000;
+    return response;
+  };
+  const report = await h.run(request);
+  assert.equal(report.completed, true);
+  assert.equal(report.ok, true);
+  assert.equal(h.state.calls.length, 8);
+  noLeak(report, h.state);
+});
+
+for (const phase of ["headers", "body"]) {
+  for (const elapsed of [89_999, 90_000, 90_001]) {
+    test(`diagnostic ${phase} at global ${elapsed}ms respect the remaining budget`, async () => {
+      const clock = heldDiagnosticTimeouts();
+      let monotonicNow = 0;
+      const h = harness({ now: () => monotonicNow });
+      h.state.events = Array.from({ length: 20 }, (_, i) => eventFixture(0, types[0], `global${i}`));
+      const fetchFixture = h.deps.fetch;
+      h.deps.fetch = async (url, init) => {
+        const response = await fetchFixture(url, init);
+        const call = h.state.calls.length;
+        if (call < 10) { monotonicNow += 9_000; return response; }
+        if (call !== 10) return response;
+        if (phase === "headers") { monotonicNow = elapsed; return response; }
+        const body = await response.text();
+        return new Response(new ReadableStream({
+          pull(controller) {
+            monotonicNow = elapsed;
+            controller.enqueue(new TextEncoder().encode(body));
+            controller.close();
+          },
+        }, { highWaterMark: 0 }));
+      };
+      try {
+        const report = await h.run(request);
+        const valid = elapsed < 90_000;
+        assert.equal(report.ok, valid);
+        assert.equal(report.completed, valid);
+        assert.equal(report.stage, valid ? "complete_partial" : "event_lookup");
+        assert.equal(h.state.calls.length, valid ? 25 : 10);
+        assert.equal(report.results.qa_yape.eventDetailQueryFailed, !valid);
+        noLeak(report, h.state);
+      } finally { clock.restore(); }
+    });
+  }
+}
+
 test("two valid empty pages report only bounded page absence, never an exhaustive scan", async () => {
   const h = harness(); h.state.events = [];
   const report = await h.run(request);

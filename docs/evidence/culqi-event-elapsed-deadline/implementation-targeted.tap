@@ -1,0 +1,808 @@
+TAP version 13
+# (node:113166) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/config.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: sandbox mode exposes its identity to the checkout
+ok 1 - sandbox mode exposes its identity to the checkout
+  ---
+  duration_ms: 1.181027
+  type: 'test'
+  ...
+# Subtest: missing mode fails closed even with keys configured
+ok 2 - missing mode fails closed even with keys configured
+  ---
+  duration_ms: 0.241399
+  type: 'test'
+  ...
+# Subtest: mismatched live/test credentials fail closed
+ok 3 - mismatched live/test credentials fail closed
+  ---
+  duration_ms: 0.158291
+  type: 'test'
+  ...
+# Subtest: sandbox cannot run on a production deployment
+ok 4 - sandbox cannot run on a production deployment
+  ---
+  duration_ms: 0.300765
+  type: 'test'
+  ...
+# Subtest: live mode requires explicit release approval
+ok 5 - live mode requires explicit release approval
+  ---
+  duration_ms: 0.256659
+  type: 'test'
+  ...
+# Subtest: approved matching live mode can run
+ok 6 - approved matching live mode can run
+  ---
+  duration_ms: 0.216581
+  type: 'test'
+  ...
+# Subtest: sandbox requires explicit localhost or preview site origin
+ok 7 - sandbox requires explicit localhost or preview site origin
+  ---
+  duration_ms: 0.566035
+  type: 'test'
+  ...
+# Subtest: sandbox request to the public site is rejected even if configured for localhost
+ok 8 - sandbox request to the public site is rejected even if configured for localhost
+  ---
+  duration_ms: 1.875943
+  type: 'test'
+  ...
+# Subtest: sandbox request must match the allowed configured origin
+ok 9 - sandbox request must match the allowed configured origin
+  ---
+  duration_ms: 1.727288
+  type: 'test'
+  ...
+# Subtest: matching preview host enables sandbox and mismatched preview host fails closed
+ok 10 - matching preview host enables sandbox and mismatched preview host fails closed
+  ---
+  duration_ms: 0.612763
+  type: 'test'
+  ...
+# Subtest: stable preview branch origin works across deployments but not another branch
+ok 11 - stable preview branch origin works across deployments but not another branch
+  ---
+  duration_ms: 0.738655
+  type: 'test'
+  ...
+# Subtest: branch URL never authorizes production, another origin or port
+ok 12 - branch URL never authorizes production, another origin or port
+  ---
+  duration_ms: 0.499748
+  type: 'test'
+  ...
+# (node:113172) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:113172) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: real event client uses the SDK GET contract for each existing configured mode
+ok 13 - real event client uses the SDK GET contract for each existing configured mode
+  ---
+  duration_ms: 7.075694
+  type: 'test'
+  ...
+# Subtest: SDK-contract transport fixture reaches the real verification handler and one unchanged RPC
+ok 14 - SDK-contract transport fixture reaches the real verification handler and one unchanged RPC
+  ---
+  duration_ms: 3.01901
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late headers at 10000ms before delayed timers
+ok 15 - event lookup rejects late headers at 10000ms before delayed timers
+  ---
+  duration_ms: 8.291952
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late headers at 10001ms before delayed timers
+ok 16 - event lookup rejects late headers at 10001ms before delayed timers
+  ---
+  duration_ms: 1.677302
+  type: 'test'
+  ...
+# Subtest: event lookup accepts headers at 9999ms with its timer still queued
+ok 17 - event lookup accepts headers at 9999ms with its timer still queued
+  ---
+  duration_ms: 1.637064
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late body at 10000ms before delayed timers
+ok 18 - event lookup rejects late body at 10000ms before delayed timers
+  ---
+  duration_ms: 1.558409
+  type: 'test'
+  ...
+# Subtest: event lookup rejects late body at 10001ms before delayed timers
+ok 19 - event lookup rejects late body at 10001ms before delayed timers
+  ---
+  duration_ms: 1.677514
+  type: 'test'
+  ...
+# Subtest: event lookup accepts body at 9999ms with its timer still queued
+ok 20 - event lookup accepts body at 9999ms with its timer still queued
+  ---
+  duration_ms: 1.253853
+  type: 'test'
+  ...
+# Subtest: event lookup rejects an expired result when queued continuations resume
+ok 21 - event lookup rejects an expired result when queued continuations resume
+  ---
+  duration_ms: 1.305023
+  type: 'test'
+  ...
+# Subtest: event lookup bounds stalled headers and ignores its late response
+ok 22 - event lookup bounds stalled headers and ignores its late response
+  ---
+  duration_ms: 2.487622
+  type: 'test'
+  ...
+# Subtest: event lookup bounds stalled body and ignores its late response
+ok 23 - event lookup bounds stalled body and ignores its late response
+  ---
+  duration_ms: 1.383585
+  type: 'test'
+  ...
+# Subtest: a completed event lookup clears its deadline without cancelling the successful response
+ok 24 - a completed event lookup clears its deadline without cancelling the successful response
+  ---
+  duration_ms: 1.342351
+  type: 'test'
+  ...
+# Subtest: each SDK error type is classified without acknowledging caller payment claims or opening DB
+ok 25 - each SDK error type is classified without acknowledging caller payment claims or opening DB
+  ---
+  duration_ms: 4.522453
+  type: 'test'
+  ...
+# Subtest: HTTP lookup failures report only whether the event prefix matches the configured provider environment
+ok 26 - HTTP lookup failures report only whether the event prefix matches the configured provider environment
+  ---
+  duration_ms: 5.131317
+  type: 'test'
+  ...
+# Subtest: typed client errors normalize unknown, absent, and hostile types to a fixed safe classification
+ok 27 - typed client errors normalize unknown, absent, and hostile types to a fixed safe classification
+  ---
+  duration_ms: 0.537186
+  type: 'test'
+  ...
+# Subtest: unknown and malformed provider errors preserve a bounded retryable response
+ok 28 - unknown and malformed provider errors preserve a bounded retryable response
+  ---
+  duration_ms: 5.078624
+  type: 'test'
+  ...
+# Subtest: authenticated event identity mismatch never uses the claimed paid caller resource
+ok 29 - authenticated event identity mismatch never uses the claimed paid caller resource
+  ---
+  duration_ms: 0.639517
+  type: 'test'
+  ...
+# Subtest: invalid incoming IDs and disabled scope make zero provider or DB calls
+ok 30 - invalid incoming IDs and disabled scope make zero provider or DB calls
+  ---
+  duration_ms: 1.355206
+  type: 'test'
+  ...
+# Subtest: unrecognized configured modes and missing secret fail before event transport
+ok 31 - unrecognized configured modes and missing secret fail before event transport
+  ---
+  duration_ms: 0.798147
+  type: 'test'
+  ...
+# Subtest: event-only SDK headers cannot alter the existing single-charge request or body
+ok 32 - event-only SDK headers cannot alter the existing single-charge request or body
+  ---
+  duration_ms: 0.883832
+  type: 'test'
+  ...
+# (node:113173) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Yape creates one charge from ype source, without order or card authentication
+ok 33 - Yape creates one charge from ype source, without order or card authentication
+  ---
+  duration_ms: 1.472147
+  type: 'test'
+  ...
+# Subtest: Yape rejects excessive amount or 3DS before contacting provider
+ok 34 - Yape rejects excessive amount or 3DS before contacting provider
+  ---
+  duration_ms: 0.591631
+  type: 'test'
+  ...
+# Subtest: unexpected REVIEW for Yape is not converted into a card 3DS flow
+ok 35 - unexpected REVIEW for Yape is not converted into a card 3DS flow
+  ---
+  duration_ms: 0.49982
+  type: 'test'
+  ...
+# Subtest: card REVIEW retains the verified 3DS continuation
+ok 36 - card REVIEW retains the verified 3DS continuation
+  ---
+  duration_ms: 0.211641
+  type: 'test'
+  ...
+# (node:113194) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/culqi-readonly-diagnostic.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: exported metadata scope is boolean-only and never accesses payment keys
+ok 37 - exported metadata scope is boolean-only and never accesses payment keys
+  ---
+  duration_ms: 1.707996
+  type: 'test'
+  ...
+# Subtest: authenticated read is GET-only, bounded, local-pinned and never confirms payment
+ok 38 - authenticated read is GET-only, bounded, local-pinned and never confirms payment
+  ---
+  duration_ms: 17.500283
+  type: 'test'
+  ...
+# Subtest: unauthenticated request stops before CSRF/config/DB/provider, raw error is suppressed
+ok 39 - unauthenticated request stops before CSRF/config/DB/provider, raw error is suppressed
+  ---
+  duration_ms: 0.506789
+  type: 'test'
+  ...
+# Subtest: CSRF false or throwing stops before all config reads
+ok 40 - CSRF false or throwing stops before all config reads
+  ---
+  duration_ms: 1.125527
+  type: 'test'
+  ...
+# Subtest: wrong Origin fails before reading config
+ok 41 - wrong Origin fails before reading config
+  ---
+  duration_ms: 0.336688
+  type: 'test'
+  ...
+# Subtest: missing Origin fails before reading config
+ok 42 - missing Origin fails before reading config
+  ---
+  duration_ms: 1.540921
+  type: 'test'
+  ...
+# Subtest: null Origin fails before reading config
+ok 43 - null Origin fails before reading config
+  ---
+  duration_ms: 0.319624
+  type: 'test'
+  ...
+# Subtest: wrong Host fails before reading config
+ok 44 - wrong Host fails before reading config
+  ---
+  duration_ms: 0.175508
+  type: 'test'
+  ...
+# Subtest: wrong forwarded Host fails before reading config
+ok 45 - wrong forwarded Host fails before reading config
+  ---
+  duration_ms: 0.166815
+  type: 'test'
+  ...
+# Subtest: multiple forwarded Hosts fails before reading config
+ok 46 - multiple forwarded Hosts fails before reading config
+  ---
+  duration_ms: 0.209436
+  type: 'test'
+  ...
+# Subtest: cross-site request fails before reading config
+ok 47 - cross-site request fails before reading config
+  ---
+  duration_ms: 0.248268
+  type: 'test'
+  ...
+# Subtest: same-site foreign request fails before reading config
+ok 48 - same-site foreign request fails before reading config
+  ---
+  duration_ms: 0.270823
+  type: 'test'
+  ...
+# Subtest: Fetch-Site none request fails before reading config
+ok 49 - Fetch-Site none request fails before reading config
+  ---
+  duration_ms: 0.134061
+  type: 'test'
+  ...
+# Subtest: GET action fails before reading config
+ok 50 - GET action fails before reading config
+  ---
+  duration_ms: 0.116783
+  type: 'test'
+  ...
+# Subtest: wrong Referer fails before reading config
+ok 51 - wrong Referer fails before reading config
+  ---
+  duration_ms: 0.129723
+  type: 'test'
+  ...
+# Subtest: credentialed Referer fails before reading config
+ok 52 - credentialed Referer fails before reading config
+  ---
+  duration_ms: 0.174628
+  type: 'test'
+  ...
+# Subtest: canonical forwarded Host and same-origin Fetch-Site preserve authenticated reads
+ok 53 - canonical forwarded Host and same-origin Fetch-Site preserve authenticated reads
+  ---
+  duration_ms: 3.088347
+  type: 'test'
+  ...
+# Subtest: production fails before payment key access
+ok 54 - production fails before payment key access
+  ---
+  duration_ms: 0.364567
+  type: 'test'
+  ...
+# Subtest: target production fails before payment key access
+ok 55 - target production fails before payment key access
+  ---
+  duration_ms: 0.697959
+  type: 'test'
+  ...
+# Subtest: wrong project fails before payment key access
+ok 56 - wrong project fails before payment key access
+  ---
+  duration_ms: 0.238082
+  type: 'test'
+  ...
+# Subtest: wrong branch fails before payment key access
+ok 57 - wrong branch fails before payment key access
+  ---
+  duration_ms: 0.140883
+  type: 'test'
+  ...
+# Subtest: wrong repo fails before payment key access
+ok 58 - wrong repo fails before payment key access
+  ---
+  duration_ms: 0.129715
+  type: 'test'
+  ...
+# Subtest: wrong branch origin fails before payment key access
+ok 59 - wrong branch origin fails before payment key access
+  ---
+  duration_ms: 0.204526
+  type: 'test'
+  ...
+# Subtest: production site fails before payment key access
+ok 60 - production site fails before payment key access
+  ---
+  duration_ms: 0.218279
+  type: 'test'
+  ...
+# Subtest: wrong QA fails before payment key access
+ok 61 - wrong QA fails before payment key access
+  ---
+  duration_ms: 0.115465
+  type: 'test'
+  ...
+# Subtest: live mode fails before payment key access
+ok 62 - live mode fails before payment key access
+  ---
+  duration_ms: 0.100083
+  type: 'test'
+  ...
+# Subtest: live approved fails before payment key access
+ok 63 - live approved fails before payment key access
+  ---
+  duration_ms: 0.102711
+  type: 'test'
+  ...
+# Subtest: missing live flag fails before payment key access
+ok 64 - missing live flag fails before payment key access
+  ---
+  duration_ms: 0.10396
+  type: 'test'
+  ...
+# Subtest: disabled fails before payment key access
+ok 65 - disabled fails before payment key access
+  ---
+  duration_ms: 0.156471
+  type: 'test'
+  ...
+# Subtest: test prefixes reject CULQI_SECRET_KEY invalid/missing value
+ok 66 - test prefixes reject CULQI_SECRET_KEY invalid/missing value
+  ---
+  duration_ms: 0.238017
+  type: 'test'
+  ...
+# Subtest: test prefixes reject CULQI_SECRET_KEY invalid/missing value
+ok 67 - test prefixes reject CULQI_SECRET_KEY invalid/missing value
+  ---
+  duration_ms: 0.228764
+  type: 'test'
+  ...
+# Subtest: test prefixes reject NEXT_PUBLIC_CULQI_PUBLIC_KEY invalid/missing value
+ok 68 - test prefixes reject NEXT_PUBLIC_CULQI_PUBLIC_KEY invalid/missing value
+  ---
+  duration_ms: 0.157966
+  type: 'test'
+  ...
+# Subtest: test prefixes reject CULQI_SECRET_KEY invalid/missing value
+ok 69 - test prefixes reject CULQI_SECRET_KEY invalid/missing value
+  ---
+  duration_ms: 0.127507
+  type: 'test'
+  ...
+# Subtest: caller IDs/JSON/headers are ignored and never select a resource or leak
+ok 70 - caller IDs/JSON/headers are ignored and never select a resource or leak
+  ---
+  duration_ms: 2.266413
+  type: 'test'
+  ...
+# Subtest: dependencies.targets are ignored and cannot override fixed server charge IDs
+ok 71 - dependencies.targets are ignored and cannot override fixed server charge IDs
+  ---
+  duration_ms: 1.589904
+  type: 'test'
+  ...
+# Subtest: entire missing configuration fails closed without reads or provider GET
+ok 72 - entire missing configuration fails closed without reads or provider GET
+  ---
+  duration_ms: 0.417934
+  type: 'test'
+  ...
+# Subtest: current GET charge mismatches prevent listed and verified events from passing
+ok 73 - current GET charge mismatches prevent listed and verified events from passing
+  ---
+  duration_ms: 12.019469
+  type: 'test'
+  ...
+# Subtest: DB identity, live source, duplicate rows and provider mismatches fail before provider GET
+ok 74 - DB identity, live source, duplicate rows and provider mismatches fail before provider GET
+  ---
+  duration_ms: 1.378214
+  type: 'test'
+  ...
+# Subtest: AUT0000 alone, paid and capture flags never create approval
+ok 75 - AUT0000 alone, paid and capture flags never create approval
+  ---
+  duration_ms: 3.286031
+  type: 'test'
+  ...
+# Subtest: capture observations retain unknown semantics even with malformed date types
+ok 76 - capture observations retain unknown semantics even with malformed date types
+  ---
+  duration_ms: 7.56363
+  type: 'test'
+  ...
+# Subtest: serialized and object event data are accepted only after detail GET
+ok 77 - serialized and object event data are accepted only after detail GET
+  ---
+  duration_ms: 3.647029
+  type: 'test'
+  ...
+# Subtest: listed success cannot pass if authenticated GET returns mismatch
+ok 78 - listed success cannot pass if authenticated GET returns mismatch
+  ---
+  duration_ms: 23.550082
+  type: 'test'
+  ...
+# Subtest: seconds event timestamps, live IDs and malicious JSON never trigger candidate GET
+ok 79 - seconds event timestamps, live IDs and malicious JSON never trigger candidate GET
+  ---
+  duration_ms: 1.941147
+  type: 'test'
+  ...
+# Subtest: conflicting verified events remain in review and never reconcile
+ok 80 - conflicting verified events remain in review and never reconcile
+  ---
+  duration_ms: 2.602124
+  type: 'test'
+  ...
+# Subtest: candidate and request caps stop the scan without inferring absence
+ok 81 - candidate and request caps stop the scan without inferring absence
+  ---
+  duration_ms: 6.193871
+  type: 'test'
+  ...
+# Subtest: provider/DB errors, malformed JSON, excessive bodies and headers never leak
+ok 82 - provider/DB errors, malformed JSON, excessive bodies and headers never leak
+  ---
+  duration_ms: 5.683246
+  type: 'test'
+  ...
+# Subtest: stream limits cancel excessive charge, list and detail bodies before approval
+ok 83 - stream limits cancel excessive charge, list and detail bodies before approval
+  ---
+  duration_ms: 2.738513
+  type: 'test'
+  ...
+# Subtest: invalid UTF-8, non-object JSON and missing response bodies fail closed
+ok 84 - invalid UTF-8, non-object JSON and missing response bodies fail closed
+  ---
+  duration_ms: 2.278964
+  type: 'test'
+  ...
+# Subtest: malformed or oversized list envelopes cannot trigger event detail GET
+ok 85 - malformed or oversized list envelopes cannot trigger event detail GET
+  ---
+  duration_ms: 9.055455
+  type: 'test'
+  ...
+# Subtest: duplicate event IDs cause only one authenticated detail GET
+ok 86 - duplicate event IDs cause only one authenticated detail GET
+  ---
+  duration_ms: 2.412873
+  type: 'test'
+  ...
+# Subtest: deadline aborts subsequent requests, empty lists still are partial, logger errors suppressed
+ok 87 - deadline aborts subsequent requests, empty lists still are partial, logger errors suppressed
+  ---
+  duration_ms: 1.45594
+  type: 'test'
+  ...
+# Subtest: requests near the global deadline receive only the remaining time budget
+ok 88 - requests near the global deadline receive only the remaining time budget
+  ---
+  duration_ms: 12.796403
+  type: 'test'
+  ...
+# Subtest: body reads obey the remaining deadline abort and suppress raw stream errors
+ok 89 - body reads obey the remaining deadline abort and suppress raw stream errors
+  ---
+  duration_ms: 20.885957
+  type: 'test'
+  ...
+# Subtest: two valid empty pages report only bounded page absence, never an exhaustive scan
+ok 90 - two valid empty pages report only bounded page absence, never an exhaustive scan
+  ---
+  duration_ms: 1.262675
+  type: 'test'
+  ...
+# Subtest: a failed charge query identifies its reference and leaves later references unknown
+ok 91 - a failed charge query identifies its reference and leaves later references unknown
+  ---
+  duration_ms: 0.885237
+  type: 'test'
+  ...
+# Subtest: first or second list query failure never certifies absence for any charge
+ok 92 - first or second list query failure never certifies absence for any charge
+  ---
+  duration_ms: 2.214394
+  type: 'test'
+  ...
+# Subtest: invalid list envelopes mark that query failed despite valid HTTP and JSON
+ok 93 - invalid list envelopes mark that query failed despite valid HTTP and JSON
+  ---
+  duration_ms: 4.40772
+  type: 'test'
+  ...
+# Subtest: failed event detail GET remains unknown rather than declaring a rejected event
+ok 94 - failed event detail GET remains unknown rather than declaring a rejected event
+  ---
+  duration_ms: 2.051716
+  type: 'test'
+  ...
+# Subtest: a candidate for one reference does not hide bounded absence for the other two
+ok 95 - a candidate for one reference does not hide bounded absence for the other two
+  ---
+  duration_ms: 1.063694
+  type: 'test'
+  ...
+# Subtest: unclassifiable list entries keep absence unknown even after both page reads
+ok 96 - unclassifiable list entries keep absence unknown even after both page reads
+  ---
+  duration_ms: 5.418752
+  type: 'test'
+  ...
+# (node:113201) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:113201) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: authenticated resource is passed once to the transaction RPC
+ok 97 - authenticated resource is passed once to the transaction RPC
+  ---
+  duration_ms: 5.27736
+  type: 'test'
+  ...
+# Subtest: documented JSON-string event data is parsed before transaction
+ok 98 - documented JSON-string event data is parsed before transaction
+  ---
+  duration_ms: 0.910564
+  type: 'test'
+  ...
+# Subtest: both selected charge events preserve object and JSON-string data through the mocked RPC
+ok 99 - both selected charge events preserve object and JSON-string data through the mocked RPC
+  ---
+  duration_ms: 2.832987
+  type: 'test'
+  ...
+# Subtest: invalid provider identity or absent provider type cannot use caller type
+ok 100 - invalid provider identity or absent provider type cannot use caller type
+  ---
+  duration_ms: 1.603873
+  type: 'test'
+  ...
+# Subtest: malformed resources never reach the transaction
+ok 101 - malformed resources never reach the transaction
+  ---
+  duration_ms: 2.006608
+  type: 'test'
+  ...
+# Subtest: missing migration or failed transaction is retryable, never success
+ok 102 - missing migration or failed transaction is retryable, never success
+  ---
+  duration_ms: 0.993746
+  type: 'test'
+  ...
+# Subtest: duplicate transaction result is returned without extra writes
+ok 103 - duplicate transaction result is returned without extra writes
+  ---
+  duration_ms: 0.526506
+  type: 'test'
+  ...
+# Subtest: disabled payments make no provider lookup, database client or transaction call for either charge event
+ok 104 - disabled payments make no provider lookup, database client or transaction call for either charge event
+  ---
+  duration_ms: 1.242012
+  type: 'test'
+  ...
+# Subtest: refund events require reconciliation and never reach payment transaction
+ok 105 - refund events require reconciliation and never reach payment transaction
+  ---
+  duration_ms: 0.737155
+  type: 'test'
+  ...
+# Subtest: invalid request bodies log a bounded failure without provider or database access
+ok 106 - invalid request bodies log a bounded failure without provider or database access
+  ---
+  duration_ms: 3.395753
+  type: 'test'
+  ...
+# Subtest: provider and database exceptions never log error messages, payloads or headers
+ok 107 - provider and database exceptions never log error messages, payloads or headers
+  ---
+  duration_ms: 1.894241
+  type: 'test'
+  ...
+# Subtest: success diagnostics omit request, authenticated resource and RPC result private fields
+ok 108 - success diagnostics omit request, authenticated resource and RPC result private fields
+  ---
+  duration_ms: 1.884289
+  type: 'test'
+  ...
+# Subtest: diagnostics report verified event outcomes and normalize unknown or forged states
+ok 109 - diagnostics report verified event outcomes and normalize unknown or forged states
+  ---
+  duration_ms: 2.164289
+  type: 'test'
+  ...
+# Subtest: a late failed event reports its event outcome while the effective paid order remains unchanged
+ok 110 - a late failed event reports its event outcome while the effective paid order remains unchanged
+  ---
+  duration_ms: 0.487226
+  type: 'test'
+  ...
+# Subtest: failed request and unverified provider identity cannot claim verified payment progress
+ok 111 - failed request and unverified provider identity cannot claim verified payment progress
+  ---
+  duration_ms: 1.031621
+  type: 'test'
+  ...
+# Subtest: provider HTTP failures map only to allowlisted diagnostic reasons while remaining retryable
+ok 112 - provider HTTP failures map only to allowlisted diagnostic reasons while remaining retryable
+  ---
+  duration_ms: 2.085894
+  type: 'test'
+  ...
+# Subtest: lookup diagnostics distinguish the observed HTTP 400, HTTP 500 and transport failures
+ok 113 - lookup diagnostics distinguish the observed HTTP 400, HTTP 500 and transport failures
+  ---
+  duration_ms: 0.92568
+  type: 'test'
+  ...
+# Subtest: lookup error types are fixed labels and never read raw upstream error fields
+ok 114 - lookup error types are fixed labels and never read raw upstream error fields
+  ---
+  duration_ms: 4.713883
+  type: 'test'
+  ...
+# Subtest: event mode diagnostics normalize hostile fields without exposing IDs or changing lookup rejection
+ok 115 - event mode diagnostics normalize hostile fields without exposing IDs or changing lookup rejection
+  ---
+  duration_ms: 2.128005
+  type: 'test'
+  ...
+# Subtest: lookup diagnostics accept only numeric integer upstream HTTP statuses from 100 through 599
+ok 116 - lookup diagnostics accept only numeric integer upstream HTTP statuses from 100 through 599
+  ---
+  duration_ms: 2.914775
+  type: 'test'
+  ...
+# Subtest: lookup timeout labels never serialize untrusted names or nested causes
+ok 117 - lookup timeout labels never serialize untrusted names or nested causes
+  ---
+  duration_ms: 1.9615
+  type: 'test'
+  ...
+# Subtest: hostile upstream status and name accessors cannot throw or add raw diagnostics
+ok 118 - hostile upstream status and name accessors cannot throw or add raw diagnostics
+  ---
+  duration_ms: 0.734544
+  type: 'test'
+  ...
+# Subtest: successful lookup and failures at other stages never claim an upstream HTTP status or failure
+ok 119 - successful lookup and failures at other stages never claim an upstream HTTP status or failure
+  ---
+  duration_ms: 2.257075
+  type: 'test'
+  ...
+# Subtest: verified but unsupported or malformed resources remain bounded and never invoke the transaction
+ok 120 - verified but unsupported or malformed resources remain bounded and never invoke the transaction
+  ---
+  duration_ms: 0.864346
+  type: 'test'
+  ...
+# Subtest: known database codes and exact local validation messages become enum reasons without raw details
+ok 121 - known database codes and exact local validation messages become enum reasons without raw details
+  ---
+  duration_ms: 1.218803
+  type: 'test'
+  ...
+# Subtest: every handled result logs one bounded diagnostic without changing its response or RPC behavior
+ok 122 - every handled result logs one bounded diagnostic without changing its response or RPC behavior
+  ---
+  duration_ms: 1.55195
+  type: 'test'
+  ...
+# Subtest: webhook diagnostics remain local and add no notification or extra write mechanism
+ok 123 - webhook diagnostics remain local and add no notification or extra write mechanism
+  ---
+  duration_ms: 0.289066
+  type: 'test'
+  ...
+# (node:113214) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-deadline-review/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-deadline-review/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: accepts only the authenticated event identity and type
+ok 124 - accepts only the authenticated event identity and type
+  ---
+  duration_ms: 0.964876
+  type: 'test'
+  ...
+# Subtest: accepts the exact integer amount in PEN using either provider currency field
+ok 125 - accepts the exact integer amount in PEN using either provider currency field
+  ---
+  duration_ms: 0.243002
+  type: 'test'
+  ...
+# Subtest: rejects missing, nonnumeric, fractional, wrong and unsafe amounts
+ok 126 - rejects missing, nonnumeric, fractional, wrong and unsafe amounts
+  ---
+  duration_ms: 0.368331
+  type: 'test'
+  ...
+# Subtest: rejects absent, mismatched and conflicting currencies
+ok 127 - rejects absent, mismatched and conflicting currencies
+  ---
+  duration_ms: 0.200429
+  type: 'test'
+  ...
+# Subtest: a repeated paid event preserves every fulfillment stage
+ok 128 - a repeated paid event preserves every fulfillment stage
+  ---
+  duration_ms: 0.299981
+  type: 'test'
+  ...
+# Subtest: initial payment confirmation and other transitions remain compatible
+ok 129 - initial payment confirmation and other transitions remain compatible
+  ---
+  duration_ms: 0.108106
+  type: 'test'
+  ...
+1..129
+# tests 129
+# suites 0
+# pass 129
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 541.688377
