@@ -100,10 +100,11 @@ function toMinorUnits(amount: number) {
   return minor;
 }
 
-async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}) {
+async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void) {
   const { hasSecretKey } = assertCulqiEnabled();
   if (!hasSecretKey) throw new Error("Culqi secret key is not configured.");
 
+  assertInBudget?.();
   const response = await fetch(`${culqiApiUrl}${path}`, {
     ...init,
     headers: {
@@ -114,7 +115,9 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}) {
     cache: "no-store",
   });
 
+  assertInBudget?.();
   const payload = await response.json().catch(() => null) as T | CulqiErrorPayload | null;
+  assertInBudget?.();
   if (!response.ok) {
     throw new CulqiApiError(payload as CulqiErrorPayload | null, response.status);
   }
@@ -125,8 +128,8 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}) {
   };
 }
 
-async function culqiRequest<T>(path: string, init: RequestInit = {}) {
-  const response = await culqiRequestWithStatus<T>(path, init);
+async function culqiRequest<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void) {
+  const response = await culqiRequestWithStatus<T>(path, init, assertInBudget);
   return response.payload;
 }
 
@@ -222,18 +225,26 @@ export async function fetchCulqiEvent(eventId: string) {
   const environment = mode === "sandbox" ? "test" : mode === "live" ? "live" : null;
   if (!environment) throw new Error("Culqi event environment is not configured.");
   const controller = new AbortController();
+  const expiresAt = performance.now() + 10_000;
+  const timeoutError = new DOMException("Culqi event lookup deadline exceeded.", "TimeoutError");
+  const assertInBudget = () => {
+    // A delayed timer cannot authorize accepting headers or a body after expiry.
+    if (performance.now() >= expiresAt) {
+      controller.abort(timeoutError);
+      throw timeoutError;
+    }
+  };
   let timer: ReturnType<typeof setTimeout> | undefined;
   const deadline = new Promise<never>((_, reject) => {
     timer = setTimeout(() => {
-      const error = new DOMException("Culqi event lookup deadline exceeded.", "TimeoutError");
-      reject(error);
-      controller.abort(error);
+      reject(timeoutError);
+      controller.abort(timeoutError);
     }, 10_000);
   });
   // Match the official SDK's event lookup contract without changing charge requests.
   try {
     // Bound headers and JSON together, even when a transport ignores abort.
-    return await Promise.race([culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
+    const event = await Promise.race([culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
       method: "GET",
       signal: controller.signal,
       headers: {
@@ -241,7 +252,9 @@ export async function fetchCulqiEvent(eventId: string) {
         "x-api-version": "2",
         "x-culqi-env": environment,
       },
-    }), deadline]);
+    }, assertInBudget), deadline]);
+    assertInBudget();
+    return event;
   } catch (error) {
     if (error instanceof CulqiApiError) {
       // Event-only context contains no ID or provider payload. It is immutable

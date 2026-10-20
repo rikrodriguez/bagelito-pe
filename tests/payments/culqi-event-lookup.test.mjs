@@ -7,7 +7,7 @@ import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib
 const clientSource = await readFile(new URL('../../src/lib/payments/culqi.ts', import.meta.url), 'utf8');
 const handlerSource = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const executable = (source) => stripTypeScriptTypes(source.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
-const loadClient = new Function('assertCulqiEnabled', 'fetch', 'process', `${executable(clientSource)}; return { fetchCulqiEvent, createCulqiCharge, CulqiApiError };`);
+const loadClient = new Function('assertCulqiEnabled', 'fetch', 'process', 'performance', `${executable(clientSource)}; return { fetchCulqiEvent, createCulqiCharge, CulqiApiError };`);
 const loadHandler = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient',
   'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', `${executable(handlerSource)}; return POST;`);
 const eventId = 'evt_test_lookup123';
@@ -19,7 +19,7 @@ const verifiedEvent = { id: eventId, type: 'charge.creation.succeeded',
   data: JSON.stringify({ object: 'charge', id: chargeId, amount: 6600, currency_code: 'PEN' }) };
 
 function setup({ mode = 'sandbox', enabled = true, hasSecretKey = true, status = 200, payload = verifiedEvent,
-  transport = null, enforceSdkContract = false } = {}) {
+  transport = null, enforceSdkContract = false, now = () => performance.now() } = {}) {
   const requests = [], rpcCalls = [], clientCalls = [], logs = [];
   const client = loadClient(() => {
     if (!enabled) throw new Error('Culqi payments are not enabled yet.');
@@ -37,7 +37,7 @@ function setup({ mode = 'sandbox', enabled = true, hasSecretKey = true, status =
       ? { type: 'parameter_error', merchant_message: privateMarker } : payload;
     return new Response(JSON.stringify(responsePayload), { status: responseStatus,
       headers: { 'Content-Type': 'application/json' } });
-  }, { env: { CULQI_SECRET_KEY: 'fixture-only-not-a-key' } });
+  }, { env: { CULQI_SECRET_KEY: 'fixture-only-not-a-key' } }, { now });
   const post = loadHandler({ json: (responsePayload, init = {}) => ({ payload: responsePayload,
     status: init.status ?? 200, headers: init.headers }) }, client.fetchCulqiEvent, () => enabled, () => {
     clientCalls.push('database');
@@ -107,6 +107,75 @@ test('SDK-contract transport fixture reaches the real verification handler and o
 });
 
 const flush = () => new Promise(resolve => setImmediate(resolve));
+for (const phase of ['headers', 'body']) {
+  for (const elapsed of [10000, 10001]) {
+    test(`event lookup rejects late ${phase} at ${elapsed}ms before delayed timers`, async (t) => {
+      t.mock.timers.enable({ apis: ['setTimeout'] });
+      let now = 0, headers, body, bodyReads = 0;
+      const fixture = setup({ now: () => now,
+        transport: () => new Promise(resolve => { headers = resolve; }) });
+      const response = { ok: true, status: 200, json: () => {
+        bodyReads++;
+        return phase === 'body' ? new Promise(resolve => { body = resolve; }) : Promise.resolve(verifiedEvent);
+      } };
+      const pending = fixture.post();
+      await flush();
+      assert.equal(fixture.requests.length, 1);
+      if (phase === 'body') {
+        now = 6000;
+        headers(response);
+        await flush();
+        assert.equal(bodyReads, 1);
+      }
+      // The clock advances while the timer callback remains queued. A result
+      // outside the budget cannot proceed to identity verification or SQL.
+      now = elapsed;
+      if (phase === 'headers') headers(response);
+      else body(verifiedEvent);
+      assertSafeFailure(fixture, await pending);
+      assert.equal(fixture.logs[0][1].upstreamFailureClass, 'timeout');
+      assert.equal(fixture.logs[0][1].upstreamHttpStatus, null);
+      assert.equal(fixture.requests[0].init.signal.aborted, true);
+      assert.equal(bodyReads, phase === 'body' ? 1 : 0, 'Expired headers cannot start reading a body');
+      t.mock.timers.tick(20000);
+      await flush();
+      assert.equal(fixture.logs.length, 1);
+      assert.deepEqual(fixture.rpcCalls, []);
+    });
+  }
+  test(`event lookup accepts ${phase} at 9999ms with its timer still queued`, async (t) => {
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    let now = 0;
+    const fixture = setup({ now: () => now, transport: async () => {
+      if (phase === 'headers') now = 9999;
+      return { ok: true, status: 200, json: async () => { now = 9999; return verifiedEvent; } };
+    } });
+    assert.equal((await fixture.post()).status, 200);
+    assert.equal(fixture.rpcCalls.length, 1);
+    t.mock.timers.tick(20000);
+    await flush();
+    assert.equal(fixture.requests[0].init.signal.aborted, false);
+    assert.equal(fixture.logs.length, 1);
+  });
+}
+
+test('event lookup rejects an expired result when queued continuations resume', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let now = 0;
+  const fixture = setup({ now: () => now, transport: async () => ({
+    ok: true, status: 200, json: async () => {
+      // The provider body resolves in time; subsequent queued work consumes
+      // the budget before the handler can accept its result.
+      queueMicrotask(() => queueMicrotask(() => queueMicrotask(() => { now = 10001; })));
+      return verifiedEvent;
+    },
+  }) });
+  assertSafeFailure(fixture, await fixture.post());
+  assert.equal(fixture.logs[0][1].upstreamFailureClass, 'timeout');
+  assert.equal(fixture.requests[0].init.signal.aborted, true);
+  assert.deepEqual(fixture.rpcCalls, []);
+});
+
 for (const phase of ['headers', 'body']) {
   test(`event lookup bounds stalled ${phase} and ignores its late response`, async (t) => {
     t.mock.timers.enable({ apis: ['setTimeout'] });
