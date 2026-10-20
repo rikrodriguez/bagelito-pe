@@ -1,5 +1,7 @@
 # Culqi: aceptación del evento dentro de su presupuesto
 
+**Actualización de evidencia, 20 de octubre:** los upstream 400 mencionados abajo son atribuciones históricas sin el resultado primario recuperado. La [revisión actual de procedencia y despliegue](culqi-webhook-evidence-recovery.md) distingue las capturas aportadas, el historial del hosting y los límites de acceso. Las regresiones locales del deadline siguen verificadas.
+
 Base local: `b21e8217b7379c70bb86621f918f9fb936376ce3` (PR13). Corrección registrada en el commit local `4102a1d1fedb78f09ea16ebb01bb5367d9bc05e3`, rama separada `local/culqi-event-deadline-review`, worktree `/workspace/bagelito-culqi-deadline-review`. El worktree del PR13 permanece intacto. No explica ni corrige el HTTP 400 histórico de Culqi.
 
 ## Defecto local reproducido

@@ -1,0 +1,135 @@
+TAP version 13
+# (node:3003) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/bagelito-culqi-webhook-evidence/src/lib/payments/verification.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /workspace/bagelito-culqi-webhook-evidence/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:3003) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+# Subtest: historical_4254fe3: panel_camel_charge cannot be queried as an event or settle
+ok 1 - historical_4254fe3: panel_camel_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 7.008448
+  type: 'test'
+  ...
+# Subtest: historical_4254fe3: api_snake_charge cannot be queried as an event or settle
+ok 2 - historical_4254fe3: api_snake_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.555898
+  type: 'test'
+  ...
+# Subtest: historical_4254fe3: a synthetic event reference reaches only its independently verified resource
+ok 3 - historical_4254fe3: a synthetic event reference reaches only its independently verified resource
+  ---
+  duration_ms: 0.96054
+  type: 'test'
+  ...
+# Subtest: historical_4254fe3: synthetic event lookup400 reproduces the500 classification
+ok 4 - historical_4254fe3: synthetic event lookup400 reproduces the500 classification
+  ---
+  duration_ms: 0.802661
+  type: 'test'
+  ...
+# Subtest: historical_c462ec8: panel_camel_charge cannot be queried as an event or settle
+ok 5 - historical_c462ec8: panel_camel_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.886577
+  type: 'test'
+  ...
+# Subtest: historical_c462ec8: api_snake_charge cannot be queried as an event or settle
+ok 6 - historical_c462ec8: api_snake_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.450695
+  type: 'test'
+  ...
+# Subtest: historical_c462ec8: a synthetic event reference reaches only its independently verified resource
+ok 7 - historical_c462ec8: a synthetic event reference reaches only its independently verified resource
+  ---
+  duration_ms: 0.348098
+  type: 'test'
+  ...
+# Subtest: historical_c462ec8: synthetic event lookup400 reproduces the500 classification
+ok 8 - historical_c462ec8: synthetic event lookup400 reproduces the500 classification
+  ---
+  duration_ms: 0.79236
+  type: 'test'
+  ...
+# Subtest: latest_ready_before_delivery_80233bc: panel_camel_charge cannot be queried as an event or settle
+ok 9 - latest_ready_before_delivery_80233bc: panel_camel_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.556108
+  type: 'test'
+  ...
+# Subtest: latest_ready_before_delivery_80233bc: api_snake_charge cannot be queried as an event or settle
+ok 10 - latest_ready_before_delivery_80233bc: api_snake_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.71493
+  type: 'test'
+  ...
+# Subtest: latest_ready_before_delivery_80233bc: a synthetic event reference reaches only its independently verified resource
+ok 11 - latest_ready_before_delivery_80233bc: a synthetic event reference reaches only its independently verified resource
+  ---
+  duration_ms: 0.458963
+  type: 'test'
+  ...
+# Subtest: latest_ready_before_delivery_80233bc: synthetic event lookup400 reproduces the500 classification
+ok 12 - latest_ready_before_delivery_80233bc: synthetic event lookup400 reproduces the500 classification
+  ---
+  duration_ms: 0.362097
+  type: 'test'
+  ...
+# Subtest: current_preview_d45c71c: panel_camel_charge cannot be queried as an event or settle
+ok 13 - current_preview_d45c71c: panel_camel_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.226708
+  type: 'test'
+  ...
+# Subtest: current_preview_d45c71c: api_snake_charge cannot be queried as an event or settle
+ok 14 - current_preview_d45c71c: api_snake_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.158947
+  type: 'test'
+  ...
+# Subtest: current_preview_d45c71c: a synthetic event reference reaches only its independently verified resource
+ok 15 - current_preview_d45c71c: a synthetic event reference reaches only its independently verified resource
+  ---
+  duration_ms: 0.411269
+  type: 'test'
+  ...
+# Subtest: current_preview_d45c71c: synthetic event lookup400 reproduces the500 classification
+ok 16 - current_preview_d45c71c: synthetic event lookup400 reproduces the500 classification
+  ---
+  duration_ms: 0.266462
+  type: 'test'
+  ...
+# Subtest: current_pr_a42d18c: panel_camel_charge cannot be queried as an event or settle
+ok 17 - current_pr_a42d18c: panel_camel_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.224296
+  type: 'test'
+  ...
+# Subtest: current_pr_a42d18c: api_snake_charge cannot be queried as an event or settle
+ok 18 - current_pr_a42d18c: api_snake_charge cannot be queried as an event or settle
+  ---
+  duration_ms: 0.244864
+  type: 'test'
+  ...
+# Subtest: current_pr_a42d18c: a synthetic event reference reaches only its independently verified resource
+ok 19 - current_pr_a42d18c: a synthetic event reference reaches only its independently verified resource
+  ---
+  duration_ms: 0.349972
+  type: 'test'
+  ...
+# Subtest: current_pr_a42d18c: synthetic event lookup400 reproduces the500 classification
+ok 20 - current_pr_a42d18c: synthetic event lookup400 reproduces the500 classification
+  ---
+  duration_ms: 0.244094
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 223.289671

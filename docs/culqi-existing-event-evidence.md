@@ -1,5 +1,7 @@
 # Evidencia de un evento Culqi ya existente
 
+**Lectura ya completada.** El titular aportó la lista completa visible con token 201, cargo 201 y consulta de cargo 200, sin 400. No pedir más búsquedas en el panel ni exigir un evt ausente. El [estado actualizado y la recuperación de evidencia](culqi-webhook-evidence-recovery.md) sustituyen los próximos pasos manuales de esta guía histórica.
+
 Esta lectura manual permite investigar el HTTP400 histórico sin crear otro cargo, reenviar eventos ni modificar configuración. Se realiza en la cuenta de Culqi ya autorizada, en modo pruebas/integración. No necesita que un agente opere la laptop, copie una sesión o lea claves.
 
 ## Qué ocurrió y qué buscar

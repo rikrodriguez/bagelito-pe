@@ -1,0 +1,132 @@
+{
+  "scope": {
+    "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+    "teamId": "team_EWhRYzkxyiCVNnh43fCf4Dcb",
+    "window_since": "2026-10-16T03:30:00Z",
+    "window_until": "2026-10-16T04:00:00Z",
+    "event_limit": 50
+  },
+  "project_events": [
+    {
+      "id": "uev_Godx3TUQg8b2kKczSxzbOq8k",
+      "type": "aliases-assigned",
+      "createdAt": 1792122086054,
+      "text": "rikrodriguez assigned an alias to bagelito-9irnj0cig-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+      "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+      "aliasCount": 1,
+      "deploymentId": "dpl_AmdeKBgt8WqDBfcJm41GWu4ksR4U",
+      "deploymentUrl": "bagelito-9irnj0cig-ricardo-rodriguezs-projects-487b7b64.vercel.app"
+    },
+    {
+      "id": "uev_7gFichi5eYa2tDaHCPnbpT3X",
+      "type": "deployment",
+      "createdAt": 1792122043184,
+      "text": "You deployed bagelito-pe from rikrodriguez/bagelito-pe (80233bc in fix/culqi-payment-coordination-20261012) to bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+      "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+      "aliases": [
+        "bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app"
+      ],
+      "deploymentId": "dpl_AmdeKBgt8WqDBfcJm41GWu4ksR4U",
+      "deploymentUrl": "bagelito-9irnj0cig-ricardo-rodriguezs-projects-487b7b64.vercel.app"
+    }
+  ],
+  "build_evidence": [
+    {
+      "created": 1792122043716,
+      "type": "stdout",
+      "text": "Running build in Washington, D.C., USA (East) – iad1"
+    },
+    {
+      "created": 1792122043842,
+      "type": "stdout",
+      "text": "Cloning github.com/rikrodriguez/bagelito-pe (Branch: fix/culqi-payment-coordination-20261012, Commit: 80233bc)"
+    },
+    {
+      "created": 1792122044469,
+      "type": "stdout",
+      "text": "Cloning completed: 626.000ms"
+    },
+    {
+      "created": 1792122044794,
+      "type": "stdout",
+      "text": "Restored build cache from previous deployment (6T8kiuYTzdukJQxLN8FGH4KyQ45a)"
+    },
+    {
+      "created": 1792122080765,
+      "type": "stderr",
+      "text": "Build Completed in /vercel/output [35s]"
+    },
+    {
+      "created": 1792122086015,
+      "type": "stdout",
+      "text": "Deployment completed"
+    },
+    {
+      "created": 1792122086041,
+      "type": "stdout",
+      "text": "Creating build cache..."
+    },
+    {
+      "created": 1792122096992,
+      "type": "stdout",
+      "text": "Created build cache: 11s"
+    },
+    {
+      "created": 1792122096992,
+      "type": "stdout",
+      "text": "Uploading build cache [183.77 MB]"
+    },
+    {
+      "created": 1792122099124,
+      "type": "stdout",
+      "text": "Build cache uploaded: 2.132s"
+    }
+  ],
+  "build_route": [
+    {
+      "created": 1792122080039,
+      "text": "├ ƒ /api/webhooks/culqi                    193 B         103 kB"
+    }
+  ],
+  "current_alias": {
+    "alias": "bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+    "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+    "createdAt": 1791838186530,
+    "updatedAt": 1792241921905,
+    "deploymentId": "dpl_9RoAm1RKYe364jSV1iGbrwQf4MZS"
+  },
+  "bundle_access": {
+    "action": "GET /v6/deployments/{id}/files",
+    "target": "dpl_AmdeKBgt8WqDBfcJm41GWu4ksR4U",
+    "http_status": 404,
+    "code": "not_found",
+    "message": "File tree not found",
+    "state": "read failed; no file identifiers returned; no alternate binary route attempted"
+  },
+  "deployment_metadata": [
+    {
+      "id": "dpl_AmdeKBgt8WqDBfcJm41GWu4ksR4U",
+      "url": "bagelito-9irnj0cig-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+      "createdAt": 1792122042838,
+      "ready": 1792122085849,
+      "readyState": "READY",
+      "sha": "80233bcb4624eedb0e9e428bc6f358ef11b23300",
+      "ref": "fix/culqi-payment-coordination-20261012"
+    },
+    {
+      "id": "dpl_9RoAm1RKYe364jSV1iGbrwQf4MZS",
+      "url": "bagelito-n7azs33aq-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+      "createdAt": 1792241870843,
+      "ready": 1792241921764,
+      "readyState": "READY",
+      "sha": "d45c71cf9e242469c7171debdb756c1c527b63b9",
+      "ref": "fix/culqi-payment-coordination-20261012"
+    }
+  ],
+  "limits": [
+    "No primary original event_lookup/400 record recovered.",
+    "No per-delivery request record tying each 500 to a specific raw body and deployment instance.",
+    "Build/assignment audit supports provenance, but is not a binary fingerprint of the historical running function.",
+    "Provider API list shows only 3 successful requests in its visible range; it does not establish all upstream traffic globally."
+  ]
+}
