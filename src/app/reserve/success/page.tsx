@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { ReservationSuccessContent } from "./ReservationSuccessContent";
 
 export const metadata: Metadata = {
-  title: "Reservation received | Bagelito.pe",
+  title: "Reservation status | Bagelito.pe",
   robots: {
     index: false,
     follow: false,
@@ -12,19 +12,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function SuccessPage({ searchParams }: { searchParams?: Promise<{ order?: string; pack?: string; packSlug?: string; amount?: string; payment?: string }> }) {
+export default async function SuccessPage({ searchParams }: { searchParams?: Promise<{ order?: string | string[] }> }) {
   const params = await searchParams;
-  const order = params?.order ?? "BAG-PENDING";
-  const pack = params?.pack ?? "";
-  const packSlug = params?.packSlug;
-  const amount = params?.amount ?? "";
-  const payment = params?.payment ?? "manual";
+  // A navigation URL is not evidence of an order, its contents or a payment.
+  // Keep only a reference for the existing tracking lookup.
+  const order = typeof params?.order === "string" ? params.order : "";
 
   return (
     <>
       <Header />
       <main className="success-page">
-        <ReservationSuccessContent order={order} pack={pack} packSlug={packSlug} amount={amount} payment={payment} />
+        <ReservationSuccessContent order={order} />
       </main>
       <Footer />
     </>
