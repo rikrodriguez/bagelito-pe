@@ -5,13 +5,15 @@ import { trackBagelitoEvent } from "@/lib/analytics";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
+import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 const badgeIcons = [CalendarDays, LockKeyhole, Archive, Truck];
 
 export function Hero() {
   const { copy } = useLanguage();
   const { accepting: acceptingReservations } = useBatchAvailability();
-  const primaryHref = acceptingReservations ? "#packs" : "/waitlist";
+  const waitlistHref = useWaitlistCampaignHref();
+  const primaryHref = acceptingReservations ? "#packs" : waitlistHref();
   const primaryLabel = acceptingReservations ? copy.hero.primaryCta : copy.hero.waitlistCta;
 
   return (

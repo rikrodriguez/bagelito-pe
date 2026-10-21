@@ -1,5 +1,5 @@
 import { requireAdmin } from "@/lib/admin/auth";
-import { fetchOrders, getDeliveryRoutePlan, type Order } from "@/lib/admin/queries";
+import { fetchCurrentBatch, fetchOrders, getDeliveryRoutePlan, type Order } from "@/lib/admin/queries";
 
 export const runtime = "nodejs";
 
@@ -21,7 +21,8 @@ function getHandoffText(order: Order) {
 
 export async function GET() {
   await requireAdmin();
-  const routePlan = getDeliveryRoutePlan(await fetchOrders());
+  const [batch, orders] = await Promise.all([fetchCurrentBatch(), fetchOrders()]);
+  const routePlan = getDeliveryRoutePlan(orders.filter((order) => order.batch_id === batch.id));
   const rows = [
     [
       "Stop",
