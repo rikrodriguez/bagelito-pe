@@ -1,7 +1,7 @@
 name: Integrated delivery candidate CI
 on:
   push:
-    branches: [test/culqi-webhook-diagnostic-preview-20261020, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016, fix/admin-culqi-proof-label-20261016, fix/checkout-preparation-deadline-20261017]
+    branches: [codex/culqi-payment-split-20261021, test/culqi-webhook-diagnostic-preview-20261020, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016, fix/admin-culqi-proof-label-20261016, fix/checkout-preparation-deadline-20261017]
   pull_request:
     branches: [fix/culqi-payment-coordination-20261012, main, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016, fix/admin-culqi-proof-label-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
@@ -14,7 +14,8 @@ jobs:
   application:
     if: >-
       github.event_name == 'push' ||
-      ((github.event.pull_request.head.ref == 'test/culqi-webhook-diagnostic-preview-20261020' ||
+      ((github.event.pull_request.head.ref == 'codex/culqi-payment-split-20261021' ||
+        github.event.pull_request.head.ref == 'test/culqi-webhook-diagnostic-preview-20261020' ||
         github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
         github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
         github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016' ||
@@ -61,7 +62,8 @@ jobs:
   sql:
     if: >-
       github.event_name == 'push' ||
-      ((github.event.pull_request.head.ref == 'test/culqi-webhook-diagnostic-preview-20261020' ||
+      ((github.event.pull_request.head.ref == 'codex/culqi-payment-split-20261021' ||
+        github.event.pull_request.head.ref == 'test/culqi-webhook-diagnostic-preview-20261020' ||
         github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
         github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
         github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016' ||

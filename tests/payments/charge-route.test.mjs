@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 const source=await readFile(new URL('../../src/app/api/payments/culqi/charge/route.ts',import.meta.url),'utf8');
 const body=stripTypeScriptTypes(source.replace(/^import[\s\S]*?;\n/gm,'')).replace(/export /g,'');
-const load=new Function('NextResponse','createCulqiCharge','isCulqiRequestAllowed','coordinateCulqiCharge','PublicApiError','enforcePublicApiSecurity','createSupabaseAdminClient',`${body};return POST;`);
+const load=new Function('NextResponse','createCulqiCharge','isCulqiRequestAllowed','coordinateCulqiCharge','PublicApiError','enforcePublicApiSecurity','createSupabaseAdminClient','getPaymentConfig','toPaymentMinorUnits','fetchCulqiCharge',`${body};return POST;`);
 const checkoutSessionId='11111111-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 const otherCheckoutSessionId='22222222-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
 async function run({order={},payload={},allowed=true,queryError=null}={}){
@@ -12,7 +12,7 @@ async function run({order={},payload={},allowed=true,queryError=null}={}){
  let coordinations=0, providerCalls=0;
  const filters=[],selections=[],coordinateCalls=[];
  const q={select(columns){selections.push(columns);return q;},eq(column,value){filters.push([column,value]);return q;},maybeSingle:async()=>({data:row,error:queryError})};
- const post=load({json:(payload,init={})=>({payload,status:init.status??200})},async()=>{providerCalls++;throw new Error('Unexpected provider call');},()=>allowed,async(args)=>{coordinations++;coordinateCalls.push(args);return {ok:true,paymentStatus:'awaiting_webhook'};},class extends Error {},async()=>{},()=>({from:()=>q}));
+ const post=load({json:(payload,init={})=>({payload,status:init.status??200})},async()=>{providerCalls++;throw new Error('Unexpected provider call');},()=>allowed,async(args)=>{coordinations++;coordinateCalls.push(args);return {ok:true,paymentStatus:'awaiting_webhook'};},class extends Error {},async()=>{},()=>({from:()=>q}),()=>({mode:'sandbox'}),amount=>Math.round(amount*100),async()=>{throw new Error('Unexpected GET');});
  const response=await post(new Request('https://fixture.invalid',{method:'POST',body:JSON.stringify({orderCode:'BAG-1',checkoutSessionId,email:'fixture@example.invalid',sourceId:'tkn_test_fixture123',deviceId:'device123',...payload})}));
  return {response,coordinations,providerCalls,filters,selections,coordinateCalls};
 }
@@ -74,4 +74,13 @@ test('an order lookup failure never echoes checkout capability in an error or re
  assert.equal(r.response.status,500);assert.equal(r.coordinations,0);assert.equal(r.providerCalls,0);
  assert.deepEqual(r.response.payload,{ok:false,error:'Could not process Culqi payment.'});
  assert.equal(JSON.stringify(r.response).includes(checkoutSessionId),false);
+});
+
+test('confirmation context uses persisted amount and capability, configured mode and a server GET helper',async()=>{
+ const r=await run({payload:{amount:1,amountMinor:1,mode:'live',checkoutSessionId}});
+ assert.equal(r.response.status,200);
+ assert.equal(r.coordinateCalls[0].amountMinor,6800);
+ assert.equal(r.coordinateCalls[0].checkoutSessionId,checkoutSessionId);
+ assert.equal(r.coordinateCalls[0].mode,'test');
+ assert.equal(typeof r.coordinateCalls[0].fetchCharge,'function');
 });
