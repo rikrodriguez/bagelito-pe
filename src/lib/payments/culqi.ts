@@ -11,12 +11,18 @@ type CulqiEventResponse = {
 export type CulqiChargeResponse = {
   action_code?: string;
   amount: number;
+  amount_refunded?: number;
+  capture?: boolean;
+  capture_date?: number;
+  current_amount?: number;
   currency_code?: string;
   currency?: string;
+  dispute?: boolean;
   duplicated?: boolean;
   id?: string;
   metadata?: Record<string, string> | null;
   outcome?: {
+    type?: string;
     code?: string;
     decline_code?: string;
     merchant_message?: string;
@@ -116,6 +122,10 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, a
   });
 
   assertInBudget?.();
+  if (init.redirect === "error" && (response.redirected
+    || (response.url && response.url !== `${culqiApiUrl}${path}`))) {
+    throw new Error("Culqi charge requests cannot follow redirects.");
+  }
   const payload = await response.json().catch(() => null) as T | CulqiErrorPayload | null;
   assertInBudget?.();
   if (!response.ok) {
@@ -131,6 +141,80 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, a
 async function culqiRequest<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void) {
   const response = await culqiRequestWithStatus<T>(path, init, assertInBudget);
   return response.payload;
+}
+
+// Charge operations own one budget across headers, JSON and queued continuations.
+// Racing the operation is necessary because AbortSignal is only cooperative.
+async function withinChargeDeadline<T>(
+  operation: (signal: AbortSignal, assertInBudget: () => void) => Promise<T>,
+) {
+  const controller = new AbortController();
+  const expiresAt = performance.now() + 10_000;
+  const timeoutError = new DOMException("Culqi charge request deadline exceeded.", "TimeoutError");
+  const assertInBudget = () => {
+    if (controller.signal.aborted || performance.now() >= expiresAt) {
+      controller.abort(timeoutError);
+      throw timeoutError;
+    }
+  };
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(timeoutError);
+      controller.abort(timeoutError);
+    }, 10_000);
+  });
+  try {
+    assertInBudget();
+    const result = await Promise.race([operation(controller.signal, assertInBudget), deadline]);
+    assertInBudget();
+    return result;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Authenticated observation of exactly one persisted charge reference. This does
+// not assert payment: callers must still validate money, source, order and capture.
+export async function fetchCulqiCharge(chargeId: string): Promise<CulqiChargeResponse> {
+  const { mode, hasSecretKey } = assertCulqiEnabled();
+  const environment = mode === "sandbox" ? "test" : mode === "live" ? "live" : null;
+  if (!environment) throw new Error("Culqi charge environment is not configured.");
+  if (!hasSecretKey) throw new Error("Culqi secret key is not configured.");
+  if (typeof chargeId !== "string" || !/^chr_(test|live)_[A-Za-z0-9_-]{8,100}$/.test(chargeId)
+    || !chargeId.startsWith(`chr_${environment}_`)) {
+    throw new Error("A matching Culqi charge ID is required.");
+  }
+  const url = `${culqiApiUrl}/charges/${encodeURIComponent(chargeId)}`;
+  return withinChargeDeadline(async (signal, assertInBudget) => {
+    const response = await fetch(url, {
+      method: "GET", signal, cache: "no-store", redirect: "error", credentials: "omit",
+      headers: {
+        Authorization: `Bearer ${process.env.CULQI_SECRET_KEY}`,
+        "Content-Type": "application/json", Accept: "application/json",
+        "x-api-version": "2", "x-culqi-env": environment,
+      },
+    });
+    assertInBudget();
+    if (response.redirected || (response.url && response.url !== url)) {
+      throw new Error("Culqi charge lookup cannot follow redirects.");
+    }
+    const payload: unknown = await response.json().catch(() => null);
+    assertInBudget();
+    if (!response.ok) {
+      // Preserve only bounded classification, never raw provider error messages,
+      // charge IDs or payment details in an exception that a caller could log.
+      const type = payload !== null && typeof payload === "object" && !Array.isArray(payload)
+        ? (payload as { type?: unknown }).type : undefined;
+      throw new CulqiApiError({ type }, response.status);
+    }
+    if (response.status !== 200 || !payload || typeof payload !== "object" || Array.isArray(payload)
+      || (payload as { object?: unknown }).object !== "charge"
+      || (payload as { id?: unknown }).id !== chargeId) {
+      throw new Error("Culqi did not return the requested charge.");
+    }
+    return payload as CulqiChargeResponse;
+  });
 }
 
 function splitCustomerName(customerName: string) {
@@ -197,13 +281,22 @@ export async function createCulqiCharge({
       source_id: sourceId,
       ...(authentication3DS ? { authentication_3DS: authentication3DS } : {}),
   };
-  const { payload: charge, status } = await culqiRequestWithStatus<CulqiChargeResponse>("/charges", {
-    body: JSON.stringify(chargePayload),
-    method: "POST",
-  });
+  const { payload: charge, status } = await withinChargeDeadline((signal, assertInBudget) =>
+    culqiRequestWithStatus<CulqiChargeResponse>("/charges", {
+      body: JSON.stringify(chargePayload), method: "POST", signal, redirect: "error", credentials: "omit",
+    }, assertInBudget));
 
   if (status === 200 && charge?.action_code === "REVIEW") {
     if (!sourceId.startsWith("tkn_")) throw new Error("Unexpected card authentication for non-card source.");
+    if (typeof charge.id === "string" && charge.id) {
+      // A returned charge identity must survive reconciliation. This is only an
+      // observation: the evidence policy rejects REVIEW rather than paying or
+      // reopening the claim for another charge POST.
+      return { charge: charge as CulqiChargeResponse & { id: string }, requires3DS: false } satisfies CulqiChargeResult;
+    }
+    if (charge.id != null || charge.capture === true) {
+      throw new Error("Ambiguous Culqi authentication response.");
+    }
     return {
       requires3DS: true,
       response: charge,

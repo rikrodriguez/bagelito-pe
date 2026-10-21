@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import {
   createCulqiCharge,
+  fetchCulqiCharge,
+  getPaymentConfig,
   isCulqiRequestAllowed,
+  toPaymentMinorUnits,
   type CulqiAuthentication3DS,
 } from "@/lib/payments";
 import { coordinateCulqiCharge } from "@/lib/payments/charge-coordinator";
@@ -160,8 +163,14 @@ export async function POST(request: Request) {
     }
 
     const chargeOrder = order;
+    const configuredMode = getPaymentConfig().mode;
+    if (configuredMode !== "sandbox" && configuredMode !== "live") {
+      throw new Error("Culqi charge mode is unavailable.");
+    }
     const result = await coordinateCulqiCharge({
       db: supabase, orderId: order.id, orderCode: order.order_code, sourceId, deviceId,
+      checkoutSessionId, amountMinor: toPaymentMinorUnits(Number(order.total_amount)),
+      mode: configuredMode === "sandbox" ? "test" : "live", fetchCharge: fetchCulqiCharge,
       has3DS: Boolean(authentication3DS),
       createCharge: () => createCulqiCharge({
 

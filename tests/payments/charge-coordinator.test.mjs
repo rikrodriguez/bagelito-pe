@@ -1,13 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { coordinateCulqiCharge } from '../../src/lib/payments/charge-coordinator.ts';
+import { sourceModule } from '../helpers/load-ts.mjs';
+const { coordinateCulqiCharge } = sourceModule('src/lib/payments/charge-coordinator.ts');
 
 // This fixture models the RPC contract; it does NOT execute PostgreSQL locks.
 function database() {
-  const row = { state: 'idle', attempt: null, source: null, device: null };
+  const row = { state: 'idle', attempt: null, source: null, device: null, paid: false };
   let calls = 0;
   return { row, async rpc(name, args) {
     if (name === 'claim_culqi_charge') {
+      if (row.paid) return { data: { claimed: false, state: 'paid' }, error: null };
       if (row.state === 'requires_3ds') {
         if (!args.p_has_3ds || row.source !== args.p_source_id || row.device !== args.p_device_id)
           return { data: { claimed: false, state: row.state }, error: null };
@@ -18,24 +20,32 @@ function database() {
       row.source = args.p_source_id; row.device = args.p_device_id;
       return { data: { claimed: true, state: row.state, attempt_id: row.attempt }, error: null };
     }
+    if (name === 'confirm_culqi_charge_result') {
+      row.paid = true;
+      return { data: { paymentState: 'paid', orderState: 'payment_confirmed', requiresReview: false }, error: null };
+    }
     assert.equal(name, 'finish_culqi_charge');
     assert.equal(args.p_attempt_id, row.attempt);
     if (row.state === 'submitting') row.state = args.p_state;
     return { data: { state: row.state }, error: null };
   }};
 }
-const base = { orderId: 'order-1', orderCode: 'BAG-1', sourceId: 'tkn_test_12345678', deviceId: 'device123', has3DS: false };
-const success = { requires3DS: false, charge: { id: 'chr_test_12345678', amount: 6800 } };
+const base = { orderId: 'order-1', orderCode: 'BAG-1', sourceId: 'tkn_test_12345678', deviceId: 'device123', has3DS: false,
+  checkoutSessionId: '11111111-aaaa-4aaa-8aaa-aaaaaaaaaaaa', amountMinor: 6800, mode: 'test' };
+const success = (sourceId = base.sourceId) => ({ requires3DS: false, charge: { object: 'charge', id: 'chr_test_12345678', amount: 6800,
+  currency_code: 'PEN', metadata: { bagelito_order_code: 'BAG-1' }, source: { id: sourceId },
+  capture: true, current_amount: 6800, amount_refunded: 0, dispute: false } });
 
 test('20 concurrent requests produce only one provider charge call', async () => {
   const db = database(); let calls = 0;
   let release; const gate = new Promise(resolve => { release = resolve; });
-  const createCharge = async () => { calls++; await gate; return success; };
+  const createCharge = async () => { calls++; await gate; return success(db.row.source); };
   const requests = Array.from({ length: 20 }, (_, i) => coordinateCulqiCharge({ ...base, sourceId: `tkn_test_token${i}12345678`, db, createCharge }));
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(calls, 1); release();
   const results = await Promise.all(requests);
-  assert.ok(results.every(r => r.paymentStatus === 'awaiting_webhook'));
+  assert.equal(results.filter(r => r.paymentStatus === 'paid').length, 1);
+  assert.ok(results.every(r => ['paid', 'awaiting_webhook'].includes(r.paymentStatus)));
   assert.equal(db.row.state, 'submitted');
 });
 
@@ -51,7 +61,7 @@ test('timeout leaves a closed uncertain attempt and cannot re-charge', async () 
 
 test('missing migration prevents calling Culqi', async () => {
   let calls = 0;
-  await assert.rejects(() => coordinateCulqiCharge({ ...base, db: { rpc: async () => ({ data: null, error: { message: 'function does not exist' } }) }, createCharge: async () => { calls++; return success; } }));
+  await assert.rejects(() => coordinateCulqiCharge({ ...base, db: { rpc: async () => ({ data: null, error: { message: 'function does not exist' } }) }, createCharge: async () => { calls++; return success(); } }));
   assert.equal(calls, 0);
 });
 
@@ -59,19 +69,20 @@ test('3DS continuation requires matching source and fingerprint and runs once', 
   const db = database(); let calls = 0;
   const review = async () => { calls++; return { requires3DS: true, response: { action_code: 'REVIEW', amount: 6800 } }; };
   assert.equal((await coordinateCulqiCharge({ ...base, db, createCharge: review })).requires3DS, true);
-  const charge = async () => { calls++; return success; };
+  const charge = async () => { calls++; return success(); };
   await coordinateCulqiCharge({ ...base, db, has3DS: true, sourceId: 'tkn_test_other123', createCharge: charge });
   await coordinateCulqiCharge({ ...base, db, has3DS: true, deviceId: 'different', createCharge: charge });
   assert.equal(calls, 1);
   const results = await Promise.all(Array.from({ length: 10 }, () => coordinateCulqiCharge({ ...base, db, has3DS: true, createCharge: charge })));
   assert.equal(calls, 2);
-  assert.ok(results.every(r => r.paymentStatus === 'awaiting_webhook'));
+  assert.ok(results.some(r => r.paymentStatus === 'paid'));
+  assert.ok(results.every(r => ['paid', 'awaiting_webhook'].includes(r.paymentStatus)));
 });
 
 test('post-charge database failure never triggers a second provider call', async () => {
   const db = database(); const original = db.rpc; let calls = 0;
   db.rpc = async (name, args) => name === 'finish_culqi_charge' ? { data: null, error: { message: 'database unavailable' } } : original(name, args);
-  const createCharge = async () => { calls++; return success; };
+  const createCharge = async () => { calls++; return success(); };
   const first = await coordinateCulqiCharge({ ...base, db, createCharge });
   assert.equal(first.paymentStatus, 'reconciliation_required');
   await coordinateCulqiCharge({ ...base, db, createCharge });
