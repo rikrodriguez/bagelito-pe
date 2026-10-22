@@ -62,12 +62,38 @@ type CulqiErrorPayload = {
   merchant_message?: string;
   message?: string;
   object?: string;
+  param?: unknown;
   type?: unknown;
   user_message?: string;
 };
 
 export type CulqiErrorType = "invalid_request_error" | "authentication_error" | "parameter_error"
   | "card_error" | "limit_api_error" | "resource_error" | "api_error" | "unknown";
+
+export type CulqiEventErrorParam = "id" | "environment" | "version" | "authorization" | "other" | "absent";
+
+function eventLookupApiError(payload: CulqiErrorPayload | null, status: number) {
+  let type: unknown;
+  let param: unknown;
+  let upstreamErrorParam: CulqiEventErrorParam = "other";
+  try { type = payload?.type; } catch { /* Unreadable provider type is unknown. */ }
+  try {
+    param = payload?.param;
+    // Exact, closed labels only. Never normalize, coerce or retain a raw param.
+    switch (param) {
+      case undefined: case null: upstreamErrorParam = "absent"; break;
+      case "id": upstreamErrorParam = "id"; break;
+      case "environment": case "x-culqi-env": upstreamErrorParam = "environment"; break;
+      case "version": case "x-api-version": upstreamErrorParam = "version"; break;
+      case "authorization": upstreamErrorParam = "authorization"; break;
+    }
+  } catch { /* Unreadable provider param stays other. */ }
+  // Event failures retain only bounded context. Charge error construction and
+  // its user-facing messages/fields continue through the original path.
+  const error = new CulqiApiError({ type }, status);
+  Object.defineProperty(error, "upstreamErrorParam", { value: upstreamErrorParam });
+  return error;
+}
 
 const culqiErrorTypes = new Set<CulqiErrorType>([
   "invalid_request_error", "authentication_error", "parameter_error", "card_error",
@@ -106,7 +132,8 @@ function toMinorUnits(amount: number) {
   return minor;
 }
 
-async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void) {
+async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void,
+  errorForResponse?: (payload: CulqiErrorPayload | null, status: number) => CulqiApiError) {
   const { hasSecretKey } = assertCulqiEnabled();
   if (!hasSecretKey) throw new Error("Culqi secret key is not configured.");
 
@@ -129,6 +156,7 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, a
   const payload = await response.json().catch(() => null) as T | CulqiErrorPayload | null;
   assertInBudget?.();
   if (!response.ok) {
+    if (errorForResponse) throw errorForResponse(payload as CulqiErrorPayload | null, response.status);
     throw new CulqiApiError(payload as CulqiErrorPayload | null, response.status);
   }
 
@@ -138,8 +166,9 @@ async function culqiRequestWithStatus<T>(path: string, init: RequestInit = {}, a
   };
 }
 
-async function culqiRequest<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void) {
-  const response = await culqiRequestWithStatus<T>(path, init, assertInBudget);
+async function culqiRequest<T>(path: string, init: RequestInit = {}, assertInBudget?: () => void,
+  errorForResponse?: (payload: CulqiErrorPayload | null, status: number) => CulqiApiError) {
+  const response = await culqiRequestWithStatus<T>(path, init, assertInBudget, errorForResponse);
   return response.payload;
 }
 
@@ -345,7 +374,7 @@ export async function fetchCulqiEvent(eventId: string) {
         "x-api-version": "2",
         "x-culqi-env": environment,
       },
-    }, assertInBudget), deadline]);
+    }, assertInBudget, eventLookupApiError), deadline]);
     assertInBudget();
     return event;
   } catch (error) {
@@ -354,6 +383,10 @@ export async function fetchCulqiEvent(eventId: string) {
       // and does not change ID acceptance, authentication or transaction rules.
       Object.defineProperty(error, "eventModeMatchesConfig", {
         value: eventId.startsWith(`evt_${environment}_`), writable: false, configurable: false,
+      });
+      Object.defineProperty(error, "eventIdMatchesDocumentedLength", {
+        // Observation only: the existing event ID acceptance rules are unchanged.
+        value: eventId.length === 25, writable: false, configurable: false,
       });
     }
     throw error;

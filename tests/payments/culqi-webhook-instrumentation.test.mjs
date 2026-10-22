@@ -251,3 +251,60 @@ test('missing Git, invalid SHA and unreadable source never invent build identity
     assert.equal(JSON.stringify(r.identity).includes(marker), false);
   }
 });
+
+test('diagnostics-only handler revalidates HTTP param categories without reading raw params or messages', async () => {
+  for (const value of ['id', 'environment', 'version', 'authorization', 'other', 'absent',
+    marker, undefined, null, ['id'], { private: marker }, 'id ', 'none']) {
+    const error = Object.assign(new Error(marker), { status: 400, errorType: 'parameter_error',
+      upstreamErrorParam: value, eventIdMatchesDocumentedLength: marker });
+    let rawReads = 0;
+    for (const key of ['param', 'payload', 'cause']) Object.defineProperty(error, key, {
+      get() { rawReads++; throw new Error(marker); },
+    });
+    const r = await execute({ fetchError: error });
+    assert.equal(r.response.status, 500);
+    assert.equal(r.diagnostic.upstreamErrorParam,
+      ['id', 'environment', 'version', 'authorization', 'other', 'absent'].includes(value) ? value : 'other');
+    assert.equal(r.diagnostic.eventIdMatchesDocumentedLength, eventId.length === 25,
+      'The handler computes this boolean from its lookup input, never an arbitrary error field');
+    assert.equal(r.diagnostic.eventVerified, false);
+    assert.equal(r.diagnostic.transactionAttempted, false);
+    assert.deepEqual(r.clients, []);
+    assert.deepEqual(r.rpc, []);
+    assert.equal(rawReads, 0);
+    for (const sensitive of [marker, eventId, createHash('sha256').update(eventId).digest('hex')]) {
+      assert.equal(JSON.stringify(r.logs).includes(sensitive), false);
+      assert.equal(JSON.stringify(r.response).includes(sensitive), false);
+    }
+  }
+  const error = Object.assign(new Error(marker), { status: 400 });
+  Object.defineProperty(error, 'upstreamErrorParam', { get() { throw new Error(marker); } });
+  const r = await execute({ fetchError: error });
+  assert.equal(r.response.status, 500);
+  assert.equal(r.diagnostic.upstreamErrorParam, 'other');
+  assert.deepEqual(r.clients, []);
+  assert.deepEqual(r.rpc, []);
+});
+
+test('diagnostics-only lookup context is neutral before lookup and has no provider param on transport failures', async () => {
+  for (const options of [{ enabled: false }, { raw: '{' }, { received: { id: chargeId } }]) {
+    const r = await execute(options);
+    assert.equal(r.diagnostic.eventIdMatchesDocumentedLength, null);
+    assert.equal(r.diagnostic.upstreamErrorParam, 'none');
+    assert.deepEqual(r.lookups, []);
+  }
+  for (const fetchError of [new Error(marker), new DOMException(marker, 'TimeoutError')]) {
+    let categoryReads = 0;
+    Object.defineProperty(fetchError, 'upstreamErrorParam', {
+      get() { categoryReads++; throw new Error(marker); },
+    });
+    const r = await execute({ fetchError });
+    assert.equal(r.response.status, 500);
+    assert.equal(r.diagnostic.eventIdMatchesDocumentedLength, eventId.length === 25);
+    assert.equal(r.diagnostic.upstreamErrorParam, 'none');
+    assert.equal(categoryReads, 0);
+    assert.equal(r.diagnostic.upstreamHttpStatus, null);
+    assert.deepEqual(r.clients, []);
+    assert.deepEqual(r.rpc, []);
+  }
+});

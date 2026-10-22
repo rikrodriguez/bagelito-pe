@@ -136,6 +136,7 @@ const diagnosticEventPaymentStates = new Set(['none', 'unknown', 'paid', 'pendin
 const diagnosticUpstreamFailureClasses = new Set(['none', 'http', 'timeout', 'transport_or_unknown']);
 const diagnosticUpstreamErrorTypes = new Set(['none', 'unknown', 'invalid_request_error', 'authentication_error',
   'parameter_error', 'card_error', 'limit_api_error', 'resource_error', 'api_error']);
+const diagnosticUpstreamErrorParams = new Set(['none', 'id', 'environment', 'version', 'authorization', 'other', 'absent']);
 function assertOneSafeDiagnostic(result) {
   assert.equal(result.logs.length, 1, 'Every handled webhook must produce one bounded diagnostic');
   const [{ level, args }] = result.logs;
@@ -145,7 +146,8 @@ function assertOneSafeDiagnostic(result) {
   assert.ok(args[1] && typeof args[1] === 'object' && !Array.isArray(args[1]));
   assert.deepEqual(Object.keys(args[1]).sort(), [
     'stage', 'reason', 'httpStatus', 'eventVerified', 'transactionAttempted', 'eventPaymentState', 'duplicate',
-    'upstreamHttpStatus', 'upstreamFailureClass', 'upstreamErrorType', 'eventModeMatchesConfig',
+    'upstreamHttpStatus', 'upstreamFailureClass', 'upstreamErrorType', 'upstreamErrorParam', 'eventModeMatchesConfig',
+    'eventIdMatchesDocumentedLength',
     'diagnosticVersion', 'invocationId', 'buildCommit', 'buildSourceDigest', 'buildSourceMatchesCommit',
     'requestParse', 'bodyKind', 'bodyObject', 'bodyIdKind', 'bodyHasData', 'bodyDataKind',
     'bodyHasCamelFields', 'bodyHasSnakeFields', 'lookupResource', 'lookupIdKind', 'lookupState',
@@ -155,6 +157,11 @@ function assertOneSafeDiagnostic(result) {
   assert.ok(diagnosticEventPaymentStates.has(args[1].eventPaymentState), 'Payment state must be normalized to a fixed enum');
   assert.ok(diagnosticUpstreamFailureClasses.has(args[1].upstreamFailureClass), 'Upstream failure class must be a fixed local enum');
   assert.ok(diagnosticUpstreamErrorTypes.has(args[1].upstreamErrorType), 'Provider error type must be a fixed local enum');
+  assert.ok(diagnosticUpstreamErrorParams.has(args[1].upstreamErrorParam), 'Provider param must be a fixed local enum');
+  assert.ok(args[1].eventIdMatchesDocumentedLength === null || typeof args[1].eventIdMatchesDocumentedLength === 'boolean',
+    'Documented event ID length agreement is only a boolean or null');
+  if (args[1].lookupState === 'not_attempted') assert.equal(args[1].eventIdMatchesDocumentedLength, null);
+  if (args[1].upstreamFailureClass !== 'http') assert.equal(args[1].upstreamErrorParam, 'none');
   assert.ok(args[1].eventModeMatchesConfig === null || typeof args[1].eventModeMatchesConfig === 'boolean',
     'Event/configured environment agreement is only a boolean or null');
   assert.ok(args[1].upstreamHttpStatus === null || (Number.isInteger(args[1].upstreamHttpStatus)
@@ -183,7 +190,7 @@ function assertOneSafeDiagnostic(result) {
   for (const key of ['bodyHasData', 'bodyHasCamelFields', 'bodyHasSnakeFields']) assert.equal(typeof args[1][key], 'boolean');
   assert.equal(args[1].transactionAttempted, result.calls.length > 0, 'Transaction flag describes an actual mocked RPC invocation');
   for (const [key, value] of Object.entries(args[1])) {
-    assert.ok((['upstreamHttpStatus', 'eventModeMatchesConfig', 'buildCommit', 'buildSourceDigest', 'buildSourceMatchesCommit'].includes(key) && value === null) || ['string', 'number', 'boolean'].includes(typeof value),
+    assert.ok((['upstreamHttpStatus', 'eventModeMatchesConfig', 'eventIdMatchesDocumentedLength', 'buildCommit', 'buildSourceDigest', 'buildSourceMatchesCommit'].includes(key) && value === null) || ['string', 'number', 'boolean'].includes(typeof value),
       'No error, payload, header or nested object may enter logs');
   }
   const serialized = JSON.stringify(result.logs);
