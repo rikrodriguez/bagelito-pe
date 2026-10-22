@@ -79,6 +79,14 @@ type PaymentStatusResult = {
   retryAfterSeconds?: number;
 };
 
+type CheckoutPreparation = {
+  checkoutSessionId: string;
+  fingerprint: string;
+  expiresAt: number;
+  orderCode?: string;
+  sessionId?: string;
+};
+
 async function readCheckoutPaymentStatus(
   reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">,
   timeoutMs = 20_000,
@@ -133,6 +141,11 @@ export function ReservationFlow({
   const [error, setError] = useState("");
   const hasMountedRef = useRef(false);
   const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
+  const checkoutFingerprintRef = useRef("");
+  const batchAcceptingRef = useRef(batchAvailability.accepting);
+  batchAcceptingRef.current = batchAvailability.accepting;
+  const preparationRef = useRef<CheckoutPreparation | null>(null);
+  const [checkoutPreparation, setCheckoutPreparation] = useState<CheckoutPreparation | null>(null);
   const recoveryRef = useRef<CheckoutRecovery | null>(null);
   const activePaymentRef = useRef<{
     checkoutSessionId: string; orderCode: string; sourceId: string; deviceId?: string; awaiting3DS: boolean;
@@ -284,6 +297,20 @@ export function ReservationFlow({
     ...item,
     quantity: item.quantity * checkoutPackCount,
   })), [checkoutPackCount, selectedItems]);
+  const checkoutFingerprint = JSON.stringify({
+    details, extraPack: extraPackAdded, items: checkoutItems, packSlug: selectedPack.slug,
+  });
+  checkoutFingerprintRef.current = checkoutFingerprint;
+
+  function updateCheckoutPreparation(value: CheckoutPreparation | null) {
+    preparationRef.current = value;
+    setCheckoutPreparation(value);
+  }
+
+  function isCurrentPreparation(value: CheckoutPreparation | null) {
+    return value !== null && value.checkoutSessionId === checkoutSessionRef.current.id
+      && value.fingerprint === checkoutFingerprintRef.current && value.expiresAt > Date.now();
+  }
 
   const flavorSummary = checkoutItems.map((item) => {
     const flavor = flavors.find((candidate) => candidate.slug === item.flavorSlug);
@@ -365,6 +392,7 @@ export function ReservationFlow({
 
   function selectPack(nextSlug: PackSlug) {
     if (checkoutIsLocked()) return;
+    updateCheckoutPreparation(null);
     const nextPack = packs.find((pack) => pack.slug === nextSlug);
     trackBagelitoEvent("Reserve Pack Selected", { pack: nextSlug, amount: nextPack?.amount });
     setPackSlug(nextSlug);
@@ -376,6 +404,7 @@ export function ReservationFlow({
 
   function goToStep(nextStep: number) {
     if (checkoutIsLocked()) return;
+    if (nextStep < 4) updateCheckoutPreparation(null);
     setStep(Math.max(1, Math.min(4, nextStep)));
   }
 
@@ -433,12 +462,7 @@ export function ReservationFlow({
 
   function getCheckoutSessionId() {
     if (checkoutIsLocked()) throw new CheckoutReviewError();
-    const fingerprint = JSON.stringify({
-      details,
-      extraPack: extraPackAdded,
-      items: checkoutItems,
-      packSlug: selectedPack.slug,
-    });
+    const fingerprint = checkoutFingerprintRef.current;
 
     if (
       !checkoutSessionRef.current.id
@@ -455,6 +479,7 @@ export function ReservationFlow({
 
   function toggleExtraPack() {
     if (checkoutIsLocked()) return;
+    updateCheckoutPreparation(null);
     const nextValue = !extraPackAdded;
     setExtraPackAdded(nextValue);
     setError("");
@@ -484,9 +509,20 @@ export function ReservationFlow({
     if (!paymentConfig.enabled) {
       throw new Error(culqiText.unavailable);
     }
+    if (!batchAcceptingRef.current && !isCurrentPreparation(preparationRef.current)) {
+      throw new Error(r.errors.submit);
+    }
 
     const checkoutSessionId = getCheckoutSessionId();
+    const fingerprint = checkoutFingerprintRef.current;
     const preparationDeadline = Date.now() + 20_000;
+    const previousPreparation = preparationRef.current;
+    // Public availability includes this request's hold. Keep the owner mounted
+    // while preparing, then bind the exception to the server's original expiry.
+    updateCheckoutPreparation({
+      checkoutSessionId, fingerprint,
+      expiresAt: isCurrentPreparation(previousPreparation) ? previousPreparation!.expiresAt : preparationDeadline,
+    });
     const controller = new AbortController();
     let timeout: ReturnType<typeof setTimeout> | undefined;
     const deadline = new Promise<never>((_, reject) => {
@@ -496,7 +532,10 @@ export function ReservationFlow({
       }, 20_000);
     });
     const assertPreparationActive = () => {
-      if (controller.signal.aborted || Date.now() >= preparationDeadline) {
+      if (controller.signal.aborted || Date.now() >= preparationDeadline
+        || preparationRef.current?.checkoutSessionId !== checkoutSessionId
+        || preparationRef.current.fingerprint !== fingerprint
+        || checkoutFingerprintRef.current !== fingerprint) {
         controller.abort();
         throw new Error(r.errors.submit);
       }
@@ -523,6 +562,13 @@ export function ReservationFlow({
       if (!reservationResponse.ok || !reservation.ok || !reservation.orderCode) {
         throw new Error(reservation.error ?? r.errors.submit);
       }
+      const reservationExpiry = Date.parse(reservation.expiresAt ?? "");
+      if (!Number.isFinite(reservationExpiry) || reservationExpiry <= Date.now()) {
+        updateCheckoutPreparation(null);
+        throw new Error(r.errors.submit);
+      }
+      updateCheckoutPreparation({ checkoutSessionId, fingerprint,
+        expiresAt: reservationExpiry, orderCode: reservation.orderCode });
 
       const orderResponse = await fetch("/api/payments/culqi/order", {
         body: JSON.stringify({
@@ -547,6 +593,13 @@ export function ReservationFlow({
       if (!orderResponse.ok || !order.ok || !order.sessionId || !order.amount) {
         throw new Error(order.error ?? r.errors.submit);
       }
+      const orderExpiry = Date.parse(order.expiresAt ?? reservation.expiresAt ?? "");
+      if (!Number.isFinite(orderExpiry) || orderExpiry <= Date.now() || orderExpiry > reservationExpiry) {
+        updateCheckoutPreparation(null);
+        throw new Error(r.errors.submit);
+      }
+      updateCheckoutPreparation({ checkoutSessionId, fingerprint,
+        expiresAt: orderExpiry, orderCode: reservation.orderCode, sessionId: order.sessionId });
 
       trackBagelitoEvent("Culqi Checkout Prepared", {
         amount: Number(reservation.amount ?? totalAmount),
@@ -622,6 +675,10 @@ export function ReservationFlow({
     },
   ): Promise<CulqiTokenSubmission> {
     if (session.checkoutSessionId !== checkoutSessionRef.current.id) throw new CheckoutReviewError();
+    const preparation = preparationRef.current;
+    if (!isCurrentPreparation(preparation) || preparation?.orderCode !== session.orderCode
+      || preparation.sessionId !== session.sessionId
+      || preparation.expiresAt !== Date.parse(session.expiresAt ?? "")) throw new CheckoutReviewError();
     const current = recoveryRef.current;
     if (current) {
       const active = activePaymentRef.current;
@@ -811,7 +868,7 @@ export function ReservationFlow({
     );
   }
 
-  if (!batchAvailability.accepting && !checkoutPage) {
+  if (!batchAvailability.accepting && !isCurrentPreparation(checkoutPreparation) && !paymentInProgress) {
     return (
       <section className="reserve-shell">
         <div className="reserve-herolet">

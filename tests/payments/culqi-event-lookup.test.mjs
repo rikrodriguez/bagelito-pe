@@ -2,13 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
-import { randomUUID } from 'node:crypto';
+import { randomUUID, createHash } from 'node:crypto';
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib/payments/verification.ts';
 
 const clientSource = await readFile(new URL('../../src/lib/payments/culqi.ts', import.meta.url), 'utf8');
 const handlerSource = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const executable = (source) => stripTypeScriptTypes(source.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
-const loadClient = new Function('assertCulqiEnabled', 'fetch', 'process', 'performance', `${executable(clientSource)}; return { fetchCulqiEvent, createCulqiCharge, CulqiApiError };`);
+const loadClient = new Function('assertCulqiEnabled', 'fetch', 'process', 'performance', 'console', `${executable(clientSource)}; return { fetchCulqiEvent, createCulqiCharge, CulqiApiError };`);
 const loadHandler = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient',
   'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', `${executable(handlerSource)}; return POST;`);
 const eventId = 'evt_test_lookup123';
@@ -38,7 +38,10 @@ function setup({ mode = 'sandbox', enabled = true, hasSecretKey = true, status =
       ? { type: 'parameter_error', merchant_message: privateMarker } : payload;
     return new Response(JSON.stringify(responsePayload), { status: responseStatus,
       headers: { 'Content-Type': 'application/json' } });
-  }, { env: { CULQI_SECRET_KEY: 'fixture-only-not-a-key' } }, { now });
+  }, { env: { CULQI_SECRET_KEY: 'fixture-only-not-a-key' } }, { now }, {
+    info: (...args) => logs.push(args), error: (...args) => logs.push(args),
+    warn: (...args) => logs.push(args), log: (...args) => logs.push(args),
+  });
   const post = loadHandler({ json: (responsePayload, init = {}) => ({ payload: responsePayload,
     status: init.status ?? 200, headers: init.headers }) }, client.fetchCulqiEvent, () => enabled, () => {
     clientCalls.push('database');
@@ -346,4 +349,117 @@ test('event-only SDK headers cannot alter the existing single-charge request or 
   assert.equal(JSON.parse(init.body).amount, 6600);
   assert.equal(JSON.parse(init.body).source_id, 'ype_test_fixture123');
   assert.equal(eventRequest.init.body, undefined);
+});
+
+// These fixtures exercise bounded diagnostics only. Mocked HTTP 400 responses
+// neither reproduce Culqi's actual failure nor demonstrate a provider fix.
+test('diagnostics-only HTTP 400 fixtures classify exact provider param values through a closed allowlist', async () => {
+  const cases = [
+    ['id', 'id'], ['environment', 'environment'], ['x-culqi-env', 'environment'],
+    ['version', 'version'], ['x-api-version', 'version'], ['authorization', 'authorization'],
+    [undefined, 'absent'], [null, 'absent'], ['', 'other'], ['ID', 'other'],
+    ['Authorization', 'other'], ['id ', 'other'], ['x-api-version.private', 'other'],
+    ['environment=' + privateMarker, 'other'], [privateMarker, 'other'],
+    [['id'], 'other'], [{ id: privateMarker }, 'other'], [400, 'other'], [true, 'other'],
+  ];
+  for (const [param, expected] of cases) {
+    const fixture = setup({ status: 400, payload: { type: 'parameter_error', param,
+      message: privateMarker, merchant_message: privateMarker, user_message: privateMarker,
+      charge_id: chargeId, code: 'raw-code', details: { payload: privateMarker } } });
+    const response = await fixture.post();
+    assertSafeFailure(fixture, response, 'parameter_error');
+    assert.equal(fixture.requests.length, 1, 'Classification must not retry the HTTP 400');
+    assert.equal(fixture.logs[0][1].upstreamErrorParam, expected);
+    assert.equal(fixture.logs[0][1].upstreamHttpStatus, 400);
+    assert.equal(fixture.logs[0][1].reason, 'upstream_failure');
+    await assert.rejects(fixture.fetchCulqiEvent(eventId), error => {
+      assert.ok(error instanceof fixture.CulqiApiError);
+      assert.equal(error.upstreamErrorParam, expected);
+      assert.equal(error.message, 'Culqi request failed with status 400.');
+      assert.equal(error.userMessage, error.message);
+      assert.equal(error.chargeId, null);
+      assert.equal(error.code, null);
+      assert.throws(() => { error.upstreamErrorParam = 'id'; }, TypeError);
+      assert.equal(error.upstreamErrorParam, expected);
+      for (const marker of [privateMarker, chargeId, eventId, 'raw-code']) {
+        assert.equal(JSON.stringify(error).includes(marker), false);
+        assert.equal(String(error.stack).includes(marker), false);
+      }
+      return true;
+    });
+  }
+});
+
+test('diagnostics-only documented length comparison observes 24, 25 and 26 characters without tightening validation', async () => {
+  for (const mode of ['sandbox', 'live']) {
+    for (const length of [24, 25, 26]) {
+      const id = `evt_${mode === 'sandbox' ? 'test' : 'live'}_${'A'.repeat(length - 9)}`;
+      for (const status of [200, 400]) {
+        const fixture = setup({ mode, status, payload: status === 400
+          ? { type: 'parameter_error', param: 'id', message: privateMarker }
+          : { ...verifiedEvent, id } });
+        const response = await fixture.post({ id: ` ${id} `, paid: true, data: privateMarker });
+        assert.equal(response.status, status === 200 ? 200 : 500);
+        assert.equal(fixture.requests.length, 1, 'All three lengths must reach the unchanged lookup');
+        assert.equal(fixture.logs[0][1].eventIdMatchesDocumentedLength, length === 25);
+        assert.equal(fixture.rpcCalls.length, status === 200 ? 1 : 0);
+        assert.equal(fixture.logs[0][1].upstreamErrorParam, status === 200 ? 'none' : 'id');
+        const forbidden = [id, privateMarker, createHash('sha256').update(id).digest('hex'),
+          `https://api.culqi.com/v2/events/${id}`, 'fixture-only-not-a-key'];
+        for (const marker of forbidden) {
+          assert.equal(JSON.stringify(fixture.logs).includes(marker), false);
+          assert.equal(JSON.stringify(response).includes(marker), false);
+        }
+        if (status === 400) await assert.rejects(fixture.fetchCulqiEvent(id), error => {
+          assert.equal(error.eventIdMatchesDocumentedLength, length === 25);
+          assert.throws(() => { error.eventIdMatchesDocumentedLength = length !== 25; }, TypeError);
+          assert.equal(error.eventIdMatchesDocumentedLength, length === 25);
+          return true;
+        });
+      }
+    }
+  }
+});
+
+test('diagnostics-only event HTTP errors never coerce or log hostile provider params', async () => {
+  let coercions = 0;
+  const hostile = { toString() { coercions++; throw new Error(privateMarker); } };
+  for (const param of [hostile, { get value() { throw new Error(privateMarker); } }]) {
+    const fixture = setup({ transport: async () => ({ ok: false, status: 400,
+      json: async () => ({ type: 'parameter_error', param, message: privateMarker }) }) });
+    const response = await fixture.post();
+    assertSafeFailure(fixture, response, 'parameter_error');
+    assert.equal(fixture.logs[0][1].upstreamErrorParam, 'other');
+  }
+  assert.equal(coercions, 0);
+  const payload = { type: 'parameter_error', message: privateMarker };
+  Object.defineProperty(payload, 'param', { get() { throw new Error(privateMarker); } });
+  const fixture = setup({ transport: async () => ({ ok: false, status: 400, json: async () => payload }) });
+  const response = await fixture.post();
+  assertSafeFailure(fixture, response, 'parameter_error');
+  assert.equal(fixture.logs[0][1].upstreamErrorParam, 'other');
+});
+
+test('diagnostics-only event context preserves existing charge creation error behavior', async () => {
+  const fixture = setup({ status: 400, payload: { type: 'card_error', param: 'id',
+    user_message: privateMarker, merchant_message: 'another fixture message',
+    charge_id: chargeId, decline_code: 'fixture-decline' } });
+  await assert.rejects(fixture.createCulqiCharge({ amount: 66, customerEmail: 'fixture@example.invalid',
+    customerName: 'Fixture Person', deliveryAddress: 'Fixture', district: 'Lince', orderCode: 'BAG-FIXTURE',
+    phoneNumber: '000000000', sourceId: 'tkn_test_fixture123' }), error => {
+    assert.ok(error instanceof fixture.CulqiApiError);
+    assert.equal(error.message, privateMarker);
+    assert.equal(error.userMessage, privateMarker);
+    assert.equal(error.chargeId, chargeId);
+    assert.equal(error.code, 'fixture-decline');
+    assert.equal(error.errorType, 'card_error');
+    assert.equal(error.status, 400);
+    assert.equal(Object.hasOwn(error, 'eventIdMatchesDocumentedLength'), false);
+    assert.equal(Object.hasOwn(error, 'upstreamErrorParam'), false);
+    assert.equal(error.eventModeMatchesConfig, null);
+    return true;
+  });
+  assert.deepEqual(fixture.logs, []);
+  assert.equal(fixture.requests.length, 1);
+  assert.equal(fixture.requests[0].init.method, 'POST');
 });
