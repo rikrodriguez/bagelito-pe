@@ -13,6 +13,8 @@ import {
   CHECKOUT_RECOVERY_STORAGE_KEY,
 } from '../../src/lib/payments/checkout-recovery.ts';
 import { translations, packCopy, flavorCopy } from '../../src/lib/i18n.ts';
+import { saveSuccessProof } from '../../src/lib/payments/success-proof.ts';
+import { CHECKOUT_LEGAL_VERSION } from '../../src/lib/legal-terms.ts';
 
 const checkoutSessionId = '00000000-0000-4000-8000-000000000001';
 const reference = { version: 1, checkoutSessionId, orderCode: 'BAG-TEST-1', state: 'pending' };
@@ -154,6 +156,8 @@ function flowHarness(paymentConfig = config, locale = 'es') {
     if (specifier === '@/components/RollingBagel') return { RollingBagel: Placeholder };
     if (specifier === '@/components/ConversionTrustStrip') return { ConversionTrustStrip: Placeholder };
     if (specifier === '@/lib/payments/checkout-recovery') return recoveryModule;
+    if (specifier === '@/lib/payments/success-proof') return { saveSuccessProof };
+    if (specifier === '@/lib/legal-terms') return { CHECKOUT_LEGAL_VERSION };
     if (specifier === '@/lib/waitlist/use-campaign-href') return campaignHooks;
     if (specifier === '@/lib/analytics') return { trackBagelitoEvent() {} };
     if (specifier === '@/lib/delivery-pricing') return { getDeliveryFee: () => 8 };
@@ -173,7 +177,17 @@ function flowHarness(paymentConfig = config, locale = 'es') {
   return {
     render, cleanup: h.cleanup,
     checkout() { return nodes(tree).find(node => node?.type === FixtureCheckout)?.props; },
-    reviewStage() { h.states[0].set(4); render(); },
+    reviewStage(acceptTerms = true) {
+      h.states[0].set(4);
+      render();
+      if (acceptTerms) {
+        const consent = nodes(tree).find(node => node?.type === 'input' && node?.props?.id === 'checkout-terms-consent');
+        assert.ok(consent, 'A real, initially unchecked purchase consent must be present.');
+        assert.equal(consent.props.checked, false);
+        consent.props.onChange({ target: { checked: true } });
+        render();
+      }
+    },
     get tree() { return tree; },
   };
 }
@@ -1271,3 +1285,23 @@ for (const earlyReview of [false, true]) {
     } finally { h.cleanup(); env.restore(); }
   });
 }
+
+
+test('Culqi payment cannot open without independent affirmative terms consent', () => {
+  const store = storage();
+  const env = browser(store);
+  const flow = flowHarness();
+  try {
+    flow.reviewStage(false);
+    const controls = nodes(flow.tree);
+    const consent = controls.find(node => node?.type === 'input' && node?.props?.id === 'checkout-terms-consent');
+    assert.ok(consent);
+    assert.equal(consent.props.checked, false, 'No default/implicit legal consent allowed');
+    assert.equal(flow.checkout().disabled, true, 'Culqi must be disabled before acceptance');
+    consent.props.onChange({ target: { checked: true } });
+    flow.render();
+    assert.equal(flow.checkout().disabled, false, 'Explicit acceptance unlocks the checkout');
+    const updated = nodes(flow.tree).find(node => node?.type === 'input' && node?.props?.id === 'checkout-terms-consent');
+    assert.equal(updated.props.checked, true);
+  } finally { flow.cleanup(); env.restore(); }
+});
