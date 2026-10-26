@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, BadgePercent, BookOpenCheck, Check, CreditCard, 
 import type { Flavor } from "@/data/flavors";
 import { flavorImages } from "@/data/flavor-images";
 import type { Pack, PackSlug } from "@/data/packs";
-import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
+import { RollingBagel } from "@/components/RollingBagel";
 import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
 import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
