@@ -350,7 +350,7 @@ export const translations = {
     track: {
       kicker: "Customer tracking",
       title: "Track your reservation",
-      intro: "Enter the email or WhatsApp from your reservation, or your order number.",
+      intro: "Enter your order number AND the email or WhatsApp used for that reservation.",
       safeLookup: "Protected lookup",
       safeLookupNote: "Searches are rate-limited to protect your reservation details.",
       fields: {
@@ -360,7 +360,7 @@ export const translations = {
       },
       submit: "Find your reservation",
       submitting: "Checking...",
-      helper: "You only need one: email, WhatsApp, or order number.",
+      helper: "For your privacy, both the order number and a matching email or WhatsApp are required.",
       currentStatus: "Current status",
       itemsTitle: "Bagels in this order",
       nextStepTitle: "What happens next",
@@ -372,7 +372,7 @@ export const translations = {
       autoRefresh: "Updates automatically while the order is active.",
       pendingStep: "Pending",
       toBeAnnounced: "To be announced",
-      supportNote: "You can return using your order number or the same email or WhatsApp from your reservation.",
+      supportNote: "To track an order, use its order number together with the email or WhatsApp used at checkout.",
       labels: {
         orderCode: "Order number",
         customer: "Customer",
@@ -753,7 +753,7 @@ export const translations = {
     track: {
       kicker: "Seguimiento del cliente",
       title: "Sigue tu reserva",
-      intro: "Ingresa el email o WhatsApp de tu reserva, o tu número de pedido.",
+      intro: "Ingresa tu número de pedido Y el email o WhatsApp que utilizaste en esa reserva.",
       safeLookup: "Consulta protegida",
       safeLookupNote: "Limitamos los intentos para proteger los datos de tu reserva.",
       fields: {
@@ -763,7 +763,7 @@ export const translations = {
       },
       submit: "Buscar mi reserva",
       submitting: "Buscando...",
-      helper: "Solo necesitas uno: email, WhatsApp o número de pedido.",
+      helper: "Por tu seguridad necesitamos el número de pedido y el email o WhatsApp asociado.",
       currentStatus: "Estado actual",
       itemsTitle: "Bagels en este pedido",
       nextStepTitle: "Qué sigue",
@@ -775,7 +775,7 @@ export const translations = {
       autoRefresh: "Se actualiza automáticamente mientras el pedido siga activo.",
       pendingStep: "Pendiente",
       toBeAnnounced: "Por definir",
-      supportNote: "Puedes volver usando tu número de pedido o el mismo email o WhatsApp de tu reserva.",
+      supportNote: "Para consultar tu pedido, ingresa el número y el email o WhatsApp utilizado al reservar.",
       labels: {
         orderCode: "Número de pedido",
         customer: "Cliente",

@@ -26,6 +26,7 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
   const { locale, copy } = useLanguage();
   const s = copy.success;
   const isCulqiFlow = payment === "paid" || payment === "pending";
+  const isUnverifiedManual = !isCulqiFlow && payment !== "demo";
   // A ?payment=paid URL claim is never a source of truth.
   const [serverStatus, setServerStatus] = useState<"checking" | "paid" | "review" | "unverified">("checking");
   const displayPack = isPackSlug(packSlug) ? packCopy[locale][packSlug].name : pack || s.fallbackPack;
@@ -116,10 +117,27 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
             : paymentCopy.unverified
       : null;
   const isDemo = payment === "demo";
-  const kicker = culqiState?.kicker ?? s.kicker;
-  const title = culqiState?.title ?? s.title;
-  const text = culqiState?.text ?? s.text;
-  const coordination = culqiState?.coordination ?? s.coordination;
+  // A manual/unrecognized success URL alone is never a receipt or reservation.
+  // The verified Culqi path above remains unchanged.
+  const manualNotice = isUnverifiedManual
+    ? locale === "es"
+      ? {
+          kicker: "Reserva no verificada",
+          title: "Consulta el estado de tu pedido",
+          text: "Este enlace no confirma una reserva ni un pago. Ingresa el número de pedido y el email o WhatsApp asociado en el seguimiento seguro.",
+          coordination: "Verifica el estado en seguimiento o escríbenos para recibir ayuda.",
+        }
+      : {
+          kicker: "Unverified order status",
+          title: "Check your order status",
+          text: "This link does not confirm an order or payment. Enter the order number and matching email or WhatsApp in secure tracking.",
+          coordination: "Verify status through order tracking or contact support.",
+        }
+    : null;
+  const kicker = manualNotice?.kicker ?? culqiState?.kicker ?? s.kicker;
+  const title = manualNotice?.title ?? culqiState?.title ?? s.title;
+  const text = manualNotice?.text ?? culqiState?.text ?? s.text;
+  const coordination = manualNotice?.coordination ?? culqiState?.coordination ?? s.coordination;
 
   useEffect(() => {
     // A confirmation page view is not a completed-purchase event.
@@ -174,10 +192,10 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
       <h1>{title}</h1>
       <p>{text}</p>
       <div className="success-summary">
-        {!isDemo && (!isCulqiFlow || serverStatus === "paid")
+        {!isDemo && !isUnverifiedManual && (isCulqiFlow && serverStatus === "paid")
           ? <div><span>{s.labels.orderCode}</span><strong>{order}</strong></div> : null}
-        <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div>
-        {!isCulqiFlow && amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
+        {!isUnverifiedManual ? <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div> : null}
+        {isDemo && amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
         <div><span>{s.labels.status}</span><strong>{isDemo ? paymentCopy.demo.status : kicker}</strong></div>
       </div>
       <div className="next-step">
@@ -185,7 +203,7 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
         {s.nextStep} <strong>{coordination}</strong>
       </div>
       <div className="success-actions">
-        {!isDemo ? <Link className="pill-button outline" href={`/track?order=${encodeURIComponent(order)}`} onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "track" })}>{s.trackOrder}</Link> : null}
+        {!isDemo ? <Link className="pill-button outline" href={/^BAG-[A-Z0-9_-]{1,36}$/.test(order) ? `/track?order=${encodeURIComponent(order)}` : "/track"} onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "track" })}>{s.trackOrder}</Link> : null}
         <a className="pill-button pink" href={getWhatsAppHref()} target="_blank" rel="noreferrer" onClick={() => trackBagelitoEvent("WhatsApp Click", { location: "success", target: "coordination" })}><MessageCircle size={18} /> {s.message}</a>
       </div>
       <Link className="mini-link" href="/" onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "home" })}>{s.backHome}</Link>

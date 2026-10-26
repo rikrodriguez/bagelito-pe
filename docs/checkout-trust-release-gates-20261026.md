@@ -7,7 +7,7 @@ Rama `fix/checkout-proof-consent-rate-limit-20261026` basada en la rama QA `code
 ### 1. Consentimiento explícito
 
 - `ReservationFlow` muestra casilla no marcada, separada de `marketingOptIn`, accesible con teclado y visible antes del widget Culqi.
-- El checkout se deshabilita hasta marcar la casilla. Backend Zod exige `termsAccepted=true` y `termsVersion="2026-08-20"` (versión publicada en `/legal`).
+- El checkout se deshabilita hasta marcar la casilla. Backend Zod exige `termsAccepted=true` y `termsVersion="2026-10-26"` (versión publicada en `/legal`).
 - Para pedidos nuevos, el trigger preparado en `supabase/add-checkout-legal-evidence.sql` registra `checkout_legal_version` y `checkout_legal_accepted_at`. Históricos quedan nulos, nunca se recalculan retrospectivamente.
 - No hay evidencia criptográfica del clic: la prueba consiste en la aceptación explícita en UX y la validación del input con la marca del servidor al crear el pedido. Si se exige prueba jurídica más estricta, se debe revisar registro y conservación con asesoría local.
 

@@ -1,6 +1,6 @@
 # Aceptación de términos: versión y prueba
 
-El texto vigente en /legal declara "Última actualización: 20 de agosto de 2026", versión \`2026-08-20\`. El checkbox de compra de /checkout y /reserve está **desmarcado al iniciar**, separado del checkbox de marketing. El cliente envía \`termsAccepted: true\` y \`termsVersion: "2026-08-20"\`. Zod en el servidor rechaza false y cualquier otra versión.
+El texto vigente en /legal declara "Última actualización: 26 de octubre de 2026", versión \`2026-10-26\`. El checkbox de compra de /checkout y /reserve está **desmarcado al iniciar**, separado del checkbox de marketing. El cliente envía \`termsAccepted: true\` y \`termsVersion: "2026-10-26"\`. Zod en el servidor rechaza false y cualquier otra versión.
 
 **Persistencia**: la migración \`supabase/add-checkout-legal-evidence.sql\` introduce \`orders.checkout_legal_version\` y \`orders.checkout_legal_accepted_at\`. Su trigger inserta la versión **solo para pedidos nuevos con \`terms_accepted=true\`**, junto con la transacción original del pedido. Nunca rellena retrospectivamente datos históricos: la versión no demuestra un clic por sí sola, y no debe atribuirse esa evidencia a pedidos anteriores.
 

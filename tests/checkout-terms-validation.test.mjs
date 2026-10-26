@@ -28,7 +28,7 @@ const input={
 test("accepted current-version terms and independent marketing preference validate",()=>{
  const result=culqiReservationPayloadSchema.parse({...input,marketingOptIn:false});
  assert.equal(result.termsAccepted,true);
- assert.equal(result.termsVersion,"2026-08-20");
+ assert.equal(result.termsVersion,"2026-10-26");
  assert.equal(result.marketingOptIn,false);
 });
 test("declined, missing and stale policy consent are all rejected",()=>{
