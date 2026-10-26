@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { ComplaintPayload } from "@/lib/complaints/schema";
 import {
+  siteAddress,
   siteContactEmail,
   siteLegalName,
   siteName,
@@ -123,6 +124,7 @@ export function ComplaintsBookForm() {
             <div><span>Razón social</span><strong>{siteLegalName}</strong></div>
             <div><span>Nombre comercial</span><strong>{siteName}</strong></div>
             <div><span>RUC</span><strong>{siteRuc}</strong></div>
+            <div><span>Dirección del proveedor</span><strong>{siteAddress}</strong></div>
             <div><span>Email</span><strong>{siteContactEmail}</strong></div>
           </section>
 
@@ -189,6 +191,7 @@ export function ComplaintsBookForm() {
               <div><span>Razón social</span><strong>{siteLegalName}</strong></div>
               <div><span>Nombre comercial</span><strong>{siteName}</strong></div>
               <div><span>RUC</span><strong>{siteRuc}</strong></div>
+              <div><span>Dirección del proveedor</span><strong>{siteAddress}</strong></div>
               <div><span>Email</span><a href={`mailto:${siteContactEmail}`}>{siteContactEmail}</a></div>
               <div><span>Teléfono</span><strong>{siteWhatsAppPhone}</strong></div>
             </div>

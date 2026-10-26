@@ -9,5 +9,6 @@ export const siteInstagramUrl = "https://www.instagram.com/bagelito.pe";
 export const siteWhatsAppPhone = "+51 917 547 745";
 export const siteContactEmail = "contacto@bagelito.pe";
 export const siteRuc = "10464295874";
+export const siteAddress = "Jr. Cruz del Sur 140, Surco";
 export const siteServiceArea = "Lima, Perú";
 export const sitePriceRange = "S/50-S/115";

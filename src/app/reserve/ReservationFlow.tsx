@@ -22,7 +22,7 @@ import { checkoutExtraPackDiscountPercent, getCheckoutExtraPackOffer } from "@/l
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
 import { districtOptions } from "@/lib/reservations/schema";
-import { siteServiceArea } from "@/lib/site";
+import { siteAddress, siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 type Props = {
@@ -155,7 +155,7 @@ export function ReservationFlow({
     };
   const checkoutText = locale === "es"
     ? {
-      address: `Zona de atención: ${siteServiceArea}`,
+      address: `Dirección de contacto: ${siteAddress} · Zona de atención: ${siteServiceArea}`,
       complaints: "Libro de Reclamaciones",
       contact: "Ayuda por WhatsApp",
       delivery: "Delivery",
@@ -170,7 +170,7 @@ export function ReservationFlow({
       total: "Total",
     }
     : {
-      address: "Service area: Lima, Peru",
+      address: `Contact address: ${siteAddress} · Service area: ${siteServiceArea}`,
       complaints: "Complaints Book",
       contact: "WhatsApp support",
       delivery: "Delivery",

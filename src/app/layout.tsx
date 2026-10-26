@@ -80,7 +80,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body>
         <StructuredData />
         <LanguageProvider>
-          <BatchAvailabilityProvider initialBatch={batchAvailability}>
+          <BatchAvailabilityProvider initialBatch={batchAvailability} merchantReviewOnly={process.env.BAGELITO_MERCHANT_REVIEW_ONLY === "true"}>
             <BatchDeadlineBanner />
             {children}
             <PurchaseActivityToast events={purchaseActivity} />

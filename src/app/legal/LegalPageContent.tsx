@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BookOpenCheck, Clock3, Database, Mail, MessageCircle, RotateCcw, ScrollText, ShieldCheck, Truck } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
-import { siteContactEmail, siteLegalName, siteRuc, siteServiceArea } from "@/lib/site";
+import { siteAddress, siteContactEmail, siteLegalName, siteRuc, siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 const legalCopy = {
@@ -19,6 +19,7 @@ const legalCopy = {
       ["Delivery", "One scheduled Lima delivery window"],
       ["Payments", "Shown at checkout when orders are open"],
       ["Contact", `${siteContactEmail} · +51 917 547 745`],
+      ["Business address", siteAddress],
       ["Legal entity", siteLegalName],
       ["RUC", siteRuc],
     ],
@@ -78,6 +79,7 @@ const legalCopy = {
         ],
         bullets: [
           `Provider: ${siteLegalName} · Brand: Bagelito.pe · RUC ${siteRuc}.`,
+          `Business address: ${siteAddress}.`,
           `Online service area: ${siteServiceArea}.`,
           `Official email: ${siteContactEmail}.`,
           "Submitting a complaint does not prevent the consumer from using other dispute-resolution channels or filing a complaint with Indecopi.",
@@ -148,6 +150,7 @@ const legalCopy = {
       ["Delivery", "Una ventana programada en Lima"],
       ["Pagos", "Métodos disponibles al abrir pedidos"],
       ["Contacto", `${siteContactEmail} · +51 917 547 745`],
+      ["Dirección comercial", siteAddress],
       ["Razón social", siteLegalName],
       ["RUC", siteRuc],
     ],
@@ -207,6 +210,7 @@ const legalCopy = {
         ],
         bullets: [
           `Proveedor: ${siteLegalName} · Marca: Bagelito.pe · RUC ${siteRuc}.`,
+          `Dirección comercial: ${siteAddress}.`,
           `Zona de atención online: ${siteServiceArea}.`,
           `Email oficial: ${siteContactEmail}.`,
           "La presentación de una hoja no impide acudir a otras vías de solución ni presentar una denuncia ante Indecopi.",
@@ -330,6 +334,7 @@ export function LegalPageContent() {
         <div>
           <h2>{copy.contactTitle}</h2>
           <p>{copy.contactText}</p>
+          <p>{locale === "es" ? "Dirección comercial" : "Business address"}: {siteAddress}</p>
         </div>
         <div className="legal-contact-actions">
           <a className="pill-button pink" href={getWhatsAppHref()} target="_blank" rel="noreferrer">

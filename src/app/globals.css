@@ -6008,6 +6008,20 @@ html[data-admin-nav-collapsed="1"] .admin-workspace {
   white-space: nowrap;
 }
 
+.clean-pack-card .review-checkout-cta span {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .merchant-review-header { grid-template-columns: minmax(0, 1fr) auto; }
+  .merchant-review-header .logo-link { grid-column: 1; grid-row: 1; }
+  .merchant-review-header .header-actions { display: contents; }
+  .merchant-review-header .language-toggle { grid-column: 2; grid-row: 1; }
+  .merchant-review-header .header-checkout-link { grid-column: 1 / -1; grid-row: 2; text-align: center; }
+}
+
 @media (max-width: 1120px) {
   .clean-pack-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

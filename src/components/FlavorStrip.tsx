@@ -1,5 +1,7 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import Image from "next/image";
 import Link from "next/link";
 import { flavors } from "@/data/flavors";
@@ -44,15 +46,16 @@ const singlePackPrice: number = (() => {
 
 export function FlavorStrip() {
   const { locale, copy } = useLanguage();
-  const { accepting } = useBatchAvailability();
-  const destination = accepting ? "/checkout?pack=6-single" : "/waitlist?pack=6-single";
+  const { accepting, merchantReviewOnly } = useBatchAvailability();
+  const review = merchantReviewCopy[locale];
+  const destination = merchantReviewOnly ? "/checkout?pack=6-single" : accepting ? "/checkout?pack=6-single" : "/waitlist?pack=6-single";
 
   return (
     <section id="flavors" className="flavor-section section-pad">
       <h2>{copy.flavors.title}</h2>
       <p className="section-intro">{copy.flavors.intro}</p>
       <p className="flavor-catalog-note">
-        {locale === "es"
+        {merchantReviewOnly ? review.flavorNote : locale === "es"
           ? "Elige tu sabor al comprar un pack. Pedido mínimo: 6 bagels. Los precios del pack y delivery se muestran antes de pagar."
           : "Choose your flavor when ordering a pack. Minimum: 6 bagels. Full pack and delivery prices are shown before payment."}
       </p>
@@ -78,10 +81,10 @@ export function FlavorStrip() {
                 {locale === "es" ? "Pack de 6 desde" : "6-pack from"} S/{singlePackPrice}
               </strong>
               <Link className="flavor-product-cta" href={destination} aria-label={
-                locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
+                merchantReviewOnly ? `${review.cta}: ${name}` : locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
                   : `${accepting ? "Choose pack" : "Notify me when open"}: ${name}`
               }>
-                {accepting
+                {merchantReviewOnly ? review.cta : accepting
                   ? locale === "es" ? "Elegir pack" : "Choose pack"
                   : locale === "es" ? "Avisarme" : "Notify me"}
               </Link>
