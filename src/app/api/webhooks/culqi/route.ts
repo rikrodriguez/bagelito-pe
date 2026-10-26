@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { fetchCulqiEvent, isCulqiRequestAllowed, type CulqiErrorType, type CulqiEventErrorParam } from "@/lib/payments";
+import { fetchCulqiCharge, fetchCulqiEvent, isCulqiRequestAllowed, type CulqiErrorType, type CulqiEventErrorParam } from "@/lib/payments";
+import { resolveVerifiedCulqiChargeCurrency } from "@/lib/payments/culqi-event-currency-evidence";
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from "@/lib/payments/verification";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { randomUUID } from "node:crypto";
@@ -49,10 +50,10 @@ function requestShape(value: unknown) {
 }
 
 type DiagnosticStage = "scope" | "request" | "event_lookup" | "event_identity"
-  | "resource" | "database_client" | "transaction";
+  | "resource" | "charge_evidence" | "database_client" | "transaction";
 type DiagnosticReason = "scope_rejected" | "invalid_event_id" | "malformed_request"
   | "upstream_unauthorized" | "upstream_not_found" | "upstream_rate_limited" | "upstream_failure"
-  | "event_identity_mismatch" | "refund_requires_review" | "event_ignored" | "missing_resource"
+  | "event_identity_mismatch" | "refund_requires_review" | "event_ignored" | "missing_resource" | "charge_evidence_invalid"
   | "database_client_failure" | "rpc_missing" | "rpc_permission_denied"
   | "amount_currency_mismatch" | "order_missing" | "source_mismatch"
   | "payment_attempt_missing" | "legacy_requires_review" | "rpc_failure"
@@ -130,6 +131,7 @@ function rpcFailureReason(error: unknown): DiagnosticReason {
 function exceptionReason(stage: DiagnosticStage, error: unknown, upstreamHttpStatus: number | null): DiagnosticReason {
   if (stage === "request") return "malformed_request";
   if (stage === "event_identity") return "event_identity_mismatch";
+  if (stage === "charge_evidence") return "charge_evidence_invalid";
   if (stage === "database_client") return "database_client_failure";
   if (stage === "transaction") return rpcFailureReason(error);
   if (stage === "event_lookup") {
@@ -211,6 +213,8 @@ export async function POST(request: Request) {
     if (!resource || typeof resource.id !== "string" || !resource.id) {
       return respond(400, { ok: false, error: "Webhook payment data is missing." }, "missing_resource");
     }
+    stage = "charge_evidence";
+    const reconciledResource = await resolveVerifiedCulqiChargeCurrency(eventType, resource, fetchCulqiCharge);
     // The service-role RPC validates amount, currency and order identity, locks
     // event and order, and commits payment/history/event-marker as ONE transaction.
     // No nontransactional fallback: a missing migration must fail closed.
@@ -220,7 +224,7 @@ export async function POST(request: Request) {
     transactionAttempted = true;
     const { data, error } = await database.rpc("apply_culqi_payment_event", {
       p_event_id: eventId, p_event_type: eventType,
-      p_resource: resource, p_verified_payload: verified,
+      p_resource: reconciledResource, p_verified_payload: verified,
     });
     if (error) return respond(500, { ok: false, error: "Could not process Culqi webhook." }, rpcFailureReason(error));
     if (!data || typeof data !== "object" || Array.isArray(data)) {

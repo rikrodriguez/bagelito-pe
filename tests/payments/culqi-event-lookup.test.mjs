@@ -4,13 +4,14 @@ import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 import { randomUUID, createHash } from 'node:crypto';
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib/payments/verification.ts';
+import { resolveVerifiedCulqiChargeCurrency } from '../../src/lib/payments/culqi-event-currency-evidence.ts';
 
 const clientSource = await readFile(new URL('../../src/lib/payments/culqi.ts', import.meta.url), 'utf8');
 const handlerSource = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const executable = (source) => stripTypeScriptTypes(source.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
 const loadClient = new Function('assertCulqiEnabled', 'fetch', 'process', 'performance', 'console', `${executable(clientSource)}; return { fetchCulqiEvent, createCulqiCharge, CulqiApiError };`);
 const loadHandler = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient',
-  'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', `${executable(handlerSource)}; return POST;`);
+  'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', 'fetchCulqiCharge', 'resolveVerifiedCulqiChargeCurrency', `${executable(handlerSource)}; return POST;`);
 const eventId = 'evt_test_lookup123';
 const chargeId = 'chr_test_lookup123';
 const privateMarker = 'fixture-PRIVATE-never-log@example.invalid sk_test_fixture_do_not_use card_4111111111111111';
@@ -52,7 +53,7 @@ function setup({ mode = 'sandbox', enabled = true, hasSecretKey = true, status =
   }, parseCulqiEventResource, verifyCulqiEventIdentity, {
     info: (...args) => logs.push(args), error: () => assert.fail('No raw error logging'),
     warn: () => assert.fail('No raw error logging'), log: () => assert.fail('No raw logging'),
-  }, randomUUID);
+  }, randomUUID, async () => { throw new Error('Unexpected charge GET'); }, resolveVerifiedCulqiChargeCurrency);
   return { ...client, requests, clientCalls, rpcCalls, logs,
     post: (received = { id: eventId, type: 'charge.creation.succeeded', paid: true, data: verifiedEvent.data }) =>
       post(new Request('https://fixture.invalid/api/webhooks/culqi', { method: 'POST', body: JSON.stringify(received) })) };

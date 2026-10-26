@@ -4,11 +4,12 @@ import { randomUUID, createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib/payments/verification.ts';
+import { resolveVerifiedCulqiChargeCurrency } from '../../src/lib/payments/culqi-event-currency-evidence.ts';
 
 const source = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const executable = (value) => stripTypeScriptTypes(value.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
 const load = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient',
-  'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', 'process', `${executable(source)}; return POST;`);
+  'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', 'process', 'fetchCulqiCharge', 'resolveVerifiedCulqiChargeCurrency', `${executable(source)}; return POST;`);
 const eventId = 'evt_test_DIAGNOSTIC001';
 const chargeId = 'chr_test_DIAGNOSTIC001';
 const marker = 'PRIVATE-fixture@example.invalid sk_test_fixture 4111111111111111 Bearer-fixture cookie-fixture';
@@ -32,7 +33,8 @@ async function execute({ received = { object: 'event', id: eventId }, raw, enabl
     logAttempts++;
     if (logThrows) throw new Error(marker);
     logs.push(args);
-  } }, uuid, { env: { CULQI_WEBHOOK_BUILD_IDENTITY: buildSnapshot } });
+  } }, uuid, { env: { CULQI_WEBHOOK_BUILD_IDENTITY: buildSnapshot } },
+  async () => { throw new Error('Unexpected charge GET'); }, resolveVerifiedCulqiChargeCurrency);
   const request = new Request('https://fixture.invalid/api/webhooks/culqi', { method: 'POST',
     body: raw ?? JSON.stringify(received), headers });
   const nativeJson = request.json.bind(request);

@@ -8,7 +8,8 @@ function webhookBuildIdentity() {
   // files, keys or runtime aliases are read. Git commands never invoke a shell.
   const paths = [
     "src/app/api/webhooks/culqi/route.ts", "src/lib/payments/culqi.ts",
-    "src/lib/payments/verification.ts", "src/lib/payments/config.ts", "next.config.ts",
+    "src/lib/payments/verification.ts", "src/lib/payments/config.ts",
+    "src/lib/payments/culqi-event-currency-evidence.ts", "next.config.ts",
   ];
   const unavailable = { schema: 1, commit: null, sourceDigest: null, sourceMatchesCommit: null };
   try {
