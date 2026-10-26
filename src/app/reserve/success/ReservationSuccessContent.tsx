@@ -154,7 +154,10 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
     });
     void Promise.race([status, deadline]).then(result => {
       if (!active) return;
-      const checked = checkServerPaymentStatus(result);
+      const checked = result && typeof result === "object"
+        && result.orderCode === proof.orderCode
+        ? checkServerPaymentStatus(result)
+        : "unverified";
       setServerStatus(checked);
       if (checked === "paid") {
         trackBagelitoEvent("Verified Culqi Payment Confirmation Viewed");
