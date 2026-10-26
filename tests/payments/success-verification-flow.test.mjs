@@ -18,7 +18,7 @@ function textNodes(tree) {
 function mount({ payment="paid", proof=false, data=verified, error=null }={}) {
  const oldWindow=globalThis.window,oldFetch=globalThis.fetch;
  const map=new Map(),calls=[],effects=[],state=[],hooks=[];
- let cursor=0,alive=true;
+ let cursor=0;
  const storage={getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v)};
  if(proof)assert.equal(saveSuccessProof(storage,ORDER,SESSION),true);
  globalThis.window={sessionStorage:storage};
@@ -63,7 +63,6 @@ function mount({ payment="paid", proof=false, data=verified, error=null }={}) {
  return {
    first,calls,render,
    cleanup(){
-     alive=false;
      for(const x of hooks)x?.cleanup?.();
      if(oldWindow===undefined)delete globalThis.window;
      else globalThis.window=oldWindow;
