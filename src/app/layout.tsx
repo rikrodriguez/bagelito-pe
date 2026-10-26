@@ -71,7 +71,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const batchAvailability = await getReservationBatchAvailability();
 
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="es" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <StructuredData />
         <LanguageProvider>
