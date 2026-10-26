@@ -2,13 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFile} from "node:fs/promises";
 const read = async path => readFile(new URL("../"+path,import.meta.url),"utf8");
-const [reserve,button,manual,culqi,header,images] = await Promise.all([
+const [reserve,button,manual,culqi,header,images,paymentConfig] = await Promise.all([
  read("src/app/reserve/ReservationFlow.tsx"),
  read("src/components/payments/CulqiCheckoutButton.tsx"),
  read("src/app/api/reservations/route.ts"),
  read("src/app/api/reservations/culqi/route.ts"),
  read("src/components/Header.tsx"),
- read("src/data/flavor-images.ts")
+ read("src/data/flavor-images.ts"),
+ read("src/lib/payments/config.ts")
 ]);
 test("the four-step checkout uses actual photos from the same product catalog",()=>{
  assert.match(reserve,/src=\{flavorImages\[flavor\.slug\]\}/);
@@ -44,4 +45,9 @@ test("backend denies all public order creation while review-only flag is on",()=
    assert.match(route,/status: 503/);
    assert.match(route,/Cache-Control/);
  }
+});
+
+test("even configured payment keys cannot enable provider in merchant-review mode",()=>{
+ assert.match(paymentConfig,/BAGELITO_MERCHANT_REVIEW_ONLY/);
+ assert.match(paymentConfig,/process\.env\.BAGELITO_MERCHANT_REVIEW_ONLY !== "true"/);
 });
