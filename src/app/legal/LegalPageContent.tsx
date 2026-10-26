@@ -90,6 +90,7 @@ const legalCopy = {
         icon: RotateCcw,
         title: "Refunds and cancellations",
         body: [
+          "We offer replacement or a refund for incorrect or defective products. The cancellation rules do not limit these remedies.",
           "Because Bagelito.pe produces handmade, perishable food by confirmed reservation, cancellations and refunds depend on the production stage of the monthly batch.",
           "If Bagelito.pe cannot produce or deliver a confirmed order due to an internal issue, the customer may choose a refund or credit for a future batch. Duplicate or excess payments can also be coordinated for correction.",
         ],
@@ -221,6 +222,7 @@ const legalCopy = {
         icon: RotateCcw,
         title: "Reembolsos y cancelaciones",
         body: [
+          "Ofrecemos reposición o devolución del importe por productos equivocados o defectuosos. Las reglas de cancelación no limitan estas opciones.",
           "Como Bagelito.pe produce alimentos artesanales y perecibles por reserva confirmada, las cancelaciones y reembolsos dependen de la etapa de producción del batch mensual.",
           "Si Bagelito.pe no puede producir o entregar un pedido confirmado por un problema interno, el cliente podrá elegir entre reembolso o crédito para un futuro batch. Los pagos duplicados o excedentes también pueden coordinarse para corrección.",
         ],
