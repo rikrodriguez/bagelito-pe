@@ -17,7 +17,7 @@ test("catalog shows 10 distinct real local bagel photos, not invented products",
 });
 test("prices use the existing actual pack amount and never invent a new checkout amount",()=>{
  assert.match(packs,/slug:\s*"6-single"[^}]*amount:\s*50/);
- assert.match(src,/minimumSingleFlavorPack\.amount/);
+ assert.match(src,/singlePackPrice/);
  assert.match(src,/Minimum: 6 bagels/);
  assert.match(src,/Pedido mínimo: 6 bagels/);
  assert.doesNotMatch(src,/flavor\.price/);
