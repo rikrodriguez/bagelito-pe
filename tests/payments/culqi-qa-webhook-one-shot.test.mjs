@@ -5,7 +5,7 @@ import {allowed,run} from "../../scripts/culqi-qa-webhook-one-shot.mjs";
 const host="bagelito-pe-git-cod-d9825d-ricardo-rodriguezs-projects-487b7b64.vercel.app";
 const env={VERCEL:"1",VERCEL_ENV:"preview",VERCEL_PROJECT_ID:"prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
  VERCEL_GIT_COMMIT_REF:"codex/culqi-payment-split-20261021",
- VERCEL_GIT_COMMIT_MESSAGE:"qa: apply verified Culqi event once and test duplicate",
+ VERCEL_GIT_COMMIT_MESSAGE:"qa: verify existing Culqi event idempotency v2",
  VERCEL_GIT_REPO_OWNER:"rikrodriguez",VERCEL_GIT_REPO_SLUG:"bagelito-pe",VERCEL_BRANCH_URL:host,
  NEXT_PUBLIC_SITE_URL:"https://"+host,NEXT_PUBLIC_SUPABASE_URL:"https://qaahskendqdkynwtylho.supabase.co",
  PAYMENT_PROVIDER:"culqi",CULQI_MODE:"sandbox",CULQI_ENABLED:"true",CULQI_LIVE_APPROVED:"false",
@@ -63,12 +63,12 @@ test("strict gate rejects production, any wrong branch and merchant",()=>{
 });
 test("one genuine verified event applies once and second invocation is duplicate",async()=>{
  const f=fixture();const out=await run({env,fetcher:f.fetcher,post:f.post});
- assert.equal(out.verdict,"event_applied_and_duplicate_safe");
+ assert.equal(out.verdict,"event_applied_and_duplicate_safe_pending_receipt_audit");
  assert.equal(out.firstApplied,true);assert.equal(out.recordConfirmed,true);
  assert.equal(out.secondDuplicate,true);assert.equal(out.orderStillPaid,true);
  assert.equal(out.attemptedChargeCreate,false);
  assert.deepEqual(f.states,[1,2]);
- assert.equal(out.receiptUnchanged,true);assert.equal(out.attemptsUnchanged,true);
+ assert.equal(out.receiptAuditExternal,true);assert.equal(out.attemptsUnchanged,true);
  for(const call of f.calls)assert.equal(call.init.method,"GET");
  assert.equal(JSON.stringify(out).includes(id),false);
  assert.equal(JSON.stringify(out).includes(env.CULQI_SECRET_KEY),false);
