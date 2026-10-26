@@ -47,8 +47,11 @@ const flavorImages: Record<string, string> = {
   "rainbow-custom-colors": "/images/bagel-rainbow.webp",
   snickerdoodle: "/images/bagel-snickerdoodle.webp",
 };
-const minimumSingleFlavorPack = packs.find((pack) => pack.slug === "6-single");
-if (!minimumSingleFlavorPack) throw new Error("Bagelito single-flavor pack is not configured.");
+const singlePackPrice: number = (() => {
+  const pack = packs.find((item) => item.slug === "6-single");
+  if (!pack) throw new Error("Bagelito single-flavor pack is not configured.");
+  return pack.amount;
+})();
 
 export function FlavorStrip() {
   const { locale, copy } = useLanguage();
@@ -83,7 +86,7 @@ export function FlavorStrip() {
               <h3>{name}</h3>
               <p>{flavorDescriptions[locale][flavor.slug as keyof typeof flavorDescriptions.en]}</p>
               <strong className="flavor-product-price">
-                {locale === "es" ? "Pack de 6 desde" : "6-pack from"} S/{minimumSingleFlavorPack.amount}
+                {locale === "es" ? "Pack de 6 desde" : "6-pack from"} S/{singlePackPrice}
               </strong>
               <Link className="flavor-product-cta" href={destination} aria-label={
                 locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
