@@ -365,12 +365,10 @@ export async function fetchCulqiEvent(eventId: string) {
   });
   // Match the official SDK's event lookup contract without changing charge requests.
   try {
-    // The official SDK sets version/environment headers, while the published
-    // Event GET example needs only Authorization. If Culqi rejects an otherwise
-    // well-formed same-environment event with a 400 parameter error for those
-    // headers (or does not identify a parameter), try the documented minimal
-    // GET exactly once. Both GETs share the ORIGINAL ten-second budget.
-    // There is no charge POST, event acknowledgement or DB mutation here.
+    // The official SDK sends version/environment headers; Culqi's documented
+    // Event GET also supports Authorization only. Retry once with minimal
+    // headers ONLY for a 400 parameter error on a correctly shaped same-mode ID.
+    // Both GETs share one ten-second deadline. Neither can create charges.
     const readEvent = (headers: Record<string, string>) => culqiRequest<CulqiEventResponse>(
       `/events/${encodeURIComponent(eventId)}`, {
         method: "GET", signal: controller.signal, redirect: "error", credentials: "omit",
@@ -388,35 +386,12 @@ export async function fetchCulqiEvent(eventId: string) {
         if (!(error instanceof CulqiApiError)
           || error.status !== 400 || error.errorType !== "parameter_error"
           || !["version", "environment", "absent"].includes(parameter ?? "")
-          || !new RegExp(`^evt_${environment}_[A-Za-z0-9]{16}export async function fetchCulqiEvent(eventId: string) {
-  const { mode } = assertCulqiEnabled();
-  const environment = mode === "sandbox" ? "test" : mode === "live" ? "live" : null;
-  if (!environment) throw new Error("Culqi event environment is not configured.");
-  const controller = new AbortController();
-  const expiresAt = performance.now() + 10_000;
-  const timeoutError = new DOMException("Culqi event lookup deadline exceeded.", "TimeoutError");
-  const assertInBudget = () => {
-    // A delayed timer cannot authorize accepting headers or a body after expiry.
-    if (controller.signal.aborted || performance.now() >= expiresAt) {
-      controller.abort(timeoutError);
-      throw timeoutError;
-    }
-  };
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  const deadline = new Promise<never>((_, reject) => {
-    timer = setTimeout(() => {
-      reject(timeoutError);
-      controller.abort(timeoutError);
-    }, 10_000);
-  });
-  // Match the official SDK's event lookup contract without changing charge requests.
-  try {
-).test(eventId)) throw error;
+          || !new RegExp(`^evt_${environment}_[A-Za-z0-9]{16}$`).test(eventId)) throw error;
         assertInBudget();
         return readEvent({ Accept: "application/json" });
       }
     };
-    // Bound both transport attempts and JSON bodies, including noncooperative abort.
+    // Bounds both HTTP responses and JSON parsing under the original deadline.
     const event = await Promise.race([readWithDocumentedFallback(), deadline]);
     assertInBudget();
     return event;
