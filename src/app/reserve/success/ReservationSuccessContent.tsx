@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, Clock3, MessageCircle } from "lucide-react";
+import { Clock3, MessageCircle } from "lucide-react";
 import { packCopy } from "@/lib/i18n";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import { getWhatsAppHref } from "@/lib/whatsapp";
@@ -106,7 +106,7 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
         <div><span>{s.labels.status}</span><strong>{isDemo ? paymentCopy.demo.status : kicker}</strong></div>
       </div>
       <div className="next-step">
-        {!unverified && payment === "paid" ? <CheckCircle2 size={20} /> : <Clock3 size={20} />}
+        <Clock3 size={20} />
         {s.nextStep} <strong>{coordination}</strong>
       </div>
       <div className="success-actions">
