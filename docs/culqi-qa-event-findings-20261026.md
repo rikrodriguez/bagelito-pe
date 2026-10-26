@@ -26,3 +26,10 @@ Pruebas con la Preview de Vercel en la rama \`codex/culqi-payment-split-20261021
 
 ## Limpieza
 El script temporal, los tests auxiliares y el hook de \`npm run build\` usados para consultar eventos se retiraron tras registrar estos resultados. Ninguna de estas comprobaciones se introdujo en \`main\`; el parche de consulta de Culqi permanece solo en QA y en su revisión previa.
+
+## Confirmación adicional sobre eventos y moneda (26-oct-2026)
+- Consulta real con `sk_test` a Culqi: lista de `charge.creation.succeeded` HTTP 200, 21 eventos test con ID de longitud documentada; tres se relacionan por cargo y metadata con `BAG-000013`. Un evento verificado por GET individual respondió HTTP 200 con cabeceras SDK y también con Authorization solamente; identidad, tipo y cargo coinciden.
+- El `data` del evento verificado está en forma de objeto, **sin** `currency_code` **ni** `currency`. El cargo independiente obtenido mediante `GET /v2/charges/{id}` sí devuelve `currency_code=PEN`, ID/importe/origen coincidentes y `capture=true`, aunque también muestra `paid=false`. Por diseño, `paid` aislado no prueba ni invalida la captura: la evidencia financiera requiere monto, moneda, capture, current_amount, amount_refunded y dispute.
+- La prueba de aplicar el evento detuvo la ejecución **antes del webhook** por dato de moneda ausente. Por tanto, cero mutaciones y ninguna notificación reconocida a partir de estos diagnósticos.
+- La mitigación segura es verificar un segundo GET autenticado del cargo y completar **solo la moneda ausente** del evento cuando exista evidencia vinculante completa; jamás completar una moneda explícita contradictoria, ni suponer PEN, ni aceptar datos del navegador.
+- Los dos scripts de diagnóstico y el runner transitorio quedan eliminados del hook de build al concluir las observaciones. Mantener `main` y cobros reales sin modificaciones hasta probar RPC e idempotencia en QA.
