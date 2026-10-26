@@ -104,6 +104,7 @@ const copy={
 };
 const Icon=()=>React.createElement("i");
 const {ReservationSuccessContent}=load("src/app/reserve/success/ReservationSuccessContent.tsx",{
+ "@/lib/payments/success-proof":{readSuccessProof:()=>null,checkServerPaymentStatus:()=>"unverified"},
  "next/link":{__esModule:true,default:({href,children})=>React.createElement("a",{href},children)},
  "lucide-react":{CheckCircle2:Icon,Clock3:Icon,MessageCircle:Icon},
  "@/components/LanguageProvider":{useLanguage:()=>({locale:"en",copy})},
@@ -111,13 +112,19 @@ const {ReservationSuccessContent}=load("src/app/reserve/success/ReservationSucce
  "@/lib/analytics":{trackBagelitoEvent(){}},
  "@/lib/whatsapp":{getWhatsAppHref:()=>"#"}
 });
-test("manual, paid and pending URL variants cannot mint an order receipt or reported total",()=>{
- for(const payment of ["manual","paid","pending","random"]){
+test("manual and unrecognized URL variants never create a fake receipt",()=>{
+ for(const payment of ["manual","random"]){
    const html=renderToStaticMarkup(React.createElement(ReservationSuccessContent,
      {order:code,pack:"fake pack",amount:"999999",payment}));
    assert.match(html,/Unverified order status/);
    assert.doesNotMatch(html,/Manual reservation received|Received your reservation|S\/999999|>999999</);
-   assert.doesNotMatch(html,new RegExp("(?<!/track\\?order=)"+code+"</strong>"));
    assert.doesNotMatch(html,/Payment confirmed|Pago confirmado/);
+ }
+});
+test("Culqi URL claims cannot bypass server verification at initial render",()=>{
+ for(const payment of ["paid","pending"]){
+  const html=renderToStaticMarkup(React.createElement(ReservationSuccessContent,
+    {order:code,pack:"fake pack",amount:"999999",payment}));
+  assert.doesNotMatch(html,/Payment confirmed|Your pack is secured|S\/999999/);
  }
 });

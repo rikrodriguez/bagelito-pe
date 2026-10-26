@@ -1,0 +1,61 @@
+{
+  "browser": "local Chromium",
+  "third_party_requests_allowed": false,
+  "real_database_writes": 0,
+  "scenarios": [
+    {
+      "viewport": "desktop",
+      "channel": "instagram",
+      "locale": "es",
+      "home_links": 7,
+      "explicit_consent": true,
+      "payload_preserved": true,
+      "real_writes": 0
+    },
+    {
+      "viewport": "desktop",
+      "channel": "tiktok",
+      "locale": "en",
+      "home_links": 7,
+      "explicit_consent": true,
+      "payload_preserved": true,
+      "real_writes": 0
+    },
+    {
+      "viewport": "desktop",
+      "channel": "direct",
+      "locale": "es",
+      "home_links": 7,
+      "explicit_consent": true,
+      "payload_preserved": true,
+      "real_writes": 0
+    },
+    {
+      "viewport": "mobile",
+      "channel": "instagram",
+      "locale": "es",
+      "home_links": 7,
+      "explicit_consent": true,
+      "payload_preserved": true,
+      "real_writes": 0
+    },
+    {
+      "viewport": "mobile",
+      "channel": "tiktok",
+      "locale": "en",
+      "home_links": 7,
+      "explicit_consent": true,
+      "payload_preserved": true,
+      "real_writes": 0
+    },
+    {
+      "viewport": "mobile",
+      "channel": "direct",
+      "locale": "es",
+      "home_links": 7,
+      "explicit_consent": true,
+      "payload_preserved": true,
+      "real_writes": 0
+    }
+  ]
+}

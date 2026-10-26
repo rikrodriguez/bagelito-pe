@@ -1,0 +1,103 @@
+name: Integrated delivery candidate CI
+on:
+  push:
+    branches: [integration/culqi-release-candidate-20261026, fix/culqi-event-get-fallback-20261026, test/culqi-event-parameter-diagnostic-20261022, codex/culqi-payment-split-20261021, test/culqi-webhook-diagnostic-preview-20261020, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016, fix/admin-culqi-proof-label-20261016, fix/checkout-preparation-deadline-20261017]
+  pull_request:
+    branches: [codex/culqi-payment-split-20261021, fix/culqi-payment-coordination-20261012, main, integration/delivery-candidate-20261016, fix/waitlist-reserve-attribution-20261016, fix/culqi-webhook-event-deadline-20261016, fix/checkout-expired-retry-20261016, fix/admin-culqi-proof-label-20261016]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+concurrency:
+  group: delivery-candidate-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  application:
+    if: >-
+      github.event_name == 'push' ||
+      ((github.event.pull_request.head.ref == 'integration/culqi-release-candidate-20261026' ||
+        github.event.pull_request.head.ref == 'fix/culqi-event-get-fallback-20261026' ||
+        github.event.pull_request.head.ref == 'test/culqi-event-parameter-diagnostic-20261022' ||
+        github.event.pull_request.head.ref == 'codex/culqi-payment-split-20261021' ||
+        github.event.pull_request.head.ref == 'test/culqi-webhook-diagnostic-preview-20261020' ||
+        github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
+        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
+        github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016' ||
+        github.event.pull_request.head.ref == 'fix/checkout-expired-retry-20261016' ||
+        github.event.pull_request.head.ref == 'fix/admin-culqi-proof-label-20261016' ||
+        github.event.pull_request.head.ref == 'fix/checkout-preparation-deadline-20261017') &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      CULQI_ENABLED: 'false'
+    steps:
+      - name: Check out exact candidate head
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run combined synthetic Node regression
+        run: npm test
+      - name: Lint
+        run: npm run lint
+      - name: Build and validate types
+        run: npm run build
+      - name: Verify diagnostic authentication and environment boundaries
+        run: node tests/culqi-readonly-http.mjs
+      - name: Verify reconciliation parser and HTTP adapter
+        run: node tests/culqi-reconciliation-http.mjs
+      - name: Pull pinned isolated PostgreSQL image
+        run: docker pull --platform linux/amd64 postgres:17.11-bookworm@sha256:66aafa11cf15800a3c94763f7e11d1e7b2e37e5e84bc4ce027cb6e1e4bfaf4df
+      - name: Verify native status and webhook failures/settlement with isolated SQL
+        run: node tests/culqi-status-recovery-http.mjs
+      - name: Verify native administrative status boundary
+        run: node tests/culqi-admin-status-http.mjs
+      - name: Restore logical fixture backup and run native operator journey
+        run: node tests/integrated-backup-restore.mjs
+  sql:
+    if: >-
+      github.event_name == 'push' ||
+      ((github.event.pull_request.head.ref == 'integration/culqi-release-candidate-20261026' ||
+        github.event.pull_request.head.ref == 'fix/culqi-event-get-fallback-20261026' ||
+        github.event.pull_request.head.ref == 'test/culqi-event-parameter-diagnostic-20261022' ||
+        github.event.pull_request.head.ref == 'codex/culqi-payment-split-20261021' ||
+        github.event.pull_request.head.ref == 'test/culqi-webhook-diagnostic-preview-20261020' ||
+        github.event.pull_request.head.ref == 'integration/delivery-candidate-20261016' ||
+        github.event.pull_request.head.ref == 'fix/waitlist-reserve-attribution-20261016' ||
+        github.event.pull_request.head.ref == 'fix/culqi-webhook-event-deadline-20261016' ||
+        github.event.pull_request.head.ref == 'fix/checkout-expired-retry-20261016' ||
+        github.event.pull_request.head.ref == 'fix/admin-culqi-proof-label-20261016' ||
+        github.event.pull_request.head.ref == 'fix/checkout-preparation-deadline-20261017') &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [core-only, full]
+    steps:
+      - name: Check out exact candidate head
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Run preflight, migration, race and compatible rollback fixtures
+        env:
+          SQL_PROFILE: ${{ matrix.profile }}
+        run: |
+          args=()
+          if [[ "$SQL_PROFILE" == core-only ]]; then args+=(--core-only); fi
+          docker run --rm --platform linux/amd64 --network none --read-only \
+            --tmpfs /tmp:rw,mode=1777 --user postgres \
+            --env PG_BIN=/usr/lib/postgresql/17/bin \
+            --volume "$PWD:/workspace:ro" --workdir /workspace --entrypoint bash \
+            postgres:17.11-bookworm@sha256:66aafa11cf15800a3c94763f7e11d1e7b2e37e5e84bc4ce027cb6e1e4bfaf4df \
+            tests/run-sql-tests.sh "${args[@]}"

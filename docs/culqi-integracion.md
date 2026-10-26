@@ -1,5 +1,7 @@
 # Integración Culqi
 
+Para el diagnóstico de configuración de PR1 consultar [Diagnóstico Preview](culqi-diagnostico-preview.md). Ese recorrido requiere `CULQI_ENABLED=false`, no hace pagos y no autoriza activación.
+
 La página de checkout muestra el pedido, los datos del comprador y los medios de pago. El formulario real se monta dentro del iframe seguro de Culqi únicamente cuando la integración está habilitada.
 
 ## Activación segura

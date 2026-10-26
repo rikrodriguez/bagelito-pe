@@ -6,12 +6,15 @@ import { ShoppingBag } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
+import { usePacksCampaignHref, useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 export function MobileStickyReserveCTA() {
   const { copy } = useLanguage();
   const { accepting: acceptingReservations } = useBatchAvailability();
+  const waitlistHref = useWaitlistCampaignHref();
+  const packsHref = usePacksCampaignHref();
   const [isVisible, setIsVisible] = useState(false);
-  const href = acceptingReservations ? "/#packs" : "/waitlist";
+  const href = acceptingReservations ? packsHref : waitlistHref();
   const label = acceptingReservations ? copy.stickyReserveCta.label : copy.stickyReserveCta.waitlistLabel;
   const ariaLabel = acceptingReservations ? copy.stickyReserveCta.aria : copy.stickyReserveCta.waitlistAria;
 

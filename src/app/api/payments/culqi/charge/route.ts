@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import {
-  CulqiApiError,
   createCulqiCharge,
+  fetchCulqiCharge,
   getPaymentConfig,
+  isCulqiRequestAllowed,
+  toPaymentMinorUnits,
   type CulqiAuthentication3DS,
 } from "@/lib/payments";
+import { coordinateCulqiCharge } from "@/lib/payments/charge-coordinator";
 import { PublicApiError, enforcePublicApiSecurity } from "@/lib/public-api-security";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
@@ -12,18 +15,15 @@ export const runtime = "nodejs";
 
 type ChargePayload = {
   authentication3DS?: unknown;
+  checkoutSessionId?: unknown;
   deviceId?: unknown;
   email?: unknown;
   orderCode?: unknown;
   sourceId?: unknown;
 };
 
-type StoredAttemptPayload = {
-  device_finger_print_id?: unknown;
-  source_id?: unknown;
-};
-
 type ChargeOrder = {
+  checkout_session_id: string | null;
   customer_name: string;
   delivery_address: string;
   district: string;
@@ -31,6 +31,7 @@ type ChargeOrder = {
   id: string;
   order_code: string;
   payment_order_id: string | null;
+  payment_lane: string;
   payment_expires_at: string | null;
   payment_status: string | null;
   status: string;
@@ -73,7 +74,7 @@ function parseAuthentication3DS(value: unknown): CulqiAuthentication3DS | undefi
 }
 
 export async function POST(request: Request) {
-  if (!getPaymentConfig().enabled) {
+  if (!isCulqiRequestAllowed(request)) {
     return NextResponse.json(
       { ok: false, error: "Culqi payments are not enabled yet." },
       { status: 503 },
@@ -81,24 +82,29 @@ export async function POST(request: Request) {
   }
 
   let order: ChargeOrder | null = null;
-  let createdChargeId: string | null = null;
 
   try {
     const payload = await request.json() as ChargePayload;
+    const checkoutSessionId = typeof payload.checkoutSessionId === "string" ? payload.checkoutSessionId.trim().toLowerCase() : "";
     const orderCode = String(payload.orderCode ?? "").trim().toUpperCase();
     const email = String(payload.email ?? "").trim().toLowerCase();
     const sourceId = String(payload.sourceId ?? "").trim();
     const deviceId = String(payload.deviceId ?? "").trim();
+    if (sourceId.startsWith("ype_") && payload.authentication3DS != null) {
+      return NextResponse.json({ ok: false, error: "Card 3DS is not supported for Yape." }, { status: 400 });
+    }
     const authentication3DS = parseAuthentication3DS(payload.authentication3DS);
 
     if (
       !orderCode
       || !email
+      || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(checkoutSessionId)
       || !isCulqiSourceId(sourceId)
       || (sourceId.startsWith("tkn_") && !isDeviceId(deviceId))
+      || (sourceId.startsWith("ype_") && payload.authentication3DS != null)
     ) {
       return NextResponse.json(
-        { ok: false, error: "Valid order, email, Culqi token, and card security fingerprint are required." },
+        { ok: false, error: "Valid order, checkout session, email, Culqi token, and card security fingerprint are required." },
         { status: 400 },
       );
     }
@@ -113,14 +119,17 @@ export async function POST(request: Request) {
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("orders")
-      .select("id, order_code, customer_name, email, whatsapp, delivery_address, district, total_amount, status, payment_status, payment_order_id, payment_expires_at")
+      .select("id, order_code, checkout_session_id, customer_name, email, whatsapp, delivery_address, district, total_amount, status, payment_status, payment_lane, payment_order_id, payment_expires_at")
       .eq("order_code", orderCode)
+      .eq("checkout_session_id", checkoutSessionId)
       .maybeSingle();
 
     if (error) throw new Error(error.message);
     order = data as ChargeOrder | null;
 
-    if (!order || order.email.trim().toLowerCase() !== email) {
+    if (!order || order.order_code !== orderCode
+      || typeof order.checkout_session_id !== "string" || order.checkout_session_id.toLowerCase() !== checkoutSessionId
+      || order.email.trim().toLowerCase() !== email) {
       return NextResponse.json({ ok: false, error: "Order not found." }, { status: 404 });
     }
     if (order.status === "cancelled" || order.status === "delivered") {
@@ -142,166 +151,45 @@ export async function POST(request: Request) {
         { status: 410 },
       );
     }
-    if (!order.payment_order_id) {
+    if (order.payment_order_id || order.payment_lane !== "token") {
       return NextResponse.json(
-        { ok: false, error: "Culqi checkout order has not been prepared." },
+        { ok: false, error: "This reservation cannot accept token charges." },
         { status: 409 },
       );
     }
 
-    const { data: attempt, error: attemptReadError } = await supabase
-      .from("payment_attempts")
-      .select("provider_payload")
-      .eq("provider", "culqi")
-      .eq("provider_order_id", order.payment_order_id)
-      .maybeSingle();
-    if (attemptReadError) throw new Error(attemptReadError.message);
-
-    if (authentication3DS) {
-      const stored = attempt?.provider_payload as StoredAttemptPayload | null;
-      if (
-        stored?.source_id !== sourceId
-        || stored?.device_finger_print_id !== deviceId
-      ) {
-        return NextResponse.json(
-          { ok: false, error: "The 3DS authentication does not match this payment attempt." },
-          { status: 409 },
-        );
-      }
+    if (sourceId.startsWith("ype_") && Number(order.total_amount) > 2000) {
+      return NextResponse.json({ ok: false, error: "Yape supports a maximum of S/ 2000 per payment." }, { status: 400 });
     }
 
-    const chargeResult = await createCulqiCharge({
-      amount: Number(order.total_amount),
+    const chargeOrder = order;
+    const configuredMode = getPaymentConfig().mode;
+    if (configuredMode !== "sandbox" && configuredMode !== "live") {
+      throw new Error("Culqi charge mode is unavailable.");
+    }
+    const result = await coordinateCulqiCharge({
+      db: supabase, orderId: order.id, orderCode: order.order_code, sourceId, deviceId,
+      checkoutSessionId, amountMinor: toPaymentMinorUnits(Number(order.total_amount)),
+      mode: configuredMode === "sandbox" ? "test" : "live", fetchCharge: fetchCulqiCharge,
+      has3DS: Boolean(authentication3DS),
+      createCharge: () => createCulqiCharge({
+
+      amount: Number(chargeOrder.total_amount),
       authentication3DS,
-      customerEmail: order.email,
-      customerName: order.customer_name,
-      deliveryAddress: order.delivery_address,
+      customerEmail: chargeOrder.email,
+      customerName: chargeOrder.customer_name,
+      deliveryAddress: chargeOrder.delivery_address,
       deviceFingerprintId: deviceId || undefined,
-      district: order.district,
-      orderCode: order.order_code,
-      phoneNumber: order.whatsapp,
+      district: chargeOrder.district,
+      orderCode: chargeOrder.order_code,
+      phoneNumber: chargeOrder.whatsapp,
       sourceId,
+      }),
     });
-    if (chargeResult.requires3DS) {
-      const { error: reviewUpdateError } = await supabase
-        .from("payment_attempts")
-        .update({
-          payment_method: "card",
-          provider_payload: {
-            action: chargeResult.response,
-            device_finger_print_id: deviceId,
-            source_id: sourceId,
-            stage: "requires_3ds",
-          },
-        })
-        .eq("provider", "culqi")
-        .eq("provider_order_id", order.payment_order_id);
-      if (reviewUpdateError) throw new Error(reviewUpdateError.message);
-
-      return NextResponse.json({
-        ok: true,
-        orderCode: order.order_code,
-        paymentStatus: "requires_3ds",
-        requires3DS: true,
-      });
-    }
-
-    const charge = chargeResult.charge;
-    createdChargeId = charge.id;
-    const sourceType = sourceId.startsWith("ype_") ? "yape" : "card";
-
-    const { error: updateError } = await supabase
-      .from("orders")
-      .update({
-        payment_charge_id: charge.id,
-        payment_failure_code: null,
-        payment_failure_message: null,
-        payment_metadata: charge,
-        payment_method: "Culqi",
-      })
-      .eq("id", order.id);
-    if (updateError) throw new Error(updateError.message);
-
-    const { error: attemptError } = await supabase
-      .from("payment_attempts")
-      .update({
-        payment_method: sourceType,
-        provider_charge_id: charge.id,
-        provider_payload: charge,
-      })
-      .eq("provider", "culqi")
-      .eq("provider_order_id", order.payment_order_id);
-    if (attemptError) throw new Error(attemptError.message);
-
-    // A successful browser token or charge response is never used to mark the
-    // reservation paid. The verified Culqi webhook is the source of truth.
-    return NextResponse.json({
-      ok: true,
-      orderCode: order.order_code,
-      paymentStatus: "awaiting_webhook",
-    });
+    return NextResponse.json(result, { status: result.ok ? 200 : 409 });
   } catch (error) {
-    if (createdChargeId && order) {
-      // The bank-facing charge already exists. Avoid inviting a duplicate retry
-      // if a later local persistence step failed; the webhook can still match by
-      // the Bagelito order code stored in Culqi metadata.
-      return NextResponse.json({
-        ok: true,
-        orderCode: order.order_code,
-        paymentStatus: "awaiting_webhook",
-      }, { status: 202 });
-    }
-
-    if (order?.id && error instanceof CulqiApiError) {
-      const supabase = createSupabaseAdminClient();
-      const failureCode = error.code;
-      const failureMessage = error.userMessage;
-
-      await supabase
-        .from("orders")
-        .update({
-          payment_charge_id: error.chargeId,
-          payment_failure_code: failureCode,
-          payment_failure_message: failureMessage,
-          payment_status: "failed",
-          status: "needs_correction",
-        })
-        .eq("id", order.id)
-        .neq("payment_status", "paid");
-
-      if (order.payment_order_id) {
-        await supabase
-          .from("payment_attempts")
-          .update({
-            failure_code: failureCode,
-            failure_message: failureMessage,
-            provider_charge_id: error.chargeId,
-            status: "failed",
-          })
-          .eq("provider", "culqi")
-          .eq("provider_order_id", order.payment_order_id);
-      }
-
-      if (order.status !== "needs_correction") {
-        await supabase.from("order_status_history").insert({
-          changed_by: "culqi charge",
-          new_status: "needs_correction",
-          old_status: order.status,
-          order_id: order.id,
-        });
-      }
-    }
-
-    const status = error instanceof PublicApiError
-      ? error.status
-      : error instanceof CulqiApiError
-        ? 402
-        : 500;
-    const message = error instanceof CulqiApiError
-      ? error.userMessage
-      : error instanceof Error
-        ? error.message
-        : "Could not process Culqi payment.";
+    const status = error instanceof PublicApiError ? error.status : 500;
+    const message = error instanceof PublicApiError ? error.message : "Could not process Culqi payment.";
 
     return NextResponse.json(
       { ok: false, error: message },

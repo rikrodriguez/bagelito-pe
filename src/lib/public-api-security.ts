@@ -178,12 +178,13 @@ async function consumeRateLimit(scope: string, identifier: string, limit: number
 
   if (error) {
     if (isMissingFunctionError(error, "consume_api_rate_limit")) {
-      logWarn("public_rate_limit_rpc_missing", {
-        limit,
-        scope,
-        windowSeconds,
+      logWarn("public_rate_limit_rpc_missing", { scope });
+      // Financial/public forms must not silently become unlimited when the
+      // database migration or RPC permissions are missing.
+      throw new PublicApiError("This service is temporarily unavailable. Please try again shortly.", {
+        code: "rate_limit_unavailable",
+        status: 503,
       });
-      return;
     }
 
     throw new Error("Could not verify request rate limit: " + error.message);

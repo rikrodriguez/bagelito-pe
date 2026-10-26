@@ -73,6 +73,9 @@ import { CostCalculator } from "./CostCalculator";
 import { CustomerProfileActions } from "./CustomerProfileActions";
 import { closeCurrentBatch, quickUpdateOrderStatus, updateBatchFinancialCosts, updateBatchSettings } from "./actions";
 import { WaitlistLeadActions } from "./WaitlistLeadActions";
+import { CulqiReadonlyDiagnosticButton } from "./CulqiReadonlyDiagnosticButton";
+import { getCulqiReadonlyDiagnosticScope } from "@/lib/payments/culqi-readonly-diagnostic";
+import { WaitlistSource } from "@/components/WaitlistSource";
 
 const paidStatuses = new Set<string>(productionStatuses);
 const statusFilterOptions = [
@@ -960,6 +963,7 @@ function WaitlistPanel({
                       <span>{signup.whatsapp} · {signup.email}</span>
                       <small>{signup.preferred_pack_name ?? "No pack preference"} · {signup.contact_preference} · {formatDate(signup.created_at)}</small>
                       {signup.notes ? <small>Notes: {signup.notes}</small> : null}
+                      <WaitlistSource source={signup.source} />
                     </div>
                     <div className="waitlist-row-actions">
                       {view === "active" ? (
@@ -1279,6 +1283,8 @@ export default async function AdminPage({
   searchParams?: Promise<AdminSearchParams>;
 }) {
   await requireAdmin();
+  // Metadata only; never read payment keys or run the diagnostic while rendering.
+  const showCulqiReadonlyDiagnostic = Object.values(getCulqiReadonlyDiagnosticScope(process.env)).every(Boolean);
   const missing = getMissingAdminEnv();
   const params = await searchParams;
   const batchMessage = params?.batch;
@@ -1304,7 +1310,7 @@ export default async function AdminPage({
   const sort = sortOptions.some((option) => option.value === params?.sort) ? params?.sort ?? "newest" : "newest";
 
   if (missing.length) {
-    return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p></section></main>;
+    return <main className="admin-page"><section className="admin-shell admin-card"><h1>Setup needed</h1><p>Missing environment variables: {missing.join(", ")}</p>{showCulqiReadonlyDiagnostic ? <CulqiReadonlyDiagnosticButton /> : null}</section></main>;
   }
 
   const allOrders = await fetchOrders();
@@ -1318,10 +1324,11 @@ export default async function AdminPage({
   const baseOrders = showingArchived ? archivedOrders : activeOrders;
   const orders = filterAndSortOrders(baseOrders, searchQuery, statusFilter, sort);
   const stats = getDashboardStats(activeOrders);
-  const delivery = getDeliverySummary(activeOrders);
+  const currentBatchOrders = activeOrders.filter((order) => order.batch_id === currentBatch.id);
+  const delivery = getDeliverySummary(currentBatchOrders);
   const finance = getFinancialSummary(currentBatch, activeOrders);
   const productionOps = getProductionOpsPlan(currentBatch, activeOrders);
-  const routePlan = getDeliveryRoutePlan(activeOrders);
+  const routePlan = getDeliveryRoutePlan(currentBatchOrders);
   const paidOrders = activeOrders.filter(isPaid);
   const deliveredOrders = activeOrders.filter(isDelivered);
   const paidNotDeliveredOrders = paidOrders.filter((order) => !isDelivered(order));
@@ -1464,6 +1471,7 @@ export default async function AdminPage({
             <p className="admin-intro">{sectionMeta.intro}</p>
           </div>
           <div className="admin-export-row">
+            {showCulqiReadonlyDiagnostic ? <CulqiReadonlyDiagnosticButton /> : null}
             <a href="/admin/export/orders"><FileDown size={16} /> Full backup CSV</a>
             <a href="/admin/export/production"><FileDown size={16} /> Production CSV</a>
             <a href="/admin/export/delivery"><FileDown size={16} /> Delivery CSV</a>
@@ -1798,7 +1806,7 @@ export default async function AdminPage({
                   <div className="data-block">
                     <small>Proof</small>
                     {order.payment_provider === "culqi"
-                      ? <strong>No voucher required · webhook verified</strong>
+                      ? <strong>No voucher required · managed by Culqi</strong>
                       : hasUploadedPaymentProof(order)
                         ? <a href={`/admin/payment-proof/${order.order_code}`} target="_blank" rel="noreferrer">View private signed proof</a>
                         : <strong>No proof uploaded yet</strong>}

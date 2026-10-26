@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 const src = await readFile(new URL("../src/app/reserve/ReservationFlow.tsx", import.meta.url), "utf8");
 
 test("closed /reserve no longer advertises old order close or delivery dates", () => {
-  const start = src.indexOf("if (!batchAvailability.accepting && !checkoutPage)");
+  const start = src.indexOf("if (!batchAvailability.accepting &&");
   const after = src.slice(start, start + 1700);
   assert.ok(start >= 0);
   assert.match(after, /reserve-closed-card/);

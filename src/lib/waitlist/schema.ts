@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { isPackSlug } from "@/lib/catalog";
 import { defaultLocale } from "@/lib/i18n";
+import { isWaitlistSource, WAITLIST_SOURCE_LIMIT, WAITLIST_DIRECT_SOURCE } from "./attribution";
 
 export const waitlistContactPreferences = ["whatsapp", "email", "both"] as const;
 
@@ -13,7 +14,7 @@ export const waitlistPayloadSchema = z.object({
   contactPreference: z.enum(waitlistContactPreferences).default("whatsapp"),
   locale: z.enum(["en", "es"]).default(defaultLocale),
   notes: z.string().trim().max(500, "Notes must be 500 characters or less.").optional().default(""),
-  source: z.string().trim().max(80).optional().default("waitlist_page"),
+  source: z.string().trim().max(WAITLIST_SOURCE_LIMIT).refine(isWaitlistSource, "Invalid campaign source.").optional().default(WAITLIST_DIRECT_SOURCE),
   consentAccepted: z.boolean().refine((value) => value, "Waitlist consent is required."),
 });
 

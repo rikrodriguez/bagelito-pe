@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Clock3, MessageCircle } from "lucide-react";
+import { CheckCircle2, Clock3, MessageCircle } from "lucide-react";
 import { packCopy } from "@/lib/i18n";
 import { trackBagelitoEvent } from "@/lib/analytics";
+import { checkServerPaymentStatus, readSuccessProof } from "@/lib/payments/success-proof";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 import type { PackSlug } from "@/data/packs";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -24,6 +25,10 @@ function isPackSlug(value: string | undefined): value is PackSlug {
 export function ReservationSuccessContent({ order, pack, packSlug, amount, payment = "manual" }: Props) {
   const { locale, copy } = useLanguage();
   const s = copy.success;
+  const isCulqiFlow = payment === "paid" || payment === "pending";
+  const isUnverifiedManual = !isCulqiFlow && payment !== "demo";
+  // A ?payment=paid URL claim is never a source of truth.
+  const [serverStatus, setServerStatus] = useState<"checking" | "paid" | "review" | "unverified">("checking");
   const displayPack = isPackSlug(packSlug) ? packCopy[locale][packSlug].name : pack || s.fallbackPack;
   const paymentCopy = locale === "es"
     ? {
@@ -41,10 +46,28 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
         title: "Tu batch está reservado.",
       },
       pending: {
-        coordination: "Confirmación automática del pago",
-        kicker: "Confirmando pago",
-        text: "Recibimos tu reserva. Estamos esperando la confirmación segura de Culqi; no necesitas subir ningún voucher.",
-        title: "Estamos confirmando tu reserva.",
+        coordination: "Consulta el seguimiento del pedido para verificar el estado.",
+        kicker: "Confirmación pendiente",
+        text: "Aún no hay una confirmación comprobada de este pago. No vuelvas a pagar sin revisar el estado.",
+        title: "Estamos verificando tu reserva.",
+      },
+      checking: {
+        coordination: "Consultando directamente el estado guardado del pedido.",
+        kicker: "Verificando pago",
+        text: "Estamos consultando la confirmación del servidor de Bagelito.",
+        title: "Verificando tu reserva.",
+      },
+      unverified: {
+        coordination: "Usa el seguimiento o comunícate con Bagelito antes de realizar otro pago.",
+        kicker: "Sin confirmar",
+        text: "No podemos verificar un pago desde este enlace. Los parámetros de la URL no son un comprobante.",
+        title: "No pudimos confirmar el pago.",
+      },
+      review: {
+        coordination: "Contáctanos para revisar tu reserva; no realices otro pago.",
+        kicker: "Revisión necesaria",
+        text: "El pedido presenta una situación que requiere verificación de Bagelito.",
+        title: "Estamos revisando el pago.",
       },
     }
     : {
@@ -62,37 +85,106 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
         title: "Your batch is reserved.",
       },
       pending: {
-        coordination: "Automatic payment confirmation",
-        kicker: "Confirming payment",
-        text: "We received your reservation. We are waiting for Culqi's secure confirmation; you do not need to upload a voucher.",
-        title: "We are confirming your reservation.",
+        coordination: "Check order tracking to verify the current status.",
+        kicker: "Confirmation pending",
+        text: "This payment has not yet been verified. Do not pay again before checking its status.",
+        title: "We are checking your reservation.",
+      },
+      checking: {
+        coordination: "Checking the saved order status with our server.",
+        kicker: "Verifying payment",
+        text: "We are consulting Bagelito's verified order status.",
+        title: "Verifying your reservation.",
+      },
+      unverified: {
+        coordination: "Use order tracking or contact Bagelito before attempting another payment.",
+        kicker: "Unconfirmed",
+        text: "Payment cannot be verified from this link. URL parameters are not a receipt.",
+        title: "We could not confirm the payment.",
+      },
+      review: {
+        coordination: "Contact Bagelito to review your reservation. Do not pay again.",
+        kicker: "Review required",
+        text: "This order requires a manual review before we can confirm payment.",
+        title: "We are reviewing this payment.",
       },
     };
-  // No provider payment on public main. Do not render a positive status based
-  // on the URL even for payment=paid or payment=pending.
-  const culqiState = payment === "demo" ? paymentCopy.demo : null;
+  const culqiState = payment === "demo" ? paymentCopy.demo
+    : isCulqiFlow
+      ? serverStatus === "paid" ? paymentCopy.paid
+        : serverStatus === "review" ? paymentCopy.review
+          : serverStatus === "checking" ? paymentCopy.checking
+            : paymentCopy.unverified
+      : null;
   const isDemo = payment === "demo";
-  // Main does NOT have a verified checkout receipt endpoint. A URL alone
-  // must never claim that a manual order was created or paid.
-  const unverified = !isDemo;
-  const kicker = unverified
-    ? locale === "es" ? "Estado no verificado" : "Unverified order status"
-    : culqiState?.kicker ?? s.kicker;
-  const title = unverified
-    ? locale === "es" ? "Consulta el estado de tu pedido" : "Check your order status"
-    : culqiState?.title ?? s.title;
-  const text = unverified
+  // A manual/unrecognized success URL alone is never a receipt or reservation.
+  // The verified Culqi path above remains unchanged.
+  const manualNotice = isUnverifiedManual
     ? locale === "es"
-      ? "Este enlace no confirma una reserva ni un pago. Verifica tu número de pedido junto con el email o WhatsApp utilizado al reservar."
-      : "This link does not confirm an order or payment. Verify your order number with the email or WhatsApp used at checkout."
-    : culqiState?.text ?? s.text;
-  const coordination = unverified
-    ? locale === "es" ? "Realiza una consulta segura o escríbenos para recibir ayuda." : "Use protected tracking or contact support."
-    : culqiState?.coordination ?? s.coordination;
+      ? {
+          kicker: "Reserva no verificada",
+          title: "Consulta el estado de tu pedido",
+          text: "Este enlace no confirma una reserva ni un pago. Ingresa el número de pedido y el email o WhatsApp asociado en el seguimiento seguro.",
+          coordination: "Verifica el estado en seguimiento o escríbenos para recibir ayuda.",
+        }
+      : {
+          kicker: "Unverified order status",
+          title: "Check your order status",
+          text: "This link does not confirm an order or payment. Enter the order number and matching email or WhatsApp in secure tracking.",
+          coordination: "Verify status through order tracking or contact support.",
+        }
+    : null;
+  const kicker = manualNotice?.kicker ?? culqiState?.kicker ?? s.kicker;
+  const title = manualNotice?.title ?? culqiState?.title ?? s.title;
+  const text = manualNotice?.text ?? culqiState?.text ?? s.text;
+  const coordination = manualNotice?.coordination ?? culqiState?.coordination ?? s.coordination;
 
   useEffect(() => {
-    trackBagelitoEvent("Reservation Confirmation Page Viewed");
-  }, []);
+    // A confirmation page view is not a completed-purchase event.
+    trackBagelitoEvent("Checkout Confirmation Page Viewed", { type: isCulqiFlow ? "culqi" : "other" });
+  }, [isCulqiFlow]);
+
+  useEffect(() => {
+    if (!isCulqiFlow) return;
+    let proof;
+    try { proof = readSuccessProof(window.sessionStorage, order); }
+    catch { proof = null; }
+    if (!proof) { setServerStatus("unverified"); return; }
+    let active = true;
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const status = (async () => {
+      const response = await fetch("/api/payments/culqi/status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ checkoutSessionId: proof.checkoutSessionId, orderCode: proof.orderCode }),
+        cache: "no-store",
+        signal: controller.signal,
+      });
+      if (!response.ok) return null;
+      return response.json();
+    })();
+    const deadline = new Promise<never>((_, reject) => {
+      timeout = setTimeout(() => {
+        controller.abort();
+        reject(new Error("Payment status timeout"));
+      }, 10_000);
+    });
+    void Promise.race([status, deadline]).then(result => {
+      if (!active) return;
+      const checked = result && typeof result === "object"
+        && result.orderCode === proof.orderCode
+        ? checkServerPaymentStatus(result)
+        : "unverified";
+      setServerStatus(checked);
+      if (checked === "paid") {
+        trackBagelitoEvent("Verified Culqi Payment Confirmation Viewed");
+      }
+    }).catch(() => {
+      if (active) setServerStatus("unverified");
+    }).finally(() => clearTimeout(timeout));
+    return () => { active = false; controller.abort(); clearTimeout(timeout); };
+  }, [order, isCulqiFlow]);
 
   return (
     <section className="success-card">
@@ -100,17 +192,18 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
       <h1>{title}</h1>
       <p>{text}</p>
       <div className="success-summary">
-        {!unverified && !isDemo ? <div><span>{s.labels.orderCode}</span><strong>{order}</strong></div> : null}
-        {!unverified ? <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div> : null}
-        {!unverified && amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
+        {!isDemo && !isUnverifiedManual && (isCulqiFlow && serverStatus === "paid")
+          ? <div><span>{s.labels.orderCode}</span><strong>{order}</strong></div> : null}
+        {!isUnverifiedManual ? <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div> : null}
+        {isDemo && amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
         <div><span>{s.labels.status}</span><strong>{isDemo ? paymentCopy.demo.status : kicker}</strong></div>
       </div>
       <div className="next-step">
-        <Clock3 size={20} />
+        {serverStatus === "paid" && isCulqiFlow ? <CheckCircle2 size={20} /> : <Clock3 size={20} />}
         {s.nextStep} <strong>{coordination}</strong>
       </div>
       <div className="success-actions">
-        {unverified ? <Link className="pill-button outline" href={/^BAG-[A-Z0-9_-]{1,36}$/.test(order) ? `/track?order=${encodeURIComponent(order)}` : "/track"}>{s.trackOrder}</Link> : null}
+        {!isDemo ? <Link className="pill-button outline" href={/^BAG-[A-Z0-9_-]{1,36}$/.test(order) ? `/track?order=${encodeURIComponent(order)}` : "/track"} onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "track" })}>{s.trackOrder}</Link> : null}
         <a className="pill-button pink" href={getWhatsAppHref()} target="_blank" rel="noreferrer" onClick={() => trackBagelitoEvent("WhatsApp Click", { location: "success", target: "coordination" })}><MessageCircle size={18} /> {s.message}</a>
       </div>
       <Link className="mini-link" href="/" onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "home" })}>{s.backHome}</Link>
