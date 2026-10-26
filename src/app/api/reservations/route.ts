@@ -8,6 +8,12 @@ import { createReservation } from "@/lib/reservations/service";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  // Merchant review may show an open batch, but cannot reserve inventory
+  // or accept payment proofs before the provider approves the commerce.
+  if (process.env.BAGELITO_MERCHANT_REVIEW_ONLY === "true") {
+    return NextResponse.json({ ok: false, error: "Checkout is a preview; reservations and payments are not enabled." },
+      { status: 503, headers: { "Cache-Control": "no-store" } });
+  }
   const startedAt = Date.now();
   const requestId = getRequestId(request);
 

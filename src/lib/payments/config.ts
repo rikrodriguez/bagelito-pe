@@ -32,6 +32,7 @@ export function getPaymentConfig(): PaymentConfig {
 
   return {
     enabled: provider === "culqi"
+      && process.env.BAGELITO_MERCHANT_REVIEW_ONLY !== "true"
       && process.env.CULQI_ENABLED === "true"
       && Boolean(publicKey)
       && Boolean(rsaId)

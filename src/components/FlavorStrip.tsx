@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { flavors } from "@/data/flavors";
 import { packs } from "@/data/packs";
+import { flavorImages } from "@/data/flavor-images";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { flavorCopy } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
@@ -35,18 +36,6 @@ const flavorDescriptions = {
   },
 } as const;
 
-const flavorImages: Record<string, string> = {
-  "jalapeno-cheddar": "/images/bagel-jalapeno-cheddar.webp",
-  cheddar: "/images/bagel-cheddar.webp",
-  sesame: "/images/bagel-sesame.webp",
-  "everything-bagel": "/images/bagel-everything.webp",
-  "cinnamon-raisin": "/images/bagel-cinnamon-raisin.webp",
-  blueberry: "/images/bagel-blueberry.webp",
-  plain: "/images/bagel-plain.webp",
-  "classic-onion": "/images/bagel-classic-onion.webp",
-  "rainbow-custom-colors": "/images/bagel-rainbow.webp",
-  snickerdoodle: "/images/bagel-snickerdoodle.webp",
-};
 const singlePackPrice: number = (() => {
   const pack = packs.find((item) => item.slug === "6-single");
   if (!pack) throw new Error("Bagelito single-flavor pack is not configured.");
