@@ -1,8 +1,11 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { flavors } from "@/data/flavors";
+import { packs } from "@/data/packs";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { flavorCopy } from "@/lib/i18n";
-import { RollingBagel, type BagelVariant } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
 
 const flavorDescriptions = {
@@ -32,21 +35,70 @@ const flavorDescriptions = {
   },
 } as const;
 
+const flavorImages: Record<string, string> = {
+  "jalapeno-cheddar": "/images/bagel-jalapeno-cheddar.webp",
+  cheddar: "/images/bagel-cheddar.webp",
+  sesame: "/images/bagel-sesame.webp",
+  "everything-bagel": "/images/bagel-everything.webp",
+  "cinnamon-raisin": "/images/bagel-cinnamon-raisin.webp",
+  blueberry: "/images/bagel-blueberry.webp",
+  plain: "/images/bagel-plain.webp",
+  "classic-onion": "/images/bagel-classic-onion.webp",
+  "rainbow-custom-colors": "/images/bagel-rainbow.webp",
+  snickerdoodle: "/images/bagel-snickerdoodle.webp",
+};
+const singlePackPrice: number = (() => {
+  const pack = packs.find((item) => item.slug === "6-single");
+  if (!pack) throw new Error("Bagelito single-flavor pack is not configured.");
+  return pack.amount;
+})();
+
 export function FlavorStrip() {
   const { locale, copy } = useLanguage();
+  const { accepting } = useBatchAvailability();
+  const destination = accepting ? "/checkout?pack=6-single" : "/waitlist?pack=6-single";
 
   return (
     <section id="flavors" className="flavor-section section-pad">
       <h2>{copy.flavors.title}</h2>
       <p className="section-intro">{copy.flavors.intro}</p>
+      <p className="flavor-catalog-note">
+        {locale === "es"
+          ? "Elige tu sabor al comprar un pack. Pedido mínimo: 6 bagels. Los precios del pack y delivery se muestran antes de pagar."
+          : "Choose your flavor when ordering a pack. Minimum: 6 bagels. Full pack and delivery prices are shown before payment."}
+      </p>
       <div className="flavor-strip">
-        {flavors.map((flavor) => (
-          <article className="flavor-mini" key={flavor.slug}>
-            <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorCopy[locale][flavor.slug] ?? flavor.name} />
-            <h3>{flavorCopy[locale][flavor.slug] ?? flavor.name}</h3>
-            <p>{flavorDescriptions[locale][flavor.slug as keyof typeof flavorDescriptions.en]}</p>
-          </article>
-        ))}
+        {flavors.map((flavor) => {
+          const name = flavorCopy[locale][flavor.slug] ?? flavor.name;
+          return (
+            <article className="flavor-mini flavor-product-card" key={flavor.slug}>
+              <div className="flavor-product-photo">
+                <Image
+                  src={flavorImages[flavor.slug]}
+                  alt={locale === "es" ? `Bagel artesanal sabor ${name} de Bagelito` : `Bagelito handmade ${name} bagel`}
+                  width={320}
+                  height={320}
+                  sizes="(max-width: 650px) 43vw, (max-width: 1050px) 28vw, 200px"
+                  quality={75}
+                  loading="lazy"
+                />
+              </div>
+              <h3>{name}</h3>
+              <p>{flavorDescriptions[locale][flavor.slug as keyof typeof flavorDescriptions.en]}</p>
+              <strong className="flavor-product-price">
+                {locale === "es" ? "Pack de 6 desde" : "6-pack from"} S/{singlePackPrice}
+              </strong>
+              <Link className="flavor-product-cta" href={destination} aria-label={
+                locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
+                  : `${accepting ? "Choose pack" : "Notify me when open"}: ${name}`
+              }>
+                {accepting
+                  ? locale === "es" ? "Elegir pack" : "Choose pack"
+                  : locale === "es" ? "Avisarme" : "Notify me"}
+              </Link>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
