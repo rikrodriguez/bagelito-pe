@@ -6,7 +6,7 @@ const QA_DB = "https://qaahskendqdkynwtylho.supabase.co";
 const CULQI = "https://api.culqi.com";
 const CODE = "BAG-000013";
 const EVENT_ID = /^evt_test_[A-Za-z0-9]{16}$/;
-const MESSAGE = "qa: replay verified Culqi webhook in sandbox";
+const MESSAGE = "qa: verify Culqi event financial bindings";
 
 export function allowedQA(env) {
   try {
@@ -79,7 +79,7 @@ function paymentStateOK(order) {
 
 export async function runReplay({env,fetcher,post}) {
   const result={allowed:false,qaOrderValidated:false,eventListed:false,providerEventVerified:false,
-    financialsMatched:false,firstHttp:null,firstOK:false,secondHttp:null,duplicate:false,
+    financialsMatched:false,detailEvidence:null,firstHttp:null,firstOK:false,secondHttp:null,duplicate:false,
     attemptedChargePOST:false,attemptedWebhookPOST:false,verdict:"skipped"};
   if(!allowedQA(env))return result;
   result.allowed=true;
@@ -95,8 +95,15 @@ export async function runReplay({env,fetcher,post}) {
   if(!record(events)||!Array.isArray(events.data)||events.data.length>100) {
     result.verdict="events_unavailable";return result;
   }
-  const candidates=events.data.filter(e=>record(e)&&EVENT_ID.test(e.id)&&e.type==="charge.creation.succeeded"
-    &&financialMatches(e,order));
+  // Provider LIST is only a discovery surface and may omit financial fields.
+  // Select solely by the persisted charge ID and order metadata; the detail
+  // GET below must independently establish EVERY financial binding.
+  const candidates=events.data.filter(e=>{
+    const listed=record(e)?resource(e.data):null;
+    return record(e)&&EVENT_ID.test(e.id)&&e.type==="charge.creation.succeeded"
+      &&listed?.object==="charge"&&listed.id===order.payment_charge_id
+      &&record(listed.metadata)&&listed.metadata.bagelito_order_code===CODE;
+  });
   if(!candidates.length){result.verdict="no_matching_event";return result;}
   result.eventListed=true;
   // Provider list items never authorize a DB mutation. Re-fetch the exact
@@ -108,6 +115,19 @@ export async function runReplay({env,fetcher,post}) {
     result.verdict="provider_identity_failed";return result;
   }
   result.providerEventVerified=true;
+  const verifiedResource=resource(detail.data);
+  result.detailEvidence={
+    object:verifiedResource?.object==="charge",
+    chargeId:verifiedResource?.id===order.payment_charge_id,
+    amount:Number.isSafeInteger(verifiedResource?.amount)&&verifiedResource.amount===order.payment_amount_minor,
+    currency:(verifiedResource?.currency_code??verifiedResource?.currency)==="PEN",
+    metadata:record(verifiedResource?.metadata)&&verifiedResource.metadata.bagelito_order_code===CODE,
+    source:record(verifiedResource?.source)&&verifiedResource.source.id===order.payment_charge_source_id,
+    dispute:verifiedResource?.dispute===true,
+    refund:typeof verifiedResource?.amount_refunded==="number"&&verifiedResource.amount_refunded!==0,
+    currentAmount:typeof verifiedResource?.current_amount==="number"
+      ? verifiedResource.current_amount===order.payment_amount_minor : null,
+  };
   if(!financialMatches(detail,order)){result.verdict="financial_binding_failed";return result;}
   result.financialsMatched=true;
   // This is the exact already-compiled App Router webhook POST. It only reads

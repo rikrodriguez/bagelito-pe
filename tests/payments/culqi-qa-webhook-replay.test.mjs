@@ -3,7 +3,7 @@ import {allowedQA,runReplay} from "../../scripts/culqi-qa-webhook-replay.mjs";
 const host="bagelito-pe-git-cod-d9825d-ricardo-rodriguezs-projects-487b7b64.vercel.app";
 const env={VERCEL:"1",VERCEL_ENV:"preview",VERCEL_PROJECT_ID:"prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
  VERCEL_GIT_COMMIT_REF:"codex/culqi-payment-split-20261021",
- VERCEL_GIT_COMMIT_MESSAGE:"qa: replay verified Culqi webhook in sandbox",
+ VERCEL_GIT_COMMIT_MESSAGE:"qa: verify Culqi event financial bindings",
  VERCEL_GIT_REPO_OWNER:"rikrodriguez",VERCEL_GIT_REPO_SLUG:"bagelito-pe",VERCEL_BRANCH_URL:host,
  NEXT_PUBLIC_SITE_URL:"https://"+host,NEXT_PUBLIC_SUPABASE_URL:"https://qaahskendqdkynwtylho.supabase.co",
  PAYMENT_PROVIDER:"culqi",CULQI_MODE:"sandbox",CULQI_ENABLED:"true",CULQI_LIVE_APPROVED:"false",
@@ -49,7 +49,8 @@ test("wrong source, amount or currency cannot reach webhook or change order",asy
  for(const dataDelta of [{amount:5801},{currency_code:"USD"},{source:{id:"tkn_test_wrong_wrong123"}}]){
   const f=fixture({event:{...evt,data:{...data,...dataDelta}}});
   const r=await runReplay({env,fetcher:f.fetcher,post:f.post});
-  assert.equal(r.verdict,"no_matching_event");assert.equal(f.getCalls(),0);
+  assert.equal(r.verdict,"financial_binding_failed");assert.equal(f.getCalls(),0);
+  assert.equal(r.providerEventVerified,true);
  }
 });
 test("missing QA paid order blocks event GET and POST",async()=>{
