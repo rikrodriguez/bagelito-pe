@@ -5,11 +5,12 @@ import {fileURLToPath} from "node:url";
 import path from "node:path";
 const root=fileURLToPath(new URL("../",import.meta.url));
 const src=await readFile(path.join(root,"src/components/FlavorStrip.tsx"),"utf8");
+const imagesSrc=await readFile(path.join(root,"src/data/flavor-images.ts"),"utf8");
 const flavors=await readFile(path.join(root,"src/data/flavors.ts"),"utf8");
 const packs=await readFile(path.join(root,"src/data/packs.ts"),"utf8");
 
 test("catalog shows 10 distinct real local bagel photos, not invented products",async()=>{
- const mapped=[...src.matchAll(/(?:^\s*|,?\s+)(?:"([^"]+)"|([a-z]+)):\s*"(\/images\/bagel-[\w-]+\.webp)"/gm)];
+ const mapped=[...imagesSrc.matchAll(/(?:^\s*|,?\s+)(?:"([^"]+)"|([a-z]+)):\s*"(\/images\/bagel-[\w-]+\.webp)"/gm)];
  assert.ok(mapped.length>=10,"Culqi requires >=5 photographed products");
  const paths=mapped.map(m=>m[3]);
  assert.equal(new Set(paths).size,paths.length);
@@ -31,6 +32,6 @@ test("purchase CTA respects accepting status and does not take payment for a clo
 test("all catalog flavor keys have descriptive copy and canonical names",()=>{
  const keys=[...flavors.matchAll(/slug:\s*"([\w-]+)"/g)].map(m=>m[1]);
  assert.equal(keys.length,10);
- for(const key of keys)assert.ok(src.includes('"'+key+'":')||new RegExp("\\b"+key+":").test(src),key);
+ for(const key of keys)assert.ok(imagesSrc.includes('"'+key+'":')||new RegExp("\\b"+key+":").test(imagesSrc),key);
  assert.match(src,/flavorDescriptions\[locale\]/);
 });

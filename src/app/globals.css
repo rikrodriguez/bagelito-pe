@@ -8171,3 +8171,45 @@ html[data-admin-nav-collapsed="1"] .admin-workspace {
   .flavor-product-card p { font-size: .75rem; }
   .flavor-product-price { font-size: .78rem; }
 }
+
+
+/* Culqi approval: visible end-to-end checkout in strictly nonpayment review mode. */
+.header-checkout-link { color: var(--blue); border: 1px solid rgba(16,64,128,.18); border-radius: 12px; padding: 11px 14px; font-size: .82rem; font-weight: 900; text-decoration: none; background: white; }
+.header-checkout-link:hover { border-color: var(--blue); background: #eef5ff; }
+.header-checkout-link:focus-visible { outline: 3px solid #f2b744; outline-offset: 2px; }
+.flavor-select-card .flavor-select-photo {
+  display: block;
+  width: min(100%, 172px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 13px;
+  background: #f8f7f2;
+  margin: 0 auto;
+}
+.checkout-review-banner, .culqi-review-only-note {
+  display: grid;
+  gap: 5px;
+  padding: 15px 18px;
+  border: 1px solid rgba(16,74,150,.24);
+  border-radius: 14px;
+  background: #f1f7ff;
+  color: var(--navy);
+  line-height: 1.5;
+}
+.checkout-review-banner { margin: 16px 0 24px; }
+.checkout-review-banner strong, .culqi-review-only-note strong { color: var(--blue); font-size: .91rem; }
+.checkout-review-banner span, .culqi-review-only-note span { font-size: .85rem; }
+.culqi-review-only-note { margin: 0 0 16px; background: #f6faff; }
+.culqi-demo-illustration { display: grid; gap: 12px; margin-top: 12px; }
+.culqi-demo-illustration .culqi-preview-field strong { color: #64748b; }
+.checkout-terms-acceptance { margin: 16px 0; padding: 16px 18px; background: #fff; border: 1px solid rgba(16,74,150,.24); border-radius: 14px; }
+.checkout-terms-acceptance label { display: flex; gap: 12px; align-items: flex-start; font-weight: 750; line-height: 1.5; cursor: pointer; }
+.checkout-terms-acceptance input { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--blue); }
+.checkout-terms-acceptance a { color: var(--blue); text-decoration: underline; }
+.checkout-terms-acceptance small { display: block; padding: 8px 0 0 32px; color: #586c80; }
+@media (max-width: 650px) {
+  .header-checkout-link { padding: 10px; font-size: .73rem; }
+  .flavor-select-card .flavor-select-photo { width: min(100%, 140px); }
+  .checkout-review-banner { margin: 14px 0; padding: 12px; }
+}

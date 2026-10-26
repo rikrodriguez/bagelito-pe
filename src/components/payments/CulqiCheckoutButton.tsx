@@ -459,7 +459,13 @@ export function CulqiCheckoutButton({
 
       {showDemo ? (
         <form className="culqi-preview culqi-preview-form" onSubmit={handleDemoSubmit}>
-          <div className="culqi-preview-tabs" role="tablist" aria-label={locale === "es" ? "Método de pago" : "Payment method"}>
+          <div className="culqi-review-only-note" role="status">
+            <strong>{locale === "es" ? "MODO DEMOSTRACIÓN — No se realizan cobros" : "DEMONSTRATION — No charges processed"}</strong>
+            <span>{locale === "es"
+              ? "Esta es una vista previa del checkout para la revisión comercial. No introduzcas información bancaria ni de tarjeta."
+              : "This is a checkout preview for merchant review. Do not enter any card or bank details."}</span>
+          </div>
+          <div className="culqi-preview-tabs" role="tablist" aria-label={locale === "es" ? "Métodos de pago ilustrativos" : "Illustrative payment methods"}>
             <button className={demoPaymentMethod === "card" ? "active" : ""} type="button" role="tab" aria-selected={demoPaymentMethod === "card"} onClick={() => setDemoPaymentMethod("card")}>
               <CreditCard size={16} /> {copy.card}
             </button>
@@ -471,59 +477,39 @@ export function CulqiCheckoutButton({
             </button>
           </div>
 
-          <fieldset className="culqi-demo-fieldset" disabled={disabled || state === "confirming"}>
-            {demoPaymentMethod === "card" ? (
-              <>
-                <label className="culqi-preview-field wide">
-                  <span>{copy.cardNumber}</span>
-                  <input autoComplete="off" inputMode="numeric" name="demo-card-number" pattern="[0-9 ]{13,23}" placeholder="0000 0000 0000 0000" required />
-                  <small>VISA &nbsp; MC &nbsp; AMEX &nbsp; DINERS</small>
-                </label>
-                <div className="culqi-preview-fields">
-                  <label className="culqi-preview-field">
-                    <span>{copy.expires}</span>
-                    <input autoComplete="off" inputMode="numeric" name="demo-expiry" pattern="(0[1-9]|1[0-2])/[0-9]{2}" placeholder="MM/AA" required />
-                  </label>
-                  <label className="culqi-preview-field">
-                    <span>{copy.cvv}</span>
-                    <input autoComplete="off" inputMode="numeric" name="demo-cvv" pattern="[0-9]{3,4}" placeholder="000" required />
-                  </label>
-                </div>
-              </>
-            ) : demoPaymentMethod === "mobile" ? (
+          {demoPaymentMethod === "card" ? (
+            <div className="culqi-demo-illustration" aria-label={locale === "es" ? "Representación visual de un formulario de tarjeta" : "Illustration of card fields"}>
+              <div className="culqi-preview-field wide"><span>{copy.cardNumber}</span><strong>•••• •••• •••• ••••</strong><small>VISA · MC · AMEX · DINERS</small></div>
               <div className="culqi-preview-fields">
-                <label className="culqi-preview-field">
-                  <span>{copy.mobilePhone}</span>
-                  <input autoComplete="off" inputMode="tel" name="demo-mobile" pattern="[0-9 +]{9,16}" placeholder="999 999 999" required />
-                </label>
-                <label className="culqi-preview-field">
-                  <span>{copy.mobileCode}</span>
-                  <input autoComplete="off" inputMode="numeric" name="demo-approval-code" pattern="[0-9]{6}" placeholder="000000" required />
-                </label>
+                <div className="culqi-preview-field"><span>{copy.expires}</span><strong>•• / ••</strong></div>
+                <div className="culqi-preview-field"><span>{copy.cvv}</span><strong>•••</strong></div>
               </div>
-            ) : (
-              <div className="culqi-demo-options" role="radiogroup" aria-label={copy.walletsMore}>
-                {["Apple Pay", "Google Pay", "PagoEfectivo", "Cuotéalo BCP"].map((method, index) => (
-                  <label className="culqi-demo-option" key={method}>
-                    <input defaultChecked={index === 0} name="demo-wallet" type="radio" value={method} />
-                    <span>{method}</span>
-                  </label>
-                ))}
-              </div>
-            )}
-
-            <label className="culqi-preview-field wide">
-              <span>{copy.email}</span>
-              <input autoComplete="off" defaultValue={customerEmail} name="demo-email" placeholder="nombre@email.com" required type="email" />
-            </label>
-            <p className="culqi-checkout-terms-note">{copy.checkoutTerms} <a href="/legal" target="_blank" rel="noreferrer">{copy.checkoutTermsLink}</a></p>
-            <button className="culqi-preview-pay" type="submit">
-              {state === "confirming" ? copy.confirming : copy.pay}
-            </button>
-          </fieldset>
-
+            </div>
+          ) : demoPaymentMethod === "mobile" ? (
+            <div className="culqi-demo-illustration">
+              <div className="culqi-preview-field wide"><span>{copy.mobilePhone}</span><strong>••• ••• •••</strong></div>
+              <div className="culqi-preview-field wide"><span>{copy.mobileCode}</span><strong>••••••</strong></div>
+            </div>
+          ) : (
+            <div className="culqi-demo-options">
+              {["Apple Pay", "Google Pay", "PagoEfectivo"].map((method) => (
+                <span className="culqi-demo-option" key={method}>{method}</span>
+              ))}
+            </div>
+          )}
+          <p className="culqi-checkout-terms-note">
+            {locale === "es"
+              ? "El pago real se procesará únicamente en el checkout aprobado por Culqi."
+              : "Real payments will only be processed through Culqi's approved checkout."}
+            {" "}<a href="/legal" target="_blank" rel="noreferrer">{copy.checkoutTermsLink}</a>
+          </p>
+          <button className="culqi-preview-pay" type="submit" disabled={disabled || state === "confirming"}>
+            {state === "confirming"
+              ? locale === "es" ? "Abriendo demostración..." : "Opening demonstration..."
+              : locale === "es" ? `Simular checkout de S/${amount} (sin pagar)` : `Preview S/${amount} checkout (no payment)`}
+          </button>
           <div className="culqi-availability-note" role="status">
-            <strong>{disabled ? copy.terms : copy.demoStatus}</strong>
+            <strong>{locale === "es" ? "No se registrarán pedidos ni cargos." : "No orders or charges will be recorded."}</strong>
             {disabled ? <span>{copy.terms}</span> : null}
           </div>
         </form>

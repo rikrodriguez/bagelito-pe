@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BadgePercent, BookOpenCheck, Check, CreditCard, Gift, MessageCircle, Minus, Plus, ShieldCheck, Truck } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
+import { flavorImages } from "@/data/flavor-images";
 import type { Pack, PackSlug } from "@/data/packs";
 import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
 import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
@@ -81,10 +82,8 @@ export function ReservationFlow({
   const [singleFlavor, setSingleFlavor] = useState("");
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
-  // The legal copy is available from the checkout summary. Keeping this
-  // internal flag true lets the payment control render without a duplicate
-  // terms card in the final step.
-  const termsAccepted = true;
+  // Explicit purchase consent is separate from the optional marketing consent.
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
   const hasMountedRef = useRef(false);
@@ -604,6 +603,14 @@ export function ReservationFlow({
         )}
       </div>
 
+      {!paymentConfig.enabled ? (
+        <div className="checkout-review-banner" role="status">
+          <strong>{locale === "es" ? "Vista de revisión — Sin cobros reales" : "Review preview — No real payments"}</strong>
+          <span>{locale === "es"
+            ? "Puedes elegir packs, sabores, delivery y revisar el total. El pago se habilitará cuando Culqi apruebe el comercio. No introduzcas datos reales de tarjeta."
+            : "Choose packs, flavors, delivery, and review the total. Payments activate only after merchant approval. Do not enter real card information."}</span>
+        </div>
+      ) : null}
       <ConversionTrustStrip compact />
 
       <div className="reserve-progress">
@@ -685,7 +692,15 @@ export function ReservationFlow({
               const flavorLabel = flavorCopy[locale][flavor.slug] ?? flavor.name;
               return (
                 <article className={"flavor-select-card " + (isSingleSelected ? "selected" : "")} key={flavor.slug}>
-                  <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorLabel} />
+                  <Image
+                    src={flavorImages[flavor.slug]}
+                    alt={locale === "es" ? `Bagel artesanal sabor ${flavorLabel} de Bagelito` : `Bagelito ${flavorLabel} flavor bagel`}
+                    width={256}
+                    height={256}
+                    sizes="(max-width: 760px) 42vw, (max-width: 1120px) 26vw, 190px"
+                    className="flavor-select-photo"
+                    loading="lazy"
+                  />
                   <h3>{flavorLabel}</h3>
                   {selectedPack.packType === "mixed" ? (
                     <div className="quantity-control">
@@ -824,12 +839,30 @@ export function ReservationFlow({
               <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
               <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
             </div>
+            <div className="checkout-terms-acceptance">
+              <label htmlFor="bagelito-purchase-terms">
+                <input
+                  id="bagelito-purchase-terms"
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(event) => setTermsAccepted(event.target.checked)}
+                />
+                <span>
+                  {locale === "es" ? "He leído y acepto los " : "I have read and accept the "}
+                  <Link href="/legal" target="_blank" rel="noopener noreferrer">
+                    {locale === "es" ? "términos de compra y política de privacidad" : "purchase terms and privacy policy"}
+                  </Link>
+                  {" "}({locale === "es" ? "revisados el" : "updated"} 26/10/2026).
+                </span>
+              </label>
+              {!termsAccepted ? <small>{locale === "es" ? "Acepta los términos para continuar con la demostración." : "Accept the terms to continue the demonstration."}</small> : null}
+            </div>
             <CulqiCheckoutButton
               key={`${selectedPack.slug}-${extraPackAdded ? "extra" : "single"}`}
               amount={totalAmount}
               config={paymentConfig}
               customerEmail={details.email}
-              disabled={false}
+              disabled={!termsAccepted}
               locale={locale}
               onAlternativePayment={submitCulqiAlternative}
               onDemoComplete={completeDemoCheckout}
