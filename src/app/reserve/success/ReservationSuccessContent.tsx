@@ -68,19 +68,31 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
         title: "We are confirming your reservation.",
       },
     };
-  const culqiState = payment === "demo" ? paymentCopy.demo : payment === "paid" ? paymentCopy.paid : payment === "pending" ? paymentCopy.pending : null;
+  // No provider payment on public main. Do not render a positive status based
+  // on the URL even for payment=paid or payment=pending.
+  const culqiState = payment === "demo" ? paymentCopy.demo : null;
   const isDemo = payment === "demo";
-  const kicker = culqiState?.kicker ?? s.kicker;
-  const title = culqiState?.title ?? s.title;
-  const text = culqiState?.text ?? s.text;
-  const coordination = culqiState?.coordination ?? s.coordination;
+  // Main does NOT have a verified checkout receipt endpoint. A URL alone
+  // must never claim that a manual order was created or paid.
+  const unverified = !isDemo;
+  const kicker = unverified
+    ? locale === "es" ? "Estado no verificado" : "Unverified order status"
+    : culqiState?.kicker ?? s.kicker;
+  const title = unverified
+    ? locale === "es" ? "Consulta el estado de tu pedido" : "Check your order status"
+    : culqiState?.title ?? s.title;
+  const text = unverified
+    ? locale === "es"
+      ? "Este enlace no confirma una reserva ni un pago. Verifica tu número de pedido junto con el email o WhatsApp utilizado al reservar."
+      : "This link does not confirm an order or payment. Verify your order number with the email or WhatsApp used at checkout."
+    : culqiState?.text ?? s.text;
+  const coordination = unverified
+    ? locale === "es" ? "Realiza una consulta segura o escríbenos para recibir ayuda." : "Use protected tracking or contact support."
+    : culqiState?.coordination ?? s.coordination;
 
   useEffect(() => {
-    trackBagelitoEvent("Reservation Success Viewed", {
-      pack: packSlug ?? "unknown",
-      amount: amount ? Number(amount) : undefined,
-    });
-  }, [amount, packSlug]);
+    trackBagelitoEvent("Reservation Confirmation Page Viewed");
+  }, []);
 
   return (
     <section className="success-card">
@@ -88,17 +100,17 @@ export function ReservationSuccessContent({ order, pack, packSlug, amount, payme
       <h1>{title}</h1>
       <p>{text}</p>
       <div className="success-summary">
-        {!isDemo ? <div><span>{s.labels.orderCode}</span><strong>{order}</strong></div> : null}
-        <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div>
-        {amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
+        {!unverified && !isDemo ? <div><span>{s.labels.orderCode}</span><strong>{order}</strong></div> : null}
+        {!unverified ? <div><span>{s.labels.pack}</span><strong>{displayPack}</strong></div> : null}
+        {!unverified && amount ? <div><span>{s.labels.totalAmount}</span><strong>S/{amount}</strong></div> : null}
         <div><span>{s.labels.status}</span><strong>{isDemo ? paymentCopy.demo.status : kicker}</strong></div>
       </div>
       <div className="next-step">
-        {payment === "paid" ? <CheckCircle2 size={20} /> : <Clock3 size={20} />}
+        {!unverified && payment === "paid" ? <CheckCircle2 size={20} /> : <Clock3 size={20} />}
         {s.nextStep} <strong>{coordination}</strong>
       </div>
       <div className="success-actions">
-        {!isDemo ? <Link className="pill-button outline" href={`/track?order=${encodeURIComponent(order)}`} onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "track" })}>{s.trackOrder}</Link> : null}
+        {unverified ? <Link className="pill-button outline" href={/^BAG-[A-Z0-9_-]{1,36}$/.test(order) ? `/track?order=${encodeURIComponent(order)}` : "/track"}>{s.trackOrder}</Link> : null}
         <a className="pill-button pink" href={getWhatsAppHref()} target="_blank" rel="noreferrer" onClick={() => trackBagelitoEvent("WhatsApp Click", { location: "success", target: "coordination" })}><MessageCircle size={18} /> {s.message}</a>
       </div>
       <Link className="mini-link" href="/" onClick={() => trackBagelitoEvent("CTA Click", { location: "success", target: "home" })}>{s.backHome}</Link>
