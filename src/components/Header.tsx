@@ -17,7 +17,7 @@ export function Header() {
   return (
     <header className={"site-header" + (merchantReviewOnly ? " merchant-review-header" : "")}>
       <Link href="/" className="logo-link" aria-label={copy.header.homeLabel}>
-        <Image src="/images/bagelito-logo.svg" alt="Bagelito Classic Gringo Bagels" width={757} height={253} priority />
+        <Image src="/images/bagelito-logo.svg" alt="Bagelito Classic Gringo Bagels" width={671} height={178} priority />
       </Link>
       <nav className="store-header-navigation" aria-label={locale === "es" ? "Navegación de tienda" : "Store navigation"}>
         <Link href="/#mostrador">{locale === "es" ? "Sabores" : "Flavors"}</Link>
