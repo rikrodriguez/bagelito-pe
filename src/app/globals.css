@@ -8094,3 +8094,22 @@ html[data-admin-nav-collapsed="1"] .admin-workspace {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Checkout: affirmative purchase consent; independent from marketing opt-in. */
+.checkout-terms-acceptance {
+  padding: 16px 18px;
+  margin: 17px 0 7px;
+  border: 1px solid rgba(27, 69, 122, .18);
+  background: #f7faff;
+  border-radius: 15px;
+  color: var(--navy);
+  font-size: .88rem;
+  line-height: 1.5;
+}
+.checkout-terms-acceptance label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-weight: 650; }
+.checkout-terms-acceptance input { flex: 0 0 auto; margin: 4px 0 0; width: 18px; height: 18px; accent-color: var(--blue); cursor: pointer; }
+.checkout-terms-acceptance input:disabled { cursor: not-allowed; }
+.checkout-terms-acceptance a { color: var(--blue); font-weight: 900; text-decoration: underline; text-underline-offset: 2px; }
+.checkout-terms-acceptance small { display: block; padding: 8px 0 0 30px; color: #5f6d7e; font-size: .78rem; }
+.checkout-terms-acceptance:focus-within { outline: 2px solid rgba(45, 97, 180, .2); outline-offset: 2px; }
