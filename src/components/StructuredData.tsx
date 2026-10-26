@@ -25,7 +25,7 @@ const structuredData = {
       legalName: siteLegalName,
       url: siteUrl,
       description: siteDescription,
-      slogan: "The monthly bagel drop in Lima",
+      slogan: "Classic Gringo Bagels",
       image: absoluteUrl(siteOgImage),
       logo: absoluteUrl("/images/bagelito-logo.svg"),
       telephone: siteWhatsAppPhone,
@@ -40,11 +40,13 @@ const structuredData = {
         addressCountry: "PE",
       },
       sameAs: [siteInstagramUrl],
-      potentialAction: {
-        "@type": "OrderAction",
-        name: "Reserve a Bagelito batch",
-        target: absoluteUrl("/reserve"),
-      },
+      ...(process.env.BAGELITO_MERCHANT_REVIEW_ONLY === "true" ? {} : {
+        potentialAction: {
+          "@type": "OrderAction",
+          name: "Choose a Bagelito box",
+          target: absoluteUrl("/checkout"),
+        },
+      }),
     },
     {
       "@type": "WebSite",
