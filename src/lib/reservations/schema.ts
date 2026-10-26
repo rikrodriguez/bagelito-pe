@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { getFlavorBySlug, getPackBySlug, isPackSlug } from "@/lib/catalog";
 import { districtOptions } from "@/lib/delivery-pricing";
+import { CHECKOUT_LEGAL_VERSION } from "@/lib/legal-terms";
 
 export { districtOptions };
 
@@ -77,6 +78,8 @@ export const culqiReservationPayloadSchema = z.object({
   checkoutSessionId: z.string().uuid("Invalid checkout session."),
   extraPack: z.boolean().default(false),
   termsAccepted: z.boolean().refine((value) => value, "Monthly batch terms must be accepted."),
+  // A different/stale legal version must not be accepted by a new checkout.
+  termsVersion: z.literal(CHECKOUT_LEGAL_VERSION),
 }).superRefine(validatePackItems);
 
 export type ReservationPayload = z.infer<typeof reservationPayloadSchema>;
