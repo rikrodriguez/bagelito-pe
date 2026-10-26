@@ -272,3 +272,12 @@ body:has(.bagelito-store) .site-footer { background: #f9fafc; border-color: #e4e
     animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important;
   }
 }
+
+/* Shared navigation now includes entrance / counter / box / direct checkout. */
+.site-header:has(.store-header-navigation) { display: flex; align-items: center; justify-content: space-between; }
+.site-header .store-header-navigation { display: flex; align-items: center; gap: clamp(12px,2.5vw,35px); margin-inline: auto; }
+.site-header .store-header-navigation a { white-space: nowrap; font-weight: 800; font-size: 13px; color: #154b98; }
+.site-header .store-header-navigation a:hover { color: #dc776b; }
+@media (max-width: 760px) {
+  .site-header .store-header-navigation { display: none; }
+}
