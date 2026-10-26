@@ -1,0 +1,128 @@
+{
+  "project_ref": "qaahskendqdkynwtylho",
+  "read_only": true,
+  "payment_rpc_executed": false,
+  "rpc": {
+    "exists": true,
+    "source_md5": "78f7976e1f3e592eca179d147506fc6f",
+    "returns_set": false,
+    "anon_execute": false,
+    "returns_jsonb": true,
+    "overload_count": 1,
+    "public_execute": false,
+    "source_matches": true,
+    "service_execute": true,
+    "language_plpgsql": true,
+    "security_definer": true,
+    "search_path_matches": true,
+    "argument_names_match": true,
+    "service_schema_usage": true,
+    "authenticated_execute": false
+  },
+  "schema": {
+    "tables": [
+      {
+        "rls": true,
+        "name": "batches",
+        "exists": true,
+        "force_rls": false,
+        "owner_insert": true,
+        "owner_select": true,
+        "owner_update": true,
+        "missing_columns": [],
+        "owner_rls_bypass_or_ownership": true
+      },
+      {
+        "rls": true,
+        "name": "order_status_history",
+        "exists": true,
+        "force_rls": false,
+        "owner_insert": true,
+        "owner_select": true,
+        "owner_update": true,
+        "missing_columns": [],
+        "owner_rls_bypass_or_ownership": true
+      },
+      {
+        "rls": true,
+        "name": "orders",
+        "exists": true,
+        "force_rls": false,
+        "owner_insert": true,
+        "owner_select": true,
+        "owner_update": true,
+        "missing_columns": [],
+        "owner_rls_bypass_or_ownership": true
+      },
+      {
+        "rls": true,
+        "name": "payment_attempts",
+        "exists": true,
+        "force_rls": false,
+        "owner_insert": true,
+        "owner_select": true,
+        "owner_update": true,
+        "missing_columns": [],
+        "owner_rls_bypass_or_ownership": true
+      },
+      {
+        "rls": true,
+        "name": "payment_webhook_events",
+        "exists": true,
+        "force_rls": false,
+        "owner_insert": true,
+        "owner_select": true,
+        "owner_update": true,
+        "missing_columns": [],
+        "owner_rls_bypass_or_ownership": true
+      }
+    ],
+    "event_key_unique": true,
+    "server_version_num": "170006"
+  },
+  "preview_binding": "The known project was queried; deployment runtime public Supabase URL and current sandbox configuration have not been independently observed. No environment/key values read.",
+  "hosting": {
+    "alias": {
+      "alias": "bagelito-pe-git-fix-80c94a-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+      "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+      "createdAt": 1791838186530,
+      "updatedAt": 1792241921905,
+      "deployment": {
+        "id": "dpl_9RoAm1RKYe364jSV1iGbrwQf4MZS",
+        "url": "bagelito-n7azs33aq-ricardo-rodriguezs-projects-487b7b64.vercel.app"
+      },
+      "deploymentId": "dpl_9RoAm1RKYe364jSV1iGbrwQf4MZS"
+    },
+    "deployment": {
+      "id": "dpl_9RoAm1RKYe364jSV1iGbrwQf4MZS",
+      "url": "bagelito-n7azs33aq-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+      "createdAt": 1792241870843,
+      "ready": 1792241921764,
+      "readyState": "READY",
+      "target": null,
+      "source": "git",
+      "sha": "d45c71cf9e242469c7171debdb756c1c527b63b9",
+      "ref": "fix/culqi-payment-coordination-20261012",
+      "repo": "bagelito-pe",
+      "org": "rikrodriguez"
+    },
+    "project": {
+      "id": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+      "name": "bagelito-pe",
+      "accountId": "team_EWhRYzkxyiCVNnh43fCf4Dcb",
+      "framework": "nextjs",
+      "nodeVersion": "24.x",
+      "createdAt": 1779928889785,
+      "updatedAt": 1792020504663
+    }
+  },
+  "limits": {
+    "project_tool_git_link": "not exposed by normalized project read; current deployment source=git confirms the observed repo/ref/SHA",
+    "artifact_file_tree": "404 not_found on current deployment; no file identifiers, no binary read",
+    "origin_get": "direct cloud HTTP unavailable (URLError), browser retrieval tool inaccessible; no authentication bypass attempted",
+    "billing_plan": "not exposed by team read; no free-of-charge assertion",
+    "schema_read": "catalog compatibility only; does not execute the RPC or certify provider acceptance"
+  },
+  "application_rows_read": false,
+  "recorded_at_utc": "2026-10-20T23:57:21Z"
+}

@@ -803,6 +803,8 @@ section[id] { scroll-margin-top: 24px; }
 .culqi-embed { width: 100%; min-height: 560px; }
 .culqi-embed iframe { width: 100% !important; min-height: 560px !important; border: 0 !important; }
 .culqi-busy { position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; justify-items: center; gap: 10px; background: rgba(255,255,255,.92); color: var(--navy); padding: 24px; font-weight: 900; text-align: center; }
+.culqi-embed-shell.is-closed { min-height: 0 !important; }
+.culqi-embed-shell.is-closed .culqi-busy { position: static; }
 .culqi-retry-button { margin: 0; }
 .culqi-security-note { display: flex; align-items: flex-start; justify-content: center; gap: 7px; margin: 0; border-top: 1px solid rgba(80,54,213,.1); background: #f8fbfa; color: var(--blue); padding: 13px 18px; font-size: .78rem; font-weight: 850; line-height: 1.35; text-align: center; }
 .culqi-security-note svg { flex: 0 0 auto; color: #1a9b72; }
@@ -1242,6 +1244,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shado
   justify-content: space-between;
   gap: 14px;
 }
+.waitlist-attribution { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 0; font-size: .78rem; }
+.waitlist-attribution > div { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.waitlist-attribution dt { color: var(--blue); font-weight: 850; }
+.waitlist-attribution dd { margin: 0; overflow-wrap: anywhere; }
 .waitlist-date-head strong {
   display: block;
   color: var(--navy);
@@ -8088,3 +8094,22 @@ html[data-admin-nav-collapsed="1"] .admin-workspace {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Checkout: affirmative purchase consent; independent from marketing opt-in. */
+.checkout-terms-acceptance {
+  padding: 16px 18px;
+  margin: 17px 0 7px;
+  border: 1px solid rgba(27, 69, 122, .18);
+  background: #f7faff;
+  border-radius: 15px;
+  color: var(--navy);
+  font-size: .88rem;
+  line-height: 1.5;
+}
+.checkout-terms-acceptance label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-weight: 650; }
+.checkout-terms-acceptance input { flex: 0 0 auto; margin: 4px 0 0; width: 18px; height: 18px; accent-color: var(--blue); cursor: pointer; }
+.checkout-terms-acceptance input:disabled { cursor: not-allowed; }
+.checkout-terms-acceptance a { color: var(--blue); font-weight: 900; text-decoration: underline; text-underline-offset: 2px; }
+.checkout-terms-acceptance small { display: block; padding: 8px 0 0 30px; color: #5f6d7e; font-size: .78rem; }
+.checkout-terms-acceptance:focus-within { outline: 2px solid rgba(45, 97, 180, .2); outline-offset: 2px; }

@@ -1,6 +1,8 @@
 export type PaymentProvider = "manual" | "culqi";
+export type PaymentMode = "disabled" | "sandbox" | "live";
 
 export type PaymentConfig = {
+  mode: PaymentMode;
   enabled: boolean;
   provider: PaymentProvider;
   publicKey: string;
@@ -11,6 +13,7 @@ export type PaymentConfig = {
 };
 
 export type PublicPaymentConfig = {
+  mode: PaymentMode;
   currency: "PEN";
   enabled: boolean;
   provider: PaymentProvider;
@@ -29,9 +32,33 @@ export function getPaymentConfig(): PaymentConfig {
   const rsaId = process.env.NEXT_PUBLIC_CULQI_RSA_ID?.trim() ?? "";
   const rsaPublicKey = process.env.NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY?.trim() ?? "";
   const hasSecretKey = Boolean(process.env.CULQI_SECRET_KEY?.trim());
+  const secretKey = process.env.CULQI_SECRET_KEY?.trim() ?? "";
+  const mode: PaymentMode = process.env.CULQI_MODE === "sandbox"
+    ? "sandbox"
+    : process.env.CULQI_MODE === "live" ? "live" : "disabled";
+  const matchingKeys = mode === "sandbox"
+    ? publicKey.startsWith("pk_test_") && secretKey.startsWith("sk_test_")
+    : mode === "live" && publicKey.startsWith("pk_live_") && secretKey.startsWith("sk_live_");
+  let sandboxOriginAllowed = false;
+  try {
+    const host = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "").hostname;
+    const publicHosts = new Set(["bagelito.pe", "www.bagelito.pe", "bagelito-pe.vercel.app"]);
+    sandboxOriginAllowed = !publicHosts.has(host) && (
+      host === "localhost" || host === "127.0.0.1"
+      || (process.env.VERCEL_ENV === "preview" && (
+        host === process.env.VERCEL_URL || host === process.env.VERCEL_BRANCH_URL
+      ))
+    );
+  } catch { /* Missing or invalid origins fail closed. */ }
+  const modeAllowed = mode === "sandbox"
+    ? process.env.VERCEL_ENV !== "production" && sandboxOriginAllowed
+    : mode === "live" && process.env.CULQI_LIVE_APPROVED === "true";
 
   return {
+    mode,
     enabled: provider === "culqi"
+      && matchingKeys
+      && modeAllowed
       && process.env.CULQI_ENABLED === "true"
       && Boolean(publicKey)
       && Boolean(rsaId)
@@ -48,6 +75,7 @@ export function getPaymentConfig(): PaymentConfig {
 
 export function getPublicPaymentConfig(): PublicPaymentConfig {
   const {
+    mode,
     currency,
     enabled,
     provider,
@@ -57,6 +85,7 @@ export function getPublicPaymentConfig(): PublicPaymentConfig {
   } = getPaymentConfig();
 
   return {
+    mode,
     currency,
     enabled,
     provider,
@@ -81,4 +110,17 @@ export function assertCulqiEnabled() {
     throw new Error("Culqi payments are not enabled yet.");
   }
   return config;
+}
+
+// The deployment flag alone is insufficient: a preview can have a public alias.
+// Fence every sandbox API request to the explicitly configured review origin.
+export function isCulqiRequestAllowed(request: Request): boolean {
+  const config = getPaymentConfig();
+  if (!config.enabled) return false;
+  if (config.mode !== "sandbox") return true;
+  try {
+    return new URL(request.url).origin === new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "").origin;
+  } catch {
+    return false;
+  }
 }

@@ -1,14 +1,22 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { consumeAdminLoginLimit, adminLoginOriginAllowed } from "@/lib/admin/login-security";
+import { isAdminSessionConfigured } from "@/lib/admin/session-security";
 import { createAdminToken, getAdminCookieName, requireAdmin, verifyAdminPassword } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { batchStatuses, defaultFinancialCosts, getCustomerKey, hasUploadedPaymentProof, isOrderArchived, type StatusHistory } from "@/lib/admin/queries";
+import { batchStatuses, getCustomerKey, hasUploadedPaymentProof, isOrderArchived, type StatusHistory } from "@/lib/admin/queries";
 import { ordersOpenStatus } from "@/lib/batch-availability";
 import { canSendAdminWhatsAppIntent, getAdminWhatsAppIntentForStatus, getAdminWhatsAppSentStatus, parseAdminWhatsAppIntent } from "@/lib/admin/whatsapp-messages";
 import { getDurationMs, logError, logInfo, logWarn } from "@/lib/monitoring";
+import { runAdminCulqiReadonlyDiagnostic } from "@/lib/payments/culqi-readonly-adapter";
+
+export async function runCulqiReadonlyDiagnostic(): Promise<{ ok: boolean }> {
+  // Ignore all action arguments. No redirect, cache revalidation or DB mutation.
+  return runAdminCulqiReadonlyDiagnostic();
+}
 
 const allowedOrderStatuses = [
   "payment_pending_review",
@@ -238,12 +246,22 @@ export async function loginAdmin(formData: FormData) {
   const startedAt = Date.now();
   const password = String(formData.get("password") ?? "");
 
-  if (!process.env.ADMIN_PASSWORD) {
-    logError("admin_login_missing_password_env", new Error("ADMIN_PASSWORD is not configured"), {
-      durationMs: getDurationMs(startedAt),
-    });
-    redirect("/admin/login?error=missing-password");
+  if (!isAdminSessionConfigured(process.env.ADMIN_PASSWORD, process.env.ADMIN_SESSION_SECRET)) {
+    redirect("/admin/login?error=unavailable");
   }
+
+  const requestHeaders = await headers();
+  if (!adminLoginOriginAllowed(requestHeaders, process.env.NEXT_PUBLIC_SITE_URL)) {
+    redirect("/admin/login?error=unavailable");
+  }
+  let allowed = false;
+  try {
+    allowed = await consumeAdminLoginLimit(createSupabaseAdminClient(), requestHeaders, process.env.VERCEL === "1");
+  } catch {
+    // Deliberately generic: never expose database errors, identifiers or secrets.
+    redirect("/admin/login?error=unavailable");
+  }
+  if (!allowed) redirect("/admin/login?error=limited");
 
   if (!verifyAdminPassword(password)) {
     logWarn("admin_login_invalid", { durationMs: getDurationMs(startedAt) });
@@ -646,9 +664,9 @@ export async function updateBatchFinancialCosts(formData: FormData) {
       .from("batches")
       .update({
         actual_delivery_cost: actualDeliveryCost,
-        ingredient_cost_per_bagel: ingredientCostPerBagel || defaultFinancialCosts.ingredientCostPerBagel,
+        ingredient_cost_per_bagel: ingredientCostPerBagel,
         other_batch_cost: otherBatchCost,
-        packaging_cost_per_pack: packagingCostPerPack || defaultFinancialCosts.packagingCostPerPack,
+        packaging_cost_per_pack: packagingCostPerPack,
       })
       .eq("id", batchId);
 

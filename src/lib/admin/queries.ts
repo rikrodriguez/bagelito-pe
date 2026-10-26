@@ -1,6 +1,6 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
-import { isBatchAcceptingOrders } from "@/lib/batch-availability";
+import { consumesBatchCapacity, isBatchAcceptingOrders } from "@/lib/batch-availability";
 
 export const productionStatuses = ["payment_confirmed", "in_production", "ready_for_delivery", "delivered"] as const;
 export const batchStatuses = ["waitlist_open", "orders_open", "closed", "in_production", "delivered"] as const;
@@ -424,13 +424,13 @@ export function getDashboardStats(orders: Order[]) {
   };
 }
 
-export function isBatchAcceptingReservations(batch: Pick<Batch, "orders_close_at" | "status">) {
-  return isBatchAcceptingOrders(batch.status, batch.orders_close_at);
+export function isBatchAcceptingReservations(batch: Pick<Batch, "orders_close_at" | "orders_open_at" | "status">) {
+  return isBatchAcceptingOrders(batch.status, batch.orders_close_at, Date.now(), batch.orders_open_at);
 }
 
 export function getBatchStats(batch: Batch, orders: Order[]) {
-  const batchOrders = filterActiveOrders(orders).filter((order) => order.batch_id === batch.id && order.status !== "cancelled");
-  const confirmedOrders = batchOrders.filter((order) => productionStatuses.includes(order.status as (typeof productionStatuses)[number]));
+  const batchOrders = orders.filter((order) => order.batch_id === batch.id && consumesBatchCapacity(order));
+  const confirmedOrders = filterActiveOrders(batchOrders).filter((order) => productionStatuses.includes(order.status as (typeof productionStatuses)[number]));
   const reservedPacks = batchOrders.length;
   const reservedBagels = batchOrders.reduce((sum, order) => sum + Number(order.pack_units), 0);
   const confirmedPacks = confirmedOrders.length;
