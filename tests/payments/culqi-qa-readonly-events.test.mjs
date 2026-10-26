@@ -22,7 +22,7 @@ test("one-shot permission requires exact QA identity and refuses public/live", (
   assert.equal(allowedQAEnvironment({}),false);
   const valid={VERCEL:"1",VERCEL_ENV:"preview",VERCEL_PROJECT_ID:"prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
     VERCEL_GIT_COMMIT_REF:"codex/culqi-payment-split-20261021",
-    VERCEL_GIT_COMMIT_MESSAGE:"qa: one-shot readonly Culqi event diagnostics",
+    VERCEL_GIT_COMMIT_MESSAGE:"qa: readonly unfiltered Culqi event probe",
     VERCEL_GIT_REPO_OWNER:"rikrodriguez",VERCEL_GIT_REPO_SLUG:"bagelito-pe",
     VERCEL_BRANCH_URL:"bagelito-pe-git-cod-d9825d-ricardo-rodriguezs-projects-487b7b64.vercel.app",
     NEXT_PUBLIC_SITE_URL:"https://bagelito-pe-git-cod-d9825d-ricardo-rodriguezs-projects-487b7b64.vercel.app",
