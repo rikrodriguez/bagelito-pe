@@ -267,6 +267,16 @@ const legalCopy = {
   },
 } as const;
 
+// Keep existing links valid regardless of the visitor's saved language.
+const legalAnchorAliases: Record<string, string> = {
+  terms: "terminos", terminos: "terms",
+  privacy: "privacidad", privacidad: "privacy",
+  "complaints-book": "libro-reclamaciones", "libro-reclamaciones": "complaints-book",
+  refunds: "reembolsos", reembolsos: "refunds",
+  "waiting-window": "ventana-espera", "ventana-espera": "waiting-window",
+  "data-retention": "registros", registros: "data-retention",
+};
+
 export function LegalPageContent() {
   const { locale } = useLanguage();
   const copy = legalCopy[locale];
@@ -304,6 +314,7 @@ export function LegalPageContent() {
             <section className="legal-policy-block" id={section.id} key={section.id}>
               <div className="legal-policy-icon"><Icon size={25} /></div>
               <div>
+                {legalAnchorAliases[section.id] ? <span id={legalAnchorAliases[section.id]} aria-hidden="true" /> : null}
                 <h2>{section.title}</h2>
                 {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 <ul>

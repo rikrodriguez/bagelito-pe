@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import {
   BookOpenCheck,
@@ -43,9 +43,12 @@ export function ComplaintsBookForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState<SubmittedComplaint | null>(null);
+  const submissionInFlight = useRef(false);
 
   async function submitComplaint(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submissionInFlight.current) return;
+    submissionInFlight.current = true;
     setError("");
     setSubmitting(true);
 
@@ -91,6 +94,7 @@ export function ComplaintsBookForm() {
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "No pudimos registrar la hoja.");
     } finally {
+      submissionInFlight.current = false;
       setSubmitting(false);
     }
   }
