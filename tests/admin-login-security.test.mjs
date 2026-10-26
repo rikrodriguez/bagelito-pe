@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createHmac,randomBytes,timingSafeEqual } from 'node:crypto';
+import { createHash,createHmac,randomBytes,timingSafeEqual } from 'node:crypto';
 import { stripTypeScriptTypes } from 'node:module';
 import { adminLoginIdentifier,consumeAdminLoginLimit,hasStrongAdminPassword,adminLoginOriginAllowed } from '../src/lib/admin/login-security.ts';
 const globalBucket = 'admin_login_global:' + createHash('sha256').update('bagelito:admin-login:global').digest('hex');
