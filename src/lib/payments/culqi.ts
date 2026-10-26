@@ -351,7 +351,7 @@ export async function fetchCulqiEvent(eventId: string) {
   const timeoutError = new DOMException("Culqi event lookup deadline exceeded.", "TimeoutError");
   const assertInBudget = () => {
     // A delayed timer cannot authorize accepting headers or a body after expiry.
-    if (performance.now() >= expiresAt) {
+    if (controller.signal.aborted || performance.now() >= expiresAt) {
       controller.abort(timeoutError);
       throw timeoutError;
     }
@@ -365,16 +365,34 @@ export async function fetchCulqiEvent(eventId: string) {
   });
   // Match the official SDK's event lookup contract without changing charge requests.
   try {
-    // Bound headers and JSON together, even when a transport ignores abort.
-    const event = await Promise.race([culqiRequest<CulqiEventResponse>(`/events/${encodeURIComponent(eventId)}`, {
-      method: "GET",
-      signal: controller.signal,
-      headers: {
-        Accept: "application/json",
-        "x-api-version": "2",
-        "x-culqi-env": environment,
-      },
-    }, assertInBudget, eventLookupApiError), deadline]);
+    // The official SDK sends version/environment headers; Culqi's documented
+    // Event GET also supports Authorization only. Retry once with minimal
+    // headers ONLY for a 400 parameter error on a correctly shaped same-mode ID.
+    // Both GETs share one ten-second deadline. Neither can create charges.
+    const readEvent = (headers: Record<string, string>) => culqiRequest<CulqiEventResponse>(
+      `/events/${encodeURIComponent(eventId)}`, {
+        method: "GET", signal: controller.signal, redirect: "error", credentials: "omit",
+        headers,
+      }, assertInBudget, eventLookupApiError,
+    );
+    const readWithDocumentedFallback = async () => {
+      try {
+        return await readEvent({
+          Accept: "application/json", "x-api-version": "2", "x-culqi-env": environment,
+        });
+      } catch (error) {
+        const parameter = (error as CulqiApiError & { upstreamErrorParam?: CulqiEventErrorParam })
+          ?.upstreamErrorParam;
+        if (!(error instanceof CulqiApiError)
+          || error.status !== 400 || error.errorType !== "parameter_error"
+          || !["version", "environment", "absent"].includes(parameter ?? "")
+          || !new RegExp(`^evt_${environment}_[A-Za-z0-9]{16}$`).test(eventId)) throw error;
+        assertInBudget();
+        return readEvent({ Accept: "application/json" });
+      }
+    };
+    // Bounds both HTTP responses and JSON parsing under the original deadline.
+    const event = await Promise.race([readWithDocumentedFallback(), deadline]);
     assertInBudget();
     return event;
   } catch (error) {
