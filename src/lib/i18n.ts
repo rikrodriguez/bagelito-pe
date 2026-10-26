@@ -189,7 +189,7 @@ export const translations = {
       intro: "Everything you need to know before reserving your next Bagelito batch.",
       items: [
         { question: "How does the monthly batch work?", answer: "Orders open once a month. You reserve your pack, pay to separate it, we close production, bake only confirmed orders, and deliver in one scheduled Lima window." },
-        { question: "When is my pack confirmed?", answer: "You pay in Bagelito's secure Culqi Checkout. Your pack is confirmed when our server receives the provider's verified payment confirmation. The checkout shows the payment methods available for your purchase; you do not need to send a transaction number or upload a voucher." },
+        { question: "When is my pack confirmed?", answer: "When a batch opens, the checkout shows the payment methods available for your order. Your pack is confirmed only after Bagelito verifies the payment. Until orders reopen, join the waitlist; online payments are not available for a closed batch." },
         { question: "What is the minimum order?", answer: "The minimum order is a 6-pack. You can choose 6 mixed, 6 single flavor, 12 mixed, or 12 single flavor." },
         { question: "Can I choose my flavors?", answer: "Yes. Mixed packs let you choose the exact number of bagels across this month’s flavors. Single-flavor packs use one flavor for the full pack." },
         { question: "How does delivery work?", answer: "Delivery happens in one scheduled Lima window. Please be available at the address provided; the driver waits up to 10 minutes before Bagelito.pe may need to re-coordinate depending on availability." },
@@ -592,7 +592,7 @@ export const translations = {
       intro: "Todo lo que necesitas saber antes de separar tu próximo batch Bagelito.",
       items: [
         { question: "¿Cómo funciona el batch mensual?", answer: "Abrimos pedidos una vez al mes. Separas tu pack, pagas para reservarlo, cerramos producción, horneamos solo pedidos confirmados y entregamos en una ventana programada en Lima." },
-        { question: "¿Cuándo queda confirmado mi pack?", answer: "Pagas en el Checkout seguro de Culqi. Tu pack queda confirmado cuando nuestro servidor recibe la confirmación verificada del proveedor. El checkout muestra los métodos de pago disponibles para tu compra; no necesitas enviar un número de operación ni subir un voucher." },
+        { question: "¿Cuándo queda confirmado mi pack?", answer: "Cuando abramos una tanda, el checkout mostrará los métodos de pago disponibles. Tu pack se confirma únicamente después de verificar el pago. Mientras los pedidos estén cerrados, puedes unirte a la lista de espera; no es posible pagar una tanda cerrada." },
         { question: "¿Cuál es el pedido mínimo?", answer: "El pedido mínimo es un pack de 6. Puedes elegir 6 mixtos, 6 de un sabor, 12 mixtos o 12 de un sabor." },
         { question: "¿Puedo elegir mis sabores?", answer: "Sí. En packs mixtos eliges la cantidad exacta de bagels entre los sabores del mes. En packs de un sabor, todo el pack va con un solo sabor." },
         { question: "¿Cómo funciona el delivery?", answer: "La entrega ocurre en una ventana programada en Lima. Debe haber alguien disponible en la dirección indicada; el repartidor espera hasta 10 minutos antes de que Bagelito.pe pueda recoordinar según disponibilidad." },
