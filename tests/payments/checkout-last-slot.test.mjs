@@ -104,7 +104,16 @@ function harness({checkoutPage,stall,expiryOffset=60_000}={}) {
   return {
     calls,instances,render,
     get tree(){return tree;},get child(){return child;},get childTree(){return childTree;},
-    review(){parentHooks.states[0].set(4);render();},
+    review(){
+      parentHooks.states[0].set(4);
+      render();
+      const checkbox = nodes(tree).find(node=>node?.type==='input' && node?.props?.id==='checkout-terms-consent');
+      if (checkbox) {
+        assert.equal(checkbox.props.checked,false,'Legal consent must be unchecked initially');
+        checkbox.props.onChange({target:{checked:true}});
+        render();
+      }
+    },
     readyScripts(){for(const id of ['culqi-custom-checkout','culqi-3ds-script'])nodes(childTree).find(node=>node?.props?.id===id).props.onReady();render();},
     closeBatch(){batch={...batch,accepting:false,reservedPacks:1,reservedBagels:6,remainingPacks:0,remainingBagels:0};render();},
     release(){stalled.resolve();},
