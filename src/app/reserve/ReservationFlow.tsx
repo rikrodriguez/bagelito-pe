@@ -882,10 +882,12 @@ export function ReservationFlow({
               <div className="checkout-summary-total"><span>{checkoutText.total}</span><strong>S/{totalAmount}</strong></div>
             </div>
 
-            <div className="checkout-summary-detail">
-              <Truck size={18} aria-hidden="true" />
-              <span>{formatPublicDate(batchAvailability.deliveryDate)}</span>
-            </div>
+            {batchAvailability.accepting && batchAvailability.deliveryDate ? (
+              <div className="checkout-summary-detail">
+                <Truck size={18} aria-hidden="true" />
+                <span>{formatPublicDate(batchAvailability.deliveryDate)}</span>
+              </div>
+            ) : null}
             <div className="checkout-summary-detail">
               <ShieldCheck size={18} aria-hidden="true" />
               <span>{checkoutText.secure}</span>
