@@ -456,6 +456,7 @@ export function ReservationFlow({
       items: checkoutItems,
       packSlug: selectedPack.slug,
       termsAccepted,
+      termsVersion: CHECKOUT_LEGAL_VERSION,
       website,
     };
   }
