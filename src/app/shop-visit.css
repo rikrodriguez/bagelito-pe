@@ -281,3 +281,6 @@ body:has(.bagelito-store) .site-footer { background: #f9fafc; border-color: #e4e
 @media (max-width: 760px) {
   .site-header .store-header-navigation { display: none; }
 }
+
+/* The visit itself is the public storefront; do not show promotional batch clocks here. */
+body:has(.bagelito-store) .batch-deadline-banner { display: none; }
