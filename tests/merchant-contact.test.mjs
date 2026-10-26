@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { loadTs } from "./helpers/load-ts.mjs";
 
 const approvedAddress = "Jr. Cruz del Sur 140, Surco";
+const approvedLegalName = "Ricardo Jesus Rodriguez Herrerea";
 const site = loadTs("src/lib/site.ts");
 const whatsapp = loadTs("src/lib/whatsapp.ts");
 const { translations } = loadTs("src/lib/i18n.ts");
@@ -24,6 +25,7 @@ for (const locale of ["es", "en"]) {
     });
     const html = renderToStaticMarkup(React.createElement(Footer));
     assert.ok(html.includes(approvedAddress));
+    assert.ok(html.includes(approvedLegalName), "footer must identify the business owner exactly as supplied");
     assert.match(html, /mailto:contacto@bagelito\.pe/);
     assert.match(html, /https:\/\/www\.instagram\.com\/bagelito\.pe/);
     const whatsappHref = [...html.matchAll(/href="([^"]+)"/g)].map((match) => match[1].replaceAll("&amp;", "&"))
@@ -42,6 +44,9 @@ for (const locale of ["es", "en"]) {
     for (const className of ["legal-summary", "legal-contact-card"]) {
       const section = elements(tree).find((node) => node.props?.className === className);
       assert.ok(renderToStaticMarkup(section).includes(approvedAddress), `${className} must expose the merchant address`);
+      if (className === "legal-summary") {
+        assert.ok(renderToStaticMarkup(section).includes(approvedLegalName), "legal summary must identify the supplied owner");
+      }
     }
   });
 }
@@ -51,6 +56,7 @@ test("business structured data uses the exact approved address as text", () => {
   const data = JSON.parse(StructuredData().props.dangerouslySetInnerHTML.__html);
   const bakery = data["@graph"].find((node) => node["@type"] === "Bakery");
   assert.equal(bakery.address, approvedAddress);
+  assert.equal(bakery.legalName, approvedLegalName);
 });
 
 test("the complaint form and its printable receipt identify the provider's address separately from the consumer", () => {
@@ -65,6 +71,7 @@ test("the complaint form and its printable receipt identify the provider's addre
   });
   const provider = elements(ComplaintsBookForm()).find((node) => node.props?.className === "complaints-provider-grid");
   assert.ok(renderToStaticMarkup(provider).includes(approvedAddress));
+  assert.ok(renderToStaticMarkup(provider).includes(approvedLegalName), "complaints form must identify the supplied owner");
 
   receipt = {
     amount: 50,
@@ -87,6 +94,7 @@ test("the complaint form and its printable receipt identify the provider's addre
   const providerReceipt = elements(tree).find((node) => node.props?.className === "complaint-receipt-provider");
   const providerHtml = renderToStaticMarkup(providerReceipt);
   assert.ok(providerHtml.includes(approvedAddress));
+  assert.ok(providerHtml.includes(approvedLegalName), "receipt must identify the supplied owner");
   assert.doesNotMatch(providerHtml, /Calle del Consumidor 999/);
   assert.match(renderToStaticMarkup(tree), /Calle del Consumidor 999/);
 });

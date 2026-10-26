@@ -121,7 +121,7 @@ export function ComplaintsBookForm() {
 
           <section className="complaint-receipt-provider">
             <h2>Proveedor</h2>
-            <div><span>Razón social</span><strong>{siteLegalName}</strong></div>
+            <div><span>Nombre o razón social</span><strong>{siteLegalName}</strong></div>
             <div><span>Nombre comercial</span><strong>{siteName}</strong></div>
             <div><span>RUC</span><strong>{siteRuc}</strong></div>
             <div><span>Dirección del proveedor</span><strong>{siteAddress}</strong></div>
@@ -188,7 +188,7 @@ export function ComplaintsBookForm() {
           <fieldset className="complaints-fieldset provider-fieldset">
             <legend><BookOpenCheck size={19} /> Identificación del proveedor</legend>
             <div className="complaints-provider-grid">
-              <div><span>Razón social</span><strong>{siteLegalName}</strong></div>
+              <div><span>Nombre o razón social</span><strong>{siteLegalName}</strong></div>
               <div><span>Nombre comercial</span><strong>{siteName}</strong></div>
               <div><span>RUC</span><strong>{siteRuc}</strong></div>
               <div><span>Dirección del proveedor</span><strong>{siteAddress}</strong></div>

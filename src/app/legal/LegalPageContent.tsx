@@ -20,7 +20,7 @@ const legalCopy = {
       ["Payments", "Shown at checkout when orders are open"],
       ["Contact", `${siteContactEmail} · +51 917 547 745`],
       ["Business address", siteAddress],
-      ["Legal entity", siteLegalName],
+      ["Business owner", siteLegalName],
       ["RUC", siteRuc],
     ],
     sections: [
@@ -152,7 +152,7 @@ const legalCopy = {
       ["Pagos", "Métodos disponibles al abrir pedidos"],
       ["Contacto", `${siteContactEmail} · +51 917 547 745`],
       ["Dirección comercial", siteAddress],
-      ["Razón social", siteLegalName],
+      ["Titular del negocio", siteLegalName],
       ["RUC", siteRuc],
     ],
     sections: [
