@@ -11,13 +11,13 @@ const legalCopy = {
     eyebrow: "Legal policies",
     title: "Bagelito.pe operating policies",
     intro: "These policies explain how Bagelito.pe handles monthly pre-orders, personal data, delivery, cancellations, refunds, and the delivery waiting window in Lima.",
-    updated: "Last updated: August 20, 2026",
+    updated: "Last updated: October 26, 2026",
     summaryTitle: "Quick summary",
     summary: [
       ["Business model", "Monthly pre-order batch"],
       ["Confirmation", "Only after payment is confirmed"],
       ["Delivery", "One scheduled Lima delivery window"],
-      ["Payments", "Secure Culqi Checkout"],
+      ["Payments", "Shown at checkout when orders are open"],
       ["Contact", `${siteContactEmail} · +51 917 547 745`],
       ["Legal entity", siteLegalName],
       ["RUC", siteRuc],
@@ -28,7 +28,7 @@ const legalCopy = {
         icon: ScrollText,
         title: "Terms of purchase and use",
         body: [
-          "Bagelito.pe operates as a monthly pre-order batch. A pack becomes officially separated only after payment is confirmed through Culqi Checkout.",
+          "Bagelito.pe operates as a monthly pre-order batch. A pack is confirmed only once Bagelito verifies payment through an enabled payment method. When orders are closed, no online payment is accepted.",
           "The customer is responsible for entering accurate contact, flavor, payment, and delivery information. Images, flavors, packaging, and batch details may vary slightly due to handmade production and monthly ingredient availability.",
         ],
         bullets: [
@@ -48,7 +48,7 @@ const legalCopy = {
         ],
         bullets: [
           "Operational providers such as hosting, database, storage, communication, payment, and delivery tools may process data only as needed to complete the order.",
-          "Card or wallet credentials entered in Culqi Checkout are processed by Culqi and are not stored by Bagelito.pe.",
+          "When a hosted card or wallet checkout is enabled, payment credentials are processed by the payment provider and not stored by Bagelito.pe.",
           `Customers may request access, correction, update, deletion, or objection regarding their personal data by writing to ${siteContactEmail} or contacting Bagelito.pe via WhatsApp.`,
           "Bagelito.pe applies reasonable security practices for a small food business, but no digital system can be guaranteed to be risk-free.",
         ],
@@ -123,8 +123,8 @@ const legalCopy = {
         ],
         bullets: [
           `Official contacts: ${siteContactEmail} and +51 917 547 745.`,
-          "Available payment methods are those enabled by Culqi Checkout and may include cards, Yape, or mobile wallets.",
-          "Online payment confirmation is received server-to-server from the payment provider.",
+          "Payment methods are shown during an open batch; card, Yape or wallet payments are offered only when enabled and displayed by the checkout.",
+          "If online payments are enabled, Bagelito verifies the provider's confirmed payment before reserving a pack.",
           "Bagelito.pe may update these policies as the operation, legal setup, or batch process evolves.",
         ],
       },
@@ -140,13 +140,13 @@ const legalCopy = {
     eyebrow: "Políticas legales",
     title: "Políticas operativas de Bagelito.pe",
     intro: "Estas políticas explican cómo Bagelito.pe maneja la preventa mensual, datos personales, delivery, cancelaciones, reembolsos y la ventana de espera de entrega en Lima.",
-    updated: "Última actualización: 20 de agosto de 2026",
+    updated: "Última actualización: 26 de octubre de 2026",
     summaryTitle: "Resumen rápido",
     summary: [
       ["Modelo", "Batch mensual por preventa"],
       ["Confirmación", "Solo después de confirmar el pago"],
       ["Delivery", "Una ventana programada en Lima"],
-      ["Pagos", "Checkout seguro de Culqi"],
+      ["Pagos", "Métodos disponibles al abrir pedidos"],
       ["Contacto", `${siteContactEmail} · +51 917 547 745`],
       ["Razón social", siteLegalName],
       ["RUC", siteRuc],
@@ -157,7 +157,7 @@ const legalCopy = {
         icon: ScrollText,
         title: "Términos de compra y uso",
         body: [
-          "Bagelito.pe funciona como un batch mensual por preventa. El pack queda oficialmente separado solo cuando el pago es confirmado mediante Culqi Checkout.",
+          "Bagelito.pe funciona como un batch mensual por preventa. El pack queda confirmado solo cuando Bagelito verifica el pago a través de un método habilitado. Cuando los pedidos están cerrados, no se aceptan pagos online.",
           "El cliente es responsable de ingresar información correcta de contacto, sabores, pago y entrega. Las imágenes, sabores, empaque y detalles del batch pueden variar ligeramente por tratarse de producción artesanal y disponibilidad mensual de ingredientes.",
         ],
         bullets: [
@@ -177,7 +177,7 @@ const legalCopy = {
         ],
         bullets: [
           "Proveedores operativos como hosting, base de datos, almacenamiento, comunicación, pagos y delivery pueden procesar datos solo en lo necesario para completar el pedido.",
-          "Los datos de tarjeta o billetera ingresados en Culqi Checkout son procesados por Culqi y Bagelito.pe no los almacena.",
+          "Cuando se habilita un checkout externo de tarjeta o billetera, el proveedor procesa esas credenciales y Bagelito.pe no las almacena.",
           `El cliente puede solicitar acceso, corrección, actualización, eliminación u oposición respecto a sus datos personales escribiendo a ${siteContactEmail} o por WhatsApp.`,
           "Bagelito.pe aplica prácticas razonables de seguridad para una operación pequeña de alimentos, aunque ningún sistema digital puede garantizar riesgo cero.",
         ],
@@ -252,8 +252,8 @@ const legalCopy = {
         ],
         bullets: [
           `Contactos oficiales: ${siteContactEmail} y +51 917 547 745.`,
-          "Los métodos disponibles son los habilitados por Culqi Checkout y pueden incluir tarjetas, Yape o billeteras móviles.",
-          "La confirmación del pago online se recibe directamente desde el servidor del proveedor de pagos.",
+          "Los métodos de pago se muestran cuando la tanda está abierta; tarjetas, Yape y billeteras solo se ofrecen cuando están habilitados en el checkout.",
+          "Si se habilitan pagos online, Bagelito verifica la confirmación del proveedor antes de separar el pack.",
           "Bagelito.pe puede actualizar estas políticas conforme evolucione la operación, formalización legal o proceso de batches.",
         ],
       },

@@ -189,7 +189,7 @@ export const translations = {
       intro: "Everything you need to know before reserving your next Bagelito batch.",
       items: [
         { question: "How does the monthly batch work?", answer: "Orders open once a month. You reserve your pack, pay to separate it, we close production, bake only confirmed orders, and deliver in one scheduled Lima window." },
-        { question: "When is my pack confirmed?", answer: "You pay in Bagelito's secure Culqi Checkout. Your pack is confirmed when our server receives the provider's verified payment confirmation. The checkout shows the payment methods available for your purchase; you do not need to send a transaction number or upload a voucher." },
+        { question: "When is my pack confirmed?", answer: "When a batch opens, the checkout shows the payment methods available for your order. Your pack is confirmed only after Bagelito verifies the payment. Until orders reopen, join the waitlist; online payments are not available for a closed batch." },
         { question: "What is the minimum order?", answer: "The minimum order is a 6-pack. You can choose 6 mixed, 6 single flavor, 12 mixed, or 12 single flavor." },
         { question: "Can I choose my flavors?", answer: "Yes. Mixed packs let you choose the exact number of bagels across this month’s flavors. Single-flavor packs use one flavor for the full pack." },
         { question: "How does delivery work?", answer: "Delivery happens in one scheduled Lima window. Please be available at the address provided; the driver waits up to 10 minutes before Bagelito.pe may need to re-coordinate depending on availability." },
@@ -350,7 +350,7 @@ export const translations = {
     track: {
       kicker: "Customer tracking",
       title: "Track your reservation",
-      intro: "Enter the email or WhatsApp from your reservation, or your order number.",
+      intro: "Enter your order number AND the email or WhatsApp used for that reservation.",
       safeLookup: "Protected lookup",
       safeLookupNote: "Searches are rate-limited to protect your reservation details.",
       fields: {
@@ -360,7 +360,7 @@ export const translations = {
       },
       submit: "Find your reservation",
       submitting: "Checking...",
-      helper: "You only need one: email, WhatsApp, or order number.",
+      helper: "For your privacy, both the order number and a matching email or WhatsApp are required.",
       currentStatus: "Current status",
       itemsTitle: "Bagels in this order",
       nextStepTitle: "What happens next",
@@ -372,7 +372,7 @@ export const translations = {
       autoRefresh: "Updates automatically while the order is active.",
       pendingStep: "Pending",
       toBeAnnounced: "To be announced",
-      supportNote: "You can return using your order number or the same email or WhatsApp from your reservation.",
+      supportNote: "To track an order, use its order number together with the email or WhatsApp used at checkout.",
       labels: {
         orderCode: "Order number",
         customer: "Customer",
@@ -592,7 +592,7 @@ export const translations = {
       intro: "Todo lo que necesitas saber antes de separar tu próximo batch Bagelito.",
       items: [
         { question: "¿Cómo funciona el batch mensual?", answer: "Abrimos pedidos una vez al mes. Separas tu pack, pagas para reservarlo, cerramos producción, horneamos solo pedidos confirmados y entregamos en una ventana programada en Lima." },
-        { question: "¿Cuándo queda confirmado mi pack?", answer: "Pagas en el Checkout seguro de Culqi. Tu pack queda confirmado cuando nuestro servidor recibe la confirmación verificada del proveedor. El checkout muestra los métodos de pago disponibles para tu compra; no necesitas enviar un número de operación ni subir un voucher." },
+        { question: "¿Cuándo queda confirmado mi pack?", answer: "Cuando abramos una tanda, el checkout mostrará los métodos de pago disponibles. Tu pack se confirma únicamente después de verificar el pago. Mientras los pedidos estén cerrados, puedes unirte a la lista de espera; no es posible pagar una tanda cerrada." },
         { question: "¿Cuál es el pedido mínimo?", answer: "El pedido mínimo es un pack de 6. Puedes elegir 6 mixtos, 6 de un sabor, 12 mixtos o 12 de un sabor." },
         { question: "¿Puedo elegir mis sabores?", answer: "Sí. En packs mixtos eliges la cantidad exacta de bagels entre los sabores del mes. En packs de un sabor, todo el pack va con un solo sabor." },
         { question: "¿Cómo funciona el delivery?", answer: "La entrega ocurre en una ventana programada en Lima. Debe haber alguien disponible en la dirección indicada; el repartidor espera hasta 10 minutos antes de que Bagelito.pe pueda recoordinar según disponibilidad." },
@@ -753,7 +753,7 @@ export const translations = {
     track: {
       kicker: "Seguimiento del cliente",
       title: "Sigue tu reserva",
-      intro: "Ingresa el email o WhatsApp de tu reserva, o tu número de pedido.",
+      intro: "Ingresa tu número de pedido Y el email o WhatsApp que utilizaste en esa reserva.",
       safeLookup: "Consulta protegida",
       safeLookupNote: "Limitamos los intentos para proteger los datos de tu reserva.",
       fields: {
@@ -763,7 +763,7 @@ export const translations = {
       },
       submit: "Buscar mi reserva",
       submitting: "Buscando...",
-      helper: "Solo necesitas uno: email, WhatsApp o número de pedido.",
+      helper: "Por tu seguridad necesitamos el número de pedido y el email o WhatsApp asociado.",
       currentStatus: "Estado actual",
       itemsTitle: "Bagels en este pedido",
       nextStepTitle: "Qué sigue",
@@ -775,7 +775,7 @@ export const translations = {
       autoRefresh: "Se actualiza automáticamente mientras el pedido siga activo.",
       pendingStep: "Pendiente",
       toBeAnnounced: "Por definir",
-      supportNote: "Puedes volver usando tu número de pedido o el mismo email o WhatsApp de tu reserva.",
+      supportNote: "Para consultar tu pedido, ingresa el número y el email o WhatsApp utilizado al reservar.",
       labels: {
         orderCode: "Número de pedido",
         customer: "Cliente",

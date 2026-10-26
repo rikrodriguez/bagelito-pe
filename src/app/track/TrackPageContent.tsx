@@ -85,7 +85,7 @@ export function TrackPageContent({ initialOrderCode = "" }: Props) {
     const trimmedContact = nextContact.trim();
     const trimmedOrderCode = nextOrderCode.trim().toUpperCase();
 
-    if (!trimmedContact && !trimmedOrderCode) {
+    if (!trimmedContact || !trimmedOrderCode) {
       if (!silent) setError(t.errors.required);
       return;
     }
@@ -118,11 +118,11 @@ export function TrackPageContent({ initialOrderCode = "" }: Props) {
       setLastCheckedAt(new Date().toISOString());
 
       if (!silent) {
-        trackBagelitoEvent("Track Lookup Success", { orderCode: trimmedOrderCode || "contact", status: payload.order.status });
+        trackBagelitoEvent("Track Lookup Success", { status: payload.order.status });
       }
     } catch (lookupError) {
       if (!silent) {
-        trackBagelitoEvent("Track Lookup Error", { orderCode: trimmedOrderCode || "contact" });
+        trackBagelitoEvent("Track Lookup Error");
         setResult(null);
         setError(lookupError instanceof Error ? lookupError.message : t.errors.generic);
       }
@@ -204,7 +204,7 @@ export function TrackPageContent({ initialOrderCode = "" }: Props) {
             type="button"
             disabled={submitting}
             onClick={() => {
-              trackBagelitoEvent("Track Lookup Attempt", { orderCode: orderCode.trim().toUpperCase() || "contact" });
+              trackBagelitoEvent("Track Lookup Attempt");
               void performLookup({ nextContact: contact, nextOrderCode: orderCode });
             }}
           >
@@ -245,10 +245,8 @@ export function TrackPageContent({ initialOrderCode = "" }: Props) {
 
             <div className="track-meta-grid">
               <div><span>{t.labels.orderCode}</span><strong>{result.orderCode}</strong></div>
-              <div><span>{t.labels.customer}</span><strong>{result.customerName}</strong></div>
               <div><span>{t.labels.pack}</span><strong>{result.packName}</strong></div>
               <div><span>{t.labels.total}</span><strong>S/{result.totalAmount}</strong></div>
-              <div><span>{t.labels.district}</span><strong>{result.district}</strong></div>
               <div><span>{t.labels.batch}</span><strong>{result.batchName ?? t.toBeAnnounced}</strong></div>
               <div><span>{t.labels.deliveryDate}</span><strong>{formatDate(result.deliveryDate, locale)}</strong></div>
               <div><span>{t.labels.submittedAt}</span><strong>{formatDate(result.createdAt, locale)}</strong></div>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState, type CSSProperties } from "react";
+import Link from "next/link";
 import { CalendarDays, PackageCheck, Truck, UsersRound } from "lucide-react";
 import { packs } from "@/lib/catalog";
+import { getPublicBatchDisplay } from "@/lib/public-batch-display";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { useLanguage } from "./LanguageProvider";
 
@@ -115,24 +117,30 @@ export function BatchInfo() {
     };
   }
 
+  // Hide closed-batch dates on SSR; only show future dates after hydration.
+  const publicDisplay = getPublicBatchDisplay(batch, currentTime);
   const nextOrderWindow = batch.accepting
     ? live.openNow
-    : batch.status === "waitlist_open"
-      ? formatBatchDate(batch.ordersOpenAt, locale, live.comingSoon)
+    : publicDisplay.nextOpeningAt
+      ? formatBatchDate(publicDisplay.nextOpeningAt, locale, live.comingSoon)
       : live.comingSoon;
-  const minimumOrder = Math.min(...packs.map((pack) => pack.units));
-  const values = [
-    getStatusLabel(),
-    nextOrderWindow,
-    formatBatchDate(batch.ordersCloseAt, locale, live.comingSoon),
-    formatBatchDate(batch.deliveryDate, locale, live.scheduledDate),
-    getCapacityLabel(),
-    fillTemplate(live.minimumOrder, { count: minimumOrder }),
+  const minimumOrder = Math.min(...packs.map(pack => pack.units));
+  const visibleRows = [
+    { index: 0, value: getStatusLabel() },
+    { index: 1, value: nextOrderWindow },
+    ...(batch.accepting ? [
+      { index: 2, value: formatBatchDate(batch.ordersCloseAt, locale, live.comingSoon) },
+      { index: 3, value: formatBatchDate(batch.deliveryDate, locale, live.scheduledDate) },
+      { index: 4, value: getCapacityLabel() },
+    ] : publicDisplay.showFutureDelivery ? [
+      { index: 3, value: formatBatchDate(batch.deliveryDate, locale, live.scheduledDate) },
+    ] : []),
+    { index: 5, value: fillTemplate(live.minimumOrder, { count: minimumOrder }) },
   ];
-  const gauge = getGauge();
-  const gaugeStyle = {
-    "--batch-progress": `${gauge.percent}%`,
-  } as CSSProperties;
+  const gauge = batch.accepting ? getGauge() : null;
+  const gaugeStyle = gauge ? {
+    "--batch-progress": String(gauge.percent) + "%",
+  } as CSSProperties : undefined;
 
   return (
     <section id="next-batch" className="batch-section section-pad">
@@ -143,32 +151,42 @@ export function BatchInfo() {
         </div>
         <div className="batch-grid">
           <div className="batch-list">
-            {copy.batch.rows.map((label, index) => {
+            {visibleRows.map(({ index, value }) => {
               const Icon = rowIcons[index];
+              const label = copy.batch.rows[index];
+              if (!Icon || !label) return null;
               return (
-                <div className="batch-row" key={label}>
+                <div className="batch-row" key={index}>
                   <Icon aria-hidden="true" size={18} />
                   <span>{label}</span>
-                  <strong>{values[index]}</strong>
+                  <strong>{value}</strong>
                 </div>
               );
             })}
           </div>
-          <div className="batch-gauge">
-            <div
-              aria-label={gauge.title}
-              aria-valuemax={100}
-              aria-valuemin={0}
-              aria-valuenow={gauge.percent}
-              className="gauge-ring"
-              role="progressbar"
-              style={gaugeStyle}
-            >
-              <span className="gauge-ring-value">{gauge.percent}%</span>
+          {gauge ? (
+            <div className="batch-gauge">
+              <div
+                aria-label={gauge.title}
+                aria-valuemax={100}
+                aria-valuemin={0}
+                aria-valuenow={gauge.percent}
+                className="gauge-ring"
+                role="progressbar"
+                style={gaugeStyle}
+              >
+                <span className="gauge-ring-value">{gauge.percent}%</span>
+              </div>
+              <strong>{gauge.title}</strong>
+              <span>{gauge.text}</span>
             </div>
-            <strong>{gauge.title}</strong>
-            <span>{gauge.text}</span>
-          </div>
+          ) : (
+            <div className="batch-gauge">
+              <strong>{copy.batch.waitlistTitle}</strong>
+              <span>{copy.batch.waitlistIntro}</span>
+              <Link className="pill-button pink" href="/waitlist">{copy.batch.cta}</Link>
+            </div>
+          )}
         </div>
       </div>
     </section>

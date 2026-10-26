@@ -32,13 +32,11 @@ export async function POST(request: Request) {
     const order = await findTrackedOrder(payload);
 
     await trackBagelitoServerEvent("Track Lookup Success", {
-      orderCode: order.orderCode,
       status: order.status,
     }, request);
 
     logInfo("track_api_success", {
       durationMs: getDurationMs(startedAt),
-      orderCode: order.orderCode,
       requestId,
       route: "/api/track",
       status: 200,

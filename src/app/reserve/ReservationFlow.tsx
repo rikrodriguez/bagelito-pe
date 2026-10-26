@@ -28,6 +28,8 @@ import {
 import { districtOptions } from "@/lib/reservations/schema";
 import { siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
+import { saveSuccessProof } from "@/lib/payments/success-proof";
+import { CHECKOUT_LEGAL_VERSION } from "@/lib/legal-terms";
 import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 type Props = {
@@ -79,6 +81,14 @@ type PaymentStatusResult = {
   retryAfterSeconds?: number;
 };
 
+type CheckoutPreparation = {
+  checkoutSessionId: string;
+  fingerprint: string;
+  expiresAt: number;
+  orderCode?: string;
+  sessionId?: string;
+};
+
 async function readCheckoutPaymentStatus(
   reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">,
   timeoutMs = 20_000,
@@ -125,14 +135,17 @@ export function ReservationFlow({
   const [singleFlavor, setSingleFlavor] = useState("");
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
-  // The legal copy is available from the checkout summary. Keeping this
-  // internal flag true lets the payment control render without a duplicate
-  // terms card in the final step.
-  const termsAccepted = true;
+  // Explicit purchase consent is separate from the optional marketing checkbox.
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
   const hasMountedRef = useRef(false);
   const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
+  const checkoutFingerprintRef = useRef("");
+  const batchAcceptingRef = useRef(batchAvailability.accepting);
+  batchAcceptingRef.current = batchAvailability.accepting;
+  const preparationRef = useRef<CheckoutPreparation | null>(null);
+  const [checkoutPreparation, setCheckoutPreparation] = useState<CheckoutPreparation | null>(null);
   const recoveryRef = useRef<CheckoutRecovery | null>(null);
   const activePaymentRef = useRef<{
     checkoutSessionId: string; orderCode: string; sourceId: string; deviceId?: string; awaiting3DS: boolean;
@@ -284,6 +297,20 @@ export function ReservationFlow({
     ...item,
     quantity: item.quantity * checkoutPackCount,
   })), [checkoutPackCount, selectedItems]);
+  const checkoutFingerprint = JSON.stringify({
+    details, extraPack: extraPackAdded, items: checkoutItems, packSlug: selectedPack.slug,
+  });
+  checkoutFingerprintRef.current = checkoutFingerprint;
+
+  function updateCheckoutPreparation(value: CheckoutPreparation | null) {
+    preparationRef.current = value;
+    setCheckoutPreparation(value);
+  }
+
+  function isCurrentPreparation(value: CheckoutPreparation | null) {
+    return value !== null && value.checkoutSessionId === checkoutSessionRef.current.id
+      && value.fingerprint === checkoutFingerprintRef.current && value.expiresAt > Date.now();
+  }
 
   const flavorSummary = checkoutItems.map((item) => {
     const flavor = flavors.find((candidate) => candidate.slug === item.flavorSlug);
@@ -365,6 +392,7 @@ export function ReservationFlow({
 
   function selectPack(nextSlug: PackSlug) {
     if (checkoutIsLocked()) return;
+    updateCheckoutPreparation(null);
     const nextPack = packs.find((pack) => pack.slug === nextSlug);
     trackBagelitoEvent("Reserve Pack Selected", { pack: nextSlug, amount: nextPack?.amount });
     setPackSlug(nextSlug);
@@ -376,6 +404,7 @@ export function ReservationFlow({
 
   function goToStep(nextStep: number) {
     if (checkoutIsLocked()) return;
+    if (nextStep < 4) updateCheckoutPreparation(null);
     setStep(Math.max(1, Math.min(4, nextStep)));
   }
 
@@ -427,18 +456,14 @@ export function ReservationFlow({
       items: checkoutItems,
       packSlug: selectedPack.slug,
       termsAccepted,
+      termsVersion: CHECKOUT_LEGAL_VERSION,
       website,
     };
   }
 
   function getCheckoutSessionId() {
     if (checkoutIsLocked()) throw new CheckoutReviewError();
-    const fingerprint = JSON.stringify({
-      details,
-      extraPack: extraPackAdded,
-      items: checkoutItems,
-      packSlug: selectedPack.slug,
-    });
+    const fingerprint = checkoutFingerprintRef.current;
 
     if (
       !checkoutSessionRef.current.id
@@ -455,6 +480,7 @@ export function ReservationFlow({
 
   function toggleExtraPack() {
     if (checkoutIsLocked()) return;
+    updateCheckoutPreparation(null);
     const nextValue = !extraPackAdded;
     setExtraPackAdded(nextValue);
     setError("");
@@ -465,7 +491,11 @@ export function ReservationFlow({
     });
   }
 
-  function redirectToSuccess(orderCode: string, payment: "paid" | "pending") {
+  function redirectToSuccess(orderCode: string, payment: "paid" | "pending", checkoutSessionId: string) {
+    // This proves only checkout ownership; payment must still be rechecked
+    // against the server after navigation. Never put the UUID in the URL.
+    try { saveSuccessProof(window.sessionStorage, orderCode, checkoutSessionId); }
+    catch { /* Private browsing may disable sessionStorage; fail closed on success page. */ }
     const params = new URLSearchParams({
       amount: String(totalAmount),
       order: orderCode,
@@ -484,9 +514,20 @@ export function ReservationFlow({
     if (!paymentConfig.enabled) {
       throw new Error(culqiText.unavailable);
     }
+    if (!batchAcceptingRef.current && !isCurrentPreparation(preparationRef.current)) {
+      throw new Error(r.errors.submit);
+    }
 
     const checkoutSessionId = getCheckoutSessionId();
+    const fingerprint = checkoutFingerprintRef.current;
     const preparationDeadline = Date.now() + 20_000;
+    const previousPreparation = preparationRef.current;
+    // Public availability includes this request's hold. Keep the owner mounted
+    // while preparing, then bind the exception to the server's original expiry.
+    updateCheckoutPreparation({
+      checkoutSessionId, fingerprint,
+      expiresAt: isCurrentPreparation(previousPreparation) ? previousPreparation!.expiresAt : preparationDeadline,
+    });
     const controller = new AbortController();
     let timeout: ReturnType<typeof setTimeout> | undefined;
     const deadline = new Promise<never>((_, reject) => {
@@ -496,7 +537,10 @@ export function ReservationFlow({
       }, 20_000);
     });
     const assertPreparationActive = () => {
-      if (controller.signal.aborted || Date.now() >= preparationDeadline) {
+      if (controller.signal.aborted || Date.now() >= preparationDeadline
+        || preparationRef.current?.checkoutSessionId !== checkoutSessionId
+        || preparationRef.current.fingerprint !== fingerprint
+        || checkoutFingerprintRef.current !== fingerprint) {
         controller.abort();
         throw new Error(r.errors.submit);
       }
@@ -523,6 +567,13 @@ export function ReservationFlow({
       if (!reservationResponse.ok || !reservation.ok || !reservation.orderCode) {
         throw new Error(reservation.error ?? r.errors.submit);
       }
+      const reservationExpiry = Date.parse(reservation.expiresAt ?? "");
+      if (!Number.isFinite(reservationExpiry) || reservationExpiry <= Date.now()) {
+        updateCheckoutPreparation(null);
+        throw new Error(r.errors.submit);
+      }
+      updateCheckoutPreparation({ checkoutSessionId, fingerprint,
+        expiresAt: reservationExpiry, orderCode: reservation.orderCode });
 
       const orderResponse = await fetch("/api/payments/culqi/order", {
         body: JSON.stringify({
@@ -547,6 +598,13 @@ export function ReservationFlow({
       if (!orderResponse.ok || !order.ok || !order.sessionId || !order.amount) {
         throw new Error(order.error ?? r.errors.submit);
       }
+      const orderExpiry = Date.parse(order.expiresAt ?? reservation.expiresAt ?? "");
+      if (!Number.isFinite(orderExpiry) || orderExpiry <= Date.now() || orderExpiry > reservationExpiry) {
+        updateCheckoutPreparation(null);
+        throw new Error(r.errors.submit);
+      }
+      updateCheckoutPreparation({ checkoutSessionId, fingerprint,
+        expiresAt: orderExpiry, orderCode: reservation.orderCode, sessionId: order.sessionId });
 
       trackBagelitoEvent("Culqi Checkout Prepared", {
         amount: Number(reservation.amount ?? totalAmount),
@@ -622,6 +680,10 @@ export function ReservationFlow({
     },
   ): Promise<CulqiTokenSubmission> {
     if (session.checkoutSessionId !== checkoutSessionRef.current.id) throw new CheckoutReviewError();
+    const preparation = preparationRef.current;
+    if (!isCurrentPreparation(preparation) || preparation?.orderCode !== session.orderCode
+      || preparation.sessionId !== session.sessionId
+      || preparation.expiresAt !== Date.parse(session.expiresAt ?? "")) throw new CheckoutReviewError();
     const current = recoveryRef.current;
     if (current) {
       const active = activePaymentRef.current;
@@ -708,7 +770,7 @@ export function ReservationFlow({
       activePaymentRef.current = null;
       setPaymentInProgress(false);
       if (verifiedStatus === "released") setResolvedRecovery({ orderCode: session.orderCode, paid: false });
-      else if (!recoveryRef.current) redirectToSuccess(session.orderCode, verifiedStatus);
+      else if (!recoveryRef.current) redirectToSuccess(session.orderCode, verifiedStatus, session.checkoutSessionId);
       return "submitted";
     } catch {
       if (isCurrentRecovery(submittedReference)) markPaymentForReview();
@@ -811,7 +873,7 @@ export function ReservationFlow({
     );
   }
 
-  if (!batchAvailability.accepting && !checkoutPage) {
+  if (!batchAvailability.accepting && !isCurrentPreparation(checkoutPreparation) && !paymentInProgress) {
     return (
       <section className="reserve-shell">
         <div className="reserve-herolet">
@@ -826,8 +888,8 @@ export function ReservationFlow({
         <div className="reserve-closed-card">
           <div>
             <span>{localizedBatchName}</span>
-            <strong>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</strong>
-            <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
+            <strong>{locale === "es" ? "Próxima apertura por anunciar" : "Next opening to be announced"}</strong>
+            <p>{locale === "es" ? "Únete a la lista y te avisaremos al abrir pedidos." : "Join the waitlist and we will notify you when orders reopen."}</p>
           </div>
           <Link className="pill-button pink" href={waitlistHref(selectedPack.slug)}>
             <MessageCircle size={18} />
@@ -854,13 +916,19 @@ export function ReservationFlow({
           <span>{localizedBatchName}</span>
           <strong>{batchAvailability.accepting ? batchText.open : batchText.closed}</strong>
         </div>
-        <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
-        <p>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</p>
-        <p>
-          {batchText.limit}: {batchAvailability.remainingPacks === null
-            ? batchText.noLimit
-            : `${batchAvailability.remainingPacks} ${batchText.remaining}`}
-        </p>
+        {batchAvailability.accepting ? (
+          <>
+            <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
+            <p>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</p>
+            <p>
+              {batchText.limit}: {batchAvailability.remainingPacks === null
+                ? batchText.noLimit
+                : `${batchAvailability.remainingPacks} ${batchText.remaining}`}
+            </p>
+          </>
+        ) : (
+          <p>{locale === "es" ? "Los pedidos están cerrados; la fecha de la próxima tanda aún no ha sido anunciada." : "Orders are closed; the next batch date has not been announced."}</p>
+        )}
       </div>
 
       <ConversionTrustStrip compact />
@@ -1085,12 +1153,37 @@ export function ReservationFlow({
               <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
               <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
             </div>
+            <div className="checkout-terms-acceptance">
+              <label htmlFor="checkout-terms-consent">
+                <input
+                  id="checkout-terms-consent"
+                  type="checkbox"
+                  checked={termsAccepted}
+                  disabled={checkoutIsLocked() || paymentInProgress || Boolean(checkoutPreparation)}
+                  onChange={(event) => setTermsAccepted(event.target.checked)}
+                />
+                <span>
+                  {locale === "es" ? "He leído y acepto los " : "I have read and accept the "}
+                  <Link href="/legal" target="_blank" rel="noopener noreferrer">
+                    {locale === "es" ? "términos de compra y la política de privacidad" : "purchase terms and privacy policy"}
+                  </Link>
+                  {" "}({locale === "es" ? "versión" : "version"} {CHECKOUT_LEGAL_VERSION}).
+                </span>
+              </label>
+              {!termsAccepted ? (
+                <small role="status">
+                  {locale === "es"
+                    ? "Marca esta casilla para habilitar el pago. Es independiente de las promociones por WhatsApp."
+                    : "Select the checkbox to enable payment. This is separate from marketing consent."}
+                </small>
+              ) : null}
+            </div>
             <CulqiCheckoutButton
               key={`${selectedPack.slug}-${extraPackAdded ? "extra" : "single"}`}
               amount={totalAmount}
               config={paymentConfig}
               customerEmail={details.email}
-              disabled={false}
+              disabled={!termsAccepted}
               locale={locale}
               onError={setError}
               onPaymentUnresolved={() => {
@@ -1145,10 +1238,12 @@ export function ReservationFlow({
               <div className="checkout-summary-total"><span>{checkoutText.total}</span><strong>S/{totalAmount}</strong></div>
             </div>
 
-            <div className="checkout-summary-detail">
-              <Truck size={18} aria-hidden="true" />
-              <span>{formatPublicDate(batchAvailability.deliveryDate)}</span>
-            </div>
+            {batchAvailability.accepting && batchAvailability.deliveryDate ? (
+              <div className="checkout-summary-detail">
+                <Truck size={18} aria-hidden="true" />
+                <span>{formatPublicDate(batchAvailability.deliveryDate)}</span>
+              </div>
+            ) : null}
             <div className="checkout-summary-detail">
               <ShieldCheck size={18} aria-hidden="true" />
               <span>{checkoutText.secure}</span>

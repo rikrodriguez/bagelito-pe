@@ -16,8 +16,6 @@ type StatusHistoryRow = {
 type OrderLookupRow = {
   batch_id: string | null;
   created_at: string;
-  customer_name: string;
-  district: string;
   email: string;
   order_code: string;
   order_items?: OrderItemRow[];
@@ -40,9 +38,7 @@ type BatchLookupRow = {
 export type PublicTrackedOrder = {
   batchName: string | null;
   createdAt: string;
-  customerName: string;
   deliveryDate: string | null;
-  district: string;
   history: Array<{ createdAt: string; status: string }>;
   items: Array<{ flavorName: string; flavorSlug: string; quantity: number }>;
   orderCode: string;
@@ -81,51 +77,36 @@ function matchesContact(order: Pick<OrderLookupRow, "email" | "whatsapp">, conta
   const normalizedContact = contact.trim();
   if (!normalizedContact) return false;
 
-  return normalizeEmail(order.email) === normalizeEmail(normalizedContact)
-    || normalizePhone(order.whatsapp) === normalizePhone(normalizedContact);
+  // Never let the digits of an email address match somebody else's phone.
+  if (normalizedContact.includes("@")) {
+    return normalizeEmail(order.email) === normalizeEmail(normalizedContact);
+  }
+  const normalizedPhone = normalizePhone(normalizedContact);
+  return /^9\d{8}$/.test(normalizedPhone)
+    && normalizePhone(order.whatsapp) === normalizedPhone;
 }
 
-const orderLookupSelect = "batch_id, created_at, customer_name, district, email, order_code, pack_name, pack_units, payment_provider, payment_status, status, total_amount, updated_at, whatsapp, order_items(flavor_name, flavor_slug, quantity), order_status_history(created_at, new_status)";
+const legacyOrderLookupSelect = "batch_id, created_at, email, order_code, pack_name, pack_units, status, total_amount, updated_at, whatsapp, order_items(flavor_name, flavor_slug, quantity), order_status_history(created_at, new_status)";
+const orderLookupSelect = legacyOrderLookupSelect.replace(", status, total_amount", ", payment_provider, payment_status, status, total_amount");
+
+function missingPaymentColumn(error: { code?: string; message?: string } | null) {
+  const message = String(error?.message ?? "").toLowerCase();
+  return (error?.code === "42703" || error?.code === "PGRST200")
+    && (message.includes("payment_provider") || message.includes("payment_status"));
+}
 
 async function readOrderByCode(orderCode: string) {
-  const { data, error } = await createSupabaseAdminClient()
-    .from("orders")
-    .select(orderLookupSelect)
-    .eq("order_code", orderCode)
-    .maybeSingle();
-
-  if (error) {
-    throw new Error("Could not look up reservation: " + error.message);
-  }
-
-  return (data as OrderLookupRow | null) ?? null;
-}
-
-async function readOrderByContact(contact: string) {
   const supabase = createSupabaseAdminClient();
-  const trimmedContact = contact.trim();
-  const baseQuery = supabase
-    .from("orders")
-    .select(orderLookupSelect);
-  const filteredQuery = trimmedContact.includes("@")
-    ? baseQuery.ilike("email", trimmedContact)
-    : baseQuery.in("whatsapp", [...new Set([
-        trimmedContact,
-        normalizePhone(trimmedContact),
-        `51${normalizePhone(trimmedContact)}`,
-        `+51${normalizePhone(trimmedContact)}`,
-      ])]);
-  const { data, error } = await filteredQuery
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (error) {
-    throw new Error("Could not look up reservation: " + error.message);
+  let result = await supabase.from("orders")
+    .select(orderLookupSelect).eq("order_code", orderCode).maybeSingle();
+  // Production may still use the legacy manual schema until the Culqi
+  // financial migration. Never make tracking availability depend on it.
+  if (missingPaymentColumn(result.error)) {
+    result = await supabase.from("orders").select(legacyOrderLookupSelect)
+      .eq("order_code", orderCode).maybeSingle();
   }
-
-  const order = (data as OrderLookupRow | null) ?? null;
-  return order && matchesContact(order, contact) ? order : null;
+  if (result.error) throw new Error("Could not look up reservation.");
+  return (result.data as OrderLookupRow | null) ?? null;
 }
 
 async function readBatch(batchId: string | null) {
@@ -151,13 +132,10 @@ export async function findTrackedOrder(input: unknown) {
   }
 
   const payload: TrackLookupInput = trackLookupSchema.parse(input);
-  let order = payload.orderCode ? await readOrderByCode(payload.orderCode) : null;
-
-  if (!order && payload.contact) {
-    order = await readOrderByContact(payload.contact);
-  }
-
-  if (!order) {
+  // Require TWO independent matching identifiers. Both missing orders and
+  // wrong contacts have the same error: no enumeration by sequential code.
+  const order = await readOrderByCode(payload.orderCode);
+  if (!order || !matchesContact(order, payload.contact)) {
     throw new TrackLookupError("We could not find a reservation with those details.", 404);
   }
 
@@ -166,9 +144,7 @@ export async function findTrackedOrder(input: unknown) {
   return {
     batchName: batch?.name ?? null,
     createdAt: order.created_at,
-    customerName: order.customer_name,
     deliveryDate: batch?.delivery_date ?? null,
-    district: order.district,
     history: [...(order.order_status_history ?? [])]
       .filter((item) => item?.new_status)
       .map((item) => ({ createdAt: item.created_at, status: item.new_status }))

@@ -5,6 +5,8 @@ export const ADMIN_PASSWORD_MIN_LENGTH = 16;
 export const ADMIN_LOGIN_WINDOW_SECONDS = 15 * 60;
 export const ADMIN_LOGIN_IP_LIMIT = 5;
 export const ADMIN_LOGIN_GLOBAL_LIMIT = 20;
+// The production rate limiter stores ONLY SHA-256 identifiers (64 lowercase hex).
+const ADMIN_LOGIN_GLOBAL_IDENTIFIER = createHash("sha256").update("bagelito:admin-login:global").digest("hex");
 
 type HeaderReader = { get(name: string): string | null };
 type LimiterClient = { rpc(name: string, args: Record<string, unknown>): {
@@ -38,7 +40,7 @@ export function adminLoginIdentifier(headers: HeaderReader, vercelRuntime: boole
 export async function consumeAdminLoginLimit(db: LimiterClient, headers: HeaderReader, vercelRuntime: boolean): Promise<boolean> {
   const limits = [
     { scope: "admin_login_ip", identifier: adminLoginIdentifier(headers, vercelRuntime), limit: ADMIN_LOGIN_IP_LIMIT },
-    { scope: "admin_login_global", identifier: "single-admin", limit: ADMIN_LOGIN_GLOBAL_LIMIT },
+    { scope: "admin_login_global", identifier: ADMIN_LOGIN_GLOBAL_IDENTIFIER, limit: ADMIN_LOGIN_GLOBAL_LIMIT },
   ];
   // A global ceiling also limits IP rotation. All attempts, including successful
   // ones, consume budget; no comparison or session issuance happens beforehand.
@@ -54,7 +56,7 @@ export async function consumeAdminLoginLimit(db: LimiterClient, headers: HeaderR
     }
     const row = response.data as { allowed?: unknown; hits?: unknown; retry_after_seconds?: unknown } | null;
     if (response.error || !row || typeof row.allowed !== "boolean"
-      || !Number.isInteger(row.hits) || Number(row.hits) < 1 || Number(row.hits) > item.limit
+      || !Number.isInteger(row.hits) || Number(row.hits) < 1 || Number(row.hits) > item.limit + 1
       || !Number.isInteger(row.retry_after_seconds) || Number(row.retry_after_seconds) < 0
       || Number(row.retry_after_seconds) > ADMIN_LOGIN_WINDOW_SECONDS
       || (row.allowed && row.retry_after_seconds !== 0)

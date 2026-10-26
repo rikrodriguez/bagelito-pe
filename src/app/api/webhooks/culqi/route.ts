@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { fetchCulqiEvent, isCulqiRequestAllowed, type CulqiErrorType } from "@/lib/payments";
+import { fetchCulqiCharge, fetchCulqiEvent, isCulqiRequestAllowed, type CulqiErrorType, type CulqiEventErrorParam } from "@/lib/payments";
+import { resolveVerifiedCulqiChargeCurrency } from "@/lib/payments/culqi-event-currency-evidence";
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from "@/lib/payments/verification";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { randomUUID } from "node:crypto";
@@ -49,10 +50,10 @@ function requestShape(value: unknown) {
 }
 
 type DiagnosticStage = "scope" | "request" | "event_lookup" | "event_identity"
-  | "resource" | "database_client" | "transaction";
+  | "resource" | "charge_evidence" | "database_client" | "transaction";
 type DiagnosticReason = "scope_rejected" | "invalid_event_id" | "malformed_request"
   | "upstream_unauthorized" | "upstream_not_found" | "upstream_rate_limited" | "upstream_failure"
-  | "event_identity_mismatch" | "refund_requires_review" | "event_ignored" | "missing_resource"
+  | "event_identity_mismatch" | "refund_requires_review" | "event_ignored" | "missing_resource" | "charge_evidence_invalid"
   | "database_client_failure" | "rpc_missing" | "rpc_permission_denied"
   | "amount_currency_mismatch" | "order_missing" | "source_mismatch"
   | "payment_attempt_missing" | "legacy_requires_review" | "rpc_failure"
@@ -61,6 +62,7 @@ type UpstreamFailureDiagnostic = {
   upstreamHttpStatus: number | null;
   upstreamFailureClass: "none" | "http" | "timeout" | "transport_or_unknown";
   upstreamErrorType: CulqiErrorType | "none";
+  upstreamErrorParam: CulqiEventErrorParam | "none";
   eventModeMatchesConfig: boolean | null;
 };
 
@@ -70,6 +72,10 @@ function eventLookupFailureDiagnostic(error: unknown): UpstreamFailureDiagnostic
   let errorType: unknown;
   let eventModeMatches: unknown;
   let eventModeMatchesConfig: boolean | null = null;
+  let upstreamErrorParam: CulqiEventErrorParam = "other";
+  const allowedParams = new Set<CulqiEventErrorParam>([
+    "id", "environment", "version", "authorization", "other", "absent",
+  ]);
   const allowedTypes = new Set<CulqiErrorType>([
     "invalid_request_error", "authentication_error", "parameter_error", "card_error",
     "limit_api_error", "resource_error", "api_error",
@@ -86,7 +92,12 @@ function eventLookupFailureDiagnostic(error: unknown): UpstreamFailureDiagnostic
     if (typeof eventModeMatches === "boolean") eventModeMatchesConfig = eventModeMatches;
     try { status = (error as { status?: unknown }).status; } catch { /* Unknown transport failure. */ }
     if (typeof status === "number" && Number.isInteger(status) && status >= 100 && status <= 599) {
-      return { upstreamHttpStatus: status, upstreamFailureClass: "http", upstreamErrorType, eventModeMatchesConfig };
+      let paramClass: unknown;
+      try { paramClass = (error as { upstreamErrorParam?: unknown }).upstreamErrorParam; } catch { /* Unknown safe classification. */ }
+      if (typeof paramClass === "string" && allowedParams.has(paramClass as CulqiEventErrorParam)) {
+        upstreamErrorParam = paramClass as CulqiEventErrorParam;
+      }
+      return { upstreamHttpStatus: status, upstreamFailureClass: "http", upstreamErrorType, upstreamErrorParam, eventModeMatchesConfig };
     }
     try { name = (error as { name?: unknown }).name; } catch { /* Unknown transport failure. */ }
   }
@@ -95,6 +106,7 @@ function eventLookupFailureDiagnostic(error: unknown): UpstreamFailureDiagnostic
     // AbortError can describe cancellation; it does not prove a timeout.
     upstreamFailureClass: name === "TimeoutError" ? "timeout" : "transport_or_unknown",
     upstreamErrorType,
+    upstreamErrorParam: "none",
     eventModeMatchesConfig: null,
   };
 }
@@ -119,6 +131,7 @@ function rpcFailureReason(error: unknown): DiagnosticReason {
 function exceptionReason(stage: DiagnosticStage, error: unknown, upstreamHttpStatus: number | null): DiagnosticReason {
   if (stage === "request") return "malformed_request";
   if (stage === "event_identity") return "event_identity_mismatch";
+  if (stage === "charge_evidence") return "charge_evidence_invalid";
   if (stage === "database_client") return "database_client_failure";
   if (stage === "transaction") return rpcFailureReason(error);
   if (stage === "event_lookup") {
@@ -139,9 +152,10 @@ export async function POST(request: Request) {
   let lookupResource = "none", lookupIdKind = "none", lookupState = "not_attempted";
   let stage: DiagnosticStage = "scope";
   let eventVerified = false;
+  let eventIdMatchesDocumentedLength: boolean | null = null;
   let transactionAttempted = false;
   let upstreamFailure: UpstreamFailureDiagnostic = {
-    upstreamHttpStatus: null, upstreamFailureClass: "none", upstreamErrorType: "none", eventModeMatchesConfig: null,
+    upstreamHttpStatus: null, upstreamFailureClass: "none", upstreamErrorType: "none", upstreamErrorParam: "none", eventModeMatchesConfig: null,
   };
   const respond = (httpStatus: number, payload: Record<string, unknown>, reason: DiagnosticReason) => {
     const allowedStates = new Set(["paid", "pending", "failed", "expired"]);
@@ -160,7 +174,9 @@ export async function POST(request: Request) {
       upstreamHttpStatus: upstreamFailure.upstreamHttpStatus,
       upstreamFailureClass: upstreamFailure.upstreamFailureClass,
       upstreamErrorType: upstreamFailure.upstreamErrorType,
+      upstreamErrorParam: upstreamFailure.upstreamErrorParam,
       eventModeMatchesConfig: upstreamFailure.eventModeMatchesConfig,
+      eventIdMatchesDocumentedLength,
     }); } catch { /* Logging cannot change an outcome or cause another write. */ }
     return NextResponse.json(payload, { status: httpStatus, headers: { "Cache-Control": "no-store" } });
   };
@@ -181,6 +197,8 @@ export async function POST(request: Request) {
     // Describes the client invocation, not proof that an HTTP request was sent:
     // configuration/mode checks may reject before transport.
     lookupResource = "events"; lookupIdKind = "evt"; lookupState = "started";
+    // Documented total length is a diagnostic, never an additional ID gate.
+    eventIdMatchesDocumentedLength = eventId.length === 25;
     const verified = await fetchCulqiEvent(eventId);
     lookupState = "returned";
     stage = "event_identity";
@@ -195,6 +213,8 @@ export async function POST(request: Request) {
     if (!resource || typeof resource.id !== "string" || !resource.id) {
       return respond(400, { ok: false, error: "Webhook payment data is missing." }, "missing_resource");
     }
+    stage = "charge_evidence";
+    const reconciledResource = await resolveVerifiedCulqiChargeCurrency(eventType, resource, fetchCulqiCharge);
     // The service-role RPC validates amount, currency and order identity, locks
     // event and order, and commits payment/history/event-marker as ONE transaction.
     // No nontransactional fallback: a missing migration must fail closed.
@@ -204,7 +224,7 @@ export async function POST(request: Request) {
     transactionAttempted = true;
     const { data, error } = await database.rpc("apply_culqi_payment_event", {
       p_event_id: eventId, p_event_type: eventType,
-      p_resource: resource, p_verified_payload: verified,
+      p_resource: reconciledResource, p_verified_payload: verified,
     });
     if (error) return respond(500, { ok: false, error: "Could not process Culqi webhook." }, rpcFailureReason(error));
     if (!data || typeof data !== "object" || Array.isArray(data)) {

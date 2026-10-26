@@ -126,6 +126,7 @@ expect_sql_failure "$ROOT/supabase/add-checkout-safety.sql" 23514 protected-orig
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/checkout-replay-guard-assert.sql"
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/compatible-intake-rollback.sql"
 echo 'PASS: core preflight rejects installed state; original replay aborts atomically; forward guard is idempotent; closed intake retains settlement'
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-charge-confirmation.sql" >> "$WORK/schema.log" 2>&1
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/admin-login-rate-limit.sql"
 for file in reservation-window.sql charge-claim.sql charge-concurrency.sql prepare-concurrency.sql; do
  "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/$file"
@@ -175,10 +176,34 @@ echo 'PASS: persistent admin limits, expiry recovery, role restrictions and conc
 echo 'PASS: verified failure wins over late response; wall-clock expiry enforced; payment race cannot oversell capacity'
 echo 'PASS: atomic rollback after history failure; metadata/source binding; duplicate event race; fulfillment preservation; late-payment quarantine'
 echo 'PASS: scheduled opening; legacy lane blocked; reusable token-only session; single charge claim; 3DS binding; concurrent card/Yape sessions allow exactly one claim'
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/charge-confirmation.sql"
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/charge-confirmation-finish-sticky.sql"
+for scenario in 1 2 3 4 5 6 7; do
+ "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/charge-confirmation-race-setup.sql" > "$WORK/confirmation-setup-$scenario.log" 2>&1
+ confirmation_signal=$((94000+scenario))
+ "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -v scenario="$scenario" -v signal="$confirmation_signal" \
+  -f "$ROOT/tests/payments/sql/charge-confirmation-race-holder.sql" > "$WORK/confirmation-holder-$scenario.log" 2>&1 & confirmation_holder=$!
+ confirmation_ready=false
+ for attempt in $(seq 1 100); do
+  observed=$("$PG_BIN/psql" -X -At -v ON_ERROR_STOP=1 -c "select exists(select 1 from pg_locks where locktype='advisory' and granted and classid=0 and objid=$confirmation_signal and objsubid=1);")
+  if [[ "$observed" == t ]]; then confirmation_ready=true; break; fi
+  kill -0 "$confirmation_holder" 2>/dev/null || { cat "$WORK/confirmation-holder-$scenario.log"; exit 1; }
+  sleep .02
+ done
+ [[ "$confirmation_ready" == true ]] || { cat "$WORK/confirmation-holder-$scenario.log"; exit 1; }
+ PGAPPNAME=bagelito_confirmation_waiter PGOPTIONS="$PGOPTIONS -c statement_timeout=15000 -c lock_timeout=12000" \
+  "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -v scenario="$scenario" \
+  -f "$ROOT/tests/payments/sql/charge-confirmation-race-waiter.sql" > "$WORK/confirmation-waiter-$scenario.log" 2>&1 \
+  || { cat "$WORK/confirmation-waiter-$scenario.log"; exit 1; }
+ wait "$confirmation_holder" || { cat "$WORK/confirmation-holder-$scenario.log"; exit 1; }
+ "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -v scenario="$scenario" -f "$ROOT/tests/payments/sql/charge-confirmation-race-assert.sql"
+done
+echo 'PASS: charge result duplicate/webhook races, post-lock expiry, reused capacity, refund, claim and freshness guards'
 assert_core_only_catalog
 if [[ "$SQL_PROFILE" == full ]]; then
  "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-charge-get-reconciliation.sql" >> "$WORK/schema.log" 2>&1
  "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-culqi-status-charge-recovery.sql" >> "$WORK/schema.log" 2>&1
+ "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/charge-confirmation-qa-recovery.sql"
  "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/charge-get-reconciliation.sql"
  echo 'PASS: charge GET disabled policy, typed evidence, role isolation, atomic history, already-paid and webhook preservation'
  bash "$ROOT/tests/payments/sql/charge-get-reconciliation-races.sh"
