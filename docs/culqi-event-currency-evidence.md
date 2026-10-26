@@ -24,3 +24,9 @@ Después de verificar el ID/tipo mediante GET autenticado del evento:
 4. Sin verificación de entregas reales y aprobación de despliegue no habilitar live ni fusionar con main.
 
 Esta rama procede del trabajo Culqi QA, no de producción; no contiene cambios a la home, diseño ni productos.
+
+## Resultado de verificación en QA — 26 de octubre de 2026
+
+La corrección fue integrada exclusivamente en la rama QA mediante PR #20. En Vercel QA se invocó dos veces el handler POST compilado con un mismo evento de Culqi autenticado: HTTP 200 + evento aplicado la primera vez y HTTP 200 + duplicate=true la segunda. Supabase QA registró exactamente un evento procesado; los recibos de cargo, intentos y estado de pago quedaron sin cambios. El ensayo no creó cargos ni afectó producción.
+
+**Límite:** fue una invocación controlada del handler dentro del entorno QA, no una entrega entrante real desde CulqiPanel por la URL HTTP configurada. Todavía hay que verificar esa entrega, Yape, 3DS y los permisos de activación live.

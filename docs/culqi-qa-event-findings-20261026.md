@@ -33,3 +33,18 @@ El script temporal, los tests auxiliares y el hook de \`npm run build\` usados p
 - La prueba de aplicar el evento detuvo la ejecución **antes del webhook** por dato de moneda ausente. Por tanto, cero mutaciones y ninguna notificación reconocida a partir de estos diagnósticos.
 - La mitigación segura es verificar un segundo GET autenticado del cargo y completar **solo la moneda ausente** del evento cuando exista evidencia vinculante completa; jamás completar una moneda explícita contradictoria, ni suponer PEN, ni aceptar datos del navegador.
 - Los dos scripts de diagnóstico y el runner transitorio quedan eliminados del hook de build al concluir las observaciones. Mantener `main` y cobros reales sin modificaciones hasta probar RPC e idempotencia en QA.
+
+## QA webhook and idempotency VALIDATED — 26 October 2026
+
+The authenticated Culqi sandbox event was identified against the already-paid QA order BAG-000013. The exact compiled Next.js POST webhook handler was invoked in-process on the QA Vercel Preview, using the authentic Culqi event ID. All transaction decisions used Culqi's authenticated GETs and the existing Supabase QA RPC. No charge POST, new provider charge, production action or test card interaction was performed.
+
+- Controlled Vercel QA deployment: `dpl_6pr4UEFMtw6AfQua5iU2qSENYPUS`, SHA `71940ef746804bf5370fa761c75924d222a74179`.
+- Preflight accepted: QA-only env/branch/site, persisted paid order, matching event identity, matching provider charge, PEN amount and currency, captured net amount, zero refund and no dispute.
+- **First handler POST:** HTTP 200, applied successfully, processed marker confirmed.
+- **Second handler POST (same event):** HTTP 200, `duplicate=true`, with no second payment.
+- Independent Supabase SQL, after test: **1** processed webhook event; **0** unprocessed webhook events; **1** original charge confirmation receipt; **1** payment attempt; **1** paid and confirmed QA order; **0** additional order status-history entries attributed to webhook.
+- Before test: **0** webhook events, **1** original receipt, **1** attempt, **1** paid and confirmed QA order.
+- The one-shot code had six synthetic QA-safety tests, all passed; the stable Culqi correction had previously passed 729/729 Node tests and a successful production-style build on an isolated runner (not a live release).
+- The temporary build-time replay hook, test script, test fixtures and temporary documents were removed after verification; `npm run build` is restored to `next build`.
+
+**Important limit:** this proves the handler and idempotent Supabase transaction with a genuine event inside the QA Vercel environment. It does NOT prove an HTTP delivery from Culqi's remote webhook service to the registered public URL. CulqiPanel's merchant association, event subscription, delivery retries and external reachability still require an end-to-end inbound delivery test. Do not claim production payments are live; 3DS/Yape paths and operational launch checks remain.
