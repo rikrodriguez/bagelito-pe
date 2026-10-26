@@ -1,43 +1,26 @@
 import type { Metadata } from "next";
-import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
-import { FAQ } from "@/components/FAQ";
-import { FinalCTA } from "@/components/FinalCTA";
-import { FlavorStrip } from "@/components/FlavorStrip";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { HowMonthlyWorks } from "@/components/HowMonthlyWorks";
-import { MobileStickyReserveCTA } from "@/components/MobileStickyReserveCTA";
-import { Packs } from "@/components/Packs";
-import { Testimonials } from "@/components/Testimonials";
-import { WhyMonthly } from "@/components/WhyMonthly";
+import { ShopVisit } from "@/components/ShopVisit";
+import { getPublicPaymentConfig } from "@/lib/payments";
+import "./shop-visit.css";
 
 export const metadata: Metadata = {
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
+  title: "Bagelito | Classic Gringo Bagels en Lima",
+  description: "Explora los sabores Bagelito, arma tu caja de 6 o 12 bagels y revisa el total y el delivery en nuestro checkout.",
 };
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default function HomePage() {
+  // Do not claim transactions are enabled merely because checkout is visible.
+  const paymentEnabled = getPublicPaymentConfig().enabled;
   return (
     <>
       <Header />
-      <main>
-        <Hero />
-        <ConversionTrustStrip />
-        <HowMonthlyWorks />
-        <Packs />
-        <WhyMonthly />
-        <FlavorStrip />
-        <Testimonials />
-        <FAQ />
-        <FinalCTA />
-      </main>
+      <main><ShopVisit paymentEnabled={paymentEnabled} /></main>
       <Footer />
-      <MobileStickyReserveCTA />
     </>
   );
 }
