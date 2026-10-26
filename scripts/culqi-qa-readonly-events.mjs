@@ -1,6 +1,6 @@
 import { pathToFileURL } from "node:url";
 
-const RUN_MESSAGE = "qa: one-shot readonly Culqi event diagnostics";
+const RUN_MESSAGE = "qa: readonly unfiltered Culqi event probe";
 const QA_BRANCH = "codex/culqi-payment-split-20261021";
 const QA_HOST = "bagelito-pe-git-cod-d9825d-ricardo-rodriguezs-projects-487b7b64.vercel.app";
 const QA_DATABASE = "https://qaahskendqdkynwtylho.supabase.co";
@@ -168,16 +168,100 @@ export async function inspectQAEvents(fetcher, secret) {
   return report;
 }
 
+
+/**
+ * A second bounded read-only diagnostic comparing three API list modes.
+ * Do not infer global absence of events from a single page or filtered result.
+ * No provider IDs, PII, payloads, timestamps, or keys are logged.
+ */
+export async function inspectBroadEventLists(fetcher, secret) {
+  const queries = [
+    { label: "unfiltered", path: "/v2/events?limit=30" },
+    { label: "by_type", path: "/v2/events?type=charge.creation.succeeded&limit=30" },
+    { label: "by_date", path: "/v2/events?creation_date_from=1792540800&creation_date_to=1792800000&limit=30" },
+  ];
+  const report = {
+    checks: [],
+    targetSeen: false,
+    lookupAttempted: false,
+    sdkGetStatus: null,
+    sdkErrorType: "none",
+    sdkErrorParam: "none",
+    minimalGetStatus: null,
+    identityVerified: false,
+    interpretation: "inconclusive",
+    readsAttempted: 0,
+    writesAttempted: false,
+  };
+  let candidate = null;
+  for (const query of queries) {
+    const read = await requestJSON(fetcher, query.path, secret, false, 512000);
+    report.readsAttempted++;
+    const validList = read.ok && object(read.body) && Array.isArray(read.body.data)
+      && read.body.data.length <= 30;
+    const rows = validList ? read.body.data : [];
+    const targetMatches = rows.filter(eventMatchesOrder);
+    if (targetMatches.length && !candidate) candidate = targetMatches[0];
+    report.checks.push({
+      filter: query.label,
+      httpStatus: read.status,
+      errorType: read.error.type,
+      errorParam: read.error.param,
+      validList,
+      pageCount: validList ? rows.length : null,
+      matchesTargetOnPage: targetMatches.length > 0,
+    });
+  }
+  if (!candidate) {
+    const unfiltered = report.checks[0];
+    report.interpretation = unfiltered.validList && unfiltered.pageCount === 0
+      ? "unfiltered_page_empty" : "target_not_in_scanned_pages";
+    return report;
+  }
+  report.targetSeen = true;
+  if (!object(candidate) || typeof candidate.id !== "string" || !EVENT_ID.test(candidate.id)) {
+    report.interpretation = "invalid_event_id_shape";
+    return report;
+  }
+  const resourcePath = "/v2/events/" + encodeURIComponent(candidate.id);
+  const sdk = await requestJSON(fetcher, resourcePath, secret, true, 512000);
+  report.readsAttempted++;
+  report.lookupAttempted = true;
+  report.sdkGetStatus = sdk.status;
+  report.sdkErrorType = sdk.error.type;
+  report.sdkErrorParam = sdk.error.param;
+  report.identityVerified = sdk.ok && object(sdk.body) && sdk.body.id === candidate.id
+    && sdk.body.type === candidate.type && eventMatchesOrder(sdk.body);
+  if (report.identityVerified) {
+    report.interpretation = "sdk_get_verified";
+    return report;
+  }
+  if (sdk.status !== 400 || sdk.error.type !== "parameter_error"
+    || !["version", "environment", "absent"].includes(sdk.error.param)) {
+    report.interpretation = "sdk_get_unverified";
+    return report;
+  }
+  const minimal = await requestJSON(fetcher, resourcePath, secret, false, 512000);
+  report.readsAttempted++;
+  report.minimalGetStatus = minimal.status;
+  report.identityVerified = minimal.ok && object(minimal.body)
+    && minimal.body.id === candidate.id && minimal.body.type === candidate.type
+    && eventMatchesOrder(minimal.body);
+  report.interpretation = report.identityVerified
+    ? "minimal_get_verified" : "minimal_get_unverified";
+  return report;
+}
+
 async function main() {
   if (!allowedQAEnvironment(process.env)) {
-    console.info("culqi_qa_readonly_event_diagnostic", { status: "skipped" });
+    console.info("culqi_qa_broad_event_list", { status: "skipped" });
     return;
   }
   // Event data/IDs, cards, personal data and secrets never reach logs.
   let result;
-  try { result = await inspectQAEvents(fetch, process.env.CULQI_SECRET_KEY); }
+  try { result = await inspectBroadEventLists(fetch, process.env.CULQI_SECRET_KEY); }
   catch { result = { interpretation: "unexpected_failure", writesAttempted: false }; }
-  console.info("culqi_qa_readonly_event_diagnostic", result);
+  console.info("culqi_qa_broad_event_list", result);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
