@@ -4,17 +4,18 @@ import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { parseCulqiEventResource, verifyCulqiEventIdentity } from '../../src/lib/payments/verification.ts';
+import { resolveVerifiedCulqiChargeCurrency } from '../../src/lib/payments/culqi-event-currency-evidence.ts';
 const source = await readFile(new URL('../../src/app/api/webhooks/culqi/route.ts', import.meta.url), 'utf8');
 const body = stripTypeScriptTypes(source.replace(/^import .*;\n/gm, '')).replace(/export /g, '');
-const load = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient', 'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', `${body}; return POST;`);
+const load = new Function('NextResponse', 'fetchCulqiEvent', 'isCulqiRequestAllowed', 'createSupabaseAdminClient', 'parseCulqiEventResource', 'verifyCulqiEventIdentity', 'console', 'randomUUID', 'fetchCulqiCharge', 'resolveVerifiedCulqiChargeCurrency', `${body}; return POST;`);
 const id = 'evt_test_12345678';
 async function execute({
   event = {}, resource = { id: 'chr_test_12345678', amount: 6800, currency_code: 'PEN' },
   error = null, data = { status: 'paid' }, enabled = true, receivedType = 'charge.creation.succeeded',
   requestBody = JSON.stringify({ id, type: receivedType }), requestHeaders = {},
-  fetchError = null, clientError = null, rpcError = null, rpcImplementation = null,
+  fetchError = null, clientError = null, chargeError = null, chargeResult = null, rpcError = null, rpcImplementation = null,
 } = {}) {
-  const calls = [], fetchCalls = [], clientCalls = [], logs = [];
+  const calls = [], fetchCalls = [], chargeCalls = [], clientCalls = [], logs = [];
   const post = load({ json: (payload, init = {}) => ({ payload, status: init.status ?? 200 }) }, async (eventId) => {
     fetchCalls.push(eventId);
     if (fetchError) throw fetchError;
@@ -33,9 +34,13 @@ async function execute({
     warn: (...args) => logs.push({ level: 'warn', args }),
     error: () => assert.fail('Webhook must not log raw errors'),
     log: () => assert.fail('Webhook must use its bounded diagnostic logger'),
-  }, randomUUID);
+  }, randomUUID, async (chargeId) => {
+    chargeCalls.push(chargeId);
+    if (chargeError) throw chargeError;
+    return chargeResult;
+  }, resolveVerifiedCulqiChargeCurrency);
   const response = await post(new Request('https://fixture.invalid', { method: 'POST', body: requestBody, headers: requestHeaders }));
-  return { response, calls, fetchCalls, clientCalls, logs };
+  return { response, calls, fetchCalls, chargeCalls, clientCalls, logs };
 }
 test('authenticated resource is passed once to the transaction RPC', async () => {
   const { response, calls } = await execute();
@@ -123,11 +128,11 @@ const hostileError = () => Object.assign(new Error(sensitiveText), {
   headers: { authorization: sensitiveMarkers[4], cookie: sensitiveMarkers[5] },
   merchant_message: sensitiveMarkers[6], payload: sensitiveMarkers[7],
 });
-const diagnosticStages = new Set(['scope', 'request', 'event_lookup', 'event_identity', 'resource', 'database_client', 'transaction']);
+const diagnosticStages = new Set(['scope', 'request', 'event_lookup', 'event_identity', 'resource', 'charge_evidence', 'database_client', 'transaction']);
 const diagnosticReasons = new Set([
   'scope_rejected', 'invalid_event_id', 'malformed_request',
   'upstream_unauthorized', 'upstream_not_found', 'upstream_rate_limited', 'upstream_failure',
-  'event_identity_mismatch', 'refund_requires_review', 'event_ignored', 'missing_resource',
+  'event_identity_mismatch', 'refund_requires_review', 'event_ignored', 'missing_resource', 'charge_evidence_invalid',
   'database_client_failure', 'rpc_missing', 'rpc_permission_denied', 'amount_currency_mismatch',
   'order_missing', 'source_mismatch', 'payment_attempt_missing', 'legacy_requires_review',
   'rpc_failure', 'invalid_rpc_result', 'applied', 'duplicate', 'unexpected_failure',
@@ -550,4 +555,35 @@ test('every handled result logs one bounded diagnostic without changing its resp
 
 test('webhook diagnostics remain local and add no notification or extra write mechanism', () => {
   assert.doesNotMatch(source, /monitoring-alerts|\blogError\s*\(|\bfetch\s*\(|\.from\s*\(|\.insert\s*\(|\.update\s*\(/);
+});
+
+
+test('a verified event missing currency consults authenticated charge before SQL', async () => {
+  const eventResource = { object: 'charge', id: 'chr_test_12345678', amount: 6800,
+    source: { id: 'tkn_test_fixture123' }, metadata: { bagelito_order_code: 'BAG-FIXTURE' } };
+  const verifiedCharge = { ...eventResource, currency_code: 'PEN', capture: true,
+    current_amount: 6800, amount_refunded: 0, dispute: false, paid: false };
+  const result = await execute({ resource: eventResource, chargeResult: verifiedCharge });
+  assert.equal(result.response.status, 200);
+  assert.deepEqual(result.chargeCalls, [eventResource.id]);
+  assert.equal(result.calls.length, 1);
+  assert.equal(result.calls[0].args.p_resource.currency_code, 'PEN');
+  assert.deepEqual(result.calls[0].args.p_verified_payload.data, eventResource,
+    'Raw authenticated event must remain unmodified as stored evidence');
+  assert.equal(Object.hasOwn(eventResource, 'currency_code'), false);
+  assert.equal(result.logs[0].args[1].reason, 'applied');
+});
+
+test('a wrong authenticated charge currency cannot reach the payment RPC', async () => {
+  const resource = { object: 'charge', id: 'chr_test_12345678', amount: 6800,
+    source: { id: 'tkn_test_fixture123' }, metadata: { bagelito_order_code: 'BAG-FIXTURE' } };
+  const result = await execute({ resource, chargeResult: { ...resource,
+    currency_code: 'USD', capture: true, current_amount: 6800,
+    amount_refunded: 0, dispute: false } });
+  assert.equal(result.response.status, 500);
+  assert.equal(result.calls.length, 0);
+  assert.equal(result.logs[0].args[1].stage, 'charge_evidence');
+  assert.equal(result.logs[0].args[1].reason, 'charge_evidence_invalid');
+  assert.equal(result.logs[0].args[1].transactionAttempted, false);
+  assert.deepEqual(result.chargeCalls, [resource.id]);
 });
