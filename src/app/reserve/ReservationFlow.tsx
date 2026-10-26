@@ -28,6 +28,8 @@ import {
 import { districtOptions } from "@/lib/reservations/schema";
 import { siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
+import { saveSuccessProof } from "@/lib/payments/success-proof";
+import { CHECKOUT_LEGAL_VERSION } from "@/lib/legal-terms";
 import { useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 type Props = {
@@ -133,10 +135,8 @@ export function ReservationFlow({
   const [singleFlavor, setSingleFlavor] = useState("");
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
-  // The legal copy is available from the checkout summary. Keeping this
-  // internal flag true lets the payment control render without a duplicate
-  // terms card in the final step.
-  const termsAccepted = true;
+  // Explicit purchase consent is separate from the optional marketing checkbox.
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
   const hasMountedRef = useRef(false);
@@ -490,7 +490,11 @@ export function ReservationFlow({
     });
   }
 
-  function redirectToSuccess(orderCode: string, payment: "paid" | "pending") {
+  function redirectToSuccess(orderCode: string, payment: "paid" | "pending", checkoutSessionId: string) {
+    // This proves only checkout ownership; payment must still be rechecked
+    // against the server after navigation. Never put the UUID in the URL.
+    try { saveSuccessProof(window.sessionStorage, orderCode, checkoutSessionId); }
+    catch { /* Private browsing may disable sessionStorage; fail closed on success page. */ }
     const params = new URLSearchParams({
       amount: String(totalAmount),
       order: orderCode,
@@ -765,7 +769,7 @@ export function ReservationFlow({
       activePaymentRef.current = null;
       setPaymentInProgress(false);
       if (verifiedStatus === "released") setResolvedRecovery({ orderCode: session.orderCode, paid: false });
-      else if (!recoveryRef.current) redirectToSuccess(session.orderCode, verifiedStatus);
+      else if (!recoveryRef.current) redirectToSuccess(session.orderCode, verifiedStatus, session.checkoutSessionId);
       return "submitted";
     } catch {
       if (isCurrentRecovery(submittedReference)) markPaymentForReview();
@@ -1142,12 +1146,37 @@ export function ReservationFlow({
               <div className="wide"><span>{r.reviewLabels.address}</span><strong>{details.deliveryAddress}, {details.district === "Other" ? r.otherDistrict : details.district}</strong></div>
               <div className="wide"><span>{r.reviewLabels.flavors}</span><strong>{flavorSummary.map((item) => item.quantity + " x " + item.flavorName).join(", ")}</strong></div>
             </div>
+            <div className="checkout-terms-acceptance">
+              <label htmlFor="checkout-terms-consent">
+                <input
+                  id="checkout-terms-consent"
+                  type="checkbox"
+                  checked={termsAccepted}
+                  disabled={checkoutIsLocked() || paymentInProgress || Boolean(checkoutPreparation)}
+                  onChange={(event) => setTermsAccepted(event.target.checked)}
+                />
+                <span>
+                  {locale === "es" ? "He leído y acepto los " : "I have read and accept the "}
+                  <Link href="/legal" target="_blank" rel="noopener noreferrer">
+                    {locale === "es" ? "términos de compra y la política de privacidad" : "purchase terms and privacy policy"}
+                  </Link>
+                  {" "}({locale === "es" ? "versión" : "version"} {CHECKOUT_LEGAL_VERSION}).
+                </span>
+              </label>
+              {!termsAccepted ? (
+                <small role="status">
+                  {locale === "es"
+                    ? "Marca esta casilla para habilitar el pago. Es independiente de las promociones por WhatsApp."
+                    : "Select the checkbox to enable payment. This is separate from marketing consent."}
+                </small>
+              ) : null}
+            </div>
             <CulqiCheckoutButton
               key={`${selectedPack.slug}-${extraPackAdded ? "extra" : "single"}`}
               amount={totalAmount}
               config={paymentConfig}
               customerEmail={details.email}
-              disabled={false}
+              disabled={!termsAccepted}
               locale={locale}
               onError={setError}
               onPaymentUnresolved={() => {
