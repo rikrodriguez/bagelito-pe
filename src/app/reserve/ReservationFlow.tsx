@@ -561,8 +561,8 @@ export function ReservationFlow({
         <div className="reserve-closed-card">
           <div>
             <span>{localizedBatchName}</span>
-            <strong>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</strong>
-            <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
+            <strong>{locale === "es" ? "Próxima apertura por anunciar" : "Next opening to be announced"}</strong>
+            <p>{locale === "es" ? "Únete a la lista y te avisaremos al abrir pedidos." : "Join the waitlist and we will notify you when orders reopen."}</p>
           </div>
           <Link className="pill-button pink" href={`/waitlist?pack=${selectedPack.slug}`}>
             <MessageCircle size={18} />
@@ -589,13 +589,19 @@ export function ReservationFlow({
           <span>{localizedBatchName}</span>
           <strong>{batchAvailability.accepting ? batchText.open : batchText.closed}</strong>
         </div>
-        <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
-        <p>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</p>
-        <p>
-          {batchText.limit}: {batchAvailability.remainingPacks === null
-            ? batchText.noLimit
-            : `${batchAvailability.remainingPacks} ${batchText.remaining}`}
-        </p>
+        {batchAvailability.accepting ? (
+          <>
+            <p>{batchText.ordersClose}: {formatPublicDate(batchAvailability.ordersCloseAt)}</p>
+            <p>{batchText.delivery}: {formatPublicDate(batchAvailability.deliveryDate)}</p>
+            <p>
+              {batchText.limit}: {batchAvailability.remainingPacks === null
+                ? batchText.noLimit
+                : `${batchAvailability.remainingPacks} ${batchText.remaining}`}
+            </p>
+          </>
+        ) : (
+          <p>{locale === "es" ? "Los pedidos están cerrados; la fecha de la próxima tanda aún no ha sido anunciada." : "Orders are closed; the next batch date has not been announced."}</p>
+        )}
       </div>
 
       <ConversionTrustStrip compact />
