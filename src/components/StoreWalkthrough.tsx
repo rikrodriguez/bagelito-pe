@@ -12,13 +12,16 @@ import { districtDeliveryDistancesKm, getDeliveryFee } from "@/lib/delivery-pric
 import { SHOP_DRAFT_KEY, SHOP_DRAFT_UPDATED_EVENT } from "@/lib/shop-draft";
 import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
+import { FirstStageChoice } from "@/components/store/FirstStageChoice";
+import { FirstStageProgress } from "@/components/store/FirstStageProgress";
+import { getFirstStageFromHash, hashForFirstStage, type FirstStageStep, type PackFamily } from "@/lib/storefront-first-stage";
 
 type Scene = "entry" | "counter" | "build" | "cashier";
 type Draft = { version: 1; packSlug: PackSlug; quantities: Record<string, number>; singleFlavor: string; district?: string };
 type FlyingBagel = { slug: string; x: number; y: number; dx: number; dy: number; key: number };
 const scenes: Scene[] = ["entry", "counter", "build", "cashier"];
 const sceneHash: Record<Scene, string> = { entry: "#entrar", counter: "#mostrador", build: "#arma-tu-caja", cashier: "#caja" };
-const getScene = (hash: string): Scene => scenes.find((s) => sceneHash[s] === hash) ?? "entry";
+const getScene = (hash: string): Scene => hash === "#packs" ? "counter" : scenes.find((s) => sceneHash[s] === hash) ?? "entry";
 const descriptions = {
   es: {
     "jalapeno-cheddar": "Cheddar dorado, con un toque de jalapeño.",
@@ -157,6 +160,8 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const { accepting, merchantReviewOnly } = useBatchAvailability();
   const [scene, setScene] = useState<Scene>("entry");
   const [entering, setEntering] = useState(false);
+  const [firstStageStep, setFirstStageStep] = useState<FirstStageStep>("entry");
+  const [selectedPackFamily, setSelectedPackFamily] = useState<PackFamily | null>(null);
   const [packSlug, setPackSlug] = useState<PackSlug>("6-mixed");
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [singleFlavor, setSingleFlavor] = useState("");
@@ -199,6 +204,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
         if (saved.district) setDistrict(saved.district);
       }
     } catch { /* Private browsing can disable storage. */ }
+    setFirstStageStep(getFirstStageFromHash(window.location.hash));
     setScene(getScene(window.location.hash));
     setHydrated(true);
   }, []);
@@ -214,6 +220,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
       if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
       doorTimerRef.current = null;
       setEntering(false);
+      setFirstStageStep(getFirstStageFromHash(window.location.hash));
       setScene(getScene(window.location.hash));
     };
     window.addEventListener("popstate", fromHistory);
@@ -256,7 +263,10 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
       setScene(next);
       setDetail(null);
       setEntering(false);
-      if (window.location.hash !== sceneHash[next]) window.history.pushState(null, "", sceneHash[next]);
+      if (next === "entry") { setFirstStageStep("entry"); setSelectedPackFamily(null); }
+      if (next === "counter") { setFirstStageStep("category"); setSelectedPackFamily(null); }
+      const nextHash = next === "entry" ? hashForFirstStage("entry") : next === "counter" ? hashForFirstStage("category") : sceneHash[next];
+      if (window.location.hash !== nextHash) window.history.pushState(null, "", nextHash);
       window.requestAnimationFrame(() => {
         stageRef.current?.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});
         window.requestAnimationFrame(() => document.querySelector<HTMLElement>(".walk-frame.is-active h1, .walk-frame.is-active h2")?.focus({preventScroll:true}));
@@ -322,7 +332,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   }
 
   return (
-    <div className="bagelito-store walk-store">
+    <div className="bagelito-store walk-store has-first-stage">
       <div className="store-notice walk-review-note" role="status">
         <span className="store-notice-dot" />
         {reviewOnly ? t.preview : !accepting ? t.closed : t.note}
@@ -398,6 +408,29 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
               <div className="walk-room-floor" />
               <div className="walk-room-light one" /><div className="walk-room-light two"/>
             </div>
+            <FirstStageChoice
+              step={firstStageStep === "pack-size" ? "pack-size" : "category"}
+              selectedFamily={selectedPackFamily}
+              onPacks={() => {
+                setSelectedPackFamily(null);
+                setFirstStageStep("pack-size");
+                if (window.location.hash !== hashForFirstStage("pack-size")) {
+                  window.history.pushState({ bagelitoFirstStage: true }, "", hashForFirstStage("pack-size"));
+                }
+              }}
+              onBack={() => {
+                if (window.history.state?.bagelitoFirstStage) window.history.back();
+                else {
+                  setSelectedPackFamily(null);
+                  setFirstStageStep("category");
+                  window.history.replaceState(null, "", hashForFirstStage("category"));
+                }
+              }}
+              onFamily={(family) => {
+                setSelectedPackFamily(family);
+                setAnnouncement(family === "large" ? "Bagels grandes seleccionado." : "Mini bagels seleccionado.");
+              }}
+            />
             <div className="walk-counter-layout">
               <div className="walk-counter-header">
                 <div><span className="walk-eyebrow">{t.counterEyebrow}</span><h2 tabIndex={-1}>{t.counterTitle}</h2><p>{t.counterBody}</p></div>
@@ -586,6 +619,14 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
             </button>:<button type="button" className="walk-bottom-next" onClick={checkout}>{filled?t.continue:t.edit}<ArrowRight size={18}/></button>}
           </div>
         </div>
+        <FirstStageProgress
+          step={firstStageStep}
+          onEntry={() => move("entry")}
+          onCategory={() => {
+            if (firstStageStep === "pack-size" && window.history.state?.bagelitoFirstStage) window.history.back();
+            else move("counter");
+          }}
+        />
       </div>
       <div className="walk-epilogue"><div><span>GOOD BAGELS, GOOD DAYS.</span><h2>{t.finalBand}</h2><p>{t.finalLine}</p></div>
         <button type="button" onClick={()=>move("counter")}>{t.counterTitle}<ArrowRight size={18}/></button>
