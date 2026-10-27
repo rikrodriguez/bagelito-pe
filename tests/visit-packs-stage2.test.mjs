@@ -10,7 +10,14 @@ test("Packs selected within the same photographic scene",()=>{
  assert.doesNotMatch(builder,/\/api\/|fetch\(/);
 });
 test("Real pack constraints and safe persisted data",()=>{
- const m=loadTs("src/components/visit/PackVisitBuilder.tsx");
+ const m=loadTs("src/components/visit/PackVisitBuilder.tsx",{
+  "@/data/packs":loadTs("src/data/packs.ts"),
+  "@/data/flavors":loadTs("src/data/flavors.ts"),
+  "@/data/flavor-images":loadTs("src/data/flavor-images.ts"),
+  "@/lib/shop-draft":loadTs("src/lib/shop-draft.ts"),
+  "next/image":{default:()=>null},
+  "lucide-react":{ArrowLeft:()=>null,ArrowRight:()=>null,Check:()=>null,Minus:()=>null,Plus:()=>null,ShoppingBag:()=>null},
+});
  assert.equal(typeof m.readPackDraft,"function");
  assert.equal(typeof m.changeFlavor,"function");
  assert.equal(typeof m.packCount,"function");
