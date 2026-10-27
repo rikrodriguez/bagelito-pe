@@ -22,6 +22,8 @@ test("first purchase decision is exactly Packs Combos Schmears",()=>{
   assert.match(source,/Schmears/);
   assert.doesNotMatch(source,/Sandwich/);
   assert.doesNotMatch(source,/Bebida/);
+  assert.doesNotMatch(source,/2 bagels/);
+  assert.match(source,/Bagels \+ schmears/);
 });
 
 test("packs branch asks Grandes or Minis before any flavor selection",()=>{
