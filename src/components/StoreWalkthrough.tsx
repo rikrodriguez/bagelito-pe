@@ -400,7 +400,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
                           <button type="button" className="walk-rack-photo store-product-image" aria-label={t.photo + " " + label(f.slug)}
                             onClick={() => {setSpotlight(f.slug);setDetail(f.slug);}}>
                             <Image src={flavorImages[f.slug]} alt={label(f.slug)} width={230} height={230}
-                              sizes="(max-width: 760px) 130px, 160px" quality={75} loading="lazy"/>
+                              sizes="(max-width: 760px) 130px, 160px" quality={75} loading={scene === "counter" ? "eager" : "lazy"}/>
                           </button>
                           <div className="walk-rack-label"><strong>{label(f.slug)}</strong><span>{selected ? selected + " ✓" : t.from}</span></div>
                           <button type="button" className="walk-rack-plus" onClick={(event)=>add(f.slug,event)}
@@ -416,7 +416,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
                   <button type="button" className="walk-spotlight-photo" onClick={() => setDetail(spotlightFlavor.slug)}
                     aria-label={t.photo + " " + label(spotlightFlavor.slug)}>
                     <Image src={flavorImages[spotlightFlavor.slug]} alt={label(spotlightFlavor.slug)} width={390} height={390}
-                      sizes="(max-width: 800px) 70vw, 310px" quality={75}/>
+                      sizes="(max-width: 800px) 70vw, 310px" quality={75} loading={scene === "counter" ? "eager" : "lazy"}/>
                   </button>
                   <h3>{label(spotlightFlavor.slug)}</h3>
                   <p>{descriptions[locale][spotlightFlavor.slug as keyof typeof descriptions.es]}</p>
