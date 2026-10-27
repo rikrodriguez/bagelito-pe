@@ -12,3 +12,6 @@ Task 3: complete (full suite 85/85 PASS; lint PASS; Next production build/types 
 Final: fixed mobile future-step contrast — regression test RED→GREEN; future progress text #56677f; suite 85/85.
 Final review: self-review (no general-purpose subagent tool available). Scope remains first-stage only; no payment/Culqi/database code changed.
 Final: minor (deferred): current functional preview still uses the V3 CSS-rendered store environment rather than the final photorealistic store asset approved in visual mockups. This is intentionally deferred because the user requested step-by-step validation of the Packs fork before the final visual-asset pass.
+
+Final: fixed keyboard reachability for future Combos/Schmears — regression test RED→GREEN; controls use `aria-disabled=true` without being removed from focus order.
+Final: fixed pre-hydration entry race — regression test RED→GREEN; entry CTA and door now have native `#mostrador` href fallbacks; final suite 88/88 PASS, lint/build PASS.
