@@ -1,0 +1,28 @@
+.pv-menu-reference { margin-top: 8px; text-align:center; }
+.pv-menu-trigger { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:42px; border:1px solid rgba(0,74,173,.24); border-radius:99px; padding:9px 17px; background:#fff; color:#004aad; font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+.pv-menu-trigger:focus-visible,.pv-menu-close:focus-visible { outline:3px solid #fa967f; outline-offset:3px; }
+.pv-menu-dialog { box-sizing:border-box; position:fixed; inset:0; margin:auto; padding:0; width:min(540px,calc(100vw - 26px)); max-width:540px; height:fit-content; max-height:calc(100dvh - 36px); border:1px solid #c5d6e6; border-radius:22px; background:#fff; color:#123763; font-family:'Glacial Indifference',sans-serif; box-shadow:0 25px 100px rgba(0,24,67,.35); text-align:left; overflow:auto; }
+.pv-menu-dialog::backdrop { background:rgba(5,24,56,.66); backdrop-filter:blur(5px); }
+.pv-menu-heading { position:sticky; top:0; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:23px 24px 16px; background:#fff; border-bottom:1px solid #e1e9f2; }
+.pv-menu-heading span { display:block; font-size:10px; font-weight:700; letter-spacing:.12em; color:#365879; }
+.pv-menu-dialog .pv-menu-heading h2 { margin:6px 0 0; color:#004aad; font-size:32px; line-height:1.05; font-weight:700; }
+.pv-menu-dialog .pv-menu-close { display:grid; place-items:center; flex:0 0 42px; width:42px; height:42px; min-height:42px; border:1px solid #d1ddeb; border-radius:50%; background:#f4f8fc; color:#004aad; cursor:pointer; padding:0; }
+.pv-menu-content { padding:18px 24px 13px; }
+.pv-menu-dialog .pv-menu-content p { font-size:14px; line-height:1.45; color:#365375; margin:0 0 13px; }
+.pv-menu-dialog h3 { color:#004aad; font-size:18px; margin:23px 0 8px; }
+.pv-menu-prices { margin:0; }
+.pv-menu-prices > div { display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid #e2e9f2; padding:14px 0; }
+.pv-menu-prices dt { font-weight:700; font-size:16px; line-height:1.25; }
+.pv-menu-prices dd { margin:0; color:#004aad; font-size:21px; font-weight:700; flex:none; }
+.pv-menu-dialog small { display:block; font-weight:400; color:#3d5878; font-size:12px; line-height:1.4; margin-top:5px; }
+.pv-menu-dialog .pv-menu-note { margin-top:15px; font-size:12px; color:#455b73; }
+.pv-menu-flavors { display:flex; flex-wrap:wrap; list-style:none; padding:0; margin:0 0 18px; gap:7px; }
+.pv-menu-flavors li { border:1px solid #d1deed; color:#004aad; background:#f1f6fc; border-radius:99px; padding:6px 10px; font-size:12px; font-weight:700; }
+.pv-menu-table-scroll { max-width:100%; overflow-x:auto; }
+.pv-menu-dialog table { width:100%; border-collapse:collapse; font-size:14px; }
+.pv-menu-dialog caption { text-align:left; font-size:12px; color:#355270; padding-bottom:8px; }
+.pv-menu-dialog th,.pv-menu-dialog td { text-align:left; padding:10px 6px; border-bottom:1px solid #dce5f0; color:#153b6b; }
+.pv-menu-dialog thead th { font-size:12px; color:#004aad; }
+.pv-menu-dialog td { font-weight:700; }
+.pv-menu-dialog .pv-menu-disclaimer { display:block; margin:0; padding:13px 24px 17px; background:#eff5fc; border-top:1px solid #d9e4f0; color:#2c4d73; font-size:11px; line-height:1.4; }
+@media(max-width:360px) { .pv-menu-heading {padding:18px 16px 13px;} .pv-menu-content {padding:14px 16px 12px;} .pv-menu-dialog .pv-menu-heading h2 {font-size:27px;} .pv-menu-prices dt {font-size:14px;} .pv-menu-prices dd {font-size:18px;} .pv-menu-prices > div {gap:10px;} .pv-menu-dialog .pv-menu-disclaimer {padding-inline:16px;} }
