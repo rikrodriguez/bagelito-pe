@@ -71,3 +71,8 @@ test("entry flow owns the viewport without legacy review or WhatsApp overlays",(
   assert.match(css,/body:has\(\.entry-flow\) \.batch-deadline-banner\s*\{[^}]*display:\s*none/);
   assert.match(css,/body:has\(\.entry-flow\) \.floating-whatsapp\s*\{[^}]*display:\s*none/);
 });
+
+test("small combo helper copy uses accessible dark blue",()=>{
+  const css=read("src/app/store-entry-flow.css");
+  assert.match(css,/\.entry-flow-choice em\s*\{[^}]*color:\s*#34577e/);
+});
