@@ -1,0 +1,114 @@
+/* V3 shared brand, packing and header foundations only. Retired static storefront and its CSS. */
+/* Bagelito Store Visit V1
+   White tile / cobalt / steel. Scoped to the storefront; legacy checkout and
+   financial integrations keep their existing styling and behavior. */
+body:has(.bagelito-store) { background: #fff; color: #102b66; }
+body:has(.bagelito-store) .site-header {
+  position: relative; z-index: 40; background: #fff; border-color: #e4e7ec;
+  padding: 10px clamp(16px, 4.5vw, 76px);
+}
+body:has(.bagelito-store) .logo-link img { width: clamp(158px, 16vw, 216px); max-height: 83px; object-fit: contain; }
+body:has(.bagelito-store) .header-checkout-link {
+  border-radius: 100px; background: #084dae; color: white; border: 1px solid #084dae;
+  font-size: 13px; font-weight: 800; padding: 12px 18px;
+}
+body:has(.bagelito-store) .site-footer { background: #f9fafc; border-color: #e4e8f0; }
+.bagelito-store {
+  --s-blue: #084dae; --s-dark: #092e70; --s-coral: #f68f81;
+  --s-ink: #102b66; --s-line: #dbe3ef; --s-stone: #f5f7fa;
+  background: white; color: var(--s-ink); width: 100%; overflow: clip;
+}
+.bagelito-store * { box-sizing: border-box; }
+.bagelito-store button { font: inherit; }
+.bagelito-store button:disabled { opacity: .47; cursor: not-allowed; }
+.bagelito-store button:focus-visible, .bagelito-store a:focus-visible {
+  outline: 3px solid var(--s-coral); outline-offset: 4px;
+}
+.bagelito-store a { color: inherit; }
+.bagelito-store section[id] { scroll-margin-top: 22px; }
+.store-notice {
+  background: #f2f5f9; color: #334260; border-block: 1px solid #e3e8f0;
+  padding: 12px 20px; text-align: center; display: flex; justify-content: center;
+  align-items: center; gap: 10px; font-weight: 650; font-size: 12px; letter-spacing: .015em;
+}
+.store-notice-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--s-coral); flex: none; }
+
+.store-builder { padding: clamp(66px, 7vw, 112px) clamp(18px, 4.2vw, 82px) clamp(80px, 8vw, 125px); background: white; }
+.store-pack-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; max-width: 1180px; margin: 48px auto 0; }
+.store-pack {
+  display: grid; gap: 10px; text-align: left; background: #fff; border: 1.5px solid #d8e1ed;
+  border-radius: 14px; padding: 21px; color: var(--s-dark); min-height: 168px;
+  transition: border-color .16s ease, transform .16s ease;
+}
+.store-pack.active { border: 2.5px solid var(--s-blue); background: #f0f6ff; box-shadow: 0 6px 19px rgba(8,77,174,.09); }
+.store-pack:not(.active):hover { transform: translateY(-2px); border-color: #92aad0; }
+.store-pack > span { color: #5a77a4; letter-spacing: .14em; font-size: 10px; font-weight: 900; }
+.store-pack > strong { font-size: 17px; line-height: 1.15; letter-spacing: -.025em; }
+.store-pack b { font-size: 27px; line-height: 1; }
+.store-pack small { color: #52698b; font-size: 12px; }
+.store-pack-hint { text-align: center; margin-top: 12px; color: #73809a; font-size: 12px; }
+.store-builder-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, .75fr); gap: clamp(22px, 4vw, 64px); max-width: 1300px; margin: 49px auto 0; align-items: start; }
+.store-box-scene { background: linear-gradient(180deg, #f8fafb, #e7ecf1); min-height: 560px; padding: clamp(20px, 4vw, 52px); border-radius: 22px; display: flex; flex-direction: column; justify-content: center; perspective: 1000px; overflow: hidden; }
+.store-box-lid { background: var(--s-blue); color: white; border: 4px solid #fff; border-radius: 14px 14px 2px 2px; box-shadow: 0 10px 15px rgba(18,46,81,.13); display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 17px 22px; transform: rotateX(-7deg); }
+.store-box-lid strong { font-size: 28px; letter-spacing: -.065em; }
+.store-box-lid span { font-weight: 850; font-size: 9px; letter-spacing: .07em; text-align: right; }
+.store-box-tray { background: #fefefe; border: 13px solid #0a4eb0; border-radius: 4px; padding: 17px; box-shadow: inset 0 5px 14px rgba(0,0,0,.08), 0 18px 27px rgba(12,41,77,.16); display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 7px; }
+.store-box-tray:has(.store-box-slot:nth-child(12)) { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.store-box-slot { position: relative; aspect-ratio: 1; border-radius: 50%; background: #eef3f8; border: 2px dashed #c3d2e5; min-width: 0; display: grid; place-items: center; color: #bdcce0; font-size: 30px; }
+.store-box-slot.filled { border: none; background: #fff; animation: store-pop .24s ease-out both; }
+.store-box-slot img { object-fit: contain; }
+.store-box-front { background: var(--s-blue); border: 4px solid #fff; color: white; border-radius: 2px 2px 16px 16px; display: flex; justify-content: space-between; gap: 15px; align-items: center; padding: 18px 25px; font-size: 10px; font-weight: 850; letter-spacing: .1em; }
+.store-box-front strong { font-size: 17px; }
+@keyframes store-pop { from { opacity: .4; transform: translateY(-13px) scale(.82); } to { opacity: 1; transform: none; } }
+.store-cart { background: #fff; border: 1px solid #d8e2ed; border-radius: 18px; padding: clamp(20px, 2.2vw, 30px); box-shadow: 0 14px 48px rgba(8, 54, 109, .09); position: sticky; top: 25px; }
+.store-cart h3 { font-size: 28px; letter-spacing: -.045em; color: var(--s-blue); margin: 11px 0 19px; }
+.store-cart-meter { background: #e6edf5; height: 7px; border-radius: 99px; overflow: hidden; }
+.store-cart-meter span { display: block; height: 100%; border-radius: inherit; background: var(--s-blue); transition: width .2s ease; }
+.store-cart-count { color: #5d6f8d; font-size: 12px; font-weight: 750; padding-top: 9px; }
+.store-cart-lines { margin-top: 25px; min-height: 73px; max-height: 265px; overflow-y: auto; }
+.store-empty-message { color: #78859a; font-size: 14px; padding: 23px 0; }
+.store-cart-line { display: grid; grid-template-columns: 50px minmax(0,1fr) auto; gap: 9px; align-items: center; padding: 7px 0; border-bottom: 1px solid #eef1f5; }
+.store-cart-line > img { object-fit: contain; }
+.store-cart-line > strong { color: var(--s-dark); font-size: 12px; line-height: 1.2; }
+.store-item-controls { display: flex; gap: 3px; align-items: center; }
+.store-item-controls button { height: 30px; width: 30px; border-radius: 50%; background: #f1f5fa; color: var(--s-blue); border: 1px solid #d8e2ee; display: grid; place-items: center; }
+.store-item-controls b { min-width: 19px; font-size: 13px; text-align: center; }
+.store-cart-total { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; padding-top: 17px; border-top: 1px solid #dbe3ef; }
+.store-cart-total span { color: #566780; font-size: 13px; font-weight: 750; }
+.store-cart-total strong { font-size: 25px; color: var(--s-blue); }
+.store-delivery-note { margin-top: 11px; font-size: 12px; line-height: 1.5; color: #68758d; }
+.store-checkout { width: 100%; margin-top: 22px; }
+.store-cart-help, .store-cart-warning { margin: 11px 0 0; font-size: 11px; line-height: 1.45; text-align: center; color: #63738d; }
+.store-cart-warning { color: #9b4f4f; }
+
+.site-header:has(.store-header-navigation) { display: flex; align-items: center; justify-content: space-between; }
+.site-header .store-header-navigation { display: flex; align-items: center; gap: clamp(12px,2.5vw,35px); margin-inline: auto; }
+.site-header .store-header-navigation a { white-space: nowrap; font-weight: 800; font-size: 13px; color: #154b98; }
+.site-header .store-header-navigation a:hover { color: #dc776b; }
+@media (max-width: 760px) {
+  .site-header .store-header-navigation { display: none; }
+}
+
+/* The visit itself is the public storefront; do not show promotional batch clocks here. */
+body:has(.bagelito-store) .batch-deadline-banner { display: none; }
+
+/* The approved mark must never be compressed into an unreadable sliver on mobile. */
+.header-checkout-icon { display: none; }
+@media (max-width: 760px) {
+  body:has(.bagelito-store) .site-header { gap: 8px; justify-content: space-between; }
+  body:has(.bagelito-store) .site-header .logo-link { flex: 0 0 128px; min-width: 128px; }
+  body:has(.bagelito-store) .site-header .logo-link img { display: block; width: 128px; }
+  body:has(.bagelito-store) .site-header .header-actions { display: flex; align-items: center; flex: 0 0 auto; gap: 7px; }
+  body:has(.bagelito-store) .site-header .header-checkout-link {
+    display: grid; place-items: center; flex: 0 0 44px;
+    width: 44px; height: 44px; min-width: 44px; max-width: none;
+    min-height: 44px; border-radius: 50%; padding: 0;
+  }
+  body:has(.bagelito-store) .site-header .header-checkout-text { display: none; }
+  body:has(.bagelito-store) .site-header .header-checkout-icon { display: block; }
+}
+@media (max-width: 349px) {
+  body:has(.bagelito-store) .site-header .logo-link { flex-basis: 117px; min-width: 117px; }
+  body:has(.bagelito-store) .site-header .logo-link img { width: 117px; }
+}
+
