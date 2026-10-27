@@ -52,6 +52,8 @@ test("visual layer supports full viewport and reduced motion",()=>{
   assert.match(css,/100dvh/);
   assert.match(css,/prefers-reduced-motion/);
   assert.match(css,/object-fit:\s*cover/);
+  assert.match(css,/object-fit:\s*contain/);
+  assert.match(css,/background-image:\s*url\("\/images\/store-category-flow\.webp"\)/);
 });
 
 test("pure entry flow only allows approved first-segment transitions",()=>{
