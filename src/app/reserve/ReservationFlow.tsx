@@ -102,6 +102,11 @@ export function ReservationFlow({
       const pack = packs.find((item) => item.slug === initialPackSlug);
       if (draft.version !== 1 || !pack || draft.packSlug !== pack.slug) return;
       const known = new Set(flavors.map((flavor) => flavor.slug));
+      // The public builder may choose a delivery district. Keep the exact tariff
+      // consistent without restoring or storing personal delivery information.
+      if (typeof draft.district === "string" && districtOptions.some((option) => option === draft.district)) {
+        setDetails((current) => ({ ...current, district: draft.district as string }));
+      }
       if (pack.packType === "single") {
         if (typeof draft.singleFlavor === "string" && known.has(draft.singleFlavor)) {
           setSingleFlavor(draft.singleFlavor);
@@ -135,13 +140,13 @@ export function ReservationFlow({
     if (!shopDraftRestored) return;
     try {
       window.localStorage.setItem(SHOP_DRAFT_KEY, JSON.stringify({
-        version: 1, packSlug, quantities, singleFlavor,
+        version: 1, packSlug, quantities, singleFlavor, district: details.district,
       }));
       window.dispatchEvent(new Event(SHOP_DRAFT_UPDATED_EVENT));
     } catch {
       // Storage is optional; never block the checkout.
     }
-  }, [shopDraftRestored, packSlug, quantities, singleFlavor]);
+  }, [shopDraftRestored, packSlug, quantities, singleFlavor, details.district]);
 
   const hasMountedRef = useRef(false);
   const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
