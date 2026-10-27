@@ -51,3 +51,8 @@ test("future categories remain visible but explicitly unavailable in this increm
   assert.match(choice, /Próxima etapa/);
   assert.match(choice, /disabled/);
 });
+
+
+test("future progress labels use an AA-safe text color on white", () => {
+  assert.match(css, /\.first-stage-progress button,\s*\.first-stage-progress-future\s*\{[^}]*color:\s*#56677f/i);
+});
