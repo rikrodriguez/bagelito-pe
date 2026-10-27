@@ -5,6 +5,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, ChevronRight, DoorOpen, Info, Layers, Package, RotateCcw, Soup, X } from "lucide-react";
 import { initialVisit, readVisitDraft, readVisitHash, visitReducer, VISIT_CATEGORIES, VISIT_STORAGE_KEY, type VisitCategory } from "@/lib/photo-visit";
 import { useLanguage } from "@/components/LanguageProvider";
+import { PackVisitBuilder } from "@/components/visit/PackVisitBuilder";
 
 const copy = {
   es: {
@@ -44,6 +45,7 @@ export function PhotoVisit() {
   const [loaded, setLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showPacks, setShowPacks] = useState(false);
   const [imageKey, setImageKey] = useState(0);
   const [reduced, setReduced] = useState(false);
   const cameraRef = useRef<HTMLDivElement>(null);
@@ -105,6 +107,7 @@ export function PhotoVisit() {
   }, [showInfo]);
 
   function goEntrance() {
+    setShowPacks(false);
     dispatch({ type: "RESET" });
     if (window.location.hash !== "#entrada") window.history.pushState(null, "", "#entrada");
   }
@@ -118,16 +121,18 @@ export function PhotoVisit() {
     if (window.location.hash !== "#vitrina") window.history.pushState(null, "", "#vitrina");
   }
   function choose(category: VisitCategory) {
+    setShowPacks(false);
     dispatch({ type: "CHOOSE", category });
     if (window.location.hash !== "#" + category) window.history.pushState(null, "", "#" + category);
   }
   function clear() {
+    setShowPacks(false);
     dispatch({ type: "CLEAR" });
     window.history.pushState(null, "", "#vitrina");
   }
 
   return (
-    <main className="photo-visit" data-phase={state.phase} data-selected={state.category || "none"} data-loaded={loaded} data-reduced={reduced}>
+    <main className="photo-visit" data-phase={state.phase} data-selected={state.category || "none"} data-loaded={loaded} data-reduced={reduced} data-building={showPacks}>
       <h1 className="pv-sr-only">Bagelito · {t.scope}</h1>
       <div className="pv-world" aria-hidden="true">
         <div className="pv-camera" ref={cameraRef}>
@@ -162,7 +167,7 @@ export function PhotoVisit() {
           <p>{t.intro}</p>
         </section>}
         {isMoving && <div className="pv-moving" role="status"><span className="pv-motion-dot"/>{t.near}</div>}
-        {atCounter && <section className="pv-chooser" aria-labelledby="pv-question">
+        {atCounter && !showPacks && <section className="pv-chooser" aria-labelledby="pv-question">
           <div className="pv-question-wrap"><span>02 / {locale === "es" ? "EN LA VITRINA" : "AT THE COUNTER"}</span><h2 id="pv-question" tabIndex={-1} ref={chooseHeading}>{t.choose}</h2></div>
           <div className="pv-families" role="group" aria-label={t.choose}>
             {VISIT_CATEGORIES.map((category) => {
@@ -176,9 +181,10 @@ export function PhotoVisit() {
             })}
           </div>
           <div className="pv-selection" aria-live="polite">
-            {state.category ? <><strong><Check size={16} /> {t.selected} {t.families[state.category]}</strong><span>{t.stop}</span><button type="button" onClick={clear}>{t.change}</button></> : <p>{t.hint}</p>}
+            {state.category ? <><strong><Check size={16} /> {t.selected} {t.families[state.category]}</strong><span>{state.category==="packs"?(locale==="es"?"Elige el tamaño y los bagels de tu caja.":"Choose the size and bagels for your box."):t.stop}</span>{state.category==="packs"&&<button className="pv-start-packs" type="button" onClick={()=>setShowPacks(true)}>{locale==="es"?"Armar mi pack":"Build my box"}<ArrowRight size={15}/></button>}<button type="button" onClick={clear}>{t.change}</button></> : <p>{t.hint}</p>}
           </div>
         </section>}
+        {atCounter && showPacks && state.category==="packs" && <PackVisitBuilder locale={locale} onBack={()=>setShowPacks(false)}/>}
         {imageError && <div className="pv-error" role="alert"><p>{t.error}</p><button type="button" onClick={() => {setImageError(false);setLoaded(false);setImageKey((key) => key + 1);}}><RotateCcw size={17}/>{t.retry}</button></div>}
       </div>
 
