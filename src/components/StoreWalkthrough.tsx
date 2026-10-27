@@ -14,7 +14,7 @@ import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
 import { FirstStageChoice } from "@/components/store/FirstStageChoice";
 import { FirstStageProgress } from "@/components/store/FirstStageProgress";
-import { getFirstStageFromHash, hashForFirstStage, type FirstStageStep, type PackFamily } from "@/lib/storefront-first-stage";
+import { getFirstStageFromHash, getPackFamilyFromHash, hashForFirstStage, hashForPackFamily, type FirstStageStep, type PackConfigId, type PackFamily } from "@/lib/storefront-first-stage";
 
 type Scene = "entry" | "counter" | "build" | "cashier";
 type Draft = { version: 1; packSlug: PackSlug; quantities: Record<string, number>; singleFlavor: string; district?: string };
@@ -162,6 +162,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const [entering, setEntering] = useState(false);
   const [firstStageStep, setFirstStageStep] = useState<FirstStageStep>("entry");
   const [selectedPackFamily, setSelectedPackFamily] = useState<PackFamily | null>(null);
+  const [selectedPackConfig, setSelectedPackConfig] = useState<PackConfigId | null>(null);
   const [packSlug, setPackSlug] = useState<PackSlug>("6-mixed");
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [singleFlavor, setSingleFlavor] = useState("");
@@ -205,6 +206,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
       }
     } catch { /* Private browsing can disable storage. */ }
     setFirstStageStep(getFirstStageFromHash(window.location.hash));
+    setSelectedPackFamily(getPackFamilyFromHash(window.location.hash));
     setScene(getScene(window.location.hash));
     setHydrated(true);
   }, []);
@@ -221,6 +223,8 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
       doorTimerRef.current = null;
       setEntering(false);
       setFirstStageStep(getFirstStageFromHash(window.location.hash));
+      setSelectedPackFamily(getPackFamilyFromHash(window.location.hash));
+      setSelectedPackConfig(null);
       setScene(getScene(window.location.hash));
     };
     window.addEventListener("popstate", fromHistory);
@@ -263,8 +267,8 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
       setScene(next);
       setDetail(null);
       setEntering(false);
-      if (next === "entry") { setFirstStageStep("entry"); setSelectedPackFamily(null); }
-      if (next === "counter") { setFirstStageStep("category"); setSelectedPackFamily(null); }
+      if (next === "entry") { setFirstStageStep("entry"); setSelectedPackFamily(null); setSelectedPackConfig(null); }
+      if (next === "counter") { setFirstStageStep("category"); setSelectedPackFamily(null); setSelectedPackConfig(null); }
       const nextHash = next === "entry" ? hashForFirstStage("entry") : next === "counter" ? hashForFirstStage("category") : sceneHash[next];
       if (window.location.hash !== nextHash) window.history.pushState(null, "", nextHash);
       window.requestAnimationFrame(() => {
@@ -409,26 +413,41 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
               <div className="walk-room-light one" /><div className="walk-room-light two"/>
             </div>
             <FirstStageChoice
-              step={firstStageStep === "pack-size" ? "pack-size" : "category"}
+              step={firstStageStep === "pack-config" ? "pack-config" : firstStageStep === "pack-size" ? "pack-size" : "category"}
               selectedFamily={selectedPackFamily}
+              selectedConfig={selectedPackConfig}
               onPacks={() => {
                 setSelectedPackFamily(null);
+                setSelectedPackConfig(null);
                 setFirstStageStep("pack-size");
                 if (window.location.hash !== hashForFirstStage("pack-size")) {
                   window.history.pushState({ bagelitoFirstStage: true }, "", hashForFirstStage("pack-size"));
                 }
               }}
               onBack={() => {
-                if (window.history.state?.bagelitoFirstStage) window.history.back();
-                else {
+                if (firstStageStep === "pack-config") {
+                  setSelectedPackConfig(null);
+                  setFirstStageStep("pack-size");
+                  window.history.pushState({ bagelitoFirstStage: true }, "", hashForFirstStage("pack-size"));
+                } else if (window.history.state?.bagelitoFirstStage) {
+                  window.history.back();
+                } else {
                   setSelectedPackFamily(null);
+                  setSelectedPackConfig(null);
                   setFirstStageStep("category");
                   window.history.replaceState(null, "", hashForFirstStage("category"));
                 }
               }}
               onFamily={(family) => {
                 setSelectedPackFamily(family);
+                setSelectedPackConfig(null);
+                setFirstStageStep("pack-config");
+                window.history.pushState({ bagelitoFirstStage: true, family }, "", hashForPackFamily(family));
                 setAnnouncement(family === "large" ? "Bagels grandes seleccionado." : "Mini bagels seleccionado.");
+              }}
+              onConfig={(config) => {
+                setSelectedPackConfig(config);
+                setAnnouncement("Pack seleccionado. El siguiente paso será elegir sabores.");
               }}
             />
             <div className="walk-counter-layout">
@@ -623,8 +642,15 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
           step={firstStageStep}
           onEntry={() => move("entry")}
           onCategory={() => {
-            if (firstStageStep === "pack-size" && window.history.state?.bagelitoFirstStage) window.history.back();
-            else move("counter");
+            setSelectedPackFamily(null);
+            setSelectedPackConfig(null);
+            setFirstStageStep("category");
+            window.history.pushState({ bagelitoFirstStage: true }, "", hashForFirstStage("category"));
+          }}
+          onSize={() => {
+            setSelectedPackConfig(null);
+            setFirstStageStep("pack-size");
+            window.history.pushState({ bagelitoFirstStage: true }, "", hashForFirstStage("pack-size"));
           }}
         />
       </div>
