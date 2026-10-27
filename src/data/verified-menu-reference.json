@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "currency": "PEN",
+  "sourceKind": "user-supplied screenshots",
+  "sources": {
+    "packsAndCombos": "IMG_4144.jpeg",
+    "schmearSizes": "IMG_4145.jpeg",
+    "minisAndCustomColors": "IMG_4146.jpeg",
+    "schmearFlavors": "IMG_4139.jpeg",
+    "packagingReference": "IMG_4140.jpeg"
+  },
+  "checkoutEnabled": false,
+  "inventory": null,
+  "packs": [
+    { "id": "6-mixed", "units": 6, "flavorMode": "mixed", "price": 60 },
+    { "id": "6-single", "units": 6, "flavorMode": "single", "price": 50 },
+    { "id": "12-mixed", "units": 12, "flavorMode": "mixed", "price": 115 },
+    { "id": "12-single", "units": 12, "flavorMode": "single", "price": 100 }
+  ],
+  "combos": [
+    { "id": "perfect-pair", "name": "Perfect Pair", "bagels": 6, "flavorMode": "mixed", "schmearCount": 1, "schmearGrams": 120, "price": 74 },
+    { "id": "brunch-pack", "name": "Brunch Pack", "bagels": 12, "flavorMode": "mixed", "schmearCount": 2, "schmearGrams": 120, "price": 140 },
+    { "id": "schmear-lover", "name": "Schmear Lover", "bagels": 6, "flavorMode": "mixed", "schmearCount": 3, "schmearGrams": 120, "price": 99 }
+  ],
+  "schmears": [
+    { "id": "whipped-original", "name": "Whipped Original", "priceClass": "original" },
+    { "id": "herbs-roasted-garlic", "name": "Herbs & Roasted Garlic", "priceClass": "flavored" },
+    { "id": "aji-amarillo", "name": "Ají Amarillo", "priceClass": "flavored" },
+    { "id": "honey-cinnamon", "name": "Honey Cinnamon", "priceClass": "flavored" },
+    { "id": "classic-strawberry", "name": "Classic Strawberry", "priceClass": "flavored" }
+  ],
+  "schmearSizes": [
+    { "name": "Just a Lil", "grams": 120, "original": 12, "flavored": 16 },
+    { "name": "Solid Schmear", "grams": 180, "original": 18, "flavored": 23 },
+    { "name": "Like NYC", "grams": 240, "original": 22, "flavored": 29 }
+  ],
+  "miniPacks": [
+    { "units": 6, "mixed": 25, "single": 20 },
+    { "units": 12, "mixed": 40, "single": 35 },
+    { "units": 24, "mixed": 75, "single": 70 }
+  ],
+  "schmearUpgrade": {
+    "sourceText": "¿Más schmear en tu pack? 180 g +S/6 | 240 g +S/13",
+    "options": [ { "grams": 180, "supplement": 6 }, { "grams": 240, "supplement": 13 } ],
+    "chargingUnit": null,
+    "enabled": false,
+    "note": "The screenshot does not specify whether the supplement applies per tub or per entire combo; do not charge automatically."
+  },
+  "customColors": {
+    "minimumBagels": 6,
+    "basePrice": 50,
+    "bands": [
+      { "min": 1, "max": 2, "supplement": 0 },
+      { "min": 3, "max": 5, "supplement": 10 },
+      { "min": 6, "max": 7, "supplement": 15 }
+    ],
+    "enabled": false,
+    "note": "Source offer recorded. Larger-quantity pricing and supplement application unit are not specified."
+  },
+  "packaging": {
+    "materialObserved": "kraft-paper bags",
+    "printObserved": "monochrome Bagelito stamp",
+    "use": "Packaging reference only; preserve the separately approved blue/coral brand identity."
+  },
+  "notInferred": ["stock", "ingredients", "allergens", "nutrition", "tax breakdown", "delivery fees", "drinks", "sandwiches", "combo flavor exclusions"]
+}
