@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { access } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadTs } from "./helpers/load-ts.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const text = (filename) => readFileSync(path.join(root, filename), "utf8");
@@ -12,6 +13,8 @@ const flow = text("src/app/reserve/ReservationFlow.tsx");
 const home = text("src/app/page.tsx");
 const imageMap = text("src/data/flavor-images.ts");
 const packSource = text("src/data/packs.ts");
+const draftSource = text("src/lib/shop-draft.ts");
+const header = text("src/components/Header.tsx");
 
 test("home continues the current Next app with real shared catalog and original checkout", () => {
   assert.match(home, /import \{ ShopVisit \}/);
@@ -46,8 +49,10 @@ test("all catalog entries have real checked-in photographs and the storefront us
 
 test("store box selection is restored into the same checkout without personal information", () => {
   const key = "bagelito:shop-box:v1";
-  assert.ok(visit.includes(key));
-  assert.ok(flow.includes(key));
+  assert.ok(draftSource.includes(key));
+  assert.match(visit, /SHOP_DRAFT_KEY/);
+  assert.match(flow, /SHOP_DRAFT_KEY/);
+  assert.match(header, /getShopCheckoutHref/);
   assert.match(flow, /draft\.packSlug !== pack\.slug/);
   assert.match(flow, /Number\.isInteger\(rawCount\)/);
   assert.match(flow, /setQuantities\(cleaned\)/);
@@ -73,4 +78,18 @@ test("brand, accessibility, languages and truth-in-advertising are retained", ()
   assert.match(text("src/lib/i18n.ts"), /defaultLocale: Locale = "es"/);
   assert.match(text("src/app/layout.tsx"), /<html lang="es"/);
   assert.doesNotMatch(home, /BatchInfo|PurchaseActivityToast/);
+});
+
+test("header and hero direct checkout preserve every approved selected pack", () => {
+  const { getShopCheckoutHref } = loadTs("src/lib/shop-draft.ts");
+  for (const slug of ["6-mixed", "12-mixed", "6-single", "12-single"]) {
+    const draft = JSON.stringify({ version: 1, packSlug: slug });
+    assert.equal(getShopCheckoutHref(() => draft), "/checkout?pack=" + slug);
+  }
+  for (const raw of [null, "{", JSON.stringify({ version: 1, packSlug: "unknown" })]) {
+    assert.equal(getShopCheckoutHref(() => raw), "/checkout?pack=6-mixed");
+  }
+  assert.match(visit, /encodeURIComponent\(packSlug\)/);
+  assert.match(header, /SHOP_DRAFT_UPDATED_EVENT/);
+  assert.match(flow, /window\.dispatchEvent\(new Event\(SHOP_DRAFT_UPDATED_EVENT\)\)/);
 });
