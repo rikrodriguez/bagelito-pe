@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadTs } from "./helpers/load-ts.mjs";
 
 const root=fileURLToPath(new URL("../",import.meta.url));
 const read=(p)=>readFileSync(path.join(root,p),"utf8");
@@ -49,4 +50,16 @@ test("visual layer supports full viewport and reduced motion",()=>{
   assert.match(css,/100dvh/);
   assert.match(css,/prefers-reduced-motion/);
   assert.match(css,/object-fit:\s*cover/);
+});
+
+test("pure entry flow only allows approved first-segment transitions",()=>{
+  const { nextEntryState, categoryOptions, packSizeOptions }=loadTs("src/lib/store-entry-flow.ts");
+  assert.deepEqual(categoryOptions.map((item)=>item.id),["packs","combos","schmears"]);
+  assert.deepEqual(packSizeOptions.map((item)=>item.id),["large","mini"]);
+  assert.equal(nextEntryState("entry","enter"),"categories");
+  assert.equal(nextEntryState("categories","packs"),"pack-size");
+  assert.equal(nextEntryState("pack-size","back"),"categories");
+  assert.equal(nextEntryState("categories","back"),"entry");
+  assert.equal(nextEntryState("categories","combos"),"categories");
+  assert.equal(nextEntryState("categories","schmears"),"categories");
 });
