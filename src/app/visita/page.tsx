@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PhotoVisit } from "@/components/visit/PhotoVisit";
+import "./brand-fonts.css";
 import "./visit.css";
 
 export const metadata: Metadata = {
