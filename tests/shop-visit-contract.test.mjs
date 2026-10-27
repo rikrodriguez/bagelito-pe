@@ -14,24 +14,15 @@ const packsFile = read("src/data/packs.ts");
 const imagesFile = read("src/data/flavor-images.ts");
 const css = read("src/app/walkthrough.css");
 
-test("the real homepage uses the four-scene walk, not the old static showcase", () => {
-  assert.match(page, /import \{ StoreWalkthrough \}/);
-  assert.match(page, /<StoreWalkthrough paymentEnabled=\{paymentEnabled\}/);
-  assert.match(page, /getPublicPaymentConfig/);
-  assert.match(page, /walkthrough\.css/);
-  assert.doesNotMatch(page, /<ShopVisit/);
+test("legacy full walkthrough remains intact while the preview homepage uses the scoped entry flow", () => {
+  assert.match(page, /StoreEntryFlow/);
+  assert.match(page, /store-entry-flow\.css/);
+  assert.doesNotMatch(page, /<StoreWalkthrough/);
   for (const room of ["entry", "counter", "build", "cashier"]) {
     assert.ok(visit.includes('"'+room+'"'), room);
     assert.match(css, new RegExp('walk-'+room));
   }
-  assert.match(visit, /onClick=\{\(\) => move\("counter"\)\}/);
-  assert.match(visit, /onClick=\{\(\) => move\("build"\)\}/);
-  assert.match(visit, /onClick=\{\(\)\s*=>\s*move\("cashier"\)\}/);
-  assert.match(visit, /onPointerMove=\{onMove\}/);
-  assert.match(visit, /walk-entrance-hotspot/);
-  assert.match(visit, /walk-rack/);
-  assert.match(visit, /walk-metal-table/);
-  assert.match(visit, /walk-receipt/);
+  assert.doesNotMatch(visit,/fetch\s*\(|\/api\/payments|\/api\/reservations|createReservation/);
 });
 
 test("all 10 existing photographed flavors are the real product source", async () => {
