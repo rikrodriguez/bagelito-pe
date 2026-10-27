@@ -9,10 +9,10 @@ import { packs, type PackSlug } from "@/data/packs";
 import { flavorCopy, packCopy } from "@/lib/i18n";
 import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
+import { SHOP_DRAFT_KEY, SHOP_DRAFT_UPDATED_EVENT } from "@/lib/shop-draft";
 
 // Shared with the existing checkout. Only a pack and flavor counts are stored;
 // no customer identity, reservation, or payment details ever enter localStorage.
-export const SHOP_DRAFT_KEY = "bagelito:shop-box:v1";
 type BoxDraft = { version: 1; packSlug: PackSlug; quantities: Record<string, number>; singleFlavor: string };
 const descriptions = {
   es: {
@@ -153,7 +153,10 @@ export function ShopVisit({ paymentEnabled }: { paymentEnabled: boolean }) {
   }, []);
   useEffect(() => {
     if (!hydrated) return;
-    try { window.localStorage.setItem(SHOP_DRAFT_KEY, JSON.stringify({ version: 1, packSlug, quantities, singleFlavor })); }
+    try {
+      window.localStorage.setItem(SHOP_DRAFT_KEY, JSON.stringify({ version: 1, packSlug, quantities, singleFlavor }));
+      window.dispatchEvent(new Event(SHOP_DRAFT_UPDATED_EVENT));
+    }
     catch { /* Selection remains usable without storage. */ }
   }, [hydrated, packSlug, quantities, singleFlavor]);
   useEffect(() => {
@@ -200,7 +203,7 @@ export function ShopVisit({ paymentEnabled }: { paymentEnabled: boolean }) {
             <a className="store-primary" href="#mostrador">{t.explore}<ArrowRight size={19}/></a>
             <a className="store-secondary" href="#arma-tu-caja">{t.build}<ArrowDown size={18}/></a>
           </div>
-          <Link href="/checkout?pack=6-mixed" className="store-quick">{t.quick} <ArrowRight size={16}/></Link>
+          <Link href={"/checkout?pack=" + encodeURIComponent(packSlug)} className="store-quick">{t.quick} <ArrowRight size={16}/></Link>
           <div className="store-progress-decor" aria-hidden="true"><span>01</span><span>02</span><span>03</span><span>04</span></div>
         </div>
         <div className="store-showroom" aria-label={locale === "es" ? "Ilustración del mostrador digital con fotografías de bagels" : "Illustrated digital counter featuring bagel photographs"}>
