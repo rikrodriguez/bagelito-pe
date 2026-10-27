@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { LanguageToggle } from "./LanguageToggle";
@@ -24,7 +25,7 @@ export function Header() {
         <Link href="/#arma-tu-caja">{locale === "es" ? "Arma tu caja" : "Build a box"}</Link>
       </nav>
       <div className="header-actions">
-        <Link className="header-checkout-link" href="/checkout?pack=6-mixed">{label}</Link>
+        <Link className="header-checkout-link" href="/checkout?pack=6-mixed" aria-label={label}><span className="header-checkout-text">{label}</span><ShoppingBag className="header-checkout-icon" size={19} aria-hidden="true" /></Link>
         <LanguageToggle />
       </div>
     </header>
