@@ -130,7 +130,7 @@ export function StoreEntryFlow() {
               <span className="entry-flow-kicker">EN LA VITRINA</span>
               <h1>¿Qué te provoca hoy?</h1>
               <p className="entry-flow-intro">Elige por dónde empezar. La tienda se queda contigo durante todo el pedido.</p>
-              <div className="entry-flow-category-grid">
+              <div className="entry-flow-category-grid" aria-label="Opciones de compra: Packs, Combos, Schmears">
                 {categoryOptions.map((item) => (
                   <button
                     type="button"
