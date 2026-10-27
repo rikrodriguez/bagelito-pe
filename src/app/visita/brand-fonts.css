@@ -1,0 +1,17 @@
+/* Public webfont references from the type designer's Glacial Indifference repository.
+   Pinned source revision; fonts are not copied out of the local font installation.
+   License and attribution: https://github.com/marcologous/glacial-indifference/blob/f572a5123659f34385e08a36f28fec03f69aaf52/LICENSE.txt */
+@font-face {
+  font-family: "Glacial Indifference";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://raw.githubusercontent.com/marcologous/glacial-indifference/f572a5123659f34385e08a36f28fec03f69aaf52/fonts/woff2/GlacialIndifference-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Glacial Indifference";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://raw.githubusercontent.com/marcologous/glacial-indifference/f572a5123659f34385e08a36f28fec03f69aaf52/fonts/woff2/GlacialIndifference-Bold.woff2") format("woff2");
+}
