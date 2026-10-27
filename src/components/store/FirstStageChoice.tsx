@@ -47,11 +47,11 @@ export function FirstStageChoice({ step, selectedFamily, onPacks, onBack, onFami
               <span className="first-stage-category-image"><Image src="/images/pack-6-mixed.webp" alt="" width={230} height={160} sizes="180px" quality={75} /></span>
               <strong>Packs</strong><small>6 o 12 grandes · minis disponibles</small><ArrowRight size={19} />
             </button>
-            <button type="button" className="first-stage-category-option" data-category="combos" disabled>
+            <button type="button" className="first-stage-category-option" data-category="combos" aria-disabled="true">
               <span className="first-stage-combo-visual"><Image src="/images/bagel-everything.webp" alt="" width={105} height={105} quality={72} /><i /></span>
               <strong>Combos</strong><small>2 bagels + 1 schmear</small><em>Próxima etapa</em>
             </button>
-            <button type="button" className="first-stage-category-option" data-category="schmears" disabled>
+            <button type="button" className="first-stage-category-option" data-category="schmears" aria-disabled="true">
               <span className="first-stage-schmear-bowl" aria-hidden="true"><i /></span>
               <strong>Schmears</strong><small>Tarrinas individuales</small><em>Próxima etapa</em>
             </button>
