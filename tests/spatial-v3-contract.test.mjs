@@ -5,7 +5,6 @@ const read = (path) => readFileSync(new URL("../" + path,import.meta.url),"utf8"
 const shop=read("src/components/StoreWalkthrough.tsx");
 const world=read("src/app/spatial-v3.css");
 const checkout=read("src/app/checkout/checkout-bridge.css");
-const page=read("src/app/page.tsx");
 const checkoutPage=read("src/app/checkout/page.tsx");
 
 test("scene movement and doorway are real interactions, not a decorative slideshow",()=>{
@@ -51,7 +50,7 @@ test("checkout is visually continuous but the existing financial components rema
  assert.match(checkout,/\.checkout-page/);
  assert.match(checkout,/\.culqi-preview-pay/);
  assert.match(checkout,/\.checkout-page \.reserve-progress button\.active/);
- assert.match(page,/spatial-v3\.css/);
+ assert.match(checkoutPage,/checkout-bridge\.css/);
  assert.doesNotMatch(shop,/fetch\(|createCharge|\/api\/payments\/culqi/);
 });
 test("mobile does not use opaque fixed overlays on products",()=>{
