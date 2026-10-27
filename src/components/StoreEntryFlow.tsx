@@ -36,6 +36,7 @@ export function StoreEntryFlow() {
   }, []);
 
   const stepIndex = state === "entry" ? 0 : state === "categories" ? 1 : 2;
+  const sceneImage = state === "entry" ? "/images/store-entry-door.webp" : "/images/store-category-flow.webp";
 
   function transition(action: EntryFlowAction) {
     const target = nextEntryState(state, action);
@@ -89,7 +90,7 @@ export function StoreEntryFlow() {
         className="entry-flow-photo entry-flow-photo-entry"
       />
       <Image
-        src="/images/store-category-flow.webp"
+        src={sceneImage}
         alt=""
         fill
         priority
