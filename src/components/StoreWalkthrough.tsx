@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent } from "react";
-import { ArrowLeft, ArrowRight, Check, ChevronRight, DoorOpen, Minus, Plus, ShoppingBag, Sparkles, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, DoorOpen, Minus, Plus, ShoppingBag, Sparkles, X } from "lucide-react";
 import { flavors } from "@/data/flavors";
 import { flavorImages } from "@/data/flavor-images";
 import { packs, type PackSlug } from "@/data/packs";
