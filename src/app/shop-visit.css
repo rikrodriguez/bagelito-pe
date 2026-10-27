@@ -284,3 +284,23 @@ body:has(.bagelito-store) .site-footer { background: #f9fafc; border-color: #e4e
 
 /* The visit itself is the public storefront; do not show promotional batch clocks here. */
 body:has(.bagelito-store) .batch-deadline-banner { display: none; }
+
+/* The approved mark must never be compressed into an unreadable sliver on mobile. */
+.header-checkout-icon { display: none; }
+@media (max-width: 760px) {
+  body:has(.bagelito-store) .site-header { gap: 8px; justify-content: space-between; }
+  body:has(.bagelito-store) .site-header .logo-link { flex: 0 0 128px; min-width: 128px; }
+  body:has(.bagelito-store) .site-header .logo-link img { display: block; width: 128px; }
+  body:has(.bagelito-store) .site-header .header-actions { display: flex; align-items: center; flex: 0 0 auto; gap: 7px; }
+  body:has(.bagelito-store) .site-header .header-checkout-link {
+    display: grid; place-items: center; flex: 0 0 44px;
+    width: 44px; height: 44px; min-width: 44px; max-width: none;
+    min-height: 44px; border-radius: 50%; padding: 0;
+  }
+  body:has(.bagelito-store) .site-header .header-checkout-text { display: none; }
+  body:has(.bagelito-store) .site-header .header-checkout-icon { display: block; }
+}
+@media (max-width: 349px) {
+  body:has(.bagelito-store) .site-header .logo-link { flex-basis: 117px; min-width: 117px; }
+  body:has(.bagelito-store) .site-header .logo-link img { width: 117px; }
+}
