@@ -156,6 +156,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const t = words[locale];
   const { accepting, merchantReviewOnly } = useBatchAvailability();
   const [scene, setScene] = useState<Scene>("entry");
+  const [entering, setEntering] = useState(false);
   const [packSlug, setPackSlug] = useState<PackSlug>("6-mixed");
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [singleFlavor, setSingleFlavor] = useState("");
@@ -167,6 +168,9 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const [announcement, setAnnouncement] = useState("");
   const [flying, setFlying] = useState<FlyingBagel | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const rackRef = useRef<HTMLDivElement>(null);
+  const boxTrayRef = useRef<HTMLDivElement>(null);
+  const doorTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const basketRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const focusReturn = useRef<HTMLElement | null>(null);
@@ -206,10 +210,16 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     } catch { /* Browsing must work without storage. */ }
   }, [hydrated, packSlug, quantities, singleFlavor, district]);
   useEffect(() => {
-    const fromHistory = () => setScene(getScene(window.location.hash));
+    const fromHistory = () => {
+      if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
+      doorTimerRef.current = null;
+      setEntering(false);
+      setScene(getScene(window.location.hash));
+    };
     window.addEventListener("popstate", fromHistory);
     window.addEventListener("hashchange", fromHistory);
     return () => {
+      if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
       window.removeEventListener("popstate", fromHistory);
       window.removeEventListener("hashchange", fromHistory);
     };
@@ -239,12 +249,23 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     return flavorCopy[locale][slug] ?? flavors.find((f) => f.slug === slug)?.name ?? slug;
   }
   function move(next: Scene) {
-    setScene(next);
-    setDetail(null);
-    if (window.location.hash !== sceneHash[next]) window.history.pushState(null, "", sceneHash[next]);
-    window.requestAnimationFrame(() => stageRef.current?.scrollIntoView({
-      block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    }));
+    if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const commit = () => {
+      doorTimerRef.current = null;
+      setScene(next);
+      setDetail(null);
+      setEntering(false);
+      if (window.location.hash !== sceneHash[next]) window.history.pushState(null, "", sceneHash[next]);
+      window.requestAnimationFrame(() => {
+        stageRef.current?.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});
+        window.requestAnimationFrame(() => document.querySelector<HTMLElement>(".walk-frame.is-active h1, .walk-frame.is-active h2")?.focus({preventScroll:true}));
+      });
+    };
+    if (scene === "entry" && next === "counter" && !reduced) {
+      setEntering(true);
+      doorTimerRef.current = window.setTimeout(commit, 470);
+    } else commit();
   }
   function changePack(next: PackSlug) {
     if (next === packSlug) return;
@@ -275,7 +296,8 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     setAnnouncement(label(slug) + " " + t.save);
     if (!event || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const source = event.currentTarget.getBoundingClientRect();
-    const destination = basketRef.current?.getBoundingClientRect();
+    const emptySlot = scene === "build" ? boxTrayRef.current?.querySelector<HTMLElement>(".store-box-slot:not(.filled)") : null;
+    const destination = (emptySlot || basketRef.current)?.getBoundingClientRect();
     if (!destination) return;
     const x = source.left + source.width / 2 - 37;
     const y = source.top + source.height / 2 - 37;
@@ -286,10 +308,10 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     });
   }
   function onMove(event: PointerEvent<HTMLDivElement>) {
-    if (event.pointerType !== "mouse" || !stageRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    stageRef.current.style.setProperty("--walk-px", (20 * ((event.clientX - rect.left) / rect.width - .5)).toFixed(1) + "px");
-    stageRef.current.style.setProperty("--walk-py", (14 * ((event.clientY - rect.top) / rect.height - .5)).toFixed(1) + "px");
+    event.currentTarget.style.setProperty("--walk-px", (20 * ((event.clientX - rect.left) / rect.width - .5)).toFixed(1) + "px");
+    event.currentTarget.style.setProperty("--walk-py", (14 * ((event.clientY - rect.top) / rect.height - .5)).toFixed(1) + "px");
   }
   function checkout() {
     if (!filled) { move("build"); return; }
