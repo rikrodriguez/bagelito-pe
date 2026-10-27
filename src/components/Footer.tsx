@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="footer-brand">
         <Link href="/" className="footer-logo" aria-label={copy.footer.homeLabel}>
-          <Image src="/images/bagelito-logo.svg" alt="Bagelito.pe" width={757} height={253} />
+          <Image src="/images/bagelito-logo.svg" alt="Bagelito.pe" width={671} height={178} />
         </Link>
         <p>{copy.footer.tagline}</p>
       </div>

@@ -19,7 +19,8 @@ test("the four-step checkout uses actual photos from the same product catalog",(
  assert.doesNotMatch(reserve,/variant=\{flavor\.variant as BagelVariant\} size="sm" label=\{flavorLabel\}/);
 });
 test("the merchant checkout review is discoverable from the header",()=>{
- assert.match(header,/href="\/checkout\?pack=6-mixed"/);
+ assert.match(header,/href=\{checkoutHref\}/);
+ assert.match(header,/getShopCheckoutHref/);
  assert.match(header,/useBatchAvailability/);
  assert.match(reserve,/Review preview — No real payments/);
 });
