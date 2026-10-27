@@ -23,6 +23,7 @@ import { flavorCopy, packCopy } from "@/lib/i18n";
 import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
 import { districtOptions } from "@/lib/reservations/schema";
 import { siteAddress, siteServiceArea } from "@/lib/site";
+import { SHOP_DRAFT_KEY, SHOP_DRAFT_UPDATED_EVENT } from "@/lib/shop-draft";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 type Props = {
@@ -93,7 +94,7 @@ export function ReservationFlow({
   // remains authoritative. Never restore customer or payment details.
   useEffect(() => {
     try {
-      const raw = window.localStorage.getItem("bagelito:shop-box:v1");
+      const raw = window.localStorage.getItem(SHOP_DRAFT_KEY);
       if (!raw) return;
       const value: unknown = JSON.parse(raw);
       if (!value || typeof value !== "object") return;
@@ -133,9 +134,10 @@ export function ReservationFlow({
   useEffect(() => {
     if (!shopDraftRestored) return;
     try {
-      window.localStorage.setItem("bagelito:shop-box:v1", JSON.stringify({
+      window.localStorage.setItem(SHOP_DRAFT_KEY, JSON.stringify({
         version: 1, packSlug, quantities, singleFlavor,
       }));
+      window.dispatchEvent(new Event(SHOP_DRAFT_UPDATED_EVENT));
     } catch {
       // Storage is optional; never block the checkout.
     }
