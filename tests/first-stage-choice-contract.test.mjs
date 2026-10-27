@@ -64,3 +64,9 @@ test("future categories stay keyboard-focusable while explicitly unavailable", (
   assert.doesNotMatch(choice, /data-category="combos"\s+disabled/);
   assert.doesNotMatch(choice, /data-category="schmears"\s+disabled/);
 });
+
+
+test("entry links have a real category hash fallback before React hydration", () => {
+  const matches = storefront.match(/href=\{hashForFirstStage\("category"\)\}/g) ?? [];
+  assert.ok(matches.length >= 2, "door and primary entry CTA need native #mostrador fallbacks");
+});
