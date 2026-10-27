@@ -1,0 +1,166 @@
+/* Scoped to the existing /checkout flow only.
+   Visual continuity with the Bagelito Spatial Visit; payment logic is unchanged. */
+body:has(.checkout-page) {
+  background:#fff;
+  color:#123968;
+  --navy:#123968;
+  --pink:#0751ae;
+  --purple:#0751ae;
+  --orange:#e88979;
+  --blue:#244b7f;
+  --line:rgba(34,76,130,.18);
+}
+body:has(.checkout-page) .batch-deadline-banner { display:none; }
+body:has(.checkout-page) .site-header {
+  background:#fff;
+  border-bottom:1px solid #dce6f0;
+}
+body:has(.checkout-page) .header-checkout-link {
+  background:#0751ae;
+  color:#fff;
+  border-color:#0751ae;
+  border-radius:99px;
+}
+body:has(.checkout-page) .header-checkout-link:hover { background:#003d8e; }
+body:has(.checkout-page) .site-footer {
+  background:#f6f9fd;
+  border-color:#dce5f0;
+}
+body:has(.checkout-page) .site-footer strong { color:#0751ae; }
+.checkout-page {
+  min-height:76vh;
+  padding:clamp(22px,4vw,62px) clamp(14px,4.6vw,74px) clamp(50px,6vw,90px);
+  background:
+    linear-gradient(90deg,rgba(209,223,240,.37) 1px,transparent 1px),
+    linear-gradient(rgba(209,223,240,.37) 1px,transparent 1px),
+    linear-gradient(180deg,#fff 0%,#f7faff 100%);
+  background-size:94px 94px,94px 94px,auto;
+}
+.checkout-page * {box-sizing:border-box;}
+.checkout-page a:focus-visible,.checkout-page button:focus-visible,
+.checkout-page select:focus-visible,.checkout-page input:focus-visible {
+  outline:3px solid #f28d7d;
+  outline-offset:3px;
+}
+.checkout-flow-shell {max-width:1350px;}
+.checkout-flow-shell .reserve-herolet {
+  border:1px solid #d3e1f0;
+  background:#fff;
+  box-shadow:0 16px 38px rgba(15,72,141,.07);
+  border-radius:20px;
+}
+.checkout-flow-shell .reserve-herolet h1 {
+  color:#0751ae;
+  font-size:clamp(2.55rem,5.1vw,4.6rem);
+  letter-spacing:-.065em;
+}
+.checkout-flow-shell .reserve-herolet p:not(.kicker) {
+  color:#4b617e;
+  font-weight:650;
+}
+.checkout-flow-shell .reserve-herolet .kicker {color:#0751ae;}
+.checkout-page .checkout-review-banner,
+.checkout-page .culqi-review-only-note {
+  background:#eaf3fe;
+  border:1px solid #afc9e8;
+  border-radius:14px;
+  color:#16437c;
+}
+.checkout-page .checkout-review-banner strong,
+.checkout-page .culqi-review-only-note strong {color:#0751ae;}
+.checkout-page .reserve-batch-card {
+  background:#f5f9ff;
+  border:1px solid #d4e2f2;
+  color:#143a70;
+  box-shadow:none;
+}
+.checkout-page .reserve-batch-card.is-closed {
+  background:#eff5fe;
+  border-color:#cadced;
+}
+.checkout-page .reserve-batch-card.is-closed span {color:#385a80;}
+.checkout-page .reserve-progress button {
+  color:#31527f;
+  border-color:#d3e0ee;
+  background:#fff;
+}
+.checkout-page .reserve-progress button.active {background:#0751ae;color:#fff;border-color:#0751ae;}
+.checkout-page .reserve-progress button:disabled {opacity:.58;}
+.checkout-page .reserve-card,
+.checkout-page .reserve-pack-option,
+.checkout-page .checkout-order-summary {
+  background:#fff;
+  border:1px solid #d6e3f2;
+  box-shadow:0 14px 30px rgba(6,55,118,.07);
+}
+.checkout-page .reserve-pack-option.selected {
+  border:2px solid #0751ae;
+  background:#eff6ff;
+}
+.checkout-page .reserve-pack-option b,
+.checkout-page .reserve-pack-option.selected strong {color:#0751ae;}
+.checkout-page .reserve-step-title h2,
+.checkout-page .reserve-card h2,
+.checkout-page .checkout-summary-heading h2 {color:#113d7e;}
+.checkout-page .reserve-step-title span {background:#eaf3fd;color:#143d78;}
+.checkout-page .pill-button.pink,
+.checkout-page .select-flavor-button,
+.checkout-page .checkout-upsell-action > button:not(.checkout-upsell-remove),
+.checkout-page .culqi-preview-pay {
+  background:#0751ae;
+  color:#fff;
+  border-color:#0751ae;
+  box-shadow:0 9px 23px rgba(7,81,174,.15);
+}
+.checkout-page .pill-button.pink:hover,
+.checkout-page .culqi-preview-pay:hover:not(:disabled) {background:#003d8e;}
+.checkout-page .pill-button.outline {background:#fff;border-color:#0751ae;color:#0751ae;}
+.checkout-page .flavor-select-card {background:#fff;border:1px solid #dfe8f2;}
+.checkout-page .flavor-select-card.selected {border:2px solid #0751ae;background:#eff6ff;}
+.checkout-page .flavor-select-photo {background:#f4f8fe;border-radius:16px;}
+.checkout-page .quantity-control button {color:#0751ae;border-color:#d1e1f0;background:#eaf3fe;}
+.checkout-page .form-grid input,
+.checkout-page .form-grid select,
+.checkout-page .form-grid textarea {border-color:#c6d8ec;background:#fff;color:#13396e;}
+.checkout-page .form-grid input:focus,
+.checkout-page .form-grid textarea:focus,
+.checkout-page .form-grid select:focus {border-color:#0751ae;}
+.checkout-page .checkout-order-summary {border-radius:22px;}
+.checkout-page .checkout-summary-heading button,
+.checkout-page .checkout-section-kicker {color:#0751ae;}
+.checkout-page .checkout-upsell,
+.checkout-page .checkout-upsell.is-added {
+  background:#f6f9ff;
+  border:1px solid #dae6f3;
+  box-shadow:none;
+}
+.checkout-page .checkout-upsell::before,
+.checkout-page .checkout-upsell::after {display:none;}
+.checkout-page .checkout-upsell-heading > span {color:#0751ae;}
+.checkout-page .checkout-upsell-heading > strong {background:#0751ae;color:#fff;}
+.checkout-page .checkout-upsell-icon {color:#0751ae;background:#e7f2fd;}
+.checkout-page .checkout-upsell-price strong {color:#0751ae;}
+.checkout-page .culqi-checkout-panel {border:1px solid #d3e3f3;box-shadow:0 18px 34px rgba(3,65,139,.09);}
+.checkout-page .culqi-preview {background:#fff;}
+.checkout-page .culqi-preview-tabs button.active,
+.checkout-page .culqi-preview-tabs > span.active {background:#eaf3ff;color:#0751ae;border-color:#bed3eb;}
+.checkout-page .culqi-preview-field {border-color:#d3e0ee;background:#fff;}
+.checkout-page .culqi-checkout-terms-note a {color:#0751ae;}
+.checkout-page .culqi-availability-note {background:#eaf3fd;color:#16477d;}
+.checkout-page .culqi-security-note {background:#f7faff;}
+.checkout-page .review-grid strong,
+.checkout-page .checkout-summary-lines strong,
+.checkout-page .checkout-order-summary strong {color:#0e3876;}
+.checkout-page .reserve-nav {background:#fff;border-top:1px solid #d3e1ef;}
+.checkout-page .checkout-summary-heading button {text-decoration:underline;text-underline-offset:4px;}
+.checkout-page .flavor-select-grid img,
+.checkout-page .checkout-summary-photo img {object-fit:contain;}
+@media(max-width:760px){
+  .checkout-page {padding:23px 13px 48px;}
+  .checkout-flow-shell .reserve-herolet {padding:23px;border-radius:16px;}
+  .checkout-page .reserve-nav {background:rgba(255,255,255,.97);border-top-color:#d7e3f0;}
+  .checkout-page .checkout-order-summary {border-radius:18px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .checkout-page * {scroll-behavior:auto!important; transition-duration:.01ms!important;}
+}
