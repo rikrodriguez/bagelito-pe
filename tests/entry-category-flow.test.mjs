@@ -76,3 +76,9 @@ test("small combo helper copy uses accessible dark blue",()=>{
   const css=read("src/app/store-entry-flow.css");
   assert.match(css,/\.entry-flow-choice em\s*\{[^}]*color:\s*#34577e/);
 });
+
+test("entry and counter use distinct approved store scenes",()=>{
+  const source=read("src/components/StoreEntryFlow.tsx");
+  assert.match(source,/store-entry-door\.webp/);
+  assert.match(source,/store-category-flow\.webp/);
+});
