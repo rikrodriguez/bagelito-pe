@@ -81,12 +81,20 @@ export function StoreEntryFlow() {
   return (
     <main className="entry-flow" data-state={state} data-entering={entering}>
       <Image
+        src="/images/store-entry-door.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="entry-flow-photo entry-flow-photo-entry"
+      />
+      <Image
         src="/images/store-category-flow.webp"
         alt=""
         fill
         priority
         sizes="100vw"
-        className="entry-flow-photo"
+        className="entry-flow-photo entry-flow-photo-counter"
       />
       <div className="entry-flow-shade" aria-hidden="true" />
 
