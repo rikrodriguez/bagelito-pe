@@ -56,3 +56,11 @@ test("future categories remain visible but explicitly unavailable in this increm
 test("future progress labels use an AA-safe text color on white", () => {
   assert.match(css, /\.first-stage-progress button,\s*\.first-stage-progress-future\s*\{[^}]*color:\s*#56677f/i);
 });
+
+
+test("future categories stay keyboard-focusable while explicitly unavailable", () => {
+  assert.match(choice, /data-category="combos"\s+aria-disabled="true"/);
+  assert.match(choice, /data-category="schmears"\s+aria-disabled="true"/);
+  assert.doesNotMatch(choice, /data-category="combos"\s+disabled/);
+  assert.doesNotMatch(choice, /data-category="schmears"\s+disabled/);
+});
