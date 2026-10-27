@@ -62,7 +62,7 @@ body:has(.entry-flow) { overflow:hidden; }
 .entry-flow-schmear-scoop { width:58px;height:42px;border-radius:50%;background:linear-gradient(145deg,#fff,#f3c4bb);border:5px solid #e8edf2;color:transparent;box-shadow:inset 0 4px 8px rgba(144,77,68,.1); }
 .entry-flow-choice strong,.entry-flow-size-card strong { font-size:25px;letter-spacing:-.035em; }
 .entry-flow-choice small,.entry-flow-size-card small { font-size:12px;color:#46627e;margin-top:3px;line-height:1.3; }
-.entry-flow-choice em { font-size:10px;color:#59718d;font-style:normal;margin-top:7px;font-weight:700; }
+.entry-flow-choice em { font-size:10px;color:#34577e;font-style:normal;margin-top:7px;font-weight:700; }
 .entry-flow-choice-arrow { position:absolute;right:16px;bottom:16px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eaf3ff;color:var(--bagelito-blue); }
 .entry-flow-back { border:0;background:transparent;color:var(--bagelito-blue);font-size:13px;font-weight:800;display:flex;gap:7px;align-items:center;padding:0;margin-bottom:10px; }
 .entry-flow-size-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
