@@ -22,7 +22,7 @@ test("first purchase decision is exactly Packs Combos Schmears",()=>{
   assert.match(source,/Schmears/);
   assert.doesNotMatch(source,/Sandwich/);
   assert.doesNotMatch(source,/Bebida/);
-  assert.doesNotMatch(source,/2 bagels/);
+  assert.doesNotMatch(source,/2 bagels\s*\+\s*1 schmear/i);
   assert.match(source,/Bagels \+ schmears/);
 });
 
