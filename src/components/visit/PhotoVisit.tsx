@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Check, ChevronRight, DoorOpen, Info, Layers, Pac
 import { initialVisit, readVisitDraft, readVisitHash, visitReducer, VISIT_CATEGORIES, VISIT_STORAGE_KEY, type VisitCategory } from "@/lib/photo-visit";
 import { useLanguage } from "@/components/LanguageProvider";
 import { PackVisitBuilder } from "@/components/visit/PackVisitBuilder";
+import { VerifiedMenu } from "@/components/visit/VerifiedMenu";
 
 const copy = {
   es: {
@@ -14,10 +15,10 @@ const copy = {
     choose: "¿Qué te provoca hoy?", hint: "Elige cómo quieres armar tu pedido.",
     families: { packs: "Packs", combos: "Combos", schmears: "Schmears" },
     desc: { packs: "Tu caja de bagels", combos: "Bagels + schmears", schmears: "Tus favoritos para untar" },
-    selected: "Elegiste", change: "Cambiar categoría", stop: "Primero validamos esta visita. La configuración de sabores viene en la siguiente etapa.",
+    selected: "Elegiste", change: "Cambiar categoría", stop: "La carta ya está disponible para revisar. La configuración de sabores viene en su siguiente etapa.",
     steps: ["Entrada", "Vitrina", "Elige"], future: "Luego: configura tu pedido", info: "Acerca de esta preview", close: "Cerrar información",
-    scope: "Etapa 1 · Entrada y elección", disclosure: "Visualización conceptual. No es una fotografía de un local real. Esta preview no crea pedidos ni efectúa cobros.",
-    more: "Paredes blancas de cuadritos, acero, bagels protegidos por vidrio y schmears tipo heladería. Se conserva el sistema de compra existente sin activarlo aquí.",
+    scope: "Visita y carta · Sin compra", disclosure: "Visualización conceptual. No es una fotografía de un local real. Esta preview no crea pedidos ni efectúa cobros.",
+    more: "Paredes blancas de cuadritos, acero, bagels protegidos por vidrio y schmears tipo heladería. Los nombres, tamaños y precios de la carta se toman de las capturas suministradas, no del render. El sistema de compra existente no se activa aquí.",
     error: "No se pudo cargar la escena.", retry: "Reintentar", loading: "Abriendo Bagelito…", reset: "Repetir la visita", moveHint: "Una tienda. Elige a tu manera.",
     image: "Visualización de la tienda Bagelito, con azulejos blancos, vitrinas de bagels y schmears tipo heladería.",
   },
@@ -27,10 +28,10 @@ const copy = {
     choose: "What are you craving?", hint: "Choose how to build your order.",
     families: { packs: "Packs", combos: "Combos", schmears: "Schmears" },
     desc: { packs: "Your box of bagels", combos: "Bagels + schmears", schmears: "Your favorite spreads" },
-    selected: "You chose", change: "Change category", stop: "First, we are validating this visit. Flavor configuration comes in the next stage.",
+    selected: "You chose", change: "Change category", stop: "The supplied menu is now available to review. Flavor configuration comes in its next stage.",
     steps: ["Entrance", "Counter", "Choose"], future: "Next: configure your order", info: "About this preview", close: "Close information",
-    scope: "Stage 1 · Entrance and choice", disclosure: "Concept visualization, not a photograph of an existing store. This preview creates no orders or charges.",
-    more: "Small white tiles, steel, bagels behind glass, and gelato-style schmear wells. The existing purchase system remains unchanged and is not enabled here.",
+    scope: "Visit and menu · No checkout", disclosure: "Concept visualization, not a photograph of an existing store. This preview creates no orders or charges.",
+    more: "Small white tiles, steel, bagels behind glass, and gelato-style schmear wells. Menu names, sizes and prices come from the supplied screenshots, not the render. The existing purchase system is not enabled here.",
     error: "The scene could not load.", retry: "Try again", loading: "Opening Bagelito…", reset: "Replay the visit", moveHint: "One store. Your choice.",
     image: "Bagelito concept store with white tiles, enclosed bagel displays, and gelato-style schmear wells.",
   },
@@ -183,6 +184,7 @@ export function PhotoVisit() {
           <div className="pv-selection" aria-live="polite">
             {state.category ? <><strong><Check size={16} /> {t.selected} {t.families[state.category]}</strong><span>{state.category==="packs"?(locale==="es"?"Elige el tamaño y los bagels de tu caja.":"Choose the size and bagels for your box."):t.stop}</span>{state.category==="packs"&&<button className="pv-start-packs" type="button" onClick={()=>setShowPacks(true)}>{locale==="es"?"Armar mi pack":"Build my box"}<ArrowRight size={15}/></button>}<button type="button" onClick={clear}>{t.change}</button></> : <p>{t.hint}</p>}
           </div>
+          {state.category && <VerifiedMenu key={state.category} category={state.category} locale={locale} />}
         </section>}
         {atCounter && showPacks && state.category==="packs" && <PackVisitBuilder locale={locale} onBack={()=>setShowPacks(false)}/>}
         {imageError && <div className="pv-error" role="alert"><p>{t.error}</p><button type="button" onClick={() => {setImageError(false);setLoaded(false);setImageKey((key) => key + 1);}}><RotateCcw size={17}/>{t.retry}</button></div>}
@@ -203,7 +205,7 @@ export function PhotoVisit() {
       {showInfo && <div className="pv-info-backdrop" onClick={(event) => { if(event.target === event.currentTarget) setShowInfo(false); }}>
         <section className="pv-info-dialog" role="dialog" aria-modal="true" aria-label={t.info}>
           <button type="button" className="pv-info-close" aria-label={t.close} ref={infoClose} onClick={() => setShowInfo(false)}><X size={21}/></button>
-          <span>PREVIEW / 01</span><h2>{t.scope}</h2><p>{t.disclosure}</p><p>{t.more}</p>
+          <span>PREVIEW / CARTA</span><h2>{t.scope}</h2><p>{t.disclosure}</p><p>{t.more}</p>
         </section>
       </div>}
       <span className="pv-sr-only" role="status" aria-live="polite">{isMoving ? t.moving : atCounter ? t.choose : t.intro}</span>
