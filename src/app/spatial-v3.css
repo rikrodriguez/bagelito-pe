@@ -7,6 +7,7 @@
   color: #0b326a;
 }
 body:has(.walk-store) { background: #fff; }
+body:has(.walk-store) .site-footer strong {color:#0751ae;}
 .walk-store * { box-sizing: border-box; }
 .walk-digital-label { color: #445b79; }
 .walk-steps button:not(.is-active) { color: #405674; }
