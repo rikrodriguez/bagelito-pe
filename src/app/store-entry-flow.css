@@ -1,3 +1,6 @@
+body:has(.entry-flow) .batch-deadline-banner { display:none; }
+body:has(.entry-flow) .floating-whatsapp { display:none; }
+body:has(.entry-flow) { overflow:hidden; }
 .entry-flow {
   --bagelito-blue:#004aad;
   --bagelito-coral:#fa967f;
