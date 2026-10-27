@@ -295,6 +295,7 @@
 .walk-store.has-first-stage .walk-wayfinding { justify-content: flex-end; }
 .walk-store.has-first-stage .walk-counter-layout { display: none; }
 .walk-store.has-first-stage .walk-bottom-bar { display: none; }
+.walk-store.has-first-stage .walk-epilogue { display: none; }
 .walk-store.has-first-stage .walk-counter.is-active { min-height: clamp(680px, 58vw, 820px); }
 
 @media (max-width: 760px) {
