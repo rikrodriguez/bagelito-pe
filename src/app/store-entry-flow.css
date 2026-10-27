@@ -15,10 +15,23 @@ body:has(.entry-flow) { overflow:hidden; }
   color:#053d91;
   font-family:var(--font-sans,Arial,sans-serif);
 }
+.entry-flow::before {
+  content:"";
+  position:absolute;
+  inset:-4%;
+  z-index:0;
+  background-image:url("/images/store-category-flow.webp");
+  background-size:cover;
+  background-position:center;
+  filter:blur(16px) saturate(.9) brightness(.9);
+  transform:scale(1.08);
+  opacity:.72;
+}
 .entry-flow * { box-sizing:border-box; }
 .entry-flow button { font:inherit; }
 .entry-flow button:focus-visible { outline:3px solid var(--bagelito-coral); outline-offset:4px; }
 .entry-flow-photo {
+  z-index:1;
   object-fit:cover;
   object-position:center;
   transform:scale(1.02);
@@ -32,7 +45,7 @@ body:has(.entry-flow) { overflow:hidden; }
 }
 .entry-flow[data-entering="true"] .entry-flow-photo { transform:scale(1.18); }
 .entry-flow-shade {
-  position:absolute;inset:0;
+  position:absolute;inset:0;z-index:2;
   background:linear-gradient(180deg,rgba(4,34,77,.025),transparent 42%,rgba(4,34,77,.12));
   pointer-events:none;
 }
@@ -95,12 +108,13 @@ body:has(.entry-flow) { overflow:hidden; }
 .entry-flow-progress-item.is-done { color:#3b628f; }.entry-flow-progress-item.is-done .entry-flow-progress-icon { background:#dcecff;color:var(--bagelito-blue); }
 
 @media (max-width:700px) {
-  .entry-flow-photo { object-position:center 58%; }
+  .entry-flow-photo { object-position:center 52%; }
   .entry-flow[data-state="categories"] .entry-flow-photo,
   .entry-flow[data-state="pack-size"] .entry-flow-photo {
-    object-position:center 64%;
-    transform:scale(1.045);
-    filter:saturate(1) brightness(.96) contrast(1.01);
+    object-fit:contain;
+    object-position:center top;
+    transform:none;
+    filter:saturate(1) brightness(.98) contrast(1.01);
   }
   .entry-flow-topbar { top:10px;left:10px;right:10px; }
   .entry-flow-review { display:none; }
