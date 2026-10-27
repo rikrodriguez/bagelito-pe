@@ -65,3 +65,9 @@ test("pure entry flow only allows approved first-segment transitions",()=>{
   assert.equal(nextEntryState("categories","combos"),"categories");
   assert.equal(nextEntryState("categories","schmears"),"categories");
 });
+
+test("entry flow owns the viewport without legacy review or WhatsApp overlays",()=>{
+  const css=read("src/app/store-entry-flow.css");
+  assert.match(css,/body:has\(\.entry-flow\) \.batch-deadline-banner\s*\{[^}]*display:\s*none/);
+  assert.match(css,/body:has\(\.entry-flow\) \.floating-whatsapp\s*\{[^}]*display:\s*none/);
+});
