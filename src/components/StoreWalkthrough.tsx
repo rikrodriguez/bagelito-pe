@@ -367,7 +367,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
               <h1 tabIndex={-1}>{t.entryTitle}</h1>
               <p>{t.entryBody}</p>
               <div className="walk-entry-actions">
-                <button type="button" className="walk-primary" disabled={entering} onClick={() => move("counter")}>{t.enter} <ArrowRight size={20} /></button>
+                <Link href={hashForFirstStage("category")} className="walk-primary" aria-disabled={entering} onClick={(event) => { event.preventDefault(); if (!entering) move("counter"); }}>{t.enter} <ArrowRight size={20} /></Link>
                 <button type="button" className="walk-quiet" onClick={() => move("build")}>{t.fastHint} <ChevronRight size={17} /></button>
               </div>
               <Link className="walk-direct-link" href={"/checkout?pack=" + encodeURIComponent(packSlug)}>{t.quick} <ArrowRight size={17} /></Link>
@@ -392,10 +392,10 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
                 </div>
                 <div className="walk-façade-tiles" />
               </div>
-              <button type="button" className="walk-entrance-hotspot" disabled={entering} onClick={() => move("counter")}
-                aria-label={t.start}>
+              <Link href={hashForFirstStage("category")} className="walk-entrance-hotspot" aria-disabled={entering}
+                onClick={(event) => { event.preventDefault(); if (!entering) move("counter"); }} aria-label={t.start}>
                 <DoorOpen size={21}/><span>{t.start}</span><ArrowRight size={17}/>
-              </button>
+              </Link>
               <span className="walk-door-hint">{t.enterHint}</span>
             </div>
           </section>
