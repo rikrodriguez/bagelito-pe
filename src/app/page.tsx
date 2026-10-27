@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { ShopVisit } from "@/components/ShopVisit";
+import { StoreWalkthrough } from "@/components/StoreWalkthrough";
 import { getPublicPaymentConfig } from "@/lib/payments";
 import "./shop-visit.css";
+import "./walkthrough.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -19,7 +20,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main><ShopVisit paymentEnabled={paymentEnabled} /></main>
+      <main><StoreWalkthrough paymentEnabled={paymentEnabled} /></main>
       <Footer />
     </>
   );
