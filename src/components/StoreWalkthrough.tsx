@@ -243,7 +243,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     setDetail(null);
     if (window.location.hash !== sceneHash[next]) window.history.pushState(null, "", sceneHash[next]);
     window.requestAnimationFrame(() => stageRef.current?.scrollIntoView({
-      block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
     }));
   }
   function changePack(next: PackSlug) {
@@ -288,8 +288,8 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   function onMove(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType !== "mouse" || !stageRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    stageRef.current.style.setProperty("--walk-px", ((event.clientX - rect.left) / rect.width - .5).toFixed(3));
-    stageRef.current.style.setProperty("--walk-py", ((event.clientY - rect.top) / rect.height - .5).toFixed(3));
+    stageRef.current.style.setProperty("--walk-px", (20 * ((event.clientX - rect.left) / rect.width - .5)).toFixed(1) + "px");
+    stageRef.current.style.setProperty("--walk-py", (14 * ((event.clientY - rect.top) / rect.height - .5)).toFixed(1) + "px");
   }
   function checkout() {
     if (!filled) { move("build"); return; }
@@ -305,7 +305,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
         <span className="store-notice-dot" />
         {reviewOnly ? t.preview : !accepting ? t.closed : t.note}
       </div>
-      <main className="walk-main" aria-label={t.stageLandmark}>
+      <div className="walk-main" aria-label={t.stageLandmark}>
         <div className="walk-top" ref={stageRef}>
           <div className="walk-top-info">
             <span className="walk-kicker">BAGELITO EXPERIENCE</span>
@@ -557,7 +557,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
             </button>:<button type="button" className="walk-bottom-next" onClick={checkout}>{filled?t.continue:t.edit}<ArrowRight size={18}/></button>}
           </div>
         </div>
-      </main>
+      </div>
       <div className="walk-epilogue"><div><span>GOOD BAGELS, GOOD DAYS.</span><h2>{t.finalBand}</h2><p>{t.finalLine}</p></div>
         <button type="button" onClick={()=>move("counter")}>{t.counterTitle}<ArrowRight size={18}/></button>
       </div>
