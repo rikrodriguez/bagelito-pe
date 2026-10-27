@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { PhotoVisit } from "@/components/visit/PhotoVisit";
 import "./brand-fonts.css";
 import "./visit.css";
+import "./packs.css";
 
 export const metadata: Metadata = {
-  title: "Bagelito · Entra a la tienda | Preview 01",
+  title: "Bagelito · Entra a la tienda | Preview 02",
   description: "Preview conceptual: entra, acércate a la vitrina y elige Packs, Combos o Schmears. Sin pedidos ni cobros.",
   robots: { index: false, follow: false },
 };
