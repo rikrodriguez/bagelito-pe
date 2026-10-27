@@ -393,3 +393,34 @@ body:has(.walk-store) { background:#fff; }
  .walk-frame { transform:none!important; }
  .walk-façade { transform:none!important; }
 }
+
+/* Mobile isn't a miniature desktop: the shop doorway takes the first visual position.
+   The active room contributes its natural height, so narrow phones never crop the packing bench. */
+@media (max-width:650px) {
+  .walk-theatre,
+  .walk-theatre[data-scene="entry"],
+  .walk-theatre[data-scene="counter"],
+  .walk-theatre[data-scene="build"],
+  .walk-theatre[data-scene="cashier"] {
+    height:auto !important; min-height:0; transition:none;
+  }
+  .walk-frame { position:absolute; inset:0; height:100%; overflow:hidden; }
+  .walk-frame.is-active { position:relative; inset:auto; height:auto; overflow:visible; }
+  .walk-entry.is-active { flex-direction:column-reverse; min-height:0; }
+  .walk-entrance-art { flex:0 0 408px; min-height:408px; }
+  .walk-entry-copy { flex:1 0 auto; padding:24px 23px 36px; }
+  .walk-entry-copy h1 { font-size:clamp(43px,9.5vw,63px); margin:15px 0; }
+  .walk-entrance-hotspot { bottom:14%; }
+  .walk-door-hint { bottom:6%; }
+  .walk-counter.is-active { min-height:885px; }
+  .walk-build.is-active { padding-bottom:20px; }
+  .walk-cashier.is-active { min-height:920px; }
+}
+@media (max-width:365px) {
+  .walk-entry.is-active { min-height:0; }
+  .walk-entrance-art { flex-basis:365px; min-height:365px; }
+  .walk-entry-copy { padding:23px 18px 28px; }
+  .walk-counter.is-active { min-height:890px; }
+  .walk-build.is-active { min-height:0; }
+  .walk-cashier.is-active { min-height:0; }
+}
