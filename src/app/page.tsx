@@ -5,6 +5,7 @@ import { StoreWalkthrough } from "@/components/StoreWalkthrough";
 import { getPublicPaymentConfig } from "@/lib/payments";
 import "./shop-visit.css";
 import "./walkthrough.css";
+import "./spatial-v3.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
