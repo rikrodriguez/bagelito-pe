@@ -6,7 +6,8 @@
       "feat/immersive-shop-visit-20261026": false,
       "feat/bagelito-spatial-v3-20261027": false,
       "feat/photo-visit-step1-20261027": false,
-      "feat/photo-visit-packs-step2-20261027": false
+      "feat/photo-visit-packs-step2-20261027": false,
+      "fix/visit-menu-reference-20261027": false
     }
   }
 }
