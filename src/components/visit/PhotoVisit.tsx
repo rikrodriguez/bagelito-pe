@@ -150,7 +150,7 @@ export function PhotoVisit() {
 
       <div className="pv-toolbar" inert={showInfo}>
         <button className="pv-brand" type="button" aria-label={t.back} onClick={goEntrance}>
-          <span className="pv-logo-window"><Image src="/visit/logo.jpg" alt="Bagelito" width={1080} height={1080} unoptimized /></span>
+          <span className="pv-logo-window"><Image src="/visit/logo.svg" alt="Bagelito" width={671} height={178} unoptimized /></span>
         </button>
         <div className="pv-toolbar-actions">
           {!isEntry && <button type="button" className="pv-round" onClick={goEntrance} aria-label={t.back}><ArrowLeft size={19} /></button>}
