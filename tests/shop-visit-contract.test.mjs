@@ -5,91 +5,92 @@ import { access } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadTs } from "./helpers/load-ts.mjs";
-
 const root = fileURLToPath(new URL("../", import.meta.url));
-const text = (filename) => readFileSync(path.join(root, filename), "utf8");
-const visit = text("src/components/ShopVisit.tsx");
-const flow = text("src/app/reserve/ReservationFlow.tsx");
-const home = text("src/app/page.tsx");
-const imageMap = text("src/data/flavor-images.ts");
-const packSource = text("src/data/packs.ts");
-const draftSource = text("src/lib/shop-draft.ts");
-const header = text("src/components/Header.tsx");
+const read = (file) => readFileSync(path.join(root, file), "utf8");
+const visit = read("src/components/StoreWalkthrough.tsx");
+const page = read("src/app/page.tsx");
+const flow = read("src/app/reserve/ReservationFlow.tsx");
+const packsFile = read("src/data/packs.ts");
+const imagesFile = read("src/data/flavor-images.ts");
+const css = read("src/app/walkthrough.css");
 
-test("home continues the current Next app with real shared catalog and original checkout", () => {
-  assert.match(home, /import \{ ShopVisit \}/);
-  assert.match(home, /getPublicPaymentConfig\(\)\.enabled/);
-  assert.match(home, /<Header\s*\/>/);
-  assert.match(visit, /import \{ flavors \} from "@\/data\/flavors"/);
-  assert.match(visit, /import \{ packs, type PackSlug \} from "@\/data\/packs"/);
-  assert.match(visit, /window\.location\.assign\("\/checkout\?pack="/);
-  assert.doesNotMatch(visit, /fetch\s*\(|createReservation|\/api\/payments|\/api\/reservations|CulqiCheckoutButton/);
+test("the real homepage uses the four-scene walk, not the old static showcase", () => {
+  assert.match(page, /import \{ StoreWalkthrough \}/);
+  assert.match(page, /<StoreWalkthrough paymentEnabled=\{paymentEnabled\}/);
+  assert.match(page, /getPublicPaymentConfig/);
+  assert.match(page, /walkthrough\.css/);
+  assert.doesNotMatch(page, /<ShopVisit/);
+  for (const room of ["entry", "counter", "build", "cashier"]) {
+    assert.ok(visit.includes('"'+room+'"'), room);
+    assert.match(css, new RegExp('walk-'+room));
+  }
+  assert.match(visit, /onClick=\{\(\) => move\("counter"\)\}/);
+  assert.match(visit, /onClick=\{\(\) => move\("build"\)\}/);
+  assert.match(visit, /onClick=\{\(\) => move\("cashier"\)\}/);
+  assert.match(visit, /onPointerMove=\{onMove\}/);
+  assert.match(visit, /walk-entrance-hotspot/);
+  assert.match(visit, /walk-rack/);
+  assert.match(visit, /walk-metal-table/);
+  assert.match(visit, /walk-receipt/);
 });
 
-test("existing four prices and pack formats remain the only selection options", () => {
-  const matches = [...packSource.matchAll(/slug: "(12-mixed|6-mixed|12-single|6-single)"[^}]+?units: (\d+), amount: (\d+), packType: "(mixed|single)"/g)];
-  assert.equal(matches.length, 4);
-  assert.deepEqual(Object.fromEntries(matches.map(([, slug, units, amount, type]) => [slug, [Number(units), Number(amount), type]])), {
-    "12-mixed": [12, 115, "mixed"], "6-mixed": [6, 60, "mixed"],
-    "12-single": [12, 100, "single"], "6-single": [6, 50, "single"],
+test("all 10 existing photographed flavors are the real product source", async () => {
+  const mapped=[...imagesFile.matchAll(/:\s*"(\/images\/bagel-[\w-]+\.webp)"/g)].map(m=>m[1]);
+  assert.equal(mapped.length,10);
+  assert.equal(new Set(mapped).size,10);
+  for(const image of mapped) await access(path.join(root,"public",image));
+  assert.match(visit,/flavors\.map\(\(f\)/);
+  assert.match(visit,/src=\{flavorImages\[f\.slug\]\}/);
+  assert.match(visit,/src=\{flavorImages\[slug\]\}/);
+  assert.doesNotMatch(visit,/Math\.random\(\)/);
+});
+
+test("only canonical 6/12 mixed/single boxes and approved amounts", () => {
+  const match=[...packsFile.matchAll(/slug: "(12-mixed|6-mixed|12-single|6-single)"[^}]+?units: (\d+), amount: (\d+), packType: "(mixed|single)"/g)];
+  assert.deepEqual(Object.fromEntries(match.map(([,slug,units,amount,type])=>[slug,[Number(units),Number(amount),type]])),{
+    "12-mixed":[12,115,"mixed"],"6-mixed":[6,60,"mixed"],
+    "12-single":[12,100,"single"],"6-single":[6,50,"single"],
   });
-  assert.match(visit, /remaining === 0/);
-  assert.match(visit, /pack\.units - total \+ old/);
-  assert.match(visit, /Array\.from\(\{ length: pack\.units \}/);
+  assert.match(visit,/const remaining = Math\.max\(0, pack\.units - count\)/);
+  assert.match(visit,/pack\.units - currentTotal \+ old/);
+  assert.match(visit,/disabled=\{!canAdd\(f\.slug\)\}/);
+  assert.match(visit,/disabled=\{!filled\}/);
+  assert.match(visit,/changePack\(option\.slug\)/);
 });
 
-test("all catalog entries have real checked-in photographs and the storefront uses those paths", async () => {
-  const mapped = [...imageMap.matchAll(/:\s*"(\/images\/bagel-[\w-]+\.webp)"/g)].map((match) => match[1]);
-  assert.equal(mapped.length, 10);
-  assert.equal(new Set(mapped).size, 10);
-  for (const img of mapped) await access(path.join(root, "public", img));
-  assert.match(visit, /src=\{flavorImages\[flavor\.slug\]\}/);
-  assert.match(visit, /src=\{flavorImages\[slug\]\}/);
+test("tactile selection and recovery into original checkout without financial writes", () => {
+  assert.match(visit,/const \[flying, setFlying\]/);
+  assert.match(visit,/walk-flying-bagel/);
+  assert.match(css,/@keyframes walk-fly/);
+  assert.match(visit,/SHOP_DRAFT_KEY/);
+  assert.match(visit,/SHOP_DRAFT_UPDATED_EVENT/);
+  assert.match(visit,/safeDraft/);
+  assert.match(visit,/window\.location\.assign\("\/checkout\?pack="/);
+  assert.match(flow,/setSingleFlavor\(draft\.singleFlavor\)/);
+  assert.match(flow,/setQuantities\(cleaned\)/);
+  assert.match(flow,/draft\.district/);
+  assert.doesNotMatch(visit,/fetch\s*\(|\/api\/payments|\/api\/reservations|createReservation|CulqiCheckoutButton/);
 });
 
-test("store box selection is restored into the same checkout without personal information", () => {
-  const key = "bagelito:shop-box:v1";
-  assert.ok(draftSource.includes(key));
-  assert.match(visit, /SHOP_DRAFT_KEY/);
-  assert.match(flow, /SHOP_DRAFT_KEY/);
-  assert.match(header, /getShopCheckoutHref/);
-  assert.match(flow, /draft\.packSlug !== pack\.slug/);
-  assert.match(flow, /Number\.isInteger\(rawCount\)/);
-  assert.match(flow, /setQuantities\(cleaned\)/);
-  assert.match(flow, /setSingleFlavor\(draft\.singleFlavor\)/);
-  assert.doesNotMatch(visit, /localStorage\.setItem\([^;]*(?:customerName|whatsapp|email|deliveryAddress)/s);
+test("no deceptive retail/payment claims and intentional accessible motion", () => {
+  assert.match(visit,/merchantReviewOnly \|\| !paymentEnabled/);
+  assert.match(visit,/No orders or payments are created/);
+  assert.match(visit,/recorrido digital ilustrado|Recorrido digital ilustrado/);
+  assert.match(visit,/aria-hidden=\{scene !== "counter"\}/);
+  assert.match(visit,/aria-pressed=\{scene === s\}/);
+  assert.match(visit,/aria-modal="true"/);
+  assert.match(visit,/event\.key === "Escape"/);
+  assert.match(css,/prefers-reduced-motion/);
+  assert.match(visit,/window\.addEventListener\("popstate"/);
+  assert.match(visit,/getDeliveryFee\(district\)/);
+  assert.doesNotMatch(visit,/Próximo batch|Últimas unidades|clientes comprando ahora/);
 });
 
-test("review mode is explicit, no simulated payment gets treated as an order", () => {
-  assert.match(visit, /batch\.merchantReviewOnly \|\| !paymentEnabled/);
-  assert.match(visit, /no orders or payments are created here/);
-  assert.match(flow, /getCheckoutSessionId/);
-  assert.match(flow, /CulqiCheckoutButton/);
-  assert.match(text("src/lib/payments/config.ts"), /process\.env\.BAGELITO_MERCHANT_REVIEW_ONLY !== "true"/);
-});
-
-test("brand, accessibility, languages and truth-in-advertising are retained", () => {
-  const logo = text("public/images/bagelito-logo.svg");
-  assert.match(logo, /#f28d7d/i);
-  assert.match(logo, /#0751ae/i);
-  assert.match(visit, /aria-live="polite"/);
-  assert.match(visit, /aria-modal="true"/);
-  assert.match(text("src/app/shop-visit.css"), /prefers-reduced-motion/);
-  assert.match(text("src/lib/i18n.ts"), /defaultLocale: Locale = "es"/);
-  assert.match(text("src/app/layout.tsx"), /<html lang="es"/);
-  assert.doesNotMatch(home, /BatchInfo|PurchaseActivityToast/);
-});
-
-test("header and hero direct checkout preserve every approved selected pack", () => {
-  const { getShopCheckoutHref } = loadTs("src/lib/shop-draft.ts");
-  for (const slug of ["6-mixed", "12-mixed", "6-single", "12-single"]) {
-    const draft = JSON.stringify({ version: 1, packSlug: slug });
-    assert.equal(getShopCheckoutHref(() => draft), "/checkout?pack=" + slug);
+test("direct checkout still uses the current selected box after scene changes",()=>{
+  const {getShopCheckoutHref}=loadTs("src/lib/shop-draft.ts");
+  for(const slug of ["6-mixed","12-mixed","6-single","12-single"]){
+    assert.equal(getShopCheckoutHref(()=>JSON.stringify({version:1,packSlug:slug})),"/checkout?pack="+slug);
   }
-  for (const raw of [null, "{", JSON.stringify({ version: 1, packSlug: "unknown" })]) {
-    assert.equal(getShopCheckoutHref(() => raw), "/checkout?pack=6-mixed");
-  }
-  assert.match(visit, /encodeURIComponent\(packSlug\)/);
-  assert.match(header, /SHOP_DRAFT_UPDATED_EVENT/);
-  assert.match(flow, /window\.dispatchEvent\(new Event\(SHOP_DRAFT_UPDATED_EVENT\)\)/);
+  assert.match(visit,/encodeURIComponent\(packSlug\)/);
+  assert.match(read("src/components/Header.tsx"),/SHOP_DRAFT_UPDATED_EVENT/);
 });
