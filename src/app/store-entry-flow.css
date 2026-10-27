@@ -26,9 +26,16 @@ body:has(.entry-flow) { overflow:hidden; }
   transition:transform .9s cubic-bezier(.2,.75,.15,1),filter .55s ease;
 }
 .entry-flow[data-state="categories"] .entry-flow-photo,
-.entry-flow[data-state="pack-size"] .entry-flow-photo { transform:scale(1.12); filter:saturate(.88) brightness(.82) blur(1px); }
+.entry-flow[data-state="pack-size"] .entry-flow-photo {
+  transform:scale(1.075);
+  filter:saturate(.98) brightness(.94) contrast(1.02);
+}
 .entry-flow[data-entering="true"] .entry-flow-photo { transform:scale(1.18); }
-.entry-flow-shade { position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,34,77,.08),rgba(4,34,77,.03) 48%,rgba(4,34,77,.22));pointer-events:none; }
+.entry-flow-shade {
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(4,34,77,.025),transparent 42%,rgba(4,34,77,.12));
+  pointer-events:none;
+}
 .entry-flow-topbar { position:absolute;z-index:20;left:clamp(14px,2.4vw,34px);right:clamp(14px,2.4vw,34px);top:clamp(12px,2.1vw,28px);display:flex;align-items:center;justify-content:space-between;gap:12px; }
 .entry-flow-round-button,.entry-flow-cart { border:0;background:rgba(255,255,255,.95);color:var(--bagelito-blue);box-shadow:0 8px 30px rgba(3,35,74,.12);min-height:48px; }
 .entry-flow-round-button { width:48px;border-radius:50%;font-size:22px;display:grid;place-items:center; }
@@ -50,7 +57,15 @@ body:has(.entry-flow) { overflow:hidden; }
 .entry-flow-primary { display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:99px;background:var(--bagelito-blue);color:#fff;font-weight:850;padding:15px 24px;min-height:54px;box-shadow:0 13px 27px rgba(0,74,173,.2); }
 .entry-flow-decision { position:absolute;z-index:10;inset:0;display:grid;place-items:center;padding:100px 20px 120px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .38s ease; }
 .entry-flow[data-state="categories"] .entry-flow-decision,.entry-flow[data-state="pack-size"] .entry-flow-decision { opacity:1;visibility:visible;pointer-events:auto; }
-.entry-flow-panel { width:min(820px,calc(100vw - 36px));background:rgba(255,255,255,.95);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.88);border-radius:28px;padding:clamp(22px,3.2vw,36px);box-shadow:0 24px 80px rgba(4,36,78,.25); }
+.entry-flow-panel {
+  width:min(820px,calc(100vw - 36px));
+  background:rgba(255,255,255,.91);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:28px;
+  padding:clamp(22px,3.2vw,36px);
+  box-shadow:0 24px 80px rgba(4,36,78,.20);
+}
 .entry-flow-kicker { color:var(--bagelito-coral);font-weight:950;font-size:11px;letter-spacing:.14em; }
 .entry-flow-panel h1 { margin:6px 0 8px;font-size:clamp(34px,4.5vw,59px);letter-spacing:-.05em;line-height:.98;color:var(--bagelito-blue); }
 .entry-flow-intro { color:#4a627f;font-size:14px;font-weight:600;margin:0 0 22px; }
@@ -80,7 +95,13 @@ body:has(.entry-flow) { overflow:hidden; }
 .entry-flow-progress-item.is-done { color:#3b628f; }.entry-flow-progress-item.is-done .entry-flow-progress-icon { background:#dcecff;color:var(--bagelito-blue); }
 
 @media (max-width:700px) {
-  .entry-flow-photo { object-position:center center; }
+  .entry-flow-photo { object-position:center 58%; }
+  .entry-flow[data-state="categories"] .entry-flow-photo,
+  .entry-flow[data-state="pack-size"] .entry-flow-photo {
+    object-position:center 64%;
+    transform:scale(1.045);
+    filter:saturate(1) brightness(.96) contrast(1.01);
+  }
   .entry-flow-topbar { top:10px;left:10px;right:10px; }
   .entry-flow-review { display:none; }
   .entry-flow-cart { padding:0 12px;min-height:44px;font-size:12px; }
@@ -88,7 +109,15 @@ body:has(.entry-flow) { overflow:hidden; }
   .entry-flow-entry-copy { width:calc(100vw - 30px);padding:23px 20px;border-radius:22px; }
   .entry-flow-entry-copy p { font-size:13px; }
   .entry-flow-decision { align-items:end;padding:72px 10px 93px; }
-  .entry-flow-panel { width:100%;border-radius:24px;padding:20px 14px 18px;max-height:calc(100dvh - 175px);overflow-y:auto; }
+  .entry-flow-panel {
+    width:100%;
+    border-radius:24px;
+    padding:18px 14px 16px;
+    max-height:calc(100dvh - 188px);
+    overflow-y:auto;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(10px);
+  }
   .entry-flow-panel h1 { font-size:37px; }
   .entry-flow-intro { font-size:12px;margin-bottom:13px; }
   .entry-flow-category-grid { grid-template-columns:1fr;gap:8px; }
