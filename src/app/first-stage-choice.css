@@ -351,3 +351,105 @@
 @media (prefers-reduced-motion: reduce) {
   .first-stage-category-option,.first-stage-size-option { transition: none; }
 }
+
+
+/* Pack configuration step: exact quantities, format and prices from approved menu. */
+.first-stage-config-card { width: min(920px, 100%); }
+.first-stage-config-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.first-stage-config-grid.is-mini {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.first-stage-config-option {
+  min-width: 0;
+  min-height: 144px;
+  border: 1px solid #d5e2ef;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fff, #f7faff);
+  color: #0c3b78;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto auto;
+  column-gap: 10px;
+  align-items: center;
+  text-align: left;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.first-stage-config-option:hover {
+  transform: translateY(-3px);
+  border-color: #0751ae;
+  box-shadow: 0 12px 25px rgba(7,81,174,.1);
+}
+.first-stage-config-option.selected {
+  border: 2px solid #0751ae;
+  background: #eef6ff;
+  box-shadow: 0 12px 27px rgba(7,81,174,.13);
+}
+.first-stage-config-units {
+  grid-row: 1 / span 2;
+  min-width: 58px;
+  font-size: 42px;
+  line-height: .9;
+  font-weight: 950;
+  color: #0751ae;
+  letter-spacing: -.06em;
+}
+.first-stage-config-bagels {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: .12em;
+  color: #5a7190;
+}
+.first-stage-config-option strong {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 22px;
+  line-height: 1;
+  color: #123e7c;
+}
+.first-stage-config-option b {
+  grid-column: 1 / span 2;
+  grid-row: 3;
+  margin-top: 12px;
+  font-size: 27px;
+  color: #0751ae;
+}
+.first-stage-config-check {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #eaf3ff;
+  color: #0751ae;
+}
+.first-stage-config-option.selected .first-stage-config-check {
+  background: #0751ae;
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .first-stage-config-grid,
+  .first-stage-config-grid.is-mini { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .first-stage-config-option { min-height: 123px; padding: 12px; }
+  .first-stage-config-units { min-width: 48px; font-size: 35px; }
+  .first-stage-config-option strong { font-size: 18px; }
+  .first-stage-config-option b { font-size: 23px; }
+  .first-stage-config-check { width: 32px; height: 32px; }
+}
+@media (max-width: 360px) {
+  .first-stage-config-grid,
+  .first-stage-config-grid.is-mini { grid-template-columns: 1fr; }
+  .first-stage-config-option { min-height: 105px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .first-stage-config-option { transition: none; }
+}
