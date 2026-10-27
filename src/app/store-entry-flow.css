@@ -108,6 +108,17 @@ body:has(.entry-flow) { overflow:hidden; }
 .entry-flow-progress-item.is-done { color:#3b628f; }.entry-flow-progress-item.is-done .entry-flow-progress-icon { background:#dcecff;color:var(--bagelito-blue); }
 
 @media (max-width:700px) {
+  .entry-flow[data-state="entry"] .entry-flow-photo {
+    object-fit:contain;
+    object-position:center top;
+    transform:none;
+    filter:saturate(1) brightness(.98);
+  }
+  .entry-flow[data-state="entry"] .entry-flow-glass { display:none; }
+  .entry-flow[data-state="entry"] .entry-flow-entry {
+    align-items:end;
+    padding:0 15px 92px;
+  }
   .entry-flow-photo { object-position:center 52%; }
   .entry-flow[data-state="categories"] .entry-flow-photo,
   .entry-flow[data-state="pack-size"] .entry-flow-photo {
