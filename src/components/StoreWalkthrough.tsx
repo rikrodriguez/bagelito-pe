@@ -21,7 +21,7 @@ type Draft = { version: 1; packSlug: PackSlug; quantities: Record<string, number
 type FlyingBagel = { slug: string; x: number; y: number; dx: number; dy: number; key: number };
 const scenes: Scene[] = ["entry", "counter", "build", "cashier"];
 const sceneHash: Record<Scene, string> = { entry: "#entrar", counter: "#mostrador", build: "#arma-tu-caja", cashier: "#caja" };
-const getScene = (hash: string): Scene => hash === "#packs" ? "counter" : scenes.find((s) => sceneHash[s] === hash) ?? "entry";
+const getScene = (hash: string): Scene => hash.startsWith("#packs") ? "counter" : scenes.find((s) => sceneHash[s] === hash) ?? "entry";
 const descriptions = {
   es: {
     "jalapeno-cheddar": "Cheddar dorado, con un toque de jalapeño.",
