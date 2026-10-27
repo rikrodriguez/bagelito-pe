@@ -6,6 +6,7 @@ import { getPublicPaymentConfig } from "@/lib/payments";
 import "./store-foundation.css";
 import "./walkthrough.css";
 import "./spatial-v3.css";
+import "./first-stage-choice.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
