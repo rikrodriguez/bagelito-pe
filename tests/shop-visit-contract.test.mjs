@@ -26,7 +26,7 @@ test("the real homepage uses the four-scene walk, not the old static showcase", 
   }
   assert.match(visit, /onClick=\{\(\) => move\("counter"\)\}/);
   assert.match(visit, /onClick=\{\(\) => move\("build"\)\}/);
-  assert.match(visit, /onClick=\{\(\) => move\("cashier"\)\}/);
+  assert.match(visit, /onClick=\{\(\)\s*=>\s*move\("cashier"\)\}/);
   assert.match(visit, /onPointerMove=\{onMove\}/);
   assert.match(visit, /walk-entrance-hotspot/);
   assert.match(visit, /walk-rack/);
