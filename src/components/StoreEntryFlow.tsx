@@ -143,7 +143,7 @@ export function StoreEntryFlow() {
                     </span>
                     <strong>{item.label}</strong>
                     <small>{item.detail}</small>
-                    {item.id === "combos" ? <em>2 bagels + schmear</em> : null}
+                    {item.id === "combos" ? <em>Bagels + schmears</em> : null}
                     <span className="entry-flow-choice-arrow"><ArrowRight size={18} /></span>
                   </button>
                 ))}
