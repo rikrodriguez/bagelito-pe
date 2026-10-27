@@ -150,11 +150,11 @@
   border-color: #0751ae;
   box-shadow: 0 15px 30px rgba(7,81,174,.12);
 }
-.first-stage-category-option:disabled {
+.first-stage-category-option[aria-disabled="true"] {
   opacity: .72;
   cursor: not-allowed;
 }
-.first-stage-category-option:disabled em {
+.first-stage-category-option[aria-disabled="true"] em {
   color: #7b6a67;
 }
 .first-stage-category-image,
