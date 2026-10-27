@@ -5,6 +5,7 @@ import { flavors, getValidPack, packs } from "@/lib/catalog";
 import { getPublicPaymentConfig } from "@/lib/payments";
 import { siteDescription, siteOgImage } from "@/lib/site";
 import { ReservationFlow } from "@/app/reserve/ReservationFlow";
+import "./checkout-bridge.css";
 
 export const metadata: Metadata = {
   title: "Checkout seguro | Bagelito.pe",

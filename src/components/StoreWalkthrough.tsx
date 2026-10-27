@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent } from "react";
-import { ArrowLeft, ArrowRight, Check, ChevronRight, DoorOpen, Minus, Plus, ShoppingBag, Sparkles, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, DoorOpen, Minus, Plus, ShoppingBag, Sparkles, X } from "lucide-react";
 import { flavors } from "@/data/flavors";
 import { flavorImages } from "@/data/flavor-images";
 import { packs, type PackSlug } from "@/data/packs";
@@ -156,6 +156,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const t = words[locale];
   const { accepting, merchantReviewOnly } = useBatchAvailability();
   const [scene, setScene] = useState<Scene>("entry");
+  const [entering, setEntering] = useState(false);
   const [packSlug, setPackSlug] = useState<PackSlug>("6-mixed");
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [singleFlavor, setSingleFlavor] = useState("");
@@ -167,6 +168,9 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const [announcement, setAnnouncement] = useState("");
   const [flying, setFlying] = useState<FlyingBagel | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const rackRef = useRef<HTMLDivElement>(null);
+  const boxTrayRef = useRef<HTMLDivElement>(null);
+  const doorTimerRef = useRef<number | null>(null);
   const basketRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const focusReturn = useRef<HTMLElement | null>(null);
@@ -206,10 +210,16 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     } catch { /* Browsing must work without storage. */ }
   }, [hydrated, packSlug, quantities, singleFlavor, district]);
   useEffect(() => {
-    const fromHistory = () => setScene(getScene(window.location.hash));
+    const fromHistory = () => {
+      if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
+      doorTimerRef.current = null;
+      setEntering(false);
+      setScene(getScene(window.location.hash));
+    };
     window.addEventListener("popstate", fromHistory);
     window.addEventListener("hashchange", fromHistory);
     return () => {
+      if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
       window.removeEventListener("popstate", fromHistory);
       window.removeEventListener("hashchange", fromHistory);
     };
@@ -239,12 +249,23 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     return flavorCopy[locale][slug] ?? flavors.find((f) => f.slug === slug)?.name ?? slug;
   }
   function move(next: Scene) {
-    setScene(next);
-    setDetail(null);
-    if (window.location.hash !== sceneHash[next]) window.history.pushState(null, "", sceneHash[next]);
-    window.requestAnimationFrame(() => stageRef.current?.scrollIntoView({
-      block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    }));
+    if (doorTimerRef.current) window.clearTimeout(doorTimerRef.current);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const commit = () => {
+      doorTimerRef.current = null;
+      setScene(next);
+      setDetail(null);
+      setEntering(false);
+      if (window.location.hash !== sceneHash[next]) window.history.pushState(null, "", sceneHash[next]);
+      window.requestAnimationFrame(() => {
+        stageRef.current?.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});
+        window.requestAnimationFrame(() => document.querySelector<HTMLElement>(".walk-frame.is-active h1, .walk-frame.is-active h2")?.focus({preventScroll:true}));
+      });
+    };
+    if (scene === "entry" && next === "counter" && !reduced) {
+      setEntering(true);
+      doorTimerRef.current = window.setTimeout(commit, 470);
+    } else commit();
   }
   function changePack(next: PackSlug) {
     if (next === packSlug) return;
@@ -275,7 +296,8 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     setAnnouncement(label(slug) + " " + t.save);
     if (!event || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const source = event.currentTarget.getBoundingClientRect();
-    const destination = basketRef.current?.getBoundingClientRect();
+    const emptySlot = scene === "build" ? boxTrayRef.current?.querySelector<HTMLElement>(".store-box-slot:not(.filled)") : null;
+    const destination = (emptySlot || basketRef.current)?.getBoundingClientRect();
     if (!destination) return;
     const x = source.left + source.width / 2 - 37;
     const y = source.top + source.height / 2 - 37;
@@ -286,10 +308,10 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
     });
   }
   function onMove(event: PointerEvent<HTMLDivElement>) {
-    if (event.pointerType !== "mouse" || !stageRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    stageRef.current.style.setProperty("--walk-px", (20 * ((event.clientX - rect.left) / rect.width - .5)).toFixed(1) + "px");
-    stageRef.current.style.setProperty("--walk-py", (14 * ((event.clientY - rect.top) / rect.height - .5)).toFixed(1) + "px");
+    event.currentTarget.style.setProperty("--walk-px", (20 * ((event.clientX - rect.left) / rect.width - .5)).toFixed(1) + "px");
+    event.currentTarget.style.setProperty("--walk-py", (14 * ((event.clientY - rect.top) / rect.height - .5)).toFixed(1) + "px");
   }
   function checkout() {
     if (!filled) { move("build"); return; }
@@ -327,14 +349,15 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
           </div>
         </div>
 
-        <div className="walk-theatre" data-scene={scene} onPointerMove={onMove}>
+        <div className="walk-theatre" data-scene={scene} data-entering={entering} onPointerMove={onMove}>
+          <div className="walk-spatial-environment" aria-hidden="true"><span className="walk-env-sign">BAGELITO</span><span className="walk-env-floor" /></div>
           <section className={"walk-frame walk-entry" + (scene === "entry" ? " is-active" : "")} aria-hidden={scene !== "entry"} id="entrar">
             <div className="walk-entry-copy">
               <span className="walk-eyebrow"><Sparkles size={15} /> {t.entryEyebrow}</span>
-              <h1>{t.entryTitle}</h1>
+              <h1 tabIndex={-1}>{t.entryTitle}</h1>
               <p>{t.entryBody}</p>
               <div className="walk-entry-actions">
-                <button type="button" className="walk-primary" onClick={() => move("counter")}>{t.enter} <ArrowRight size={20} /></button>
+                <button type="button" className="walk-primary" disabled={entering} onClick={() => move("counter")}>{t.enter} <ArrowRight size={20} /></button>
                 <button type="button" className="walk-quiet" onClick={() => move("build")}>{t.fastHint} <ChevronRight size={17} /></button>
               </div>
               <Link className="walk-direct-link" href={"/checkout?pack=" + encodeURIComponent(packSlug)}>{t.quick} <ArrowRight size={17} /></Link>
@@ -359,7 +382,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
                 </div>
                 <div className="walk-façade-tiles" />
               </div>
-              <button type="button" className="walk-entrance-hotspot" onClick={() => move("counter")}
+              <button type="button" className="walk-entrance-hotspot" disabled={entering} onClick={() => move("counter")}
                 aria-label={t.start}>
                 <DoorOpen size={21}/><span>{t.start}</span><ArrowRight size={17}/>
               </button>
@@ -377,7 +400,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
             </div>
             <div className="walk-counter-layout">
               <div className="walk-counter-header">
-                <div><span className="walk-eyebrow">{t.counterEyebrow}</span><h2>{t.counterTitle}</h2><p>{t.counterBody}</p></div>
+                <div><span className="walk-eyebrow">{t.counterEyebrow}</span><h2 tabIndex={-1}>{t.counterTitle}</h2><p>{t.counterBody}</p></div>
                 <button type="button" className="walk-minibag" onClick={() => move("build")}><ShoppingBag size={17}/>{count}/{pack.units}<ChevronRight size={15}/></button>
               </div>
               <div className="walk-counter-floorplan">
@@ -392,11 +415,16 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
                       ))}
                     </div>
                   </div>
-                  <div className="walk-rack" aria-label={t.shelfName}>
+                  <div className="walk-rack-controls" role="group" aria-label={locale==="es"?"Recorrer los sabores":"Browse flavors"}>
+                    <button type="button" onClick={() => rackRef.current?.scrollBy({left:-322,behavior:"smooth"})} aria-label={locale==="es"?"Sabores anteriores":"Previous flavors"}><ArrowLeft size={18}/></button>
+                    <span>{t.shelfHint}</span>
+                    <button type="button" onClick={() => rackRef.current?.scrollBy({left:322,behavior:"smooth"})} aria-label={locale==="es"?"Ver más sabores":"Show more flavors"}><ArrowRight size={18}/></button>
+                  </div>
+                  <div ref={rackRef} className="walk-rack" aria-label={t.shelfName}>
                     {filtered.map((f) => {
                       const selected = pack.packType==="single" ? singleFlavor===f.slug?pack.units:0 : (quantities[f.slug]??0);
                       return (
-                        <article className={"walk-rack-item store-product" + (spotlight === f.slug ? " is-spotlight" : "")} key={f.slug}>
+                        <article className={"walk-rack-item store-product" + (spotlight === f.slug ? " is-spotlight" : "")} key={f.slug} onMouseEnter={()=>setSpotlight(f.slug)}>
                           <button type="button" className="walk-rack-photo store-product-image" aria-label={t.photo + " " + label(f.slug)}
                             onClick={() => {setSpotlight(f.slug);setDetail(f.slug);}}>
                             <Image src={flavorImages[f.slug]} alt={label(f.slug)} width={230} height={230}
@@ -431,7 +459,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
           <section className={"walk-frame walk-build" + (scene === "build" ? " is-active" : "")}
             aria-hidden={scene !== "build"} id="arma-tu-caja">
             <div className="walk-build-top">
-              <div><span className="walk-eyebrow">{t.builderEyebrow}</span><h2>{t.builderTitle}</h2><p>{t.builderBody}</p></div>
+              <div><span className="walk-eyebrow">{t.builderEyebrow}</span><h2 tabIndex={-1}>{t.builderTitle}</h2><p>{t.builderBody}</p></div>
               <button type="button" className="walk-quiet" onClick={() => move("counter")}><ArrowLeft size={16}/>{t.back}</button>
             </div>
             <div className="walk-pack-options store-pack-options" role="group" aria-label={t.format}>
@@ -451,14 +479,15 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
                 <div className="walk-metal-table">
                   <div className="store-box-scene" aria-label={t.box+": "+count+"/"+pack.units}>
                     <div className="store-box-lid"><strong>BAGELITO</strong><span>CLASSIC GRINGO BAGELS</span></div>
-                    <div className="store-box-tray">
+                    <div ref={boxTrayRef} className="store-box-tray">
                       {Array.from({length:pack.units},(_,index)=>{
                         const slug=slots[index];
                         return (
-                          <div className={"store-box-slot"+(slug?" filled":"")} key={index}>
-                            {slug ? <Image src={flavorImages[slug]} alt={label(slug)} fill
-                              sizes="(max-width: 760px) 19vw, 110px" quality={75}/> : <span aria-hidden="true">+</span>}
-                          </div>
+                          <button type="button" className={"store-box-slot"+(slug?" filled":"")} key={index}
+                            aria-label={slug ? (locale==="es"?"Quitar ":"Remove ")+label(slug)+(locale==="es"?" de la caja":" from the box") : (locale==="es"?"Espacio vacío, elegir sabor":"Empty slot, pick a flavor")}
+                            onClick={() => slug ? updateFlavor(slug,-1) : document.querySelector<HTMLElement>(".walk-mix-tray")?.scrollIntoView({block:"nearest",behavior:"smooth"})}>
+                            {slug ? <Image src={flavorImages[slug]} alt="" fill sizes="(max-width:760px) 19vw, 110px" quality={75}/> : <Plus size={22} aria-hidden="true"/>}
+                          </button>
                         );
                       })}
                     </div>
@@ -516,7 +545,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
             <div className="walk-cashier-stage">
               <div className="walk-cashier-copy">
                 <span className="walk-eyebrow">{t.checkoutEyebrow}</span>
-                <h2>{t.checkoutTitle}</h2><p>{t.checkoutBody}</p>
+                <h2 tabIndex={-1}>{t.checkoutTitle}</h2><p>{t.checkoutBody}</p>
                 <div className="walk-checkout-machine" aria-hidden="true">
                   <div className="walk-terminal"><div className="walk-terminal-screen"><ShoppingBag size={32}/><strong>BAGELITO</strong><span>S/{total}</span></div><div className="walk-terminal-foot"/></div>
                   <div className="walk-paper-strip"><span>GOOD BAGELS</span><b>GOOD DAYS</b><span>♥ ♥ ♥</span></div>
@@ -580,8 +609,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
           </div>
         </div>
       </div>:null}
-      <button type="button" className="store-mobile-bag walk-mobile-pocket" onClick={()=>move("build")}
-        aria-label={t.mobileGo+": "+count+"/"+pack.units}><ShoppingBag size={17}/>{t.mobileGo}<strong>{count}/{pack.units}</strong>{filled?<Check size={16}/>:<ArrowRight size={16}/>}</button>
+
     </div>
   );
 }

@@ -3,8 +3,9 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { StoreWalkthrough } from "@/components/StoreWalkthrough";
 import { getPublicPaymentConfig } from "@/lib/payments";
-import "./shop-visit.css";
+import "./store-foundation.css";
 import "./walkthrough.css";
+import "./spatial-v3.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

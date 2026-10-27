@@ -1,0 +1,437 @@
+/* Bagelito Spatial Visit V3 — critical UX overrides.
+   One persistent room, genuine pointer parallax, full-height scenes and tactile displays. */
+.walk-store {
+  --s-blue: #0751ae;
+  --s-dark: #0b326a;
+  --s-coral: #f28d7d;
+  color: #0b326a;
+}
+body:has(.walk-store) { background: #fff; }
+body:has(.walk-store) .site-footer strong {color:#0751ae;}
+.walk-store * { box-sizing: border-box; }
+.walk-digital-label { color: #445b79; }
+.walk-steps button:not(.is-active) { color: #405674; }
+.walk-steps button:not(.is-active) span { color: #405674; opacity: 1; }
+.walk-entrance-flourish { color: #52637b; }
+.walk-pack.active.store-pack > span { color: #2b4c75; }
+.walk-pack-warning,.walk-store .store-pack-hint { color: #51617a; }
+.walk-store button:focus-visible,
+.walk-store a:focus-visible,
+.walk-store select:focus-visible { outline: 3px solid #ff806e; outline-offset: 3px; }
+.walk-store .walk-wayfinding { border-bottom: 1px solid #dbe5f0; }
+
+/* Persistent spatial world underneath all four stations */
+.walk-theatre,
+.walk-theatre[data-scene="entry"],
+.walk-theatre[data-scene="counter"],
+.walk-theatre[data-scene="build"],
+.walk-theatre[data-scene="cashier"] {
+  height: auto !important;
+  min-height: 0;
+  overflow: clip;
+  transition: none;
+  background: transparent;
+}
+.walk-spatial-environment {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg,rgba(220,227,237,.48) 1px,transparent 1px),
+    linear-gradient(rgba(220,227,237,.48) 1px,transparent 1px),
+    linear-gradient(180deg,#fff 0%,#f9fcff 42%,#ecf2f8 100%);
+  background-size: 94px 94px,94px 94px,auto;
+  transform: translateZ(0);
+}
+.walk-env-sign {
+  display: block;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 10%;
+  font-size: clamp(72px,13vw,200px);
+  line-height: 1;
+  color: #0751ae;
+  opacity: .075;
+  font-weight: 1000;
+  letter-spacing: -.08em;
+  transform: translate3d(calc(var(--walk-px,0px) * -.28),0,0);
+  transition: transform .22s ease;
+}
+.walk-env-floor {
+  position: absolute;
+  top: 53%;
+  left: -18%;
+  width: 136%;
+  height: 75%;
+  transform-origin: center top;
+  transform: rotateX(57deg) translateY(calc(var(--walk-py,0px) * .15));
+  background-color: rgba(231,239,247,.7);
+  background-image: linear-gradient(#cdd8e7 1px,transparent 1px),linear-gradient(90deg,#cdd8e7 1px,transparent 1px);
+  background-size: 102px 102px;
+  mask-image: linear-gradient(to bottom,transparent,#000 9%,#000 90%);
+}
+.walk-frame {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate3d(0,28px,0) scale(1.034);
+  transition:
+    opacity .46s ease,
+    transform .62s cubic-bezier(.18,.83,.29,1),
+    visibility 0s linear .63s;
+}
+.walk-frame.is-active {
+  position: relative;
+  inset: auto;
+  overflow: visible;
+  height: auto;
+  min-height: clamp(660px,55vw,790px);
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
+  transition: opacity .48s ease,transform .62s cubic-bezier(.18,.83,.29,1);
+}
+.walk-entry.is-active { min-height: clamp(650px,51vw,780px); }
+.walk-counter.is-active { min-height: clamp(710px,51vw,790px); }
+.walk-build.is-active { min-height: 0; }
+.walk-cashier.is-active { min-height: 700px; }
+.walk-entry { background: transparent; }
+.walk-entry-copy {
+  position: relative;
+  background: linear-gradient(90deg,#fff 81%,rgba(255,255,255,.96));
+  padding-block: clamp(55px,7vw,100px);
+  min-width: 0;
+}
+.walk-entry-copy h1 { text-wrap: balance; }
+.walk-entrance-art { background: transparent; }
+.walk-façade { transform: translate3d(var(--walk-px,0px),var(--walk-py,0px),0) perspective(960px) rotateY(-4deg); }
+.walk-interior-glimpse,
+.walk-door-glass { transition: transform .5s ease,opacity .48s ease; }
+/* The doorway is functional: panels actually open before entering the shared room. */
+.walk-theatre[data-entering="true"] .walk-door-panel.left {
+  transform: translateX(-106%) perspective(800px) rotateY(-8deg);
+}
+.walk-theatre[data-entering="true"] .walk-door-panel.right {
+  transform: translateX(106%) perspective(800px) rotateY(8deg);
+}
+.walk-theatre[data-entering="true"] .walk-façade {
+  transform: perspective(1000px) scale(1.105) translate3d(0,3%,0);
+}
+.walk-theatre[data-entering="true"] .walk-interior-glimpse {
+  transform: scale(1.08);
+}
+.walk-theatre[data-entering="true"] .walk-entrance-hotspot {
+  opacity: 0;
+  pointer-events: none;
+}
+.walk-theatre[data-entering="true"] .walk-door-hint { opacity: 0; }
+
+/* Hero-sized real product next to a traversable physical shelf.
+   The shelf is a horizontal rail, NOT the V2 5 x 2 product-card grid. */
+.walk-counter { background: transparent; }
+.walk-counter .walk-room-perspective { opacity: .25; }
+.walk-counter-layout {
+  padding: clamp(34px,4vw,64px) clamp(21px,4.5vw,70px) clamp(35px,4vw,62px);
+}
+.walk-counter-header {
+  position: relative;
+  margin-bottom: clamp(20px,3vw,42px);
+}
+.walk-counter-header h2 { font-size: clamp(44px,4.4vw,75px); }
+.walk-counter-floorplan {
+  grid-template-columns: minmax(0,.92fr) minmax(0,1.25fr);
+  align-items: stretch;
+  gap: clamp(22px,3vw,53px);
+}
+.walk-counter .walk-spotlight {
+  order: 0;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 8px 4px 18px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.walk-counter .walk-spotlight-kicker { color: #465e7f; font-size: 11px; }
+.walk-counter .walk-spotlight-photo {
+  margin: 13px 0 2px;
+  width: 100%;
+  height: clamp(245px,24vw,345px);
+  min-height: 240px;
+  max-height: 360px;
+  border-radius: 23px;
+  background: radial-gradient(circle at 51% 48%,#fff 12%,rgba(255,255,255,.92) 42%,rgba(231,239,248,.25) 76%);
+  overflow: visible;
+}
+.walk-counter .walk-spotlight-photo img {
+  display: block;
+  width: 95%;
+  max-width: 430px;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 23px 18px rgba(21,39,65,.25));
+  transition: transform .3s ease,filter .3s ease;
+}
+.walk-counter .walk-spotlight-photo:hover img {
+  transform: scale(1.08) rotate(-3deg);
+  filter: drop-shadow(0 28px 21px rgba(21,39,65,.28));
+}
+.walk-counter .walk-spotlight h3 {
+  font-size: clamp(29px,2.8vw,47px);
+  width: auto;
+  letter-spacing: -.062em;
+  color: #083d88;
+  margin: 7px 0;
+}
+.walk-counter .walk-spotlight p {
+  display: block;
+  color: #455a76;
+  font-size: 14px;
+  margin: 3px 0 15px;
+  min-height: auto;
+}
+.walk-counter .walk-spotlight .walk-primary {
+  width: min(100%,350px);
+  margin-top: 3px;
+}
+.walk-counter .walk-spotlight .walk-quiet { margin-top: 8px; }
+.walk-counter .walk-display-case {
+  order: 1;
+  background: linear-gradient(180deg,#fff 0%,#f7fafe 21%,#edf3f8 77%,#becad5 91%,#e1e8ee 100%);
+  min-height: 520px;
+  border-radius: 14px 14px 3px 3px;
+  box-shadow: 0 20px 40px rgba(20,52,88,.14), inset 0 4px 16px #fff;
+  display: flex;
+  flex-direction: column;
+}
+.walk-counter .walk-display-heading {
+  padding: 16px 18px;
+  min-height: 70px;
+  border-bottom: 1px solid #cfdbe8;
+}
+.walk-counter .walk-counter-filters button {
+  color: #344f76;
+  font-size: 12px;
+}
+.walk-counter .walk-counter-filters button.active { color: #fff; }
+.walk-rack-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 11px;
+  padding: 12px 15px 4px;
+}
+.walk-rack-controls button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 43px;
+  height: 43px;
+  border: 1px solid #c8d8e9;
+  border-radius: 50%;
+  background: #fff;
+  color: #0751ae;
+}
+.walk-rack-controls button:hover { background: #e7f1fd; }
+.walk-rack-controls span {
+  font-size: 11px;
+  color: #405877;
+  font-weight: 800;
+  text-align: center;
+}
+.walk-counter .walk-rack {
+  display: flex;
+  grid-template-columns: none;
+  flex: 1;
+  gap: 10px;
+  padding: 13px 20px 26px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #8faccc #e1e9f2;
+  background:
+    linear-gradient(0deg,transparent 0 20%,rgba(182,197,211,.75) 20.4% 22.2%,#fff 23%,transparent 24%);
+}
+.walk-counter .walk-rack-item.store-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+  flex: 0 0 clamp(175px,16vw,225px);
+  align-self: center;
+  height: 300px;
+  gap: 6px;
+  padding: 20px 4px 10px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  position: relative;
+}
+.walk-counter .walk-rack-photo.store-product-image {
+  height: 198px;
+  min-height: 198px;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+}
+.walk-counter .walk-rack-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 10px rgba(21,43,66,.19));
+}
+.walk-counter .walk-rack-label {
+  border: 0;
+  background: #fff;
+  box-shadow: 0 5px 9px rgba(16,45,78,.09);
+  width: calc(100% - 9px);
+  min-height: 54px;
+  padding: 11px 8px;
+  border-radius: 8px;
+}
+.walk-counter .walk-rack-label strong {
+  color: #113d78;
+  font-size: 13px;
+  line-height: 1.15;
+}
+.walk-counter .walk-rack-label span {
+  font-size: 10px;
+  color: #49637f;
+}
+.walk-counter .walk-rack-plus {
+  top: 6px; right: 6px;
+  height: 41px; width: 41px;
+  box-shadow: 0 7px 15px rgba(7,65,132,.19);
+}
+.walk-counter .walk-metal-lip { margin-top: auto; background: linear-gradient(#e0e7ef,#abb9c7 60%,#d1dbe4); min-height: 56px; }
+.walk-counter .walk-metal-lip span { color: #174674; }
+/* Real tile / countertop context remains continuous with the entrance. */
+.walk-room-wall { opacity: .4; }
+.walk-counter .walk-room-floor { opacity: .55; }
+
+/* Editable physical box slots: one tap removes exactly that unit. */
+.walk-metal-table .store-box-slot {
+  padding: 0;
+  cursor: pointer;
+  appearance: none;
+  font-family: inherit;
+  line-height: 1;
+  transition: border-color .2s, background .2s;
+}
+.walk-metal-table .store-box-slot:hover,
+.walk-metal-table .store-box-slot:focus-visible { border-color: #0751ae; background: #dfefff; }
+.walk-metal-table .store-box-slot.filled { background: #fff; }
+.walk-metal-table .store-box-slot.filled:hover img { transform: scale(.94); filter: saturate(.8); }
+.walk-metal-table .store-box-slot img { transition:transform .19s; }
+.walk-metal-table .store-box-slot svg { color: #8aa2c2; }
+.walk-metal-table .store-box-slot:focus-visible { outline-offset: 3px; }
+.walk-workbench { gap: clamp(18px,3vw,46px); align-items: start; }
+.walk-cart.store-cart {
+  min-height: auto;
+  height: auto;
+  align-self: start;
+  position: sticky;
+  top: 18px;
+  overflow: visible;
+}
+.walk-cart .store-cart-lines { max-height: none; min-height: 64px; overflow-y: visible; }
+.walk-cashier .walk-receipt { min-height: auto; }
+.walk-cashier .walk-cashier-stage { padding-bottom: clamp(48px,5vw,90px); }
+
+/* No double floating CTA covering bagels/door/ticket on touch devices.
+   Support remains accessible via the real footer WhatsApp link. */
+body:has(.walk-store) .floating-whatsapp { display: none; }
+.walk-store .walk-mobile-pocket { display: none!important; }
+.walk-pocket { min-width: 90px; }
+
+/* Responsive layouts use natural content size, not theatrical fixed heights. */
+@media (max-width: 1080px) {
+  .walk-counter-floorplan { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 18px; }
+  .walk-counter .walk-rack-item.store-product { flex-basis: 184px; }
+  .walk-counter .walk-spotlight-photo { height: 285px; }
+  .walk-counter .walk-rack-label strong { font-size: 12px; }
+  .walk-counter .walk-display-case { min-height: 485px; }
+}
+@media (max-width: 790px) {
+  .walk-counter-floorplan { display: flex; flex-direction: column; }
+  .walk-counter .walk-spotlight { order: 0; display: grid; grid-template-columns: minmax(120px,42%) 1fr; gap: 10px 16px;
+    background: rgba(255,255,255,.95); border: 1px solid #d6e2ef; border-radius: 20px; padding: 16px; text-align: left; }
+  .walk-counter .walk-spotlight-kicker { grid-column: 1 / -1; }
+  .walk-counter .walk-spotlight-photo { grid-row: 2 / span 3; grid-column: 1; width: 100%; margin: 0; min-height: 160px; height: 200px; max-height: 260px; }
+  .walk-counter .walk-spotlight-photo img { height: 100%; width: 100%; }
+  .walk-counter .walk-spotlight h3 { grid-column: 2; font-size: clamp(24px,3vw,34px); width: auto; }
+  .walk-counter .walk-spotlight p { grid-column: 2; display: block; font-size: 12px; }
+  .walk-counter .walk-spotlight .walk-primary { grid-column: 2; min-width: 0; width: 100%; margin: 0; }
+  .walk-counter .walk-spotlight .walk-quiet { grid-column: 2; font-size: 11px; }
+  .walk-counter .walk-display-case { min-height: 390px; width: 100%; order: 1; }
+  .walk-counter .walk-rack-item.store-product { height: 260px; flex-basis: 170px; }
+  .walk-counter .walk-rack-photo.store-product-image { min-height: 148px; height: 148px; }
+  .walk-cart.store-cart { position: static; width: 100%; }
+  .walk-counter .walk-metal-lip { min-height: 48px; }
+  .walk-frame.is-active { min-height: 0; }
+}
+@media (max-width: 650px) {
+  .walk-store .walk-wayfinding { padding-inline: 6px; }
+  .walk-steps button:not(.is-active) { color: #405674; }
+  .walk-steps button span { opacity: 1; }
+  .walk-entry.is-active { display: flex; flex-direction: column-reverse; min-height: 0; }
+  .walk-entrance-art { min-height: 370px; flex-basis: 370px; border: 0; }
+  .walk-entry-copy { padding: 27px 24px 42px; }
+  .walk-entry-copy h1 { font-size: clamp(41px,9vw,53px); max-width: 530px; }
+  .walk-counter.is-active,.walk-build.is-active,.walk-cashier.is-active { min-height:0; }
+  .walk-counter-layout { padding: 28px 13px 36px; }
+  .walk-counter-header h2 { font-size: clamp(38px,8.2vw,53px); }
+  .walk-counter .walk-spotlight { display: grid; grid-template-columns: minmax(100px,38%) 1fr; gap:8px 12px; padding:12px; }
+  .walk-counter .walk-spotlight-photo { height: 155px; min-height: 145px; }
+  .walk-counter .walk-spotlight h3 { font-size: clamp(21px,6vw,28px); }
+  .walk-counter .walk-spotlight p { font-size: 11px; }
+  .walk-counter .walk-spotlight .walk-primary { min-height: 43px; font-size: 11px; padding: 7px 10px; }
+  .walk-counter .walk-rack-item.store-product { height: 225px; flex-basis: 155px; }
+  .walk-counter .walk-rack-photo.store-product-image { height: 135px; min-height: 135px; }
+  .walk-counter .walk-rack-label strong { font-size: 11px; }
+  .walk-counter .walk-rack-label span { font-size: 9px; }
+  .walk-counter .walk-display-case { min-height: 330px; }
+  .walk-counter .walk-rack { padding: 7px 11px 15px; scroll-padding-inline: 11px; }
+  .walk-rack-controls span { font-size: 10px; }
+  .walk-cart.store-cart { min-height: 0; }
+  .walk-workbench { display:flex; flex-direction:column; }
+  .walk-workbench-left { width:100%; }
+  .walk-pack-options.store-pack-options { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .walk-cashier-stage { padding-bottom: 37px; }
+  .walk-cashier .walk-receipt { min-height: 0; }
+  .walk-bottom-bar { padding-bottom: 20px; min-height: 68px; }
+  .walk-bottom-next { min-height: 46px; }
+  .walk-theatre .walk-frame.is-active { height:auto!important; }
+  .walk-rack-controls button { flex-basis: 39px; height:39px; }
+}
+@media (max-width: 365px) {
+  .walk-entry-copy { padding: 25px 17px 34px; }
+  .walk-entrance-art { flex-basis: 340px; min-height: 340px; }
+  .walk-entrance-hotspot { bottom: 16%; }
+  .walk-counter .walk-spotlight { grid-template-columns: 105px 1fr; gap: 6px; }
+  .walk-counter .walk-spotlight h3 { font-size: 21px; }
+  .walk-counter .walk-spotlight .walk-primary { font-size: 10px; }
+  .walk-counter .walk-rack-item.store-product { flex-basis: 142px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .walk-theatre .walk-frame { transition: none!important; transform:none!important; }
+  .walk-theatre .walk-spatial-environment,.walk-spatial-environment * { transition:none!important; transform:none; }
+  .walk-theatre[data-entering="true"] .walk-door-panel { transform:none!important; }
+  .walk-counter .walk-rack-photo img, .walk-counter .walk-spotlight-photo img { transition:none!important; }
+  .walk-counter .walk-rack { scroll-behavior: auto; }
+  .walk-metal-table .store-box-slot img { transition:none!important; }
+}
