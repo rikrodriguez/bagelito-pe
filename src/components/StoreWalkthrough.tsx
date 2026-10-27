@@ -170,7 +170,7 @@ export function StoreWalkthrough({ paymentEnabled }: { paymentEnabled: boolean }
   const stageRef = useRef<HTMLDivElement>(null);
   const rackRef = useRef<HTMLDivElement>(null);
   const boxTrayRef = useRef<HTMLDivElement>(null);
-  const doorTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const doorTimerRef = useRef<number | null>(null);
   const basketRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const focusReturn = useRef<HTMLElement | null>(null);
