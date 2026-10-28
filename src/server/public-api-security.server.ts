@@ -50,13 +50,22 @@ function contactId(email: string, whatsapp: string) {
 }
 
 async function consume(scope: string, identifier: string, limit: number, windowSeconds: number) {
-  const supabase = createSupabaseAdminClient()
-  const { data, error } = await supabase.rpc('consume_api_rate_limit', {
-    p_identifier: hash(identifier),
-    p_limit: limit,
-    p_scope: scope,
-    p_window_seconds: windowSeconds,
-  }).single()
+  let data: unknown
+  let error: { message?: string } | null = null
+
+  try {
+    const supabase = createSupabaseAdminClient()
+    const result = await supabase.rpc('consume_api_rate_limit', {
+      p_identifier: hash(identifier),
+      p_limit: limit,
+      p_scope: scope,
+      p_window_seconds: windowSeconds,
+    }).single()
+    data = result.data
+    error = result.error
+  } catch {
+    throw new PublicApiError('This service is temporarily unavailable.', 503)
+  }
 
   if (error) {
     throw new PublicApiError('This service is temporarily unavailable.', 503)
