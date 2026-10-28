@@ -60,6 +60,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
   const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;bridgeReady:boolean;mode:string}|null>(null)
+  const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
+  const [quoteLoading, setQuoteLoading] = useState(false)
   const qaMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const receiptDrag = useRef({ startY: 0, offset: 0 })
 
@@ -82,6 +84,45 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       })
     return () => { active = false }
   }, [])
+
+
+  useEffect(() => {
+    if (scene !== 'cashier') return
+    let active = true
+    setQuoteLoading(true)
+    setCheckoutQuote(null)
+    fetch('/api/checkout/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
+      body: JSON.stringify({
+        category,
+        packFormat,
+        packQty,
+        packMix,
+        bagels: bagelCounts,
+        schmears: schmearCounts,
+        schmearSize,
+        comboId,
+        bagelMode,
+      }),
+    })
+      .then(async (response) => {
+        const result = await response.json() as { status?: string; checkoutAllowed?: boolean; amountPen?: number | null; reasons?: string[] }
+        return {
+          status: typeof result.status === 'string' ? result.status : 'invalid',
+          checkoutAllowed: result.checkoutAllowed === true,
+          amountPen: typeof result.amountPen === 'number' ? result.amountPen : null,
+          reasons: Array.isArray(result.reasons) ? result.reasons.filter((x): x is string => typeof x === 'string') : [],
+        }
+      })
+      .then((quote) => { if (active) setCheckoutQuote(quote) })
+      .catch(() => {
+        if (active) setCheckoutQuote({ status: 'invalid', checkoutAllowed: false, amountPen: null, reasons: ['No se pudo validar el pedido.'] })
+      })
+      .finally(() => { if (active) setQuoteLoading(false) })
+    return () => { active = false }
+  }, [scene, category, packFormat, packQty, packMix, bagelCounts, schmearCounts, schmearSize, comboId, bagelMode])
 
   const selectedCombo = combos.find((c) => c.id === comboId) ?? null
   const bagelTotal = Object.values(bagelCounts).reduce((sum, n) => sum + n, 0)
@@ -380,8 +421,18 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     {scene === 'cross-sell' && <CrossSellPanel onPrimary={acceptPrimaryUpsell} onDownsell={acceptDownsell} onSkip={() => setScene('cashier')} />}
 
     {scene === 'cashier' && <div className="guided-cashier-action">
-      <div className="guided-cashier-copy"><small>CAJA BAGELITO</small><b>Tu pedido está listo para revisar.</b></div>
-      <button onClick={() => setScene('pay')}>Revisar pedido y pagar <b>→</b></button>
+      <div className="guided-cashier-copy">
+        <small>CAJA BAGELITO</small>
+        <b>{quoteLoading ? 'Validando tu pedido…' : checkoutQuote?.checkoutAllowed ? 'Tu pedido está listo.' : 'Este pedido necesita revisión.'}</b>
+        {checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
+        {!quoteLoading && checkoutQuote?.reasons?.length ? <span>{checkoutQuote.reasons[0]}</span> : <span>Precio e inventario se validan en el servidor.</span>}
+      </div>
+      <button
+        disabled={quoteLoading || (!checkoutQuote?.checkoutAllowed && !qaMode)}
+        onClick={() => { if (checkoutQuote?.checkoutAllowed || qaMode) setScene('pay') }}
+      >
+        {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Revisar pedido y pagar' : 'Checkout bloqueado'} <b>→</b>
+      </button>
     </div>}
 
     {scene === 'pay' && <div className="guided-payment-gate">
