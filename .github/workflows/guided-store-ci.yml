@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   build-and-typecheck:
@@ -41,19 +43,40 @@ jobs:
           cat ci-build.log
           git diff -- src/routeTree.gen.ts > ci-route-tree.diff
           exit 0
-      - name: Upload audit logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: guided-store-ci-logs
-          path: |
-            ci-install.log
-            ci-install.exit
-            ci-build.log
-            ci-build.exit
-            ci-route-tree.diff
-          if-no-files-found: error
-          retention-days: 3
+      - name: Publish failure diagnostics to PR
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          install_code="$(cat ci-install.exit 2>/dev/null || echo missing)"
+          build_code="$(cat ci-build.exit 2>/dev/null || echo missing)"
+          if [ "$install_code" = "0" ] && [ "$build_code" = "0" ] && [ ! -s ci-route-tree.diff ]; then
+            exit 0
+          fi
+          {
+            echo '<!-- guided-store-ci-diagnostic -->'
+            echo '### Guided Store CI diagnostic'
+            echo
+            echo "- install exit: `$install_code`"
+            echo "- build/typecheck exit: `$build_code`"
+            echo
+            echo '#### build/typecheck tail'
+            echo '~~~text'
+            tail -n 100 ci-build.log 2>/dev/null || true
+            echo '~~~'
+            if [ -s ci-route-tree.diff ]; then
+              echo
+              echo '#### generated route-tree diff'
+              echo '~~~diff'
+              tail -n 120 ci-route-tree.diff
+              echo '~~~'
+            fi
+          } > ci-comment.md
+          payload="$(jq -Rs '{body: .}' < ci-comment.md)"
+          curl --fail-with-body -sS             -X POST             -H "Authorization: Bearer $GH_TOKEN"             -H "Accept: application/vnd.github+json"             -H "X-GitHub-Api-Version: 2022-11-28"             "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments"             -d "$payload"
       - name: Enforce checks
         shell: bash
         run: |
