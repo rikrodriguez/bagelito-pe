@@ -45,6 +45,16 @@ async function archiveHumanUsedMedia(db: any) {
   let failed = 0;
 
   for (const message of messages ?? []) {
+    if (message.provider_message_id) {
+      const { data: aiSend } = await db
+        .from("instagram_outbound_sends")
+        .select("id")
+        .eq("provider_message_id", message.provider_message_id)
+        .maybeSingle();
+
+      if (aiSend?.id) continue;
+    }
+
     const attachments = Array.isArray(message.attachments) ? message.attachments : [];
 
     for (let index = 0; index < attachments.length; index += 1) {
@@ -180,6 +190,55 @@ async function sha256(body: string) {
   const digest = await crypto.subtle.digest("SHA-256", encoder.encode(body));
   return bytesToHex(new Uint8Array(digest));
 }
+
+
+async function postInstagramMessage(args: {
+  accountId: string;
+  recipientId: string;
+  accessToken: string;
+  message: Record<string, unknown>;
+}) {
+  const response = await fetch(
+    `https://graph.instagram.com/v26.0/${args.accountId}/messages`,
+    {
+      method: "POST",
+      headers: {
+        "authorization": `Bearer ${args.accessToken}`,
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        recipient: { id: args.recipientId },
+        message: args.message
+      })
+    }
+  );
+
+  const raw = await response.text();
+  let payload: any = {};
+  try { payload = raw ? JSON.parse(raw) : {}; } catch { payload = { raw }; }
+
+  if (!response.ok) {
+    throw new Error(`instagram_send_failed:${response.status}:${raw.slice(0,500)}`);
+  }
+
+  return payload;
+}
+
+async function resolveInstagramMediaUrl(db: any, asset: any) {
+  if (asset?.public_url) return asset.public_url;
+  if (!asset?.storage_path) return null;
+
+  const { data, error } = await db.storage
+    .from(HUMAN_MEDIA_BUCKET)
+    .createSignedUrl(asset.storage_path, 60 * 60);
+
+  if (error) {
+    throw new Error(`instagram_media_sign_failed:${error.message}`);
+  }
+
+  return data?.signedUrl ?? null;
+}
+
 
 function extractOutputText(payload: any) {
   const parts: string[] = [];
@@ -368,23 +427,29 @@ async function generateShadowDraft(args: {
       sendable: asset.sendable
     }));
 
-  await db.from("instagram_ai_runs").insert({
-    conversation_id: conversationId,
-    triggering_message_id: triggeringMessageId,
-    execution_mode: "shadow",
-    intent,
-    language,
-    confidence,
-    proposed_reply: proposedReply,
-    proposed_media: proposedMedia,
-    facts_used: {
-      fact_keys: (facts ?? []).map((f: any) => f.fact_key),
-      current_batch: batch ?? null,
-      risk: RISK[intent] ?? "review"
-    },
-    model,
-    status: "proposed"
-  });
+  const { data: aiRun, error: aiRunError } = await db
+    .from("instagram_ai_runs")
+    .insert({
+      conversation_id: conversationId,
+      triggering_message_id: triggeringMessageId,
+      execution_mode: "shadow",
+      intent,
+      language,
+      confidence,
+      proposed_reply: proposedReply,
+      proposed_media: proposedMedia,
+      facts_used: {
+        fact_keys: (facts ?? []).map((f: any) => f.fact_key),
+        current_batch: batch ?? null,
+        risk: RISK[intent] ?? "review"
+      },
+      model,
+      status: "proposed"
+    })
+    .select("id")
+    .single();
+
+  if (aiRunError) throw new Error(`instagram_ai_run_insert_failed:${aiRunError.message}`);
 
   if ((RISK[intent] ?? "review") === "human") {
     await db.from("instagram_conversations")
@@ -392,7 +457,16 @@ async function generateShadowDraft(args: {
       .eq("id", conversationId);
   }
 
-  return { generated: true, intent, language, confidence, risk: RISK[intent] ?? "review" };
+  return {
+    generated: true,
+    aiRunId: aiRun?.id ?? null,
+    intent,
+    language,
+    confidence,
+    risk: RISK[intent] ?? "review",
+    proposedReply,
+    proposedMedia
+  };
 }
 
 type MetaEvent = {
@@ -422,6 +496,7 @@ Deno.serve(async (req: Request) => {
   const accountId = Deno.env.get("INSTAGRAM_ACCOUNT_ID") ?? "";
   const username = Deno.env.get("INSTAGRAM_USERNAME") ?? "bagelito.pe";
   const openaiKey = Deno.env.get("OPENAI_API_KEY") ?? "";
+  const instagramAccessToken = Deno.env.get("INSTAGRAM_ACCESS_TOKEN") ?? "";
   const aiModel = Deno.env.get("INSTAGRAM_AI_MODEL") ?? "gpt-6-luna";
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
@@ -439,6 +514,7 @@ Deno.serve(async (req: Request) => {
         hasAccountId: accountId.length > 0,
         persistenceReady: Boolean(supabaseUrl && serviceRoleKey),
         aiReady: openaiKey.length > 0,
+        sendReady: instagramAccessToken.length > 0,
         aiModel
       });
     }
@@ -468,6 +544,12 @@ Deno.serve(async (req: Request) => {
   const db = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false }
   });
+
+  const { data: runtimeSettings } = await db
+    .from("instagram_runtime_settings")
+    .select("enabled,mode,test_recipient_igsid,min_confidence,auto_intents,media_enabled,max_media")
+    .eq("id", "default")
+    .maybeSingle();
 
   const webhookEventKey = await sha256(rawBody);
   const { error: webhookInsertError } = await db
@@ -506,6 +588,17 @@ Deno.serve(async (req: Request) => {
         const senderId = event.sender?.id ?? "";
         const recipientId = event.recipient?.id ?? "";
         const inbound = !event.message.is_echo && senderId !== igAccountId;
+        let knownAiSend = false;
+
+        if (!inbound && event.message.mid) {
+          const { data: aiSend } = await db
+            .from("instagram_outbound_sends")
+            .select("id")
+            .eq("provider_message_id", event.message.mid)
+            .maybeSingle();
+          knownAiSend = Boolean(aiSend?.id);
+        }
+
         const contactInstagramId = inbound ? senderId : recipientId;
         if (!contactInstagramId || contactInstagramId === igAccountId) continue;
 
@@ -559,11 +652,12 @@ Deno.serve(async (req: Request) => {
           update.unread_count = Number(conversation.unread_count ?? 0) + (duplicateMessage ? 0 : 1);
         } else {
           update.last_outbound_at = sentAt;
-          // In Shadow Mode there is no Send API, so an outbound echo means Bagelito
-          // replied manually from Instagram/Meta. Keep the thread human-owned.
-          update.mode = "human_active";
 
-          if (!duplicateMessage) {
+          if (!knownAiSend) {
+            update.mode = "human_active";
+          }
+
+          if (!duplicateMessage && !knownAiSend) {
             const { data: latestRun } = await db
               .from("instagram_ai_runs")
               .select("id,proposed_reply,status")
@@ -624,7 +718,120 @@ Deno.serve(async (req: Request) => {
             openaiKey,
             model: aiModel
           });
-          if (shadow.generated) shadowGenerated += 1;
+          if (shadow.generated) {
+            shadowGenerated += 1;
+
+            const autoIntents = Array.isArray(runtimeSettings?.auto_intents)
+              ? runtimeSettings.auto_intents
+              : [];
+            const minConfidence = Number(runtimeSettings?.min_confidence ?? 0.92);
+            const testOnly =
+              runtimeSettings?.mode === "test_auto" &&
+              contactInstagramId === runtimeSettings?.test_recipient_igsid;
+            const fullAuto = runtimeSettings?.mode === "auto";
+            const safeForAuto =
+              Boolean(runtimeSettings?.enabled) &&
+              Boolean(instagramAccessToken) &&
+              conversation.mode !== "human_active" &&
+              (testOnly || fullAuto) &&
+              autoIntents.includes(shadow.intent) &&
+              typeof shadow.confidence === "number" &&
+              shadow.confidence >= minConfidence &&
+              shadow.risk === "auto" &&
+              typeof shadow.proposedReply === "string" &&
+              shadow.proposedReply.trim().length > 0;
+
+            if (safeForAuto) {
+              const textSend = await postInstagramMessage({
+                accountId: igAccountId,
+                recipientId: contactInstagramId,
+                accessToken: instagramAccessToken,
+                message: { text: shadow.proposedReply.trim() }
+              });
+
+              if (textSend?.message_id) {
+                await db.from("instagram_outbound_sends").insert({
+                  conversation_id: conversation.id,
+                  ai_run_id: shadow.aiRunId,
+                  provider_message_id: textSend.message_id,
+                  recipient_igsid: contactInstagramId,
+                  kind: "text",
+                  source: "ai"
+                });
+              }
+
+              const sentMedia: any[] = [];
+              if (runtimeSettings?.media_enabled) {
+                const maxMedia = Math.max(0, Math.min(7, Number(runtimeSettings?.max_media ?? 0)));
+
+                for (const asset of (shadow.proposedMedia ?? []).slice(0, maxMedia)) {
+                  if (!asset?.sendable) continue;
+                  const mediaUrl = await resolveInstagramMediaUrl(db, asset);
+                  if (!mediaUrl) continue;
+
+                  const mediaSend = await postInstagramMessage({
+                    accountId: igAccountId,
+                    recipientId: contactInstagramId,
+                    accessToken: instagramAccessToken,
+                    message: {
+                      attachment: {
+                        type: "image",
+                        payload: { url: mediaUrl }
+                      }
+                    }
+                  });
+
+                  if (mediaSend?.message_id) {
+                    await db.from("instagram_outbound_sends").insert({
+                      conversation_id: conversation.id,
+                      ai_run_id: shadow.aiRunId,
+                      provider_message_id: mediaSend.message_id,
+                      recipient_igsid: contactInstagramId,
+                      kind: "image",
+                      asset_key: asset.asset_key ?? null,
+                      source: "ai"
+                    });
+                  }
+
+                  sentMedia.push({
+                    asset_key: asset.asset_key ?? null,
+                    provider_message_id: mediaSend?.message_id ?? null
+                  });
+                }
+              }
+
+              if (shadow.aiRunId) {
+                await db.from("instagram_ai_runs")
+                  .update({
+                    execution_mode: "auto",
+                    status: "sent",
+                    updated_at: new Date().toISOString()
+                  })
+                  .eq("id", shadow.aiRunId);
+              }
+
+              await db.from("instagram_conversation_events").insert({
+                conversation_id: conversation.id,
+                event_type: testOnly ? "test_auto_send" : "auto_send",
+                from_mode: conversation.mode,
+                to_mode: "ai_active",
+                reason: testOnly ? "controlled_test" : "safe_auto",
+                actor: "ai",
+                metadata: {
+                  triggering_message_id: insertedMessage.id,
+                  ai_run_id: shadow.aiRunId,
+                  intent: shadow.intent,
+                  confidence: shadow.confidence,
+                  provider_message_id: textSend?.message_id ?? null,
+                  sent_media: sentMedia
+                }
+              });
+
+              await db.from("instagram_conversations")
+                .update({ mode: "ai_active", updated_at: new Date().toISOString() })
+                .eq("id", conversation.id);
+            }
+          }
         }
       }
     }
