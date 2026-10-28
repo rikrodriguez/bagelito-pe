@@ -121,3 +121,7 @@
 .guided-cashier-copy strong{font-size:30px;line-height:1;letter-spacing:-.04em;color:#004aad;margin-top:4px}
 .guided-cashier-copy span{font-size:8.5px;line-height:1.45;color:#6d8196;font-weight:700;margin-top:3px}
 .guided-cashier-action>button:disabled{background:#dfe7ed;color:#7a8b9c;box-shadow:none;cursor:not-allowed}
+
+.wallet-actions button:disabled{opacity:.58;cursor:not-allowed;box-shadow:none}
+.wallet-actions button:disabled.wallet-primary{background:#dfe5e9!important;color:#71849a!important;border-color:#dfe5e9!important}
+.wallet-actions button:disabled.wallet-secondary{background:#f7f8f9!important;color:#7f8d9c!important;border-color:#dfe4e8!important}
