@@ -70,7 +70,7 @@ export function projectBatchAvailability(
   if (!batch) return fallbackBatchAvailability('closed');
   const usage = computeBatchUsage(orders, now);
   const accepting =
-    isBatchAcceptingOrders(batch.status, batch.orders_close_at, now) &&
+    isBatchAcceptingOrders(batch.status, batch.orders_close_at, now, batch.orders_open_at) &&
     !(batch.capacity_packs && usage.reservedPacks + 1 > Number(batch.capacity_packs)) &&
     !(batch.capacity_bagels && usage.reservedBagels + nextPackUnits > Number(batch.capacity_bagels));
 
