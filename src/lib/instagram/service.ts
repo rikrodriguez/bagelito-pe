@@ -115,7 +115,7 @@ async function claimWebhook(payload: unknown, rawBody: string) {
 
   const { data: existing, error: readError } = await supabase
     .from("instagram_webhook_events")
-    .select("id, processed_at, processing_error")
+    .select("id, processed_at, processing_error, received_at")
     .eq("event_key", eventKey)
     .maybeSingle();
 
@@ -123,8 +123,18 @@ async function claimWebhook(payload: unknown, rawBody: string) {
     throw new Error(`instagram_webhook_dedupe_failed: ${readError.message}`);
   }
 
-  if (existing?.processed_at || (existing && !existing.processing_error)) {
+  if (existing?.processed_at) {
     return { eventKey, duplicate: true };
+  }
+
+  if (existing && !existing.processing_error) {
+    const claimedAt = new Date(existing.received_at).getTime();
+    const stillProcessing =
+      Number.isFinite(claimedAt) && Date.now() - claimedAt < 2 * 60 * 1000;
+
+    if (stillProcessing) {
+      return { eventKey, duplicate: true };
+    }
   }
 
   if (!existing) {
