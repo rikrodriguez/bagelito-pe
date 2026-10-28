@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { coordinateCulqiCharge } from '../../../../server/charge-coordinator.server'
 import { createCulqiCharge, fetchCulqiCharge, type CulqiAuthentication3DS } from '../../../../server/culqi.server'
-import { getPrivatePaymentConfig } from '../../../../server/payment-config.server'
+import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { enforcePublicApiSecurity, PublicApiError } from '../../../../server/public-api-security.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
 
@@ -43,6 +43,7 @@ export const Route = createFileRoute('/api/payments/culqi/charge')({
     handlers: {
       POST: async ({ request }) => {
         try {
+          if (!isPaymentRequestAllowed(request)) throw new PublicApiError('Culqi payments are not enabled yet.', 503)
           const cfg = getPrivatePaymentConfig()
           if (!cfg.enabled || !cfg.bridgeReady || (cfg.mode !== 'sandbox' && cfg.mode !== 'live')) {
             throw new PublicApiError('Culqi payments are not enabled yet.', 503)
