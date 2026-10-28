@@ -1,0 +1,45 @@
+name: Instagram Inbox CI
+
+on:
+  push:
+    branches:
+      - feature/instagram-inbox-agent
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73c27597364c9af683
+
+      - name: Setup Node
+        uses: actions/setup-node@1e60f620b9541d3b243d3c1844b9eac34b9d9537
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install
+        run: npm ci --ignore-scripts
+
+      - name: Test
+        run: npm test
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: test-only-ci-placeholder
+          ADMIN_PASSWORD: test-only-ci-placeholder
+          INSTAGRAM_APP_SECRET: test-only-ci-placeholder
+          INSTAGRAM_WEBHOOK_VERIFY_TOKEN: test-only-ci-placeholder
+          INSTAGRAM_AUTOMATION_MODE: shadow
