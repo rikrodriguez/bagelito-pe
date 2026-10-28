@@ -10,31 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PlayableRouteImport } from './routes/playable'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as PlayableRouteImport } from './routes/playable'
 import { Route as ApiBatchRouteImport } from './routes/api/batch'
 import { Route as ApiCatalogRouteImport } from './routes/api/catalog'
 import { Route as ApiCheckoutQuoteRouteImport } from './routes/api/checkout/quote'
 import { Route as ApiCheckoutSessionRouteImport } from './routes/api/checkout/session'
+import { Route as ApiWebhooksCulqiRouteImport } from './routes/api/webhooks/culqi'
 import { Route as ApiPaymentsCulqiChargeRouteImport } from './routes/api/payments/culqi/charge'
 import { Route as ApiPaymentsCulqiConfigRouteImport } from './routes/api/payments/culqi/config'
 import { Route as ApiPaymentsCulqiOrderRouteImport } from './routes/api/payments/culqi/order'
 import { Route as ApiPaymentsCulqiStatusRouteImport } from './routes/api/payments/culqi/status'
-import { Route as ApiWebhooksCulqiRouteImport } from './routes/api/webhooks/culqi'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PlayableRoute = PlayableRouteImport.update({
-  id: '/playable',
-  path: '/playable',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LegalRoute = LegalRouteImport.update({
   id: '/legal',
   path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayableRoute = PlayableRouteImport.update({
+  id: '/playable',
+  path: '/playable',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiBatchRoute = ApiBatchRouteImport.update({
@@ -57,6 +57,11 @@ const ApiCheckoutSessionRoute = ApiCheckoutSessionRouteImport.update({
   path: '/api/checkout/session',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiWebhooksCulqiRoute = ApiWebhooksCulqiRouteImport.update({
+  id: '/api/webhooks/culqi',
+  path: '/api/webhooks/culqi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPaymentsCulqiChargeRoute = ApiPaymentsCulqiChargeRouteImport.update({
   id: '/api/payments/culqi/charge',
   path: '/api/payments/culqi/charge',
@@ -77,113 +82,108 @@ const ApiPaymentsCulqiStatusRoute = ApiPaymentsCulqiStatusRouteImport.update({
   path: '/api/payments/culqi/status',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiWebhooksCulqiRoute = ApiWebhooksCulqiRouteImport.update({
-  id: '/api/webhooks/culqi',
-  path: '/api/webhooks/culqi',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/playable': typeof PlayableRoute
   '/legal': typeof LegalRoute
+  '/playable': typeof PlayableRoute
   '/api/batch': typeof ApiBatchRoute
   '/api/catalog': typeof ApiCatalogRoute
   '/api/checkout/quote': typeof ApiCheckoutQuoteRoute
   '/api/checkout/session': typeof ApiCheckoutSessionRoute
+  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
   '/api/payments/culqi/charge': typeof ApiPaymentsCulqiChargeRoute
   '/api/payments/culqi/config': typeof ApiPaymentsCulqiConfigRoute
   '/api/payments/culqi/order': typeof ApiPaymentsCulqiOrderRoute
   '/api/payments/culqi/status': typeof ApiPaymentsCulqiStatusRoute
-  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/playable': typeof PlayableRoute
   '/legal': typeof LegalRoute
+  '/playable': typeof PlayableRoute
   '/api/batch': typeof ApiBatchRoute
   '/api/catalog': typeof ApiCatalogRoute
   '/api/checkout/quote': typeof ApiCheckoutQuoteRoute
   '/api/checkout/session': typeof ApiCheckoutSessionRoute
+  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
   '/api/payments/culqi/charge': typeof ApiPaymentsCulqiChargeRoute
   '/api/payments/culqi/config': typeof ApiPaymentsCulqiConfigRoute
   '/api/payments/culqi/order': typeof ApiPaymentsCulqiOrderRoute
   '/api/payments/culqi/status': typeof ApiPaymentsCulqiStatusRoute
-  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/playable': typeof PlayableRoute
   '/legal': typeof LegalRoute
+  '/playable': typeof PlayableRoute
   '/api/batch': typeof ApiBatchRoute
   '/api/catalog': typeof ApiCatalogRoute
   '/api/checkout/quote': typeof ApiCheckoutQuoteRoute
   '/api/checkout/session': typeof ApiCheckoutSessionRoute
+  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
   '/api/payments/culqi/charge': typeof ApiPaymentsCulqiChargeRoute
   '/api/payments/culqi/config': typeof ApiPaymentsCulqiConfigRoute
   '/api/payments/culqi/order': typeof ApiPaymentsCulqiOrderRoute
   '/api/payments/culqi/status': typeof ApiPaymentsCulqiStatusRoute
-  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/playable'
     | '/legal'
+    | '/playable'
     | '/api/batch'
     | '/api/catalog'
     | '/api/checkout/quote'
     | '/api/checkout/session'
+    | '/api/webhooks/culqi'
     | '/api/payments/culqi/charge'
     | '/api/payments/culqi/config'
     | '/api/payments/culqi/order'
     | '/api/payments/culqi/status'
-    | '/api/webhooks/culqi'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/playable'
     | '/legal'
+    | '/playable'
     | '/api/batch'
     | '/api/catalog'
     | '/api/checkout/quote'
     | '/api/checkout/session'
+    | '/api/webhooks/culqi'
     | '/api/payments/culqi/charge'
     | '/api/payments/culqi/config'
     | '/api/payments/culqi/order'
     | '/api/payments/culqi/status'
-    | '/api/webhooks/culqi'
   id:
     | '__root__'
     | '/'
-    | '/playable'
     | '/legal'
+    | '/playable'
     | '/api/batch'
     | '/api/catalog'
     | '/api/checkout/quote'
     | '/api/checkout/session'
+    | '/api/webhooks/culqi'
     | '/api/payments/culqi/charge'
     | '/api/payments/culqi/config'
     | '/api/payments/culqi/order'
     | '/api/payments/culqi/status'
-    | '/api/webhooks/culqi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PlayableRoute: typeof PlayableRoute
   LegalRoute: typeof LegalRoute
+  PlayableRoute: typeof PlayableRoute
   ApiBatchRoute: typeof ApiBatchRoute
   ApiCatalogRoute: typeof ApiCatalogRoute
   ApiCheckoutQuoteRoute: typeof ApiCheckoutQuoteRoute
   ApiCheckoutSessionRoute: typeof ApiCheckoutSessionRoute
+  ApiWebhooksCulqiRoute: typeof ApiWebhooksCulqiRoute
   ApiPaymentsCulqiChargeRoute: typeof ApiPaymentsCulqiChargeRoute
   ApiPaymentsCulqiConfigRoute: typeof ApiPaymentsCulqiConfigRoute
   ApiPaymentsCulqiOrderRoute: typeof ApiPaymentsCulqiOrderRoute
   ApiPaymentsCulqiStatusRoute: typeof ApiPaymentsCulqiStatusRoute
-  ApiWebhooksCulqiRoute: typeof ApiWebhooksCulqiRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -195,18 +195,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/playable': {
-      id: '/playable'
-      path: '/playable'
-      fullPath: '/playable'
-      preLoaderRoute: typeof PlayableRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/legal': {
       id: '/legal'
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playable': {
+      id: '/playable'
+      path: '/playable'
+      fullPath: '/playable'
+      preLoaderRoute: typeof PlayableRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/batch': {
@@ -237,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCheckoutSessionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/webhooks/culqi': {
+      id: '/api/webhooks/culqi'
+      path: '/api/webhooks/culqi'
+      fullPath: '/api/webhooks/culqi'
+      preLoaderRoute: typeof ApiWebhooksCulqiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/payments/culqi/charge': {
       id: '/api/payments/culqi/charge'
       path: '/api/payments/culqi/charge'
@@ -265,37 +272,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPaymentsCulqiStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/webhooks/culqi': {
-      id: '/api/webhooks/culqi'
-      path: '/api/webhooks/culqi'
-      fullPath: '/api/webhooks/culqi'
-      preLoaderRoute: typeof ApiWebhooksCulqiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute,
-  PlayableRoute,
-  LegalRoute,
-  ApiBatchRoute,
-  ApiCatalogRoute,
-  ApiCheckoutQuoteRoute,
-  ApiCheckoutSessionRoute,
-  ApiPaymentsCulqiChargeRoute,
-  ApiPaymentsCulqiConfigRoute,
-  ApiPaymentsCulqiOrderRoute,
-  ApiPaymentsCulqiStatusRoute,
-  ApiWebhooksCulqiRoute,
+  IndexRoute: IndexRoute,
+  LegalRoute: LegalRoute,
+  PlayableRoute: PlayableRoute,
+  ApiBatchRoute: ApiBatchRoute,
+  ApiCatalogRoute: ApiCatalogRoute,
+  ApiCheckoutQuoteRoute: ApiCheckoutQuoteRoute,
+  ApiCheckoutSessionRoute: ApiCheckoutSessionRoute,
+  ApiWebhooksCulqiRoute: ApiWebhooksCulqiRoute,
+  ApiPaymentsCulqiChargeRoute: ApiPaymentsCulqiChargeRoute,
+  ApiPaymentsCulqiConfigRoute: ApiPaymentsCulqiConfigRoute,
+  ApiPaymentsCulqiOrderRoute: ApiPaymentsCulqiOrderRoute,
+  ApiPaymentsCulqiStatusRoute: ApiPaymentsCulqiStatusRoute,
 }
-
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-
+import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
