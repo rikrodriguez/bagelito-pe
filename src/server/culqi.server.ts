@@ -229,7 +229,7 @@ export async function fetchCulqiEvent(eventId: string) {
   if (cfg.mode !== 'sandbox' && cfg.mode !== 'live') throw new Error('Culqi mode unavailable.')
 
   const env = cfg.mode === 'sandbox' ? 'test' : 'live'
-  if (!new RegExp('^evt_' + env + '_[A-Za-z0-9_-]{8,40}).test(eventId)) {
+  if (!new RegExp(`^evt_${env}_[A-Za-z0-9_-]{8,40}$`).test(eventId)) {
     throw new Error('Invalid Culqi event ID.')
   }
 
