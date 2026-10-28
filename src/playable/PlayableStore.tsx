@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, RoundedBox } from '@react-three/drei'
+import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@react-three/drei'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
@@ -17,6 +17,16 @@ type Step = 'explore' | 'choose-pack' | 'choose-combo' | 'choose-schmear-size' |
 type Move = { forward:boolean; backward:boolean; left:boolean; right:boolean; run:boolean }
 type PackFormat = 'grande' | 'mini'
 type V3 = [number,number,number]
+type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'cashier'
+
+const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vector3}> = {
+  totem:{position:new THREE.Vector3(-3.45,1.68,7.25),lookAt:new THREE.Vector3(-4.9,1.55,5.7)},
+  vitrina:{position:new THREE.Vector3(0,1.72,4.9),lookAt:new THREE.Vector3(-.3,1.1,.15)},
+  selector:{position:new THREE.Vector3(0,1.72,5.35),lookAt:new THREE.Vector3(0,1.25,.1)},
+  bagels:{position:new THREE.Vector3(-2.05,1.62,3.15),lookAt:new THREE.Vector3(-2.05,.95,.25)},
+  schmears:{position:new THREE.Vector3(4.15,1.62,2.75),lookAt:new THREE.Vector3(4.25,.95,.05)},
+  cashier:{position:new THREE.Vector3(5.9,1.68,6.05),lookAt:new THREE.Vector3(5.15,1.15,4.6)},
+}
 
 const ZONES = {
   totem: new THREE.Vector3(-4.9, 0, 5.7),
@@ -34,6 +44,7 @@ export function PlayableStore() {
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
+  const [introGuide, setIntroGuide] = useState<'totem'|'vitrina'|null>(null)
   const [packFormat, setPackFormat] = useState<PackFormat>('grande')
   const [packQty, setPackQty] = useState(6)
   const [comboId, setComboId] = useState<string | null>(null)
@@ -82,11 +93,18 @@ export function PlayableStore() {
     return best<2.45?winner:null
   },[player])
 
+  const guideNode:GuideNode|null = category
+    ? step==='bagels' ? 'bagels'
+      : step==='schmears' ? 'schmears'
+      : step==='cashier' ? 'cashier'
+      : 'selector'
+    : introGuide
+
   const chooseCategory=(c:Category)=>{
-    setCategory(c);setBagels({});setSchmears({});setComboId(null)
+    setCategory(c);setBagels({});setSchmears({});setComboId(null);setIntroGuide(null)
     setStep(c==='packs'?'choose-pack':c==='combos'?'choose-combo':'choose-schmear-size')
   }
-  const reset=()=>{setCategory(null);setStep('explore');setBagels({});setSchmears({});setComboId(null)}
+  const reset=()=>{setCategory(null);setStep('explore');setIntroGuide(null);setBagels({});setSchmears({});setComboId(null)}
   const addBagel=(id:string)=>{
     if(step!=='bagels'||bagelTotal>=bagelTarget)return
     setBagels(v=>({...v,[id]:(v[id]??0)+1}))
@@ -110,12 +128,12 @@ export function PlayableStore() {
       <hemisphereLight args={['#fff8ec','#62717d',1.4]}/>
       <directionalLight castShadow position={[4,9,7]} intensity={2.1} shadow-mapSize={[1536,1536]}/>
       <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear}/>
-      <CameraController move={move} look={look} onPosition={setPlayer}/>
+      <CameraController move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
       <ContactShadows position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
 
-    <LookSurface look={look}/>
+    <LookSurface look={look} disabled={Boolean(guideNode)}/>
 
     <header className="playable-top interactive-ui">
       <button className="brand-pill" onClick={reset}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
@@ -124,10 +142,16 @@ export function PlayableStore() {
 
     {name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
-    {step==='explore'&&!nearest&&<div className="waypoint-hint interactive-ui"><span>Empieza en el tótem</span><b>o acércate a la vitrina →</b></div>}
+    {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
+      <span>Empieza tu pedido</span>
+      <button type="button" onClick={()=>setIntroGuide('totem')}>Ir al tótem</button>
+      <button type="button" onClick={()=>setIntroGuide('vitrina')}>Ir a la vitrina →</button>
+    </div>}
+
+    {category&&<GuidedProgress step={step}/>} 
 
     <Hud
-      category={category} step={step} nearest={nearest}
+      category={category} step={step} nearest={introGuide ?? nearest}
       packFormat={packFormat}
       bagelTotal={bagelTotal} bagelTarget={bagelTarget}
       schmearTotal={schmearTotal} schmearTarget={schmearTarget}
@@ -147,34 +171,48 @@ export function PlayableStore() {
   </main>
 }
 
-function CameraController({move,look,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;onPosition:(p:THREE.Vector3)=>void}) {
+function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
   const {camera}=useThree()
   const pos=useRef(new THREE.Vector3(0,1.68,8.25))
   const tick=useRef(0)
   const f=useMemo(()=>new THREE.Vector3(),[])
   const r=useMemo(()=>new THREE.Vector3(),[])
   const v=useMemo(()=>new THREE.Vector3(),[])
+  const desiredQuat=useMemo(()=>new THREE.Quaternion(),[])
+  const dummy=useMemo(()=>new THREE.Object3D(),[])
+
   useFrame((_,delta)=>{
-    const speed=(move.run?4:2.45)*Math.min(delta,.05)
-    f.set(-Math.sin(look.current.yaw),0,-Math.cos(look.current.yaw))
-    r.set(f.z,0,-f.x)
-    v.set(0,0,0)
-    if(move.forward)v.add(f);if(move.backward)v.sub(f);if(move.right)v.add(r);if(move.left)v.sub(r)
-    if(v.lengthSq()){v.normalize().multiplyScalar(speed);pos.current.add(v)}
-    pos.current.x=THREE.MathUtils.clamp(pos.current.x,-7.15,7.15)
-    pos.current.z=THREE.MathUtils.clamp(pos.current.z,-8.0,8.25)
-    camera.position.copy(pos.current)
-    camera.rotation.order='YXZ'
-    camera.rotation.set(look.current.pitch,look.current.yaw,0)
-    if(++tick.current%8===0)onPosition(new THREE.Vector3(pos.current.x,0,pos.current.z))
+    if(guidedNode){
+      const node=GUIDED_CAMERAS[guidedNode]
+      const alpha=1-Math.exp(-delta*4.8)
+      camera.position.lerp(node.position,alpha)
+      dummy.position.copy(camera.position)
+      dummy.lookAt(node.lookAt)
+      desiredQuat.copy(dummy.quaternion)
+      camera.quaternion.slerp(desiredQuat,alpha)
+      pos.current.copy(camera.position)
+    }else{
+      const speed=(move.run?4:2.45)*Math.min(delta,.05)
+      f.set(-Math.sin(look.current.yaw),0,-Math.cos(look.current.yaw))
+      r.set(f.z,0,-f.x)
+      v.set(0,0,0)
+      if(move.forward)v.add(f);if(move.backward)v.sub(f);if(move.right)v.add(r);if(move.left)v.sub(r)
+      if(v.lengthSq()){v.normalize().multiplyScalar(speed);pos.current.add(v)}
+      pos.current.x=THREE.MathUtils.clamp(pos.current.x,-7.15,7.15)
+      pos.current.z=THREE.MathUtils.clamp(pos.current.z,-8.0,8.25)
+      camera.position.copy(pos.current)
+      camera.rotation.order='YXZ'
+      camera.rotation.set(look.current.pitch,look.current.yaw,0)
+    }
+    if(++tick.current%8===0)onPosition(new THREE.Vector3(camera.position.x,0,camera.position.z))
   })
   return null
 }
 
-function LookSurface({look}:{look:React.MutableRefObject<{yaw:number;pitch:number}>}) {
+function LookSurface({look,disabled}:{look:React.MutableRefObject<{yaw:number;pitch:number}>;disabled:boolean}) {
   const drag=useRef(false),last=useRef({x:0,y:0})
-  return <div className="look-surface"
-    onPointerDown={e=>{if((e.target as HTMLElement).closest('.interactive-ui,button'))return;drag.current=true;last.current={x:e.clientX,y:e.clientY};e.currentTarget.setPointerCapture(e.pointerId)}}
+  return <div className={'look-surface'+(disabled?' is-guided':'')}
+    onPointerDown={e=>{if(disabled||(e.target as HTMLElement).closest('.interactive-ui,button'))return;drag.current=true;last.current={x:e.clientX,y:e.clientY};e.currentTarget.setPointerCapture(e.pointerId)}}
     onPointerMove={e=>{if(!drag.current)return;look.current.yaw-=(e.clientX-last.current.x)*.0038;look.current.pitch=THREE.MathUtils.clamp(look.current.pitch-(e.clientY-last.current.y)*.003,-.62,.42);last.current={x:e.clientX,y:e.clientY}}}
     onPointerUp={()=>drag.current=false}
     onPointerCancel={()=>drag.current=false}
@@ -211,15 +249,46 @@ function StoreArchitecture(){
     <TileGrid position={[-6.2,2.65,-8.16]} width={3.4} height={4.5}/>
     <TileGrid position={[6.3,2.65,-8.16]} width={3.0} height={4.5}/>
 
-    <Html transform position={[0,3.58,-8.12]} distanceFactor={5.5} className="world-logo"><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></Html>
-    <MenuBoard/>
+    <ApprovedBackdrop/>
     <Pendant position={[-4.9,4.0,2.2]}/>
-    <Pendant position={[-1.8,4.05,1.1]}/>
-    <Pendant position={[2.0,4.0,1.0]}/>
     <Pendant position={[5.0,4.0,2.0]}/>
     <Plant position={[-7.25,0,-6.8]}/>
     <Plant position={[7.2,0,-6.7]}/>
   </group>
+}
+
+function ApprovedBackdrop(){
+  const source=useTexture('/images/store-reference-approved.webp')
+  const texture=useMemo(()=>{
+    const t=source.clone()
+    t.needsUpdate=true
+    t.wrapS=THREE.ClampToEdgeWrapping
+    t.wrapT=THREE.ClampToEdgeWrapping
+    t.repeat.set(1,.335)
+    t.offset.set(0,.665)
+    t.colorSpace=THREE.SRGBColorSpace
+    return t
+  },[source])
+  return <group>
+    <mesh position={[0,2.68,-8.13]}>
+      <planeGeometry args={[15.55,3.47]}/>
+      <meshBasicMaterial map={texture} toneMapped={false}/>
+    </mesh>
+    <mesh position={[0,1.04,-8.08]}>
+      <boxGeometry args={[15.5,.11,.08]}/>
+      <meshStandardMaterial color="#d2d7d8" metalness={.52} roughness={.3}/>
+    </mesh>
+  </group>
+}
+
+function GuidedProgress({step}:{step:Step}){
+  const active=step==='bagels'?2:step==='schmears'?3:step==='cashier'?4:1
+  const labels=['Elige','Bagels','Schmears','Caja','Pago']
+  return <div className="guided-progress interactive-ui" aria-label="Progreso del pedido">
+    {labels.map((label,index)=><div key={label} data-active={active===index+1} data-done={active>index+1}>
+      <i>{active>index+1?'✓':index+1}</i><span>{label}</span>
+    </div>)}
+  </div>
 }
 
 function TileGrid({position,width,height}:{position:V3;width:number;height:number}){
