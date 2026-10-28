@@ -67,13 +67,14 @@ export async function quoteGuidedOrder(input: GuidedQuoteRequest): Promise<Guide
   if (category === 'packs') {
     if (!bagels) return { status: 'invalid', checkoutAllowed: false, amountPen: null, reasons: ['Selección de bagels inválida.'], batchAccepting: true }
     const format = input.packFormat === 'mini' ? 'mini' : input.packFormat === 'grande' ? 'grande' : null
-    const mix: PackMix | null = input.packMix === 'single' ? 'single' : input.packMix === 'mixed' ? 'mixed' : null
+    const requestedMix: PackMix | null = input.packMix === 'single' ? 'single' : input.packMix === 'mixed' ? 'mixed' : null
     const quantity = Number(input.packQty)
-    if (!format || !mix || !Number.isInteger(quantity)) {
+    if (!format || !requestedMix || !Number.isInteger(quantity)) {
       return { status: 'invalid', checkoutAllowed: false, amountPen: null, reasons: ['Configuración de pack inválida.'], batchAccepting: true }
     }
 
-    const pack = quotePublishedPack({ format, quantity, mix, selection: bagels })
+    const effectiveMix: PackMix = bagels.length === 1 ? 'single' : 'mixed'
+    const pack = quotePublishedPack({ format, quantity, mix: effectiveMix, selection: bagels })
     if (pack.status !== 'ready' || typeof pack.publishedBasePen !== 'number') {
       return review(pack.publishedBasePen, pack.reasons, true)
     }
