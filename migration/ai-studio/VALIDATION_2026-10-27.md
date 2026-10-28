@@ -76,3 +76,17 @@ Safe design choices:
 Local test run: `tsc -p portable-tsconfig.json` **PASS**; `node --test tests/*.test.mjs` **16/16 PASS**. These are **local** checks of equivalent extracted code and values; GHL preview, CI and Culqi sandbox remain unverified.
 
 The production checkout must have a separate server-side gate and must not treat a UI quote or the historical menu alone as authority to charge customers. Do not turn these read-only purchase previews into live payment flows until current menu approval and transactional backend integration are demonstrated.
+
+
+## Read-only Supabase batch parity + TanStack starter
+
+- Added `portable-src/lib/batch-read.ts` and `tests/batch-read.test.mjs`.
+- Added independently structured `tanstack-app/` with `package.json`, `vite.config.ts`, `src/router.tsx`, `src/routes/__root.tsx`, `src/routes/index.tsx`, `src/routes/api/catalog.ts`, `src/routes/api/batch.ts`, `src/server/batch.server.ts`, styles and copied portable domain modules.
+- The preview UI includes visible real Bagelito bagel photo URLs and a blocked checkout, with Packs → Grande/Mini, Combos → 2 bagels + schmear and Schmears 120/180/240g.
+- The server-side Supabase adapter reads only batches/orders, has a 42703 legacy-schema fallback and returns 503 with accepting=false when secrets or DB are unavailable. It does not mutate data.
+
+**Executed local validation:** portable TypeScript compilation PASS; **26/26 deterministic unit tests PASS**, 0 fail, including 10 additional batch-read projection scenarios. Syntax-only parsing of local TanStack TypeScript/TSX scaffold: 16 source files, 0 syntax errors. This is not TanStack dependency typechecking or an application build; npm registry packages are unavailable in the execution container.
+
+**Not completed:** installing TanStack dependencies, AI Studio project creation, Git Sync connection, target SSR/build/preview, server endpoint runtime test with Supabase, Culqi sandbox, live GHL workflows. GitHub Actions runner remained unavailable and its draft workflow was removed.
+
+**Required next gate:** create the AI Studio-generated private Git repo, integrate `migration/ai-studio/tanstack-app/` there and execute true `npm run build` + `npm run typecheck` + browser/endpoint smoke tests against a test database. Preserve Bagelito's Next production until these pass.
