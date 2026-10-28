@@ -99,7 +99,7 @@ export async function fetchInstagramInbox(): Promise<InstagramInboxData> {
     }
 
     const contactsById = new Map((contacts ?? []).map((contact) => [contact.id, contact]));
-    const lastMessageByConversation = new Map<string, (typeof messages)[number]>();
+    const lastMessageByConversation = new Map<string, NonNullable<typeof messages>[number]>();
 
     for (const message of messages ?? []) {
       if (!lastMessageByConversation.has(message.conversation_id)) {
