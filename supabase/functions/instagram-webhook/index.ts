@@ -76,7 +76,7 @@ async function generateShadowDraft(args: {
 }) {
   const { db, conversationId, triggeringMessageId, customerId, openaiKey, model } = args;
 
-  const [{ data: messages }, { data: facts }, { data: batch }] = await Promise.all([
+  const [{ data: messages }, { data: facts }, { data: batch }, { data: mediaAssets }] = await Promise.all([
     db.from("instagram_messages")
       .select("direction,text_content,message_type,sent_at")
       .eq("conversation_id", conversationId)
@@ -88,7 +88,11 @@ async function generateShadowDraft(args: {
       .select("id,name,status,orders_open_at,orders_close_at,delivery_date,capacity_packs,capacity_bagels,created_at")
       .order("created_at", { ascending: false })
       .limit(1)
-      .maybeSingle()
+      .maybeSingle(),
+    db.from("instagram_media_assets")
+      .select("asset_key,public_url,category,product_slug,locale,tags,approved,sendable")
+      .eq("approved", true)
+      .order("asset_key", { ascending: true })
   ]);
 
   const recentMessages = [...(messages ?? [])].reverse();
@@ -102,7 +106,9 @@ async function generateShadowDraft(args: {
     "Operational facts MUST come only from LIVE_FACTS below. Never invent price, stock, availability, batch date, delivery fee, payment state, address, product, exception, refund, compensation, or custom promise.",
     "A seasonal=true flavor is NOT proof that it is currently available. Mention it only as seasonal/depending on batch unless explicit availability exists.",
     "For complaints, refunds, missing/damaged orders, allergies/celiac/food safety, payment disputes, or fraud: classify the matching high-risk intent and draft a cautious acknowledgement without making promises.",
-    "Media tags are internal hints only. Do not invent URLs.",
+    "For media, use ONLY exact asset_key values provided in LIVE_FACTS.media_assets. Never invent an asset key or URL.",
+    "Suggest media only when it adds value: the customer asks to see a product, asks for a photo, asks how something looks, or a specific pack/flavor image would materially help. Do not attach images mechanically to every reply.",
+    "A media asset with sendable=false may still be suggested in Shadow Mode, but must not be sent until validated.",
     "Return JSON only matching the schema."
   ].join("\n");
 
@@ -112,6 +118,7 @@ async function generateShadowDraft(args: {
     LIVE_FACTS: {
       menu: factMap,
       current_batch: batch ?? null,
+      media_assets: mediaAssets ?? [],
       truth_policy: "Configured regular menu items may be described as menu offerings. Seasonal items are not confirmed live stock unless explicit availability exists."
     }
   };
@@ -182,7 +189,18 @@ async function generateShadowDraft(args: {
   const language = ["es","en","mixed","unknown"].includes(parsed.language) ? parsed.language : "unknown";
   const confidence = typeof parsed.confidence === "number" ? Math.min(1, Math.max(0, parsed.confidence)) : null;
   const proposedReply = typeof parsed.proposed_reply === "string" ? parsed.proposed_reply.trim() : "";
-  const proposedMedia = Array.isArray(parsed.proposed_media_tags) ? parsed.proposed_media_tags.slice(0,5) : [];
+  const requestedMediaKeys = Array.isArray(parsed.proposed_media_tags) ? parsed.proposed_media_tags.slice(0,5) : [];
+  const approvedMediaByKey = new Map((mediaAssets ?? []).map((asset: any) => [asset.asset_key, asset]));
+  const proposedMedia = requestedMediaKeys
+    .map((key: string) => approvedMediaByKey.get(key))
+    .filter(Boolean)
+    .map((asset: any) => ({
+      asset_key: asset.asset_key,
+      public_url: asset.public_url,
+      category: asset.category,
+      product_slug: asset.product_slug,
+      sendable: asset.sendable
+    }));
 
   await db.from("instagram_ai_runs").insert({
     conversation_id: conversationId,
