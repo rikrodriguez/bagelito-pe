@@ -417,11 +417,16 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </div>}
 
     {scene === 'wallet' && <div className="wallet-actions">
-      <button onClick={saveWallet}>{walletSaved ? 'Guardada ✓' : 'Agregar a Wallet'}</button>
-      <button onClick={() => setScene('handoff')}>Ahora no</button>
+      <div className="wallet-copy"><small>BAGELITO CLUB</small><b>Tu tarjeta está lista</b><span>Guárdala o continúa sin agregarla.</span></div>
+      <button className="wallet-primary" onClick={saveWallet}>{walletSaved ? 'Guardada ✓' : ' Add to Apple Wallet'}</button>
+      <button className="wallet-secondary" onClick={saveWallet}>G Add to Google Wallet</button>
+      <button className="wallet-skip" onClick={() => setScene('handoff')}>Ahora no</button>
     </div>}
 
-    {scene === 'handoff' && <button className="handoff-action" onClick={() => setScene('goodbye')}>Recibir pedido <b>→</b></button>}
+    {scene === 'handoff' && <div className="handoff-actions">
+      <div><small>LISTO PARA TI</small><b>Tu Bagelito está listo.</b><span>Toca para recibir la bolsa.</span></div>
+      <button className="handoff-action" onClick={() => setScene('goodbye')}>Recibir pedido <b>→</b></button>
+    </div>}
 
     {scene === 'goodbye' && <div className="goodbye-actions">
       <button onClick={onExit}>Salir de Bagelito</button>
