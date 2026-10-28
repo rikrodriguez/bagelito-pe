@@ -4,7 +4,6 @@ import {
   getVerifiedDisplayMenu,
   quotePublishedPack,
   quotePublishedSchmear,
-  quoteTwoBagelCombo,
   canProceedToCheckout,
   type BagelSelection,
   type BagelFormat,
@@ -19,10 +18,9 @@ type Category = 'packs' | 'combos' | 'schmears'
 type Stage = 'entry' | 'category' | 'configure'
 
 const menu = getVerifiedDisplayMenu()
-const firstFlavor = menu.bagels[0]?.id ?? 'plain'
-const secondFlavor = menu.bagels[1]?.id ?? firstFlavor
 const firstSchmear = menu.schmears[0]?.id ?? 'whipped-original'
 const localProductImage = (url: string) => url.replace('https://bagelito.pe', '')
+const comboOptions = menu.historicalPublishedCombos
 
 function BagelitoStore() {
   const [stage, setStage] = useState<Stage>('category')
@@ -31,6 +29,7 @@ function BagelitoStore() {
   const [quantity, setQuantity] = useState(6)
   const [mix, setMix] = useState<PackMix>('mixed')
   const [packCounts, setPackCounts] = useState<Record<string, number>>({})
-  const [comboPicked, setComboPicked] = useState<[string | null, string | null]>([null, null])
-  const [schmearId, setSchmearId] = useState(firstSchmear)
-  const [schmearGrams, setSchmearGrams] = useState(120)¶»§q«^
+  const [selectedComboId, setSelectedComboId] = useState<string | null>(null)
+  const [comboBagelCounts, setComboBagelCounts] = useState<Record<string, number>>({})
+  const [comboSchmearCounts, setComboSchmearCounts] = useState<Record<string, number>>({})
+  const [schmearId, setSchme¶»§q«^
