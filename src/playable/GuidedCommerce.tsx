@@ -243,6 +243,26 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     return base + 'goodbye.webp'
   }, [scene])
 
+  // Load the next physical set-piece while the customer is still interacting
+  // with the current scene. In particular, bag handoff cannot flash blank
+  // after the customer skips the Wallet preview.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const base = '/master-scenes-clean/'
+    const upcoming = scene === 'pay' ? [base + 'receipt.webp']
+      : scene === 'receipt' ? ['/store-entry-door.webp']
+      : scene === 'wallet' ? [base + 'bag-handoff.webp']
+      : scene === 'handoff' ? ['/store-entry-door.webp']
+      : scene === 'selector' ? [base + 'packs.webp', base + 'combos.webp', base + 'schmears.webp']
+      : []
+    const assets = upcoming.map((src) => {
+      const image = new window.Image()
+      image.src = src
+      return image
+    })
+    return () => { assets.length = 0 }
+  }, [scene])
+
   function resetSelections() {
     setBagelCounts({})
     setSchmearCounts({})
