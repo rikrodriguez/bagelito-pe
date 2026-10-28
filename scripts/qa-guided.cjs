@@ -81,6 +81,22 @@ async function audit() {
       if (JSON.stringify(showcaseLabels) !== JSON.stringify(expectedShowcaseLabels)) {
         failures.push(mode.name + ': bagel panorama hotspot positions do not match visual flavor labels')
       }
+      if (mode.name === 'desktop') {
+        const frame = await page.locator('.bagel-product-frame').boundingBox()
+        const trays = await page.locator('.bagel-hotspots > button').evaluateAll((buttons) =>
+          buttons.map((button) => {
+            const rect = button.getBoundingClientRect()
+            return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom }
+          })
+        )
+        const summary = await page.locator('.bagel-live-summary').boundingBox()
+        if (!frame || trays.length !== 8
+          || trays[3].right < frame.x + frame.width * .98
+          || trays[7].right < frame.x + frame.width * .98
+          || (summary && frame.x + frame.width > summary.x + 2)) {
+          failures.push('Desktop clean bagel photo is not fully clickable or overlaps the dynamic summary')
+        }
+      }
       if (mode.name === 'mobile') {
         const productCards = await page.locator('.mobile-bagel-card').evaluateAll((cards) =>
           cards.map((card) => ({
