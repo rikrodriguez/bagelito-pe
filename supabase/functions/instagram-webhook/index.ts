@@ -418,18 +418,63 @@ Deno.serve(async (req: Request) => {
           update.unread_count = Number(conversation.unread_count ?? 0) + (duplicateMessage ? 0 : 1);
         } else {
           update.last_outbound_at = sentAt;
-          // In Shadow Mode there is no Send API, so an outbound echo means a human
-          // replied from Instagram/Meta. Respect that takeover immediately.
+          // In Shadow Mode there is no Send API, so an outbound echo means Bagelito
+          // replied manually from Instagram/Meta. Keep the thread human-owned.
           update.mode = "human_active";
+
+          if (!duplicateMessage) {
+            const { data: latestRun } = await db
+              .from("instagram_ai_runs")
+              .select("id,proposed_reply,status")
+              .eq("conversation_id", conversation.id)
+              .eq("execution_mode", "shadow")
+              .in("status", ["proposed","approved","edited"])
+              .order("created_at", { ascending: false })
+              .limit(1)
+              .maybeSingle();
+
+            if (latestRun?.id) {
+              const humanReply = event.message.text ?? null;
+              const humanAttachments = Array.isArray(event.message.attachments) ? event.message.attachments : [];
+              const normalizedDraft = (latestRun.proposed_reply ?? "").trim();
+              const normalizedHuman = (humanReply ?? "").trim();
+
+              const { data: runSnapshot } = await db
+                .from("instagram_ai_runs")
+                .select("human_final_reply,human_final_media")
+                .eq("id", latestRun.id)
+                .single();
+
+              const currentHumanReply = (runSnapshot?.human_final_reply ?? "").trim();
+              const nextHumanReply = normalizedHuman || currentHumanReply || null;
+              const currentMedia = Array.isArray(runSnapshot?.human_final_media)
+                ? runSnapshot.human_final_media
+                : [];
+              const nextMedia = humanAttachments.length
+                ? [...currentMedia, ...humanAttachments]
+                : currentMedia;
+
+              const comparisonStatus =
+                nextHumanReply && normalizedDraft && nextHumanReply === normalizedDraft && nextMedia.length === 0
+                  ? "approved"
+                  : "edited";
+
+              await db
+                .from("instagram_ai_runs")
+                .update({
+                  human_final_reply: nextHumanReply,
+                  human_final_media: nextMedia,
+                  status: comparisonStatus,
+                  updated_at: now
+                })
+                .eq("id", latestRun.id);
+            }
+          }
         }
         const { error: updateError } = await db.from("instagram_conversations").update(update).eq("id", conversation.id);
         if (updateError) throw updateError;
 
-        const humanTakeoverActive =
-          conversation.mode === "human_active" &&
-          Boolean(conversation.last_outbound_at);
-
-        if (inbound && !duplicateMessage && insertedMessage?.id && openaiKey && !humanTakeoverActive) {
+        if (inbound && !duplicateMessage && insertedMessage?.id && openaiKey) {
           const shadow = await generateShadowDraft({
             db,
             conversationId: conversation.id,
