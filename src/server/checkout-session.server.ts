@@ -167,7 +167,7 @@ export async function createGuidedCheckoutSession(request: Request, input: Check
 
   const { data: batch, error: batchError } = await supabase
     .from('batches')
-    .select('id,status,orders_open_at,orders_close_at')
+    .select('id,status,orders_open_at,orders_close_at,delivery_date')
     .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle()
@@ -180,6 +180,9 @@ export async function createGuidedCheckoutSession(request: Request, input: Check
     || (batch.orders_open_at && (!Number.isFinite(opens) || now < opens))
     || (batch.orders_close_at && (!Number.isFinite(closes) || now >= closes))) {
     throw new PublicApiError('El batch actual no está aceptando pedidos.', 409)
+  }
+  if (!batch.delivery_date || !Number.isFinite(Date.parse(batch.delivery_date))) {
+    throw new PublicApiError('El batch todavía no tiene una fecha de delivery confirmada.', 409)
   }
 
   const orderCode = await nextOrderCode()
