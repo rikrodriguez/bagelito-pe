@@ -3,7 +3,7 @@ import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import './guided-commerce.css'
 
 const menu = getVerifiedDisplayMenu()
-const combos = menu.historicalPublishedCombos
+const combos = [{ id: 'two-bagel-schmear', name: '2 Bagels + Schmear', bagels: 2, schmear_count: 1, price: null }] as const
 
 type Category = 'packs' | 'combos' | 'schmears'
 type PackFormat = 'grande' | 'mini'
@@ -59,7 +59,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
-  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;configured:boolean;bridgeReady:boolean;visualQaAllowed:boolean;mode:string}|null>(null)
+  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;configured:boolean;bridgeReady:boolean;webhookReady:boolean;visualQaAllowed:boolean;mode:string}|null>(null)
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
@@ -71,19 +71,20 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     fetch('/api/payments/culqi/config', { cache: 'no-store' })
       .then(async (response) => {
         if (!response.ok) throw new Error('payment-config-unavailable')
-        return await response.json() as { enabled?: boolean; configured?: boolean; bridgeReady?: boolean; visualQaAllowed?: boolean; mode?: string }
+        return await response.json() as { enabled?: boolean; configured?: boolean; bridgeReady?: boolean; webhookReady?: boolean; visualQaAllowed?: boolean; mode?: string }
       })
       .then((config) => {
         if (active) setPaymentConfig({
           enabled: config.enabled === true,
           configured: config.configured === true,
           bridgeReady: config.bridgeReady === true,
+          webhookReady: config.webhookReady === true,
           visualQaAllowed: config.visualQaAllowed === true,
           mode: typeof config.mode === 'string' ? config.mode : 'disabled',
         })
       })
       .catch(() => {
-        if (active) setPaymentConfig({ enabled: false, configured: false, bridgeReady: false, visualQaAllowed: false, mode: 'disabled' })
+        if (active) setPaymentConfig({ enabled: false, configured: false, bridgeReady: false, webhookReady: false, visualQaAllowed: false, mode: 'disabled' })
       })
     return () => { active = false }
   }, [])
@@ -443,10 +444,12 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         <small>PAGO SEGURO</small>
         <b>Culqi</b>
         <span>{paymentConfig?.enabled
-          ? 'Bridge Culqi disponible. Falta conectar el checkout del navegador.'
-          : paymentConfig?.configured
-            ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
-            : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
+          ? 'Culqi está listo para iniciar el checkout seguro.'
+          : paymentConfig?.configured && paymentConfig?.bridgeReady && !paymentConfig?.webhookReady
+            ? 'El checkout permanece cerrado hasta terminar webhook y reconciliación.'
+            : paymentConfig?.configured
+              ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
+              : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
       </div>
       <button
         className="guided-pay-hotspot"
@@ -478,8 +481,12 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </div>}
 
     {scene === 'handoff' && <div className="handoff-actions">
-      <div><small>LISTO PARA TI</small><b>Tu Bagelito está listo.</b><span>Toca para recibir la bolsa.</span></div>
-      <button className="handoff-action" onClick={() => setScene('goodbye')}>Recibir pedido <b>→</b></button>
+      <div>
+        <small>{qaMode ? 'LISTO PARA TI' : 'PEDIDO CONFIRMADO'}</small>
+        <b>{qaMode ? 'Tu Bagelito está listo.' : 'Ya recibimos tu pedido.'}</b>
+        <span>{qaMode ? 'Toca para recibir la bolsa.' : 'Lo prepararemos para el delivery del batch confirmado.'}</span>
+      </div>
+      <button className="handoff-action" onClick={() => setScene('goodbye')}>{qaMode ? 'Recibir pedido' : 'Continuar'} <b>→</b></button>
     </div>}
 
     {scene === 'goodbye' && <div className="goodbye-actions">
