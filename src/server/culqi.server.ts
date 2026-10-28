@@ -38,11 +38,17 @@ export type CulqiChargeResult =
   | { charge: CulqiCharge & { id: string }; requires3DS: false }
   | { response: CulqiCharge; requires3DS: true }
 
-function config() {
+function providerConfig() {
   const cfg = getPrivatePaymentConfig()
-  if (!cfg.enabled || !cfg.bridgeReady || !cfg.secretKey) {
-    throw new Error('Culqi bridge is not enabled.')
+  if (!cfg.configured || !cfg.bridgeReady || !cfg.secretKey) {
+    throw new Error('Culqi provider access is not configured.')
   }
+  return cfg
+}
+
+function intakeConfig() {
+  const cfg = providerConfig()
+  if (!cfg.enabled) throw new Error('Culqi payment intake is not enabled.')
   return cfg
 }
 
@@ -87,7 +93,7 @@ export async function createCulqiCharge(input: {
   deviceId?: string
   authentication3DS?: CulqiAuthentication3DS
 }): Promise<CulqiChargeResult> {
-  const cfg = config()
+  const cfg = intakeConfig()
   if (cfg.mode !== 'sandbox' && cfg.mode !== 'live') throw new Error('Culqi mode unavailable.')
   if (!validSource(input.sourceId, cfg.mode)) throw new Error('Invalid Culqi source.')
   if (input.sourceId.startsWith('ype_') && input.authentication3DS) {
@@ -180,7 +186,7 @@ export async function createCulqiCharge(input: {
 }
 
 export async function fetchCulqiCharge(chargeId: string) {
-  const cfg = config()
+  const cfg = providerConfig()
   if (cfg.mode !== 'sandbox' && cfg.mode !== 'live') throw new Error('Culqi mode unavailable.')
 
   const env = cfg.mode === 'sandbox' ? 'test' : 'live'
@@ -225,7 +231,7 @@ export type CulqiEvent = {
 }
 
 export async function fetchCulqiEvent(eventId: string) {
-  const cfg = config()
+  const cfg = providerConfig()
   if (cfg.mode !== 'sandbox' && cfg.mode !== 'live') throw new Error('Culqi mode unavailable.')
 
   const env = cfg.mode === 'sandbox' ? 'test' : 'live'
