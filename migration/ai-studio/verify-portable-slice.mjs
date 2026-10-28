@@ -13,6 +13,7 @@ try {
     resolve(here, 'tests/read-only-catalog.test.mjs'),
     resolve(here, 'tests/batch-availability.test.mjs'),
     resolve(here, 'tests/approved-shop-contract.test.mjs'),
+    resolve(here, 'tests/batch-read.test.mjs'),
   ], { stdio: 'inherit', cwd: repoRoot })
   console.log('Portable slice checks passed. TanStack/AI Studio preview and GHL integration NOT tested.')
 } finally {
