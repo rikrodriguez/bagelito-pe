@@ -38,7 +38,7 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
           const supabase = createSupabaseAdminClient()
           const { data, error } = await supabase
             .from('orders')
-            .select('id,order_code,payment_status,payment_expires_at,status')
+            .select('id,order_code,payment_status,payment_expires_at,status,total_amount')
             .eq('order_code', orderCode)
             .eq('checkout_session_id', checkoutSessionId)
             .abortSignal(AbortSignal.timeout(2000))
@@ -72,6 +72,7 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
             expiresAt: data.payment_expires_at ? String(data.payment_expires_at) : null,
             paymentStatus: payment.paymentStatus,
             orderStatus: payment.orderStatus,
+            amountPen: Number.isFinite(Number(data.total_amount)) ? Number(data.total_amount) : null,
             reconciliationRequired: payment.reconciliationRequired,
           }, { headers })
         } catch (error) {
