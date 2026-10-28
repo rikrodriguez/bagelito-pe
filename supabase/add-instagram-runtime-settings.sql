@@ -4,6 +4,7 @@ create table if not exists public.instagram_runtime_settings (
   mode text not null default 'shadow'
     check (mode in ('shadow','test_auto','auto')),
   test_recipient_igsid text,
+  test_recipient_igsids text[] not null default '{}'::text[],
   min_confidence numeric not null default 0.92
     check (min_confidence >= 0 and min_confidence <= 1),
   auto_intents text[] not null default array[
