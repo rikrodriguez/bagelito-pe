@@ -3,7 +3,6 @@ import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@reac
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
-import { GuidedCommerce } from './GuidedCommerce'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -44,8 +43,6 @@ const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 
 export function PlayableStore() {
   const [ready, setReady] = useState(false)
-  const [guidedOpen, setGuidedOpen] = useState(false)
-  const [guidedDismissed, setGuidedDismissed] = useState(false)
   const [name, setName] = useState<string | null>(null)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
   const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>('guided')
@@ -99,11 +96,6 @@ export function PlayableStore() {
     }
     return best<2.45?winner:null
   },[player])
-
-  useEffect(() => {
-    if(nearest===null) setGuidedDismissed(false)
-    if(!guidedOpen&&!guidedDismissed&&!category&&(nearest==='totem'||nearest==='vitrina')) setGuidedOpen(true)
-  },[nearest,guidedOpen,guidedDismissed,category])
 
   const guideNode:GuideNode|null = category
     ? step==='bagels' ? 'bagels'
@@ -168,31 +160,6 @@ export function PlayableStore() {
       <LookSurface look={look} disabled={Boolean(guideNode)}/>
     </>}
 
-    {guideNode&&<GuidedCommerceScene
-      introGuide={introGuide}
-      category={category}
-      step={step}
-      packFormat={packFormat}
-      packQty={packQty}
-      selectedCombo={selectedCombo}
-      schmearSize={schmearSize}
-      bagels={bagels}
-      schmears={schmears}
-      bagelTotal={bagelTotal}
-      bagelTarget={bagelTarget}
-      schmearTotal={schmearTotal}
-      schmearTarget={schmearTarget}
-      onCategory={chooseCategory}
-      onPack={(format,q)=>{setPackFormat(format);setPackQty(q);setStep('bagels')}}
-      onCombo={(id)=>{setComboId(id);setStep('bagels')}}
-      onSchmearSize={(g)=>{setSchmearSize(g);setStep('schmears')}}
-      onBagel={addBagel}
-      onSchmear={addSchmear}
-      onNextBagels={()=>bagelTotal===bagelTarget&&setStep('schmears')}
-      onNextSchmears={()=>{if(category==='packs'||schmearTotal===schmearTarget)setStep('cashier')}}
-      onBack={()=>{if(category){reset()}else setIntroGuide(null)}}
-    />}
-
     {experienceMode==='explore'&&<header className="playable-top interactive-ui">
       <button className="brand-pill" onClick={()=>{reset();setExperienceMode('guided')}}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
       <div className="status-pill"><small>EXPLORA</small><b>BAGELITO STORE</b></div>
@@ -202,14 +169,12 @@ export function PlayableStore() {
 
     {experienceMode==='explore'&&step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
-      <button type="button" className="primary" onClick={()=>{setGuidedDismissed(false);setGuidedOpen(true)}}>Empezar pedido</button>
+      <button type="button" className="primary" onClick={()=>{reset();setExperienceMode('guided')}}>Empezar pedido</button>
       <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
     </div>}
 
-    {guidedOpen&&<GuidedCommerce customerName={name} onExit={()=>{setGuidedOpen(false);setGuidedDismissed(true)}}/>} 
-
-    <MobilePad move={move} setMove={setMove}/>
-    <div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>
+    {experienceMode==='explore'&&<MobilePad move={move} setMove={setMove}/>}
+    {experienceMode==='explore'&&<div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>}
 </main>
 }
 
