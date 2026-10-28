@@ -144,7 +144,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
 
   useEffect(() => {
-    if (scene !== 'cashier') return
+    if (scene !== 'cashier' || paymentConfig === null) return
+
+    if (qaMode) {
+      setQuoteLoading(false)
+      setCheckoutQuote({
+        status: 'review_required',
+        checkoutAllowed: false,
+        amountPen: null,
+        reasons: ['Preview visual · el precio final se valida en servidor antes de cobrar.'],
+      })
+      return
+    }
+
     let active = true
     setQuoteLoading(true)
     setCheckoutQuote(null)
@@ -179,7 +191,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       })
       .finally(() => { if (active) setQuoteLoading(false) })
     return () => { active = false }
-  }, [scene, category, packFormat, packQty, packMix, bagelCounts, schmearCounts, schmearSize, comboId, bagelMode])
+  }, [scene, category, packFormat, packQty, packMix, bagelCounts, schmearCounts, schmearSize, comboId, bagelMode, paymentConfig, qaMode])
 
   const selectedCombo = combos.find((c) => c.id === comboId) ?? null
   const bagelTotal = Object.values(bagelCounts).reduce((sum, n) => sum + n, 0)
