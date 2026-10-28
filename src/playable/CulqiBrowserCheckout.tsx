@@ -175,7 +175,7 @@ export function CulqiBrowserCheckout(props: {
   customer: CheckoutCustomer
   order: GuidedOrderPayload
   subtotalPen: number
-  onPaid: (orderCode: string) => void
+  onPaid: (result: { orderCode: string; amountPen: number | null }) => void
   onReview: (message: string) => void
 }) {
   const { config, customer, order, subtotalPen, onPaid, onReview } = props
@@ -260,6 +260,7 @@ export function CulqiBrowserCheckout(props: {
       const { response, result } = await jsonFetch<{
         ok?: boolean
         paymentStatus?: string
+        amountPen?: number | null
         reconciliationRequired?: boolean
       }>('/api/payments/culqi/status', {
         method: 'POST',
@@ -280,7 +281,7 @@ export function CulqiBrowserCheckout(props: {
         busyRef.current = false
         paymentAttemptStartedRef.current = false
         setStatus('ready')
-        onPaid(session.orderCode)
+        onPaid({ orderCode: session.orderCode, amountPen: session.amountMinor / 100 })
         return
       }
       if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
@@ -368,6 +369,7 @@ export function CulqiBrowserCheckout(props: {
       const { response, result } = await jsonFetch<{
         ok?: boolean
         paymentStatus?: string
+        amountPen?: number | null
         reconciliationRequired?: boolean
       }>('/api/payments/culqi/status', {
         method: 'POST',
@@ -390,7 +392,10 @@ export function CulqiBrowserCheckout(props: {
         paymentAttemptStartedRef.current = false
         setStatus('ready')
         setMessage('')
-        onPaid(recovered.orderCode)
+        onPaid({
+          orderCode: recovered.orderCode,
+          amountPen: typeof result.amountPen === 'number' ? result.amountPen : null,
+        })
         return
       }
       if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
