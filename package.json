@@ -7,7 +7,8 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "vite build && tsc --noEmit"
+    "typecheck": "vite build && tsc --noEmit",
+    "qa:guided": "node scripts/qa-guided.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
