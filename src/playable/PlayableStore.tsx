@@ -67,11 +67,6 @@ export function PlayableStore() {
   }, [])
 
   useEffect(() => {
-    if(nearest===null) setGuidedDismissed(false)
-    if(!guidedOpen&&!guidedDismissed&&!category&&(nearest==='totem'||nearest==='vitrina')) setGuidedOpen(true)
-  },[nearest,guidedOpen,guidedDismissed,category])
-
-  useEffect(() => {
     const map:Record<string,keyof Move> = {
       KeyW:'forward',ArrowUp:'forward',KeyS:'backward',ArrowDown:'backward',
       KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right',
@@ -103,6 +98,11 @@ export function PlayableStore() {
     }
     return best<2.45?winner:null
   },[player])
+
+  useEffect(() => {
+    if(nearest===null) setGuidedDismissed(false)
+    if(!guidedOpen&&!guidedDismissed&&!category&&(nearest==='totem'||nearest==='vitrina')) setGuidedOpen(true)
+  },[nearest,guidedOpen,guidedDismissed,category])
 
   const guideNode:GuideNode|null = category
     ? step==='bagels' ? 'bagels'
