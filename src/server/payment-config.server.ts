@@ -7,6 +7,7 @@ export type PublicPaymentConfig = {
   configured: boolean
   bridgeReady: boolean
   webhookReady: boolean
+  clientReady: boolean
   visualQaAllowed: boolean
   provider: 'culqi' | 'manual'
   publicKey: string
@@ -62,6 +63,7 @@ function buildPaymentConfig() {
   // until the Next.js security/reconciliation layer has been ported and tested.
   const bridgeReady = process.env.CULQI_TANSTACK_BRIDGE_READY === 'true'
   const webhookReady = process.env.CULQI_TANSTACK_WEBHOOK_READY === 'true'
+  const clientReady = process.env.CULQI_TANSTACK_CLIENT_READY === 'true'
   const visualQaAllowed = process.env.BAGELITO_VISUAL_QA_ENABLED === 'true'
     && process.env.VERCEL_ENV !== 'production'
     && Boolean(host)
@@ -70,10 +72,11 @@ function buildPaymentConfig() {
   return {
     mode: requestedMode,
     currency: 'PEN' as const,
-    enabled: configured && bridgeReady && webhookReady,
+    enabled: configured && bridgeReady && webhookReady && clientReady,
     configured,
     bridgeReady,
     webhookReady,
+    clientReady,
     visualQaAllowed,
     provider,
     publicKey: configured ? publicKey : '',
