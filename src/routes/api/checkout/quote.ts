@@ -1,13 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { quoteGuidedOrder } from '../../../server/checkout-quote.server'
 import { readBoundedJsonObject } from '../../../server/http-json.server'
-import { PublicApiError } from '../../../server/public-api-security.server'
+import { enforcePublicApiSecurity, PublicApiError } from '../../../server/public-api-security.server'
 
 export const Route = createFileRoute('/api/checkout/quote')({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
+          await enforcePublicApiSecurity({ request, scope: 'quotes' })
           const payload = await readBoundedJsonObject(request, 8 * 1024)
           const quote = await quoteGuidedOrder(payload)
           return Response.json(quote, {
