@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { quoteGuidedOrder } from '../../../server/checkout-quote.server'
 import { readBoundedJsonObject } from '../../../server/http-json.server'
+import { PublicApiError } from '../../../server/public-api-security.server'
 
 export const Route = createFileRoute('/api/checkout/quote')({
   server: {
@@ -13,14 +14,15 @@ export const Route = createFileRoute('/api/checkout/quote')({
             status: quote.status === 'invalid' ? 400 : quote.status === 'unavailable' ? 503 : 200,
             headers: { 'Cache-Control': 'no-store, max-age=0' },
           })
-        } catch {
+        } catch (error) {
+          const status = error instanceof PublicApiError ? error.status : 400
           return Response.json({
             status: 'invalid',
             checkoutAllowed: false,
             amountPen: null,
-            reasons: ['No se pudo validar el pedido.'],
+            reasons: [error instanceof PublicApiError ? error.message : 'No se pudo validar el pedido.'],
             batchAccepting: false,
-          }, { status: 400, headers: { 'Cache-Control': 'no-store, max-age=0' } })
+          }, { status, headers: { 'Cache-Control': 'no-store, max-age=0' } })
         }
       },
     },
