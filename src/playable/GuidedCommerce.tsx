@@ -67,6 +67,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
   const [paidOrderCode, setPaidOrderCode] = useState<string | null>(null)
+  const [paidAmountPen, setPaidAmountPen] = useState<number | null>(null)
   const [paymentReviewMessage, setPaymentReviewMessage] = useState('')
   const [checkoutCustomer, setCheckoutCustomer] = useState<CheckoutCustomer>({
     customerName: customerName ?? '',
@@ -212,7 +213,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
   const sceneImage = useMemo(() => {
     const base = '/master-scenes-clean/'
-    if (scene === 'entrance') return base + 'entrance.webp'
+    if (scene === 'entrance') return '/store-entry-door.webp'
     if (scene === 'selector') return base + 'selector.webp'
     if (scene === 'pack-size' || scene === 'pack-qty') return base + 'packs.webp'
     if (scene === 'combos') return base + 'combos.webp'
@@ -226,6 +227,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     if (scene === 'wallet') return base + 'wallet.webp'
     if (scene === 'handoff') return base + 'bag-handoff.webp'
     if (scene === 'returning') return base + 'inside.webp'
+    if (scene === 'goodbye') return '/store-entry-door.webp'
     return base + 'goodbye.webp'
   }, [scene])
 
@@ -581,8 +583,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
             bagelMode,
           }}
           onReview={setPaymentReviewMessage}
-          onPaid={(orderCode) => {
+          onPaid={({ orderCode, amountPen }) => {
             setPaidOrderCode(orderCode)
+            setPaidAmountPen(amountPen)
             setPaymentReviewMessage('')
             setScene('receipt')
           }}
@@ -595,26 +598,47 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </div>}
 
     {scene === 'receipt' && <>
-      {paidOrderCode && <div className="live-receipt-code"><small>PEDIDO CONFIRMADO</small><b>{paidOrderCode}</b></div>}
+      <div className={'live-receipt-sheet' + (receiptPulled ? ' pulled' : '')}>
+        <div className="live-receipt-brand">
+          <small>{qaMode ? 'PREVIEW VISUAL · SIN COBRO' : 'BAGELITO'}</small>
+          <b>{paidOrderCode ?? (qaMode ? 'QA PREVIEW' : 'PEDIDO CONFIRMADO')}</b>
+        </div>
+        <div className="live-receipt-lines">
+          {selectedBagelSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+          {selectedSchmearSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+        </div>
+        <div className="live-receipt-total">
+          <span>TOTAL</span>
+          <strong>{paidAmountPen != null ? 'S/ ' + paidAmountPen.toFixed(2) : qaMode ? 'Validado al pagar' : 'Confirmado'}</strong>
+        </div>
+        <p>{qaMode ? 'Este recibo es solo una vista de QA.' : 'Gracias por tu compra.'}</p>
+      </div>
       <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
-      onPointerDown={(e) => { receiptDrag.current.startY = e.clientY; receiptDrag.current.offset = 0 }}
-      onPointerMove={(e) => {
-        if (!receiptDrag.current.startY) return
-        receiptDrag.current.offset = Math.max(0, e.clientY - receiptDrag.current.startY)
-        if (receiptDrag.current.offset > 80) pullReceipt()
-      }}
-      onPointerUp={() => { if (!receiptPulled) pullReceipt(); receiptDrag.current.startY = 0 }}
-    >
-      <span>Jala tu recibo ↓</span>
-    </div>
+        onPointerDown={(e) => { receiptDrag.current.startY = e.clientY; receiptDrag.current.offset = 0 }}
+        onPointerMove={(e) => {
+          if (!receiptDrag.current.startY) return
+          receiptDrag.current.offset = Math.max(0, e.clientY - receiptDrag.current.startY)
+          if (receiptDrag.current.offset > 80) pullReceipt()
+        }}
+        onPointerUp={() => { if (!receiptPulled) pullReceipt(); receiptDrag.current.startY = 0 }}
+      >
+        <span>Jala tu recibo ↓</span>
+      </div>
     </>}
 
-    {scene === 'wallet' && <div className="wallet-actions">
-      <div className="wallet-copy"><small>BAGELITO CLUB</small><b>{qaMode ? 'Tu tarjeta está lista' : 'Tu tarjeta Bagelito Club'}</b><span>{qaMode ? 'Guárdala o continúa sin agregarla.' : 'La integración con Wallet todavía no está habilitada.'}</span></div>
-      <button className="wallet-primary" disabled={!qaMode} onClick={() => { if (qaMode) saveWallet() }}>{walletSaved ? 'Guardada ✓' : qaMode ? ' Add to Apple Wallet' : 'Apple Wallet · en integración'}</button>
-      <button className="wallet-secondary" disabled={!qaMode} onClick={() => { if (qaMode) saveWallet() }}>{qaMode ? 'G Add to Google Wallet' : 'Google Wallet · en integración'}</button>
-      <button className="wallet-skip" onClick={() => setScene('handoff')}>Ahora no</button>
-    </div>}
+    {scene === 'wallet' && <>
+      <div className="wallet-screen-live">
+        <small>{qaMode ? 'PREVIEW VISUAL' : 'BAGELITO CLUB'}</small>
+        <b>Bagelito Club</b>
+        <span>{qaMode ? 'Sin puntos ni saldo ficticio · no genera un pass real.' : 'Tu tarjeta digital aparecerá aquí cuando Wallet esté habilitado.'}</span>
+      </div>
+      <div className="wallet-actions">
+        <div className="wallet-copy"><small>BAGELITO CLUB</small><b>{qaMode ? 'Así se verá tu tarjeta' : 'Tu tarjeta Bagelito Club'}</b><span>{qaMode ? 'Preview de interacción. No se guarda ningún pass.' : 'La integración con Wallet todavía no está habilitada.'}</span></div>
+        <button className="wallet-primary" disabled={!qaMode} onClick={() => { if (qaMode) saveWallet() }}>{walletSaved ? 'Preview completado ✓' : qaMode ? 'Preview Apple Wallet' : 'Apple Wallet · en integración'}</button>
+        <button className="wallet-secondary" disabled={!qaMode} onClick={() => { if (qaMode) saveWallet() }}>{qaMode ? 'Preview Google Wallet' : 'Google Wallet · en integración'}</button>
+        <button className="wallet-skip" onClick={() => setScene('handoff')}>Ahora no</button>
+      </div>
+    </>}
 
     {scene === 'handoff' && <div className="handoff-actions">
       <div>
@@ -625,14 +649,21 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <button className="handoff-action" onClick={() => setScene('goodbye')}>{qaMode ? 'Recibir pedido' : 'Continuar'} <b>→</b></button>
     </div>}
 
-    {scene === 'goodbye' && <div className="goodbye-actions">
-      <button onClick={onExit}>Salir de Bagelito</button>
-      <button onClick={() => setScene('returning')}>Seguir explorando</button>
+    {scene === 'goodbye' && <div className="goodbye-panel">
+      <div>
+        <small>BAGELITO</small>
+        <h2>Nos vemos pronto.</h2>
+        <p>{qaMode ? 'Fin del recorrido visual de QA.' : 'Tu pedido quedó registrado. Te avisaremos según el batch confirmado.'}</p>
+      </div>
+      <div className="goodbye-actions">
+        <button onClick={onExit}>Salir de Bagelito</button>
+        <button onClick={() => setScene('returning')}>Seguir explorando</button>
+      </div>
     </div>}
 
     {scene === 'returning' && <div className="guided-returning-action">
       <div><small>CLIENTE RECURRENTE</small><h2>Ya conoces el camino.</h2><p>El local sigue vivo alrededor de ti mientras vuelves a pedir.</p></div>
-      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); setWalletSaved(false) }}>Volver al tótem <b>→</b></button>
+      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); setWalletSaved(false); setPaidOrderCode(null); setPaidAmountPen(null) }}>Volver al tótem <b>→</b></button>
     </div>}
   </div>
 }
