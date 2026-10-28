@@ -59,7 +59,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
-  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;configured:boolean;bridgeReady:boolean;webhookReady:boolean;visualQaAllowed:boolean;mode:string}|null>(null)
+  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;configured:boolean;bridgeReady:boolean;webhookReady:boolean;clientReady:boolean;visualQaAllowed:boolean;mode:string}|null>(null)
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
@@ -71,7 +71,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     fetch('/api/payments/culqi/config', { cache: 'no-store' })
       .then(async (response) => {
         if (!response.ok) throw new Error('payment-config-unavailable')
-        return await response.json() as { enabled?: boolean; configured?: boolean; bridgeReady?: boolean; webhookReady?: boolean; visualQaAllowed?: boolean; mode?: string }
+        return await response.json() as { enabled?: boolean; configured?: boolean; bridgeReady?: boolean; webhookReady?: boolean; clientReady?: boolean; visualQaAllowed?: boolean; mode?: string }
       })
       .then((config) => {
         if (active) setPaymentConfig({
@@ -79,12 +79,13 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           configured: config.configured === true,
           bridgeReady: config.bridgeReady === true,
           webhookReady: config.webhookReady === true,
+          clientReady: config.clientReady === true,
           visualQaAllowed: config.visualQaAllowed === true,
           mode: typeof config.mode === 'string' ? config.mode : 'disabled',
         })
       })
       .catch(() => {
-        if (active) setPaymentConfig({ enabled: false, configured: false, bridgeReady: false, webhookReady: false, visualQaAllowed: false, mode: 'disabled' })
+        if (active) setPaymentConfig({ enabled: false, configured: false, bridgeReady: false, webhookReady: false, clientReady: false, visualQaAllowed: false, mode: 'disabled' })
       })
     return () => { active = false }
   }, [])
@@ -131,6 +132,12 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const selectedCombo = combos.find((c) => c.id === comboId) ?? null
   const bagelTotal = Object.values(bagelCounts).reduce((sum, n) => sum + n, 0)
   const schmearTotal = Object.values(schmearCounts).reduce((sum, n) => sum + n, 0)
+  const selectedBagelSummary = menu.bagels
+    .filter((item) => (bagelCounts[item.id] ?? 0) > 0)
+    .map((item) => ({ name: item.name, quantity: bagelCounts[item.id] ?? 0 }))
+  const selectedSchmearSummary = menu.schmears
+    .filter((item) => (schmearCounts[item.id] ?? 0) > 0)
+    .map((item) => ({ name: item.name, quantity: schmearCounts[item.id] ?? 0 }))
 
   const bagelTarget = bagelMode === 'upsell8'
     ? 8
@@ -297,7 +304,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
   const showProgress = !['entrance', 'goodbye', 'returning'].includes(scene)
 
-  return <div className="guided-commerce" data-scene={scene}>
+  return <div className="guided-commerce" data-scene={scene} data-qa={qaMode ? 'true' : 'false'}>
     <div className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />
     {scene !== 'bagels' && scene !== 'schmears' && <img className="guided-scene-image" src={sceneImage} alt="" />}
     <div className="guided-scene-vignette" />
@@ -361,8 +368,21 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <p>En la siguiente escena eliges los sabores directamente de la vitrina.</p>
     </div>}
 
-    {scene === 'combos' && <div className="guided-combo-overlay">
-      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={combo.name} />)}
+    {scene === 'combos' && <div className="guided-combo-overlay approved-combo-overlay">
+      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={combo.name}>
+        <span className="approved-combo-art">
+          <img src="/images/bagel-everything.webp" alt="" />
+          <img src="/images/bagel-sesame.webp" alt="" />
+          <i className="approved-schmear" />
+        </span>
+        <span className="approved-combo-copy">
+          <small>COMBO APROBADO</small>
+          <b>{combo.name}</b>
+          <em>Elige 2 bagels + 1 schmear</em>
+          <strong>Precio validado en caja</strong>
+        </span>
+        <span className="approved-combo-arrow">→</span>
+      </button>)}
     </div>}
 
     {scene === 'schmear-size' && <section className="guided-floating-panel schmear-size-panel">
@@ -427,15 +447,24 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     {scene === 'cashier' && <div className="guided-cashier-action">
       <div className="guided-cashier-copy">
         <small>CAJA BAGELITO</small>
-        <b>{quoteLoading ? 'Validando tu pedido…' : checkoutQuote?.checkoutAllowed ? 'Tu pedido está listo.' : 'Este pedido necesita revisión.'}</b>
-        {checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
-        {!quoteLoading && checkoutQuote?.reasons?.length ? <span>{checkoutQuote.reasons[0]}</span> : <span>Precio e inventario se validan en el servidor.</span>}
+        <h2>Tu pedido</h2>
+        <div className="guided-cashier-lines">
+          {selectedBagelSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+          {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{category === 'schmears' ? ' · ' + schmearSize + ' g' : ''}</b></span>)}
+        </div>
+        <div className="guided-cashier-quote">
+          <span>{quoteLoading ? 'Validando precio e inventario…' : checkoutQuote?.checkoutAllowed ? 'Subtotal verificado' : 'Revisión requerida'}</span>
+          {checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
+        </div>
+        {!quoteLoading && checkoutQuote?.reasons?.length
+          ? <p>{checkoutQuote.reasons[0]}</p>
+          : <p>El delivery se calcula con tu dirección antes de crear la reserva.</p>}
       </div>
       <button
         disabled={quoteLoading || (!checkoutQuote?.checkoutAllowed && !qaMode)}
         onClick={() => { if (checkoutQuote?.checkoutAllowed || qaMode) setScene('pay') }}
       >
-        {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Revisar pedido y pagar' : 'Checkout bloqueado'} <b>→</b>
+        {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Continuar al checkout' : 'Checkout bloqueado'} <b>→</b>
       </button>
     </div>}
 
@@ -445,11 +474,13 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         <b>Culqi</b>
         <span>{paymentConfig?.enabled
           ? 'Culqi está listo para iniciar el checkout seguro.'
-          : paymentConfig?.configured && paymentConfig?.bridgeReady && !paymentConfig?.webhookReady
-            ? 'El checkout permanece cerrado hasta terminar webhook y reconciliación.'
-            : paymentConfig?.configured
-              ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
-              : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
+          : paymentConfig?.configured && paymentConfig?.bridgeReady && paymentConfig?.webhookReady && !paymentConfig?.clientReady
+            ? 'Falta conectar el checkout Culqi del navegador y 3D Secure.'
+            : paymentConfig?.configured && paymentConfig?.bridgeReady && !paymentConfig?.webhookReady
+              ? 'El checkout permanece cerrado hasta terminar webhook y reconciliación.'
+              : paymentConfig?.configured
+                ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
+                : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
       </div>
       <button
         className="guided-pay-hotspot"
