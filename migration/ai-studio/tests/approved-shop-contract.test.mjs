@@ -20,8 +20,9 @@ test('regular mix 6 costs S/60 as published (no premium bagels)', () => {
   const q = shop.quotePublishedPack({ format: 'grande', quantity: 6, mix: 'mixed', selection: mixed(6) })
   assert.equal(q.status, 'ready')
   assert.equal(q.publishedBasePen, 60)
-  assert.equal(shop.canProceedToCheckout(q, false), false)
-  assert.equal(shop.canProceedToCheckout(q, true), true)
+  assert.equal(shop.canProceedToCheckout(q, { liveInventoryAvailable: false, currentOfferApproved: true }), false)
+  assert.equal(shop.canProceedToCheckout(q, { liveInventoryAvailable: true, currentOfferApproved: false }), false)
+  assert.equal(shop.canProceedToCheckout(q, { liveInventoryAvailable: true, currentOfferApproved: true }), true)
 })
 test('single-flavor 12 costs S/100, no invented minimum flavor variety for mixed', () => {
   const q = shop.quotePublishedPack({ format: 'grande', quantity: 12, mix: 'single', selection: plain(12) })
