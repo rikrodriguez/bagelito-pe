@@ -8,7 +8,8 @@
     "outDir": ".migration-test-dist",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   },
   "include": [
     "portable-src/**/*.ts"
