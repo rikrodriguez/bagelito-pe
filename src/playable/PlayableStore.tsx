@@ -328,7 +328,7 @@ function Totem(){
     <mesh position={[0,.65,0]}><cylinderGeometry args={[.07,.09,1.2,14]}/><meshStandardMaterial color="#b5c0c7" metalness={.7}/></mesh>
     <RoundedBox castShadow position={[0,1.72,0]} args={[1.18,1.92,.18]} radius={.12}><meshStandardMaterial color="#f8f8f6"/></RoundedBox>
     <mesh position={[0,1.72,.105]}><planeGeometry args={[.96,1.62]}/><meshStandardMaterial color={BLUE} emissive={BLUE} emissiveIntensity={.09}/></mesh>
-    <Html transform position={[0,1.72,.12]} distanceFactor={1.55} className="totem-ui"><div><img src="/images/bagelito-wordmark.svg"/><b>¿Qué te provoca hoy?</b><span>Packs · Combos · Schmears</span><small>ACÉRCATE</small></div></Html>
+    <Html transform position={[0,1.72,.12]} distanceFactor={1.55} className="totem-ui"><div><img src="/images/bagelito-wordmark.svg"/><b>¿Qué te provoca hoy?</b><span>Packs · Combos · Schmears</span><small>TOCA PARA PEDIR</small></div></Html>
   </group>
 }
 
@@ -397,16 +397,30 @@ function Bagel3D({variant,color,position,active,selected,onClick}:{variant:strin
 }
 
 function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,number>;onSchmear:(id:string)=>void}){
-  const photo=useTexture('/images/schmear-vitrina-photo.webp')
-  photo.colorSpace=THREE.SRGBColorSpace
-  const positions:V3[]=[[-1.2,1.52,.965],[0,1.52,.965],[1.2,1.52,.965],[-.6,1.0,.965],[.6,1.0,.965]]
+  const source=useTexture('/images/store-reference-approved.webp')
+  const photo=useMemo(()=>{
+    const t=source.clone()
+    t.needsUpdate=true
+    t.wrapS=THREE.ClampToEdgeWrapping
+    t.wrapT=THREE.ClampToEdgeWrapping
+    t.repeat.set(676/1536,390/1024)
+    t.offset.set(860/1536,99/1024)
+    t.colorSpace=THREE.SRGBColorSpace
+    return t
+  },[source])
+  const positions:V3[]=[[-1.22,1.52,.965],[0,1.52,.965],[1.22,1.52,.965],[-.62,1.0,.965],[.62,1.0,.965]]
   return <group position={[4.25,0,-.05]}>
     <RoundedBox castShadow position={[0,.34,0]} args={[4.25,.68,1.92]} radius={.05}><meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/></RoundedBox>
     <mesh position={[0,1.28,.86]}>
-      <planeGeometry args={[4.02,1.78]}/>
+      <planeGeometry args={[4.02,2.0]}/>
       <meshBasicMaterial map={photo} toneMapped={false}/>
     </mesh>
     <mesh position={[0,1.28,.92]}><boxGeometry args={[4.05,1.78,.035]}/><meshPhysicalMaterial color="#eefaff" transmission={.96} transparent opacity={.11} roughness={.035}/></mesh>
+    <mesh position={[1.22,.93,.965]}>
+      <planeGeometry args={[1.08,.48]}/>
+      <meshBasicMaterial color="#edf1f2" toneMapped={false}/>
+    </mesh>
+    <Html transform position={[1.22,.93,.975]} distanceFactor={2.35} className="schmear-brand-tile"><div><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></div></Html>
     <mesh position={[0,.76,.96]}><boxGeometry args={[4.08,.05,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
     <mesh position={[0,2.15,.94]}><boxGeometry args={[4.08,.055,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
     {menu.schmears.map((item,index)=>{
@@ -520,7 +534,7 @@ function PickupShelf(){
 }
 
 function Seating(){
-  return <group position={[-6.0,0,4.4]}>
+  return <group position={[-6.25,0,-1.9]}>
     <mesh position={[0,.65,0]}><cylinderGeometry args={[.92,.92,.1,28]}/><meshStandardMaterial color="#f2e7da"/></mesh>
     <mesh position={[0,.33,0]}><cylinderGeometry args={[.08,.16,.62,14]}/><meshStandardMaterial color="#71818c" metalness={.55}/></mesh>
     <NPC position={[-.9,0,.2]} shirt="#b36a77" seated/>
