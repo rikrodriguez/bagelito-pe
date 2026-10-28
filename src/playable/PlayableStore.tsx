@@ -345,14 +345,33 @@ function MainCounter(props:{step:Step;bagels:Record<string,number>;schmears:Reco
 }
 
 function BagelCase({step,bagels,onBagel}:{step:Step;bagels:Record<string,number>;onBagel:(id:string)=>void}){
+  const photo=useTexture('/images/bagel-vitrina-photo.webp')
+  photo.colorSpace=THREE.SRGBColorSpace
+  const xs=[-2.52,-.84,.84,2.52]
   return <group position={[-2.1,0,.2]}>
     <RoundedBox castShadow receiveShadow position={[0,.72,0]} args={[7.2,1.44,1.95]} radius={.06}><meshStandardMaterial color={STEEL} metalness={.62} roughness={.26}/></RoundedBox>
-    <mesh position={[0,1.43,.22]}><boxGeometry args={[7.0,.82,.05]}/><meshPhysicalMaterial color="#dff4ff" transmission={.92} transparent opacity={.19} roughness={.08} metalness={0}/></mesh>
-    <mesh position={[0,1.86,-.52]} rotation={[-.52,0,0]}><boxGeometry args={[7.0,.06,1.28]}/><meshPhysicalMaterial color="#eaf7ff" transmission={.88} transparent opacity={.18} roughness={.08}/></mesh>
-    <mesh position={[0,1.18,-.9]}><boxGeometry args={[7.0,.06,.06]}/><meshStandardMaterial color="#697983" metalness={.8}/></mesh>
-    {menu.bagels.map((b,i)=>{
-      const row=i<4?0:1,col=i%4,x=-2.7+col*1.8,y=row===0?1.34:.62,z=.25,count=bagels[b.id]??0
-      return <BagelTray key={b.id} bagel={b} index={i} position={[x,y,z]} active={step==='bagels'} count={count} onClick={onBagel}/>
+    <mesh position={[0,1.05,.33]}>
+      <planeGeometry args={[6.85,2.57]}/>
+      <meshBasicMaterial map={photo} toneMapped={false}/>
+    </mesh>
+    <mesh position={[0,1.43,.55]}><boxGeometry args={[7.0,.82,.045]}/><meshPhysicalMaterial color="#e8f8ff" transmission={.94} transparent opacity={.13} roughness={.05} metalness={0}/></mesh>
+    <mesh position={[0,1.86,-.52]} rotation={[-.52,0,0]}><boxGeometry args={[7.0,.06,1.28]}/><meshPhysicalMaterial color="#eefaff" transmission={.9} transparent opacity={.14} roughness={.06}/></mesh>
+    {menu.bagels.map((bagel,index)=>{
+      const row=index<4?0:1
+      const col=index%4
+      const x=xs[col]
+      const y=row===0?1.38:.68
+      const count=bagels[bagel.id]??0
+      return <PhotoHotspot
+        key={bagel.id}
+        position={[x,y,.59]}
+        size={[1.55,.64]}
+        active={step==='bagels'}
+        selected={count>0}
+        count={count}
+        label={bagel.name}
+        onClick={()=>onBagel(bagel.id)}
+      />
     })}
   </group>
 }
@@ -390,17 +409,49 @@ function Bagel3D({variant,color,position,active,selected,onClick}:{variant:strin
 }
 
 function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,number>;onSchmear:(id:string)=>void}){
+  const photo=useTexture('/images/schmear-vitrina-photo.webp')
+  photo.colorSpace=THREE.SRGBColorSpace
+  const positions:V3[]=[[-1.25,1.32,.58],[0,1.32,.58],[1.25,1.32,.58],[-.63,.66,.58],[.63,.66,.58]]
   return <group position={[4.25,0,-.05]}>
     <RoundedBox castShadow position={[0,.72,0]} args={[4.25,1.44,1.95]} radius={.06}><meshStandardMaterial color={STEEL} metalness={.62} roughness={.26}/></RoundedBox>
-    <mesh position={[0,1.43,.22]}><boxGeometry args={[4.05,.82,.05]}/><meshPhysicalMaterial color="#dff4ff" transmission={.92} transparent opacity={.19} roughness={.08}/></mesh>
-    {menu.schmears.map((s,i)=>{const row=i<3?0:1,col=i<3?i:i-3,x=-1.28+col*1.28,y=row===0?1.25:.62,c=counts[s.id]??0;return <group key={s.id} position={[x,y,.2]}>
-      <mesh onClick={e=>{e.stopPropagation();if(step==='schmears')onSchmear(s.id)}} onPointerOver={()=>{if(step==='schmears')document.body.style.cursor='pointer'}} onPointerOut={()=>document.body.style.cursor='default'}>
-        <cylinderGeometry args={[.48,.44,.2,32]}/><meshStandardMaterial color="#f3f4f2" metalness={.12}/>
-      </mesh>
-      <mesh position={[0,.12,0]}><cylinderGeometry args={[.405,.405,.075,32]}/><meshStandardMaterial color={SCHMEAR_COLORS[i]} roughness={.88}/></mesh>
-      <mesh position={[0,.175,0]} rotation={[Math.PI/2,0,0]}><torusGeometry args={[.16,.025,8,28]}/><meshStandardMaterial color={i===1?'#d78435':i===4?'#df8993':'#d3c3aa'}/></mesh>
-      <Html transform position={[0,-.29,.25]} distanceFactor={2.4} className="product-label"><div><b>{s.name}</b>{c>0&&<span>{c}</span>}</div></Html>
-    </group>})}
+    <mesh position={[0,1.04,.32]}>
+      <planeGeometry args={[4.0,2.0]}/>
+      <meshBasicMaterial map={photo} toneMapped={false}/>
+    </mesh>
+    <mesh position={[0,1.43,.55]}><boxGeometry args={[4.05,.82,.045]}/><meshPhysicalMaterial color="#e8f8ff" transmission={.94} transparent opacity={.13} roughness={.05}/></mesh>
+    {menu.schmears.map((item,index)=>{
+      const count=counts[item.id]??0
+      return <PhotoHotspot
+        key={item.id}
+        position={positions[index]}
+        size={[1.12,.54]}
+        active={step==='schmears'}
+        selected={count>0}
+        count={count}
+        label={item.name}
+        onClick={()=>onSchmear(item.id)}
+      />
+    })}
+  </group>
+}
+
+function PhotoHotspot({position,size,active,selected,count,label,onClick}:{position:V3;size:[number,number];active:boolean;selected:boolean;count:number;label:string;onClick:()=>void}){
+  return <group position={position}>
+    <mesh
+      onClick={e=>{e.stopPropagation();if(active)onClick()}}
+      onPointerOver={()=>{if(active)document.body.style.cursor='pointer'}}
+      onPointerOut={()=>document.body.style.cursor='default'}
+    >
+      <planeGeometry args={size}/>
+      <meshBasicMaterial transparent opacity={selected?.11:active?.018:0} color={selected?CORAL:BLUE} depthWrite={false}/>
+    </mesh>
+    {selected&&<mesh position={[0,0,.012]}>
+      <planeGeometry args={[size[0]*.96,size[1]*.92]}/>
+      <meshBasicMaterial transparent opacity={.09} color={CORAL} depthWrite={false}/>
+    </mesh>}
+    {active&&<Html transform position={[size[0]*.34,size[1]*.28,.025]} distanceFactor={2.15} className="vitrina-hotspot">
+      <div data-selected={selected}><span>{selected?count:'+'}</span><small>{label}</small></div>
+    </Html>}
   </group>
 }
 
