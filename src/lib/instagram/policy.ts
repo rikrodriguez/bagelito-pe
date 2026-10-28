@@ -8,6 +8,8 @@ export const instagramIntentRisk = {
   how_to_order: "auto",
   storage: "auto",
   reheating: "auto",
+  ingredient_question: "review",
+  vegan_request: "review",
   order_status: "review",
   payment_confirmation: "review",
   address_change: "review",
