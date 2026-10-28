@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { readBoundedJsonObject } from '../../../../server/http-json.server'
 import { coordinateCulqiCharge } from '../../../../server/charge-coordinator.server'
 import { createCulqiCharge, fetchCulqiCharge, type CulqiAuthentication3DS } from '../../../../server/culqi.server'
 import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
@@ -49,7 +50,7 @@ export const Route = createFileRoute('/api/payments/culqi/charge')({
             throw new PublicApiError('Culqi payments are not enabled yet.', 503)
           }
 
-          const payload = await request.json() as Payload
+          const payload = await readBoundedJsonObject(request, 8 * 1024) as Payload
           const checkoutSessionId = String(payload.checkoutSessionId ?? '').trim().toLowerCase()
           const orderCode = String(payload.orderCode ?? '').trim().toUpperCase()
           const email = String(payload.email ?? '').trim().toLowerCase()
