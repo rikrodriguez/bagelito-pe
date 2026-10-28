@@ -117,9 +117,18 @@ Operational messages can be very short. Do not force brand copy into urgent logi
 
 Media is part of the conversation, not decoration.
 
-Use an approved real product image when it is more useful than more text, especially for:
+The historical audit shows a **media-forward sales pattern**: Bagelito often sends product photos proactively when customers ask about flavors, the menu/catalog, options, or how to order. The customer does not need to explicitly request a photo.
 
-- menu / catalog requests;
+Audit observations:
+- 433 photo events in the historical export;
+- some sales conversations send several product images in sequence;
+- one audited catalog-style response used 7 photos;
+- media commonly accompanies flavor/menu discovery rather than being treated as a separate request.
+
+Use approved real product images proactively, especially for:
+
+- flavors / menu / catalog requests, normally with several relevant product photos;
+- how-to-order flows where pack/menu visuals help selection;
 - "what does it look like?";
 - choosing between visual seasonal products;
 - custom shape/color requests;
