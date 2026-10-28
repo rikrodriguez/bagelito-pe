@@ -37,6 +37,7 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
             .select('id,order_code,payment_status,payment_expires_at,status')
             .eq('order_code', orderCode)
             .eq('checkout_session_id', checkoutSessionId)
+            .abortSignal(AbortSignal.timeout(2000))
             .maybeSingle()
 
           if (error) throw new Error('state_unavailable')
@@ -45,7 +46,7 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
           const state = await supabase.rpc('expire_culqi_token_session', {
             p_order_id: data.id,
             p_checkout_session_id: checkoutSessionId,
-          })
+          }).abortSignal(AbortSignal.timeout(2000))
           if (state.error || !state.data || typeof state.data !== 'object') throw new Error('state_unavailable')
 
           const payment = state.data as {
@@ -54,7 +55,9 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
             reconciliationRequired?: unknown
           }
           if (typeof payment.paymentStatus !== 'string'
+            || !['pending','paid','failed','expired','refunded'].includes(payment.paymentStatus)
             || typeof payment.orderStatus !== 'string'
+            || !['payment_pending_review','payment_confirmed','needs_correction','in_production','ready_for_delivery','delivered','cancelled'].includes(payment.orderStatus)
             || typeof payment.reconciliationRequired !== 'boolean') {
             throw new Error('state_unavailable')
           }
