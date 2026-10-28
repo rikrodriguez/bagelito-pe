@@ -28,6 +28,8 @@ test("Instagram policy keeps high-risk cases out of auto-send", () => {
 
 test("Instagram custom and exception cases require review", () => {
   for (const intent of [
+    "ingredient_question",
+    "vegan_request",
     "order_status",
     "payment_confirmation",
     "address_change",
