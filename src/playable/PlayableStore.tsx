@@ -48,6 +48,7 @@ export function PlayableStore() {
   const [guidedDismissed, setGuidedDismissed] = useState(false)
   const [name, setName] = useState<string | null>(null)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
+  const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>('guided')
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
   const [introGuide, setIntroGuide] = useState<'totem'|'vitrina'|null>(null)
@@ -128,6 +129,27 @@ export function PlayableStore() {
   if(!ready)return <div className="playable-loading">Preparando Bagelito…</div>
 
   return <main className={'playable-shell'+(guideNode?' guided-mode':'')}>
+    {experienceMode==='guided' ? <GuidedCommerce
+      category={category}
+      step={step}
+      bagels={bagels}
+      schmears={schmears}
+      bagelTotal={bagelTotal}
+      bagelTarget={bagelTarget}
+      schmearTotal={schmearTotal}
+      schmearTarget={schmearTarget}
+      selectedCombo={selectedCombo}
+      onCategory={chooseCategory}
+      onPack={(format,q)=>{setPackFormat(format);setPackQty(q);setStep('bagels')}}
+      onCombo={(id)=>{setComboId(id);setStep('bagels')}}
+      onSchmearSize={(g)=>{setSchmearSize(g);setStep('schmears')}}
+      onBagel={addBagel}
+      onSchmear={addSchmear}
+      onNextBagels={()=>bagelTotal===bagelTarget&&setStep('schmears')}
+      onNextSchmears={()=>{if(category==='packs'||schmearTotal===schmearTarget)setStep('cashier')}}
+      onReset={reset}
+      onExplore={()=>setExperienceMode('explore')}
+    /> : <>
     <Canvas
       shadows
       dpr={[1,1.5]}
@@ -143,8 +165,8 @@ export function PlayableStore() {
       <ContactShadows position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
-
-    <LookSurface look={look} disabled={Boolean(guideNode)}/>
+      <LookSurface look={look} disabled={Boolean(guideNode)}/>
+    </>}
 
     {guideNode&&<GuidedCommerceScene
       introGuide={introGuide}
@@ -171,14 +193,14 @@ export function PlayableStore() {
       onBack={()=>{if(category){reset()}else setIntroGuide(null)}}
     />}
 
-    <header className="playable-top interactive-ui">
-      <button className="brand-pill" onClick={reset}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
-      <div className="status-pill"><small>{step==='explore'?'EXPLORA':'PEDIDO ACTIVO'}</small><b>{category?.toUpperCase() ?? 'BAGELITO STORE'}</b></div>
-    </header>
+    {experienceMode==='explore'&&<header className="playable-top interactive-ui">
+      <button className="brand-pill" onClick={()=>{reset();setExperienceMode('guided')}}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
+      <div className="status-pill"><small>EXPLORA</small><b>BAGELITO STORE</b></div>
+    </header>}
 
-    {name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
+    {experienceMode==='explore'&&name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
-    {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
+    {experienceMode==='explore'&&step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
       <button type="button" className="primary" onClick={()=>{setGuidedDismissed(false);setGuidedOpen(true)}}>Empezar pedido</button>
       <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
@@ -342,6 +364,95 @@ function GuidedCommerceScene(props:{
   </section>
 }
 
+
+
+function GuidedCommerce(props:{
+  category:Category|null;step:Step;bagels:Record<string,number>;schmears:Record<string,number>;
+  bagelTotal:number;bagelTarget:number;schmearTotal:number;schmearTarget:number;
+  selectedCombo:(typeof combos)[number]|null;
+  onCategory:(c:Category)=>void;onPack:(f:PackFormat,q:number)=>void;onCombo:(id:string)=>void;
+  onSchmearSize:(g:number)=>void;onBagel:(id:string)=>void;onSchmear:(id:string)=>void;
+  onNextBagels:()=>void;onNextSchmears:()=>void;onReset:()=>void;onExplore:()=>void
+}){
+  const [packSize,setPackSize]=useState<PackFormat|null>(null)
+  useEffect(()=>{if(props.step==='explore')setPackSize(null)},[props.step])
+  const scene=props.step==='bagels'
+    ? '/images/bagel-vitrina-photo.webp'
+    : props.step==='schmears'
+      ? '/images/schmear-vitrina-photo.webp'
+      : '/images/store-reference-approved.webp'
+
+  return <section className={'guided-commerce guided-step-'+props.step}>
+    <div className={'golden-scene '+(props.step==='bagels'?'is-bagels':props.step==='schmears'?'is-schmears':'is-store')}>
+      <img src={scene} alt="" />
+    </div>
+
+    <button className="guided-explore interactive-ui" type="button" onClick={props.onExplore}>Explorar tienda</button>
+
+    {!props.category&&<div className="golden-selector interactive-ui" aria-label="Elige Packs, Combos o Schmears">
+      <button className="golden-card packs" onClick={()=>props.onCategory('packs')} aria-label="Packs"/>
+      <button className="golden-card combos" onClick={()=>props.onCategory('combos')} aria-label="Combos"/>
+      <button className="golden-card schmears" onClick={()=>props.onCategory('schmears')} aria-label="Schmears"/>
+    </div>}
+
+    {props.step==='choose-pack'&&<div className="guided-sheet interactive-ui">
+      <small>PACKS</small><h2>{packSize?'Elige tu cantidad':'¿Grandes o minis?'}</h2>
+      {!packSize?<div className="guided-two">
+        <button onClick={()=>setPackSize('grande')}><span>🥯</span><b>Grandes</b><small>6 o 12 bagels</small><i>→</i></button>
+        <button onClick={()=>setPackSize('mini')}><span>◌</span><b>Minis</b><small>6, 12 o 24 minis</small><i>→</i></button>
+      </div>:<div className="guided-quantities">
+        {(packSize==='grande'?[6,12]:[6,12,24]).map(q=><button key={q} onClick={()=>props.onPack(packSize,q)}><b>{q}</b><span>{packSize==='grande'?'bagels grandes':'mini bagels'}</span><i>→</i></button>)}
+        <button className="guided-back" onClick={()=>setPackSize(null)}>← Cambiar tamaño</button>
+      </div>}
+    </div>}
+
+    {props.step==='choose-combo'&&<div className="guided-sheet combo-sheet interactive-ui">
+      <small>COMBOS</small><h2>Elige tu combo</h2>
+      <p>Después eliges los bagels y schmears directamente de la vitrina.</p>
+      <div className="guided-combos">
+        {combos.map(c=><button key={c.id} onClick={()=>props.onCombo(c.id)}>
+          <span className="combo-thumb"><img src="/images/pack-6-mixed.webp" alt=""/></span>
+          <span><b>{c.name}</b><small>{c.bagels} bagels + {c.schmear_count} schmear{c.schmear_count>1?'s':''} de 120 g</small></span>
+          <strong>S/{c.price}</strong><i>→</i>
+        </button>)}
+      </div>
+    </div>}
+
+    {props.step==='choose-schmear-size'&&<div className="guided-sheet interactive-ui">
+      <small>SCHMEARS</small><h2>Elige tamaño</h2>
+      <div className="guided-quantities">
+        {menu.schmearSizes.map(size=><button key={size.grams} onClick={()=>props.onSchmearSize(size.grams)}><b>{size.grams} g</b><span>{size.label}</span><i>→</i></button>)}
+      </div>
+    </div>}
+
+    {props.step==='bagels'&&<div className="guided-product-ui interactive-ui">
+      <div className="guided-product-head"><small>{props.category==='combos'&&props.selectedCombo?props.selectedCombo.name:'TU PACK'}</small><b>Elige tus bagels</b><span>{props.bagelTotal}/{props.bagelTarget}</span></div>
+      <div className="bagel-hotspot-grid">
+        {menu.bagels.map((bagel,index)=><button key={bagel.id} onClick={()=>props.onBagel(bagel.id)} data-selected={(props.bagels[bagel.id]??0)>0} style={{gridArea:(index<4?1:2)+' / '+((index%4)+1)}} aria-label={bagel.name}>
+          {(props.bagels[bagel.id]??0)>0&&<i>{props.bagels[bagel.id]}</i>}
+        </button>)}
+      </div>
+      {props.bagelTotal===props.bagelTarget&&<button className="guided-next" onClick={props.onNextBagels}>Continuar a schmears →</button>}
+    </div>}
+
+    {props.step==='schmears'&&<div className="guided-product-ui guided-schmear-ui interactive-ui">
+      <div className="guided-product-head"><small>SCHMEARS</small><b>{props.category==='packs'?'¿Le sumamos un schmear?':'Elige tus schmears'}</b><span>{props.category==='packs'?'Opcional':props.schmearTotal+'/'+props.schmearTarget}</span></div>
+      <div className="schmear-hotspot-grid">
+        {menu.schmears.map((item,index)=><button key={item.id} onClick={()=>props.onSchmear(item.id)} data-selected={(props.schmears[item.id]??0)>0} style={{gridArea:(index<3?1:2)+' / '+((index<3?index:index-3)+1)}} aria-label={item.name}>
+          {(props.schmears[item.id]??0)>0&&<i>{props.schmears[item.id]}</i>}
+        </button>)}
+      </div>
+      {(props.category==='packs'||props.schmearTotal===props.schmearTarget)&&<button className="guided-next" onClick={props.onNextSchmears}>Ir a caja →</button>}
+    </div>}
+
+    {props.step==='cashier'&&<div className="guided-cashier-placeholder interactive-ui">
+      <small>CAJA BAGELITO</small><h2>Escena final en reconstrucción</h2><p>Esta escena no se libera como preview hasta igualar el mockup de caja, recibo, Wallet, bolsa y despedida.</p>
+      <button onClick={props.onReset}>Volver al inicio</button>
+    </div>}
+
+    {props.category&&<GuidedProgress step={props.step}/>}
+  </section>
+}
 
 function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
   const {camera}=useThree()
