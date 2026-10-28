@@ -178,13 +178,18 @@ export function CulqiBrowserCheckout(props: {
   onReview: (message: string) => void
 }) {
   const { config, customer, order, subtotalPen, onPaid, onReview } = props
-  const [status, setStatus] = useState<'idle'|'loading'|'ready'|'charging'|'3ds'|'confirming'|'review'|'error'>('idle')
+  const [status, setStatus] = useState<'idle'|'loading'|'ready'|'charging'|'3ds'|'confirming'|'review'|'error'|'expired'>('idle')
   const [message, setMessage] = useState('')
   const checkoutRef = useRef<CheckoutInstance | null>(null)
   const sessionRef = useRef<CheckoutSession | null>(null)
   const tokenRef = useRef<{ tokenId: string; deviceId: string } | null>(null)
   const busyRef = useRef(false)
   const callbackConsumedRef = useRef(false)
+  const checkoutSessionIdRef = useRef<string | null>(null)
+  const reservationExpiresAtRef = useRef<number | null>(null)
+  const reservationTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null)
+  const paymentAttemptStartedRef = useRef(false)
+  const aliveRef = useRef(true)
 
   const review = useCallback((text: string) => {
     const session = sessionRef.current
@@ -194,6 +199,58 @@ export function CulqiBrowserCheckout(props: {
     setMessage(text)
     onReview(text)
   }, [onReview])
+
+
+  const clearReservationTimer = useCallback(() => {
+    if (reservationTimerRef.current !== null) {
+      window.clearTimeout(reservationTimerRef.current)
+      reservationTimerRef.current = null
+    }
+  }, [])
+
+  const expireReservation = useCallback(() => {
+    if (!aliveRef.current) return
+    clearReservationTimer()
+    try { checkoutRef.current?.close() } catch {}
+    try { window.Culqi3DS?.reset() } catch {}
+
+    if (paymentAttemptStartedRef.current || readRecovery()) {
+      review('La reserva venció mientras el pago estaba en curso. No vuelvas a pagar hasta verificar el estado.')
+      return
+    }
+
+    busyRef.current = false
+    callbackConsumedRef.current = false
+    sessionRef.current = null
+    tokenRef.current = null
+    checkoutSessionIdRef.current = null
+    reservationExpiresAtRef.current = null
+    setStatus('expired')
+    setMessage('Tu reserva venció y el cupo dejó de estar garantizado. Inicia un nuevo checkout.')
+  }, [clearReservationTimer, review])
+
+  const checkReservationExpiry = useCallback(() => {
+    const expiresAt = reservationExpiresAtRef.current
+    if (expiresAt !== null && Date.now() >= expiresAt) {
+      expireReservation()
+      return true
+    }
+    return false
+  }, [expireReservation])
+
+  const scheduleReservationExpiry = useCallback((expiresAt: number) => {
+    reservationExpiresAtRef.current = expiresAt
+    clearReservationTimer()
+
+    const watch = () => {
+      reservationTimerRef.current = null
+      if (!aliveRef.current || checkReservationExpiry()) return
+      const remaining = expiresAt - Date.now()
+      reservationTimerRef.current = window.setTimeout(watch, Math.max(250, Math.min(remaining, 2_147_483_647)))
+    }
+
+    watch()
+  }, [checkReservationExpiry, clearReservationTimer])
 
   const waitForPaid = useCallback(async (session: CheckoutSession) => {
     setStatus('confirming')
@@ -217,22 +274,30 @@ export function CulqiBrowserCheckout(props: {
         return
       }
       if (result.paymentStatus === 'paid') {
+        clearReservationTimer()
         clearRecovery(session)
         busyRef.current = false
+        paymentAttemptStartedRef.current = false
         setStatus('ready')
         onPaid(session.orderCode)
         return
       }
       if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+        clearReservationTimer()
         clearRecovery(session)
         busyRef.current = false
+        paymentAttemptStartedRef.current = false
+        sessionRef.current = null
+        tokenRef.current = null
+        checkoutSessionIdRef.current = null
+        reservationExpiresAtRef.current = null
         setStatus('error')
         setMessage('El pago no se completó. Puedes iniciar un nuevo checkout.')
         return
       }
     }
     review('No pudimos confirmar el resultado todavía. No vuelvas a pagar hasta revisar el pedido.')
-  }, [onPaid, review])
+  }, [clearReservationTimer, onPaid, review])
 
   const submitToken = useCallback(async (
     session: CheckoutSession,
@@ -240,6 +305,9 @@ export function CulqiBrowserCheckout(props: {
     deviceId: string,
     authentication3DS?: Auth3DS,
   ) => {
+    if (checkReservationExpiry()) return
+    paymentAttemptStartedRef.current = true
+
     const { response, result } = await jsonFetch<{
       ok?: boolean
       paymentStatus?: string
@@ -282,8 +350,9 @@ export function CulqiBrowserCheckout(props: {
       return
     }
 
+    clearReservationTimer()
     await waitForPaid(session)
-  }, [customer.email, review, waitForPaid])
+  }, [checkReservationExpiry, clearReservationTimer, customer.email, review, waitForPaid])
 
   const recoverPayment = useCallback(async () => {
     const recovered = readRecovery()
@@ -314,16 +383,24 @@ export function CulqiBrowserCheckout(props: {
         return
       }
       if (result.paymentStatus === 'paid') {
+        clearReservationTimer()
         window.localStorage.removeItem(RECOVERY_KEY)
         busyRef.current = false
+        paymentAttemptStartedRef.current = false
         setStatus('ready')
         setMessage('')
         onPaid(recovered.orderCode)
         return
       }
       if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+        clearReservationTimer()
         window.localStorage.removeItem(RECOVERY_KEY)
         busyRef.current = false
+        paymentAttemptStartedRef.current = false
+        sessionRef.current = null
+        tokenRef.current = null
+        checkoutSessionIdRef.current = null
+        reservationExpiresAtRef.current = null
         setStatus('idle')
         setMessage('La reserva anterior ya no está pendiente. Puedes iniciar un nuevo checkout.')
         return
@@ -334,7 +411,7 @@ export function CulqiBrowserCheckout(props: {
       setStatus('review')
       setMessage('No pudimos consultar el pago. No vuelvas a pagar hasta verificarlo.')
     }
-  }, [onPaid])
+  }, [clearReservationTimer, onPaid])
 
   const startCheckout = useCallback(async () => {
     if (!config.enabled || busyRef.current) return
@@ -357,7 +434,8 @@ export function CulqiBrowserCheckout(props: {
         throw new Error('Culqi no está disponible.')
       }
 
-      const checkoutSessionId = crypto.randomUUID()
+      const checkoutSessionId = checkoutSessionIdRef.current ?? crypto.randomUUID()
+      checkoutSessionIdRef.current = checkoutSessionId
       const { response: reservationResponse, result: reservation } = await jsonFetch<{
         ok?: boolean
         amountMinor?: number
@@ -412,9 +490,11 @@ export function CulqiBrowserCheckout(props: {
       }
       const expiresAt = session.expiresAt ? Date.parse(session.expiresAt) : NaN
       if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
+        checkoutSessionIdRef.current = null
         throw new Error('La reserva expiró antes de abrir el checkout.')
       }
       sessionRef.current = session
+      scheduleReservationExpiry(expiresAt)
 
       window.Culqi3DS.publicKey = config.publicKey
       window.Culqi3DS.options = {
@@ -483,18 +563,22 @@ export function CulqiBrowserCheckout(props: {
         }
 
         void (async () => {
-            try {
-              checkout.close()
-              setRecovery(session, 'pending')
-              setStatus('charging')
-              window.Culqi3DS!.publicKey = config.publicKey!
-              const deviceId = tokenId.startsWith('tkn_') ? await window.Culqi3DS!.generateDevice() : ''
-              if (tokenId.startsWith('tkn_') && !deviceId) throw new Error('No se pudo generar el identificador antifraude.')
-              tokenRef.current = { tokenId, deviceId }
-              await submitToken(session, tokenId, deviceId)
-            } catch (error) {
-              review(error instanceof Error ? error.message : 'No se pudo procesar el pago.')
+          try {
+            checkout.close()
+            setStatus('charging')
+            window.Culqi3DS!.publicKey = config.publicKey!
+            const deviceId = tokenId.startsWith('tkn_') ? await window.Culqi3DS!.generateDevice() : ''
+            if (tokenId.startsWith('tkn_') && !deviceId) {
+              throw new Error('No se pudo generar el identificador antifraude.')
             }
+            if (checkReservationExpiry()) return
+
+            tokenRef.current = { tokenId, deviceId }
+            setRecovery(session, 'pending')
+            await submitToken(session, tokenId, deviceId)
+          } catch (error) {
+            review(error instanceof Error ? error.message : 'No se pudo procesar el pago.')
+          }
         })()
       }
 
@@ -508,7 +592,7 @@ export function CulqiBrowserCheckout(props: {
       setStatus('error')
       setMessage(error instanceof Error ? error.message : 'No se pudo iniciar Culqi.')
     }
-  }, [config, customer, order, recoverPayment, review, submitToken])
+  }, [checkReservationExpiry, config, customer, order, recoverPayment, review, scheduleReservationExpiry, submitToken])
 
   useEffect(() => {
     function on3DSMessage(event: MessageEvent) {
@@ -526,6 +610,7 @@ export function CulqiBrowserCheckout(props: {
         review('Se perdió la referencia del pago. No vuelvas a pagar.')
         return
       }
+      if (checkReservationExpiry()) return
       setStatus('charging')
       void submitToken(session, token.tokenId, token.deviceId, data.parameters3DS)
         .finally(() => window.Culqi3DS?.reset())
@@ -533,12 +618,30 @@ export function CulqiBrowserCheckout(props: {
 
     window.addEventListener('message', on3DSMessage)
     return () => window.removeEventListener('message', on3DSMessage)
-  }, [review, submitToken])
+  }, [checkReservationExpiry, review, submitToken])
 
-  useEffect(() => () => {
-    try { checkoutRef.current?.close() } catch {}
-    try { window.Culqi3DS?.reset() } catch {}
-  }, [])
+  useEffect(() => {
+    aliveRef.current = true
+
+    const onForeground = () => { checkReservationExpiry() }
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') checkReservationExpiry()
+    }
+
+    window.addEventListener('focus', onForeground)
+    window.addEventListener('pageshow', onForeground)
+    document.addEventListener('visibilitychange', onVisibility)
+
+    return () => {
+      aliveRef.current = false
+      clearReservationTimer()
+      window.removeEventListener('focus', onForeground)
+      window.removeEventListener('pageshow', onForeground)
+      document.removeEventListener('visibilitychange', onVisibility)
+      try { checkoutRef.current?.close() } catch {}
+      try { window.Culqi3DS?.reset() } catch {}
+    }
+  }, [checkReservationExpiry, clearReservationTimer])
 
   const customerReady = customer.customerName.trim().length >= 2
     && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email.trim())
@@ -557,7 +660,8 @@ export function CulqiBrowserCheckout(props: {
   return <div className="culqi-browser-checkout">
     <button type="button" className="culqi-start-button" disabled={!customerReady || status === 'loading' || status === 'charging' || status === '3ds' || status === 'confirming' || status === 'review'} onClick={() => void startCheckout()}>
       {status === 'loading' ? 'Preparando…'
-        : status === 'charging' ? 'Procesando…'
+        : status === 'expired' ? 'Reserva vencida'
+          : status === 'charging' ? 'Procesando…'
           : status === '3ds' ? 'Autenticando banco…'
             : status === 'confirming' ? 'Confirmando pago…'
               : status === 'review' ? 'Pago en revisión'
