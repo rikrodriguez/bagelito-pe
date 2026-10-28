@@ -19,6 +19,7 @@ import { Route as ApiPaymentsCulqiChargeRouteImport } from './routes/api/payment
 import { Route as ApiPaymentsCulqiConfigRouteImport } from './routes/api/payments/culqi/config'
 import { Route as ApiPaymentsCulqiOrderRouteImport } from './routes/api/payments/culqi/order'
 import { Route as ApiPaymentsCulqiStatusRouteImport } from './routes/api/payments/culqi/status'
+import { Route as ApiWebhooksCulqiRouteImport } from './routes/api/webhooks/culqi'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const ApiPaymentsCulqiStatusRoute = ApiPaymentsCulqiStatusRouteImport.update({
   path: '/api/payments/culqi/status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiWebhooksCulqiRoute = ApiWebhooksCulqiRouteImport.update({
+  id: '/api/webhooks/culqi',
+  path: '/api/webhooks/culqi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/api/payments/culqi/config': typeof ApiPaymentsCulqiConfigRoute
   '/api/payments/culqi/order': typeof ApiPaymentsCulqiOrderRoute
   '/api/payments/culqi/status': typeof ApiPaymentsCulqiStatusRoute
+  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/api/payments/culqi/config': typeof ApiPaymentsCulqiConfigRoute
   '/api/payments/culqi/order': typeof ApiPaymentsCulqiOrderRoute
   '/api/payments/culqi/status': typeof ApiPaymentsCulqiStatusRoute
+  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/api/payments/culqi/config': typeof ApiPaymentsCulqiConfigRoute
   '/api/payments/culqi/order': typeof ApiPaymentsCulqiOrderRoute
   '/api/payments/culqi/status': typeof ApiPaymentsCulqiStatusRoute
+  '/api/webhooks/culqi': typeof ApiWebhooksCulqiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/api/payments/culqi/config'
     | '/api/payments/culqi/order'
     | '/api/payments/culqi/status'
+    | '/api/webhooks/culqi'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/api/payments/culqi/config'
     | '/api/payments/culqi/order'
     | '/api/payments/culqi/status'
+    | '/api/webhooks/culqi'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/api/payments/culqi/config'
     | '/api/payments/culqi/order'
     | '/api/payments/culqi/status'
+    | '/api/webhooks/culqi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +170,7 @@ export interface RootRouteChildren {
   ApiPaymentsCulqiConfigRoute: typeof ApiPaymentsCulqiConfigRoute
   ApiPaymentsCulqiOrderRoute: typeof ApiPaymentsCulqiOrderRoute
   ApiPaymentsCulqiStatusRoute: typeof ApiPaymentsCulqiStatusRoute
+  ApiWebhooksCulqiRoute: typeof ApiWebhooksCulqiRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPaymentsCulqiStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/webhooks/culqi': {
+      id: '/api/webhooks/culqi'
+      path: '/api/webhooks/culqi'
+      fullPath: '/api/webhooks/culqi'
+      preLoaderRoute: typeof ApiWebhooksCulqiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPaymentsCulqiConfigRoute,
   ApiPaymentsCulqiOrderRoute,
   ApiPaymentsCulqiStatusRoute,
+  ApiWebhooksCulqiRoute,
 }
 
 export const routeTree = rootRouteImport
