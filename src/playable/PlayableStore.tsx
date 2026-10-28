@@ -52,7 +52,7 @@ export function PlayableStore() {
   const [bagels, setBagels] = useState<Record<string,number>>({})
   const [schmears, setSchmears] = useState<Record<string,number>>({})
   const [move, setMove] = useState<Move>({forward:false,backward:false,left:false,right:false,run:false})
-  const look = useRef({yaw:Math.PI,pitch:-.04})
+  const look = useRef({yaw:0,pitch:-.04})
 
   useEffect(() => {
     setReady(true)
