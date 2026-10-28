@@ -1,3 +1,5 @@
+import { deliveryDistricts } from '../domain/data/delivery-districts'
+
 const deliveryRatePerKm = 3
 const minimumDeliveryFee = 8
 const longDistanceDiscountThreshold = 15
@@ -43,5 +45,5 @@ export function getDeliveryFee(district: string) {
 }
 
 export function isSupportedDistrict(district: string) {
-  return district in districtDeliveryDistancesKm
+  return (deliveryDistricts as readonly string[]).includes(district)
 }
