@@ -384,9 +384,25 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <button onClick={() => setScene('pay')}>Revisar pedido y pagar <b>→</b></button>
     </div>}
 
-    {scene === 'pay' && <button className="guided-pay-hotspot" onClick={() => setScene('receipt')} aria-label="Continuar con pago Culqi">
-      <span>Continuar con Culqi</span>
-    </button>}
+    {scene === 'pay' && <div className="guided-payment-gate">
+      <div className="guided-payment-copy">
+        <small>PAGO SEGURO</small>
+        <b>Culqi</b>
+        <span>{paymentConfig?.enabled
+          ? 'Bridge Culqi disponible. Falta conectar la sesión transaccional del pedido.'
+          : paymentConfig?.bridgeReady
+            ? 'Culqi está configurado pero no habilitado para este entorno.'
+            : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
+      </div>
+      <button
+        className="guided-pay-hotspot"
+        onClick={() => { if (qaMode) setScene('receipt') }}
+        aria-label={qaMode ? 'Continuar en modo QA' : 'Pago Culqi pendiente de bridge seguro'}
+        disabled={!qaMode}
+      >
+        <span>{qaMode ? 'Continuar QA →' : paymentConfig?.enabled ? 'Preparando checkout seguro' : 'Checkout seguro en integración'}</span>
+      </button>
+    </div>}
 
     {scene === 'receipt' && <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
       onPointerDown={(e) => { receiptDrag.current.startY = e.clientY; receiptDrag.current.offset = 0 }}
