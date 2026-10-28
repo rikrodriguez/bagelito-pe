@@ -6,6 +6,7 @@ export type PublicPaymentConfig = {
   enabled: boolean
   configured: boolean
   bridgeReady: boolean
+  webhookReady: boolean
   visualQaAllowed: boolean
   provider: 'culqi' | 'manual'
   publicKey: string
@@ -54,11 +55,13 @@ function buildPaymentConfig() {
     && process.env.CULQI_ENABLED === 'true'
     && matchingKeys
     && modeAllowed
+    && Boolean(host)
     && Boolean(publicKey && rsaId && rsaPublicKey && secretKey)
 
   // Transactional reservation + charge endpoints are intentionally not exposed
   // until the Next.js security/reconciliation layer has been ported and tested.
   const bridgeReady = process.env.CULQI_TANSTACK_BRIDGE_READY === 'true'
+  const webhookReady = process.env.CULQI_TANSTACK_WEBHOOK_READY === 'true'
   const visualQaAllowed = process.env.BAGELITO_VISUAL_QA_ENABLED === 'true'
     && process.env.VERCEL_ENV !== 'production'
     && Boolean(host)
@@ -67,9 +70,10 @@ function buildPaymentConfig() {
   return {
     mode: requestedMode,
     currency: 'PEN' as const,
-    enabled: configured && bridgeReady,
+    enabled: configured && bridgeReady && webhookReady,
     configured,
     bridgeReady,
+    webhookReady,
     visualQaAllowed,
     provider,
     publicKey: configured ? publicKey : '',
