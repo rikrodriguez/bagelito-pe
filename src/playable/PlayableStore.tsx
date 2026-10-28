@@ -20,12 +20,15 @@ type V3 = [number,number,number]
 type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'cashier'
 
 const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vector3}> = {
-  totem:{position:new THREE.Vector3(-4.15,1.68,7.15),lookAt:new THREE.Vector3(-5.4,1.55,5.95)},
-  vitrina:{position:new THREE.Vector3(-.15,1.7,5.0),lookAt:new THREE.Vector3(-.6,1.08,.25)},
-  selector:{position:new THREE.Vector3(-.15,1.7,4.8),lookAt:new THREE.Vector3(-.6,1.12,.25)},
-  bagels:{position:new THREE.Vector3(-2.15,1.58,3.45),lookAt:new THREE.Vector3(-2.1,1.02,.3)},
-  schmears:{position:new THREE.Vector3(4.05,1.58,3.1),lookAt:new THREE.Vector3(4.25,1.02,.15)},
-  cashier:{position:new THREE.Vector3(6.1,1.62,6.15),lookAt:new THREE.Vector3(5.15,1.18,4.6)},
+  // Wide establishing shot: keeps the store readable while the chooser is open.
+  totem:{position:new THREE.Vector3(0,1.72,6.65),lookAt:new THREE.Vector3(-.25,1.18,.2)},
+  vitrina:{position:new THREE.Vector3(0,1.72,5.25),lookAt:new THREE.Vector3(-.35,1.15,.15)},
+  selector:{position:new THREE.Vector3(0,1.72,5.45),lookAt:new THREE.Vector3(-.25,1.18,.1)},
+  // Product shots: frame the entire relevant display, never a wall.
+  bagels:{position:new THREE.Vector3(-2.05,1.54,3.18),lookAt:new THREE.Vector3(-2.05,1.15,.25)},
+  schmears:{position:new THREE.Vector3(4.10,1.54,2.72),lookAt:new THREE.Vector3(4.22,1.12,.1)},
+  // Checkout shot: counter + cashier + POS, no NPC in foreground.
+  cashier:{position:new THREE.Vector3(5.85,1.62,6.45),lookAt:new THREE.Vector3(5.15,1.20,4.55)},
 }
 
 const ZONES = {
@@ -144,7 +147,7 @@ export function PlayableStore() {
 
     {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
-      <button type="button" className="primary" onClick={()=>setIntroGuide('totem')}>Empezar pedido</button>
+      <button type="button" className="primary" onClick={()=>setIntroGuide('vitrina')}>Empezar pedido</button>
       <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
     </div>}
 
@@ -228,7 +231,7 @@ function World({step,bagels,schmears,onBagel,onSchmear}:{step:Step;bagels:Record
     <Cashier/>
     <Production/>
     <PickupShelf/>
-    <AmbientPeople/>
+    <AmbientPeople step={step}/>
     <Seating/>
   </group>
 }
@@ -526,12 +529,21 @@ function Seating(){
   </group>
 }
 
-function AmbientPeople(){
+function AmbientPeople({step}:{step:Step}){
+  const guided=step!=='explore'
   return <>
-    <MovingNPC from={[7.0,0,7.4]} to={[6.7,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
-    <MovingNPC from={[6.1,0,5.2]} to={[2.8,0,8.05]} shirt="#8e6c52" bag phase={.95}/>
-    <NPC position={[6.05,0,3.6]} shirt="#7a746c"/>
-    <NPC position={[6.55,0,2.8]} shirt="#5e826f"/>
+    {/* Rappi stays visible but moves on the far pickup lane, never through the sales camera. */}
+    <MovingNPC from={[7.1,0,7.5]} to={[6.75,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
+    {/* Customer with bag exits along the opposite wall. */}
+    <MovingNPC from={[-6.5,0,-3.8]} to={[-6.6,0,7.7]} shirt="#8e6c52" bag phase={.95}/>
+    {!guided&&<>
+      <NPC position={[3.7,0,3.45]} shirt="#7a746c"/>
+      <NPC position={[4.15,0,2.7]} shirt="#5e826f"/>
+    </>}
+    {guided&&<>
+      <NPC position={[6.6,0,-2.6]} shirt="#7a746c"/>
+      <NPC position={[-6.5,0,-2.8]} shirt="#5e826f"/>
+    </>}
   </>
 }
 
