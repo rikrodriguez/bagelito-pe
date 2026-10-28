@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
+import { deliveryDistricts } from '../domain/data/delivery-districts'
+import {
+  CulqiBrowserCheckout,
+  type CheckoutCustomer,
+  type CulqiPublicConfig,
+} from './CulqiBrowserCheckout'
 import './guided-commerce.css'
 
 const menu = getVerifiedDisplayMenu()
@@ -59,7 +65,20 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
-  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;configured:boolean;bridgeReady:boolean;webhookReady:boolean;clientReady:boolean;visualQaAllowed:boolean;mode:string}|null>(null)
+  const [paidOrderCode, setPaidOrderCode] = useState<string | null>(null)
+  const [paymentReviewMessage, setPaymentReviewMessage] = useState('')
+  const [checkoutCustomer, setCheckoutCustomer] = useState<CheckoutCustomer>({
+    customerName: customerName ?? '',
+    email: '',
+    whatsapp: '',
+    deliveryAddress: '',
+    district: 'Miraflores',
+    addressReference: '',
+    deliveryNotes: '',
+    termsAccepted: false,
+    termsVersion: '2026-10-26',
+  })
+  const [paymentConfig, setPaymentConfig] = useState<CulqiPublicConfig | null>(null)
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
@@ -71,7 +90,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     fetch('/api/payments/culqi/config', { cache: 'no-store' })
       .then(async (response) => {
         if (!response.ok) throw new Error('payment-config-unavailable')
-        return await response.json() as { enabled?: boolean; configured?: boolean; bridgeReady?: boolean; webhookReady?: boolean; clientReady?: boolean; visualQaAllowed?: boolean; mode?: string }
+        return await response.json() as {
+          enabled?: boolean
+          configured?: boolean
+          bridgeReady?: boolean
+          webhookReady?: boolean
+          clientReady?: boolean
+          visualQaAllowed?: boolean
+          mode?: string
+          currency?: 'PEN'
+          publicKey?: string
+          rsaId?: string
+          rsaPublicKey?: string
+        }
       })
       .then((config) => {
         if (active) setPaymentConfig({
@@ -82,10 +113,26 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           clientReady: config.clientReady === true,
           visualQaAllowed: config.visualQaAllowed === true,
           mode: typeof config.mode === 'string' ? config.mode : 'disabled',
+          currency: config.currency === 'PEN' ? 'PEN' : 'PEN',
+          publicKey: typeof config.publicKey === 'string' ? config.publicKey : '',
+          rsaId: typeof config.rsaId === 'string' ? config.rsaId : '',
+          rsaPublicKey: typeof config.rsaPublicKey === 'string' ? config.rsaPublicKey : '',
         })
       })
       .catch(() => {
-        if (active) setPaymentConfig({ enabled: false, configured: false, bridgeReady: false, webhookReady: false, clientReady: false, visualQaAllowed: false, mode: 'disabled' })
+        if (active) setPaymentConfig({
+          enabled: false,
+          configured: false,
+          bridgeReady: false,
+          webhookReady: false,
+          clientReady: false,
+          visualQaAllowed: false,
+          mode: 'disabled',
+          currency: 'PEN',
+          publicKey: '',
+          rsaId: '',
+          rsaPublicKey: '',
+        })
       })
     return () => { active = false }
   }, [])
@@ -482,30 +529,70 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </div>}
 
     {scene === 'pay' && <div className="guided-payment-gate">
-      <div className="guided-payment-copy">
-        <small>PAGO SEGURO</small>
-        <b>Culqi</b>
-        <span>{paymentConfig?.enabled
-          ? 'Culqi está listo para iniciar el checkout seguro.'
-          : paymentConfig?.configured && paymentConfig?.bridgeReady && paymentConfig?.webhookReady && !paymentConfig?.clientReady
-            ? 'Falta conectar el checkout Culqi del navegador y 3D Secure.'
-            : paymentConfig?.configured && paymentConfig?.bridgeReady && !paymentConfig?.webhookReady
-              ? 'El checkout permanece cerrado hasta terminar webhook y reconciliación.'
-              : paymentConfig?.configured
-                ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
-                : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
+      <div className="guided-payment-sheet">
+        <div className="guided-payment-copy">
+          <small>PAGO SEGURO</small>
+          <b>Completa tu delivery</b>
+          <span>{paymentConfig?.enabled
+            ? 'El total final se valida en servidor antes de abrir Culqi.'
+            : paymentConfig?.configured && paymentConfig?.bridgeReady && paymentConfig?.webhookReady && !paymentConfig?.clientReady
+              ? 'El checkout del navegador está en validación final.'
+              : paymentConfig?.configured && paymentConfig?.bridgeReady && !paymentConfig?.webhookReady
+                ? 'El checkout permanece cerrado hasta terminar webhook y reconciliación.'
+                : paymentConfig?.configured
+                  ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
+                  : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
+        </div>
+
+        <div className="checkout-customer-grid">
+          <label><span>Nombre</span><input value={checkoutCustomer.customerName} onChange={(e) => setCheckoutCustomer((v) => ({...v, customerName:e.target.value}))} autoComplete="name" /></label>
+          <label><span>Email</span><input type="email" value={checkoutCustomer.email} onChange={(e) => setCheckoutCustomer((v) => ({...v, email:e.target.value}))} autoComplete="email" /></label>
+          <label><span>WhatsApp</span><input inputMode="tel" value={checkoutCustomer.whatsapp} onChange={(e) => setCheckoutCustomer((v) => ({...v, whatsapp:e.target.value}))} autoComplete="tel" /></label>
+          <label><span>Distrito</span><select value={checkoutCustomer.district} onChange={(e) => setCheckoutCustomer((v) => ({...v, district:e.target.value}))}>{deliveryDistricts.map((district) => <option key={district} value={district}>{district}</option>)}</select></label>
+          <label className="wide"><span>Dirección de delivery</span><input value={checkoutCustomer.deliveryAddress} onChange={(e) => setCheckoutCustomer((v) => ({...v, deliveryAddress:e.target.value}))} autoComplete="street-address" /></label>
+          <label><span>Referencia</span><input value={checkoutCustomer.addressReference} onChange={(e) => setCheckoutCustomer((v) => ({...v, addressReference:e.target.value}))} /></label>
+          <label><span>Notas</span><input value={checkoutCustomer.deliveryNotes} onChange={(e) => setCheckoutCustomer((v) => ({...v, deliveryNotes:e.target.value}))} /></label>
+        </div>
+
+        <label className="checkout-terms-check">
+          <input type="checkbox" checked={checkoutCustomer.termsAccepted} onChange={(e) => setCheckoutCustomer((v) => ({...v, termsAccepted:e.target.checked}))} />
+          <span>Acepto los términos vigentes del checkout y delivery.</span>
+        </label>
+
+        {paymentReviewMessage && <div className="checkout-review-message">{paymentReviewMessage}</div>}
+
+        {paymentConfig && checkoutQuote?.amountPen != null && <CulqiBrowserCheckout
+          config={paymentConfig}
+          customer={checkoutCustomer}
+          subtotalPen={checkoutQuote.amountPen}
+          order={{
+            category,
+            packFormat,
+            packQty,
+            packMix,
+            bagels: bagelCounts,
+            schmears: schmearCounts,
+            schmearSize,
+            comboId,
+            bagelMode,
+          }}
+          onReview={setPaymentReviewMessage}
+          onPaid={(orderCode) => {
+            setPaidOrderCode(orderCode)
+            setPaymentReviewMessage('')
+            setScene('receipt')
+          }}
+        />}
+
+        {qaMode && <button className="guided-pay-hotspot qa-only-pay" onClick={() => setScene('receipt')} aria-label="Continuar en modo QA">
+          <span>Continuar QA →</span>
+        </button>}
       </div>
-      <button
-        className="guided-pay-hotspot"
-        onClick={() => { if (qaMode) setScene('receipt') }}
-        aria-label={qaMode ? 'Continuar en modo QA' : 'Pago Culqi pendiente de bridge seguro'}
-        disabled={!qaMode}
-      >
-        <span>{qaMode ? 'Continuar QA →' : paymentConfig?.enabled ? 'Preparando checkout seguro' : 'Checkout seguro en integración'}</span>
-      </button>
     </div>}
 
-    {scene === 'receipt' && <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
+    {scene === 'receipt' && <>
+      {paidOrderCode && <div className="live-receipt-code"><small>PEDIDO CONFIRMADO</small><b>{paidOrderCode}</b></div>}
+      <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
       onPointerDown={(e) => { receiptDrag.current.startY = e.clientY; receiptDrag.current.offset = 0 }}
       onPointerMove={(e) => {
         if (!receiptDrag.current.startY) return
@@ -515,7 +602,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       onPointerUp={() => { if (!receiptPulled) pullReceipt(); receiptDrag.current.startY = 0 }}
     >
       <span>Jala tu recibo ↓</span>
-    </div>}
+    </div>
+    </>}
 
     {scene === 'wallet' && <div className="wallet-actions">
       <div className="wallet-copy"><small>BAGELITO CLUB</small><b>{qaMode ? 'Tu tarjeta está lista' : 'Tu tarjeta Bagelito Club'}</b><span>{qaMode ? 'Guárdala o continúa sin agregarla.' : 'La integración con Wallet todavía no está habilitada.'}</span></div>
