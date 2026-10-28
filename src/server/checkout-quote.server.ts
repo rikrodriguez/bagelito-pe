@@ -85,13 +85,11 @@ export async function quoteGuidedOrder(input: GuidedQuoteRequest): Promise<Guide
     if (schmear.status !== 'ready' || typeof schmear.publishedBasePen !== 'number') {
       return review(pack.publishedBasePen, schmear.reasons, true)
     }
-    return {
-      status: 'ready',
-      checkoutAllowed: true,
-      amountPen: pack.publishedBasePen + schmear.publishedBasePen,
-      reasons: [],
-      batchAccepting: true,
-    }
+    return review(
+      pack.publishedBasePen + schmear.publishedBasePen,
+      ['El esquema transaccional actual todavía no persiste schmears dentro del pedido; no se cobrará hasta portar esa línea de producto.'],
+      true,
+    )
   }
 
   if (category === 'schmears') {
@@ -106,7 +104,11 @@ export async function quoteGuidedOrder(input: GuidedQuoteRequest): Promise<Guide
     if (addOnBagels > 0) {
       return review(schmear.publishedBasePen, ['El precio del cross-sell de 2 u 8 bagels todavía no está aprobado para cobro automático.'], true)
     }
-    return { status: 'ready', checkoutAllowed: true, amountPen: schmear.publishedBasePen, reasons: [], batchAccepting: true }
+    return review(
+      schmear.publishedBasePen,
+      ['El esquema transaccional actual todavía no soporta pedidos standalone de schmear.'],
+      true,
+    )
   }
 
   if (category === 'combos') {
