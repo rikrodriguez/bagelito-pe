@@ -18,12 +18,45 @@ jobs:
         with:
           node-version: 22
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
-      - name: Build and typecheck
-        run: npm run typecheck
-      - name: Verify generated route tree is current
+        shell: bash
         run: |
-          git diff --exit-code -- src/routeTree.gen.ts || {
-            echo "routeTree.gen.ts is stale. Run TanStack route generation and commit the result."
-            exit 1
-          }
+          set +e
+          npm install --no-audit --no-fund > ci-install.log 2>&1
+          code=$?
+          echo "$code" > ci-install.exit
+          cat ci-install.log
+          exit 0
+      - name: Build and typecheck
+        shell: bash
+        run: |
+          set +e
+          if [ "$(cat ci-install.exit)" = "0" ]; then
+            npm run typecheck > ci-build.log 2>&1
+            code=$?
+          else
+            echo "Skipped because dependency installation failed." > ci-build.log
+            code=99
+          fi
+          echo "$code" > ci-build.exit
+          cat ci-build.log
+          git diff -- src/routeTree.gen.ts > ci-route-tree.diff
+          exit 0
+      - name: Upload audit logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guided-store-ci-logs
+          path: |
+            ci-install.log
+            ci-install.exit
+            ci-build.log
+            ci-build.exit
+            ci-route-tree.diff
+          if-no-files-found: error
+          retention-days: 3
+      - name: Enforce checks
+        shell: bash
+        run: |
+          test "$(cat ci-install.exit)" = "0"
+          test "$(cat ci-build.exit)" = "0"
+          test ! -s ci-route-tree.diff
