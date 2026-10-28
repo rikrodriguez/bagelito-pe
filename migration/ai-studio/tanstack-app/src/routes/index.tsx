@@ -228,12 +228,12 @@ function PackBuilder(props: {
     <BuilderHeading step="PACKS · PASO 1" title="¿Grandes o Minis?" copy="Primero elige el tamaño. Luego cantidad y sabores." />
     <div className="format-grid">
       <button type="button" className="format-card" onClick={() => props.onFormat('grande')}>
-        <span className="format-art large"><img src="https://bagelito.pe/images/pack-6-mixed.webp" alt="Pack de bagels grandes" /></span>
+        <span className="format-art large"><img src="/images/pack-6-mixed.webp" alt="Pack de bagels grandes" /></span>
         <span><strong>Bagels grandes</strong><small>6 o 12 bagels</small></span><b>→</b>
       </button>
       <button type="button" className="format-card" onClick={() => props.onFormat('mini')}>
         <span className="format-art minis">
-          {menu.bagels.slice(0, 3).map((bagel) => <img key={bagel.id} src={bagel.website_image} alt="" />)}
+          {menu.bagels.slice(0, 3).map((bagel) => <img key={bagel.id} src={localProductImage(bagel.website_image)} alt="" />)}
         </span>
         <span><strong>Mini bagels</strong><small>6, 12 o 24 minis</small></span><b>→</b>
       </button>
@@ -315,7 +315,7 @@ function SchmearPicker({ value, onChange }: { value: string; onChange: (value: s
 function ProductRail({ selected }: { selected: string[] }) {
   return <div className="product-rail" aria-label="Sabores de bagel">
     {menu.bagels.map((bagel) => <article key={bagel.id} className={selected.includes(bagel.id) ? 'active' : ''}>
-      <img src={bagel.website_image} alt={bagel.name} loading="lazy" />
+      <img src={localProductImage(bagel.website_image)} alt={bagel.name} loading="lazy" />
       <strong>{bagel.name}</strong>{bagel.premium && <small>Premium</small>}
     </article>)}
   </div>
