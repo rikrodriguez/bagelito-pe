@@ -1,11 +1,10 @@
 import { randomBytes } from 'node:crypto'
+import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { quoteGuidedOrder, type GuidedQuoteRequest } from './checkout-quote.server'
 import { getDeliveryFee, isSupportedDistrict } from './delivery-pricing.server'
 import { enforcePublicApiSecurity, PublicApiError } from './public-api-security.server'
 import { createSupabaseAdminClient } from './supabase-admin.server'
-
-export const CHECKOUT_LEGAL_VERSION = '2026-10-26' as const
 
 type CheckoutCustomer = {
   checkoutSessionId?: unknown
