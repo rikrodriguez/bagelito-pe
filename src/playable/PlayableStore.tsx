@@ -500,7 +500,7 @@ function ProductionPortal(){
     <mesh position={[0,.95,.075]}><boxGeometry args={[8.4,.11,.08]}/><meshStandardMaterial color={BLUE}/></mesh>
     <mesh position={[0,-.95,.075]}><boxGeometry args={[8.4,.11,.08]}/><meshStandardMaterial color="#d3d9dc" metalness={.55}/></mesh>
     <Html transform position={[0,.25,.09]} distanceFactor={4.6} className="production-copy">
-      <div><small>HECHOS AQUÍ</small><b>Fresh bagels. Happier days.</b><span>Mira cómo los hacemos mientras armamos tu pedido.</span></div>
+      <div><small>HECHOS AQUÍ</small><b>Hecho a mano, cada día.</b><span>Mira cómo los hacemos mientras armamos tu pedido.</span></div>
     </Html>
   </group>
 }
@@ -543,9 +543,9 @@ function MenuBoard(){
     <Html transform position={[0,0,.065]} distanceFactor={4.1} className="menu-board">
       <div>
         <h4>BAGELS</h4>
-        {menu.bagels.map(b=><p key={b.id}><span>{b.name.toUpperCase()}</span><b>8</b></p>)}
+        {menu.bagels.map(b=><p key={b.id}><span>{b.name.toUpperCase()}</span><b>{b.premium ? "PREMIUM" : "BAGEL"}</b></p>)}
         <h4>SCHMEARS</h4>
-        {menu.schmears.map(s=><p key={s.id}><span>{s.name.toUpperCase()}</span><b>7</b></p>)}
+        {menu.schmears.map(s=><p key={s.id}><span>{s.name.toUpperCase()}</span><b>SCHMEAR</b></p>)}
       </div>
     </Html>
   </group>
@@ -707,14 +707,10 @@ function DoughBalls(){
 
 function Worker({position,phase}:{position:V3;phase:number}){
   const g=useRef<THREE.Group>(null)
-  useFrame(({clock})=>{if(g.current){g.current.rotation.z=Math.sin(clock.elapsedTime*2.8+phase)*.035}})
+  useFrame(({clock})=>{if(g.current){g.current.rotation.z=Math.sin(clock.elapsedTime*2.8+phase)*.022}})
   return <group ref={g} position={position}>
-    <mesh position={[0,1.76,0]}><sphereGeometry args={[.2,16,16]}/><meshStandardMaterial color="#c98f6a"/></mesh>
-    <mesh position={[0,1.38,0]}><cylinderGeometry args={[.22,.28,.13,16]}/><meshStandardMaterial color={BLUE}/></mesh>
-    <mesh position={[0,1.12,0]}><capsuleGeometry args={[.3,.64,5,10]}/><meshStandardMaterial color="#f5f4ef"/></mesh>
-    <mesh position={[0,1.02,.27]}><boxGeometry args={[.54,.68,.035]}/><meshStandardMaterial color={BLUE}/></mesh>
-    <mesh position={[-.28,1.0,.36]} rotation={[-.65,0,.25]}><capsuleGeometry args={[.07,.42,4,8]}/><meshStandardMaterial color="#c98f6a"/></mesh>
-    <mesh position={[.28,1.0,.36]} rotation={[-.65,0,-.25]}><capsuleGeometry args={[.07,.42,4,8]}/><meshStandardMaterial color="#c98f6a"/></mesh>
+    <CharacterBody shirt="#f7f6f3" uniform/>
+    <mesh position={[0,2.04,0]}><cylinderGeometry args={[.24,.24,.055,20]}/><meshStandardMaterial color="#fffaf4"/></mesh>
   </group>
 }
 
@@ -747,9 +743,7 @@ function Bag({position}:{position:V3}){
 
 function CashierNPC({position}:{position:V3}){
   return <group position={position}>
-    <mesh position={[0,1.72,0]}><sphereGeometry args={[.2,16,16]}/><meshStandardMaterial color="#c58b68"/></mesh>
-    <mesh position={[0,1.12,0]}><capsuleGeometry args={[.3,.64,5,10]}/><meshStandardMaterial color="#f5f4ef"/></mesh>
-    <mesh position={[0,1.02,.26]}><boxGeometry args={[.54,.7,.035]}/><meshStandardMaterial color={BLUE}/></mesh>
+    <CharacterBody shirt="#f9f7f2" uniform/>
   </group>
 }
 
@@ -790,10 +784,36 @@ function AmbientPeople({step}:{step:Step}){
   </>
 }
 
+/* Fully articulated bakery silhouettes replace the old sphere + capsule placeholders.
+   Keep the same positions/routes so foreground sales cameras stay unobstructed. */
+function CharacterBody({shirt,skin='#c58e6d',uniform=false,seated=false,walking=false}:{shirt:string;skin?:string;uniform?:boolean;seated?:boolean;walking?:boolean}){
+  const pants=uniform?'#46566b':'#3b4f65'
+  const sole='#29343d'
+  return <group>
+    <RoundedBox castShadow position={[0,seated?.96:1.18,0]} args={[.53,.72,.33]} radius={.09}><meshStandardMaterial color={shirt} roughness={.88}/></RoundedBox>
+    <mesh castShadow position={[0,seated?1.36:1.62,0]}><cylinderGeometry args={[.105,.12,.16,14]}/><meshStandardMaterial color={skin} roughness={.93}/></mesh>
+    <mesh castShadow position={[0,seated?1.60:1.85,0]}><sphereGeometry args={[.225,24,18]}/><meshStandardMaterial color={skin} roughness={.93}/></mesh>
+    <mesh castShadow position={[0,seated?1.77:2.01,-.02]} scale={[1.02,.35,1]}><sphereGeometry args={[.224,20,12]}/><meshStandardMaterial color={uniform?'#322a29':'#403832'} roughness={.97}/></mesh>
+    <mesh position={[-.23,seated?1.60:1.85,0]}><sphereGeometry args={[.037,12,10]}/><meshStandardMaterial color={skin}/></mesh>
+    <mesh position={[.23,seated?1.60:1.85,0]}><sphereGeometry args={[.037,12,10]}/><meshStandardMaterial color={skin}/></mesh>
+    {[-1,1].map(side=><group key={side}>
+      <mesh castShadow position={[side*.37,seated?.98:1.20,.015]} rotation={[0,0,side*.13]}><capsuleGeometry args={[.09,.44,6,12]}/><meshStandardMaterial color={shirt} roughness={.9}/></mesh>
+      <mesh position={[side*.42,seated?.70:.91,.035]}><sphereGeometry args={[.095,14,10]}/><meshStandardMaterial color={skin} roughness={.93}/></mesh>
+      <mesh castShadow position={[side*.145,seated?.49:.43,seated?.30:.015]} rotation={[seated?1.12:walking?side*.14:0,0,0]}><capsuleGeometry args={[.125,.49,6,12]}/><meshStandardMaterial color={pants} roughness={.94}/></mesh>
+      <RoundedBox castShadow position={[side*.15,seated?.22:.08,seated?.53:.12]} args={[.22,.12,.35]} radius={.035}><meshStandardMaterial color={sole} roughness={.8}/></RoundedBox>
+    </group>)}
+    {uniform&&<>
+      <RoundedBox position={[0,1.07,.185]} args={[.42,.64,.038]} radius={.025}><meshStandardMaterial color="#004aad" roughness={.74}/></RoundedBox>
+      <mesh position={[0,1.26,.209]}><boxGeometry args={[.27,.055,.014]}/><meshStandardMaterial color="#fffaf4"/></mesh>
+      <mesh position={[0,1.05,.21]}><boxGeometry args={[.24,.014,.012]}/><meshStandardMaterial color="#fffaf4"/></mesh>
+      <mesh position={[0,.98,.21]}><boxGeometry args={[.24,.014,.012]}/><meshStandardMaterial color="#fffaf4"/></mesh>
+    </>}
+  </group>
+}
+
 function NPC({position,shirt,seated=false}:{position:V3;shirt:string;seated?:boolean}){
-  return <group position={position} scale={seated?.72:.82}>
-    <mesh position={[0,seated?1.18:1.72,0]}><sphereGeometry args={[.2,14,14]}/><meshStandardMaterial color="#c58e6d"/></mesh>
-    <mesh position={[0,seated?.68:1.1,0]}><capsuleGeometry args={[.28,.64,5,10]}/><meshStandardMaterial color={shirt}/></mesh>
+  return <group position={position} scale={.83}>
+    <CharacterBody shirt={shirt} seated={seated}/>
   </group>
 }
 
@@ -808,10 +828,9 @@ function MovingNPC({from,to,shirt,backpack,bag,phase}:{from:V3;to:V3;shirt:strin
     g.current.rotation.y=Math.atan2((raw<1?b.x-a.x:a.x-b.x),(raw<1?b.z-a.z:a.z-b.z))
   })
   return <group ref={g} scale={.82}>
-    <mesh position={[0,1.72,0]}><sphereGeometry args={[.2,14,14]}/><meshStandardMaterial color="#c58e6d"/></mesh>
-    <mesh position={[0,1.1,0]}><capsuleGeometry args={[.28,.64,5,10]}/><meshStandardMaterial color={shirt}/></mesh>
-    {backpack&&<RoundedBox position={[0,1.15,.28]} args={[.5,.72,.2]} radius={.05}><meshStandardMaterial color={backpack}/></RoundedBox>}
-    {bag&&<Bag position={[.4,.8,.05]}/>}
+    <CharacterBody shirt={shirt} walking/>
+    {backpack&&<RoundedBox castShadow position={[0,1.18,.28]} args={[.45,.77,.26]} radius={.07}><meshStandardMaterial color={backpack} roughness={.76}/></RoundedBox>}
+    {bag&&<Bag position={[.48,.76,.12]}/>}
   </group>
 }
 
