@@ -187,7 +187,7 @@ export function CulqiBrowserCheckout(props: {
   const callbackConsumedRef = useRef(false)
   const checkoutSessionIdRef = useRef<string | null>(null)
   const reservationExpiresAtRef = useRef<number | null>(null)
-  const reservationTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null)
+  const reservationTimerRef = useRef<number | null>(null)
   const paymentAttemptStartedRef = useRef(false)
   const aliveRef = useRef(true)
 
