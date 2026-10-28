@@ -236,9 +236,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     if (scene === 'cashier') return base + 'cashier.webp'
     if (scene === 'pay') return base + 'pay.webp'
     if (scene === 'receipt') return base + 'receipt.webp'
-    if (scene === 'wallet') return base + 'wallet.webp'
+    if (scene === 'wallet') return '/store-entry-door.webp'
     if (scene === 'handoff') return base + 'bag-handoff.webp'
-    if (scene === 'returning') return base + 'inside.webp'
+    if (scene === 'returning') return '/store-entry-door.webp'
     if (scene === 'goodbye') return '/store-entry-door.webp'
     return base + 'goodbye.webp'
   }, [scene])
@@ -467,6 +467,30 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </section>}
 
     {scene === 'bagels' && <>
+      <section className="mobile-product-stage mobile-bagel-stage" aria-label="Selecciona sabores de bagels">
+        <header>
+          <small>VITRINA BAGELITO · {packFormat === 'mini' && category === 'packs' ? 'MINIS' : 'GRANDES'}</small>
+          <h2>Elige tus sabores</h2>
+          <span>{bagelTotal} de {bagelTarget} seleccionados</span>
+        </header>
+        <div className="mobile-bagel-grid">
+          {menu.bagels.map((bagel) => {
+            const count = bagelCounts[bagel.id] ?? 0
+            return <article key={bagel.id} className="mobile-bagel-card" data-selected={count > 0}>
+              <button type="button" onClick={() => addBagel(bagel.id)} aria-label={'Agregar ' + bagel.name}>
+                <img src={'/images/bagel-' + bagel.id + '.webp'} alt={bagel.name} loading="eager" />
+                <span>{bagel.name}</span>
+                {bagel.premium && <small>Premium</small>}
+                <b aria-hidden="true">+</b>
+              </button>
+              {count > 0 && <div className="mobile-product-count">
+                <button type="button" onClick={() => removeBagel(bagel.id)} aria-label={'Quitar ' + bagel.name}>−</button>
+                <strong>{count}</strong>
+              </div>}
+            </article>
+          })}
+        </div>
+      </section>
       <div className="guided-product-frame bagel-product-frame"><img src={sceneImage} alt="Vitrina de bagels" /><div className="guided-product-hotspots bagel-hotspots">
         {menu.bagels.map((bagel, index) => {
           const count = bagelCounts[bagel.id] ?? 0
@@ -495,6 +519,30 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </>}
 
     {scene === 'schmears' && <>
+      <section className="mobile-product-stage mobile-schmear-stage" aria-label="Selecciona sabores de schmears">
+        <header>
+          <small>ESTACIÓN DE SCHMEARS · {schmearSize} G</small>
+          <h2>Elige tu schmear</h2>
+          <span>{category === 'packs' ? 'Un toque extra, opcional' : schmearTotal + ' de ' + schmearTarget + ' seleccionados'}</span>
+        </header>
+        <div className="mobile-schmear-grid">
+          {menu.schmears.map((item, index) => {
+            const count = schmearCounts[item.id] ?? 0
+            return <article key={item.id} className="mobile-schmear-card" data-selected={count > 0}>
+              <button type="button" onClick={() => addSchmear(item.id)} aria-label={'Agregar ' + item.name}>
+                <span className="mobile-schmear-pot" style={{backgroundImage: 'url("' + sceneImage + '")', backgroundPosition: (index * 25) + '% center'}} />
+                <span className="mobile-schmear-label">{item.name}</span>
+                {item.note && <small>{item.note}</small>}
+                <b aria-hidden="true">{count ? '✓' : '+'}</b>
+              </button>
+              {count > 0 && category === 'combos' && <div className="mobile-product-count">
+                <button type="button" onClick={() => removeSchmear(item.id)} aria-label={'Quitar ' + item.name}>−</button>
+                <strong>{count}</strong>
+              </div>}
+            </article>
+          })}
+        </div>
+      </section>
       <div className="guided-product-frame schmear-product-frame"><img src={sceneImage} alt="Estación de schmears" /><div className="guided-product-hotspots schmear-hotspots">
         {menu.schmears.map((item, index) => {
           const count = schmearCounts[item.id] ?? 0
