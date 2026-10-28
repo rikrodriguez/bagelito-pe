@@ -270,7 +270,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
   function nextFromSchmears() {
     if (category === 'schmears') {
-      setScene('cross-sell')
+      setScene(qaMode ? 'cross-sell' : 'cashier')
       return
     }
     if (category === 'packs') {
