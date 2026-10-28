@@ -79,3 +79,15 @@
   .guided-cashier-copy{width:min(300px,82vw)}
   .guided-returning-action{left:14px;right:14px;bottom:18px;max-width:none}
 }
+
+.guided-payment-gate{position:absolute;z-index:96;inset:0;pointer-events:none}
+.guided-payment-copy{position:absolute;left:8%;bottom:8%;width:min(330px,34vw);padding:16px 18px;border-radius:24px;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);box-shadow:0 16px 40px rgba(0,30,70,.16);display:flex;flex-direction:column;gap:4px;pointer-events:auto}
+.guided-payment-copy small{font-size:8px;letter-spacing:.18em;font-weight:950;color:#71849a}
+.guided-payment-copy b{font-size:26px;line-height:1;color:#004aad}
+.guided-payment-copy span{font-size:9px;line-height:1.45;color:#6c8197;font-weight:700}
+.guided-payment-gate .guided-pay-hotspot{pointer-events:auto}
+.guided-payment-gate .guided-pay-hotspot:disabled{cursor:not-allowed;opacity:.58}
+.guided-payment-gate .guided-pay-hotspot:disabled span{background:#dfe7ed;color:#71849a}
+@media(max-width:800px){
+  .guided-payment-copy{left:14px;bottom:82px;width:calc(100% - 28px)}
+}
