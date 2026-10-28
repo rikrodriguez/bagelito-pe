@@ -1,7 +1,7 @@
 import { flavors } from "@/data/flavors";
 import { packs } from "@/data/packs";
 import { isBatchAcceptingOrders } from "@/lib/batch-availability";
-import { getDeliveryFee } from "@/lib/delivery-pricing";
+import { districtOptions, getDeliveryFee } from "@/lib/delivery-pricing";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export type InstagramLiveContextRequest = {
@@ -136,7 +136,17 @@ export async function getInstagramLiveContext(
     }
   }
 
-  const district = request.district?.trim() || null;
+  const requestedDistrict = request.district?.trim() || null;
+  const district = requestedDistrict
+    ? districtOptions.find(
+        (option) =>
+          option.toLocaleLowerCase("es") === requestedDistrict.toLocaleLowerCase("es"),
+      ) ?? null
+    : null;
+
+  if (requestedDistrict && !district) {
+    warnings.push("delivery_district_unrecognized");
+  }
 
   return {
     generatedAt: new Date().toISOString(),
