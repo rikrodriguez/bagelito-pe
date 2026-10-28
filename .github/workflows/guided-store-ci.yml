@@ -1,0 +1,29 @@
+name: Guided Store CI
+
+on:
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build and typecheck
+        run: npm run typecheck
+      - name: Verify generated route tree is current
+        run: |
+          git diff --exit-code -- src/routeTree.gen.ts || {
+            echo "routeTree.gen.ts is stale. Run TanStack route generation and commit the result."
+            exit 1
+          }
