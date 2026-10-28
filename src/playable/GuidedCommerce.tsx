@@ -8,8 +8,10 @@ const combos = menu.historicalPublishedCombos
 type Category = 'packs' | 'combos' | 'schmears'
 type PackFormat = 'grande' | 'mini'
 type Scene =
+  | 'entrance'
   | 'selector'
-  | 'packs'
+  | 'pack-size'
+  | 'pack-qty'
   | 'combos'
   | 'schmear-size'
   | 'bagels'
@@ -21,6 +23,7 @@ type Scene =
   | 'wallet'
   | 'handoff'
   | 'goodbye'
+  | 'returning'
 
 type BagelMode = 'pack' | 'combo' | 'upsell8' | 'downsell2'
 
@@ -44,7 +47,7 @@ const SCHMEAR_SPOTS = [
 ] as const
 
 export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; customerName?: string | null }) {
-  const [scene, setScene] = useState<Scene>('selector')
+  const [scene, setScene] = useState<Scene>('entrance')
   const [category, setCategory] = useState<Category | null>(null)
   const [packFormat, setPackFormat] = useState<PackFormat>('grande')
   const [packQty, setPackQty] = useState(6)
@@ -72,7 +75,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
   const schmearTarget = category === 'combos' ? selectedCombo?.schmear_count ?? 0 : 1
 
-  const progressIndex = scene === 'selector' || scene === 'packs' || scene === 'combos' || scene === 'schmear-size'
+  const progressIndex = scene === 'selector' || scene === 'pack-size' || scene === 'pack-qty' || scene === 'combos' || scene === 'schmear-size'
     ? 0
     : scene === 'bagels'
       ? 1
@@ -83,20 +86,22 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           : 4
 
   const sceneImage = useMemo(() => {
-    const base='/master-scenes-clean/'
-    if (scene === 'selector') return base+'selector.webp'
-    if (scene === 'packs') return base+'packs.webp'
-    if (scene === 'combos') return base+'combos.webp'
-    if (scene === 'schmear-size') return base+'schmears.webp'
-    if (scene === 'bagels') return base+'bagels-vitrina.webp'
-    if (scene === 'schmears') return base+'schmears-vitrina.webp'
-    if (scene === 'cross-sell') return base+'cross-sell.webp'
-    if (scene === 'cashier') return base+'cashier.webp'
-    if (scene === 'pay') return base+'pay.webp'
-    if (scene === 'receipt') return base+'receipt.webp'
-    if (scene === 'wallet') return base+'wallet.webp'
-    if (scene === 'handoff') return base+'bag-handoff.webp'
-    return base+'goodbye.webp'
+    const base = '/master-scenes-clean/'
+    if (scene === 'entrance') return base + 'entrance.webp'
+    if (scene === 'selector') return base + 'selector.webp'
+    if (scene === 'pack-size' || scene === 'pack-qty') return base + 'packs.webp'
+    if (scene === 'combos') return base + 'combos.webp'
+    if (scene === 'schmear-size') return base + 'schmears.webp'
+    if (scene === 'bagels') return base + 'bagels-vitrina.webp'
+    if (scene === 'schmears') return base + 'schmears-vitrina.webp'
+    if (scene === 'cross-sell') return base + 'cross-sell.webp'
+    if (scene === 'cashier') return base + 'cashier.webp'
+    if (scene === 'pay') return base + 'pay.webp'
+    if (scene === 'receipt') return base + 'receipt.webp'
+    if (scene === 'wallet') return base + 'wallet.webp'
+    if (scene === 'handoff') return base + 'bag-handoff.webp'
+    if (scene === 'returning') return base + 'inside.webp'
+    return base + 'goodbye.webp'
   }, [scene])
 
   function resetSelections() {
@@ -107,13 +112,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   function chooseCategory(value: Category) {
     setCategory(value)
     resetSelections()
-    if (value === 'packs') setScene('packs')
+    if (value === 'packs') setScene('pack-size')
     if (value === 'combos') setScene('combos')
     if (value === 'schmears') setScene('schmear-size')
   }
 
-  function choosePack(format: PackFormat, qty: number, mix: 'mixed'|'single') {
+  function choosePackFormat(format: PackFormat) {
     setPackFormat(format)
+    setPackQty(format === 'mini' ? 6 : 6)
+    setPackMix('mixed')
+    setScene('pack-qty')
+  }
+
+  function choosePack(qty: number, mix: 'mixed'|'single') {
     setPackQty(qty)
     setPackMix(mix)
     setBagelMode('pack')
@@ -207,18 +218,6 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     setScene('bagels')
   }
 
-  function declinePrimaryUpsell() {
-    document.documentElement.dataset.bagelitoOffer = 'downsell'
-  }
-
-  function toPay() {
-    setScene('pay')
-  }
-
-  function fakePay() {
-    setScene('receipt')
-  }
-
   function pullReceipt() {
     setReceiptPulled(true)
     window.setTimeout(() => setScene('wallet'), 700)
@@ -229,22 +228,16 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     window.setTimeout(() => setScene('handoff'), 650)
   }
 
-  function skipWallet() {
-    setScene('handoff')
-  }
-
-  function finishHandoff() {
-    setScene('goodbye')
-  }
+  const showProgress = !['entrance', 'goodbye', 'returning'].includes(scene)
 
   return <div className="guided-commerce" data-scene={scene}>
-    <div className="guided-scene-backdrop" style={{backgroundImage:'url("'+sceneImage+'")'}} />
-    {scene!=='bagels'&&scene!=='schmears'&&<img className="guided-scene-image" src={sceneImage} alt="" />}
+    <div className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />
+    {scene !== 'bagels' && scene !== 'schmears' && <img className="guided-scene-image" src={sceneImage} alt="" />}
     <div className="guided-scene-vignette" />
 
-    <button className="guided-close" type="button" onClick={onExit}>×</button>
+    <button className="guided-close" type="button" onClick={onExit} aria-label="Cerrar experiencia">×</button>
 
-    <div className="guided-progress-master">
+    {showProgress && <div className="guided-progress-master">
       {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => <div
         key={label}
         data-active={progressIndex === index}
@@ -253,10 +246,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         <i>{progressIndex > index ? '✓' : index + 1}</i>
         <span>{label}</span>
       </div>)}
-    </div>
+    </div>}
+
+    {scene === 'entrance' && <div className="guided-entrance-action">
+      <div>
+        <small>BAGELITO STORE</small>
+        <h1>Entra. Elige. Disfruta.</h1>
+        <p>Una visita guiada, como entrar al Bagelito real.</p>
+      </div>
+      <button onClick={() => setScene('selector')}>Entrar a Bagelito <b>→</b></button>
+    </div>}
 
     {scene === 'selector' && <>
-      {customerName&&<div className="guided-welcome">¡Hola {customerName}! Bienvenida de vuelta ;)</div>}
+      {customerName && <div className="guided-welcome">Hola {customerName}. ¿Qué te provoca hoy?</div>}
       <div className="guided-selector-hitboxes">
         <button aria-label="Packs" onClick={() => chooseCategory('packs')} />
         <button aria-label="Combos" onClick={() => chooseCategory('combos')} />
@@ -264,15 +266,30 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       </div>
     </>}
 
-    {scene === 'packs' && <div className="guided-floating-panel pack-config-panel">
-      <small>PACKS</small>
-      <h2>Elige tu pack</h2>
+    {scene === 'pack-size' && <div className="guided-floating-panel pack-size-panel">
+      <small>PACKS · PASO 1</small>
+      <h2>¿Grandes o minis?</h2>
+      <p>Primero eliges el formato. Después cantidad y sabores.</p>
+      <div className="pack-format-grid">
+        <button onClick={() => choosePackFormat('grande')}>
+          <span className="pack-format-art"><img src="/images/bagel-everything.webp" alt="" /></span>
+          <span><b>Bagels grandes</b><small>6 o 12 bagels</small></span><i>→</i>
+        </button>
+        <button onClick={() => choosePackFormat('mini')}>
+          <span className="pack-format-art mini"><img src="/images/bagel-plain.webp" alt="" /></span>
+          <span><b>Mini bagels</b><small>6, 12 o 24 minis</small></span><i>→</i>
+        </button>
+      </div>
+    </div>}
+
+    {scene === 'pack-qty' && <div className="guided-floating-panel pack-config-panel">
+      <button className="panel-back" onClick={() => setScene('pack-size')}>←</button>
+      <small>PACKS · {packFormat === 'mini' ? 'MINIS' : 'GRANDES'}</small>
+      <h2>¿Cuántos quieres?</h2>
       <div className="pack-choice-grid">
-        <button onClick={() => choosePack('grande', 6, 'mixed')}><b>Grandes · 6</b><span>S/60 mixto</span></button>
-        <button onClick={() => choosePack('grande', 12, 'mixed')}><b>Grandes · 12</b><span>S/115 mixto</span></button>
-        <button onClick={() => choosePack('mini', 6, 'mixed')}><b>Minis · 6</b><span>S/25 mixto</span></button>
-        <button onClick={() => choosePack('mini', 12, 'mixed')}><b>Minis · 12</b><span>S/40 mixto</span></button>
-        <button onClick={() => choosePack('mini', 24, 'mixed')}><b>Minis · 24</b><span>S/75 mixto</span></button>
+        {(packFormat === 'mini' ? [6, 12, 24] : [6, 12]).map((qty) => <button key={qty} onClick={() => choosePack(qty, 'mixed')}>
+          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Mixto</small>
+        </button>)}
       </div>
       <p>En la siguiente escena eliges los sabores directamente de la vitrina.</p>
     </div>}
@@ -283,13 +300,13 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
     {scene === 'schmear-size' && <section className="guided-floating-panel schmear-size-panel">
       <small>SCHMEARS</small><h2>Elige tamaño</h2>
-      <div className="guided-size-cards">{menu.schmearSizes.map((size)=><button key={size.grams} onClick={()=>chooseSchmearSize(size.grams)}>
+      <div className="guided-size-cards">{menu.schmearSizes.map((size) => <button key={size.grams} onClick={() => chooseSchmearSize(size.grams)}>
         <b>{size.grams} g</b><span>Original S/{size.original_price} · Sabores S/{size.flavoured_price}</span>
       </button>)}</div>
     </section>}
 
     {scene === 'bagels' && <>
-      <div className="guided-product-frame bagel-product-frame"><img src={sceneImage} alt="Vitrina de bagels"/><div className="guided-product-hotspots bagel-hotspots">
+      <div className="guided-product-frame bagel-product-frame"><img src={sceneImage} alt="Vitrina de bagels" /><div className="guided-product-hotspots bagel-hotspots">
         {menu.bagels.map((bagel, index) => {
           const count = bagelCounts[bagel.id] ?? 0
           return <button
@@ -313,7 +330,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </>}
 
     {scene === 'schmears' && <>
-      <div className="guided-product-frame schmear-product-frame"><img src={sceneImage} alt="Estación de schmears"/><div className="guided-product-hotspots schmear-hotspots">
+      <div className="guided-product-frame schmear-product-frame"><img src={sceneImage} alt="Estación de schmears" /><div className="guided-product-hotspots schmear-hotspots">
         {menu.schmears.map((item, index) => {
           const count = schmearCounts[item.id] ?? 0
           return <button
@@ -338,14 +355,15 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       </button>}
     </>}
 
-    {scene === 'cross-sell' && <CrossSellPanel onPrimary={acceptPrimaryUpsell} onDownsell={acceptDownsell} onSkip={() => setScene('cashier')} onRevealDownsell={declinePrimaryUpsell} />}
+    {scene === 'cross-sell' && <CrossSellPanel onPrimary={acceptPrimaryUpsell} onDownsell={acceptDownsell} onSkip={() => setScene('cashier')} />}
 
     {scene === 'cashier' && <div className="guided-cashier-action">
-      <button onClick={toPay}>Revisar pedido y pagar <b>→</b></button>
+      <div className="guided-cashier-copy"><small>CAJA BAGELITO</small><b>Tu pedido está listo para revisar.</b></div>
+      <button onClick={() => setScene('pay')}>Revisar pedido y pagar <b>→</b></button>
     </div>}
 
-    {scene === 'pay' && <button className="guided-pay-hotspot" onClick={fakePay} aria-label="Pagar con Culqi">
-      <span>Pagar</span>
+    {scene === 'pay' && <button className="guided-pay-hotspot" onClick={() => setScene('receipt')} aria-label="Continuar con pago Culqi">
+      <span>Continuar con Culqi</span>
     </button>}
 
     {scene === 'receipt' && <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
@@ -362,29 +380,33 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
     {scene === 'wallet' && <div className="wallet-actions">
       <button onClick={saveWallet}>{walletSaved ? 'Guardada ✓' : 'Agregar a Wallet'}</button>
-      <button onClick={skipWallet}>Ahora no</button>
+      <button onClick={() => setScene('handoff')}>Ahora no</button>
     </div>}
 
-    {scene === 'handoff' && <button className="handoff-action" onClick={finishHandoff}>Recibir pedido <b>→</b></button>}
+    {scene === 'handoff' && <button className="handoff-action" onClick={() => setScene('goodbye')}>Recibir pedido <b>→</b></button>}
 
     {scene === 'goodbye' && <div className="goodbye-actions">
       <button onClick={onExit}>Salir de Bagelito</button>
-      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections() }}>Seguir explorando</button>
+      <button onClick={() => setScene('returning')}>Seguir explorando</button>
+    </div>}
+
+    {scene === 'returning' && <div className="guided-returning-action">
+      <div><small>CLIENTE RECURRENTE</small><h2>Ya conoces el camino.</h2><p>El local sigue vivo alrededor de ti mientras vuelves a pedir.</p></div>
+      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); setWalletSaved(false) }}>Volver al tótem <b>→</b></button>
     </div>}
   </div>
 }
 
-function CrossSellPanel({ onPrimary, onDownsell, onSkip, onRevealDownsell }: {
+function CrossSellPanel({ onPrimary, onDownsell, onSkip }: {
   onPrimary: () => void
   onDownsell: () => void
   onSkip: () => void
-  onRevealDownsell: () => void
 }) {
   const [showDownsell, setShowDownsell] = useState(false)
   return <div className="cross-sell-actions">
     {!showDownsell ? <>
       <button className="primary" onClick={onPrimary}>Sí, quiero 8 🥯</button>
-      <button onClick={() => { setShowDownsell(true); onRevealDownsell() }}>Solo el schmear</button>
+      <button onClick={() => setShowDownsell(true)}>Solo el schmear</button>
     </> : <>
       <button className="primary" onClick={onDownsell}>Sí, agregar 2</button>
       <button onClick={onSkip}>No, gracias</button>
