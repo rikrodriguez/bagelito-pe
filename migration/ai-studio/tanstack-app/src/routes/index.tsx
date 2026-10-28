@@ -22,6 +22,7 @@ const menu = getVerifiedDisplayMenu()
 const firstFlavor = menu.bagels[0]?.id ?? 'plain'
 const secondFlavor = menu.bagels[1]?.id ?? firstFlavor
 const firstSchmear = menu.schmears[0]?.id ?? 'whipped-original'
+const localProductImage = (url: string) => url.replace('https://bagelito.pe', '')
 
 function BagelitoStore() {
   const [stage, setStage] = useState<Stage>('entry')
