@@ -102,7 +102,8 @@ export async function coordinateCulqiCharge(input: {
     }
 
     if (!observation.verified) {
-      await finish('uncertain', knownChargeId, { stage: 'reconciliation_required', reason: observation.reason })
+      const stored = await finish('uncertain', knownChargeId, { stage: 'reconciliation_required', reason: observation.reason })
+      if (stored.error) throw new Error(stored.error.message)
       return review()
     }
 
