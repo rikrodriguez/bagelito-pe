@@ -117,3 +117,7 @@
   .handoff-actions{left:12px;right:12px;bottom:14px;align-items:stretch}
   .handoff-actions>div{width:auto;text-align:left}
 }
+
+.guided-cashier-copy strong{font-size:30px;line-height:1;letter-spacing:-.04em;color:#004aad;margin-top:4px}
+.guided-cashier-copy span{font-size:8.5px;line-height:1.45;color:#6d8196;font-weight:700;margin-top:3px}
+.guided-cashier-action>button:disabled{background:#dfe7ed;color:#7a8b9c;box-shadow:none;cursor:not-allowed}
