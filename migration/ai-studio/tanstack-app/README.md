@@ -65,3 +65,4 @@ Original Next source:
 - https://github.com/rikrodriguez/bagelito-pe/tree/main
 
 No test status may be upgraded to PASS until the exact target repo and runtime have produced evidence.
+\n## 2026-10-27 continuation\n\n- Root Next.js typecheck now excludes this nested TanStack app, so the production-safe migration branch does not try to resolve TanStack dependencies from the Next root.\n- The portable Store now follows the approved Bagelito journey and keeps historical printed combos out of the active UI; current combo concept remains **2 bagels + schmear**, unpriced and nonpayable.\n- A UI contract test was added to lock the approved categories, Grandes/Minis fork, local image assets and fail-closed checkout.\n- Vercel validation is currently blocked by the Free plan build-rate limit; do not treat that quota failure as a code-build result.\n
