@@ -215,3 +215,68 @@ export async function fetchCulqiCharge(chargeId: string) {
 
   return payload
 }
+
+
+export type CulqiEvent = {
+  id?: string
+  object?: string
+  type?: string
+  data?: unknown
+}
+
+export async function fetchCulqiEvent(eventId: string) {
+  const cfg = config()
+  if (cfg.mode !== 'sandbox' && cfg.mode !== 'live') throw new Error('Culqi mode unavailable.')
+
+  const env = cfg.mode === 'sandbox' ? 'test' : 'live'
+  if (!new RegExp('^evt_' + env + '_[A-Za-z0-9_-]{8,40}$').test(eventId)) {
+    throw new Error('Invalid Culqi event ID.')
+  }
+
+  const url = 'https://api.culqi.com/v2/events/' + encodeURIComponent(eventId)
+  const request = (headers: Record<string,string>) => withinDeadline((signal) => fetch(url, {
+    method: 'GET',
+    signal,
+    cache: 'no-store',
+    redirect: 'error',
+    credentials: 'omit',
+    headers: {
+      Authorization: 'Bearer ' + cfg.secretKey,
+      Accept: 'application/json',
+      ...headers,
+    },
+  }))
+
+  let response = await request({
+    'x-api-version': '2',
+    'x-culqi-env': env,
+  })
+
+  if (response.redirected || (response.url && response.url !== url)) {
+    throw new Error('Culqi event lookup cannot follow redirects.')
+  }
+
+  let payload = await response.json().catch(() => null) as CulqiEvent | { type?: string; param?: string } | null
+
+  // Culqi's event endpoint has historically accepted both versioned headers
+  // and Authorization-only GETs. Retry once only for a parameter-shaped 400.
+  if (!response.ok && response.status === 400
+    && payload && typeof payload === 'object' && !Array.isArray(payload)
+    && (payload as { type?: unknown }).type === 'parameter_error') {
+    response = await request({})
+    if (response.redirected || (response.url && response.url !== url)) {
+      throw new Error('Culqi event lookup cannot follow redirects.')
+    }
+    payload = await response.json().catch(() => null) as CulqiEvent | null
+  }
+
+  if (!response.ok || !payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    throw new Error('Culqi event could not be verified.')
+  }
+
+  const event = payload as CulqiEvent
+  if (event.id !== eventId || event.object !== 'event' || typeof event.type !== 'string') {
+    throw new Error('Culqi returned an invalid event.')
+  }
+  return event
+}
