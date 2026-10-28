@@ -1,5 +1,6 @@
 import { Bot, CircleUserRound, Languages, MessageCircle, ShieldCheck } from "lucide-react";
-import type { InstagramInboxData } from "@/lib/admin/instagram-inbox";\nimport { InstagramShadowDraftButton } from "./InstagramShadowDraftButton";
+import type { InstagramInboxData } from "@/lib/admin/instagram-inbox";
+import { InstagramShadowDraftButton } from "./InstagramShadowDraftButton";
 
 function languageLabel(language: string) {
   if (language === "es") return "ES";
