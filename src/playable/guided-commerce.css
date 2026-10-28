@@ -823,3 +823,20 @@
     width:auto!important;
   }
 }
+
+
+/* Keep every product hotspot reachable on portrait mobile. */
+@media(max-width:800px){
+  [data-scene="bagels"] .bagel-product-frame{
+    width:124vw!important;
+    max-width:none!important;
+    top:35%!important;
+    transform:translate(-45%,-50%)!important;
+  }
+  [data-scene="schmears"] .schmear-product-frame{
+    width:115vw!important;
+    max-width:none!important;
+    top:37%!important;
+    transform:translate(-50%,-50%)!important;
+  }
+}
