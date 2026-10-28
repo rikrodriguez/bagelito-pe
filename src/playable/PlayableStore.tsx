@@ -42,11 +42,11 @@ const ZONES = {
 const BAGEL_COLORS = ['#d5a15d','#c38a4f','#dcb56f','#b97843','#cb793e','#de8a3d','#9f6847','#8b6653']
 const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 
-export function PlayableStore() {
+export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guided'|'explore' } = {}) {
   const [ready, setReady] = useState(false)
   const [name, setName] = useState<string | null>(null)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
-  const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>('guided')
+  const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>(initialMode)
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
   const [introGuide, setIntroGuide] = useState<'totem'|'vitrina'|null>(null)
