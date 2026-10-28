@@ -51,12 +51,15 @@ function review(amountPen: number | null, reasons: string[], batchAccepting: boo
 }
 
 export async function quoteGuidedOrder(input: GuidedQuoteRequest): Promise<GuidedQuoteResponse> {
-  const batch = await getBatchReadOnly()
+  const category = input.category
+  const requestedPackUnits = category === 'packs' && Number.isInteger(Number(input.packQty))
+    ? Number(input.packQty)
+    : 6
+  const batch = await getBatchReadOnly(requestedPackUnits)
   if (batch.status !== 200 || !batch.batch.accepting) {
-    return unavailable('El batch actual no está aceptando pedidos online.')
+    return unavailable('El batch actual no tiene capacidad para este pedido.')
   }
 
-  const category = input.category
   const bagels = bagelSelection(input.bagels)
   const schmears = schmearSelection(input.schmears)
   const schmearSize = Number(input.schmearSize)
