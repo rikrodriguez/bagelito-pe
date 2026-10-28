@@ -175,8 +175,7 @@ export function PlayableStore() {
 
     <MobilePad move={move} setMove={setMove}/>
     <div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>
-    {guidedCommerce&&<CinematicCommerce customerName={name} onExit={()=>setGuidedCommerce(false)}/>} 
-  </main>
+</main>
 }
 
 function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
