@@ -134,3 +134,7 @@ Historical messages must be used to learn **style and conversational behavior**.
 7. Evaluation against held-out historical conversations.
 8. Draft mode.
 9. Limited autopilot for allowlisted intents.
+
+## Deployment validation
+
+The Instagram webhook must be reachable from a public HTTPS URL before Meta webhook verification. Preview deployments are used for build validation first; production remains Shadow Mode and has no Instagram Send API implementation.
