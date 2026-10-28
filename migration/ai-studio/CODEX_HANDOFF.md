@@ -1,34 +1,47 @@
-# Codex handoff — Bagelito TanStack migration, first executable slice
+# CODEX HANDOFF — Bagelito AI Studio migration
+Status: ready for AI Studio integration, not deployed.
+Last updated: 2026-10-27 (America/Lima).
 
-## Read first
+## Source of truth
+- Current production Next.js: `rikrodriguez/bagelito-pe` on `main`.
+- Active isolated migration PR: https://github.com/rikrodriguez/bagelito-pe/pull/37
+- Portable domain & 26 local tests: `migration/ai-studio/portable-src/` and `migration/ai-studio/tests/`.
+- Independent TanStack Start source scaffold: `migration/ai-studio/tanstack-app/`.
+- Product catalog reference from 2026-10-21: `migration/ai-studio/tanstack-app/src/domain/data/verified-menu-2026-10-21.json` (not authorized live stock).
+- Live site `https://bagelito.pe/` remains unchanged.
 
-- `migration/ai-studio/README.md` and `porting-manifest.json`
-- `src/app/page.tsx`, `src/app/reserve/page.tsx`, `src/app/api/batch/route.ts`
-- `src/lib/reservations/service.ts` and schemas
-- `src/lib/payments/culqi.ts`, `src/app/api/webhooks/culqi/route.ts`
-- `docs/runbook-operativo.md`, `docs/culqi-integracion.md`
+## What is done
+- 12 Next page routes and 18 Next HTTP endpoints inventoried; no automatic copy.
+- Framework-neutral catalog, pricing, preview and batch capacity read functions.
+- Current source contract: 26/26 unit tests PASS locally with independent TypeScript compilation.
+- TanStack Start app files for `/`, `/api/catalog`, `/api/batch`, `__root.tsx`, `router.tsx`, `vite.config.ts`, CSS and README.
+- Read-only server-side Supabase adapter that fails closed (503) if credentials or DB are unavailable.
+- **AI Studio app build/SSR/Git Sync/GHL environment are NOT verified.** No API has charged customers.
 
-Do not rewrite from scratch. Compare every migrated behavior against original Next.js source.
+## Next exact task (do not re-audit)
+1. Open RikMarketing -> Bagelito subaccount -> AI Studio. Confirm an actual `Bagelito Commerce` project exists; otherwise create one. Connect **More -> Git**. Keep AI Studio-generated private repo/branch and do not overwrite its starter blindly.
+2. Clone that AI Studio-generated repository, then integrate `migration/ai-studio/tanstack-app/` from PR #37, resolving version/import differences against the actual baseline. Pin dependencies and generate lockfile in target repo.
+3. Run `npm install`, `npm run typecheck`, `npm run build` in new TanStack target and fix all compiler issues. Capture exact SHA/versions.
+4. Configure **test** Supabase URL and service role in AI Studio Secrets only; never expose keys or connect live data to a public preview before authorization.
+5. Prove endpoints GET `/api/catalog` and GET `/api/batch`, including cache headers, closed-on-failure, no unexpected writes, query compatibility and real Supabase test credentials.
+6. Inspect desktop/mobile actual AI Studio preview. Verify 8 regular bagel photographs, Packs Grande/Mini, Combo 2 bagels + schmear (no sandwich/drink), Schmears sizes and correct selectable options.
+7. Compare the source repo's published menu to the 2026-10-21 menu record. **Do not invent** current offer, premium surcharge, mini flavor availability, combo price, batch cadence or seasonal stock.
+8. Keep all checkout buttons disabled in technical preview. After the review gate: port transactional reservations, price/capacity server authority, Culqi sandbox 3DS, charge and webhook idempotency; only then CRM GHL sync.
+9. Export app from AI Studio and build on non-GHL host using test DB to demonstrate portability. Keep old production as rollback.
+10. Only merge/publish after full QA with explicit authorization for DNS/domain and live payments.
 
-## First slice, without production changes
+## Out of scope / forbidden
+- No direct modifications to the original `main` or live `bagelito.pe`.
+- No live Culqi charges, real payment links or test card payments in production.
+- No destructive Supabase schema/data operations or customer exports.
+- No GHL email/WhatsApp sends or activated automations before verified consent and operator approval.
+- No reuse of the Adam Erhart Agency OS snapshot in Bagelito.
+- No conflation of source 2026-10-21 printed menu with current commercial acceptance.
 
-1. Inspect the actual **AI Studio-generated** TanStack Start repository. Use its locked dependency versions; do not replace its runtime or the Next production repository.
-2. Port catalog types, source product data, delivery price calculations and **GET /api/batch** read-only endpoint.
-3. Use `tanstack-src/routes/api/batch.ts` as a reference. Its import path assumes the service is placed in `src/lib` of the target repo; fix aliases and client/server boundaries before build. Use the TanStack Start server route syntax supported by the generated baseline.
-4. Port a minimal interactive storefront using original design assets and approved customer journey, with checkout disabled in this first slice. No invented product prices; reconcile minis, combos and schmears with current approved menu first.
-5. Add tests for catalog/price contracts, no-store batch response, unauthenticated public read path, SSR/hydration and mobile.
-6. Run TypeScript check, lint, unit/integration tests and preview build in target AI Studio environment. Produce test report with commit SHA; failures are not PASS.
-7. Do not touch Culqi live, Vercel, production DNS, Supabase schema, real orders or GHL sending automations.
-8. Export a ZIP and independently build outside GHL once preview and tests are passing.
+## Evidence required to close this gate
+- AI Studio project ID and generated repo URL, branch, deployed preview URL.
+- New target commit and versions, build/typecheck result, SSR/mobile QA.
+- GET endpoint tests and redacted logs (never share secrets).
+- A signed release checklist for Culqi sandbox and production cutover (separate gate).
 
-## Product invariant
-
-Source Next reservation/payments/operations are existing truth. GHL becomes the communications/CRM plane, not payment confirmation or stock authority. Future Mandilia integration is an adapter, not a requirement for Bagelito launch.
-
-## Acceptance for next phase
-
-- AI Studio Git Sync repo confirmed and reachable
-- GET /api/batch API compatibility established against test fixtures
-- UI slice renders with source-approved images and correct selection rules
-- No changes to current production
-- Baseline and target SHAs/preview/test results documented
+**Do not claim AI Studio live deployment until there is a matching deployed preview URL and pass evidence.**
