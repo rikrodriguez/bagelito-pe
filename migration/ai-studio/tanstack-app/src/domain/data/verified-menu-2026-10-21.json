@@ -1,0 +1,226 @@
+{
+  "verified_at": "2026-10-21T04:05:00Z",
+  "source": "https://www.instagram.com/p/DefDmZwmaLZ/",
+  "source_date": "2026-10-14",
+  "coverage": "All six images of current pinned menu visually inspected. Initial 12 profile posts read. Complete historical 34 posts/highlights not certified because cloud browser timed out after menu collection.",
+  "currency": "PEN",
+  "bagels": [
+    {
+      "id": "everything",
+      "name": "Everything",
+      "premium": false,
+      "website_image": "https://bagelito.pe/images/bagel-everything.webp"
+    },
+    {
+      "id": "sesame",
+      "name": "Sesame",
+      "premium": false,
+      "website_image": "https://bagelito.pe/images/bagel-sesame.webp"
+    },
+    {
+      "id": "plain",
+      "name": "Plain",
+      "premium": false,
+      "website_image": "https://bagelito.pe/images/bagel-plain.webp"
+    },
+    {
+      "id": "classic-onion",
+      "name": "Classic Onion",
+      "premium": false,
+      "website_image": "https://bagelito.pe/images/bagel-classic-onion.webp"
+    },
+    {
+      "id": "jalapeno-cheddar",
+      "name": "Jalapeño Cheddar",
+      "premium": true,
+      "website_image": "https://bagelito.pe/images/bagel-jalapeno-cheddar.webp"
+    },
+    {
+      "id": "cheddar",
+      "name": "Cheddar",
+      "premium": true,
+      "website_image": "https://bagelito.pe/images/bagel-cheddar.webp"
+    },
+    {
+      "id": "cinnamon-raisin",
+      "name": "Cinnamon Raisin",
+      "premium": false,
+      "website_image": "https://bagelito.pe/images/bagel-cinnamon-raisin.webp"
+    },
+    {
+      "id": "blueberry",
+      "name": "Blueberry",
+      "premium": false,
+      "website_image": "https://bagelito.pe/images/bagel-blueberry.webp"
+    }
+  ],
+  "bagel_reference_unit_prices": {
+    "regular": 10,
+    "premium_seasonal": 12,
+    "note": "Published menu reference, not authorization to change pack purchase minimum or pricing logic. Premium inclusion in pack pricing not explicit."
+  },
+  "packs": [
+    {
+      "id": "six-mixed",
+      "quantity": 6,
+      "mix": "mixed",
+      "price": 60
+    },
+    {
+      "id": "six-single",
+      "quantity": 6,
+      "mix": "single",
+      "price": 50
+    },
+    {
+      "id": "twelve-mixed",
+      "quantity": 12,
+      "mix": "mixed",
+      "price": 115
+    },
+    {
+      "id": "twelve-single",
+      "quantity": 12,
+      "mix": "single",
+      "price": 100
+    }
+  ],
+  "schmears": [
+    {
+      "id": "whipped-original",
+      "name": "Whipped Original",
+      "price_class": "original"
+    },
+    {
+      "id": "aji-amarillo",
+      "name": "Ají Amarillo",
+      "note": "con cebolla y sal",
+      "price_class": "flavoured"
+    },
+    {
+      "id": "herb-roasted-garlic",
+      "name": "Herb & Roasted Garlic",
+      "price_class": "flavoured"
+    },
+    {
+      "id": "honey-cinnamon",
+      "name": "Honey Cinnamon",
+      "note": "con miel de Oxapampa",
+      "price_class": "flavoured"
+    },
+    {
+      "id": "classic-strawberry",
+      "name": "Classic Strawberry",
+      "note": "con fresas frescas del mercado",
+      "price_class": "flavoured"
+    }
+  ],
+  "schmear_sizes": [
+    {
+      "grams": 120,
+      "label": "Just a Lil",
+      "original_price": 12,
+      "flavoured_price": 16
+    },
+    {
+      "grams": 180,
+      "label": "Solid Schmear",
+      "original_price": 18,
+      "flavoured_price": 23
+    },
+    {
+      "grams": 240,
+      "label": "Like NYC",
+      "original_price": 22,
+      "flavoured_price": 29
+    }
+  ],
+  "combos": [
+    {
+      "id": "perfect-pair",
+      "name": "Perfect Pair",
+      "bagels": 6,
+      "mix": "mixed",
+      "schmear_count": 1,
+      "schmear_grams_each": 120,
+      "price": 74
+    },
+    {
+      "id": "brunch-pack",
+      "name": "Brunch Pack",
+      "bagels": 12,
+      "mix": "mixed",
+      "schmear_count": 2,
+      "schmear_grams_each": 120,
+      "price": 140
+    },
+    {
+      "id": "schmear-lover",
+      "name": "Schmear Lover",
+      "bagels": 6,
+      "mix": "mixed",
+      "schmear_count": 3,
+      "schmear_grams_each": 120,
+      "price": 99
+    }
+  ],
+  "combo_upgrades": {
+    "published_text": "¿Más schmear en tu pack? 180 g +S/6 | 240 g +S/13",
+    "granularity": "NOT explicit whether per pot or combo; do not infer charging logic."
+  },
+  "mini_packs": [
+    {
+      "quantity": 6,
+      "mixed_price": 25,
+      "single_price": 20
+    },
+    {
+      "quantity": 12,
+      "mixed_price": 40,
+      "single_price": 35
+    },
+    {
+      "quantity": 24,
+      "mixed_price": 75,
+      "single_price": 70
+    }
+  ],
+  "custom_colors": {
+    "minimum_quantity": 6,
+    "base_price": 50,
+    "one_two_colors_extra": 0,
+    "three_five_colors_extra": 10,
+    "six_seven_rainbow_colors_extra": 15,
+    "website_image": "https://bagelito.pe/images/bagel-rainbow.webp"
+  },
+  "seasonal_observations": [
+    {
+      "name": "Pumpkin Spice",
+      "source": "https://www.instagram.com/bagelito.pe/p/DeMvf3HlTXd/",
+      "status": "Pinned October campaign says available until October31, or pumpkin supply lasts. Verify stock before checkout.",
+      "ingredients": "roasted pumpkin puree, cinnamon, ginger, nutmeg, cloves, cardamom"
+    },
+    {
+      "name": "Birthday Cake",
+      "source": "https://www.instagram.com/bagelito.pe/p/Ddomsw2lbLV/",
+      "status": "Birthday promotion for that week's first20orders; not evidence currently offered."
+    },
+    {
+      "name": "Snickerdoodle",
+      "source": "https://bagelito.pe",
+      "status": "Website seasonal catalog only; not corroborated in current pinned IG menu.",
+      "website_image": "https://bagelito.pe/images/bagel-snickerdoodle.webp"
+    }
+  ],
+  "fulfilment": {
+    "profile": "Freshly Baked Every Friday; delivery Lima",
+    "menu_slide6": "Friday afternoon deliveries",
+    "exception_source": "https://www.instagram.com/bagelito.pe/p/DerpfxzlQW4/",
+    "exception": "This week's delivery Thursday October22; following week returns regular Friday schedule."
+  },
+  "conflicts": [
+    "Live website states monthly batch and closed orders; current Instagram states weekly Friday production. Do not import website monthly rule as confirmed commercial truth.",
+    "Website lists10 flavors including Rainbow/Custom Colors and Snickerdoodle; current IG regular menu has8 plus custom-color service, seasonal launches separately.",
+    "Current website has no schmear/combos; Instagram October14 has full published products above."
+  ]
+}
