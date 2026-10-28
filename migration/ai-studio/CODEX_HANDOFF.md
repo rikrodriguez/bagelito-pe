@@ -21,7 +21,7 @@ Last updated: 2026-10-27 (America/Lima).
 ## Next exact task (do not re-audit)
 1. Open RikMarketing -> Bagelito subaccount -> AI Studio. Confirm an actual `Bagelito Commerce` project exists; otherwise create one. Connect **More -> Git**. Keep AI Studio-generated private repo/branch and do not overwrite its starter blindly.
 2. Clone that AI Studio-generated repository, then integrate `migration/ai-studio/tanstack-app/` from PR #37, resolving version/import differences against the actual baseline. Pin dependencies and generate lockfile in target repo.
-3. Run `npm install`, `npm run typecheck`, `npm run build` in new TanStack target and fix all compiler issues. Capture exact SHA/versions.
+3. Run `npm install`, then `npm run build` (this generates `src/routeTree.gen.ts`), then `npm run typecheck` in the new TanStack target. Fix all build/type errors. Capture exact SHA/versions.
 4. Configure **test** Supabase URL and service role in AI Studio Secrets only; never expose keys or connect live data to a public preview before authorization.
 5. Prove endpoints GET `/api/catalog` and GET `/api/batch`, including cache headers, closed-on-failure, no unexpected writes, query compatibility and real Supabase test credentials.
 6. Inspect desktop/mobile actual AI Studio preview. Verify 8 regular bagel photographs, Packs Grande/Mini, Combo 2 bagels + schmear (no sandwich/drink), Schmears sizes and correct selectable options.
