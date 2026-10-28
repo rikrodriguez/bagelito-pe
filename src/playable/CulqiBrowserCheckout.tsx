@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 
 export type CulqiPublicConfig = {
   enabled: boolean
@@ -23,7 +24,7 @@ export type CheckoutCustomer = {
   addressReference: string
   deliveryNotes: string
   termsAccepted: boolean
-  termsVersion: '2026-10-26'
+  termsVersion: typeof CHECKOUT_LEGAL_VERSION
 }
 
 export type GuidedOrderPayload = {
