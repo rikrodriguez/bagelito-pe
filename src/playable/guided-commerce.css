@@ -278,3 +278,10 @@
   .guided-payment-sheet .guided-payment-copy b{font-size:22px}
   .live-receipt-code{right:10px;top:72px}
 }
+
+.culqi-recovery-button{
+  min-height:40px;border:1px solid #cfd9e2;border-radius:13px;background:#fff;color:#004aad;
+  font-weight:900;font-size:10px;cursor:pointer
+}
+.culqi-recovery-button:hover{background:#f4f8fc}
+.checkout-terms-check a{color:#004aad;font-weight:900}
