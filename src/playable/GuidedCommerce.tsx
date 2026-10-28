@@ -25,14 +25,14 @@ type Scene =
 type BagelMode = 'pack' | 'combo' | 'upsell8' | 'downsell2'
 
 const BAGEL_SPOTS = [
-  { left: '10.5%', top: '24%', width: '18.5%', height: '29%' },
-  { left: '30.5%', top: '24%', width: '18.5%', height: '29%' },
-  { left: '50.5%', top: '24%', width: '18.5%', height: '29%' },
-  { left: '70.5%', top: '24%', width: '18.5%', height: '29%' },
-  { left: '10.5%', top: '55%', width: '18.5%', height: '29%' },
-  { left: '30.5%', top: '55%', width: '18.5%', height: '29%' },
-  { left: '50.5%', top: '55%', width: '18.5%', height: '29%' },
-  { left: '70.5%', top: '55%', width: '18.5%', height: '29%' },
+  { left: '2.5%', top: '12%', width: '19%', height: '34%' },
+  { left: '23%', top: '12%', width: '19%', height: '34%' },
+  { left: '43%', top: '12%', width: '19%', height: '34%' },
+  { left: '63%', top: '12%', width: '19%', height: '34%' },
+  { left: '2.5%', top: '52%', width: '19%', height: '39%' },
+  { left: '23%', top: '52%', width: '19%', height: '39%' },
+  { left: '43%', top: '52%', width: '19%', height: '39%' },
+  { left: '63%', top: '52%', width: '19%', height: '39%' },
 ] as const
 
 const SCHMEAR_SPOTS = [
@@ -255,16 +255,14 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       </div>)}
     </div>
 
-    {scene === 'selector' && <section className="guided-selector-panel">
+    {scene === 'selector' && <>
       {customerName&&<div className="guided-welcome">¡Hola {customerName}! Bienvenida de vuelta ;)</div>}
-      <small>EN LA VITRINA</small>
-      <h1>¿Qué te provoca hoy?</h1>
-      <div>
-        <button onClick={() => chooseCategory('packs')}><img src="/images/pack-6-mixed.webp" alt=""/><span><b>Packs</b><small>Grandes o minis</small></span><i>→</i></button>
-        <button onClick={() => chooseCategory('combos')}><img src="/images/bagel-everything.webp" alt=""/><span><b>Combos</b><small>Perfect Pair, Brunch, Schmear Lover</small></span><i>→</i></button>
-        <button onClick={() => chooseCategory('schmears')}><span className="guided-schmear-art"/><span><b>Schmears</b><small>120 g, 180 g o 240 g</small></span><i>→</i></button>
+      <div className="guided-selector-hitboxes">
+        <button aria-label="Packs" onClick={() => chooseCategory('packs')} />
+        <button aria-label="Combos" onClick={() => chooseCategory('combos')} />
+        <button aria-label="Schmears" onClick={() => chooseCategory('schmears')} />
       </div>
-    </section>}
+    </>}
 
     {scene === 'packs' && <div className="guided-floating-panel pack-config-panel">
       <small>PACKS</small>
@@ -279,12 +277,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <p>En la siguiente escena eliges los sabores directamente de la vitrina.</p>
     </div>}
 
-    {scene === 'combos' && <section className="guided-floating-panel combo-config-panel">
-      <small>COMBOS</small><h2>Elige tu combo</h2>
-      <div className="guided-combo-cards">{combos.map((combo)=><button key={combo.id} onClick={()=>chooseCombo(combo.id)}>
-        <img src="/images/pack-6-mixed.webp" alt=""/><span><b>{combo.name}</b><small>{combo.bagels} bagels + {combo.schmear_count} schmear{combo.schmear_count>1?'s':''} de 120 g</small></span><strong>S/ {combo.price}</strong><i>→</i>
-      </button>)}</div>
-    </section>}
+    {scene === 'combos' && <div className="guided-combo-overlay">
+      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={combo.name} />)}
+    </div>}
 
     {scene === 'schmear-size' && <section className="guided-floating-panel schmear-size-panel">
       <small>SCHMEARS</small><h2>Elige tamaño</h2>
