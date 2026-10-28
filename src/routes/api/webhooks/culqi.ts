@@ -43,14 +43,16 @@ export const Route = createFileRoute('/api/webhooks/culqi')({
           // Re-read the event from Culqi using the server secret key.
           const verified = await fetchCulqiEvent(eventId)
           const eventType = verifyCulqiEventIdentity(eventId, verified)
+          const resource = parseCulqiEventResource(verified.data)
+
+          if (eventType.startsWith('refund.') || resource?.object === 'refund') {
+            // Never acknowledge a refund signal as an irrelevant event.
+            // Refund reconciliation is a separate financial transition.
+            return Response.json({ ok: false, error: 'Refund reconciliation requires review.' }, { status: 501, headers })
+          }
 
           if (!supportedEvents.has(eventType)) {
             return Response.json({ ok: true, ignored: true }, { headers })
-          }
-
-          const resource = parseCulqiEventResource(verified.data)
-          if (eventType.startsWith('refund.') || resource?.object === 'refund') {
-            return Response.json({ ok: false, error: 'Refund reconciliation requires review.' }, { status: 501, headers })
           }
           if (!resource || typeof resource.id !== 'string' || !resource.id) {
             return Response.json({ ok: false, error: 'Webhook payment data is missing.' }, { status: 400, headers })
