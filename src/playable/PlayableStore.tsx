@@ -45,6 +45,7 @@ const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 export function PlayableStore() {
   const [ready, setReady] = useState(false)
   const [guidedOpen, setGuidedOpen] = useState(false)
+  const [guidedDismissed, setGuidedDismissed] = useState(false)
   const [name, setName] = useState<string | null>(null)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
   const [category, setCategory] = useState<Category | null>(null)
@@ -64,6 +65,11 @@ export function PlayableStore() {
     const saved = localStorage.getItem('bagelito_customer_name')
     if (saved) setName(saved)
   }, [])
+
+  useEffect(() => {
+    if(nearest===null) setGuidedDismissed(false)
+    if(!guidedOpen&&!guidedDismissed&&!category&&(nearest==='totem'||nearest==='vitrina')) setGuidedOpen(true)
+  },[nearest,guidedOpen,guidedDismissed,category])
 
   useEffect(() => {
     const map:Record<string,keyof Move> = {
@@ -149,29 +155,11 @@ export function PlayableStore() {
 
     {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
-      <button type="button" className="primary" onClick={()=>setGuidedOpen(true)}>Empezar pedido</button>
+      <button type="button" className="primary" onClick={()=>{setGuidedDismissed(false);setGuidedOpen(true)}}>Empezar pedido</button>
       <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
     </div>}
 
-    {category&&<GuidedProgress step={step}/>} 
-
-    {!guidedOpen&&<Hud
-      category={category} step={step} nearest={introGuide ?? nearest}
-      packFormat={packFormat}
-      bagelTotal={bagelTotal} bagelTarget={bagelTarget}
-      schmearTotal={schmearTotal} schmearTarget={schmearTarget}
-      selectedCombo={selectedCombo}
-      onCategory={chooseCategory}
-      onPack={(format,q)=>{setPackFormat(format);setPackQty(q);setStep('bagels')}}
-      onCombo={(id)=>{setComboId(id);setStep('bagels')}}
-      onSchmearSize={(g)=>{setSchmearSize(g);setStep('schmears')}}
-      onNextBagels={()=>bagelTotal===bagelTarget&&setStep('schmears')}
-      onNextSchmears={()=>{if(category==='packs'||schmearTotal===schmearTarget)setStep('cashier')}}
-      onReset={reset}
-      schmearSize={schmearSize}
-    />}
-
-    {guidedOpen&&<GuidedCommerce onExit={()=>setGuidedOpen(false)}/>} 
+    {guidedOpen&&<GuidedCommerce customerName={name} onExit={()=>{setGuidedOpen(false);setGuidedDismissed(true)}}/>} 
 
     <MobilePad move={move} setMove={setMove}/>
     <div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>
