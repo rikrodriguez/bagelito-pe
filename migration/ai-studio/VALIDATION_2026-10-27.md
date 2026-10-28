@@ -56,3 +56,23 @@ The verification script compiles the portable-src folder then runs both test fil
 6. Prove independent ZIP export/build outside HighLevel and preserve unchanged production deployment as rollback.
 
 No production integration, public domain change, payment execution or GHL automation activation is authorized by this report.
+
+
+## Verified published-menu extension (2026-10-21 reference)
+
+Added `portable-src/data/verified-menu-2026-10-21.json` from the catalog evidence file, distinct from the older website's `packs.ts` and `flavors.ts`.
+The updated journey is **Packs → Grande/Mini → selection, Combos → exactly two bagels + schmear, Schmears → flavor and size**.
+
+Added `portable-src/lib/approved-shop-contract.ts` and `tests/approved-shop-contract.test.mjs`.
+
+Safe design choices:
+- Historical published regular packs: six mixed S/60, six single S/50, twelve mixed S/115, twelve single S/100.
+- Mini pack prices from the menu are preserved only as *published base prices*; selected mini flavor compatibility is not established, so checkout stays blocked.
+- Five schmears in 120/180/240 g with published original/flavored prices.
+- Current two-bagel combo remains **unpriced and nonchargeable**; the older printed six/twelve-bagel combo offers are reference only, not a replacement.
+- Premium bagel surcharges/inclusions, batch availability, and up-to-date offer approval are independent release gates.
+- Seasonal and color-custom bagels are not inserted into regular eight-flavor purchase selections.
+
+Local test run: `tsc -p portable-tsconfig.json` **PASS**; `node --test tests/*.test.mjs` **16/16 PASS**. These are **local** checks of equivalent extracted code and values; GHL preview, CI and Culqi sandbox remain unverified.
+
+The production checkout must have a separate server-side gate and must not treat a UI quote or the historical menu alone as authority to charge customers. Do not turn these read-only purchase previews into live payment flows until current menu approval and transactional backend integration are demonstrated.
