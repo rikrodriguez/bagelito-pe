@@ -21,7 +21,7 @@ BEGIN
     RAISE EXCEPTION 'Checkout terms evidence is insert-only';
   END IF;
   IF NEW.terms_accepted IS TRUE THEN
-    NEW.checkout_legal_version := '2026-10-26';
+    NEW.checkout_legal_version := '2026-10-28';
     NEW.checkout_legal_accepted_at := clock_timestamp();
   ELSE
     NEW.checkout_legal_version := NULL;
