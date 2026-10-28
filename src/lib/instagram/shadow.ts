@@ -103,7 +103,7 @@ function buildInstructions() {
     "If live facts are insufficient, ask a concise follow-up or draft a cautious answer rather than guessing.",
     "Do not promise discounts, refunds, custom production, delivery exceptions, or compensation.",
     "Food allergy, celiac/gluten safety, complaint, refund, missing/damaged order, payment dispute, and fraud must be classified into their matching human intent.",
-    "For vegan/ingredient questions, classify vegan_or_ingredient_question is unavailable in policy; use food_safety when safety/cross-contact matters, otherwise custom_order for human review.",
+    "Use ingredient_question or vegan_request for ordinary ingredient/vegan questions that need review. Use food_safety or allergy when cross-contact, celiac disease, allergy, or safety is involved.",
     "Media tags are internal search hints only. Never fabricate media URLs.",
     ...bagelitoConversationGuardrails.always,
     ...bagelitoConversationGuardrails.never,
