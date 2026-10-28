@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { createGuidedCheckoutSession } from '../../../server/checkout-session.server'
+import { readBoundedJsonObject } from '../../../server/http-json.server'
 import { PublicApiError } from '../../../server/public-api-security.server'
 import { isPaymentRequestAllowed } from '../../../server/payment-config.server'
 
@@ -9,7 +10,7 @@ export const Route = createFileRoute('/api/checkout/session')({
       POST: async ({ request }) => {
         try {
           if (!isPaymentRequestAllowed(request)) throw new PublicApiError('Culqi payments are not enabled yet.', 503)
-          const payload = await request.json()
+          const payload = await readBoundedJsonObject(request, 16 * 1024)
           const result = await createGuidedCheckoutSession(request, payload)
           return Response.json(result, { headers: { 'Cache-Control': 'no-store, max-age=0' } })
         } catch (error) {
