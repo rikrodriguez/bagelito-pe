@@ -36,6 +36,15 @@ async function audit() {
       }
       async function scene(key, name) {
         await page.locator('[data-scene="' + key + '"]').waitFor()
+        // Transitions request a new real scene image; wait for decode rather than
+        // flagging a normal in-flight image request as a broken asset.
+        await page.locator('[data-scene="' + key + '"]').evaluate(async (root) => {
+          const images = [...root.querySelectorAll('img')]
+          await Promise.race([
+            Promise.all(images.map((image) => image.decode().catch(() => {}))),
+            new Promise((done) => setTimeout(done, 5000)),
+          ])
+        })
         const brokenImages = await page.evaluate(() => [...document.images]
           .filter((image) => !image.complete || image.naturalWidth === 0)
           .map((image) => image.src))
