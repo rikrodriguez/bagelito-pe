@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { readBoundedJsonObject } from '../../../../server/http-json.server'
 import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { enforcePublicApiSecurity, PublicApiError } from '../../../../server/public-api-security.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/api/payments/culqi/order')({
         try {
           if (!isPaymentRequestAllowed(request)) throw new PublicApiError('Culqi payments are not enabled yet.', 503)
           const cfg = getPrivatePaymentConfig()
-          const payload = await request.json() as {
+          const payload = await readBoundedJsonObject(request, 4 * 1024) as {
             checkoutSessionId?: unknown
             orderCode?: unknown
             email?: unknown
