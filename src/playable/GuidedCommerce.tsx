@@ -333,10 +333,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
     {scene === 'selector' && <>
       {customerName && <div className="guided-welcome">Hola {customerName}. ¿Qué te provoca hoy?</div>}
-      <div className="guided-selector-hitboxes">
-        <button aria-label="Packs" onClick={() => chooseCategory('packs')} />
-        <button aria-label="Combos" onClick={() => chooseCategory('combos')} />
-        <button aria-label="Schmears" onClick={() => chooseCategory('schmears')} />
+      <div className="guided-selector-hitboxes live-selector-cards">
+        <button aria-label="Packs" onClick={() => chooseCategory('packs')}>
+          <img src="/images/pack-6-mixed.webp" alt="" />
+          <span><b>Packs</b><small>Grandes o minis</small></span>
+        </button>
+        <button aria-label="Combos" onClick={() => chooseCategory('combos')}>
+          <span className="selector-combo-art"><img src="/images/bagel-everything.webp" alt="" /><i className="approved-schmear" /></span>
+          <span><b>Combos</b><small>2 bagels + schmear</small></span>
+        </button>
+        <button aria-label="Schmears" onClick={() => chooseCategory('schmears')}>
+          <span className="selector-schmear-art" />
+          <span><b>Schmears</b><small>120 g · 180 g · 240 g</small></span>
+        </button>
       </div>
     </>}
 
@@ -408,10 +417,14 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           </button>
         })}
       </div></div>
-      <div className="guided-order-counter">
-        <small>{bagelMode === 'upsell8' ? '6 + 2 GRATIS' : bagelMode === 'downsell2' ? 'PRUEBA CON 2' : category === 'combos' ? selectedCombo?.name : packFormat === 'mini' ? 'MINIS' : 'PACK'}</small>
+      <div className="guided-order-counter bagel-live-summary">
+        <small>{bagelMode === 'upsell8' ? '6 + 2 GRATIS' : bagelMode === 'downsell2' ? 'PRUEBA CON 2' : category === 'combos' ? selectedCombo?.name : packFormat === 'mini' ? 'MINIS' : 'TU PACK'}</small>
         <b>{bagelTotal}/{bagelTarget}</b>
-        <span>{bagelTotal === bagelTarget ? 'Listo para continuar' : 'Toca los sabores en la vitrina'}</span>
+        <div className="bagel-summary-lines">
+          {selectedBagelSummary.map((item) => <span key={item.name}><i>{item.quantity}</i>{item.name}</span>)}
+          {bagelTotal < bagelTarget && <span className="pending"><i>{bagelTarget - bagelTotal}</i>por elegir</span>}
+        </div>
+        <em>{bagelTotal === bagelTarget ? 'Listo para continuar' : 'Toca los sabores en la vitrina'}</em>
       </div>
       {bagelTotal === bagelTarget && <button className="guided-primary-next" onClick={nextFromBagels}>Continuar <b>→</b></button>}
     </>}
