@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
+import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 import {
   CulqiBrowserCheckout,
   type CheckoutCustomer,
@@ -72,11 +73,11 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     email: '',
     whatsapp: '',
     deliveryAddress: '',
-    district: 'Miraflores',
+    district: '',
     addressReference: '',
     deliveryNotes: '',
     termsAccepted: false,
-    termsVersion: '2026-10-26',
+    termsVersion: CHECKOUT_LEGAL_VERSION,
   })
   const [paymentConfig, setPaymentConfig] = useState<CulqiPublicConfig | null>(null)
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
@@ -548,7 +549,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           <label><span>Nombre</span><input value={checkoutCustomer.customerName} onChange={(e) => setCheckoutCustomer((v) => ({...v, customerName:e.target.value}))} autoComplete="name" /></label>
           <label><span>Email</span><input type="email" value={checkoutCustomer.email} onChange={(e) => setCheckoutCustomer((v) => ({...v, email:e.target.value}))} autoComplete="email" /></label>
           <label><span>WhatsApp</span><input inputMode="tel" value={checkoutCustomer.whatsapp} onChange={(e) => setCheckoutCustomer((v) => ({...v, whatsapp:e.target.value}))} autoComplete="tel" /></label>
-          <label><span>Distrito</span><select value={checkoutCustomer.district} onChange={(e) => setCheckoutCustomer((v) => ({...v, district:e.target.value}))}>{deliveryDistricts.map((district) => <option key={district} value={district}>{district}</option>)}</select></label>
+          <label><span>Distrito</span><select value={checkoutCustomer.district} onChange={(e) => setCheckoutCustomer((v) => ({...v, district:e.target.value}))}><option value="">Elige distrito</option>{deliveryDistricts.map((district) => <option key={district} value={district}>{district}</option>)}</select></label>
           <label className="wide"><span>Dirección de delivery</span><input value={checkoutCustomer.deliveryAddress} onChange={(e) => setCheckoutCustomer((v) => ({...v, deliveryAddress:e.target.value}))} autoComplete="street-address" /></label>
           <label><span>Referencia</span><input value={checkoutCustomer.addressReference} onChange={(e) => setCheckoutCustomer((v) => ({...v, addressReference:e.target.value}))} /></label>
           <label><span>Notas</span><input value={checkoutCustomer.deliveryNotes} onChange={(e) => setCheckoutCustomer((v) => ({...v, deliveryNotes:e.target.value}))} /></label>
@@ -556,7 +557,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
         <label className="checkout-terms-check">
           <input type="checkbox" checked={checkoutCustomer.termsAccepted} onChange={(e) => setCheckoutCustomer((v) => ({...v, termsAccepted:e.target.checked}))} />
-          <span>Acepto los términos vigentes del checkout y delivery.</span>
+          <span>Acepto los <a href="/legal" target="_blank" rel="noreferrer">términos vigentes</a> del checkout y delivery.</span>
         </label>
 
         {paymentReviewMessage && <div className="checkout-review-message">{paymentReviewMessage}</div>}
