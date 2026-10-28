@@ -368,11 +368,16 @@ body:has(.entry-flow) { margin:0; overflow:hidden; background:#dce6f0; }
 @media (max-width:700px) {
   .entry-flow::before { filter:blur(14px) saturate(.8) brightness(.78); }
   .entry-flow-photo {
-    object-fit:contain;
-    object-position:center 17%;
-    transform:none;
+    object-fit:cover;
+    object-position:center center;
+    transform:scale(1.01);
   }
-  .entry-flow[data-entering="true"] .entry-flow-photo { transform:scale(1.045); }
+  .entry-flow[data-state="categories"] .entry-flow-photo,
+  .entry-flow[data-state="pack-size"] .entry-flow-photo {
+    filter:brightness(.76) saturate(.86) blur(.6px);
+    transform:scale(1.035);
+  }
+  .entry-flow[data-entering="true"] .entry-flow-photo { transform:scale(1.085); }
   .entry-flow-topbar { top:10px; left:11px; right:11px; }
   .entry-flow-review { display:none; }
   .entry-flow-round-button { width:44px; min-height:44px; }
