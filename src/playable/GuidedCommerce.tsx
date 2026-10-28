@@ -94,6 +94,15 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const qaMode = qaRequested && paymentConfig?.visualQaAllowed === true
   const receiptDrag = useRef({ startY: 0, offset: 0 })
+  const receiptPulledRef = useRef(false)
+
+  useEffect(() => {
+    if (customerName) {
+      setCheckoutCustomer((current) => current.customerName.trim()
+        ? current
+        : { ...current, customerName })
+    }
+  }, [customerName])
 
   useEffect(() => {
     let active = true
@@ -386,6 +395,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   }
 
   function pullReceipt() {
+    if (receiptPulledRef.current) return
+    receiptPulledRef.current = true
     setReceiptPulled(true)
     window.setTimeout(() => setScene('wallet'), 700)
   }
@@ -704,13 +715,38 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         <p>{qaMode ? 'Este recibo es solo una vista de QA.' : 'Gracias por tu compra.'}</p>
       </div>
       <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
-        onPointerDown={(e) => { receiptDrag.current.startY = e.clientY; receiptDrag.current.offset = 0 }}
+        role="button"
+        tabIndex={0}
+        aria-label="Jalar o tocar para retirar tu recibo"
+        onPointerDown={(e) => {
+          receiptDrag.current.startY = e.clientY
+          receiptDrag.current.offset = 0
+          e.currentTarget.setPointerCapture(e.pointerId)
+        }}
         onPointerMove={(e) => {
           if (!receiptDrag.current.startY) return
           receiptDrag.current.offset = Math.max(0, e.clientY - receiptDrag.current.startY)
           if (receiptDrag.current.offset > 80) pullReceipt()
         }}
-        onPointerUp={() => { if (!receiptPulled) pullReceipt(); receiptDrag.current.startY = 0 }}
+        onPointerUp={(e) => {
+          if (receiptDrag.current.offset > 60) pullReceipt()
+          receiptDrag.current.startY = 0
+          receiptDrag.current.offset = 0
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId)
+          }
+        }}
+        onPointerCancel={() => {
+          receiptDrag.current.startY = 0
+          receiptDrag.current.offset = 0
+        }}
+        onClick={pullReceipt}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            pullReceipt()
+          }
+        }}
       >
         <span>Jala tu recibo ↓</span>
       </div>
@@ -753,7 +789,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
     {scene === 'returning' && <div className="guided-returning-action">
       <div><small>CLIENTE RECURRENTE</small><h2>Ya conoces el camino.</h2><p>El local sigue vivo alrededor de ti mientras vuelves a pedir.</p></div>
-      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); setWalletSaved(false); setPaidOrderCode(null); setPaidAmountPen(null) }}>Volver al tótem <b>→</b></button>
+      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); receiptPulledRef.current = false; setWalletSaved(false); setPaidOrderCode(null); setPaidAmountPen(null) }}>Volver al tótem <b>→</b></button>
     </div>}
   </div>
 }
