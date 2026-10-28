@@ -1,9 +1,9 @@
 import { createHash } from 'node:crypto'
 import { createSupabaseAdminClient } from './supabase-admin.server'
 
-type Scope = 'payments' | 'reservations'
+type Scope = 'payments' | 'reservations' | 'quotes'
 
-const rules: Record<Scope, { requester: [string, number, number]; contact: [string, number, number] }> = {
+const rules: Record<Scope, { requester: [string, number, number]; contact?: [string, number, number] }> = {
   payments: {
     requester: ['payments_requester', 20, 600],
     contact: ['payments_contact', 10, 3600],
@@ -11,6 +11,9 @@ const rules: Record<Scope, { requester: [string, number, number]; contact: [stri
   reservations: {
     requester: ['reservations_requester', 6, 600],
     contact: ['reservations_contact', 4, 43200],
+  },
+  quotes: {
+    requester: ['checkout_quotes_requester', 40, 600],
   },
 }
 
@@ -81,7 +84,7 @@ export async function enforcePublicApiSecurity(input: {
   const [rScope, rLimit, rWindow] = rule.requester
   await consume(rScope, requesterId(input.request), rLimit, rWindow)
   const contact = contactId(input.email || '', input.whatsapp || '')
-  if (contact) {
+  if (contact && rule.contact) {
     const [cScope, cLimit, cWindow] = rule.contact
     await consume(cScope, contact, cLimit, cWindow)
   }
