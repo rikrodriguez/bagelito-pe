@@ -12,11 +12,19 @@ export type CulqiCharge = {
   id?: string
   object?: string
   amount?: number
+  current_amount?: number
+  amount_refunded?: number
+  currency?: string
   currency_code?: string
   capture?: boolean
+  capture_date?: number
+  dispute?: boolean
+  duplicated?: boolean
   paid?: boolean
   state?: string
   action_code?: string
+  metadata?: Record<string, string> | null
+  source?: { id?: string; type?: string } | null
   outcome?: {
     type?: string
     code?: string
@@ -25,6 +33,10 @@ export type CulqiCharge = {
     user_message?: string
   } | null
 }
+
+export type CulqiChargeResult =
+  | { charge: CulqiCharge & { id: string }; requires3DS: false }
+  | { response: CulqiCharge; requires3DS: true }
 
 function config() {
   const cfg = getPrivatePaymentConfig()
@@ -108,7 +120,18 @@ export async function createCulqiCharge(input: {
   if (!payload || !('object' in payload) || payload.object !== 'charge') {
     throw new Error('Culqi did not return a valid charge.')
   }
-  return payload as CulqiCharge
+  const charge = payload as CulqiCharge
+  if (response.status === 200 && charge.action_code === 'REVIEW') {
+    if (typeof charge.id === 'string' && charge.id) {
+      return { charge: charge as CulqiCharge & { id: string }, requires3DS: false } satisfies CulqiChargeResult
+    }
+    if (charge.capture === true) throw new Error('Ambiguous Culqi authentication response.')
+    return { response: charge, requires3DS: true } satisfies CulqiChargeResult
+  }
+  if (response.status !== 201 || !charge.id) {
+    throw new Error('Culqi did not return a valid captured charge.')
+  }
+  return { charge: charge as CulqiCharge & { id: string }, requires3DS: false } satisfies CulqiChargeResult
 }
 
 export async function fetchCulqiCharge(chargeId: string) {
