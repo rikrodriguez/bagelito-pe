@@ -109,6 +109,9 @@ export const Route = createFileRoute('/api/payments/culqi/charge')({
           if (order.payment_order_id || order.payment_lane !== 'token') {
             throw new PublicApiError('This reservation cannot accept token charges.', 409)
           }
+          if (sourceId.startsWith('ype_') && Number(order.total_amount) > 2000) {
+            throw new PublicApiError('Yape supports a maximum of S/ 2000 per payment.', 400)
+          }
 
           const amountMinor = Math.round(Number(order.total_amount) * 100)
           const result = await coordinateCulqiCharge({
