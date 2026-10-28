@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="bagelito">
+  <rect width="520" height="120" fill="none"/>
+  <text x="10" y="82" font-size="78" font-weight="900" font-family="Arial Rounded MT Bold, Arial, sans-serif" fill="#004aad" letter-spacing="-5">bagelito</text>
+  <g transform="translate(448 56)" stroke="#fa967f" stroke-width="8" stroke-linecap="round">
+    <path d="M0 -27V-12M0 12V27M-27 0H-12M12 0H27M-19 -19L-9 -9M9 9L19 19M19 -19L9 -9M-9 9L-19 19"/>
+  </g>
+</svg>
