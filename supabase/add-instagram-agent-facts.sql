@@ -39,6 +39,27 @@ values
   'src/data/packs.ts',
   now()
 )
+,
+(
+  'sales_response_policy',
+  '{
+    "commercial_exception_intents":["flavors","menu","how_to_order"],
+    "goal":"Reduce back-and-forth and move an interested customer toward an order without sounding pushy.",
+    "preferred_structure":[
+      "warm_greeting",
+      "active_promo_if_explicitly_current",
+      "current_regular_flavors_or_products",
+      "relevant_packs_and_current_prices",
+      "schmears_or_addons_when_relevant",
+      "current_production_or_delivery_timing_when_known",
+      "exact_information_needed_to_order",
+      "proactive_approved_human_used_photos"
+    ],
+    "truth_rule":"Learn structure and sales rhythm from Dawn; all promo, price, date, delivery, availability and inventory facts must come from current live sources."
+  }'::jsonb,
+  'Live audit of Dawn current Instagram handling, 2026-10-28',
+  now()
+)
 on conflict (fact_key) do update
 set fact_value = excluded.fact_value,
     source = excluded.source,
