@@ -1,7 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, Html, PerformanceMonitor, RoundedBox } from '@react-three/drei'
-import { Physics, CuboidCollider, RigidBody } from '@react-three/rapier'
-import { Ecctrl, type EcctrlHandle } from 'ecctrl'
+import { Environment, Html, PerformanceMonitor, RoundedBox, useGLTF } from '@react-three/drei'
+import { Physics, CuboidCollider, CapsuleCollider, RigidBody, useRapier, type RapierRigidBody } from '@react-three/rapier'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
@@ -30,4 +29,4 @@ export function PlayableStore() {
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 7.3))
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
-  const [packFormat, setPackForma¶»§q«^
+  const [packFormat, setP¶»§q«^
