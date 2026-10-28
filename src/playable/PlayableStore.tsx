@@ -147,7 +147,7 @@ export function PlayableStore() {
 
     {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
-      <button type="button" className="primary" onClick={()=>setIntroGuide('vitrina')}>Empezar pedido</button>
+      <button type="button" className="primary" onClick={()=>setIntroGuide('totem')}>Empezar pedido</button>
       <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
     </div>}
 
