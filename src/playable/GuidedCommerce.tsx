@@ -284,7 +284,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     {scene === 'schmear-size' && <section className="guided-floating-panel schmear-size-panel">
       <small>SCHMEARS</small><h2>Elige tamaño</h2>
       <div className="guided-size-cards">{menu.schmearSizes.map((size)=><button key={size.grams} onClick={()=>chooseSchmearSize(size.grams)}>
-        <b>{size.grams} g</b><span>Original S/{size.original_pen} · Sabores S/{size.flavored_pen}</span>
+        <b>{size.grams} g</b><span>Original S/{size.original_price} · Sabores S/{size.flavoured_price}</span>
       </button>)}</div>
     </section>}
 
