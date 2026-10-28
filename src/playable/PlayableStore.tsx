@@ -20,12 +20,12 @@ type V3 = [number,number,number]
 type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'cashier'
 
 const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vector3}> = {
-  totem:{position:new THREE.Vector3(-3.45,1.68,7.25),lookAt:new THREE.Vector3(-4.9,1.55,5.7)},
-  vitrina:{position:new THREE.Vector3(0,1.72,4.9),lookAt:new THREE.Vector3(-.3,1.1,.15)},
-  selector:{position:new THREE.Vector3(0,1.72,5.35),lookAt:new THREE.Vector3(0,1.25,.1)},
-  bagels:{position:new THREE.Vector3(-2.05,1.62,3.15),lookAt:new THREE.Vector3(-2.05,.95,.25)},
-  schmears:{position:new THREE.Vector3(4.15,1.62,2.75),lookAt:new THREE.Vector3(4.25,.95,.05)},
-  cashier:{position:new THREE.Vector3(5.9,1.68,6.05),lookAt:new THREE.Vector3(5.15,1.15,4.6)},
+  totem:{position:new THREE.Vector3(-4.15,1.68,7.15),lookAt:new THREE.Vector3(-5.4,1.55,5.95)},
+  vitrina:{position:new THREE.Vector3(-.15,1.7,5.0),lookAt:new THREE.Vector3(-.6,1.08,.25)},
+  selector:{position:new THREE.Vector3(-.15,1.7,4.8),lookAt:new THREE.Vector3(-.6,1.12,.25)},
+  bagels:{position:new THREE.Vector3(-2.15,1.58,3.45),lookAt:new THREE.Vector3(-2.1,1.02,.3)},
+  schmears:{position:new THREE.Vector3(4.05,1.58,3.1),lookAt:new THREE.Vector3(4.25,1.02,.15)},
+  cashier:{position:new THREE.Vector3(6.1,1.62,6.15),lookAt:new THREE.Vector3(5.15,1.18,4.6)},
 }
 
 const ZONES = {
@@ -143,9 +143,9 @@ export function PlayableStore() {
     {name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
     {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
-      <span>Empieza tu pedido</span>
-      <button type="button" onClick={()=>setIntroGuide('totem')}>Ir al tótem</button>
-      <button type="button" onClick={()=>setIntroGuide('vitrina')}>Ir a la vitrina →</button>
+      <span>¿Qué te provoca hoy?</span>
+      <button type="button" className="primary" onClick={()=>setIntroGuide('totem')}>Empezar pedido</button>
+      <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
     </div>}
 
     {category&&<GuidedProgress step={step}/>} 
@@ -179,16 +179,17 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
   const r=useMemo(()=>new THREE.Vector3(),[])
   const v=useMemo(()=>new THREE.Vector3(),[])
   const desiredQuat=useMemo(()=>new THREE.Quaternion(),[])
-  const dummy=useMemo(()=>new THREE.Object3D(),[])
+  const targetCamera=useMemo(()=>new THREE.PerspectiveCamera(),[])
 
   useFrame((_,delta)=>{
     if(guidedNode){
       const node=GUIDED_CAMERAS[guidedNode]
       const alpha=1-Math.exp(-delta*4.8)
       camera.position.lerp(node.position,alpha)
-      dummy.position.copy(camera.position)
-      dummy.lookAt(node.lookAt)
-      desiredQuat.copy(dummy.quaternion)
+      targetCamera.position.copy(camera.position)
+      targetCamera.up.copy(camera.up)
+      targetCamera.lookAt(node.lookAt)
+      desiredQuat.copy(targetCamera.quaternion)
       camera.quaternion.slerp(desiredQuat,alpha)
       pos.current.copy(camera.position)
     }else{
@@ -249,35 +250,26 @@ function StoreArchitecture(){
     <TileGrid position={[-6.2,2.65,-8.16]} width={3.4} height={4.5}/>
     <TileGrid position={[6.3,2.65,-8.16]} width={3.0} height={4.5}/>
 
-    <ApprovedBackdrop/>
+    <Html transform position={[0,3.58,-8.12]} distanceFactor={5.5} className="world-logo"><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></Html>
+    <MenuBoard/>
+    <ProductionPortal/>
     <Pendant position={[-4.9,4.0,2.2]}/>
+    <Pendant position={[-1.8,4.05,1.1]}/>
+    <Pendant position={[2.0,4.0,1.0]}/>
     <Pendant position={[5.0,4.0,2.0]}/>
     <Plant position={[-7.25,0,-6.8]}/>
     <Plant position={[7.2,0,-6.7]}/>
   </group>
 }
 
-function ApprovedBackdrop(){
-  const source=useTexture('/images/store-reference-approved.webp')
-  const texture=useMemo(()=>{
-    const t=source.clone()
-    t.needsUpdate=true
-    t.wrapS=THREE.ClampToEdgeWrapping
-    t.wrapT=THREE.ClampToEdgeWrapping
-    t.repeat.set(1,.335)
-    t.offset.set(0,.665)
-    t.colorSpace=THREE.SRGBColorSpace
-    return t
-  },[source])
-  return <group>
-    <mesh position={[0,2.68,-8.13]}>
-      <planeGeometry args={[15.55,3.47]}/>
-      <meshBasicMaterial map={texture} toneMapped={false}/>
-    </mesh>
-    <mesh position={[0,1.04,-8.08]}>
-      <boxGeometry args={[15.5,.11,.08]}/>
-      <meshStandardMaterial color="#d2d7d8" metalness={.52} roughness={.3}/>
-    </mesh>
+function ProductionPortal(){
+  return <group position={[0,2.05,-8.03]}>
+    <mesh position={[0,0,0]}><boxGeometry args={[8.6,2.35,.11]}/><meshStandardMaterial color="#e9e5de"/></mesh>
+    <mesh position={[0,.95,.075]}><boxGeometry args={[8.4,.11,.08]}/><meshStandardMaterial color={BLUE}/></mesh>
+    <mesh position={[0,-.95,.075]}><boxGeometry args={[8.4,.11,.08]}/><meshStandardMaterial color="#d3d9dc" metalness={.55}/></mesh>
+    <Html transform position={[0,.25,.09]} distanceFactor={4.6} className="production-copy">
+      <div><small>HECHOS AQUÍ</small><b>Fresh bagels. Happier days.</b><span>Mira cómo los hacemos mientras armamos tu pedido.</span></div>
+    </Html>
   </group>
 }
 
@@ -328,7 +320,7 @@ function MenuBoard(){
 }
 
 function Totem(){
-  return <group position={[-4.9,0,5.7]} rotation={[0,.22,0]}>
+  return <group position={[-5.4,0,5.95]} rotation={[0,.16,0]} scale={.86}>
     <mesh position={[0,.08,0]}><cylinderGeometry args={[.5,.58,.14,24]}/><meshStandardMaterial color="#c8d0d5" metalness={.45}/></mesh>
     <mesh position={[0,.65,0]}><cylinderGeometry args={[.07,.09,1.2,14]}/><meshStandardMaterial color="#b5c0c7" metalness={.7}/></mesh>
     <RoundedBox castShadow position={[0,1.72,0]} args={[1.18,1.92,.18]} radius={.12}><meshStandardMaterial color="#f8f8f6"/></RoundedBox>
@@ -349,29 +341,22 @@ function BagelCase({step,bagels,onBagel}:{step:Step;bagels:Record<string,number>
   photo.colorSpace=THREE.SRGBColorSpace
   const xs=[-2.52,-.84,.84,2.52]
   return <group position={[-2.1,0,.2]}>
-    <RoundedBox castShadow receiveShadow position={[0,.72,0]} args={[7.2,1.44,1.95]} radius={.06}><meshStandardMaterial color={STEEL} metalness={.62} roughness={.26}/></RoundedBox>
-    <mesh position={[0,1.05,.33]}>
-      <planeGeometry args={[6.85,2.57]}/>
+    <RoundedBox castShadow receiveShadow position={[0,.34,0]} args={[7.2,.68,1.92]} radius={.05}><meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/></RoundedBox>
+    <mesh position={[0,1.28,.86]}>
+      <planeGeometry args={[6.9,1.78]}/>
       <meshBasicMaterial map={photo} toneMapped={false}/>
     </mesh>
-    <mesh position={[0,1.43,.55]}><boxGeometry args={[7.0,.82,.045]}/><meshPhysicalMaterial color="#e8f8ff" transmission={.94} transparent opacity={.13} roughness={.05} metalness={0}/></mesh>
-    <mesh position={[0,1.86,-.52]} rotation={[-.52,0,0]}><boxGeometry args={[7.0,.06,1.28]}/><meshPhysicalMaterial color="#eefaff" transmission={.9} transparent opacity={.14} roughness={.06}/></mesh>
+    <mesh position={[0,1.28,.92]}><boxGeometry args={[7.0,1.78,.035]}/><meshPhysicalMaterial color="#eefaff" transmission={.96} transparent opacity={.11} roughness={.035}/></mesh>
+    <mesh position={[0,2.16,.48]} rotation={[-.4,0,0]}><boxGeometry args={[7.0,.045,1.15]}/><meshPhysicalMaterial color="#effaff" transmission={.94} transparent opacity={.12} roughness={.04}/></mesh>
+    <mesh position={[0,.76,.96]}><boxGeometry args={[7.05,.05,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
+    <mesh position={[0,2.15,.94]}><boxGeometry args={[7.05,.055,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
     {menu.bagels.map((bagel,index)=>{
       const row=index<4?0:1
       const col=index%4
       const x=xs[col]
-      const y=row===0?1.38:.68
+      const y=row===0?1.55:1.02
       const count=bagels[bagel.id]??0
-      return <PhotoHotspot
-        key={bagel.id}
-        position={[x,y,.59]}
-        size={[1.55,.64]}
-        active={step==='bagels'}
-        selected={count>0}
-        count={count}
-        label={bagel.name}
-        onClick={()=>onBagel(bagel.id)}
-      />
+      return <PhotoHotspot key={bagel.id} position={[x,y,.965]} size={[1.5,.5]} active={step==='bagels'} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
     })}
   </group>
 }
@@ -411,26 +396,19 @@ function Bagel3D({variant,color,position,active,selected,onClick}:{variant:strin
 function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,number>;onSchmear:(id:string)=>void}){
   const photo=useTexture('/images/schmear-vitrina-photo.webp')
   photo.colorSpace=THREE.SRGBColorSpace
-  const positions:V3[]=[[-1.25,1.32,.58],[0,1.32,.58],[1.25,1.32,.58],[-.63,.66,.58],[.63,.66,.58]]
+  const positions:V3[]=[[-1.2,1.52,.965],[0,1.52,.965],[1.2,1.52,.965],[-.6,1.0,.965],[.6,1.0,.965]]
   return <group position={[4.25,0,-.05]}>
-    <RoundedBox castShadow position={[0,.72,0]} args={[4.25,1.44,1.95]} radius={.06}><meshStandardMaterial color={STEEL} metalness={.62} roughness={.26}/></RoundedBox>
-    <mesh position={[0,1.04,.32]}>
-      <planeGeometry args={[4.0,2.0]}/>
+    <RoundedBox castShadow position={[0,.34,0]} args={[4.25,.68,1.92]} radius={.05}><meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/></RoundedBox>
+    <mesh position={[0,1.28,.86]}>
+      <planeGeometry args={[4.02,1.78]}/>
       <meshBasicMaterial map={photo} toneMapped={false}/>
     </mesh>
-    <mesh position={[0,1.43,.55]}><boxGeometry args={[4.05,.82,.045]}/><meshPhysicalMaterial color="#e8f8ff" transmission={.94} transparent opacity={.13} roughness={.05}/></mesh>
+    <mesh position={[0,1.28,.92]}><boxGeometry args={[4.05,1.78,.035]}/><meshPhysicalMaterial color="#eefaff" transmission={.96} transparent opacity={.11} roughness={.035}/></mesh>
+    <mesh position={[0,.76,.96]}><boxGeometry args={[4.08,.05,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
+    <mesh position={[0,2.15,.94]}><boxGeometry args={[4.08,.055,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
     {menu.schmears.map((item,index)=>{
       const count=counts[item.id]??0
-      return <PhotoHotspot
-        key={item.id}
-        position={positions[index]}
-        size={[1.12,.54]}
-        active={step==='schmears'}
-        selected={count>0}
-        count={count}
-        label={item.name}
-        onClick={()=>onSchmear(item.id)}
-      />
+      return <PhotoHotspot key={item.id} position={positions[index]} size={[1.0,.45]} active={step==='schmears'} selected={count>0} count={count} label={item.name} onClick={()=>onSchmear(item.id)}/>
     })}
   </group>
 }
@@ -550,15 +528,15 @@ function Seating(){
 
 function AmbientPeople(){
   return <>
-    <MovingNPC from={[.6,0,8.0]} to={[6.25,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
-    <MovingNPC from={[4.8,0,4.3]} to={[-.2,0,8.05]} shirt="#8e6c52" bag phase={.95}/>
-    <NPC position={[3.7,0,3.45]} shirt="#7a746c"/>
-    <NPC position={[4.15,0,2.7]} shirt="#5e826f"/>
+    <MovingNPC from={[7.0,0,7.4]} to={[6.7,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
+    <MovingNPC from={[6.1,0,5.2]} to={[2.8,0,8.05]} shirt="#8e6c52" bag phase={.95}/>
+    <NPC position={[6.05,0,3.6]} shirt="#7a746c"/>
+    <NPC position={[6.55,0,2.8]} shirt="#5e826f"/>
   </>
 }
 
 function NPC({position,shirt,seated=false}:{position:V3;shirt:string;seated?:boolean}){
-  return <group position={position} scale={seated?.84:1}>
+  return <group position={position} scale={seated?.72:.82}>
     <mesh position={[0,seated?1.18:1.72,0]}><sphereGeometry args={[.2,14,14]}/><meshStandardMaterial color="#c58e6d"/></mesh>
     <mesh position={[0,seated?.68:1.1,0]}><capsuleGeometry args={[.28,.64,5,10]}/><meshStandardMaterial color={shirt}/></mesh>
   </group>
@@ -574,7 +552,7 @@ function MovingNPC({from,to,shirt,backpack,bag,phase}:{from:V3;to:V3;shirt:strin
     g.current.position.lerpVectors(a,b,t)
     g.current.rotation.y=Math.atan2((raw<1?b.x-a.x:a.x-b.x),(raw<1?b.z-a.z:a.z-b.z))
   })
-  return <group ref={g}>
+  return <group ref={g} scale={.82}>
     <mesh position={[0,1.72,0]}><sphereGeometry args={[.2,14,14]}/><meshStandardMaterial color="#c58e6d"/></mesh>
     <mesh position={[0,1.1,0]}><capsuleGeometry args={[.28,.64,5,10]}/><meshStandardMaterial color={shirt}/></mesh>
     {backpack&&<RoundedBox position={[0,1.15,.28]} args={[.5,.72,.2]} radius={.05}><meshStandardMaterial color={backpack}/></RoundedBox>}
