@@ -1104,3 +1104,6 @@
   }
   [data-scene="returning"] .guided-scene-image{object-fit:cover;object-position:center}
 }
+
+/* Mini bagels use smaller product scale, never the grande silhouette. */
+@media(max-width:800px){.mobile-bagel-stage[data-format="mini"] .mobile-bagel-card>button img{width:72px;height:90px;object-fit:contain}.mobile-bagel-stage[data-format="mini"] .mobile-bagel-card{background:linear-gradient(180deg,#f7fbff,#fff)} }
