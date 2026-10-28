@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getPrivatePaymentConfig } from '../../../../server/payment-config.server'
+import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
 
 function validUuid(value: string) {
@@ -16,6 +16,9 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
           'X-Content-Type-Options': 'nosniff',
         }
         try {
+          if (!isPaymentRequestAllowed(request)) {
+            return Response.json({ ok: false, error: 'Culqi payments are not enabled yet.' }, { status: 503, headers })
+          }
           const cfg = getPrivatePaymentConfig()
           if (!cfg.enabled || !cfg.bridgeReady) {
             return Response.json({ ok: false, error: 'Culqi payments are not enabled yet.' }, { status: 503, headers })
