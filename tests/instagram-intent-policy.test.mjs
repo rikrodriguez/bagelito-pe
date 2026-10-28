@@ -9,20 +9,46 @@ const policy = await readFile(
 
 test("Instagram policy keeps high-risk cases out of auto-send", () => {
   for (const intent of [
-    "allergy_celiac_gluten_safety",
-    "complaint_or_service_failure",
-    "refund_or_payment_dispute",
-    "lost_or_wrong_delivery",
-    "partnership_press_vendor",
+    "complaint",
+    "refund",
+    "missing_item",
+    "damaged_order",
+    "food_safety",
+    "allergy",
+    "payment_dispute",
+    "fraud",
   ]) {
-    const start = policy.indexOf(`${intent}: {`);
-    assert.notEqual(start, -1, `missing policy for ${intent}`);
-    const block = policy.slice(start, start + 500);
-    assert.match(block, /risk: "red"/);
-    assert.match(block, /autoSendEligible: false/);
+    assert.match(
+      policy,
+      new RegExp(`${intent}: "human"`),
+      `expected ${intent} to require human handling`,
+    );
+  }
+});
+
+test("Instagram custom and exception cases require review", () => {
+  for (const intent of [
+    "order_status",
+    "payment_confirmation",
+    "address_change",
+    "custom_order",
+    "catering",
+    "collaboration",
+    "discount_exception",
+  ]) {
+    assert.match(
+      policy,
+      new RegExp(`${intent}: "review"`),
+      `expected ${intent} to require review`,
+    );
   }
 });
 
 test("Instagram auto-send requires at least 92 percent confidence", () => {
   assert.match(policy, /confidence >= 0\.92/);
+});
+
+test("Instagram policy supports Spanish, English, and mixed conversations", () => {
+  assert.match(policy, /"es" \| "en" \| "mixed" \| "unknown"/);
+  assert.match(policy, /Treat Spanish and English as native Bagelito voices/);
 });
