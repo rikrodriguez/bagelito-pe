@@ -4,6 +4,7 @@ export type PublicPaymentConfig = {
   mode: PaymentMode
   currency: 'PEN'
   enabled: boolean
+  configured: boolean
   bridgeReady: boolean
   provider: 'culqi' | 'manual'
   publicKey: string
@@ -62,6 +63,7 @@ function buildPaymentConfig() {
     mode: requestedMode,
     currency: 'PEN' as const,
     enabled: configured && bridgeReady,
+    configured,
     bridgeReady,
     provider,
     publicKey: configured ? publicKey : '',
@@ -78,4 +80,23 @@ export function getPublicPaymentConfig(): PublicPaymentConfig {
 
 export function getPrivatePaymentConfig(): PrivatePaymentConfig {
   return buildPaymentConfig()
+}
+
+
+export function isPaymentRequestAllowed(request: Request) {
+  const cfg = buildPaymentConfig()
+  if (!cfg.enabled || !cfg.bridgeReady) return false
+  const configuredSite = process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || ''
+  try {
+    const expected = new URL(configuredSite)
+    const actual = new URL(request.url)
+    if (actual.origin !== expected.origin) return false
+    const origin = request.headers.get('origin')
+    if (origin && origin !== expected.origin) return false
+    const forwardedHost = request.headers.get('x-forwarded-host')
+    if (forwardedHost && forwardedHost !== expected.host) return false
+    return true
+  } catch {
+    return false
+  }
 }
