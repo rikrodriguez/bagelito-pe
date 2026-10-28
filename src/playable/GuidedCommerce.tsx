@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import './guided-commerce.css'
 
@@ -59,8 +59,29 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
+  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;bridgeReady:boolean;mode:string}|null>(null)
   const qaMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const receiptDrag = useRef({ startY: 0, offset: 0 })
+
+  useEffect(() => {
+    let active = true
+    fetch('/api/payments/culqi/config', { cache: 'no-store' })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('payment-config-unavailable')
+        return await response.json() as { enabled?: boolean; bridgeReady?: boolean; mode?: string }
+      })
+      .then((config) => {
+        if (active) setPaymentConfig({
+          enabled: config.enabled === true,
+          bridgeReady: config.bridgeReady === true,
+          mode: typeof config.mode === 'string' ? config.mode : 'disabled',
+        })
+      })
+      .catch(() => {
+        if (active) setPaymentConfig({ enabled: false, bridgeReady: false, mode: 'disabled' })
+      })
+    return () => { active = false }
+  }, [])
 
   const selectedCombo = combos.find((c) => c.id === comboId) ?? null
   const bagelTotal = Object.values(bagelCounts).reduce((sum, n) => sum + n, 0)
