@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { readBoundedJsonObject } from '../../../../server/http-json.server'
-import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
+import { getPrivatePaymentConfig, isPaymentStatusRequestAllowed } from '../../../../server/payment-config.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
 import { PublicApiError } from '../../../../server/public-api-security.server'
 
@@ -18,11 +18,11 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
           'X-Content-Type-Options': 'nosniff',
         }
         try {
-          if (!isPaymentRequestAllowed(request)) {
+          if (!isPaymentStatusRequestAllowed(request)) {
             return Response.json({ ok: false, error: 'Culqi payments are not enabled yet.' }, { status: 503, headers })
           }
           const cfg = getPrivatePaymentConfig()
-          if (!cfg.enabled || !cfg.bridgeReady) {
+          if (!cfg.configured || !cfg.bridgeReady) {
             return Response.json({ ok: false, error: 'Culqi payments are not enabled yet.' }, { status: 503, headers })
           }
 
