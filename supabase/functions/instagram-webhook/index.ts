@@ -356,10 +356,10 @@ Deno.serve(async (req: Request) => {
         const { data: conversation, error: conversationError } = await db
           .from("instagram_conversations")
           .upsert(
-            { account_id: account.id, contact_id: contact.id, mode: "review_required", status: "open", updated_at: now },
+            { account_id: account.id, contact_id: contact.id, status: "open", updated_at: now },
             { onConflict: "account_id,contact_id" }
           )
-          .select("id,unread_count")
+          .select("id,unread_count,mode,last_outbound_at")
           .single();
         if (conversationError) throw conversationError;
 
@@ -393,11 +393,18 @@ Deno.serve(async (req: Request) => {
           update.unread_count = Number(conversation.unread_count ?? 0) + (duplicateMessage ? 0 : 1);
         } else {
           update.last_outbound_at = sentAt;
+          // In Shadow Mode there is no Send API, so an outbound echo means a human
+          // replied from Instagram/Meta. Respect that takeover immediately.
+          update.mode = "human_active";
         }
         const { error: updateError } = await db.from("instagram_conversations").update(update).eq("id", conversation.id);
         if (updateError) throw updateError;
 
-        if (inbound && !duplicateMessage && insertedMessage?.id && openaiKey) {
+        const humanTakeoverActive =
+          conversation.mode === "human_active" &&
+          Boolean(conversation.last_outbound_at);
+
+        if (inbound && !duplicateMessage && insertedMessage?.id && openaiKey && !humanTakeoverActive) {
           const shadow = await generateShadowDraft({
             db,
             conversationId: conversation.id,
