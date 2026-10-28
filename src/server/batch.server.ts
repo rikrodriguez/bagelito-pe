@@ -12,7 +12,7 @@ export type SafeBatchResponse = { batch: BatchAvailability; status: 200 | 503 }
 const currentBatchSelect =
   'id, name, status, orders_open_at, orders_close_at, delivery_date, capacity_packs, capacity_bagels'
 
-export async function getBatchReadOnly(): Promise<SafeBatchResponse> {
+export async function getBatchReadOnly(nextPackUnits = 6): Promise<SafeBatchResponse> {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
   const secret = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !secret) {
@@ -53,7 +53,7 @@ export async function getBatchReadOnly(): Promise<SafeBatchResponse> {
     }
     if (orderError) throw orderError
     return {
-      batch: projectBatchAvailability(batch, (orders ?? []) as CapacityOrderRow[]),
+      batch: projectBatchAvailability(batch, (orders ?? []) as CapacityOrderRow[], Date.now(), nextPackUnits),
       status: 200,
     }
   } catch (error) {
