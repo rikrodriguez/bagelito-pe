@@ -3,7 +3,6 @@ import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@reac
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
-import { CinematicCommerce } from './CinematicCommerce'
 import { GuidedCommerce } from './GuidedCommerce'
 import './playable.css'
 
@@ -47,7 +46,6 @@ export function PlayableStore() {
   const [ready, setReady] = useState(false)
   const [guidedOpen, setGuidedOpen] = useState(false)
   const [name, setName] = useState<string | null>(null)
-  const [guidedCommerce,setGuidedCommerce]=useState(false)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
@@ -151,7 +149,7 @@ export function PlayableStore() {
 
     {step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
-      <button type="button" className="primary" onClick={()=>setGuidedCommerce(true)}>Empezar pedido</button>
+      <button type="button" className="primary" onClick={()=>setGuidedOpen(true)}>Empezar pedido</button>
       <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
     </div>}
 
