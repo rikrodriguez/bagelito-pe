@@ -10,7 +10,8 @@ This document is intentionally fail-closed. Passing a visual QA does not authori
 - Duplicate preview project `bagelito-playable-v1`: preview deployments disabled
 - Visual QA branch: enabled with `BAGELITO_VISUAL_QA_ENABLED=true`
 - Merchant review kill switch: `BAGELITO_MERCHANT_REVIEW_ONLY=true`
-- Culqi on this branch: `CULQI_ENABLED=false`
+- Culqi intake on this branch: `CULQI_ENABLED=false`
+- Reconciliation/status is intentionally designed to remain available after intake is closed, once the provider environment is configured.
 - Production legal-evidence migration: NOT applied
 - Current production review batch: NOT checkout-ready while `delivery_date` is null
 
@@ -73,8 +74,10 @@ All gates below must be true at the same time:
    - Only then set `CULQI_TANSTACK_CLIENT_READY=true`.
 
 8. **Final safety**
-   - Keep `BAGELITO_MERCHANT_REVIEW_ONLY=true` through all sandbox QA.
-   - For live activation, remove/disable review-only only after every gate above passes.
+   - Keep `BAGELITO_MERCHANT_REVIEW_ONLY=true` during visual QA and all non-transactional review.
+   - For an intentionally approved isolated sandbox transaction, review-only may be disabled **only on that sandbox preview branch** while production stays locked.
+   - Turning `CULQI_ENABLED=false` must stop new payment intake without disabling webhook/status reconciliation for already-started payments.
+   - For live activation, remove/disable production review-only only after every gate above passes.
    - Production `CULQI_LIVE_APPROVED=true` is the final live-mode gate.
 
 ## Visual QA
