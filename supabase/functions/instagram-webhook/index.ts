@@ -325,7 +325,7 @@ async function generateShadowDraft(args: {
       store: false,
       instructions,
       input: JSON.stringify(input),
-      max_output_tokens: 500,
+      max_output_tokens: 900,
       text: {
         format: {
           type: "json_schema",
@@ -373,9 +373,46 @@ async function generateShadowDraft(args: {
 
   const payload = await response.json();
   const outputText = extractOutputText(payload);
-  if (!outputText) throw new Error("empty_openai_output");
 
-  const parsed = JSON.parse(outputText);
+  if (!outputText) {
+    await db.from("instagram_ai_runs").insert({
+      conversation_id: conversationId,
+      triggering_message_id: triggeringMessageId,
+      execution_mode: "shadow",
+      language: "unknown",
+      proposed_media: [],
+      facts_used: {
+        fact_keys: (facts ?? []).map((f: any) => f.fact_key),
+        current_batch_id: batch?.id ?? null
+      },
+      model,
+      status: "error",
+      error_message: "empty_openai_output"
+    });
+    return { generated: false, error: "empty_openai_output" };
+  }
+
+  let parsed: any;
+  try {
+    parsed = JSON.parse(outputText);
+  } catch (error) {
+    const parseError = error instanceof Error ? error.message : String(error);
+    await db.from("instagram_ai_runs").insert({
+      conversation_id: conversationId,
+      triggering_message_id: triggeringMessageId,
+      execution_mode: "shadow",
+      language: "unknown",
+      proposed_media: [],
+      facts_used: {
+        fact_keys: (facts ?? []).map((f: any) => f.fact_key),
+        current_batch_id: batch?.id ?? null
+      },
+      model,
+      status: "error",
+      error_message: `openai_json_parse_failed:${parseError.slice(0,500)}`
+    });
+    return { generated: false, error: "openai_json_parse_failed" };
+  }
   const intent = INTENTS.includes(parsed.intent) ? parsed.intent : "other";
   const language = ["es","en","mixed","unknown"].includes(parsed.language) ? parsed.language : "unknown";
   const confidence = typeof parsed.confidence === "number" ? Math.min(1, Math.max(0, parsed.confidence)) : null;
@@ -547,7 +584,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: runtimeSettings } = await db
     .from("instagram_runtime_settings")
-    .select("enabled,mode,test_recipient_igsid,min_confidence,auto_intents,media_enabled,max_media")
+    .select("enabled,mode,test_recipient_igsid,test_recipient_igsids,min_confidence,auto_intents,media_enabled,max_media")
     .eq("id", "default")
     .maybeSingle();
 
@@ -725,9 +762,12 @@ Deno.serve(async (req: Request) => {
               ? runtimeSettings.auto_intents
               : [];
             const minConfidence = Number(runtimeSettings?.min_confidence ?? 0.92);
+            const configuredTestRecipients = Array.isArray(runtimeSettings?.test_recipient_igsids)
+              ? runtimeSettings.test_recipient_igsids
+              : [runtimeSettings?.test_recipient_igsid].filter(Boolean);
             const testOnly =
               runtimeSettings?.mode === "test_auto" &&
-              contactInstagramId === runtimeSettings?.test_recipient_igsid;
+              configuredTestRecipients.includes(contactInstagramId);
             const fullAuto = runtimeSettings?.mode === "auto";
             const safeForAuto =
               Boolean(runtimeSettings?.enabled) &&
@@ -742,94 +782,116 @@ Deno.serve(async (req: Request) => {
               shadow.proposedReply.trim().length > 0;
 
             if (safeForAuto) {
-              const textSend = await postInstagramMessage({
-                accountId: igAccountId,
-                recipientId: contactInstagramId,
-                accessToken: instagramAccessToken,
-                message: { text: shadow.proposedReply.trim() }
-              });
-
-              if (textSend?.message_id) {
-                await db.from("instagram_outbound_sends").insert({
-                  conversation_id: conversation.id,
-                  ai_run_id: shadow.aiRunId,
-                  provider_message_id: textSend.message_id,
-                  recipient_igsid: contactInstagramId,
-                  kind: "text",
-                  source: "ai"
+              try {
+                const textSend = await postInstagramMessage({
+                  accountId: igAccountId,
+                  recipientId: contactInstagramId,
+                  accessToken: instagramAccessToken,
+                  message: { text: shadow.proposedReply.trim() }
                 });
-              }
 
-              const sentMedia: any[] = [];
-              if (runtimeSettings?.media_enabled) {
-                const maxMedia = Math.max(0, Math.min(7, Number(runtimeSettings?.max_media ?? 0)));
-
-                for (const asset of (shadow.proposedMedia ?? []).slice(0, maxMedia)) {
-                  if (!asset?.sendable) continue;
-                  const mediaUrl = await resolveInstagramMediaUrl(db, asset);
-                  if (!mediaUrl) continue;
-
-                  const mediaSend = await postInstagramMessage({
-                    accountId: igAccountId,
-                    recipientId: contactInstagramId,
-                    accessToken: instagramAccessToken,
-                    message: {
-                      attachment: {
-                        type: "image",
-                        payload: { url: mediaUrl }
-                      }
-                    }
+                if (textSend?.message_id) {
+                  await db.from("instagram_outbound_sends").insert({
+                    conversation_id: conversation.id,
+                    ai_run_id: shadow.aiRunId,
+                    provider_message_id: textSend.message_id,
+                    recipient_igsid: contactInstagramId,
+                    kind: "text",
+                    source: "ai"
                   });
+                }
 
-                  if (mediaSend?.message_id) {
-                    await db.from("instagram_outbound_sends").insert({
-                      conversation_id: conversation.id,
-                      ai_run_id: shadow.aiRunId,
-                      provider_message_id: mediaSend.message_id,
-                      recipient_igsid: contactInstagramId,
-                      kind: "image",
+                const sentMedia: any[] = [];
+                if (runtimeSettings?.media_enabled) {
+                  const maxMedia = Math.max(0, Math.min(7, Number(runtimeSettings?.max_media ?? 0)));
+
+                  for (const asset of (shadow.proposedMedia ?? []).slice(0, maxMedia)) {
+                    if (!asset?.sendable) continue;
+                    const mediaUrl = await resolveInstagramMediaUrl(db, asset);
+                    if (!mediaUrl) continue;
+
+                    const mediaSend = await postInstagramMessage({
+                      accountId: igAccountId,
+                      recipientId: contactInstagramId,
+                      accessToken: instagramAccessToken,
+                      message: {
+                        attachment: {
+                          type: "image",
+                          payload: { url: mediaUrl }
+                        }
+                      }
+                    });
+
+                    if (mediaSend?.message_id) {
+                      await db.from("instagram_outbound_sends").insert({
+                        conversation_id: conversation.id,
+                        ai_run_id: shadow.aiRunId,
+                        provider_message_id: mediaSend.message_id,
+                        recipient_igsid: contactInstagramId,
+                        kind: "image",
+                        asset_key: asset.asset_key ?? null,
+                        source: "ai"
+                      });
+                    }
+
+                    sentMedia.push({
                       asset_key: asset.asset_key ?? null,
-                      source: "ai"
+                      provider_message_id: mediaSend?.message_id ?? null
                     });
                   }
-
-                  sentMedia.push({
-                    asset_key: asset.asset_key ?? null,
-                    provider_message_id: mediaSend?.message_id ?? null
-                  });
                 }
-              }
 
-              if (shadow.aiRunId) {
-                await db.from("instagram_ai_runs")
-                  .update({
-                    execution_mode: "auto",
-                    status: "sent",
-                    updated_at: new Date().toISOString()
-                  })
-                  .eq("id", shadow.aiRunId);
-              }
-
-              await db.from("instagram_conversation_events").insert({
-                conversation_id: conversation.id,
-                event_type: testOnly ? "test_auto_send" : "auto_send",
-                from_mode: conversation.mode,
-                to_mode: "ai_active",
-                reason: testOnly ? "controlled_test" : "safe_auto",
-                actor: "ai",
-                metadata: {
-                  triggering_message_id: insertedMessage.id,
-                  ai_run_id: shadow.aiRunId,
-                  intent: shadow.intent,
-                  confidence: shadow.confidence,
-                  provider_message_id: textSend?.message_id ?? null,
-                  sent_media: sentMedia
+                if (shadow.aiRunId) {
+                  await db.from("instagram_ai_runs")
+                    .update({
+                      execution_mode: "auto",
+                      status: "sent",
+                      updated_at: new Date().toISOString()
+                    })
+                    .eq("id", shadow.aiRunId);
                 }
-              });
 
-              await db.from("instagram_conversations")
-                .update({ mode: "ai_active", updated_at: new Date().toISOString() })
-                .eq("id", conversation.id);
+                await db.from("instagram_conversation_events").insert({
+                  conversation_id: conversation.id,
+                  event_type: testOnly ? "test_auto_send" : "auto_send",
+                  from_mode: conversation.mode,
+                  to_mode: "ai_active",
+                  reason: testOnly ? "controlled_test" : "safe_auto",
+                  actor: "ai",
+                  metadata: {
+                    triggering_message_id: insertedMessage.id,
+                    ai_run_id: shadow.aiRunId,
+                    intent: shadow.intent,
+                    confidence: shadow.confidence,
+                    provider_message_id: textSend?.message_id ?? null,
+                    sent_media: sentMedia
+                  }
+                });
+
+                await db.from("instagram_conversations")
+                  .update({ mode: "ai_active", updated_at: new Date().toISOString() })
+                  .eq("id", conversation.id);
+              } catch (sendError) {
+                const sendErrorText = sendError instanceof Error ? sendError.message : String(sendError);
+
+                await db.from("instagram_conversation_events").insert({
+                  conversation_id: conversation.id,
+                  event_type: "auto_send_error",
+                  from_mode: conversation.mode,
+                  to_mode: conversation.mode,
+                  reason: "provider_send_failed",
+                  actor: "ai",
+                  metadata: {
+                    triggering_message_id: insertedMessage.id,
+                    ai_run_id: shadow.aiRunId,
+                    intent: shadow.intent,
+                    confidence: shadow.confidence,
+                    error: sendErrorText.slice(0, 1000)
+                  }
+                });
+
+                console.error("instagram_auto_send_failed", sendErrorText);
+              }
             }
           }
         }
