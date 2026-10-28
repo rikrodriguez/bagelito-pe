@@ -247,7 +247,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     if (scene === 'pack-size' || scene === 'pack-qty') return base + 'packs.webp'
     if (scene === 'combos') return base + 'combos.webp'
     if (scene === 'schmear-size') return base + 'schmears.webp'
-    if (scene === 'bagels') return base + 'bagels-vitrina.webp'
+    if (scene === 'bagels') return '/images/bagel-vitrina-photo.webp'
     if (scene === 'schmears') return base + 'schmears-vitrina.webp'
     if (scene === 'cross-sell') return base + 'cross-sell.webp'
     if (scene === 'cashier') return base + 'cashier.webp'
