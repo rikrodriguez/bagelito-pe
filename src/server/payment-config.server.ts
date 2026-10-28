@@ -8,6 +8,7 @@ export type PublicPaymentConfig = {
   bridgeReady: boolean
   webhookReady: boolean
   clientReady: boolean
+  merchantReviewOnly: boolean
   visualQaAllowed: boolean
   provider: 'culqi' | 'manual'
   publicKey: string
@@ -52,8 +53,10 @@ function buildPaymentConfig() {
     ? process.env.VERCEL_ENV !== 'production' && sandboxOriginAllowed
     : requestedMode === 'live' && process.env.CULQI_LIVE_APPROVED === 'true'
 
+  const merchantReviewOnly = process.env.BAGELITO_MERCHANT_REVIEW_ONLY === 'true'
   const configured = provider === 'culqi'
     && process.env.CULQI_ENABLED === 'true'
+    && !merchantReviewOnly
     && matchingKeys
     && modeAllowed
     && Boolean(host)
@@ -77,6 +80,7 @@ function buildPaymentConfig() {
     bridgeReady,
     webhookReady,
     clientReady,
+    merchantReviewOnly,
     visualQaAllowed,
     provider,
     publicKey: configured ? publicKey : '',
