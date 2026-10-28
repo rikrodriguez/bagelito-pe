@@ -15,7 +15,7 @@ try {
     resolve(here, 'tests/approved-shop-contract.test.mjs'),
     resolve(here, 'tests/batch-read.test.mjs'),
   ], { stdio: 'inherit', cwd: repoRoot })
-  console.log('Portable slice checks passed. TanStack/AI Studio preview and GHL integration NOT tested.')
+  execFileSync('node', ['--test', resolve(here, 'tests/store-ui-contract.test.mjs')], { stdio: 'inherit', cwd: repoRoot })\n  console.log('Portable slice checks passed. TanStack/AI Studio preview and GHL integration NOT tested.')
 } finally {
   rmSync(outDir, { recursive: true, force: true })
 }
