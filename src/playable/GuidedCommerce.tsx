@@ -489,10 +489,10 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           <i className="approved-schmear" />
         </span>
         <span className="approved-combo-copy">
-          <small>COMBO APROBADO</small>
+          <small>COMBO BAGELITO</small>
           <b>{combo.name}</b>
           <em>Elige 2 bagels + 1 schmear</em>
-          <strong>Precio validado en caja</strong>
+          <strong>Precio por confirmar</strong>
         </span>
         <span className="approved-combo-arrow">→</span>
       </button>)}
