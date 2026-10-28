@@ -372,10 +372,13 @@ body:has(.entry-flow) { margin:0; overflow:hidden; background:#dce6f0; }
     object-position:center center;
     transform:scale(1.01);
   }
-  .entry-flow[data-state="categories"] .entry-flow-photo,
+  .entry-flow[data-state="categories"] .entry-flow-photo {
+    filter:brightness(.93) saturate(.92);
+    transform:scale(1.025);
+  }
   .entry-flow[data-state="pack-size"] .entry-flow-photo {
-    filter:brightness(.76) saturate(.86) blur(.6px);
-    transform:scale(1.035);
+    filter:brightness(.66) saturate(.8) blur(1.4px);
+    transform:scale(1.045);
   }
   .entry-flow[data-entering="true"] .entry-flow-photo { transform:scale(1.085); }
   .entry-flow-topbar { top:10px; left:11px; right:11px; }
@@ -390,58 +393,34 @@ body:has(.entry-flow) { margin:0; overflow:hidden; background:#dce6f0; }
     font-size:12px;
   }
 
-  /* Mobile uses the same three approved choices, but floats them over the store
-     instead of hiding them in a large white container. */
+  /* On mobile the approved cards already exist in the artwork too.
+     Keep only transparent accessible hit areas over those cards. */
   .entry-flow-category-hotspots {
-    top:auto;
-    left:12px;
-    right:12px;
-    bottom:92px;
-    height:236px;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:7px;
+    position:absolute;
+    inset:0;
+    height:auto;
+    display:block;
     pointer-events:none;
   }
   .entry-flow-category-hotspot {
-    position:relative;
-    left:auto!important;
-    top:auto!important;
-    width:auto!important;
-    height:auto!important;
-    border:1px solid rgba(214,227,241,.96);
-    background:rgba(255,255,255,.91);
-    backdrop-filter:blur(9px);
-    border-radius:16px;
-    box-shadow:0 8px 22px rgba(7,44,88,.11);
-  }
-  .entry-flow-category-hotspot.packs::before,
-  .entry-flow-category-hotspot.combos::before,
-  .entry-flow-category-hotspot.schmears::before {
     position:absolute;
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:var(--bagelito-blue);
-    font-weight:900;
-    font-size:20px;
+    pointer-events:auto;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+    backdrop-filter:none;
+    border-radius:14px;
   }
-  .entry-flow-category-hotspot.packs::before { content:"Packs"; }
-  .entry-flow-category-hotspot.combos::before { content:"Combos"; }
-  .entry-flow-category-hotspot.schmears::before { content:"Schmears"; }
-  .entry-flow-category-hotspot.packs::after,
-  .entry-flow-category-hotspot.combos::after,
-  .entry-flow-category-hotspot.schmears::after {
-    position:absolute;
-    left:18px;
-    top:61%;
-    color:#4c6684;
-    font-size:10px;
-    font-weight:650;
+  .entry-flow-category-hotspot.packs { left:0%; top:20.5%; width:30%; height:19%; }
+  .entry-flow-category-hotspot.combos { left:30%; top:20.5%; width:40%; height:19%; }
+  .entry-flow-category-hotspot.schmears { left:70%; top:20.5%; width:30%; height:19%; }
+  .entry-flow-category-hotspot::before,
+  .entry-flow-category-hotspot::after { content:none!important; }
+  .entry-flow-category-hotspot:focus-visible {
+    outline:4px solid var(--bagelito-coral);
+    outline-offset:-4px;
+    background:rgba(255,255,255,.06);
   }
-  .entry-flow-category-hotspot.packs::after { content:"Arma una caja a tu manera"; }
-  .entry-flow-category-hotspot.combos::after { content:"Bagels + schmears"; }
-  .entry-flow-category-hotspot.schmears::after { content:"Tarrinas individuales"; }
 
   .entry-flow-pack-selector {
     top:auto;
