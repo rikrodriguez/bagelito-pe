@@ -34,6 +34,14 @@ type Scene =
 
 type BagelMode = 'pack' | 'combo' | 'upsell8' | 'downsell2'
 
+// Spatial order from the approved 1800 × 666 vitrina artwork, NOT catalog order.
+// Left→right: Plain, Everything, Sesame, Classic Onion / Jalapeño Cheddar,
+// Cheddar, Cinnamon Raisin, Blueberry. Keep hotspots aligned to artwork trays.
+export const BAGEL_SHOWCASE_ORDER = [
+  'plain', 'everything', 'sesame', 'classic-onion',
+  'jalapeno-cheddar', 'cheddar', 'cinnamon-raisin', 'blueberry',
+] as const
+
 const BAGEL_SPOTS = [
   { left: '2.5%', top: '12%', width: '19%', height: '34%' },
   { left: '23%', top: '12%', width: '19%', height: '34%' },
@@ -512,7 +520,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         </div>
       </section>
       <div className="guided-product-frame bagel-product-frame"><img src={sceneImage} alt="Vitrina de bagels" /><div className="guided-product-hotspots bagel-hotspots">
-        {menu.bagels.map((bagel, index) => {
+        {BAGEL_SHOWCASE_ORDER.map((flavorId, index) => {
+          const bagel = menu.bagels.find((item) => item.id === flavorId)
+          if (!bagel) return null
           const count = bagelCounts[bagel.id] ?? 0
           return <button
             key={bagel.id}
