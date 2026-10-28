@@ -269,13 +269,62 @@ export function CulqiBrowserCheckout(props: {
     await waitForPaid(session)
   }, [customer.email, review, waitForPaid])
 
+  const recoverPayment = useCallback(async () => {
+    const recovered = readRecovery()
+    if (!recovered || typeof recovered.checkoutSessionId !== 'string' || typeof recovered.orderCode !== 'string') {
+      setStatus('review')
+      setMessage('Existe una referencia de pago inválida. No vuelvas a pagar hasta revisarla.')
+      return
+    }
+    setStatus('confirming')
+    setMessage('Consultando el estado del pago…')
+    try {
+      const { response, result } = await jsonFetch<{
+        ok?: boolean
+        paymentStatus?: string
+        reconciliationRequired?: boolean
+      }>('/api/payments/culqi/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          checkoutSessionId: recovered.checkoutSessionId,
+          orderCode: recovered.orderCode,
+        }),
+      }, 10_000)
+
+      if (!response.ok || result.reconciliationRequired === true) {
+        setStatus('review')
+        setMessage('El pago necesita revisión. No vuelvas a pagar.')
+        return
+      }
+      if (result.paymentStatus === 'paid') {
+        window.localStorage.removeItem(RECOVERY_KEY)
+        busyRef.current = false
+        setStatus('ready')
+        setMessage('')
+        onPaid(recovered.orderCode)
+        return
+      }
+      if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+        window.localStorage.removeItem(RECOVERY_KEY)
+        busyRef.current = false
+        setStatus('idle')
+        setMessage('La reserva anterior ya no está pendiente. Puedes iniciar un nuevo checkout.')
+        return
+      }
+      setStatus('review')
+      setMessage('El pago sigue pendiente. No vuelvas a pagar todavía.')
+    } catch {
+      setStatus('review')
+      setMessage('No pudimos consultar el pago. No vuelvas a pagar hasta verificarlo.')
+    }
+  }, [onPaid])
+
   const startCheckout = useCallback(async () => {
     if (!config.enabled || busyRef.current) return
     const recovered = readRecovery()
     if (recovered) {
-      setStatus('review')
-      setMessage('Existe un pago pendiente de verificación. No inicies otro pago.')
-      onReview('Existe un pago pendiente de verificación. No inicies otro pago.')
+      await recoverPayment()
       return
     }
 
@@ -344,6 +393,10 @@ export function CulqiBrowserCheckout(props: {
         expiresAt: prepared.expiresAt ?? reservation.expiresAt ?? null,
         orderCode: reservation.orderCode,
         sessionId: prepared.sessionId,
+      }
+      const expiresAt = session.expiresAt ? Date.parse(session.expiresAt) : NaN
+      if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
+        throw new Error('La reserva expiró antes de abrir el checkout.')
       }
       sessionRef.current = session
 
@@ -439,7 +492,7 @@ export function CulqiBrowserCheckout(props: {
       setStatus('error')
       setMessage(error instanceof Error ? error.message : 'No se pudo iniciar Culqi.')
     }
-  }, [config, customer, onReview, order, review, status, submitToken])
+  }, [config, customer, order, recoverPayment, review, submitToken])
 
   useEffect(() => {
     function on3DSMessage(event: MessageEvent) {
@@ -481,7 +534,7 @@ export function CulqiBrowserCheckout(props: {
   if (!config.enabled) {
     return <div className="culqi-browser-status is-locked">
       <b>Checkout Culqi bloqueado</b>
-      <span>Se habilitará solo cuando cliente, webhook, datos legales y batch estén listos.</span>
+      <span>Subtotal actual: S/ {subtotalPen}. Se habilitará solo cuando cliente, webhook, datos legales y batch estén listos.</span>
     </div>
   }
 
@@ -496,6 +549,7 @@ export function CulqiBrowserCheckout(props: {
     </button>
     {!customerReady && <p className="culqi-browser-message">Completa tus datos y acepta los términos para habilitar el pago.</p>}
     {message && <p className="culqi-browser-message">{message}</p>}
+    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>Consultar estado del pago</button>}
     <div id="culqi-checkout-container" className="culqi-browser-container" />
   </div>
 }
