@@ -59,10 +59,11 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
-  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;bridgeReady:boolean;mode:string}|null>(null)
+  const [paymentConfig, setPaymentConfig] = useState<{enabled:boolean;configured:boolean;bridgeReady:boolean;visualQaAllowed:boolean;mode:string}|null>(null)
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
-  const qaMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
+  const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
+  const qaMode = qaRequested && paymentConfig?.visualQaAllowed === true
   const receiptDrag = useRef({ startY: 0, offset: 0 })
 
   useEffect(() => {
@@ -70,17 +71,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     fetch('/api/payments/culqi/config', { cache: 'no-store' })
       .then(async (response) => {
         if (!response.ok) throw new Error('payment-config-unavailable')
-        return await response.json() as { enabled?: boolean; bridgeReady?: boolean; mode?: string }
+        return await response.json() as { enabled?: boolean; configured?: boolean; bridgeReady?: boolean; visualQaAllowed?: boolean; mode?: string }
       })
       .then((config) => {
         if (active) setPaymentConfig({
           enabled: config.enabled === true,
+          configured: config.configured === true,
           bridgeReady: config.bridgeReady === true,
+          visualQaAllowed: config.visualQaAllowed === true,
           mode: typeof config.mode === 'string' ? config.mode : 'disabled',
         })
       })
       .catch(() => {
-        if (active) setPaymentConfig({ enabled: false, bridgeReady: false, mode: 'disabled' })
+        if (active) setPaymentConfig({ enabled: false, configured: false, bridgeReady: false, visualQaAllowed: false, mode: 'disabled' })
       })
     return () => { active = false }
   }, [])
@@ -351,7 +354,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <h2>¿Cuántos quieres?</h2>
       <div className="pack-choice-grid">
         {(packFormat === 'mini' ? [6, 12, 24] : [6, 12]).map((qty) => <button key={qty} onClick={() => choosePack(qty, 'mixed')}>
-          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Mixto</small>
+          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Elige sabores</small>
         </button>)}
       </div>
       <p>En la siguiente escena eliges los sabores directamente de la vitrina.</p>
@@ -440,9 +443,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         <small>PAGO SEGURO</small>
         <b>Culqi</b>
         <span>{paymentConfig?.enabled
-          ? 'Bridge Culqi disponible. Falta conectar la sesión transaccional del pedido.'
-          : paymentConfig?.bridgeReady
-            ? 'Culqi está configurado pero no habilitado para este entorno.'
+          ? 'Bridge Culqi disponible. Falta conectar el checkout del navegador.'
+          : paymentConfig?.configured
+            ? 'Culqi está configurado, pero el bridge transaccional sigue cerrado.'
             : 'El pedido solo avanza cuando el servidor confirme el cobro.'}</span>
       </div>
       <button
@@ -468,9 +471,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </div>}
 
     {scene === 'wallet' && <div className="wallet-actions">
-      <div className="wallet-copy"><small>BAGELITO CLUB</small><b>Tu tarjeta está lista</b><span>Guárdala o continúa sin agregarla.</span></div>
-      <button className="wallet-primary" onClick={saveWallet}>{walletSaved ? 'Guardada ✓' : ' Add to Apple Wallet'}</button>
-      <button className="wallet-secondary" onClick={saveWallet}>G Add to Google Wallet</button>
+      <div className="wallet-copy"><small>BAGELITO CLUB</small><b>{qaMode ? 'Tu tarjeta está lista' : 'Tu tarjeta Bagelito Club'}</b><span>{qaMode ? 'Guárdala o continúa sin agregarla.' : 'La integración con Wallet todavía no está habilitada.'}</span></div>
+      <button className="wallet-primary" disabled={!qaMode} onClick={() => { if (qaMode) saveWallet() }}>{walletSaved ? 'Guardada ✓' : qaMode ? ' Add to Apple Wallet' : 'Apple Wallet · en integración'}</button>
+      <button className="wallet-secondary" disabled={!qaMode} onClick={() => { if (qaMode) saveWallet() }}>{qaMode ? 'G Add to Google Wallet' : 'Google Wallet · en integración'}</button>
       <button className="wallet-skip" onClick={() => setScene('handoff')}>Ahora no</button>
     </div>}
 
