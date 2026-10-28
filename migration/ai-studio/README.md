@@ -59,3 +59,17 @@ Do not proceed if:
 ## Evidence needed to declare work complete
 
 Record exact source SHA, new AI Studio repo SHA, preview URL, test commands/results, server logs, screenshots, GHL API sync evidence, Culqi sandbox test records, export/restore evidence and rollback path. A document or passing local mock test is not production validation.
+
+## First extracted vertical slice — completed at code level
+
+Framework-independent source modules are now copied into `portable-src/`:
+
+- `data/packs.ts`, `data/flavors.ts`, `lib/catalog.ts`;
+- `lib/delivery-pricing.ts`;
+- `lib/batch-availability.ts`, `lib/public-batch-display.ts`, and the standalone batch DTO contract `lib/batch-types.ts`.
+
+These preserve existing source behavior; they **do not** establish the new large/mini/combos/schmears catalog or approved current prices.
+
+`node migration/ai-studio/verify-portable-slice.mjs` compiles and tests those modules in the source repository. **Local isolated verification: TypeScript PASS, 8/8 tests PASS** (see `VALIDATION_2026-10-27.md`). GitHub Actions was added, but its initial run failed before any runner step was reported; **remote CI is NOT verified**.
+
+Next: the generated AI Studio TanStack repository is needed to compile the read-only route and render a live preview. Until then, no claim is made that an application is deployed or payment-ready.
