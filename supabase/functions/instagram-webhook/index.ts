@@ -3,6 +3,134 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 const encoder = new TextEncoder();
 
+const HUMAN_MEDIA_BUCKET = "instagram-human-media";
+
+function imageExtension(contentType: string) {
+  const normalized = contentType.toLowerCase().split(";")[0].trim();
+  if (normalized === "image/png") return "png";
+  if (normalized === "image/webp") return "webp";
+  if (normalized === "image/gif") return "gif";
+  return "jpg";
+}
+
+async function ensureHumanMediaBucket(db: any) {
+  const { data: bucket } = await db.storage.getBucket(HUMAN_MEDIA_BUCKET);
+  if (bucket) return;
+
+  const { error } = await db.storage.createBucket(HUMAN_MEDIA_BUCKET, {
+    public: false,
+    fileSizeLimit: 8 * 1024 * 1024,
+    allowedMimeTypes: ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"]
+  });
+
+  if (error && !String(error.message ?? "").toLowerCase().includes("already")) {
+    throw new Error(`human_media_bucket_create_failed:${error.message}`);
+  }
+}
+
+async function archiveHumanUsedMedia(db: any) {
+  await ensureHumanMediaBucket(db);
+
+  const { data: messages, error: readError } = await db
+    .from("instagram_messages")
+    .select("id,provider_message_id,attachments,sent_at")
+    .eq("direction", "outbound")
+    .order("sent_at", { ascending: false })
+    .limit(100);
+
+  if (readError) throw new Error(`human_media_read_failed:${readError.message}`);
+
+  let archived = 0;
+  let skipped = 0;
+  let failed = 0;
+
+  for (const message of messages ?? []) {
+    const attachments = Array.isArray(message.attachments) ? message.attachments : [];
+
+    for (let index = 0; index < attachments.length; index += 1) {
+      const attachment = attachments[index] as any;
+      if (attachment?.type !== "image") continue;
+
+      const sourceUrl = attachment?.payload?.url;
+      if (typeof sourceUrl !== "string" || !sourceUrl.startsWith("https://")) continue;
+
+      const assetKey = `human-used:${message.id}:${index}`;
+      const { data: existing } = await db
+        .from("instagram_media_assets")
+        .select("id,storage_path")
+        .eq("asset_key", assetKey)
+        .maybeSingle();
+
+      if (existing?.storage_path) {
+        skipped += 1;
+        continue;
+      }
+
+      try {
+        const imageResponse = await fetch(sourceUrl);
+        if (!imageResponse.ok) {
+          failed += 1;
+          continue;
+        }
+
+        const contentType = imageResponse.headers.get("content-type") || "image/jpeg";
+        if (!contentType.toLowerCase().startsWith("image/")) {
+          failed += 1;
+          continue;
+        }
+
+        const bytes = await imageResponse.arrayBuffer();
+        if (bytes.byteLength <= 0 || bytes.byteLength > 8 * 1024 * 1024) {
+          failed += 1;
+          continue;
+        }
+
+        const ext = imageExtension(contentType);
+        const path = `human-used/${message.id}/${index}.${ext}`;
+
+        const { error: uploadError } = await db.storage
+          .from(HUMAN_MEDIA_BUCKET)
+          .upload(path, bytes, {
+            contentType,
+            cacheControl: "31536000",
+            upsert: true
+          });
+
+        if (uploadError) throw uploadError;
+
+        const sendable = ["image/jpeg", "image/jpg", "image/png"].includes(
+          contentType.toLowerCase().split(";")[0].trim()
+        );
+
+        const { error: assetError } = await db
+          .from("instagram_media_assets")
+          .upsert({
+            asset_key: assetKey,
+            storage_path: path,
+            public_url: null,
+            category: "human_reference",
+            product_slug: null,
+            locale: "both",
+            tags: ["human-used", "instagram", "bagelito", "human-reference"],
+            approved: true,
+            sendable,
+            notes: `Archived from human outbound Instagram message ${message.provider_message_id ?? message.id} at ${message.sent_at}.`,
+            updated_at: new Date().toISOString()
+          }, { onConflict: "asset_key" });
+
+        if (assetError) throw assetError;
+        archived += 1;
+      } catch (error) {
+        console.error("human_media_archive_failed", assetKey, error);
+        failed += 1;
+      }
+    }
+  }
+
+  return { archived, skipped, failed };
+}
+
+
 const INTENTS = [
   "menu","price","flavors","product_photo","batch_status","delivery_area","how_to_order","storage","reheating",
   "ingredient_question","vegan_request","order_status","payment_confirmation","address_change","custom_order","catering","collaboration","discount_exception",
@@ -90,7 +218,7 @@ async function generateShadowDraft(args: {
       .limit(1)
       .maybeSingle(),
     db.from("instagram_media_assets")
-      .select("asset_key,public_url,category,product_slug,locale,tags,approved,sendable")
+      .select("asset_key,storage_path,public_url,category,product_slug,locale,tags,approved,sendable")
       .eq("approved", true)
       .order("asset_key", { ascending: true })
   ]);
@@ -108,8 +236,9 @@ async function generateShadowDraft(args: {
     "For complaints, refunds, missing/damaged orders, allergies/celiac/food safety, payment disputes, or fraud: classify the matching high-risk intent and draft a cautious acknowledgement without making promises.",
     "For media, use ONLY exact asset_key values provided in LIVE_FACTS.media_assets. Never invent an asset key or URL.",
     "Historical Bagelito behavior is media-forward: when customers ask for flavors, menu/carta, options, or how to order, Bagelito commonly sends product photos proactively even when the customer did not explicitly ask for a photo.",
-    "For flavors or menu/carta intents, propose several approved current bagel photos (normally 4-7) alongside the concise text answer. Exclude seasonal products unless current availability is explicitly confirmed.",
-    "For how_to_order, a visual pack/menu reference is usually helpful; propose relevant approved pack images when available.",
+    "For flavors, menu/carta, or how_to_order intents, prioritize approved media with category=human_reference and tag=human-used. These are the exact images Bagelito's human operator has actually used in real DMs.",
+    "For flavors or menu/carta intents, propose the human-used reference set first (normally up to 7 images) alongside the concise text answer. Do not replace this set with generic storefront photos unless human-used references are unavailable.",
+    "For how_to_order, also prioritize the same human-used reference set because historical Bagelito behavior sends the actual sales/catalog images after explaining the process.",
     "For a specific flavor or pack question, prefer the exact matching approved asset. For other intents, suggest media only when it genuinely helps.",
     "A media asset with sendable=false may still be suggested in Shadow Mode, but must not be sent until validated.",
     "Return JSON only matching the schema."
@@ -198,22 +327,33 @@ async function generateShadowDraft(args: {
   // Historical audit: Bagelito proactively sends multiple product photos for
   // flavors/menu questions. Enforce that behavior even if the model returns
   // too few media suggestions.
-  if ((intent === "flavors" || intent === "menu") && requestedMediaKeys.length < 4) {
-    const regularFlavorKeys = (mediaAssets ?? [])
-      .filter((asset: any) =>
-        asset.category === "bagel_flavor" &&
-        !((asset.tags ?? []).includes("seasonal"))
-      )
-      .map((asset: any) => asset.asset_key)
-      .slice(0, 7);
-    requestedMediaKeys = Array.from(new Set([...requestedMediaKeys, ...regularFlavorKeys])).slice(0, 7);
-  }
+  const humanUsedKeys = (mediaAssets ?? [])
+    .filter((asset: any) =>
+      asset.category === "human_reference" &&
+      Array.isArray(asset.tags) &&
+      asset.tags.includes("human-used")
+    )
+    .map((asset: any) => asset.asset_key)
+    .slice(0, 7);
 
-  if (intent === "how_to_order" && requestedMediaKeys.length === 0) {
-    requestedMediaKeys = (mediaAssets ?? [])
-      .filter((asset: any) => asset.category === "pack")
-      .map((asset: any) => asset.asset_key)
-      .slice(0, 4);
+  if (intent === "flavors" || intent === "menu" || intent === "how_to_order") {
+    if (humanUsedKeys.length > 0) {
+      requestedMediaKeys = humanUsedKeys;
+    } else if (intent === "flavors" || intent === "menu") {
+      const regularFlavorKeys = (mediaAssets ?? [])
+        .filter((asset: any) =>
+          asset.category === "bagel_flavor" &&
+          !((asset.tags ?? []).includes("seasonal"))
+        )
+        .map((asset: any) => asset.asset_key)
+        .slice(0, 7);
+      requestedMediaKeys = regularFlavorKeys;
+    } else {
+      requestedMediaKeys = (mediaAssets ?? [])
+        .filter((asset: any) => asset.category === "pack")
+        .map((asset: any) => asset.asset_key)
+        .slice(0, 4);
+    }
   }
 
   const proposedMedia = requestedMediaKeys
@@ -221,6 +361,7 @@ async function generateShadowDraft(args: {
     .filter(Boolean)
     .map((asset: any) => ({
       asset_key: asset.asset_key,
+      storage_path: asset.storage_path,
       public_url: asset.public_url,
       category: asset.category,
       product_slug: asset.product_slug,
@@ -488,6 +629,8 @@ Deno.serve(async (req: Request) => {
       }
     }
 
+    const humanMediaArchive = await archiveHumanUsedMedia(db);
+
     await db.from("instagram_webhook_events")
       .update({ processed_at: new Date().toISOString(), processing_error: null })
       .eq("event_key", webhookEventKey);
@@ -498,6 +641,7 @@ Deno.serve(async (req: Request) => {
       eventsSeen,
       messagesStored,
       shadowGenerated,
+      humanMediaArchive,
       aiReady: Boolean(openaiKey)
     });
   } catch (error) {
