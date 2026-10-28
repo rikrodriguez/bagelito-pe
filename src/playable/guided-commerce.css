@@ -285,3 +285,298 @@
 }
 .culqi-recovery-button:hover{background:#f4f8fc}
 .checkout-terms-check a{color:#004aad;font-weight:900}
+
+
+/* 2026-10-28 visual truth pass: clean entrance/exit + live receipt/wallet */
+[data-scene="entrance"] .guided-scene-image,
+[data-scene="goodbye"] .guided-scene-image{
+  object-fit:cover;
+  object-position:center center;
+  filter:saturate(.98) contrast(1.02);
+}
+[data-scene="entrance"] .guided-scene-backdrop,
+[data-scene="goodbye"] .guided-scene-backdrop{
+  background-position:center center;
+  filter:blur(20px) brightness(.82) saturate(.9);
+}
+[data-scene="entrance"] .guided-entrance-action{
+  left:5.5vw;
+  bottom:7vh;
+  max-width:500px;
+}
+[data-scene="entrance"] .guided-entrance-action>div{
+  background:rgba(255,255,255,.94);
+}
+
+/* Static storyboard receipt is atmosphere only; all commercial data is live DOM. */
+[data-scene="receipt"] .guided-scene-image{
+  filter:blur(5px) brightness(.72) saturate(.78);
+  transform:scale(1.025);
+}
+[data-scene="receipt"] .guided-scene-backdrop{
+  filter:blur(24px) brightness(.58) saturate(.72);
+}
+.live-receipt-sheet{
+  position:absolute;
+  z-index:97;
+  left:44.5%;
+  top:7%;
+  width:39%;
+  height:84%;
+  padding:7% 7% 6%;
+  background:linear-gradient(180deg,#fff 0%,#fffdf8 100%);
+  color:#161616;
+  transform:rotate(-4deg);
+  transform-origin:center top;
+  box-shadow:0 24px 55px rgba(15,18,24,.28);
+  border-radius:5px;
+  display:flex;
+  flex-direction:column;
+  transition:transform .55s ease,opacity .55s ease;
+}
+.live-receipt-sheet.pulled{
+  transform:rotate(-4deg) translateY(70px);
+  opacity:.12;
+}
+.live-receipt-brand{
+  padding-bottom:12px;
+  border-bottom:1px dashed #b9b9b9;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:3px;
+}
+.live-receipt-brand small{
+  font-size:8px;
+  letter-spacing:.15em;
+  font-weight:950;
+  color:#004aad;
+}
+.live-receipt-brand b{
+  font-size:18px;
+  line-height:1.05;
+  letter-spacing:.02em;
+}
+.live-receipt-lines{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  padding:14px 0;
+  border-bottom:1px dashed #b9b9b9;
+  min-height:0;
+  overflow:hidden;
+}
+.live-receipt-lines>span{
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:6px;
+  font-size:10px;
+  line-height:1.25;
+}
+.live-receipt-lines i{
+  font-style:normal;
+  color:#66707b;
+  font-weight:800;
+}
+.live-receipt-lines b{
+  font-size:10px;
+  font-weight:850;
+}
+.live-receipt-total{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:8px;
+  padding-top:12px;
+}
+.live-receipt-total span{
+  font-size:10px;
+  font-weight:950;
+}
+.live-receipt-total strong{
+  font-size:20px;
+  letter-spacing:-.04em;
+}
+.live-receipt-sheet p{
+  margin:auto 0 0;
+  text-align:center;
+  font-size:8px;
+  color:#737373;
+  font-weight:750;
+}
+[data-scene="receipt"] .receipt-interaction{
+  position:absolute;
+  z-index:99;
+  left:44.5%;
+  top:7%;
+  width:39%;
+  height:84%;
+  transform:rotate(-4deg);
+  border-radius:6px;
+  background:transparent;
+  cursor:grab;
+  transition:transform .55s ease,opacity .55s ease;
+}
+[data-scene="receipt"] .receipt-interaction.pulled{
+  transform:rotate(-4deg) translateY(70px);
+  opacity:.08;
+}
+[data-scene="receipt"] .receipt-interaction::before{display:none}
+[data-scene="receipt"] .receipt-interaction span{
+  left:50%;
+  right:auto;
+  bottom:5%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+}
+
+/* Mask storyboard loyalty points with a live club surface. */
+[data-scene="wallet"] .guided-scene-image{
+  filter:brightness(.76) saturate(.82);
+}
+.wallet-screen-live{
+  position:absolute;
+  z-index:95;
+  left:23.5%;
+  top:15%;
+  width:49%;
+  height:38%;
+  border-radius:28px;
+  padding:22px;
+  background:linear-gradient(145deg,#0062d8,#003d92);
+  color:#fff;
+  box-shadow:0 20px 55px rgba(0,38,99,.3);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:7px;
+}
+.wallet-screen-live small{
+  font-size:8px;
+  letter-spacing:.17em;
+  font-weight:950;
+  opacity:.76;
+}
+.wallet-screen-live b{
+  font-size:clamp(22px,3vw,42px);
+  letter-spacing:-.04em;
+}
+.wallet-screen-live span{
+  max-width:310px;
+  font-size:9px;
+  line-height:1.45;
+  font-weight:750;
+  opacity:.88;
+}
+
+/* Goodbye no longer depends on baked HUD/avatar. */
+.goodbye-panel{
+  position:absolute;
+  z-index:96;
+  left:6vw;
+  bottom:7vh;
+  width:min(500px,44vw);
+  padding:20px;
+  border-radius:28px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(18px);
+  box-shadow:0 22px 55px rgba(2,27,61,.2);
+}
+.goodbye-panel>div:first-child{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.goodbye-panel small{
+  font-size:8px;
+  letter-spacing:.18em;
+  font-weight:950;
+  color:#71849a;
+}
+.goodbye-panel h2{
+  margin:2px 0 4px;
+  font-size:38px;
+  line-height:.95;
+  letter-spacing:-.055em;
+  color:#004aad;
+}
+.goodbye-panel p{
+  margin:0;
+  max-width:390px;
+  font-size:10px;
+  line-height:1.5;
+  color:#60768c;
+  font-weight:720;
+}
+.goodbye-panel .goodbye-actions{
+  position:static;
+  width:auto;
+  margin-top:14px;
+  display:flex;
+  gap:8px;
+  justify-content:flex-start;
+  align-items:center;
+}
+.goodbye-panel .goodbye-actions button{
+  position:static;
+  min-width:0;
+  padding:11px 15px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+}
+.goodbye-panel .goodbye-actions button:first-child{
+  background:#004aad;
+  color:#fff;
+  border-color:#004aad;
+}
+
+@media(max-width:800px){
+  [data-scene="entrance"] .guided-entrance-action{
+    left:12px;
+    right:12px;
+    bottom:14px;
+  }
+  .live-receipt-sheet{
+    left:22%;
+    top:12%;
+    width:62%;
+    height:72%;
+    padding:7% 7% 5%;
+  }
+  [data-scene="receipt"] .receipt-interaction{
+    left:22%;
+    top:12%;
+    width:62%;
+    height:72%;
+  }
+  .live-receipt-brand b{font-size:14px}
+  .live-receipt-lines>span,.live-receipt-lines b{font-size:7.5px}
+  .live-receipt-total strong{font-size:15px}
+  .wallet-screen-live{
+    left:19%;
+    top:16%;
+    width:62%;
+    height:31%;
+    padding:14px;
+    border-radius:20px;
+  }
+  .wallet-screen-live b{font-size:24px}
+  .wallet-screen-live span{font-size:7px}
+  .goodbye-panel{
+    left:12px;
+    right:12px;
+    bottom:14px;
+    width:auto;
+    padding:16px;
+    border-radius:23px;
+  }
+  .goodbye-panel h2{font-size:30px}
+  .goodbye-panel .goodbye-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+}
