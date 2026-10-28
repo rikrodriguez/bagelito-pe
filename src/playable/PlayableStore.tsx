@@ -45,7 +45,7 @@ const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guided'|'explore' } = {}) {
   const [ready, setReady] = useState(false)
   const [name, setName] = useState<string | null>(null)
-  const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
+  const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 7.5))
   const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>(initialMode)
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
@@ -129,7 +129,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     <Canvas
       shadows
       dpr={[1,1.5]}
-      camera={{fov:60,near:.05,far:70,position:[0,1.68,8.25]}}
+      camera={{fov:56,near:.05,far:70,position:[0,1.68,7.5]}}
       onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.12}}
     >
       <color attach="background" args={['#f3f0e9']}/>
@@ -405,7 +405,7 @@ function GuidedCommerce(props:{
 
 function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
   const {camera}=useThree()
-  const pos=useRef(new THREE.Vector3(0,1.68,8.25))
+  const pos=useRef(new THREE.Vector3(0,1.68,7.5))
   const tick=useRef(0)
   const f=useMemo(()=>new THREE.Vector3(),[])
   const r=useMemo(()=>new THREE.Vector3(),[])
@@ -479,6 +479,22 @@ function StoreArchitecture(){
     <mesh position={[0,4.2,-8.27]}><boxGeometry args={[16.2,.16,.12]}/><meshStandardMaterial color={BLUE}/></mesh>
     <mesh position={[0,3.7,-8.25]}><boxGeometry args={[5.9,.08,.08]}/><meshStandardMaterial color={CORAL}/></mesh>
 
+    {/* Layered wall and ceiling construction, not a single bare white box. */}
+    <mesh position={[0,.23,-8.27]}><boxGeometry args={[16,.38,.12]}/><meshStandardMaterial color="#e8dfd5" roughness={.95}/></mesh>
+    <mesh position={[0,.43,-8.20]}><boxGeometry args={[16,.055,.09]}/><meshStandardMaterial color={BLUE} roughness={.42}/></mesh>
+    <mesh position={[0,4.55,-6.45]}><boxGeometry args={[15.8,.16,.13]}/><meshStandardMaterial color="#e0cbbc" roughness={.85}/></mesh>
+    <mesh position={[0,4.54,2.2]}><boxGeometry args={[15.8,.16,.13]}/><meshStandardMaterial color="#e0cbbc" roughness={.85}/></mesh>
+    {[-7.92,7.92].map(side=><group key={side}>
+      <mesh position={[side,2.35,0]}><boxGeometry args={[.06,4.5,17.7]}/><meshStandardMaterial color="#ede4da" roughness={.86}/></mesh>
+      {[-6,-3,0,3,6].map(z=><mesh key={z} position={[side>0?7.99:-7.99,2.4,z]}><boxGeometry args={[.035,4.2,.055]}/><meshStandardMaterial color="#cfd9df" metalness={.22} roughness={.62}/></mesh>)}
+      <mesh position={[side>0?7.95:-7.95,.22,0]}><boxGeometry args={[.08,.28,17.5]}/><meshStandardMaterial color="#c3d0d8" roughness={.63}/></mesh>
+    </group>)}
+    {[-5.7,-3.2,-.7,1.8,4.3].map(x=><group key={x}>
+      <mesh position={[x,4.52,1.45]}><boxGeometry args={[.08,.09,11.4]}/><meshStandardMaterial color="#dfd1c4" roughness={.92}/></mesh>
+      <mesh position={[x,4.43,1.45]}><boxGeometry args={[.032,.018,11.4]}/><meshStandardMaterial color="#ffe1b3" emissive="#f2bf7c" emissiveIntensity={.28}/></mesh>
+    </group>)}
+    <mesh position={[0,4.05,-8.17]}><boxGeometry args={[16.1,.04,.12]}/><meshStandardMaterial color="#e7bb8d" emissive="#fbc18a" emissiveIntensity={.2}/></mesh>
+
     <TileGrid position={[-6.2,2.65,-8.16]} width={3.4} height={4.5}/>
     <TileGrid position={[6.3,2.65,-8.16]} width={3.0} height={4.5}/>
 
@@ -525,8 +541,8 @@ function TileGrid({position,width,height}:{position:V3;width:number;height:numbe
 function Pendant({position}:{position:V3}){
   return <group position={position}>
     <mesh position={[0,.38,0]}><cylinderGeometry args={[.014,.014,.75,8]}/><meshStandardMaterial color="#1f2b34"/></mesh>
-    <mesh position={[0,-.05,0]}><sphereGeometry args={[.34,24,24]}/><meshStandardMaterial color="#fff2d6" emissive="#ffd89d" emissiveIntensity={1.4}/></mesh>
-    <pointLight position={[0,-.28,0]} intensity={8} distance={5.5} color="#ffd9aa"/>
+    <mesh position={[0,-.05,0]}><sphereGeometry args={[.25,24,24]}/><meshPhysicalMaterial color="#fff2d6" emissive="#ffd89d" emissiveIntensity={.7} roughness={.24}/></mesh>
+    <pointLight position={[0,-.28,0]} intensity={3.1} distance={5.5} color="#ffd9aa"/>
   </group>
 }
 
@@ -716,7 +732,11 @@ function Worker({position,phase}:{position:V3;phase:number}){
 
 function Cashier(){
   return <group position={[5.2,0,4.65]} rotation={[0,-.7,0]}>
-    <RoundedBox castShadow position={[0,.66,0]} args={[3.6,1.3,1.4]} radius={.09}><meshStandardMaterial color="#f9f7f2"/></RoundedBox>
+    <RoundedBox castShadow position={[0,.66,0]} args={[3.6,1.3,1.4]} radius={.09}><meshStandardMaterial color="#f9f7f2" roughness={.78}/></RoundedBox>
+    <mesh position={[0,1.33,0]}><boxGeometry args={[3.78,.085,1.56]}/><meshStandardMaterial color="#f2e8df" roughness={.28}/></mesh>
+    <mesh position={[0,.68,.716]}><boxGeometry args={[3.46,1.12,.025]}/><meshStandardMaterial color="#e7dbcb" roughness={.92}/></mesh>
+    {Array.from({length:18}).map((_,i)=><mesh key={i} position={[-1.62+i*.19,.69,.735]}><boxGeometry args={[.025,1.08,.026]}/><meshStandardMaterial color="#cdbda9" roughness={.92}/></mesh>)}
+    <mesh position={[0,1.18,.742]}><boxGeometry args={[3.47,.07,.038]}/><meshStandardMaterial color={BLUE} roughness={.45}/></mesh>
     <mesh position={[-.55,1.48,.02]}><boxGeometry args={[1.18,.76,.12]}/><meshStandardMaterial color={BLUE}/></mesh>
     <mesh position={[-.55,1.04,0]}><boxGeometry args={[.18,.54,.18]}/><meshStandardMaterial color="#aeb8bf" metalness={.7}/></mesh>
     <RoundedBox position={[.72,1.18,.26]} args={[.54,.76,.28]} radius={.08}><meshStandardMaterial color="#e3eaee"/></RoundedBox>
