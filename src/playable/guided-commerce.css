@@ -1107,3 +1107,6 @@
 
 /* Mini bagels use smaller product scale, never the grande silhouette. */
 @media(max-width:800px){.mobile-bagel-stage[data-format="mini"] .mobile-bagel-card>button img{width:72px;height:90px;object-fit:contain}.mobile-bagel-stage[data-format="mini"] .mobile-bagel-card{background:linear-gradient(180deg,#f7fbff,#fff)} }
+
+/* Receipt can be pulled with touch/drag without page scroll, or activated by keyboard. */
+.receipt-interaction{touch-action:none;user-select:none}.receipt-interaction:focus-visible{outline:3px solid #004aad;outline-offset:3px}
