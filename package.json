@@ -20,7 +20,8 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "three": "^0.186.1",
-    "zustand": "^5.0.16"
+    "zustand": "^5.0.16",
+    "nitro": "^2.12.9"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
