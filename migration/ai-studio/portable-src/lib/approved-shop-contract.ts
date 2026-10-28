@@ -114,6 +114,9 @@ export function quoteTwoBagelCombo(input: {
 }
 
 /** A UI quote is not payment authorization. Server must always recheck price and inventory. */
-export function canProceedToCheckout(quote: ShopQuote, liveInventoryAvailable: boolean): boolean {
-  return quote.status === 'ready' && quote.checkoutAllowed && liveInventoryAvailable
+export function canProceedToCheckout(
+  quote: ShopQuote,
+  { liveInventoryAvailable, currentOfferApproved }: { liveInventoryAvailable: boolean; currentOfferApproved: boolean },
+): boolean {
+  return quote.status === 'ready' && quote.checkoutAllowed && liveInventoryAvailable && currentOfferApproved
 }
