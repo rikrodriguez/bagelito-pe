@@ -467,7 +467,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     </section>}
 
     {scene === 'bagels' && <>
-      <section className="mobile-product-stage mobile-bagel-stage" aria-label="Selecciona sabores de bagels">
+      <section className="mobile-product-stage mobile-bagel-stage" data-format={category === 'packs' ? packFormat : 'grande'} aria-label="Selecciona sabores de bagels">
         <header>
           <small>VITRINA BAGELITO · {packFormat === 'mini' && category === 'packs' ? 'MINIS' : 'GRANDES'}</small>
           <h2>Elige tus sabores</h2>
