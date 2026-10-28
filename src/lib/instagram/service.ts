@@ -11,6 +11,10 @@ type PersistResult = {
   messagesStored: number;
 };
 
+function isUniqueViolation(error: { code?: string } | null): boolean {
+  return error?.code === "23505";
+}
+
 async function ensureAccount(instagramUserId: string) {
   const supabase = createSupabaseAdminClient();
   const username = process.env.INSTAGRAM_USERNAME?.trim() || "bagelito.pe";
@@ -54,22 +58,27 @@ async function ensureContact(accountId: string, instagramUserId: string) {
   return data;
 }
 
-async function ensureConversation(accountId: string, contactId: string) {
+async function getConversation(accountId: string, contactId: string) {
   const supabase = createSupabaseAdminClient();
-
-  const { data: existing, error: readError } = await supabase
+  const { data, error } = await supabase
     .from("instagram_conversations")
     .select("id, unread_count")
     .eq("account_id", accountId)
     .eq("contact_id", contactId)
     .maybeSingle();
 
-  if (readError) {
-    throw new Error(`instagram_conversation_read_failed: ${readError.message}`);
+  if (error) {
+    throw new Error(`instagram_conversation_read_failed: ${error.message}`);
   }
 
+  return data;
+}
+
+async function ensureConversation(accountId: string, contactId: string) {
+  const existing = await getConversation(accountId, contactId);
   if (existing) return existing;
 
+  const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("instagram_conversations")
     .insert({
@@ -81,8 +90,16 @@ async function ensureConversation(accountId: string, contactId: string) {
     .select("id, unread_count")
     .single();
 
-  if (error) throw new Error(`instagram_conversation_insert_failed: ${error.message}`);
-  return data;
+  if (!error && data) return data;
+
+  if (isUniqueViolation(error)) {
+    const raced = await getConversation(accountId, contactId);
+    if (raced) return raced;
+  }
+
+  throw new Error(
+    `instagram_conversation_insert_failed: ${error?.message ?? "unknown error"}`,
+  );
 }
 
 function messageType(event: InstagramNormalizedEvent): string {
@@ -92,40 +109,94 @@ function messageType(event: InstagramNormalizedEvent): string {
   return "text";
 }
 
+async function claimWebhook(payload: unknown, rawBody: string) {
+  const supabase = createSupabaseAdminClient();
+  const eventKey = hashInstagramPayload(rawBody);
+
+  const { data: existing, error: readError } = await supabase
+    .from("instagram_webhook_events")
+    .select("id, processed_at, processing_error")
+    .eq("event_key", eventKey)
+    .maybeSingle();
+
+  if (readError) {
+    throw new Error(`instagram_webhook_dedupe_failed: ${readError.message}`);
+  }
+
+  if (existing?.processed_at || (existing && !existing.processing_error)) {
+    return { eventKey, duplicate: true };
+  }
+
+  if (!existing) {
+    const { error: insertError } = await supabase
+      .from("instagram_webhook_events")
+      .insert({
+        event_key: eventKey,
+        payload,
+        received_at: new Date().toISOString(),
+      });
+
+    if (insertError) {
+      if (isUniqueViolation(insertError)) {
+        return { eventKey, duplicate: true };
+      }
+
+      throw new Error(`instagram_webhook_store_failed: ${insertError.message}`);
+    }
+  } else {
+    const { error: retryError } = await supabase
+      .from("instagram_webhook_events")
+      .update({
+        payload,
+        processing_error: null,
+        received_at: new Date().toISOString(),
+      })
+      .eq("event_key", eventKey);
+
+    if (retryError) {
+      throw new Error(`instagram_webhook_retry_claim_failed: ${retryError.message}`);
+    }
+  }
+
+  return { eventKey, duplicate: false };
+}
+
+async function storeMessage(
+  conversationId: string,
+  event: InstagramNormalizedEvent,
+  inbound: boolean,
+): Promise<boolean> {
+  const supabase = createSupabaseAdminClient();
+
+  const { error } = await supabase
+    .from("instagram_messages")
+    .insert({
+      attachments: event.attachments,
+      conversation_id: conversationId,
+      direction: inbound ? "inbound" : "outbound",
+      message_type: messageType(event),
+      provider_event_key: event.eventKey,
+      provider_message_id: event.messageId,
+      raw_payload: event.raw,
+      sent_at: event.sentAt,
+      text_content: event.text,
+    });
+
+  if (!error) return true;
+  if (isUniqueViolation(error)) return false;
+
+  throw new Error(`instagram_message_insert_failed: ${error.message}`);
+}
+
 export async function persistInstagramWebhook(
   payload: unknown,
   rawBody: string,
 ): Promise<PersistResult> {
   const supabase = createSupabaseAdminClient();
-  const webhookEventKey = hashInstagramPayload(rawBody);
-  const receivedAt = new Date().toISOString();
+  const claim = await claimWebhook(payload, rawBody);
 
-  const { data: existingWebhook, error: existingError } = await supabase
-    .from("instagram_webhook_events")
-    .select("id, processed_at")
-    .eq("event_key", webhookEventKey)
-    .maybeSingle();
-
-  if (existingError) {
-    throw new Error(`instagram_webhook_dedupe_failed: ${existingError.message}`);
-  }
-
-  if (existingWebhook?.processed_at) {
+  if (claim.duplicate) {
     return { duplicateWebhook: true, eventsSeen: 0, messagesStored: 0 };
-  }
-
-  if (!existingWebhook) {
-    const { error: insertWebhookError } = await supabase
-      .from("instagram_webhook_events")
-      .insert({
-        event_key: webhookEventKey,
-        payload,
-        received_at: receivedAt,
-      });
-
-    if (insertWebhookError) {
-      throw new Error(`instagram_webhook_store_failed: ${insertWebhookError.message}`);
-    }
   }
 
   const events = normalizeInstagramWebhook(payload);
@@ -153,38 +224,9 @@ export async function persistInstagramWebhook(
 
       const contact = await ensureContact(account.id, contactInstagramId);
       const conversation = await ensureConversation(account.id, contact.id);
+      const inserted = await storeMessage(conversation.id, event, inbound);
 
-      const { data: existingMessage, error: messageReadError } = await supabase
-        .from("instagram_messages")
-        .select("id")
-        .eq("provider_event_key", event.eventKey)
-        .maybeSingle();
-
-      if (messageReadError) {
-        throw new Error(`instagram_message_dedupe_failed: ${messageReadError.message}`);
-      }
-
-      if (!existingMessage) {
-        const { error: messageInsertError } = await supabase
-          .from("instagram_messages")
-          .insert({
-            attachments: event.attachments,
-            conversation_id: conversation.id,
-            direction: inbound ? "inbound" : "outbound",
-            message_type: messageType(event),
-            provider_event_key: event.eventKey,
-            provider_message_id: event.messageId,
-            raw_payload: event.raw,
-            sent_at: event.sentAt,
-            text_content: event.text,
-          });
-
-        if (messageInsertError) {
-          throw new Error(`instagram_message_insert_failed: ${messageInsertError.message}`);
-        }
-
-        messagesStored += 1;
-      }
+      if (inserted) messagesStored += 1;
 
       const updates: Record<string, unknown> = {
         last_message_at: event.sentAt,
@@ -194,7 +236,7 @@ export async function persistInstagramWebhook(
 
       if (inbound) {
         updates.last_inbound_at = event.sentAt;
-        updates.unread_count = (conversation.unread_count ?? 0) + (existingMessage ? 0 : 1);
+        updates.unread_count = (conversation.unread_count ?? 0) + (inserted ? 1 : 0);
       } else {
         updates.last_outbound_at = event.sentAt;
       }
@@ -217,7 +259,7 @@ export async function persistInstagramWebhook(
         processed_at: new Date().toISOString(),
         processing_error: null,
       })
-      .eq("event_key", webhookEventKey);
+      .eq("event_key", claim.eventKey);
 
     if (processedError) {
       throw new Error(`instagram_webhook_finalize_failed: ${processedError.message}`);
@@ -234,7 +276,7 @@ export async function persistInstagramWebhook(
       .update({
         processing_error: error instanceof Error ? error.message : String(error),
       })
-      .eq("event_key", webhookEventKey);
+      .eq("event_key", claim.eventKey);
 
     throw error;
   }
