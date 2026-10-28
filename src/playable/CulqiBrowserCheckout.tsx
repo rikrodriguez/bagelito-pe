@@ -92,6 +92,14 @@ type CheckoutSession = {
 
 const RECOVERY_KEY = 'bagelito.culqi.pending.v1'
 
+type RecoveryReference = {
+  checkoutSessionId: string
+  orderCode: string
+  state: 'pending'|'review'
+}
+
+type InvalidRecovery = { invalid: true }
+
 function loadScript(id: string, src: string) {
   return new Promise<void>((resolve, reject) => {
     const existing = document.getElementById(id) as HTMLScriptElement | null
@@ -114,16 +122,22 @@ function loadScript(id: string, src: string) {
   })
 }
 
-function readRecovery() {
+function readRecovery(): RecoveryReference | InvalidRecovery | null {
   const raw = window.localStorage.getItem(RECOVERY_KEY)
   if (!raw) return null
   try {
     const value = JSON.parse(raw) as { checkoutSessionId?: unknown; orderCode?: unknown; state?: unknown }
     if (typeof value.checkoutSessionId === 'string'
       && typeof value.orderCode === 'string'
-      && (value.state === 'pending' || value.state === 'review')) return value
+      && (value.state === 'pending' || value.state === 'review')) {
+      return {
+        checkoutSessionId: value.checkoutSessionId,
+        orderCode: value.orderCode,
+        state: value.state,
+      }
+    }
   } catch {}
-  return { state: 'review' } as const
+  return { invalid: true }
 }
 
 function setRecovery(session: CheckoutSession, state: 'pending'|'review') {
@@ -136,7 +150,9 @@ function setRecovery(session: CheckoutSession, state: 'pending'|'review') {
 
 function clearRecovery(session: CheckoutSession) {
   const current = readRecovery()
-  if (current?.checkoutSessionId === session.checkoutSessionId && current?.orderCode === session.orderCode) {
+  if (current && 'checkoutSessionId' in current
+    && current.checkoutSessionId === session.checkoutSessionId
+    && current.orderCode === session.orderCode) {
     window.localStorage.removeItem(RECOVERY_KEY)
   }
 }
@@ -271,7 +287,7 @@ export function CulqiBrowserCheckout(props: {
 
   const recoverPayment = useCallback(async () => {
     const recovered = readRecovery()
-    if (!recovered || typeof recovered.checkoutSessionId !== 'string' || typeof recovered.orderCode !== 'string') {
+    if (!recovered || !('checkoutSessionId' in recovered)) {
       setStatus('review')
       setMessage('Existe una referencia de pago inválida. No vuelvas a pagar hasta revisarla.')
       return
