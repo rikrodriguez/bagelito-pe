@@ -65,8 +65,10 @@ import {
 } from "@/lib/admin/whatsapp-messages";
 import type { CostScenarioState } from "@/lib/bagelito-costing";
 import { getMissingAdminEnv } from "@/lib/env";
+import { fetchInstagramInbox } from "@/lib/admin/instagram-inbox";
 import { getWhatsAppHrefForPhone } from "@/lib/whatsapp";
 import { AdminSectionNav, type AdminSection } from "./AdminSectionNav";
+import { InstagramInboxPanel } from "./InstagramInboxPanel";
 import { AdminWhatsAppLink, AdminWhatsAppNotice } from "./AdminWhatsAppMessage";
 import { ArchiveOrderForm } from "./ArchiveOrderForm";
 import { CostCalculator } from "./CostCalculator";
@@ -102,6 +104,7 @@ const districtPieColors = ["#ed4a98", "#ffa12b", "#5ec7bc", "#825ddd", "#06143d"
 const adminSections = [
   "overview",
   "customers",
+  "inbox",
   "crm",
   "finance",
   "calculator",
@@ -119,6 +122,11 @@ const adminSectionMeta: Record<AdminSection, { eyebrow: string; title: string; i
     eyebrow: "Dashboard",
     title: "Operations overview",
     intro: "Daily operating snapshot for reservations, payments, production, delivery, and follow-ups.",
+  },
+  inbox: {
+    eyebrow: "Instagram",
+    title: "Instagram inbox",
+    intro: "Bilingual customer conversations in Shadow Mode, with AI/human state and no automatic sending.",
   },
   customers: {
     eyebrow: "Customer operations",
@@ -1310,6 +1318,7 @@ export default async function AdminPage({
   const allOrders = await fetchOrders();
   const currentBatch = await fetchCurrentBatch();
   const waitlistData = await fetchWaitlistSignups();
+  const instagramInbox = await fetchInstagramInbox();
   const activeWaitlistLeadCount = waitlistData.signups.filter((signup) => signup.status !== "archived").length;
   const activeOrders = filterActiveOrders(allOrders);
   const customerProfiles = getCustomerProfiles(activeOrders);
@@ -1383,6 +1392,15 @@ export default async function AdminPage({
       icon: "customers",
     },
     {
+      section: "inbox",
+      label: "Instagram Inbox",
+      helper: instagramInbox.schemaReady
+        ? `${instagramInbox.unreadCount} unread`
+        : "not connected",
+      href: buildAdminHref({ section: "inbox", q: "", status: "all", sort: "newest" }),
+      icon: "inbox",
+    },
+    {
       section: "crm",
       label: "Customer CRM",
       helper: `${customerProfiles.length} profiles`,
@@ -1452,7 +1470,7 @@ export default async function AdminPage({
       href: buildAdminHref({ section: "archive", q: "", status: "all", sort: "newest" }),
       icon: "archive",
     },
-  ] satisfies { section: AdminSection; label: string; helper: string; href: string; icon: "overview" | "customers" | "crm" | "finance" | "calculator" | "batch" | "waitlist" | "comms" | "production" | "delivery" | "insights" | "archive" }[];
+  ] satisfies { section: AdminSection; label: string; helper: string; href: string; icon: "overview" | "customers" | "inbox" | "crm" | "finance" | "calculator" | "batch" | "waitlist" | "comms" | "production" | "delivery" | "insights" | "archive" }[];
 
   return (
     <main className="admin-page">
@@ -1612,6 +1630,7 @@ export default async function AdminPage({
           </div>
         ) : null}
 
+        {activeSection === "inbox" ? <InstagramInboxPanel data={instagramInbox} /> : null}
         {activeSection === "crm" ? <CustomerCrmPanel profiles={customerProfiles} stats={customerCrmStats} /> : null}
 
         {activeSection === "finance" ? <FinancialPanel summary={finance} /> : null}
