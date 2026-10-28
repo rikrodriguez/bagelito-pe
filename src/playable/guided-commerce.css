@@ -232,3 +232,49 @@
   [data-scene="bagels"] .bagel-live-summary{right:8px!important;top:auto!important;bottom:8px!important;width:165px!important;height:180px!important;padding:10px!important}
   .bagel-summary-lines{gap:3px}.bagel-summary-lines>span{font-size:6.5px;padding:3px}.bagel-summary-lines i{width:18px;height:18px}
 }
+
+
+/* Guided checkout: customer data + secure Culqi embed */
+[data-scene="pay"] .guided-payment-gate{overflow:auto;padding:5vh 4vw 4vh}
+.guided-payment-sheet{
+  margin-left:auto;width:min(610px,48vw);min-height:88vh;padding:22px;border-radius:30px;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(18px);
+  box-shadow:0 24px 70px rgba(0,28,65,.2);pointer-events:auto
+}
+.guided-payment-sheet .guided-payment-copy{position:static;width:auto;padding:0 0 15px;background:transparent;box-shadow:none;backdrop-filter:none}
+.guided-payment-sheet .guided-payment-copy b{font-size:28px}
+.checkout-customer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.checkout-customer-grid label{display:flex;flex-direction:column;gap:5px}
+.checkout-customer-grid label.wide{grid-column:1/-1}
+.checkout-customer-grid label>span{font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#72849a;font-weight:900}
+.checkout-customer-grid input,.checkout-customer-grid select{
+  width:100%;min-height:42px;border:1px solid #dbe3e9;border-radius:13px;background:#fff;
+  padding:9px 11px;font:inherit;font-size:11px;color:#1d3349;outline:none
+}
+.checkout-customer-grid input:focus,.checkout-customer-grid select:focus{border-color:#004aad;box-shadow:0 0 0 3px rgba(0,74,173,.08)}
+.checkout-terms-check{display:flex;align-items:flex-start;gap:9px;margin:13px 0 10px;font-size:9px;line-height:1.4;color:#536c84;font-weight:750}
+.checkout-terms-check input{margin-top:1px}
+.checkout-review-message{padding:9px 11px;border-radius:12px;background:#fff1ec;color:#9a402d;font-size:9px;font-weight:800;line-height:1.4;margin-bottom:9px}
+.culqi-browser-checkout{display:flex;flex-direction:column;gap:8px}
+.culqi-start-button{
+  min-height:48px;border:0;border-radius:16px;background:#004aad;color:#fff;font-weight:950;font-size:12px;
+  box-shadow:0 12px 28px rgba(0,74,173,.2);cursor:pointer
+}
+.culqi-start-button:disabled{background:#dfe6eb;color:#74869a;box-shadow:none;cursor:not-allowed}
+.culqi-browser-message,.culqi-browser-status{margin:0;padding:9px 11px;border-radius:12px;font-size:9px;line-height:1.4}
+.culqi-browser-status{display:flex;flex-direction:column;gap:2px;background:#f3f6f8;color:#6b7f92}
+.culqi-browser-status b{font-size:10px;color:#425b71}
+.culqi-browser-container{min-height:0;border-radius:15px;overflow:hidden}
+.qa-only-pay{position:static!important;width:100%!important;height:auto!important;margin-top:8px!important;background:none!important}
+.qa-only-pay span{position:static!important;display:block!important;text-align:center}
+.live-receipt-code{position:absolute;z-index:97;right:6%;top:9%;padding:12px 15px;border-radius:18px;background:rgba(255,255,255,.95);box-shadow:0 12px 30px rgba(0,25,60,.16);display:flex;flex-direction:column;gap:2px}
+.live-receipt-code small{font-size:7px;letter-spacing:.16em;color:#71849a;font-weight:950}
+.live-receipt-code b{font-size:18px;color:#004aad;letter-spacing:-.03em}
+@media(max-width:800px){
+  [data-scene="pay"] .guided-payment-gate{padding:72px 10px 12px}
+  .guided-payment-sheet{width:100%;min-height:0;padding:14px;border-radius:22px}
+  .checkout-customer-grid{grid-template-columns:1fr}
+  .checkout-customer-grid label.wide{grid-column:auto}
+  .guided-payment-sheet .guided-payment-copy b{font-size:22px}
+  .live-receipt-code{right:10px;top:72px}
+}
