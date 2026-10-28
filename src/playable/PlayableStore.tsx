@@ -3,6 +3,7 @@ import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@reac
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
+import { GuidedCommerce as GoldenGuidedCommerce } from './GuidedCommerce'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -121,26 +122,9 @@ export function PlayableStore() {
   if(!ready)return <div className="playable-loading">Preparando Bagelito…</div>
 
   return <main className={'playable-shell'+(guideNode?' guided-mode':'')}>
-    {experienceMode==='guided' ? <GuidedCommerce
-      category={category}
-      step={step}
-      bagels={bagels}
-      schmears={schmears}
-      bagelTotal={bagelTotal}
-      bagelTarget={bagelTarget}
-      schmearTotal={schmearTotal}
-      schmearTarget={schmearTarget}
-      selectedCombo={selectedCombo}
-      onCategory={chooseCategory}
-      onPack={(format,q)=>{setPackFormat(format);setPackQty(q);setStep('bagels')}}
-      onCombo={(id)=>{setComboId(id);setStep('bagels')}}
-      onSchmearSize={(g)=>{setSchmearSize(g);setStep('schmears')}}
-      onBagel={addBagel}
-      onSchmear={addSchmear}
-      onNextBagels={()=>bagelTotal===bagelTarget&&setStep('schmears')}
-      onNextSchmears={()=>{if(category==='packs'||schmearTotal===schmearTarget)setStep('cashier')}}
-      onReset={reset}
-      onExplore={()=>setExperienceMode('explore')}
+    {experienceMode==='guided' ? <GoldenGuidedCommerce
+      customerName={name}
+      onExit={()=>setExperienceMode('explore')}
     /> : <>
     <Canvas
       shadows
