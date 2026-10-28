@@ -11,6 +11,10 @@ export type PublicPaymentConfig = {
   rsaPublicKey: string
 }
 
+export type PrivatePaymentConfig = PublicPaymentConfig & {
+  secretKey: string
+}
+
 function siteHost() {
   try {
     return new URL(process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || '').hostname
@@ -19,7 +23,7 @@ function siteHost() {
   }
 }
 
-export function getPublicPaymentConfig(): PublicPaymentConfig {
+function buildPaymentConfig() {
   const provider = process.env.PAYMENT_PROVIDER === 'culqi' ? 'culqi' : 'manual'
   const publicKey = (process.env.CULQI_PUBLIC_KEY || process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY || '').trim()
   const rsaId = (process.env.CULQI_RSA_ID || process.env.NEXT_PUBLIC_CULQI_RSA_ID || '').trim()
@@ -56,12 +60,22 @@ export function getPublicPaymentConfig(): PublicPaymentConfig {
 
   return {
     mode: requestedMode,
-    currency: 'PEN',
+    currency: 'PEN' as const,
     enabled: configured && bridgeReady,
     bridgeReady,
     provider,
     publicKey: configured ? publicKey : '',
     rsaId: configured ? rsaId : '',
     rsaPublicKey: configured ? rsaPublicKey : '',
+    secretKey: configured ? secretKey : '',
   }
+}
+
+export function getPublicPaymentConfig(): PublicPaymentConfig {
+  const { secretKey: _secretKey, ...publicConfig } = buildPaymentConfig()
+  return publicConfig
+}
+
+export function getPrivatePaymentConfig(): PrivatePaymentConfig {
+  return buildPaymentConfig()
 }
