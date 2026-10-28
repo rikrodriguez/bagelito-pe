@@ -2,8 +2,8 @@ import { flavors } from "../data/flavors";
 import { packs, type PackSlug } from "../data/packs";
 
 export { flavors, packs };
-export type { Flavor } from "@/data/flavors";
-export type { Pack, PackSlug } from "@/data/packs";
+export type { Flavor } from "../data/flavors";
+export type { Pack, PackSlug } from "../data/packs";
 
 export function getPackBySlug(slug: string | null | undefined) {
   return packs.find((pack) => pack.slug === slug);
