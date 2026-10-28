@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { CinematicCommerce } from './CinematicCommerce'
+import { GuidedCommerce } from './GuidedCommerce'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -44,6 +45,7 @@ const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 
 export function PlayableStore() {
   const [ready, setReady] = useState(false)
+  const [guidedOpen, setGuidedOpen] = useState(false)
   const [name, setName] = useState<string | null>(null)
   const [guidedCommerce,setGuidedCommerce]=useState(false)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
@@ -155,7 +157,7 @@ export function PlayableStore() {
 
     {category&&<GuidedProgress step={step}/>} 
 
-    <Hud
+    {!guidedOpen&&<Hud
       category={category} step={step} nearest={introGuide ?? nearest}
       packFormat={packFormat}
       bagelTotal={bagelTotal} bagelTarget={bagelTarget}
@@ -169,7 +171,9 @@ export function PlayableStore() {
       onNextSchmears={()=>{if(category==='packs'||schmearTotal===schmearTarget)setStep('cashier')}}
       onReset={reset}
       schmearSize={schmearSize}
-    />
+    />}
+
+    {guidedOpen&&<GuidedCommerce onExit={()=>setGuidedOpen(false)}/>} 
 
     <MobilePad move={move} setMove={setMove}/>
     <div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>
