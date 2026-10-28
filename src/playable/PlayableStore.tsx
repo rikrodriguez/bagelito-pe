@@ -3,6 +3,7 @@ import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@reac
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
+import { CinematicCommerce } from './CinematicCommerce'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -44,6 +45,7 @@ const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 export function PlayableStore() {
   const [ready, setReady] = useState(false)
   const [name, setName] = useState<string | null>(null)
+  const [guidedCommerce,setGuidedCommerce]=useState(false)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 8.25))
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
@@ -171,6 +173,7 @@ export function PlayableStore() {
 
     <MobilePad move={move} setMove={setMove}/>
     <div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>
+    {guidedCommerce&&<CinematicCommerce customerName={name} onExit={()=>setGuidedCommerce(false)}/>} 
   </main>
 }
 
