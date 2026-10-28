@@ -59,6 +59,9 @@ export async function quoteGuidedOrder(input: GuidedQuoteRequest): Promise<Guide
   if (batch.status !== 200 || !batch.batch.accepting) {
     return unavailable('El batch actual no tiene capacidad para este pedido.')
   }
+  if (!batch.batch.deliveryDate) {
+    return unavailable('El batch está visible, pero todavía no tiene una fecha de delivery confirmada para cobrar pedidos.')
+  }
 
   const bagels = bagelSelection(input.bagels)
   const schmears = schmearSelection(input.schmears)
