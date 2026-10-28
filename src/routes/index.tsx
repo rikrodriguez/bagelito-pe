@@ -1,4 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PlayableStore } from '../playable/PlayableStore'
+import { GuidedEntry } from '../playable/GuidedEntry'
 
-export const Route = createFileRoute('/')({ component: PlayableStore })
+export const Route = createFileRoute('/')({ component: GuidedEntry })
