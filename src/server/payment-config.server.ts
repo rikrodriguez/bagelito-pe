@@ -69,8 +69,6 @@ function buildPaymentConfig() {
   const clientReady = process.env.CULQI_TANSTACK_CLIENT_READY === 'true'
   const visualQaAllowed = process.env.BAGELITO_VISUAL_QA_ENABLED === 'true'
     && process.env.VERCEL_ENV !== 'production'
-    && Boolean(host)
-    && !publicHosts.has(host)
 
   return {
     mode: requestedMode,
