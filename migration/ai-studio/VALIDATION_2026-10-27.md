@@ -90,3 +90,35 @@ The production checkout must have a separate server-side gate and must not treat
 **Not completed:** installing TanStack dependencies, AI Studio project creation, Git Sync connection, target SSR/build/preview, server endpoint runtime test with Supabase, Culqi sandbox, live GHL workflows. GitHub Actions runner remained unavailable and its draft workflow was removed.
 
 **Required next gate:** create the AI Studio-generated private Git repo, integrate `migration/ai-studio/tanstack-app/` there and execute true `npm run build` + `npm run typecheck` + browser/endpoint smoke tests against a test database. Preserve Bagelito's Next production until these pass.
+
+
+## Exact TanStack runtime validation — 2026-10-27
+
+A Vercel Sandbox was created from the public migration branch and the TanStack app was installed with real npm registry access. Initial validation exposed and corrected two real scaffold defects:
+
+1. the proposed `@tanstack/react-start@^1.170.14` version did not exist;
+2. copied catalog type exports still referenced the old `@/data/*` alias.
+
+The tested direct versions are now pinned in the subproject package manifest: React Start 1.169.4, React Router 1.170.46, Vite 8.3.5, React/React DOM 19.3.1 and Vite React plugin 6.1.2.
+
+A second sandbox was reset to a completely clean checkout of source commit `56fba5fe9b6fdb6d0e8efd94fa97a3aeefc8dc8e`, with generated files, package lock, node_modules and dist removed before validation.
+
+Observed from that clean checkout:
+
+- `npm install` in `migration/ai-studio/tanstack-app`: **PASS**, 0 vulnerabilities in the TanStack subproject.
+- `npm run typecheck`: **PASS**. The command generated the route tree, built client + SSR, then completed `tsc --noEmit`.
+- Portable domain suite: **26/26 PASS**.
+- Store UI contract suite: **4/4 PASS**.
+- `vite preview` smoke test:
+  - `GET /` → **200**;
+  - `GET /api/catalog` → **200**;
+  - `GET /api/batch` with no Supabase secrets → **503**, `accepting:false`, `status:"closed"`;
+  - bundled entry scene → **200**;
+  - bundled counter scene → **200**;
+  - bundled product image → **200**.
+
+The Store source in this validated slice implements the approved journey: Entrada → Packs / Combos / Schmears; Packs → Grandes / Minis; combo = 2 bagels + schmear with no sandwich/drink; checkout remains fail-closed.
+
+**Still unverified:** HighLevel AI Studio project creation/Git Sync, AI Studio-hosted preview, test Supabase credentials, reservation writes/concurrency in the target runtime, Culqi sandbox and production cutover.
+
+The normal Vercel Git deployment status remains blocked by the Free-plan daily deployment quota. That quota status is not a build result; the isolated Vercel Sandbox build above is the current executable evidence.
