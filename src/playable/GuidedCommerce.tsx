@@ -59,6 +59,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
+  const qaMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const receiptDrag = useRef({ startY: 0, offset: 0 })
 
   const selectedCombo = combos.find((c) => c.id === comboId) ?? null
