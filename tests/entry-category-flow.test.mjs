@@ -84,3 +84,27 @@ test("entry and counter use distinct approved store scenes",()=>{
   assert.match(source,/store-entry-door\.webp/);
   assert.match(source,/store-category-flow\.webp/);
 });
+
+test("approved composition uses the store scene itself as the category interface",()=>{
+  const source=read("src/components/StoreEntryFlow.tsx");
+  assert.match(source,/entry-flow-category-hotspots/);
+  assert.match(source,/entry-flow-entry-hotspot/);
+  assert.doesNotMatch(source,/entry-flow-category-grid/);
+  assert.doesNotMatch(source,/entry-flow-entry-copy/);
+});
+
+test("pack size is integrated into a dedicated store scene, not a giant modal or fake bagel drawing",()=>{
+  const source=read("src/components/StoreEntryFlow.tsx");
+  assert.match(source,/store-pack-size-flow\.webp/);
+  assert.match(source,/entry-flow-pack-hotspots/);
+  assert.doesNotMatch(source,/entry-flow-size-bagels/);
+  assert.doesNotMatch(source,/entry-flow-size-card/);
+});
+
+test("only lightweight accessible hit areas sit above the approved store artwork",()=>{
+  const css=read("src/app/store-entry-flow.css");
+  assert.match(css,/\.entry-flow-category-hotspots/);
+  assert.match(css,/\.entry-flow-hotspot-label/);
+  assert.match(css,/opacity:\s*0/);
+  assert.match(css,/pointer-events:\s*auto/);
+});
