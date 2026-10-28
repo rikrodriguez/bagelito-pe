@@ -94,6 +94,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         return await response.json() as {
           enabled?: boolean
           configured?: boolean
+          intakeEnabled?: boolean
           bridgeReady?: boolean
           webhookReady?: boolean
           clientReady?: boolean
@@ -109,6 +110,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         if (active) setPaymentConfig({
           enabled: config.enabled === true,
           configured: config.configured === true,
+          intakeEnabled: config.intakeEnabled === true,
           bridgeReady: config.bridgeReady === true,
           webhookReady: config.webhookReady === true,
           clientReady: config.clientReady === true,
@@ -124,6 +126,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         if (active) setPaymentConfig({
           enabled: false,
           configured: false,
+          intakeEnabled: false,
           bridgeReady: false,
           webhookReady: false,
           clientReady: false,
