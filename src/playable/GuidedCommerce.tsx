@@ -43,14 +43,14 @@ export const BAGEL_SHOWCASE_ORDER = [
 ] as const
 
 const BAGEL_SPOTS = [
-  { left: '2.5%', top: '12%', width: '19%', height: '34%' },
-  { left: '23%', top: '12%', width: '19%', height: '34%' },
-  { left: '43%', top: '12%', width: '19%', height: '34%' },
-  { left: '63%', top: '12%', width: '19%', height: '34%' },
-  { left: '2.5%', top: '52%', width: '19%', height: '39%' },
-  { left: '23%', top: '52%', width: '19%', height: '39%' },
-  { left: '43%', top: '52%', width: '19%', height: '39%' },
-  { left: '63%', top: '52%', width: '19%', height: '39%' },
+  { left: '6%', top: '7%', width: '19%', height: '43%' },
+  { left: '25%', top: '7%', width: '25%', height: '43%' },
+  { left: '50%', top: '7%', width: '25%', height: '43%' },
+  { left: '75%', top: '7%', width: '25%', height: '43%' },
+  { left: '6%', top: '53%', width: '19%', height: '44%' },
+  { left: '25%', top: '53%', width: '25%', height: '44%' },
+  { left: '50%', top: '53%', width: '25%', height: '44%' },
+  { left: '75%', top: '53%', width: '25%', height: '44%' },
 ] as const
 
 const SCHMEAR_SPOTS = [
