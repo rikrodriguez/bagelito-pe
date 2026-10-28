@@ -184,12 +184,56 @@ export function CinematicCommerce({customerName,onExit}:{customerName:string|nul
   </div>
 }
 
+type Crop={atlas:1|2;x:number;y:number;w:number;h:number;mode?:'panel'|'photo'}
+
+const SCENE_CROPS:Record<Scene,Crop>={
+  selector:{atlas:1,x:1115,y:55,w:421,h:325},
+  'pack-size':{atlas:2,x:0,y:405,w:405,h:330},
+  'pack-qty':{atlas:2,x:0,y:405,w:405,h:330},
+  combo:{atlas:2,x:405,y:405,w:390,h:330},
+  'schmear-size':{atlas:1,x:0,y:435,w:228,h:285},
+  bagels:{atlas:1,x:940,y:450,w:340,h:250,mode:'photo'},
+  schmears:{atlas:1,x:228,y:450,w:362,h:250,mode:'photo'},
+  crosssell:{atlas:1,x:590,y:450,w:350,h:280},
+  downsell:{atlas:1,x:1280,y:450,w:256,h:280},
+  cashier:{atlas:1,x:0,y:795,w:340,h:229},
+  payment:{atlas:1,x:340,y:795,w:280,h:229},
+  receipt:{atlas:1,x:620,y:795,w:380,h:229},
+  wallet:{atlas:1,x:1000,y:795,w:270,h:229},
+  handoff:{atlas:1,x:1270,y:795,w:266,h:229},
+  goodbye:{atlas:2,x:1280,y:790,w:256,h:234},
+}
+
 function SceneBackground({scene}:{scene:Scene}){
-  if(scene==='bagels')return <div className="cine-bg photo bagels-photo"/>
-  if(scene==='schmears')return <div className="cine-bg photo schmears-photo"/>
-  if(['crosssell','downsell'].includes(scene))return <div className="cine-bg storyboard schmear-story"/>
-  if(['cashier','payment','receipt','wallet','handoff','goodbye'].includes(scene))return <div className={'cine-bg storyboard end-story '+scene}/>
-  return <div className="cine-bg photo store-photo"/>
+  const crop=SCENE_CROPS[scene]
+  const src=crop.atlas===1?'/images/guided-storyboard-atlas.webp':'/images/guided-storyboard-atlas-2.webp'
+  const style={
+    '--crop-aspect':String(crop.w/crop.h),
+    '--img-w':String(1536/crop.w*100)+'%',
+    '--img-h':String(1024/crop.h*100)+'%',
+    '--img-left':String(-crop.x/crop.w*100)+'%',
+    '--img-top':String(-crop.y/crop.h*100)+'%',
+  } as React.CSSProperties
+  return <div className={'cine-bg approved-scene '+(crop.mode??'panel')} style={style}>
+    <div className="scene-blur"><AtlasCrop src={src} crop={crop}/></div>
+    <div className="scene-frame"><AtlasCrop src={src} crop={crop}/></div>
+  </div>
+}
+
+function AtlasCrop({src,crop}:{src:string;crop:Crop}){
+  return <div className="atlas-window">
+    <img
+      src={src}
+      alt=""
+      draggable={false}
+      style={{
+        width:String(1536/crop.w*100)+'%',
+        height:String(1024/crop.h*100)+'%',
+        left:String(-crop.x/crop.w*100)+'%',
+        top:String(-crop.y/crop.h*100)+'%',
+      }}
+    />
+  </div>
 }
 
 function Progress({active}:{active:number}){
