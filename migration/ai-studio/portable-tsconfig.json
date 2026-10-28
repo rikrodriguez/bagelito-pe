@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "rootDir": "portable-src",
+    "outDir": ".migration-test-dist",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "portable-src/**/*.ts"
+  ],
+  "exclude": [
+    ".migration-test-dist"
+  ]
+}
