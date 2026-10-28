@@ -68,6 +68,34 @@ async function audit() {
       await scene('pack-qty', '04-pack-quantity')
       await page.locator('.pack-choice-grid button').first().click()
       await scene('bagels', '05-bagels')
+
+      // The catalog is NOT in the same order as the approved panorama.
+      // Assert that tapping each visible tray selects its actual printed flavor.
+      const showcaseLabels = await page.locator('.bagel-hotspots > button')
+        .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
+      const expectedShowcaseLabels = [
+        'Agregar Plain', 'Agregar Everything', 'Agregar Sesame',
+        'Agregar Classic Onion', 'Agregar Jalapeño Cheddar', 'Agregar Cheddar',
+        'Agregar Cinnamon Raisin', 'Agregar Blueberry',
+      ]
+      if (JSON.stringify(showcaseLabels) !== JSON.stringify(expectedShowcaseLabels)) {
+        failures.push(mode.name + ': bagel panorama hotspot positions do not match visual flavor labels')
+      }
+      if (mode.name === 'mobile') {
+        const productCards = await page.locator('.mobile-bagel-card').evaluateAll((cards) =>
+          cards.map((card) => ({
+            image: card.querySelector('img')?.getAttribute('src') || '',
+            alt: card.querySelector('img')?.getAttribute('alt') || '',
+            button: card.querySelector('button')?.getAttribute('aria-label') || '',
+          }))
+        )
+        if (productCards.length !== 8
+          || productCards.some((card) => !card.image.startsWith('/images/bagel-')
+            || card.button !== 'Agregar ' + card.alt)) {
+          failures.push('Mobile bagel product cards are not matched to their actual labeled photos')
+        }
+      }
+
       for (let i = 0; i < 6; i++) {
         const selector = mode.name === 'mobile' ? '.mobile-bagel-card > button' : '.bagel-hotspots > button'
         await page.locator(selector).nth(i % 3).click()
@@ -75,6 +103,15 @@ async function audit() {
       await scene('bagels', '06-bagels-selected')
       await page.getByRole('button', { name: /Continuar/ }).last().click()
       await scene('schmears', '07-schmears')
+      const schmearLabels = await page.locator('.schmear-hotspots > button')
+        .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
+      const expectedSchmearLabels = [
+        'Agregar Whipped Original', 'Agregar Ají Amarillo', 'Agregar Herb & Roasted Garlic',
+        'Agregar Honey Cinnamon', 'Agregar Classic Strawberry',
+      ]
+      if (JSON.stringify(schmearLabels) !== JSON.stringify(expectedSchmearLabels)) {
+        failures.push(mode.name + ': schmear showcase names are not aligned to the five product slots')
+      }
       await page.getByRole('button', { name: /Ir a caja/ }).click()
       await scene('cashier', '08-cashier')
       await page.locator('.guided-cashier-action > button').click()
