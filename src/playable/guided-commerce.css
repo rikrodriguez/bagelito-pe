@@ -1110,3 +1110,26 @@
 
 /* Receipt can be pulled with touch/drag without page scroll, or activated by keyboard. */
 .receipt-interaction{touch-action:none;user-select:none}.receipt-interaction:focus-visible{outline:3px solid #004aad;outline-offset:3px}
+
+
+/* Clean vitrina photograph spans four real trays per row, with an independent
+   live order summary (old panorama contained a baked-in 4/6 sidebar). */
+@media(min-width:801px){
+  [data-scene="bagels"] .bagel-product-frame{
+    left:1vw!important;
+    top:50%!important;
+    width:min(78vw,calc(76vh * 2.6667))!important;
+    max-width:none!important;
+    aspect-ratio:800/300!important;
+    transform:translateY(-50%)!important;
+  }
+  [data-scene="bagels"] .bagel-product-frame>img{
+    object-fit:fill!important;
+  }
+  [data-scene="bagels"] .bagel-live-summary{
+    right:1.2%!important;
+    top:4%!important;
+    bottom:4%!important;
+    width:17%!important;
+  }
+}
