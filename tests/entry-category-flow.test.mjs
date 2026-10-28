@@ -74,9 +74,10 @@ test("entry flow owns the viewport without legacy review or WhatsApp overlays",(
   assert.match(css,/body:has\(\.entry-flow\) \.floating-whatsapp\s*\{[^}]*display:\s*none/);
 });
 
-test("small combo helper copy uses accessible dark blue",()=>{
+test("mobile combo helper copy uses accessible dark blue",()=>{
   const css=read("src/app/store-entry-flow.css");
-  assert.match(css,/\.entry-flow-choice em\s*\{[^}]*color:\s*#34577e/);
+  assert.match(css,/\.entry-flow-category-hotspot\.combos::after\s*\{[^}]*content:"Bagels \+ schmears"/);
+  assert.match(css,/entry-flow-category-hotspot\.packs::after,[\s\S]*color:#4c6684/);
 });
 
 test("entry and counter use distinct approved store scenes",()=>{
@@ -93,12 +94,17 @@ test("approved composition uses the store scene itself as the category interface
   assert.doesNotMatch(source,/entry-flow-entry-copy/);
 });
 
-test("pack size is integrated into a dedicated store scene, not a giant modal or fake bagel drawing",()=>{
+test("pack size is integrated into the counter with real product artwork, not a giant modal or fake bagel drawing",()=>{
   const source=read("src/components/StoreEntryFlow.tsx");
-  assert.match(source,/store-pack-size-flow\.webp/);
+  assert.match(source,/entry-flow-pack-selector/);
   assert.match(source,/entry-flow-pack-hotspots/);
+  assert.match(source,/pack-6-mixed\.webp/);
+  assert.match(source,/bagel-everything\.webp/);
+  assert.match(source,/bagel-sesame\.webp/);
+  assert.match(source,/bagel-blueberry\.webp/);
   assert.doesNotMatch(source,/entry-flow-size-bagels/);
   assert.doesNotMatch(source,/entry-flow-size-card/);
+  assert.doesNotMatch(source,/entry-flow-panel/);
 });
 
 test("only lightweight accessible hit areas sit above the approved store artwork",()=>{
