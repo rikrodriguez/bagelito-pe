@@ -4,6 +4,7 @@ import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 export type CulqiPublicConfig = {
   enabled: boolean
   configured: boolean
+  intakeEnabled: boolean
   bridgeReady: boolean
   webhookReady: boolean
   clientReady: boolean
