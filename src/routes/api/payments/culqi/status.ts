@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { readBoundedJsonObject } from '../../../../server/http-json.server'
 import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
+import { PublicApiError } from '../../../../server/public-api-security.server'
 
 function validUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
@@ -71,8 +72,12 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
             orderStatus: payment.orderStatus,
             reconciliationRequired: payment.reconciliationRequired,
           }, { headers })
-        } catch {
-          return Response.json({ ok: false, error: 'Could not read payment status.' }, { status: 500, headers })
+        } catch (error) {
+          const status = error instanceof PublicApiError ? error.status : 500
+          return Response.json({
+            ok: false,
+            error: error instanceof PublicApiError ? error.message : 'Could not read payment status.',
+          }, { status, headers })
         }
       },
     },
