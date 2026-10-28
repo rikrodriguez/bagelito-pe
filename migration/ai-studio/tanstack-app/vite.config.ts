@@ -4,5 +4,10 @@ import viteReact from '@vitejs/plugin-react'
 
 export default defineConfig({
   server: { port: 3000 },
-  plugins: [tanstackStart(), viteReact()],
+  resolve: { tsconfigPaths: true },
+  plugins: [
+    tanstackStart(),
+    // Must run after TanStack Start (official TanStack Vite setup).
+    viteReact(),
+  ],
 })
