@@ -29,7 +29,7 @@ function siteHost() {
 }
 
 function buildPaymentConfig() {
-  const provider = process.env.PAYMENT_PROVIDER === 'culqi' ? 'culqi' : 'manual'
+  const provider: PublicPaymentConfig['provider'] = process.env.PAYMENT_PROVIDER === 'culqi' ? 'culqi' : 'manual'
   const publicKey = (process.env.CULQI_PUBLIC_KEY || process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY || '').trim()
   const rsaId = (process.env.CULQI_RSA_ID || process.env.NEXT_PUBLIC_CULQI_RSA_ID || '').trim()
   const rsaPublicKey = (process.env.CULQI_RSA_PUBLIC_KEY || process.env.NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY || '').trim()
