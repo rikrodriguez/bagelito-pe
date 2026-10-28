@@ -167,6 +167,7 @@ export function CulqiBrowserCheckout(props: {
   const sessionRef = useRef<CheckoutSession | null>(null)
   const tokenRef = useRef<{ tokenId: string; deviceId: string } | null>(null)
   const busyRef = useRef(false)
+  const callbackConsumedRef = useRef(false)
 
   const review = useCallback((text: string) => {
     const session = sessionRef.current
@@ -399,15 +400,19 @@ export function CulqiBrowserCheckout(props: {
 
       checkoutRef.current = checkout
       checkout.culqi = () => {
-        if (busyRef.current && status !== 'ready') {
-          const tokenId = checkout.token?.id
-          if (!tokenId) {
-            const error = checkout.error
-            review(error?.user_message || error?.merchant_message || error?.message || 'Culqi no pudo generar el token.')
-            return
-          }
+        if (!busyRef.current || callbackConsumedRef.current) return
+        callbackConsumedRef.current = true
+        const tokenId = checkout.token?.id
+        if (!tokenId) {
+          callbackConsumedRef.current = false
+          busyRef.current = false
+          const error = checkout.error
+          setStatus('error')
+          setMessage(error?.user_message || error?.merchant_message || error?.message || 'Culqi no pudo generar el token.')
+          return
+        }
 
-          void (async () => {
+        void (async () => {
             try {
               checkout.close()
               setRecovery(session, 'pending')
@@ -420,11 +425,11 @@ export function CulqiBrowserCheckout(props: {
             } catch (error) {
               review(error instanceof Error ? error.message : 'No se pudo procesar el pago.')
             }
-          })()
-        }
+        })()
       }
 
       busyRef.current = true
+      callbackConsumedRef.current = false
       setStatus('ready')
       setMessage('')
       checkout.open()
@@ -465,6 +470,13 @@ export function CulqiBrowserCheckout(props: {
     try { window.Culqi3DS?.reset() } catch {}
   }, [])
 
+  const customerReady = customer.customerName.trim().length >= 2
+    && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email.trim())
+    && customer.whatsapp.replace(/\D/g, '').length >= 7
+    && customer.deliveryAddress.trim().length >= 5
+    && customer.district.trim().length > 0
+    && customer.termsAccepted
+
   if (!config.enabled) {
     return <div className="culqi-browser-status is-locked">
       <b>Checkout Culqi bloqueado</b>
@@ -473,7 +485,7 @@ export function CulqiBrowserCheckout(props: {
   }
 
   return <div className="culqi-browser-checkout">
-    <button type="button" className="culqi-start-button" disabled={status === 'loading' || status === 'charging' || status === '3ds' || status === 'confirming' || status === 'review'} onClick={() => void startCheckout()}>
+    <button type="button" className="culqi-start-button" disabled={!customerReady || status === 'loading' || status === 'charging' || status === '3ds' || status === 'confirming' || status === 'review'} onClick={() => void startCheckout()}>
       {status === 'loading' ? 'Preparando…'
         : status === 'charging' ? 'Procesando…'
           : status === '3ds' ? 'Autenticando banco…'
@@ -481,6 +493,7 @@ export function CulqiBrowserCheckout(props: {
               : status === 'review' ? 'Pago en revisión'
                 : 'Pagar con Culqi'}
     </button>
+    {!customerReady && <p className="culqi-browser-message">Completa tus datos y acepta los términos para habilitar el pago.</p>}
     {message && <p className="culqi-browser-message">{message}</p>}
     <div id="culqi-checkout-container" className="culqi-browser-container" />
   </div>
