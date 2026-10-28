@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { readBoundedJsonObject } from '../../../../server/http-json.server'
 import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
 
@@ -24,7 +25,7 @@ export const Route = createFileRoute('/api/payments/culqi/status')({
             return Response.json({ ok: false, error: 'Culqi payments are not enabled yet.' }, { status: 503, headers })
           }
 
-          const payload = await request.json() as { checkoutSessionId?: unknown; orderCode?: unknown }
+          const payload = await readBoundedJsonObject(request, 4 * 1024) as { checkoutSessionId?: unknown; orderCode?: unknown }
           const checkoutSessionId = String(payload.checkoutSessionId ?? '').trim()
           const orderCode = String(payload.orderCode ?? '').trim().toUpperCase()
           if (!validUuid(checkoutSessionId) || !/^BAG-[A-Z0-9_-]{1,80}$/.test(orderCode)) {
