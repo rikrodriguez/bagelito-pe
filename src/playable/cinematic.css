@@ -3,8 +3,8 @@
    the visual truth; React controls are interaction layers on top. */
 .approved-scene{background:#161d25;display:grid;place-items:center;overflow:hidden}
 .approved-scene::after{display:none}
-.approved-scene .scene-blur{position:absolute;inset:-34px;filter:blur(28px) brightness(.62) saturate(.92);transform:scale(1.08);opacity:.72}
-.approved-scene .scene-frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,calc(100vh * var(--crop-aspect)));height:min(100vh,calc(100vw / var(--crop-aspect)));overflow:hidden;box-shadow:0 30px 80px rgba(0,20,45,.28)}
+.approved-scene .scene-blur{position:absolute;inset:0;filter:blur(28px) brightness(.62) saturate(.92);transform:scale(1.08);opacity:.72}
+.approved-scene .scene-frame{position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;box-shadow:0 30px 80px rgba(0,20,45,.28)}
 .atlas-window{position:absolute;inset:0;overflow:hidden}
 .atlas-window img{position:absolute;max-width:none;user-select:none;pointer-events:none}
 
@@ -55,7 +55,7 @@
 .cine-root .cine-progress{opacity:0;pointer-events:none}
 
 @media(max-width:760px){
-  .approved-scene .scene-frame{width:min(100vw,calc(100vh * var(--crop-aspect)));height:min(100vh,calc(100vw / var(--crop-aspect)))}
+  .approved-scene .scene-frame{width:100vw;height:100vh}
   .cine-root[data-scene="bagels"] .stage-counter,
   .cine-root[data-scene="schmears"] .stage-counter{right:10px;bottom:10px}
 }
