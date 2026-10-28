@@ -107,7 +107,10 @@ async function generateShadowDraft(args: {
     "A seasonal=true flavor is NOT proof that it is currently available. Mention it only as seasonal/depending on batch unless explicit availability exists.",
     "For complaints, refunds, missing/damaged orders, allergies/celiac/food safety, payment disputes, or fraud: classify the matching high-risk intent and draft a cautious acknowledgement without making promises.",
     "For media, use ONLY exact asset_key values provided in LIVE_FACTS.media_assets. Never invent an asset key or URL.",
-    "Suggest media only when it adds value: the customer asks to see a product, asks for a photo, asks how something looks, or a specific pack/flavor image would materially help. Do not attach images mechanically to every reply.",
+    "Historical Bagelito behavior is media-forward: when customers ask for flavors, menu/carta, options, or how to order, Bagelito commonly sends product photos proactively even when the customer did not explicitly ask for a photo.",
+    "For flavors or menu/carta intents, propose several approved current bagel photos (normally 4-7) alongside the concise text answer. Exclude seasonal products unless current availability is explicitly confirmed.",
+    "For how_to_order, a visual pack/menu reference is usually helpful; propose relevant approved pack images when available.",
+    "For a specific flavor or pack question, prefer the exact matching approved asset. For other intents, suggest media only when it genuinely helps.",
     "A media asset with sendable=false may still be suggested in Shadow Mode, but must not be sent until validated.",
     "Return JSON only matching the schema."
   ].join("\n");
@@ -150,7 +153,7 @@ async function generateShadowDraft(args: {
               proposed_reply: { type: "string" },
               proposed_media_tags: {
                 type: "array",
-                maxItems: 5,
+                maxItems: 8,
                 items: { type: "string" }
               }
             },
@@ -189,8 +192,30 @@ async function generateShadowDraft(args: {
   const language = ["es","en","mixed","unknown"].includes(parsed.language) ? parsed.language : "unknown";
   const confidence = typeof parsed.confidence === "number" ? Math.min(1, Math.max(0, parsed.confidence)) : null;
   const proposedReply = typeof parsed.proposed_reply === "string" ? parsed.proposed_reply.trim() : "";
-  const requestedMediaKeys = Array.isArray(parsed.proposed_media_tags) ? parsed.proposed_media_tags.slice(0,5) : [];
+  let requestedMediaKeys = Array.isArray(parsed.proposed_media_tags) ? parsed.proposed_media_tags.slice(0,8) : [];
   const approvedMediaByKey = new Map((mediaAssets ?? []).map((asset: any) => [asset.asset_key, asset]));
+
+  // Historical audit: Bagelito proactively sends multiple product photos for
+  // flavors/menu questions. Enforce that behavior even if the model returns
+  // too few media suggestions.
+  if ((intent === "flavors" || intent === "menu") && requestedMediaKeys.length < 4) {
+    const regularFlavorKeys = (mediaAssets ?? [])
+      .filter((asset: any) =>
+        asset.category === "bagel_flavor" &&
+        !((asset.tags ?? []).includes("seasonal"))
+      )
+      .map((asset: any) => asset.asset_key)
+      .slice(0, 7);
+    requestedMediaKeys = Array.from(new Set([...requestedMediaKeys, ...regularFlavorKeys])).slice(0, 7);
+  }
+
+  if (intent === "how_to_order" && requestedMediaKeys.length === 0) {
+    requestedMediaKeys = (mediaAssets ?? [])
+      .filter((asset: any) => asset.category === "pack")
+      .map((asset: any) => asset.asset_key)
+      .slice(0, 4);
+  }
+
   const proposedMedia = requestedMediaKeys
     .map((key: string) => approvedMediaByKey.get(key))
     .filter(Boolean)
