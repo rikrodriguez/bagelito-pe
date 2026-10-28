@@ -1,12 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { quoteGuidedOrder } from '../../../server/checkout-quote.server'
+import { readBoundedJsonObject } from '../../../server/http-json.server'
 
 export const Route = createFileRoute('/api/checkout/quote')({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
-          const payload = await request.json()
+          const payload = await readBoundedJsonObject(request, 8 * 1024)
           const quote = await quoteGuidedOrder(payload)
           return Response.json(quote, {
             status: quote.status === 'invalid' ? 400 : quote.status === 'unavailable' ? 503 : 200,
