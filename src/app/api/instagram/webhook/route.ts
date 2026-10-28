@@ -5,6 +5,7 @@ import {
   verifyWebhookToken,
 } from "@/lib/instagram/webhook";
 
+// Shadow Mode webhook: ingestion only; no Instagram Send API.
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
