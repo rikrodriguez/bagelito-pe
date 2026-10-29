@@ -53,7 +53,7 @@ const BAGEL_SPOTS = [
   { left: '75%', top: '53%', width: '25%', height: '44%' },
 ] as const
 
-/** Blue-on-white inverted label plates, aligned to the printed labels
+/** Inverted bagel signs: WHITE text on Bagelito BLUE plates, aligned to the printed labels
  * in /images/bagel-vitrina-photo.webp (800 × 300 photograph). These are
  * presentation only; product selection remains on the existing hotspots.
  */
