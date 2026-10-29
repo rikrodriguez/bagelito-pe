@@ -76,11 +76,19 @@ const SCHMEAR_SPOTS = [
   { left: '77%', top: '20%', width: '17%', height: '61%' },
 ] as const
 
-export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; customerName?: string | null }) {
-  const [scene, setScene] = useState<Scene>('entrance')
+export function GuidedCommerce({ onExit, customerName, initialCategory = null }: {
+  onExit: () => void
+  customerName?: string | null
+  initialCategory?: Category | null
+}) {
+  // A shopper coming from a physical 3D vitrina enters the matching guided
+  // category without having to navigate through the store entrance again.
+  const [scene, setScene] = useState<Scene>(initialCategory === 'packs' ? 'pack-size'
+    : initialCategory === 'combos' ? 'combos'
+      : initialCategory === 'schmears' ? 'schmear-size' : 'entrance')
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
-  const [category, setCategory] = useState<Category | null>(null)
+  const [category, setCategory] = useState<Category | null>(initialCategory)
   const [packFormat, setPackFormat] = useState<PackFormat>('grande')
   const [packQty, setPackQty] = useState(6)
   const [packMix, setPackMix] = useState<'mixed'|'single'>('mixed')
