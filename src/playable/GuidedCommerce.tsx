@@ -318,17 +318,31 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   }
 
   function choosePackFormat(format: PackFormat) {
+    if (format !== packFormat) {
+      setBagelCounts({})
+      setSchmearCounts({})
+      setPackQty(6)
+      setPackMix('mixed')
+    }
     setPackFormat(format)
-    setPackQty(format === 'mini' ? 6 : 6)
-    setPackMix('mixed')
     setScene('pack-qty')
   }
 
+  function choosePackMix(mix: 'mixed' | 'single') {
+    if (mix === packMix) return
+    setPackMix(mix)
+    setBagelCounts({})
+    setSchmearCounts({})
+  }
+
   function choosePack(qty: number, mix: 'mixed'|'single') {
+    if (qty !== packQty || mix !== packMix) {
+      setBagelCounts({})
+      setSchmearCounts({})
+    }
     setPackQty(qty)
     setPackMix(mix)
     setBagelMode('pack')
-    setBagelCounts({})
     setScene('bagels')
   }
 
@@ -367,7 +381,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
   function addSchmear(id: string) {
     setSchmearCounts((current) => {
-      if (category !== 'combos') return { [id]: 1 }
+      // One-pot flows are reversible: tapping the selected flavor removes it.
+      if (category !== 'combos') return current[id] ? {} : { [id]: 1 }
       const total = Object.values(current).reduce((sum, n) => sum + n, 0)
       if (total >= schmearTarget) return current
       return { ...current, [id]: (current[id] ?? 0) + 1 }
