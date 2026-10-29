@@ -54,7 +54,6 @@ const ZONES = {
   cashier: new THREE.Vector3(5.15, 0, 4.6),
 }
 
-const BAGEL_COLORS = ['#d5a15d','#c38a4f','#dcb56f','#b97843','#cb793e','#de8a3d','#9f6847','#8b6653']
 const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 
 export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guided'|'explore' } = {}) {
@@ -515,38 +514,6 @@ function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Rec
       <boxGeometry args={[7.07,.048,.07]}/>
       <meshStandardMaterial color="#687d8c" metalness={.86} roughness={.19}/>
     </mesh>
-  </group>
-}
-
-function BagelTray({bagel,index,position,active,count,onClick}:{bagel:(typeof menu.bagels)[number];index:number;position:V3;active:boolean;count:number;onClick:(id:string)=>void}){
-  const variants=[
-    [[-.22,.02,.02],[.18,.02,-.08],[0,.03,.2]],
-    [[-.2,.02,.04],[.2,.02,.02],[.02,.03,.22]],
-    [[-.24,.02,.02],[.18,.02,-.06],[-.02,.03,.2]]
-  ]
-  return <group position={position}>
-    <mesh position={[0,-.05,0]}><boxGeometry args={[1.48,.08,.74]}/><meshStandardMaterial color="#d1d6d8" metalness={.72} roughness={.2}/></mesh>
-    {variants[index%3].map((p,j)=><Bagel3D key={j} variant={bagel.id} color={BAGEL_COLORS[index]} position={[p[0],p[1],p[2]]} active={active} selected={count>0} onClick={()=>onClick(bagel.id)}/>)}
-    <Html transform position={[0,-.24,.4]} distanceFactor={2.45} className="product-label"><div><b>{bagel.name}</b>{count>0&&<span>{count}</span>}</div></Html>
-  </group>
-}
-
-function Bagel3D({variant,color,position,active,selected,onClick}:{variant:string;color:string;position:V3;active:boolean;selected:boolean;onClick:()=>void}){
-  const seedColor=variant==='blueberry'?'#5e476a':variant==='cinnamon-raisin'?'#5d4338':variant==='jalapeno-cheddar'?'#4c7f42':variant==='everything'?'#1f2930':variant==='sesame'?'#f0d19c':'#bd7c48'
-  const toppingCount=['plain','cheddar'].includes(variant)?0:variant==='jalapeno-cheddar'?3:5
-  return <group position={position} rotation={[Math.PI/2,0,0]} scale={selected?1.06:1}>
-    <mesh castShadow onClick={e=>{e.stopPropagation();if(active)onClick()}} onPointerOver={()=>{if(active)document.body.style.cursor='pointer'}} onPointerOut={()=>document.body.style.cursor='default'}>
-      <torusGeometry args={[.23,.105,18,36]}/>
-      <meshStandardMaterial color={variant==='cheddar'?'#e58c38':color} roughness={.58} metalness={.02} emissive={active?BLUE:'#000'} emissiveIntensity={active?.025:0}/>
-    </mesh>
-    {Array.from({length:toppingCount}).map((_,i)=>{
-      const a=(i/toppingCount)*Math.PI*2+.45
-      const rr=.19+(i%2)*.025
-      return <mesh key={i} position={[Math.cos(a)*rr,Math.sin(a)*rr,.095]}>
-        <sphereGeometry args={[variant==='jalapeno-cheddar'?.035:.018,8,8]}/>
-        <meshStandardMaterial color={seedColor}/>
-      </mesh>
-    })}
   </group>
 }
 
