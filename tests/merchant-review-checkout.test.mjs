@@ -51,3 +51,10 @@ test("even configured payment keys cannot enable provider in merchant-review mod
  assert.match(paymentConfig,/BAGELITO_MERCHANT_REVIEW_ONLY/);
  assert.match(paymentConfig,/process\.env\.BAGELITO_MERCHANT_REVIEW_ONLY !== "true"/);
 });
+
+
+test("demo remains explicit after commercial approval without claiming live payments",()=>{
+ assert.match(reserve,/Los pedidos y pagos online siguen deshabilitados en esta demostración/);
+ assert.match(reserve,/Online orders and payments remain disabled in this demonstration/);
+ assert.doesNotMatch(reserve,/cuando Culqi apruebe el comercio|Payments activate only after merchant approval/);
+});

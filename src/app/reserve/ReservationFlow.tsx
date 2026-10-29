@@ -607,8 +607,8 @@ export function ReservationFlow({
         <div className="checkout-review-banner" role="status">
           <strong>{locale === "es" ? "Vista de revisión — Sin cobros reales" : "Review preview — No real payments"}</strong>
           <span>{locale === "es"
-            ? "Puedes elegir packs, sabores, delivery y revisar el total. El pago se habilitará cuando Culqi apruebe el comercio. No introduzcas datos reales de tarjeta."
-            : "Choose packs, flavors, delivery, and review the total. Payments activate only after merchant approval. Do not enter real card information."}</span>
+            ? "Puedes elegir packs, sabores, delivery y revisar el total. Los pedidos y pagos online siguen deshabilitados en esta demostración. No introduzcas datos reales de tarjeta."
+            : "Choose packs, flavors, delivery, and review the total. Online orders and payments remain disabled in this demonstration. Do not enter real card information."}</span>
         </div>
       ) : null}
       <ConversionTrustStrip compact />

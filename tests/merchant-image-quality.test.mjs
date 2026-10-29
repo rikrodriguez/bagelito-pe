@@ -12,8 +12,10 @@ const { flavorImages } = loadTs("src/data/flavor-images.ts");
 test("the production optimizer accepts the homepage's quality 75 for all ten flavor images", () => {
   assert.equal(Object.keys(flavorImages).length, 10);
   for (const [flavor, url] of Object.entries(flavorImages)) {
-    const result = ImageOptimizerCache.validateParams({ headers: {} }, { url, w: "640", q: "75" }, { images }, false);
-    assert.equal(result.errorMessage, undefined, `${flavor}: ${result.errorMessage}`);
+    for (const width of [...images.deviceSizes, ...images.imageSizes]) {
+      const result = ImageOptimizerCache.validateParams({ headers: {} }, { url, w: String(width), q: "75" }, { images }, false);
+      assert.equal(result.errorMessage, undefined, `${flavor} at ${width}px: ${result.errorMessage}`);
+    }
   }
 });
 
@@ -21,5 +23,16 @@ test("the existing pack and checkout image qualities remain accepted", () => {
   for (const q of ["70", "72", "74", "76"]) {
     const result = ImageOptimizerCache.validateParams({ headers: {} }, { url: "/images/pack-6-mixed.webp", w: "640", q }, { images }, false);
     assert.equal(result.errorMessage, undefined);
+  }
+});
+
+// The image repair must not broaden arbitrary optimizer inputs.
+test("unconfigured image quality and width remain rejected", () => {
+  for (const query of [
+    { url: "/images/bagel-cheddar.webp", w: "640", q: "99" },
+    { url: "/images/bagel-cheddar.webp", w: "9999", q: "75" },
+  ]) {
+    const result = ImageOptimizerCache.validateParams({ headers: {} }, query, { images }, false);
+    assert.equal(typeof result.errorMessage, "string");
   }
 });
