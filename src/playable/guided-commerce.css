@@ -1706,3 +1706,57 @@
   background:#e8f1ff!important;
   color:#004aad!important;
 }
+
+
+/* Launch fallback: a genuine manual inquiry rather than a dead checkout.
+   No money is charged and the customer still needs merchant confirmation. */
+.guided-cashier-action .guided-launch-contact{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  width:100%;
+}
+.guided-launch-contact>a{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  min-height:48px;
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #004aad;
+  border-radius:15px;
+  background:#fff;
+  color:#004aad;
+  font-size:12px;
+  font-weight:950;
+  text-align:center;
+  text-decoration:none;
+  transition:background .16s ease;
+}
+.guided-launch-contact>a:hover{
+  background:#edf5ff;
+}
+.guided-launch-contact>a:focus-visible{
+  outline:3px solid #004aad;
+  outline-offset:2px;
+}
+.guided-launch-contact p{
+  margin:0;
+  color:#73869b;
+  font-size:9px;
+  line-height:1.4;
+  text-align:center;
+  font-weight:650;
+}
+@media(max-width:800px){
+  [data-scene="cashier"] .guided-cashier-action{
+    max-height:calc(100dvh - 86px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    gap:11px;
+  }
+  [data-scene="cashier"] .guided-launch-contact>a{
+    min-height:45px;
+  }
+}
