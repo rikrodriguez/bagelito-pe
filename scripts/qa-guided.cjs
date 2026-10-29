@@ -218,6 +218,16 @@ async function audit() {
       }
       await page.getByRole('button', { name: /Ir a caja/ }).click()
       await scene('cashier', '08-cashier')
+      const inquiryLink = page.locator('.guided-launch-contact > a')
+      const inquiryHref = await inquiryLink.getAttribute('href')
+      const inquiryMessage = inquiryHref && inquiryHref.includes('?text=')
+        ? decodeURIComponent(inquiryHref.split('?text=')[1]) : ''
+      if (!inquiryHref?.startsWith('https://wa.me/51917547745?text=')
+        || !inquiryMessage.includes('Plain')
+        || !inquiryMessage.includes('Everything')
+        || !inquiryMessage.includes('no confirma ni paga el pedido')) {
+        failures.push(mode.name + ': launch fallback must send an accurate unpaid WhatsApp inquiry')
+      }
       await page.locator('.guided-cashier-action > button').click()
       await scene('pay', '09-payment')
       await page.locator('.qa-only-pay').click()
