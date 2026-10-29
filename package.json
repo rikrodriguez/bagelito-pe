@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "typecheck": "vite build && tsc --noEmit",
     "qa:guided": "node scripts/qa-guided.cjs",
-    "qa:3d": "node scripts/qa-world-tour.cjs"
+    "qa:3d": "node scripts/qa-world-tour.cjs",
+    "qa:static": "node scripts/qa-tour-static.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
