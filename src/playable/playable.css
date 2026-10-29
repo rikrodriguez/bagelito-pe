@@ -306,3 +306,35 @@
   box-shadow:0 3px 8px rgba(0,26,62,.15);
   pointer-events:none!important;
 }
+
+/* WebGL can fail on older mobile hardware, private browsers or GPU loss.
+   Keep the complete guided purchase path accessible instead of a blank canvas. */
+.store-3d-fallback{
+  position:absolute;
+  z-index:85;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:28px;
+  background:linear-gradient(180deg,#fff,#edf5ff);
+  color:#004aad;
+  text-align:center;
+}
+.store-3d-fallback>img{width:176px;max-width:75vw}
+.store-3d-fallback h2{margin:4px 0 0;font-size:clamp(27px,5vw,42px);letter-spacing:-.04em}
+.store-3d-fallback p{max-width:410px;font-size:14px;line-height:1.55;color:#54718e}
+.store-3d-fallback button{
+  min-height:50px;
+  padding:12px 22px;
+  border:0;
+  border-radius:999px;
+  background:#004aad;
+  color:#fff;
+  font-size:13px;
+  font-weight:950;
+  cursor:pointer;
+}
+.store-3d-fallback button:focus-visible{outline:3px solid #004aad;outline-offset:3px}
