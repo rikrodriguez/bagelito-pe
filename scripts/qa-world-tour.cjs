@@ -10,7 +10,7 @@ const base = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, ''
 const output = resolve(process.env.QA_OUTPUT || 'qa-artifacts')
 mkdirSync(output, { recursive: true })
 
-const stops = ['totem', 'vitrina', 'bagels', 'schmears', 'cashier']
+const stops = ['totem', 'vitrina', 'bagels', 'schmears', 'production', 'cashier', 'pickup']
 
 async function audit() {
   const browser = await chromium.launch({
@@ -58,9 +58,9 @@ async function audit() {
         }
 
         await panel.getByRole('button', { name: /Anterior/ }).click()
-        await page.locator('[data-tour-node="schmears"]').waitFor()
-        await panel.getByRole('button', { name: /Siguiente/ }).click()
         await page.locator('[data-tour-node="cashier"]').waitFor()
+        await panel.getByRole('button', { name: /Siguiente/ }).click()
+        await page.locator('[data-tour-node="pickup"]').waitFor()
         await panel.getByRole('button', { name: /Terminar visita/ }).click()
         await page.locator('[data-tour-node="none"]').waitFor()
         if (await panel.count()) failures.push(mode.name + ': tour overlay was not dismissed.')
