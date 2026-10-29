@@ -279,3 +279,30 @@
 @media(prefers-reduced-motion:reduce){
   .guided-tour-panel,.tour-start-button{transition:none;animation:none}
 }
+
+
+/* Five physical schmear pans use live white product tags, contrasting with
+   the deliberately inverted blue bagel tags. Neither tag blocks raycasting. */
+.schmear-3d-sign{
+  pointer-events:none!important;
+  user-select:none;
+  width:107px;
+}
+.schmear-3d-sign>div{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:5px 6px;
+  min-height:22px;
+  border:1px solid rgba(0,74,173,.15);
+  border-radius:5px;
+  background:#fffaf4;
+  color:#004aad;
+  font-size:9px;
+  line-height:1.05;
+  text-align:center;
+  font-weight:950;
+  letter-spacing:.005em;
+  box-shadow:0 3px 8px rgba(0,26,62,.15);
+  pointer-events:none!important;
+}
