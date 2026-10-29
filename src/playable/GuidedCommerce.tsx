@@ -121,6 +121,19 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   }, [scene])
 
   useEffect(() => {
+    if (!menuOpen && !cartOpen) return
+    const dismissOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setMenuOpen(false)
+        setCartOpen(false)
+      }
+    }
+    window.addEventListener('keydown', dismissOnEscape)
+    return () => window.removeEventListener('keydown', dismissOnEscape)
+  }, [menuOpen, cartOpen])
+
+  useEffect(() => {
     if (customerName) {
       setCheckoutCustomer((current) => current.customerName.trim()
         ? current
@@ -527,6 +540,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     {canGoBack && <button type="button" className="guided-journey-back" onClick={goBack} aria-label="Volver al paso anterior" title="Volver al paso anterior">
       <span aria-hidden="true">←</span><span>Volver</span>
     </button>}
+
+    {(menuOpen || cartOpen) && <button type="button" className="guided-overlay-dismiss" aria-label="Cerrar panel abierto" onClick={() => { setMenuOpen(false); setCartOpen(false) }} />}
 
     {menuOpen && <nav className="guided-store-menu-panel" aria-label="Menú Bagelito">
       <strong>Bagelito</strong>
