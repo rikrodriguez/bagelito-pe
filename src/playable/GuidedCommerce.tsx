@@ -485,6 +485,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     : category === 'packs'
       ? bagelTotal === bagelTarget
       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
+  const canPayOnline = paymentConfig?.enabled === true && checkoutQuote?.checkoutAllowed === true
 
   const manualOrderHref = category && canReviewAtCashier
     ? createManualOrderWhatsAppHref({
@@ -830,17 +831,26 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           ? <p>{checkoutQuote.reasons[0]}</p>
           : <p>El delivery se calcula con tu dirección antes de crear la reserva.</p>}
       </div>
-      <button
-        disabled={quoteLoading || (!checkoutQuote?.checkoutAllowed && !qaMode)}
-        onClick={() => { if (checkoutQuote?.checkoutAllowed || qaMode) setScene('pay') }}
+      {(canPayOnline || qaMode) && <button
+        type="button"
+        disabled={quoteLoading && !qaMode}
+        onClick={() => { if (canPayOnline || qaMode) setScene('pay') }}
       >
-        {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Continuar al checkout' : 'Pago online aún no disponible'} <b>→</b>
-      </button>
+        {qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
+      </button>}
       <div className="guided-launch-contact">
-        {manualOrderHref && <a href={manualOrderHref} target="_blank" rel="noopener noreferrer">
-          Consultar pedido por WhatsApp <b aria-hidden="true">↗</b>
+        {manualOrderHref && <a
+          className={canPayOnline ? 'is-secondary' : 'is-primary'}
+          href={manualOrderHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {canPayOnline ? 'Consultar por WhatsApp' : 'Consultar mi pedido por WhatsApp'}
+          <b aria-hidden="true">↗</b>
         </a>}
-        <p>Se enviará tu selección para confirmar precio y fecha. Sin pago ni reserva automática.</p>
+        <p>{canPayOnline
+          ? 'Consulta adicional, sin modificar tu pedido.'
+          : 'Confirma disponibilidad, precio y fecha con Bagelito. Sin pago ni reserva automática.'}</p>
       </div>
     </div>}
 
