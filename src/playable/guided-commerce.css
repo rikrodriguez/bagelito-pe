@@ -1642,3 +1642,35 @@
   .guided-commerce .pack-config-panel{max-height:calc(100dvh - 160px)}
   .guided-commerce .pack-choice-grid button b{font-size:19px}
 }
+
+
+/* Walk-through motion: a short camera-approach between photographed stations.
+   The food, hotspot and label layers travel together, so a moving image never
+   changes which flavor the customer touches. 3D roaming stays in /playable. */
+.guided-commerce .guided-scene-image{
+  transform-origin:50% 48%;
+  animation:bagelito-camera-approach .32s cubic-bezier(.2,.75,.28,1) both;
+}
+.guided-commerce .guided-product-frame{
+  animation:bagelito-vitrina-arrival .3s cubic-bezier(.2,.75,.28,1) both;
+}
+.guided-commerce .guided-order-counter{
+  animation:bagelito-counter-arrival .25s ease-out both;
+}
+@keyframes bagelito-camera-approach{
+  from{opacity:.35;scale:1.035}
+  to{opacity:1;scale:1}
+}
+@keyframes bagelito-vitrina-arrival{
+  from{opacity:.32;translate:0 9px}
+  to{opacity:1;translate:0 0}
+}
+@keyframes bagelito-counter-arrival{
+  from{opacity:0;translate:0 6px}
+  to{opacity:1;translate:0 0}
+}
+@media(prefers-reduced-motion:reduce){
+  .guided-commerce .guided-scene-image,
+  .guided-commerce .guided-product-frame,
+  .guided-commerce .guided-order-counter{animation:none!important}
+}
