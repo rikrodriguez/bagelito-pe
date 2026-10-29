@@ -18,7 +18,7 @@ type Step = 'explore' | 'choose-pack' | 'choose-combo' | 'choose-schmear-size' |
 type Move = { forward:boolean; backward:boolean; left:boolean; right:boolean; run:boolean }
 type PackFormat = 'grande' | 'mini'
 type V3 = [number,number,number]
-type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'cashier'
+type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'production' | 'cashier' | 'pickup'
 
 const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vector3}> = {
   // Wide establishing shot: keeps the store readable while the chooser is open.
@@ -31,6 +31,10 @@ const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vect
   schmears:{position:new THREE.Vector3(4.20,1.58,3.70),lookAt:new THREE.Vector3(4.22,1.12,.05)},
   // Counter + worker + POS, without slicing the physical cashier.
   cashier:{position:new THREE.Vector3(5.65,1.65,7.25),lookAt:new THREE.Vector3(5.12,1.2,4.55)},
+  // Rise above the glass vitrina to see the production space behind it.
+  production:{position:new THREE.Vector3(0,2.62,3.85),lookAt:new THREE.Vector3(0,2.12,-8.0)},
+  // Look down the side delivery lane at the real pickup shelf and courier.
+  pickup:{position:new THREE.Vector3(6.95,1.70,-1.65),lookAt:new THREE.Vector3(6.68,1.45,-5.72)},
 }
 
 const TOUR_STOPS: ReadonlyArray<{node:GuideNode;title:string;description:string}> = [
@@ -38,7 +42,9 @@ const TOUR_STOPS: ReadonlyArray<{node:GuideNode;title:string;description:string}
   {node:'vitrina', title:'La vitrina', description:'Bagels y schmears hechos para combinar.'},
   {node:'bagels', title:'Ocho sabores de bagels', description:'Revisa cada bandeja y sus carteles azules.'},
   {node:'schmears', title:'La estación de schmears', description:'Cinco sabores para acompañar tus bagels.'},
+  {node:'production', title:'Hechos aquí', description:'Un vistazo al trabajo en la cocina de Bagelito.'},
   {node:'cashier', title:'La caja', description:'Aquí revisas el pedido antes del pago seguro.'},
+  {node:'pickup', title:'Retiro y delivery', description:'El área por donde salen los pedidos y llegan los repartidores.'},
 ]
 
 const ZONES = {
