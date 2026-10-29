@@ -62,6 +62,8 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   const [name, setName] = useState<string | null>(null)
   const [player, setPlayer] = useState(new THREE.Vector3(0, 0, 7.5))
   const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>(initialMode)
+  const [guidedStartCategory, setGuidedStartCategory] = useState<Category|null>(null)
+  const [skipGuidedEntrance, setSkipGuidedEntrance] = useState(false)
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
   const [introGuide, setIntroGuide] = useState<GuideNode|null>(null)
@@ -146,11 +148,27 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     setStep(c==='packs'?'choose-pack':c==='combos'?'choose-combo':'choose-schmear-size')
   }
   const reset=()=>{setCategory(null);setStep('explore');setIntroGuide(null);setWelcomeDismissed(false);setBagels({});setSchmears({});setComboId(null)}
+  const enterGuided=(startCategory:Category|null=null)=>{
+    reset()
+    setGuidedStartCategory(startCategory)
+    setSkipGuidedEntrance(true)
+    setExperienceMode('guided')
+  }
   const addBagel=(id:string)=>{
+    if(introGuide==='bagels'){
+      // Tapping a physical display begins pack configuration, never invents
+      // a quantity or adds an item to an unconfirmed checkout.
+      enterGuided('packs')
+      return
+    }
     if(step!=='bagels'||bagelTotal>=bagelTarget)return
     setBagels(v=>({...v,[id]:(v[id]??0)+1}))
   }
   const addSchmear=(id:string)=>{
+    if(introGuide==='schmears'){
+      enterGuided('schmears')
+      return
+    }
     if(step!=='schmears'||schmearTotal>=Math.max(1,schmearTarget))return
     setSchmears(v=>({...v,[id]:(v[id]??0)+1}))
   }
@@ -160,6 +178,8 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   return <main className={'playable-shell'+(guideNode?' guided-mode':'')} data-tour-node={introGuide ?? 'none'} data-player-x={player.x.toFixed(2)}>
     {experienceMode==='guided' ? <GoldenGuidedCommerce
       customerName={name}
+      initialCategory={guidedStartCategory}
+      skipEntrance={skipGuidedEntrance}
       onExit={()=>setExperienceMode('explore')}
     /> : <>
     <Canvas
@@ -172,7 +192,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <fog attach="fog" args={['#f3f0e9',24,42]}/>
       <hemisphereLight args={['#fff8ec','#62717d',1.4]}/>
       <directionalLight castShadow position={[4,9,7]} intensity={2.1} shadow-mapSize={[1536,1536]}/>
-      <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0}/>
+      <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0} tourNode={introGuide}/>
       <CameraController move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
       <ContactShadows position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
@@ -181,7 +201,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     </>}
 
     {experienceMode==='explore'&&<header className="playable-top interactive-ui">
-      <button className="brand-pill" onClick={()=>{reset();setExperienceMode('guided')}}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
+      <button className="brand-pill" onClick={()=>enterGuided(null)}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
       <div className="status-pill"><small>EXPLORA</small><b>BAGELITO STORE</b></div>
       <button type="button" className="tour-start-button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>
         Visita guiada 3D
@@ -192,7 +212,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
     {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
-      <button type="button" className="primary" onClick={()=>{reset();setExperienceMode('guided')}}>Empezar pedido</button>
+      <button type="button" className="primary" onClick={()=>enterGuided(null)}>Empezar pedido</button>
       <button type="button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>Visita guiada 3D</button>
       <button type="button" onClick={()=>setWelcomeDismissed(true)}>Explorar libre</button>
     </div>}
@@ -209,7 +229,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
           if(tourIndex<TOUR_STOPS.length-1)setIntroGuide(TOUR_STOPS[tourIndex+1].node)
           else setIntroGuide(null)
         }}>{tourIndex===TOUR_STOPS.length-1?'Terminar visita':'Siguiente →'}</button>
-        <button type="button" onClick={()=>{reset();setExperienceMode('guided')}}>Armar pedido</button>
+        <button type="button" onClick={()=>enterGuided(introGuide==='bagels'?'packs':introGuide==='schmears'?'schmears':null)}>Armar pedido</button>
       </div>
     </div>}
 
