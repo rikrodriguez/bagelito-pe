@@ -122,3 +122,47 @@
   .guided-product-head{top:10px;min-width:0;width:calc(100% - 90px);max-width:none}
   .guided-next{right:12px;bottom:14px}
 }
+
+
+/* BAGELITO 3D VISUAL CONTRACT — same signage as the guided vitrina.
+ * Physical blue plates in Three.js cover the photographic white labels;
+ * HTML text floats just in front but never intercepts shopping interaction.
+ */
+.bagelito-3d-blue-sign{
+  width:145px;
+  pointer-events:none!important;
+  user-select:none;
+}
+.bagelito-3d-blue-sign>div{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:25px;
+  padding:5px 5px;
+  border-radius:4px;
+  background:#004aad;
+  color:#fff;
+  font-size:11px;
+  font-weight:950;
+  line-height:1;
+  letter-spacing:.015em;
+  text-align:center;
+  white-space:nowrap;
+  box-shadow:0 4px 9px rgba(0,32,80,.22);
+  pointer-events:none!important;
+}
+.playable-shell .brand-pill,
+.playable-shell .status-pill,
+.playable-shell .waypoint-hint,
+.playable-shell .choice-panel{
+  border-color:rgba(0,74,173,.13);
+  background:rgba(255,255,255,.96);
+}
+.playable-shell .waypoint-hint button.primary,
+.playable-shell .choice-panel button:focus-visible{
+  background:#004aad;
+  color:#fff;
+}
+@media(prefers-reduced-motion:reduce){
+  .playable-shell *{scroll-behavior:auto}
+}
