@@ -4,6 +4,29 @@ Branch: `feat/guided-playable-commerce-v1-20261028`
 
 This document is intentionally fail-closed. Passing a visual QA does not authorize payments.
 
+## Culqi merchant activation — confirmation received 2026-10-28
+
+The merchant shared a confirmation email headed **“Comercio activado”**, stating that Culqi successfully activated their online merchant account. **Merchant onboarding approval is no longer pending.**
+
+This is NOT proof that payment processing is configured, that checkout/3DS/webhooks are tested, or that the TanStack branch is safe for live charges. The commercial-approval milestone and production charge authorization are separate controls.
+
+### Action sequence after merchant approval
+
+1. In the approved CulqiPanel, retrieve the **test** public/private keys and RSA ID/public key under Desarrollo → API Keys / RSA Keys. Never share private keys in chat or commit them to Git.
+2. Put test secrets in the dedicated **preview/test** Vercel environment for this branch (not production), using the matching keys and the exact preview site origin; keep live production intake disabled.
+3. Verify actual server-side reservation, card/Yape tokenization, 3D Secure, webhook lookup, charge confirmation, failure and duplicate retry handling, and refund reconciliation using Culqi's **integration** environment.
+4. Complete and verify the approved checkout policy/migration with affirmative legal acceptance, plus a real delivery date/batch and commercial price rules.
+5. Set production `CULQI_PUBLIC_KEY`, `CULQI_SECRET_KEY`, `CULQI_RSA_ID`, `CULQI_RSA_PUBLIC_KEY`, `PAYMENT_PROVIDER=culqi`, `CULQI_MODE=live`, and exact `PUBLIC_SITE_URL=https://bagelito.pe` using protected Vercel settings only. Keep `BAGELITO_MERCHANT_REVIEW_ONLY=true` and `CULQI_ENABLED=false` until end-to-end acceptance.
+6. Only after production environment verification, enable the audited TanStack bridge/webhook/client readiness flags and deliberately lift the merchant-review kill switch during a controlled live release. Live approval should never be inferred merely from the merchant-activation email.
+
+Verified deployment configuration at this checkpoint (keys only, no values): this branch's Vercel preview contains `BAGELITO_VISUAL_QA_ENABLED`, `BAGELITO_MERCHANT_REVIEW_ONLY`, `CULQI_ENABLED`, `PAYMENT_PROVIDER`. The branch-specific test and live Culqi API/RSA credentials are **not configured there yet**. Production still has `BAGELITO_MERCHANT_REVIEW_ONLY` and no evidenced complete Culqi credential set.
+
+Useful official docs:
+- https://docs.culqi.com/es/documentacion/pagos-online/llaves
+- https://docs.culqi.com/es/documentacion/pagos-online/llaves_rsa
+- https://docs.culqi.com/es/documentacion/checkout/checkout-custom
+- https://docs.culqi.com/es/documentacion/pagos-online/webhooks/
+
 ## Current release state
 
 - Primary Vercel project: `bagelito-pe`
