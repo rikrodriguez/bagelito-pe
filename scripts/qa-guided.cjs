@@ -60,8 +60,29 @@ async function audit() {
 
       await visit()
       await scene('entrance', '01-entrance')
+
+      // The approved store chrome must be real, usable controls, not
+      // decorative screenshots of a menu/bag icon.
+      if (await page.getByRole('button', { name: 'Abrir menú' }).count() !== 1
+        || await page.getByRole('button', { name: /Ver tu pedido: 0 productos/ }).count() !== 1) {
+        failures.push(mode.name + ': missing accessible menu or live order holder')
+      } else {
+        await page.getByRole('button', { name: 'Abrir menú' }).click()
+        await page.getByRole('navigation', { name: 'Menú Bagelito' }).waitFor()
+        await page.getByRole('button', { name: 'Cerrar menú' }).click()
+        await page.getByRole('button', { name: /Ver tu pedido: 0 productos/ }).click()
+        await page.getByRole('complementary', { name: 'Resumen de tu pedido' }).waitFor()
+        await page.getByRole('button', { name: 'Cerrar resumen' }).click()
+      }
+
       await page.getByRole('button', { name: /Entrar a Bagelito/i }).click()
       await scene('selector', '02-selector')
+
+      const holder = await page.locator('.guided-progress-master').boundingBox()
+      if (!holder || (mode.name === 'desktop' && holder.y < mode.viewport.height * .75)
+        || (mode.name === 'mobile' && holder.y > mode.viewport.height * .25)) {
+        failures.push(mode.name + ': progress holder placement differs from approved responsive layout')
+      }
       await page.getByRole('button', { name: 'Packs', exact: true }).click()
       await scene('pack-size', '03-pack-size')
       await page.locator('.pack-format-grid button').first().click()
@@ -153,6 +174,10 @@ async function audit() {
         await page.locator(selector).nth(i % 3).click()
       }
       await scene('bagels', '06-bagels-selected')
+      const orderHolderText = await page.locator('.guided-store-cart-button>span').textContent()
+      if (orderHolderText !== 'Tu pedido (6)') {
+        failures.push(mode.name + ': order holder did not update to six selected bagels')
+      }
       await page.getByRole('button', { name: /Continuar/ }).last().click()
       await scene('schmears', '07-schmears')
       const schmearLabels = await page.locator('.schmear-hotspots > button')
