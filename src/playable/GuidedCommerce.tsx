@@ -520,7 +520,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
                 <img src={'/images/bagel-' + bagel.id + '.webp'} alt={bagel.name} loading="eager" />
                 <span>{bagel.name}</span>
                 {bagel.premium && <small>Premium</small>}
-                <b aria-hidden="true">+</b>
+                <b aria-hidden="true">{count > 0 ? '✓' : '+'}</b>
               </button>
               {count > 0 && <div className="mobile-product-count">
                 <button type="button" onClick={() => removeBagel(bagel.id)} aria-label={'Quitar ' + bagel.name}>−</button>
