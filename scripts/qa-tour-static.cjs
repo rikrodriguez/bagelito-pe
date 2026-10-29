@@ -81,6 +81,14 @@ check('3D failures return the customer to functional guided shopping', () => {
   assert.match(three, /Storage may be disabled in a private mobile browser/)
 })
 
+check('Unfinished cart can resume without storing personal or payment data', () => {
+  assert.match(guided, /GUIDED_DRAFT_KEY/)
+  assert.match(guided, /window\.sessionStorage\.setItem\(GUIDED_DRAFT_KEY/)
+  assert.match(guided, /window\.sessionStorage\.removeItem\(GUIDED_DRAFT_KEY/)
+  assert.match(guided, /setDraftLoaded\(true\)/)
+  assert.doesNotMatch(guided, /sessionStorage\.setItem\([^\n]*checkoutCustomer/)
+})
+
 check('Payment remains gated', () => {
   assert.match(guided, /checkoutQuote\?\.checkoutAllowed/)
   assert.match(guided, /const canPayOnline = paymentConfig\?\.enabled === true/)
