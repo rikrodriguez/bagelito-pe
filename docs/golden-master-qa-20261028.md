@@ -6,6 +6,24 @@
 
 Referencia de código: PR #38, `feat/guided-playable-commerce-v1-20261028`.
 
+## Recorrido guiado — iteración de navegación y mundo 3D (28-10-2026, tarde)
+
+Cambios incorporados en la rama de desarrollo (sin modificar producción):
+
+- **Configuración de Packs:** selector explícito `Mixto` / `Un sabor`; seis o doce grandes, seis/doce/veinticuatro minis. Un solo toque completa el pack de un sabor, y se puede deshacer.
+- **Navegación reversible:** botón Volver, indicadores de pasos anteriores navegables, carrito editable, preservación de selección al regresar a la misma configuración. El cliente no pierde su pedido accidentalmente.
+- **Schmear opcional reversible:** un segundo toque retira el que se había seleccionado; cambio de sabor en combo de una unidad mediante un toque.
+- **Chrome Bagelito:** menú y holder del pedido con cierre por clic fuera / Escape. Progreso blanco-azul permanece legible.
+- **Movimiento visual:** transición breve de cámara hacia la nueva estación, respetando `prefers-reduced-motion`; hotspots y producto se desplazan como una sola capa.
+- **Visita 3D REAL, separada del funnel de cobro:** siete cámaras físicas desde tótem hasta vitrinas, producción, caja y retiro/delivery. Anterior/Siguiente/Terminar visita/Armar pedido, sin nuevos pagos ni precios ficticios.
+- **Movilidad 3D:** dirección derecha corregida, colisión contra vitrinas/caja/mesas, controles táctiles funcionales, orientación preservada al regresar de una cámara maestra; Rappi fuera del corredor de caja. NPCs desplazados a los lados en el tour.
+- **QA reproducible:** `npm run qa:guided` incorpora casos de edición, single-flavor minis y quitar schmear; `npm run qa:3d` prueba las siete cámaras, right-strafe y la transición a compra.
+- **QA geométrico estático:** toma del tótem apunta al tótem real. En 1280×800 y FOV vertical 56°, la semianchura visible estimada supera la de las vitrinas de bagels (~4.31m vs 3.6m), schmears (~3.13m vs 2.125m) y caja (~2.37m vs ~1.9m). Es una estimación geométrica; no reemplaza screenshots ni prueba de oclusiones.
+
+**Limitación de verificación:** Vercel Sandbox Hobby sigue excedido y las comprobaciones E2E `qa:guided` / `qa:3d` sobre el HEAD exacto aún no se han ejecutado. Los checks recientes de deploy tienen `build-rate-limit`, no un log nuevo de compilación. NO marcar "completo 100%" ni liberar producción hasta ejecutar esos tests, inspeccionar capturas y corregir visuales restantes.
+
+**Culqi:** comercio activado por correo, pero el usuario colocará llaves después. Mantener `CULQI_ENABLED=false` en preview visual y `BAGELITO_MERCHANT_REVIEW_ONLY=true` hasta sandbox+webhook+legal+batch real.
+
 ## Verificación de seguimiento — 28 octubre 2026, última rama
 
 - **Deploy Vercel READY** del HEAD `ec019e1267391a1ba467b89bfd4e70235352d6d4` en preview. Confirma compilación/despliegue, **no** prueba que las 13 escenas pasen golden-master visual ni que Culqi pueda cobrar.
