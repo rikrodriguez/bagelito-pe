@@ -486,22 +486,18 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       ? bagelTotal === bagelTarget
       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
 
-  function askAboutOrder() {
-    if (!category || !canReviewAtCashier) return
-    const href = createManualOrderWhatsAppHref({
-      category,
-      format: packFormat,
-      packQuantity: packQty,
-      packMix,
-      comboName: selectedCombo?.name,
-      schmearSizeGrams: schmearSize,
-      bagels: selectedBagelSummary,
-      schmears: selectedSchmearSummary,
-    })
-    // Open only from the real user click. This never records or pays an order.
-    const opened = window.open(href, '_blank', 'noopener,noreferrer')
-    if (!opened) window.location.assign(href)
-  }
+  const manualOrderHref = category && canReviewAtCashier
+    ? createManualOrderWhatsAppHref({
+        category,
+        format: packFormat,
+        packQuantity: packQty,
+        packMix,
+        comboName: selectedCombo?.name,
+        schmearSizeGrams: schmearSize,
+        bagels: selectedBagelSummary,
+        schmears: selectedSchmearSummary,
+      })
+    : null
 
   function goBack() {
     const previous: Scene | null = scene === 'selector' ? 'entrance'
@@ -841,9 +837,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Continuar al checkout' : 'Pago online aún no disponible'} <b>→</b>
       </button>
       <div className="guided-launch-contact">
-        <button type="button" onClick={askAboutOrder} disabled={!canReviewAtCashier}>
+        {manualOrderHref && <a href={manualOrderHref} target="_blank" rel="noopener noreferrer">
           Consultar pedido por WhatsApp <b aria-hidden="true">↗</b>
-        </button>
+        </a>}
         <p>Se enviará tu selección para confirmar precio y fecha. Sin pago ni reserva automática.</p>
       </div>
     </div>}
