@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feat/guided-playable-commerce-v1-20261028
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
