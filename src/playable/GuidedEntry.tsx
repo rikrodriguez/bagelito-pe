@@ -5,8 +5,12 @@ export function GuidedEntry() {
   const [customerName, setCustomerName] = useState<string | null>(null)
 
   useEffect(() => {
-    const saved = window.localStorage.getItem('bagelito_customer_name')
-    if (saved) setCustomerName(saved)
+    try {
+      const saved = window.localStorage.getItem('bagelito_customer_name')
+      if (saved) setCustomerName(saved)
+    } catch {
+      // Privacy settings must never prevent a customer opening the shop.
+    }
   }, [])
 
   return <GuidedCommerce
