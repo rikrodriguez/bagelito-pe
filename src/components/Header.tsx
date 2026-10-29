@@ -1,5 +1,7 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import Image from "next/image";
 import Link from "next/link";
 import { LanguageToggle } from "./LanguageToggle";
@@ -8,17 +10,18 @@ import { useLanguage } from "./LanguageProvider";
 
 export function Header() {
   const { copy, locale } = useLanguage();
-  const { accepting } = useBatchAvailability();
+  const { accepting, merchantReviewOnly } = useBatchAvailability();
+  const review = merchantReviewCopy[locale];
 
   return (
-    <header className="site-header">
+    <header className={`site-header${merchantReviewOnly ? " merchant-review-header" : ""}`}>
       <Link href="/" className="logo-link" aria-label={copy.header.homeLabel}>
         <Image src="/images/bagelito-logo.svg" alt="Bagelito.pe" width={757} height={253} priority />
       </Link>
       <div className="header-actions">
-        {accepting ? (
+        {merchantReviewOnly || accepting ? (
           <Link className="header-checkout-link" href="/checkout?pack=6-mixed">
-            {locale === "es" ? "Ver checkout" : "View checkout"}
+            {merchantReviewOnly ? review.cta : locale === "es" ? "Ver checkout" : "View checkout"}
           </Link>
         ) : null}
         <LanguageToggle />

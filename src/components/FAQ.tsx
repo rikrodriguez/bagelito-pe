@@ -1,21 +1,26 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import { ChevronDown, CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "./LanguageProvider";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 
 export function FAQ() {
-  const { copy } = useLanguage();
+  const { copy, locale } = useLanguage();
+  const { merchantReviewOnly } = useBatchAvailability();
+  const review = merchantReviewCopy[locale];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="faq" className="faq-section section-pad">
       <div className="section-heading">
         <h2>{copy.faq.title}</h2>
-        <p className="section-intro">{copy.faq.intro}</p>
+        <p className="section-intro">{merchantReviewOnly ? review.faqIntro : copy.faq.intro}</p>
       </div>
       <div className="faq-grid" role="list">
-        {copy.faq.items.map((item, index) => {
+        {(merchantReviewOnly ? review.faq : copy.faq.items).map((item, index) => {
           const isOpen = openIndex === index;
           const panelId = "faq-panel-" + index;
 

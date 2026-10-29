@@ -1,5 +1,7 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { trackBagelitoEvent } from "@/lib/analytics";
@@ -8,13 +10,14 @@ import { RollingBagel } from "./RollingBagel";
 import { useLanguage } from "./LanguageProvider";
 
 export function FinalCTA() {
-  const { copy } = useLanguage();
-  const { accepting } = useBatchAvailability();
-  const title = accepting ? copy.finalCta.openTitle : copy.finalCta.title;
-  const text = accepting ? copy.finalCta.openText : copy.finalCta.text;
-  const cta = accepting ? copy.finalCta.openCta : copy.finalCta.cta;
-  const href = accepting ? "/#packs" : "/waitlist";
-  const target = accepting ? "packs" : "waitlist";
+  const { copy, locale } = useLanguage();
+  const { accepting, merchantReviewOnly } = useBatchAvailability();
+  const review = merchantReviewCopy[locale];
+  const title = merchantReviewOnly ? review.status : accepting ? copy.finalCta.openTitle : copy.finalCta.title;
+  const text = merchantReviewOnly ? review.intro : accepting ? copy.finalCta.openText : copy.finalCta.text;
+  const cta = merchantReviewOnly ? review.cta : accepting ? copy.finalCta.openCta : copy.finalCta.cta;
+  const href = merchantReviewOnly ? "/checkout" : accepting ? "/#packs" : "/waitlist";
+  const target = merchantReviewOnly ? "checkout_preview" : accepting ? "packs" : "waitlist";
 
   return (
     <section className="final-cta-section">

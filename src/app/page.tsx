@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { BatchInfo } from "@/components/BatchInfo";
 import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
@@ -29,7 +28,6 @@ export default function HomePage() {
       <main>
         <Hero />
         <ConversionTrustStrip />
-        <BatchInfo />
         <HowMonthlyWorks />
         <Packs />
         <WhyMonthly />

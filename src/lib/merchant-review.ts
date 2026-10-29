@@ -1,0 +1,63 @@
+// Public presentation only. Reservation and payment guards remain server-side.
+export const merchantReviewCopy = {
+  es: {
+    status: "Revisión abierta — sin pedidos ni cobros",
+    cta: "Ver checkout de demostración",
+    intro: "Explora los packs, sabores y el cálculo de delivery. Puedes revisar el total en el checkout de demostración; no se crean pedidos ni se realizan cobros.",
+    badges: ["Catálogo de packs", "Fotos de sabores", "Total visible", "Checkout de demostración"],
+    packsTitle: "Packs del catálogo",
+    flavorNote: "Explora los sabores disponibles para los packs de 6 o 12 bagels. Los precios del pack y delivery se muestran en la demostración, sin pedidos ni cobros.",
+    howTitle: "Cómo explorar el checkout de demostración",
+    steps: [
+      { title: "Explora los packs", text: "Revisa las cantidades y los precios del catálogo." },
+      { title: "Elige los sabores", text: "Prueba la selección de sabores de cada pack." },
+      { title: "Revisa el delivery", text: "Consulta el cálculo de delivery para la zona elegida." },
+      { title: "Consulta el total", text: "La demostración termina sin crear pedidos ni procesar pagos." },
+    ],
+    trustAria: "Información del checkout de demostración",
+    trust: [
+      { title: "Total visible", text: "Pack y delivery detallados en la demostración." },
+      { title: "Sin cobros", text: "La demostración no procesa pagos." },
+      { title: "Sin pedidos", text: "Explorar el checkout no reserva stock." },
+      { title: "Delivery ilustrativo", text: "El cálculo no programa una entrega." },
+    ],
+    faqIntro: "Información sobre la revisión comercial y el checkout de demostración.",
+    faq: [
+      { question: "¿Puedo hacer un pedido ahora?", answer: "No. El sitio está abierto para revisión comercial. El checkout es una demostración sin pedidos ni cobros." },
+      { question: "¿Qué puedo revisar en el checkout?", answer: "Puedes explorar packs, seleccionar sabores y consultar el cálculo de delivery y el total. Esto no confirma una compra ni reserva stock." },
+      { question: "¿Qué cantidades tienen los packs?", answer: "El catálogo muestra packs de 6 o 12 bagels, mixtos o de un solo sabor, con sus precios visibles." },
+      { question: "¿Debo ingresar datos de pago?", answer: "No ingreses datos de tarjeta, CVV, claves ni códigos bancarios. La demostración no procesa pagos." },
+      { question: "¿La demostración programa una entrega?", answer: "No. Revisar una zona de delivery y el total no genera un pedido ni programa una entrega." },
+    ],
+  },
+  en: {
+    status: "Review preview — no orders or payments",
+    cta: "Preview checkout",
+    intro: "Explore packs, flavors, and delivery pricing. Review the total in the checkout demonstration; no orders are created and no payments are processed.",
+    badges: ["Pack catalog", "Flavor photos", "Visible total", "Checkout demonstration"],
+    packsTitle: "Packs in the catalog",
+    flavorNote: "Explore flavors for packs of 6 or 12 bagels. Pack and delivery prices are shown in the demonstration, with no orders or payments.",
+    howTitle: "How to explore the checkout demonstration",
+    steps: [
+      { title: "Explore packs", text: "Review catalog quantities and prices." },
+      { title: "Choose flavors", text: "Try the flavor selection for each pack." },
+      { title: "Review delivery", text: "View delivery pricing for the selected area." },
+      { title: "View the total", text: "The demonstration ends without creating orders or processing payments." },
+    ],
+    trustAria: "Checkout demonstration information",
+    trust: [
+      { title: "Visible total", text: "Pack and delivery detailed in the demonstration." },
+      { title: "No payments", text: "The demonstration does not process payments." },
+      { title: "No orders", text: "Exploring checkout does not reserve stock." },
+      { title: "Illustrative delivery", text: "The calculation does not schedule a delivery." },
+    ],
+    faqIntro: "Information about the commercial review and checkout demonstration.",
+    faq: [
+      { question: "Can I place an order now?", answer: "No. The site is open for commercial review. Checkout is a demonstration with no orders or payments." },
+      { question: "What can I review at checkout?", answer: "Explore packs, select flavors, and view delivery pricing and the total. This does not confirm a purchase or reserve stock." },
+      { question: "What quantities are in the packs?", answer: "The catalog shows mixed or single-flavor packs of 6 or 12 bagels, with visible prices." },
+      { question: "Should I enter payment details?", answer: "Do not enter card details, CVV, passwords, or banking codes. The demonstration does not process payments." },
+      { question: "Does the demonstration schedule a delivery?", answer: "No. Reviewing a delivery area and the total does not create an order or schedule a delivery." },
+    ],
+  },
+} as const;

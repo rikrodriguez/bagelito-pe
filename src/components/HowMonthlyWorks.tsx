@@ -1,10 +1,13 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CreditCard, LockKeyhole, ShoppingBag, Truck } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
+import { useBatchAvailability } from "./BatchAvailabilityProvider";
 
 const stepMeta = [
   { n: 1, Icon: ShoppingBag, color: "pink" },
@@ -14,7 +17,9 @@ const stepMeta = [
 ] as const;
 
 export function HowMonthlyWorks() {
-  const { copy } = useLanguage();
+  const { copy, locale } = useLanguage();
+  const { merchantReviewOnly } = useBatchAvailability();
+  const review = merchantReviewCopy[locale];
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -29,7 +34,7 @@ export function HowMonthlyWorks() {
 
   return (
     <section id="how-it-works" className="how-section section-pad" ref={sectionRef}>
-      <h2>{copy.how.title}</h2>
+      <h2>{merchantReviewOnly ? review.howTitle : copy.how.title}</h2>
       <div className="step-line" aria-hidden="true">
         <motion.span className="step-line-progress" style={{ width: trailWidth }} />
         {stepMeta.map(({ n, color }) => (
@@ -48,7 +53,7 @@ export function HowMonthlyWorks() {
         </motion.div>
       </div>
       <div className="steps-grid">
-        {copy.how.steps.map((step, index) => {
+        {(merchantReviewOnly ? review.steps : copy.how.steps).map((step, index) => {
           const meta = stepMeta[index];
           const Icon = meta.Icon;
           return (
