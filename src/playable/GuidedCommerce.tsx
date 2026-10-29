@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
+import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 import {
   CulqiBrowserCheckout,
@@ -485,6 +486,23 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       ? bagelTotal === bagelTarget
       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
 
+  function askAboutOrder() {
+    if (!category || !canReviewAtCashier) return
+    const href = createManualOrderWhatsAppHref({
+      category,
+      format: packFormat,
+      packQuantity: packQty,
+      packMix,
+      comboName: selectedCombo?.name,
+      schmearSizeGrams: schmearSize,
+      bagels: selectedBagelSummary,
+      schmears: selectedSchmearSummary,
+    })
+    // Open only from the real user click. This never records or pays an order.
+    const opened = window.open(href, '_blank', 'noopener,noreferrer')
+    if (!opened) window.location.assign(href)
+  }
+
   function goBack() {
     const previous: Scene | null = scene === 'selector' ? 'entrance'
       : scene === 'pack-size' ? 'selector'
@@ -820,8 +838,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         disabled={quoteLoading || (!checkoutQuote?.checkoutAllowed && !qaMode)}
         onClick={() => { if (checkoutQuote?.checkoutAllowed || qaMode) setScene('pay') }}
       >
-        {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Continuar al checkout' : 'Checkout bloqueado'} <b>→</b>
+        {qaMode && !checkoutQuote?.checkoutAllowed ? 'Continuar QA' : checkoutQuote?.checkoutAllowed ? 'Continuar al checkout' : 'Pago online aún no disponible'} <b>→</b>
       </button>
+      <div className="guided-launch-contact">
+        <button type="button" onClick={askAboutOrder} disabled={!canReviewAtCashier}>
+          Consultar pedido por WhatsApp <b aria-hidden="true">↗</b>
+        </button>
+        <p>Se enviará tu selección para confirmar precio y fecha. Sin pago ni reserva automática.</p>
+      </div>
     </div>}
 
     {scene === 'pay' && <div className="guided-payment-gate">
