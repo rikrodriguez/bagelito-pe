@@ -81,6 +81,42 @@ async function audit() {
       if (JSON.stringify(showcaseLabels) !== JSON.stringify(expectedShowcaseLabels)) {
         failures.push(mode.name + ': bagel panorama hotspot positions do not match visual flavor labels')
       }
+
+      // Bagelito-approved inversion: the eight physical bagel signs are blue
+      // (#004AAD) with white typography. Schmear tags are intentionally
+      // separate; do not recolor them as part of this contract.
+      const physicalSigns = await page.locator('.bagel-vitrina-label')
+        .evaluateAll((elements) => elements.map((element) => {
+          const style = window.getComputedStyle(element)
+          return {
+            label: element.textContent?.trim() || '',
+            background: style.backgroundColor,
+            color: style.color,
+            pointerEvents: style.pointerEvents,
+          }
+        }))
+      if (physicalSigns.length !== 8
+        || physicalSigns.some((sign, index) =>
+          sign.label.toLowerCase() !== expectedShowcaseLabels[index].slice(8).toLowerCase()
+          || sign.background !== 'rgb(0, 74, 173)'
+          || sign.color !== 'rgb(255, 255, 255)'
+          || sign.pointerEvents !== 'none')) {
+        failures.push(mode.name + ': bagel signage is not blue with white text or blocks product taps')
+      }
+
+      if (mode.name === 'mobile') {
+        const mobileSigns = await page.locator('.mobile-bagel-sign')
+          .evaluateAll((elements) => elements.map((element) => {
+            const style = window.getComputedStyle(element)
+            return { color: style.color, background: style.backgroundColor }
+          }))
+        if (mobileSigns.length !== 8
+          || mobileSigns.some((sign) =>
+            sign.background !== 'rgb(0, 74, 173)' || sign.color !== 'rgb(255, 255, 255)')) {
+          failures.push('Mobile flavor labels do not follow blue-background / white-text contract')
+        }
+      }
+
       if (mode.name === 'desktop') {
         const frame = await page.locator('.bagel-product-frame').boundingBox()
         const trays = await page.locator('.bagel-hotspots > button').evaluateAll((buttons) =>
