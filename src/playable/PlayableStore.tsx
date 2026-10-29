@@ -82,7 +82,9 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   }, [])
 
   useEffect(() => {
-    if(experienceMode!=='explore'){
+    if(experienceMode!=='explore' || guideNode){
+      // A cinematic camera owns movement during the guided tour.
+      // Never carry a held key into free roaming when the tour finishes.
       setMove({forward:false,backward:false,left:false,right:false,run:false})
       return
     }
@@ -93,15 +95,27 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     }
     const apply=(value:boolean)=>(e:KeyboardEvent)=>{
       const key=map[e.code]
-      if(!key || (e.target instanceof HTMLElement && e.target.closest('input,textarea,select,[contenteditable="true"]'))) return
-      e.preventDefault()
+      if(!key) return
+      // Focused form controls must be able to type normally, but key releases
+      // always clear movement so the avatar never keeps walking on blur.
+      if(value && e.target instanceof HTMLElement
+        && e.target.closest('input,textarea,select,[contenteditable="true"]')) return
+      if(value)e.preventDefault()
       setMove(v=>({...v,[key]:value}))
     }
     const down=apply(true), up=apply(false)
+    const release=()=>setMove({forward:false,backward:false,left:false,right:false,run:false})
     window.addEventListener('keydown',down,{passive:false})
     window.addEventListener('keyup',up,{passive:false})
-    return()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up)}
-  },[experienceMode])
+    window.addEventListener('blur',release)
+    document.addEventListener('visibilitychange',release)
+    return()=>{
+      window.removeEventListener('keydown',down)
+      window.removeEventListener('keyup',up)
+      window.removeEventListener('blur',release)
+      document.removeEventListener('visibilitychange',release)
+    }
+  },[experienceMode,guideNode])
 
   const selectedCombo = combos.find(x=>x.id===comboId) ?? null
   const bagelTarget = category==='packs' ? packQty : selectedCombo?.bagels ?? 0
