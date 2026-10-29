@@ -11,7 +11,7 @@ const CORAL = '#fa967f'
 const IVORY = '#fffaf4'
 const STEEL = '#b9c2c8'
 const menu = getVerifiedDisplayMenu()
-const combos = menu.historicalPublishedCombos
+const combos = [{ id:'two-bagel-schmear', name:'2 Bagels + Schmear', bagels:2, schmear_count:1 }] as const
 
 type Category = 'packs' | 'combos' | 'schmears'
 type Step = 'explore' | 'choose-pack' | 'choose-combo' | 'choose-schmear-size' | 'bagels' | 'schmears' | 'cashier'
