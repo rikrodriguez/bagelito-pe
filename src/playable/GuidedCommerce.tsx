@@ -76,8 +76,9 @@ function readSafeSelections(raw: unknown, allowedIds: readonly string[]) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}
   const next: Record<string,number> = {}
   for (const [id,value] of Object.entries(raw)) {
-    if (allowedIds.includes(id) && Number.isInteger(value) && Number(value) > 0 && Number(value) <= 24) {
-      next[id] = Number(value)
+    if (allowedIds.includes(id) && typeof value === 'number'
+      && Number.isInteger(value) && value > 0 && value <= 24) {
+      next[id] = value
     }
   }
   return next
@@ -156,7 +157,8 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             const safeBagels = readSafeSelections(draft.bagels, menu.bagels.map(item => item.id))
             const safeSchmears = readSafeSelections(draft.schmears, menu.schmears.map(item => item.id))
             const safeFormat: PackFormat = draft.format === 'mini' ? 'mini' : 'grande'
-            const safeQty = [6,12,24].includes(Number(draft.packQty)) ? Number(draft.packQty) : 6
+            const validQuantities = safeFormat === 'mini' ? [6,12,24] : [6,12]
+            const safeQty = validQuantities.includes(Number(draft.packQty)) ? Number(draft.packQty) : 6
             const safeMix = draft.packMix === 'single' ? 'single' : 'mixed'
             const safeSize = [120,180,240].includes(Number(draft.schmearSize)) ? Number(draft.schmearSize) : 120
             const restoredScene = String(draft.scene)
