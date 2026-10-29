@@ -530,37 +530,91 @@ function Bagel3D({variant,color,position,active,selected,onClick}:{variant:strin
   </group>
 }
 
+/** Whipped product is modeled in five individual chilled pans. No panorama
+ * or baked-in menu copy: each pan is an actual 3D object with its own label.
+ */
+function SchmearBowl({position,color,herbs=false}:{position:V3;color:string;herbs?:boolean}){
+  return <group position={position} rotation={[.72,0,0]}>
+    <mesh castShadow receiveShadow>
+      <cylinderGeometry args={[.38,.33,.19,32]}/>
+      <meshStandardMaterial color="#d4dce0" metalness={.78} roughness={.24}/>
+    </mesh>
+    <mesh position={[0,.108,0]}>
+      <cylinderGeometry args={[.345,.345,.035,32]}/>
+      <meshStandardMaterial color={color} roughness={.94}/>
+    </mesh>
+    <mesh position={[0,.13,0]} scale={[1,.25,1]}>
+      <sphereGeometry args={[.315,24,14]}/>
+      <meshStandardMaterial color={color} roughness={.9}/>
+    </mesh>
+    {[.245,.16,.085].map((radius,i)=><mesh key={i}
+      rotation={[Math.PI/2,0,0]}
+      position={[0,.19+i*.035,0]}>
+      <torusGeometry args={[radius,.034-i*.004,8,32]}/>
+      <meshStandardMaterial color={color} roughness={.96}/>
+    </mesh>)}
+    {herbs && Array.from({length:11}).map((_,i)=>{
+      const angle=i*2.39996
+      const radius=.08+(i%4)*.062
+      return <mesh key={i} position={[Math.cos(angle)*radius,.22,Math.sin(angle)*radius]}>
+        <sphereGeometry args={[.015,6,5]}/>
+        <meshStandardMaterial color="#4e7551" roughness={.98}/>
+      </mesh>
+    })}
+  </group>
+}
+
 function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,number>;onSchmear:(id:string)=>void}){
-  const source=useTexture('/images/store-reference-approved.webp')
-  const photo=useMemo(()=>{
-    const t=source.clone()
-    t.needsUpdate=true
-    t.wrapS=THREE.ClampToEdgeWrapping
-    t.wrapT=THREE.ClampToEdgeWrapping
-    t.repeat.set(676/1536,390/1024)
-    t.offset.set(860/1536,99/1024)
-    t.colorSpace=THREE.SRGBColorSpace
-    return t
-  },[source])
-  const positions:V3[]=[[-1.22,1.52,.965],[0,1.52,.965],[1.22,1.52,.965],[-.62,1.0,.965],[.62,1.0,.965]]
+  const positions:V3[]=[
+    [-1.22,1.73,.77],[0,1.73,.77],[1.22,1.73,.77],
+    [-.64,1.02,.77],[.64,1.02,.77],
+  ]
   return <group position={[4.25,0,-.05]}>
-    <RoundedBox castShadow position={[0,.34,0]} args={[4.25,.68,1.92]} radius={.05}><meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/></RoundedBox>
-    <mesh position={[0,1.28,.86]}>
-      <planeGeometry args={[4.02,2.0]}/>
-      <meshBasicMaterial map={photo} toneMapped={false}/>
+    <RoundedBox castShadow position={[0,.34,0]} args={[4.25,.68,1.92]} radius={.05}>
+      <meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/>
+    </RoundedBox>
+    <mesh position={[0,1.28,-.12]}>
+      <boxGeometry args={[4.08,1.80,.08]}/>
+      <meshStandardMaterial color="#f5f0e9" roughness={.72}/>
     </mesh>
-    <mesh position={[0,1.28,.92]}><boxGeometry args={[4.05,1.78,.035]}/><meshPhysicalMaterial color="#eefaff" transmission={.96} transparent opacity={.11} roughness={.035}/></mesh>
-    <mesh position={[1.22,.93,.965]}>
-      <planeGeometry args={[1.08,.48]}/>
-      <meshBasicMaterial color="#edf1f2" toneMapped={false}/>
-    </mesh>
-    <Html transform position={[1.22,.93,.975]} distanceFactor={2.35} className="schmear-brand-tile"><div><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></div></Html>
-    <mesh position={[0,.76,.96]}><boxGeometry args={[4.08,.05,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
-    <mesh position={[0,2.15,.94]}><boxGeometry args={[4.08,.055,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
+    {/* Individual wells and whipped cream replace the flat photo surface. */}
     {menu.schmears.map((item,index)=>{
       const count=counts[item.id]??0
-      return <PhotoHotspot key={item.id} position={positions[index]} size={[1.0,.45]} active={step==='schmears'} selected={count>0} count={count} label={item.name} onClick={()=>onSchmear(item.id)}/>
+      const [x,y,z]=positions[index]
+      return <group key={item.id}>
+        <RoundedBox position={[x,y,-.07]} args={[1.06,.62,.88]} radius={.065}>
+          <meshStandardMaterial color="#e3e5e4" metalness={.56} roughness={.34}/>
+        </RoundedBox>
+        <SchmearBowl position={[x,y+.05,z]} color={SCHMEAR_COLORS[index]} herbs={index===2}/>
+        <RoundedBox position={[x,y-.34,1.02]} args={[1.12,.22,.035]} radius={.025}>
+          <meshStandardMaterial color="#fffaf4" roughness={.63}/>
+        </RoundedBox>
+        <Html transform position={[x,y-.34,1.045]} distanceFactor={2.4} className="schmear-3d-sign">
+          <div>{item.name.toUpperCase()}</div>
+        </Html>
+        <PhotoHotspot position={[x,y,1.08]} size={[1.05,.51]}
+          active={step==='schmears'} selected={count>0} count={count}
+          label={item.name} onClick={()=>onSchmear(item.id)}/>
+      </group>
     })}
+    <mesh position={[0,.76,.96]}>
+      <boxGeometry args={[4.15,.05,.06]}/>
+      <meshStandardMaterial color="#6f7d86" metalness={.82}/>
+    </mesh>
+    <mesh position={[0,2.16,.96]}>
+      <boxGeometry args={[4.15,.05,.06]}/>
+      <meshStandardMaterial color="#6f7d86" metalness={.82}/>
+    </mesh>
+    <mesh position={[0,1.28,.965]}>
+      <boxGeometry args={[4.12,1.79,.024]}/>
+      <meshPhysicalMaterial color="#effaff" transmission={.95}
+        transparent opacity={.045} roughness={.04} depthWrite={false}/>
+    </mesh>
+    <mesh position={[0,2.13,.46]} rotation={[-.38,0,0]}>
+      <boxGeometry args={[4.16,.035,1.1]}/>
+      <meshPhysicalMaterial color="#effaff" transmission={.94}
+        transparent opacity={.11} roughness={.04}/>
+    </mesh>
   </group>
 }
 
