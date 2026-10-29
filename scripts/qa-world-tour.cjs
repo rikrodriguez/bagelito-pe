@@ -86,8 +86,29 @@ async function audit() {
 
         await page.locator('.tour-start-button').click()
         await panel.getByRole('button', { name: /Armar pedido/ }).click()
-        await page.locator('[data-scene="entrance"]').waitFor()
-        results.push(mode.name + ': tour-to-commerce')
+        await page.locator('[data-scene="selector"]').waitFor()
+        results.push(mode.name + ': tour-to-selector')
+
+        // Physical bagel station opens pack configuration immediately.
+        await page.goto(base + '/playable', { waitUntil:'domcontentloaded' })
+        await page.locator('.tour-start-button').click()
+        await page.locator('.guided-tour-panel').getByRole('button', { name: /Siguiente/ }).click()
+        await page.locator('.guided-tour-panel').getByRole('button', { name: /Siguiente/ }).click()
+        await page.locator('[data-tour-node="bagels"]').waitFor()
+        await page.locator('.guided-tour-panel').getByRole('button', { name: /Armar pedido/ }).click()
+        await page.locator('[data-scene="pack-size"]').waitFor()
+        results.push(mode.name + ': bagels-to-pack-configuration')
+
+        // Physical schmear station opens the correct size and flavor flow.
+        await page.goto(base + '/playable', { waitUntil:'domcontentloaded' })
+        await page.locator('.tour-start-button').click()
+        for(let i=0;i<3;i++){
+          await page.locator('.guided-tour-panel').getByRole('button', { name: /Siguiente/ }).click()
+        }
+        await page.locator('[data-tour-node="schmears"]').waitFor()
+        await page.locator('.guided-tour-panel').getByRole('button', { name: /Armar pedido/ }).click()
+        await page.locator('[data-scene="schmear-size"]').waitFor()
+        results.push(mode.name + ': schmears-to-size-configuration')
 
       } catch (err) {
         failures.push(mode.name + ' FLOW_STOP: ' + String(err))
