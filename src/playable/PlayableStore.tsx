@@ -317,11 +317,11 @@ function LookSurface({look,disabled}:{look:React.MutableRefObject<{yaw:number;pi
   />
 }
 
-function World({step,bagels,schmears,onBagel,onSchmear,touring=false}:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void;touring?:boolean}) {
+function World({step,bagels,schmears,onBagel,onSchmear,touring=false,tourNode=null}:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void;touring?:boolean;tourNode?:GuideNode|null}) {
   return <group>
     <StoreArchitecture/>
     <Totem/>
-    <MainCounter step={step} bagels={bagels} schmears={schmears} onBagel={onBagel} onSchmear={onSchmear}/>
+    <MainCounter step={step} bagels={bagels} schmears={schmears} onBagel={onBagel} onSchmear={onSchmear} tourNode={tourNode}/>
     <Cashier/>
     <Production/>
     <PickupShelf/>
@@ -432,10 +432,10 @@ function Totem(){
   </group>
 }
 
-function MainCounter(props:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void}){
+function MainCounter(props:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void;tourNode?:GuideNode|null}){
   return <group>
-    <BagelCase {...props}/>
-    <SchmearCase step={props.step} counts={props.schmears} onSchmear={props.onSchmear}/>
+    <BagelCase {...props} inspectOnly={props.tourNode==='bagels'}/>
+    <SchmearCase step={props.step} counts={props.schmears} onSchmear={props.onSchmear} inspectOnly={props.tourNode==='schmears'}/>
   </group>
 }
 
@@ -458,7 +458,7 @@ function BagelShowcaseProduct({flavorId,position}:{flavorId:string;position:V3})
   </group>
 }
 
-function BagelCase({step,bagels,onBagel}:{step:Step;bagels:Record<string,number>;onBagel:(id:string)=>void}){
+function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Record<string,number>;onBagel:(id:string)=>void;inspectOnly?:boolean}){
   const xs=[-2.52,-.84,.84,2.52]
   return <group position={[-2.1,0,.2]}>
     <RoundedBox castShadow receiveShadow position={[0,.34,0]} args={[7.2,.68,1.92]} radius={.05}>
@@ -491,7 +491,7 @@ function BagelCase({step,bagels,onBagel}:{step:Step;bagels:Record<string,number>
         <Html transform position={[x,signY,1.03]} distanceFactor={2.5} className="bagelito-3d-blue-sign">
           <div>{bagel.name.toUpperCase()}</div>
         </Html>
-        <PhotoHotspot position={[x,clickY,1.06]} size={[1.50,.58]} active={step==='bagels'} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
+        <PhotoHotspot position={[x,clickY,1.06]} size={[1.50,.58]} active={step==='bagels'||inspectOnly} browseOnly={inspectOnly} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
       </group>
     })}
     {/* Solid shelf structure and slim chrome frames create true perspective. */}
@@ -584,7 +584,7 @@ function SchmearBowl({position,color,herbs=false}:{position:V3;color:string;herb
   </group>
 }
 
-function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,number>;onSchmear:(id:string)=>void}){
+function SchmearCase({step,counts,onSchmear,inspectOnly=false}:{step:Step;counts:Record<string,number>;onSchmear:(id:string)=>void;inspectOnly?:boolean}){
   const positions:V3[]=[
     [-1.22,1.73,.77],[0,1.73,.77],[1.22,1.73,.77],
     [-.64,1.02,.77],[.64,1.02,.77],
@@ -613,7 +613,7 @@ function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,num
           <div>{item.name.toUpperCase()}</div>
         </Html>
         <PhotoHotspot position={[x,y,1.08]} size={[1.05,.51]}
-          active={step==='schmears'} selected={count>0} count={count}
+          active={step==='schmears'||inspectOnly} browseOnly={inspectOnly} selected={count>0} count={count}
           label={item.name} onClick={()=>onSchmear(item.id)}/>
       </group>
     })}
@@ -638,7 +638,7 @@ function SchmearCase({step,counts,onSchmear}:{step:Step;counts:Record<string,num
   </group>
 }
 
-function PhotoHotspot({position,size,active,selected,count,label,onClick}:{position:V3;size:[number,number];active:boolean;selected:boolean;count:number;label:string;onClick:()=>void}){
+function PhotoHotspot({position,size,active,selected,count,label,onClick,browseOnly=false}:{position:V3;size:[number,number];active:boolean;selected:boolean;count:number;label:string;onClick:()=>void;browseOnly?:boolean}){
   return <group position={position}>
     <mesh
       onClick={e=>{e.stopPropagation();if(active)onClick()}}
@@ -653,7 +653,7 @@ function PhotoHotspot({position,size,active,selected,count,label,onClick}:{posit
       <meshBasicMaterial transparent opacity={.09} color={CORAL} depthWrite={false}/>
     </mesh>}
     {active&&<Html transform position={[size[0]*.34,size[1]*.28,.025]} distanceFactor={2.15} className="vitrina-hotspot">
-      <div data-selected={selected}><span>{selected?count:'+'}</span><small>{label}</small></div>
+      <div data-selected={selected}><span>{browseOnly?'→':selected?count:'+'}</span><small>{browseOnly?'Elegir '+label:label}</small></div>
     </Html>}
   </group>
 }
