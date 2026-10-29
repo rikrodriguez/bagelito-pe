@@ -184,6 +184,7 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
   const {camera}=useThree()
   const pos=useRef(new THREE.Vector3(0,1.68,7.5))
   const tick=useRef(0)
+  const wasGuided=useRef(false)
   const f=useMemo(()=>new THREE.Vector3(),[])
   const r=useMemo(()=>new THREE.Vector3(),[])
   const v=useMemo(()=>new THREE.Vector3(),[])
@@ -192,6 +193,7 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
 
   useFrame((_,delta)=>{
     if(guidedNode){
+      wasGuided.current=true
       const node=GUIDED_CAMERAS[guidedNode]
       const alpha=1-Math.exp(-delta*4.8)
       camera.position.lerp(node.position,alpha)
@@ -202,9 +204,17 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
       camera.quaternion.slerp(desiredQuat,alpha)
       pos.current.copy(camera.position)
     }else{
+      if(wasGuided.current){
+        // Continue free exploration from the guided camera's real bearing;
+        // otherwise the old player yaw snaps the view on the first frame.
+        const bearing=new THREE.Euler().setFromQuaternion(camera.quaternion,'YXZ')
+        look.current.yaw=bearing.y
+        look.current.pitch=THREE.MathUtils.clamp(bearing.x,-.62,.42)
+        wasGuided.current=false
+      }
       const speed=(move.run?4:2.45)*Math.min(delta,.05)
       f.set(-Math.sin(look.current.yaw),0,-Math.cos(look.current.yaw))
-      r.set(f.z,0,-f.x)
+      r.set(-f.z,0,f.x) // positive strafe really moves right
       v.set(0,0,0)
       if(move.forward)v.add(f);if(move.backward)v.sub(f);if(move.right)v.add(r);if(move.left)v.sub(r)
       if(v.lengthSq()){
