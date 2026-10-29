@@ -384,7 +384,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   function addSchmear(id: string) {
     setSchmearCounts((current) => {
       // One-pot flows are reversible: tapping the selected flavor removes it.
-      if (category !== 'combos') return current[id] ? {} : { [id]: 1 }
+      if (category !== 'combos' || schmearTarget === 1) return current[id] ? {} : { [id]: 1 }
       const total = Object.values(current).reduce((sum, n) => sum + n, 0)
       if (total >= schmearTarget) return current
       return { ...current, [id]: (current[id] ?? 0) + 1 }
@@ -609,13 +609,25 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     {scene === 'pack-qty' && <div className="guided-floating-panel pack-config-panel">
       <button className="panel-back" onClick={() => setScene('pack-size')}>←</button>
       <small>PACKS · {packFormat === 'mini' ? 'MINIS' : 'GRANDES'}</small>
-      <h2>¿Cuántos quieres?</h2>
+      <h2>Arma tu pack</h2>
+      <div className="guided-pack-mix" role="group" aria-label="¿Cómo quieres combinar los sabores?">
+        <button type="button" aria-pressed={packMix === 'mixed'} onClick={() => choosePackMix('mixed')}>
+          <b>Mixto</b><small>Combina los sabores que quieras</small>
+        </button>
+        <button type="button" aria-pressed={packMix === 'single'} onClick={() => choosePackMix('single')}>
+          <b>Un sabor</b><small>Todos iguales, elige uno</small>
+        </button>
+      </div>
+      <p className="guided-pack-quantity-title">Ahora elige la cantidad:</p>
       <div className="pack-choice-grid">
-        {(packFormat === 'mini' ? [6, 12, 24] : [6, 12]).map((qty) => <button key={qty} onClick={() => choosePack(qty, 'mixed')}>
-          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Elige sabores</small>
+        {(packFormat === 'mini' ? [6, 12, 24] : [6, 12]).map((qty) => <button key={qty} onClick={() => choosePack(qty, packMix)}
+          aria-label={'Elegir ' + qty + ' ' + (packFormat === 'mini' ? 'mini bagels' : 'bagels') + ', ' + (packMix === 'single' ? 'un sabor' : 'mixtos')}>
+          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Elegir sabores →</small>
         </button>)}
       </div>
-      <p>En la siguiente escena eliges los sabores directamente de la vitrina.</p>
+      <p>{packMix === 'single'
+        ? 'En la siguiente escena toca una vez el sabor que quieres para todo el pack.'
+        : 'En la siguiente escena combina los sabores tocando los productos de la vitrina.'}</p>
     </div>}
 
     {scene === 'combos' && <div className="guided-combo-overlay approved-combo-overlay">
@@ -646,8 +658,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <section className="mobile-product-stage mobile-bagel-stage" data-format={category === 'packs' ? packFormat : 'grande'} aria-label="Selecciona sabores de bagels">
         <header>
           <small>VITRINA BAGELITO · {packFormat === 'mini' && category === 'packs' ? 'MINIS' : 'GRANDES'}</small>
-          <h2>Elige tus sabores</h2>
-          <span>{bagelTotal} de {bagelTarget} seleccionados</span>
+          <h2>{category === 'packs' && packMix === 'single' ? 'Elige un sabor' : 'Elige tus sabores'}</h2>
+          <span>{category === 'packs' && packMix === 'single' ? 'Un toque completa todo tu pack.' : bagelTotal + ' de ' + bagelTarget + ' seleccionados'}</span>
         </header>
         <div className="mobile-bagel-grid">
           {menu.bagels.map((bagel) => {
@@ -699,7 +711,9 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           {selectedBagelSummary.map((item) => <span key={item.name}><i>{item.quantity}</i>{item.name}</span>)}
           {bagelTotal < bagelTarget && <span className="pending"><i>{bagelTarget - bagelTotal}</i>por elegir</span>}
         </div>
-        <em>{bagelTotal === bagelTarget ? 'Listo para continuar' : 'Toca los sabores en la vitrina'}</em>
+        <em>{bagelTotal === bagelTarget ? 'Listo para continuar'
+          : category === 'packs' && packMix === 'single' ? 'Toca un solo sabor para todo tu pack'
+          : 'Toca los sabores en la vitrina'}</em>
       </div>
       {bagelTotal === bagelTarget && <button className="guided-primary-next" onClick={nextFromBagels}>Continuar <b>→</b></button>}
     </>}
@@ -709,7 +723,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
         <header>
           <small>ESTACIÓN DE SCHMEARS · {schmearSize} G</small>
           <h2>Elige tu schmear</h2>
-          <span>{category === 'packs' ? 'Un toque extra, opcional' : schmearTotal + ' de ' + schmearTarget + ' seleccionados'}</span>
+          <span>{category === 'packs' ? 'Opcional · toca de nuevo para quitar' : schmearTotal + ' de ' + schmearTarget + ' seleccionados'}</span>
         </header>
         <div className="mobile-schmear-grid">
           {menu.schmears.map((item, index) => {
@@ -747,7 +761,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       <div className="guided-order-counter">
         <small>SCHMEARS · {schmearSize} g</small>
         <b>{category === 'combos' ? schmearTotal + '/' + schmearTarget : schmearTotal ? '✓' : '0/1'}</b>
-        <span>{category === 'packs' ? 'Opcional' : 'Elige directamente de la estación'}</span>
+        <span>{category === 'packs' ? 'Opcional · toca para añadir o quitar' : 'Elige directamente de la estación'}</span>
       </div>
       {(category === 'packs' || schmearTotal === schmearTarget) && <button className="guided-primary-next" onClick={nextFromSchmears}>
         {category === 'schmears' ? 'Continuar' : 'Ir a caja'} <b>→</b>
