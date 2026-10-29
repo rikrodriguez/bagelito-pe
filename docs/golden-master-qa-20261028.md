@@ -6,6 +6,17 @@
 
 Referencia de código: PR #38, `feat/guided-playable-commerce-v1-20261028`.
 
+## Auditoría estructural — vitrinas y salto 3D → compra
+
+- Bagels: el modelo 3D ya **no monta la panorámica de la vitrina como una sola textura**. Ocho fotos reales separadas (`/images/bagel-{sabor}.webp`) se ubican en ocho bandejas con divisores, vidrio, placa azul y texto blanco, conservando el orden aprobado.
+- Schmears: reemplazada la toma plana del mostrador por cinco recipientes con material, colores de sabor, volumen de crema y rótulos individuales; **son aproximaciones 3D de producto**, no fotogrametría ni modelos finales aprobados.
+- El recorrido físico del mostrador ahora conecta con el funnel de compra sin decidir cantidades por el cliente: tocar un bagel lleva a `Packs → Grandes/Minis`, y tocar un schmear lleva a `Schmears → Tamaño`. Al terminar la visita sin seleccionar producto se entra directamente al selector `Packs/Combos/Schmears`.
+- Corregida una referencia temporal inválida introducida en el efecto de teclado (`guideNode` antes de su inicialización). Ahora se utilizan estados ya inicializados, y el movimiento se libera en `blur`, cambio de visibilidad y cámara guiada.
+- Quitado el código de bagels toroidales simplificados que ya no se utiliza.
+- QA de scripts `qa:guided` y `qa:3d` verificada sintácticamente, pero **todavía no ejecutada contra el HEAD actual**.
+- Añadida `npm run qa:static`, verificable sin instalar dependencias. La auditoría estructural equivalente fue ejecutada sobre el código del conector con **9/9 comprobaciones superadas**. Los ocho archivos de producto fueron verificados en el repositorio.
+- **Criterio pendiente:** pruebas de WebGL y capturas comparativas desktop/móvil de las siete cámaras; la semejanza visual con el mockup aprobado no puede inferirse a partir de las nueve comprobaciones de estructura.
+
 ## Recorrido guiado — iteración de navegación y mundo 3D (28-10-2026, tarde)
 
 Cambios incorporados en la rama de desarrollo (sin modificar producción):
