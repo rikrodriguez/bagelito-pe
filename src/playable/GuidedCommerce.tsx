@@ -69,6 +69,20 @@ export const BAGEL_SIGN_POSITIONS = [
   { left: '75.5%', top: '77.5%', width: '22%', height: '12%' },
 ] as const
 
+const GUIDED_DRAFT_KEY = 'bagelito.guided.product-draft.v1'
+const GUIDED_DRAFT_TTL_MS = 24 * 60 * 60 * 1000
+
+function readSafeSelections(raw: unknown, allowedIds: readonly string[]) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}
+  const next: Record<string,number> = {}
+  for (const [id,value] of Object.entries(raw)) {
+    if (allowedIds.includes(id) && Number.isInteger(value) && Number(value) > 0 && Number(value) <= 24) {
+      next[id] = Number(value)
+    }
+  }
+  return next
+}
+
 const SCHMEAR_SPOTS = [
   { left: '5%', top: '20%', width: '17%', height: '61%' },
   { left: '23%', top: '20%', width: '17%', height: '61%' },
@@ -119,10 +133,88 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const [paymentConfig, setPaymentConfig] = useState<CulqiPublicConfig | null>(null)
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
+  const [draftLoaded, setDraftLoaded] = useState(false)
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const qaMode = qaRequested && paymentConfig?.visualQaAllowed === true
   const receiptDrag = useRef({ startY: 0, offset: 0 })
   const receiptPulledRef = useRef(false)
+
+  // Only product IDs and quantities are saved for a short-lived in-tab draft.
+  // Never store contact details, 3DS tokens, payment data or confirmation state.
+  useEffect(() => {
+    try {
+      if (!initialCategory) {
+        const raw = window.sessionStorage.getItem(GUIDED_DRAFT_KEY)
+        if (raw) {
+          const draft = JSON.parse(raw) as Record<string,unknown>
+          const age = Date.now() - Number(draft.updatedAt)
+          if (!Number.isFinite(age) || age < 0 || age > GUIDED_DRAFT_TTL_MS
+            || !['packs','combos','schmears'].includes(String(draft.category))) {
+            window.sessionStorage.removeItem(GUIDED_DRAFT_KEY)
+          } else {
+            const restoredCategory = draft.category as Category
+            const safeBagels = readSafeSelections(draft.bagels, menu.bagels.map(item => item.id))
+            const safeSchmears = readSafeSelections(draft.schmears, menu.schmears.map(item => item.id))
+            const safeFormat: PackFormat = draft.format === 'mini' ? 'mini' : 'grande'
+            const safeQty = [6,12,24].includes(Number(draft.packQty)) ? Number(draft.packQty) : 6
+            const safeMix = draft.packMix === 'single' ? 'single' : 'mixed'
+            const safeSize = [120,180,240].includes(Number(draft.schmearSize)) ? Number(draft.schmearSize) : 120
+            const restoredScene = String(draft.scene)
+            const allowedScenes = ['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears','cashier']
+            const requestedScene: Scene = allowedScenes.includes(restoredScene)
+              ? restoredScene as Scene
+              : restoredCategory === 'schmears' ? 'schmear-size' : 'pack-size'
+            const requiredBagels = restoredCategory === 'combos' ? 2 : safeQty
+            const bagelTotal = Object.values(safeBagels).reduce((sum,n)=>sum+n,0)
+            const schmearTotal = Object.values(safeSchmears).reduce((sum,n)=>sum+n,0)
+            const complete = restoredCategory === 'schmears'
+              ? schmearTotal === 1
+              : restoredCategory === 'packs'
+                ? bagelTotal === requiredBagels
+                : bagelTotal === 2 && schmearTotal === 1
+            setCategory(restoredCategory)
+            setPackFormat(safeFormat)
+            setPackQty(safeQty)
+            setPackMix(safeMix)
+            setComboId(restoredCategory === 'combos' ? 'two-bagel-schmear' : null)
+            setSchmearSize(safeSize)
+            setBagelMode(restoredCategory === 'combos' ? 'combo' : 'pack')
+            setBagelCounts(safeBagels)
+            setSchmearCounts(safeSchmears)
+            setScene(requestedScene === 'cashier' && !complete
+              ? restoredCategory === 'schmears' ? 'schmears' : 'bagels'
+              : requestedScene)
+          }
+        }
+      }
+    } catch {
+      // No storage access or malformed draft must never block shopping.
+    }
+    setDraftLoaded(true)
+  }, [initialCategory])
+
+  useEffect(() => {
+    if (!draftLoaded) return
+    try {
+      if (!category || paidOrderCode || ['receipt','wallet','handoff','goodbye','returning'].includes(scene)) {
+        window.sessionStorage.removeItem(GUIDED_DRAFT_KEY)
+        return
+      }
+      window.sessionStorage.setItem(GUIDED_DRAFT_KEY, JSON.stringify({
+        updatedAt: Date.now(),
+        category,
+        scene: scene === 'pay' ? 'cashier' : scene,
+        format: packFormat,
+        packQty,
+        packMix,
+        schmearSize,
+        bagels: bagelCounts,
+        schmears: schmearCounts,
+      }))
+    } catch {
+      // Safari private mode or a blocked storage quota is non-fatal.
+    }
+  }, [draftLoaded,category,scene,packFormat,packQty,packMix,schmearSize,bagelCounts,schmearCounts,paidOrderCode])
 
   // Navigation and order drawer stay in their own layer while walking.
   // Close both when the customer moves to a new scene.
