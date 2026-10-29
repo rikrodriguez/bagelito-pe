@@ -424,8 +424,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const showProgress = !['entrance', 'goodbye', 'returning'].includes(scene)
 
   return <div className="guided-commerce" data-scene={scene} data-qa={qaMode ? 'true' : 'false'}>
-    <div className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />
-    {scene !== 'bagels' && scene !== 'schmears' && <img className="guided-scene-image" src={sceneImage} alt="" />}
+    <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />
+    {scene !== 'bagels' && scene !== 'schmears' && <img key={'master-' + scene} className="guided-scene-image" src={sceneImage} alt="" />}
     <div className="guided-scene-vignette" />
 
     <button className="guided-close" type="button" onClick={onExit} aria-label="Cerrar experiencia">×</button>
