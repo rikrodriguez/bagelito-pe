@@ -44,7 +44,7 @@ async function audit() {
         }
 
         await page.locator('.tour-start-button').click()
-        const panel = page.getByLabel('Recorrido guiado por Bagelito')
+        const panel = page.locator('.guided-tour-panel')
         await panel.waitFor()
 
         for (let i = 0; i < stops.length; i++) {
