@@ -323,8 +323,13 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   }
 
   function chooseCategory(value: Category) {
+    // Returning to an unchanged category must not silently erase the order.
+    // Switching categories starts a new configuration to avoid mixed products.
+    if (value !== category) {
+      resetSelections()
+      setComboId(null)
+    }
     setCategory(value)
-    resetSelections()
     if (value === 'packs') setScene('pack-size')
     if (value === 'combos') setScene('combos')
     if (value === 'schmears') setScene('schmear-size')
@@ -360,15 +365,15 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   }
 
   function chooseCombo(id: string) {
+    if (id !== comboId) resetSelections()
     setComboId(id)
     setBagelMode('combo')
-    resetSelections()
     setScene('bagels')
   }
 
   function chooseSchmearSize(grams: number) {
+    if (grams !== schmearSize) setSchmearCounts({})
     setSchmearSize(grams)
-    setSchmearCounts({})
     setScene('schmears')
   }
 
