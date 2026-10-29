@@ -87,6 +87,12 @@ async function audit() {
       await scene('pack-size', '03-pack-size')
       await page.locator('.pack-format-grid button').first().click()
       await scene('pack-qty', '04-pack-quantity')
+      // Mixed/single packs must be independently selectable in the UI.
+      const mixChoices = page.locator('.guided-pack-mix > button')
+      if (await mixChoices.count() !== 2
+        || await mixChoices.first().getAttribute('aria-pressed') !== 'true') {
+        failures.push(mode.name + ': pack mix choices are missing or default incorrectly')
+      }
       await page.locator('.pack-choice-grid button').first().click()
       await scene('bagels', '05-bagels')
 
@@ -174,12 +180,33 @@ async function audit() {
         await page.locator(selector).nth(i % 3).click()
       }
       await scene('bagels', '06-bagels-selected')
+
+      // Editing quantity / returning to the vitrinas must retain valid choices.
+      await page.getByRole('button', { name: 'Volver al paso anterior' }).click()
+      await page.locator('[data-scene="pack-qty"]').waitFor()
+      await page.locator('.pack-choice-grid button').first().click()
+      await page.locator('[data-scene="bagels"]').waitFor()
+      if (await page.locator('.bagel-live-summary>b').textContent() !== '6/6') {
+        failures.push(mode.name + ': returning to an unchanged pack lost its selected flavors')
+      }
+
       const orderHolderText = await page.locator('.guided-store-cart-button>span').textContent()
       if (orderHolderText !== 'Tu pedido (6)') {
         failures.push(mode.name + ': order holder did not update to six selected bagels')
       }
       await page.getByRole('button', { name: /Continuar/ }).last().click()
       await scene('schmears', '07-schmears')
+      const optionalSchmear = mode.name === 'mobile'
+        ? page.locator('.mobile-schmear-card > button').first()
+        : page.locator('.schmear-hotspots > button').first()
+      await optionalSchmear.click()
+      if (await page.locator('.guided-store-cart-button>span').textContent() !== 'Tu pedido (7)') {
+        failures.push(mode.name + ': optional schmear not added to live order count')
+      }
+      await optionalSchmear.click()
+      if (await page.locator('.guided-store-cart-button>span').textContent() !== 'Tu pedido (6)') {
+        failures.push(mode.name + ': optional schmear could not be removed again')
+      }
       const schmearLabels = await page.locator('.schmear-hotspots > button')
         .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
       const expectedSchmearLabels = [
@@ -211,6 +238,29 @@ async function audit() {
       await page.getByRole('button', { name: /Entrar a Bagelito/i }).click()
       await page.getByRole('button', { name: 'Schmears', exact: true }).click()
       await scene('schmear-size', '16-schmear-size')
+
+      // Repeat with mini + single-flavor pack: one tap selects the whole pack,
+      // and the remove action clears the whole choice.
+      await visit()
+      await page.getByRole('button', { name: /Entrar a Bagelito/i }).click()
+      await page.getByRole('button', { name: 'Packs', exact: true }).click()
+      await page.locator('.pack-format-grid button').nth(1).click()
+      await page.locator('.guided-pack-mix button').nth(1).click()
+      if (await page.locator('.guided-pack-mix button').nth(1).getAttribute('aria-pressed') !== 'true') {
+        failures.push(mode.name + ': one-flavor pack selector did not activate')
+      }
+      await page.locator('.pack-choice-grid button').first().click()
+      await page.locator('[data-scene="bagels"]').waitFor()
+      const bagelSelector = mode.name === 'mobile' ? '.mobile-bagel-card > button' : '.bagel-hotspots > button'
+      await page.locator(bagelSelector).first().click()
+      if (await page.locator('.bagel-live-summary>b').textContent() !== '6/6') {
+        failures.push(mode.name + ': single-flavor selection requires more than one tap')
+      }
+      if (mode.name === 'mobile') await page.locator('.mobile-bagel-card .mobile-product-count > button').first().click()
+      else await page.locator('.bagel-hotspots > button i').first().click()
+      if (await page.locator('.bagel-live-summary>b').textContent() !== '0/6') {
+        failures.push(mode.name + ': one-flavor pack cannot be cleared in one action')
+      }
       await page.close()
     }
   } finally {
