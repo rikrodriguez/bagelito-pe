@@ -5,16 +5,27 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && tsc --noEmit && npm run qa:static && npm run qa:launch",
     "preview": "vite preview",
-    "typecheck": "vite build && tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "qa:guided": "node scripts/qa-guided.cjs",
+    "qa:3d": "node scripts/qa-world-tour.cjs",
+    "qa:static": "node scripts/qa-tour-static.cjs",
+    "qa:launch": "node scripts/qa-manual-order.cjs"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "@react-three/rapier": "^2.2.0",
     "@supabase/supabase-js": "^2.106.2",
     "@tanstack/react-router": "1.170.46",
     "@tanstack/react-start": "1.169.4",
+    "howler": "^2.2.4",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "three": "^0.186.1",
+    "zustand": "^5.0.16",
+    "nitro": "3.0.260903-beta"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
