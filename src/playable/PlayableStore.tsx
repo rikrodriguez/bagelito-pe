@@ -84,7 +84,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   }, [])
 
   useEffect(() => {
-    if(experienceMode!=='explore' || guideNode){
+    if(experienceMode!=='explore' || introGuide!==null || category!==null){
       // A cinematic camera owns movement during the guided tour.
       // Never carry a held key into free roaming when the tour finishes.
       setMove({forward:false,backward:false,left:false,right:false,run:false})
@@ -117,7 +117,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       window.removeEventListener('blur',release)
       document.removeEventListener('visibilitychange',release)
     }
-  },[experienceMode,guideNode])
+  },[experienceMode,introGuide,category])
 
   const selectedCombo = combos.find(x=>x.id===comboId) ?? null
   const bagelTarget = category==='packs' ? packQty : selectedCombo?.bagels ?? 0
