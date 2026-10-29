@@ -419,42 +419,82 @@ function MainCounter(props:{step:Step;bagels:Record<string,number>;schmears:Reco
   </group>
 }
 
+/** Each SKU is a separate photograph on a physical tray, not a panorama
+ * stretched across one wall. Transparent product art keeps its real appearance,
+ * while metal dividers, shadows, blue nameplates and parallax provide depth.
+ */
+function BagelShowcaseProduct({flavorId,position}:{flavorId:string;position:V3}){
+  const texture=useTexture('/images/bagel-'+flavorId+'.webp')
+  texture.colorSpace=THREE.SRGBColorSpace
+  return <group position={position}>
+    <mesh castShadow position={[0,-.01,-.18]}>
+      <planeGeometry args={[1.36,.83]}/>
+      <meshBasicMaterial map={texture} transparent alphaTest={.025} side={THREE.DoubleSide} depthWrite={false} toneMapped={false}/>
+    </mesh>
+    <mesh position={[0,-.43,-.21]} rotation={[0,0,0]}>
+      <planeGeometry args={[1.2,.10]}/>
+      <meshBasicMaterial color="#c7a37f" transparent opacity={.20} depthWrite={false}/>
+    </mesh>
+  </group>
+}
+
 function BagelCase({step,bagels,onBagel}:{step:Step;bagels:Record<string,number>;onBagel:(id:string)=>void}){
-  const photo=useTexture('/images/bagel-vitrina-photo.webp')
-  photo.colorSpace=THREE.SRGBColorSpace
   const xs=[-2.52,-.84,.84,2.52]
   return <group position={[-2.1,0,.2]}>
-    <RoundedBox castShadow receiveShadow position={[0,.34,0]} args={[7.2,.68,1.92]} radius={.05}><meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/></RoundedBox>
-    <mesh position={[0,1.28,.86]}>
-      <planeGeometry args={[6.9,1.78]}/>
-      <meshBasicMaterial map={photo} toneMapped={false}/>
-    </mesh>
-    <mesh position={[0,1.28,.92]}><boxGeometry args={[7.0,1.78,.035]}/><meshPhysicalMaterial color="#eefaff" transmission={.96} transparent opacity={.11} roughness={.035}/></mesh>
-    <mesh position={[0,2.16,.48]} rotation={[-.4,0,0]}><boxGeometry args={[7.0,.045,1.15]}/><meshPhysicalMaterial color="#effaff" transmission={.94} transparent opacity={.12} roughness={.04}/></mesh>
-    <mesh position={[0,.76,.96]}><boxGeometry args={[7.05,.05,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
-    <mesh position={[0,2.15,.94]}><boxGeometry args={[7.05,.055,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
+    <RoundedBox castShadow receiveShadow position={[0,.34,0]} args={[7.2,.68,1.92]} radius={.05}>
+      <meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/>
+    </RoundedBox>
+
+    {/* Eight individual porcelain-lined wells, each a real 3D location. */}
     {BAGEL_SHOWCASE_ORDER.map((flavorId,index)=>{
-      // Match the physical tray, not the JSON/catalog sort order.
       const bagel=menu.bagels.find(item=>item.id===flavorId)
       if(!bagel)return null
       const row=index<4?0:1
       const col=index%4
       const x=xs[col]
-      const clickY=row===0?1.55:.96
-      const signY=row===0?1.46:.73
+      const clickY=row===0?1.62:.98
+      const signY=row===0?1.45:.73
+      const photoY=row===0?1.78:1.10
       const count=bagels[bagel.id]??0
       return <group key={bagel.id}>
-        {/* Real 3D blue plate masks the white sign printed on the photo.
-            It stays in place while the shopper walks or rotates the camera. */}
-        <RoundedBox position={[x,signY,.94]} args={[1.57,.29,.025]} radius={.035}>
+        <RoundedBox receiveShadow castShadow position={[x,clickY,-.15]} args={[1.57,.78,1.0]} radius={.055}>
+          <meshStandardMaterial color="#eee8df" metalness={.10} roughness={.67}/>
+        </RoundedBox>
+        <mesh position={[x,clickY,-.147]}>
+          <planeGeometry args={[1.48,.69]}/>
+          <meshBasicMaterial color="#f8f4ed"/>
+        </mesh>
+        <BagelShowcaseProduct flavorId={bagel.id} position={[x,photoY,.78]}/>
+        <RoundedBox position={[x,signY,1.005]} args={[1.57,.29,.035]} radius={.035}>
           <meshStandardMaterial color={BLUE} roughness={.43} metalness={.05}/>
         </RoundedBox>
-        <Html transform position={[x,signY,.96]} distanceFactor={2.5} className="bagelito-3d-blue-sign">
+        <Html transform position={[x,signY,1.03]} distanceFactor={2.5} className="bagelito-3d-blue-sign">
           <div>{bagel.name.toUpperCase()}</div>
         </Html>
-        <PhotoHotspot position={[x,clickY,.975]} size={[1.5,.5]} active={step==='bagels'} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
+        <PhotoHotspot position={[x,clickY,1.06]} size={[1.50,.58]} active={step==='bagels'} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
       </group>
     })}
+    {/* Solid shelf structure and slim chrome frames create true perspective. */}
+    {[-3.48,-1.68,0,1.68,3.48].map((x)=><mesh key={x} position={[x,1.27,.95]}>
+      <boxGeometry args={[.045,1.75,.065]}/>
+      <meshStandardMaterial color="#72838e" metalness={.83} roughness={.2}/>
+    </mesh>)}
+    {[.71,1.32,2.12].map(y=><mesh key={y} position={[0,y,.95]}>
+      <boxGeometry args={[7.05,.055,.065]}/>
+      <meshStandardMaterial color="#71828b" metalness={.8} roughness={.22}/>
+    </mesh>)}
+    <mesh position={[0,2.16,.42]} rotation={[-.4,0,0]}>
+      <boxGeometry args={[7.1,.04,1.15]}/>
+      <meshPhysicalMaterial color="#effaff" transmission={.95} transparent opacity={.11} roughness={.04}/>
+    </mesh>
+    <mesh position={[0,1.31,.965]}>
+      <boxGeometry args={[7.04,1.72,.024]}/>
+      <meshPhysicalMaterial color="#effaff" transmission={.95} transparent opacity={.055} roughness={.045} depthWrite={false}/>
+    </mesh>
+    <mesh position={[0,2.16,.92]}>
+      <boxGeometry args={[7.07,.048,.07]}/>
+      <meshStandardMaterial color="#687d8c" metalness={.86} roughness={.19}/>
+    </mesh>
   </group>
 }
 
