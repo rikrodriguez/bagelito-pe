@@ -136,7 +136,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
   if(!ready)return <div className="playable-loading">Preparando Bagelito…</div>
 
-  return <main className={'playable-shell'+(guideNode?' guided-mode':'')}>
+  return <main className={'playable-shell'+(guideNode?' guided-mode':'')} data-tour-node={introGuide ?? 'none'} data-player-x={player.x.toFixed(2)}>
     {experienceMode==='guided' ? <GoldenGuidedCommerce
       customerName={name}
       onExit={()=>setExperienceMode('explore')}
