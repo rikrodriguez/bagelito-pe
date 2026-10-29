@@ -76,16 +76,18 @@ const SCHMEAR_SPOTS = [
   { left: '77%', top: '20%', width: '17%', height: '61%' },
 ] as const
 
-export function GuidedCommerce({ onExit, customerName, initialCategory = null }: {
+export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false }: {
   onExit: () => void
   customerName?: string | null
   initialCategory?: Category | null
+  skipEntrance?: boolean
 }) {
-  // A shopper coming from a physical 3D vitrina enters the matching guided
-  // category without having to navigate through the store entrance again.
+  // A shopper coming from a physical 3D station enters the matching product
+  // category or the totem selector, without repeating the entry scene.
   const [scene, setScene] = useState<Scene>(initialCategory === 'packs' ? 'pack-size'
     : initialCategory === 'combos' ? 'combos'
-      : initialCategory === 'schmears' ? 'schmear-size' : 'entrance')
+      : initialCategory === 'schmears' ? 'schmear-size'
+        : skipEntrance ? 'selector' : 'entrance')
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [category, setCategory] = useState<Category | null>(initialCategory)
