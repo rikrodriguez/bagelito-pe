@@ -32,6 +32,14 @@ const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vect
   cashier:{position:new THREE.Vector3(5.85,1.62,6.45),lookAt:new THREE.Vector3(5.15,1.20,4.55)},
 }
 
+const TOUR_STOPS: ReadonlyArray<{node:GuideNode;title:string;description:string}> = [
+  {node:'totem', title:'Bienvenido a Bagelito', description:'Mira la tienda antes de elegir.'},
+  {node:'vitrina', title:'La vitrina', description:'Bagels y schmears hechos para combinar.'},
+  {node:'bagels', title:'Ocho sabores de bagels', description:'Revisa cada bandeja y sus carteles azules.'},
+  {node:'schmears', title:'La estación de schmears', description:'Cinco sabores para acompañar tus bagels.'},
+  {node:'cashier', title:'La caja', description:'Aquí revisas el pedido antes del pago seguro.'},
+]
+
 const ZONES = {
   totem: new THREE.Vector3(-4.9, 0, 5.7),
   vitrina: new THREE.Vector3(-1.5, 0, .3),
@@ -49,7 +57,8 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>(initialMode)
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
-  const [introGuide, setIntroGuide] = useState<'totem'|'vitrina'|null>(null)
+  const [introGuide, setIntroGuide] = useState<GuideNode|null>(null)
+  const [welcomeDismissed, setWelcomeDismissed] = useState(false)
   const [packFormat, setPackFormat] = useState<PackFormat>('grande')
   const [packQty, setPackQty] = useState(6)
   const [comboId, setComboId] = useState<string | null>(null)
@@ -102,6 +111,8 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     return best<2.45?winner:null
   },[player])
 
+  const tourIndex=introGuide ? TOUR_STOPS.findIndex(stop=>stop.node===introGuide) : -1
+
   const guideNode:GuideNode|null = category
     ? step==='bagels' ? 'bagels'
       : step==='schmears' ? 'schmears'
@@ -113,7 +124,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     setCategory(c);setBagels({});setSchmears({});setComboId(null);setIntroGuide(null)
     setStep(c==='packs'?'choose-pack':c==='combos'?'choose-combo':'choose-schmear-size')
   }
-  const reset=()=>{setCategory(null);setStep('explore');setIntroGuide(null);setBagels({});setSchmears({});setComboId(null)}
+  const reset=()=>{setCategory(null);setStep('explore');setIntroGuide(null);setWelcomeDismissed(false);setBagels({});setSchmears({});setComboId(null)}
   const addBagel=(id:string)=>{
     if(step!=='bagels'||bagelTotal>=bagelTarget)return
     setBagels(v=>({...v,[id]:(v[id]??0)+1}))
@@ -140,7 +151,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <fog attach="fog" args={['#f3f0e9',24,42]}/>
       <hemisphereLight args={['#fff8ec','#62717d',1.4]}/>
       <directionalLight castShadow position={[4,9,7]} intensity={2.1} shadow-mapSize={[1536,1536]}/>
-      <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear}/>
+      <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0}/>
       <CameraController move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
       <ContactShadows position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
@@ -151,18 +162,38 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     {experienceMode==='explore'&&<header className="playable-top interactive-ui">
       <button className="brand-pill" onClick={()=>{reset();setExperienceMode('guided')}}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
       <div className="status-pill"><small>EXPLORA</small><b>BAGELITO STORE</b></div>
+      <button type="button" className="tour-start-button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>
+        Visita guiada 3D
+      </button>
     </header>}
 
     {experienceMode==='explore'&&name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
-    {experienceMode==='explore'&&step==='explore'&&!category&&<div className="waypoint-hint interactive-ui">
+    {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<div className="waypoint-hint interactive-ui">
       <span>¿Qué te provoca hoy?</span>
       <button type="button" className="primary" onClick={()=>{reset();setExperienceMode('guided')}}>Empezar pedido</button>
-      <button type="button" onClick={()=>setIntroGuide(null)}>Explorar tienda</button>
+      <button type="button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>Visita guiada 3D</button>
+      <button type="button" onClick={()=>setWelcomeDismissed(true)}>Explorar libre</button>
     </div>}
 
-    {experienceMode==='explore'&&<MobilePad move={move} setMove={setMove}/>}
-    {experienceMode==='explore'&&<div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>}
+    {experienceMode==='explore'&&tourIndex>=0&&<div className="guided-tour-panel interactive-ui" aria-label="Recorrido guiado por Bagelito">
+      <div className="guided-tour-copy">
+        <small>RECORRIDO 3D · {tourIndex+1} / {TOUR_STOPS.length}</small>
+        <strong>{TOUR_STOPS[tourIndex].title}</strong>
+        <span>{TOUR_STOPS[tourIndex].description}</span>
+      </div>
+      <div className="guided-tour-actions">
+        <button type="button" disabled={tourIndex===0} onClick={()=>setIntroGuide(TOUR_STOPS[tourIndex-1].node)}>← Anterior</button>
+        <button type="button" className="primary" onClick={()=>{
+          if(tourIndex<TOUR_STOPS.length-1)setIntroGuide(TOUR_STOPS[tourIndex+1].node)
+          else setIntroGuide(null)
+        }}>{tourIndex===TOUR_STOPS.length-1?'Terminar visita':'Siguiente →'}</button>
+        <button type="button" onClick={()=>{reset();setExperienceMode('guided')}}>Armar pedido</button>
+      </div>
+    </div>}
+
+    {experienceMode==='explore'&&!guideNode&&<MobilePad move={move} setMove={setMove}/>}
+    {experienceMode==='explore'&&!guideNode&&<div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>}
 </main>
 }
 
@@ -245,7 +276,7 @@ function LookSurface({look,disabled}:{look:React.MutableRefObject<{yaw:number;pi
   />
 }
 
-function World({step,bagels,schmears,onBagel,onSchmear}:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void}) {
+function World({step,bagels,schmears,onBagel,onSchmear,touring=false}:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void;touring?:boolean}) {
   return <group>
     <StoreArchitecture/>
     <Totem/>
@@ -253,7 +284,7 @@ function World({step,bagels,schmears,onBagel,onSchmear}:{step:Step;bagels:Record
     <Cashier/>
     <Production/>
     <PickupShelf/>
-    <AmbientPeople step={step}/>
+    <AmbientPeople step={step} touring={touring}/>
     <Seating/>
   </group>
 }
@@ -583,8 +614,8 @@ function Seating(){
   </group>
 }
 
-function AmbientPeople({step}:{step:Step}){
-  const guided=step!=='explore'
+function AmbientPeople({step,touring=false}:{step:Step;touring?:boolean}){
+  const guided=touring||step!=='explore'
   return <>
     {/* Rappi stays visible but moves on the far pickup lane, never through the sales camera. */}
     <MovingNPC from={[7.35,0,7.5]} to={[7.35,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
