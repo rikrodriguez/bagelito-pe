@@ -3,7 +3,7 @@ import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@reac
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
-import { GuidedCommerce as GoldenGuidedCommerce } from './GuidedCommerce'
+import { BAGEL_SHOWCASE_ORDER, GuidedCommerce as GoldenGuidedCommerce } from './GuidedCommerce'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -347,13 +347,27 @@ function BagelCase({step,bagels,onBagel}:{step:Step;bagels:Record<string,number>
     <mesh position={[0,2.16,.48]} rotation={[-.4,0,0]}><boxGeometry args={[7.0,.045,1.15]}/><meshPhysicalMaterial color="#effaff" transmission={.94} transparent opacity={.12} roughness={.04}/></mesh>
     <mesh position={[0,.76,.96]}><boxGeometry args={[7.05,.05,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
     <mesh position={[0,2.15,.94]}><boxGeometry args={[7.05,.055,.06]}/><meshStandardMaterial color="#6f7d86" metalness={.82}/></mesh>
-    {menu.bagels.map((bagel,index)=>{
+    {BAGEL_SHOWCASE_ORDER.map((flavorId,index)=>{
+      // Match the physical tray, not the JSON/catalog sort order.
+      const bagel=menu.bagels.find(item=>item.id===flavorId)
+      if(!bagel)return null
       const row=index<4?0:1
       const col=index%4
       const x=xs[col]
-      const y=row===0?1.55:1.02
+      const clickY=row===0?1.55:.96
+      const signY=row===0?1.46:.73
       const count=bagels[bagel.id]??0
-      return <PhotoHotspot key={bagel.id} position={[x,y,.965]} size={[1.5,.5]} active={step==='bagels'} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
+      return <group key={bagel.id}>
+        {/* Real 3D blue plate masks the white sign printed on the photo.
+            It stays in place while the shopper walks or rotates the camera. */}
+        <RoundedBox position={[x,signY,.94]} args={[1.57,.29,.025]} radius={.035}>
+          <meshStandardMaterial color={BLUE} roughness={.43} metalness={.05}/>
+        </RoundedBox>
+        <Html transform position={[x,signY,.96]} distanceFactor={2.5} className="bagelito-3d-blue-sign">
+          <div>{bagel.name.toUpperCase()}</div>
+        </Html>
+        <PhotoHotspot position={[x,clickY,.975]} size={[1.5,.5]} active={step==='bagels'} selected={count>0} count={count} label={bagel.name} onClick={()=>onBagel(bagel.id)}/>
+      </group>
     })}
   </group>
 }
