@@ -577,7 +577,7 @@ function AmbientPeople({step}:{step:Step}){
   const guided=step!=='explore'
   return <>
     {/* Rappi stays visible but moves on the far pickup lane, never through the sales camera. */}
-    <MovingNPC from={[7.1,0,7.5]} to={[6.75,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
+    <MovingNPC from={[7.35,0,7.5]} to={[7.35,0,-4.9]} shirt="#22272b" backpack="#f36f21" phase={0}/>
     {/* Customer with bag exits along the opposite wall. */}
     <MovingNPC from={[-6.5,0,-3.8]} to={[-6.6,0,7.7]} shirt="#8e6c52" bag phase={.95}/>
     {!guided&&<>
