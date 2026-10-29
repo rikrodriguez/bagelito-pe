@@ -6,6 +6,17 @@
 
 Referencia de código: PR #38, `feat/guided-playable-commerce-v1-20261028`.
 
+## Verificación de seguimiento — 28 octubre 2026, última rama
+
+- **Deploy Vercel READY** del HEAD `ec019e1267391a1ba467b89bfd4e70235352d6d4` en preview. Confirma compilación/despliegue, **no** prueba que las 13 escenas pasen golden-master visual ni que Culqi pueda cobrar.
+- Implementados en la rama: rótulos azules con texto blanco para ocho bagels en vista guiada y placas 3D, header de menú circular + holder real de pedido, tarjetas blanco/azul, progreso tipo píldora y transiciones con movimiento reducido cuando corresponde.
+- **QA visual E2E del HEAD exacto aún pendiente**; los screenshots automáticos documentados anteriormente corresponden a versiones previas.
+- **Batch real:** `Next Bagelito Batch` (20 packs / 220 bagels) continúa con `delivery_date = null`; el batch de revisión es visible pero no está habilitado para cobrar.
+- **Migración legal:** la tabla `orders` sigue sin `checkout_legal_version` ni `checkout_legal_accepted_at`; solo tiene `terms_accepted`.
+- **Vercel preview:** sigue configurado `PAYMENT_PROVIDER=manual`, `CULQI_ENABLED=false` y `BAGELITO_MERCHANT_REVIEW_ONLY=true` para la rama. No convertir un preview QA visual en checkout con dinero.
+- **Reglas comerciales pendientes:** precio del combo 2 bagels + schmear, compatibilidad/sabores de minis, recargos de premium, schmears adicionales, standalone y cross-sells. Solo las reglas publicadas de grandes regulares **sin extras** están cotizables en el contrato actual una vez que haya batch real.
+- **Prioridad siguiente:** screenshot diff del último build en desktop, móvil y cámara 3D real; luego QA de Culqi sandbox + 3DS/webhook/doble cobro, migración legal revisada, fecha de delivery y decisión de producción.
+
 ## Evidencia de QA ejecutada
 
 - Chromium automatizado: **32 capturas** correspondientes a 16 estados en desktop 1280×800 y móvil 390×844. Navegación y clics correctos en la pasada anterior.
