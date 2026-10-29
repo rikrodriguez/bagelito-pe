@@ -25,11 +25,30 @@ async function audit() {
       { name: 'mobile', viewport: { width: 390, height: 844 } },
     ]) {
       const page = await browser.newPage({ viewport: mode.viewport, deviceScaleFactor: 1 })
+      const productAssets = new Set()
+      page.on('request', (request) => {
+        const url = request.url()
+        const item = url.match(/\/images\/(bagel-[a-z-]+\.webp)(?:\?|$)/)
+        if (item) productAssets.add(item[1])
+        if (url.includes('/images/bagel-vitrina-photo.webp')
+          || url.includes('/images/store-reference-approved.webp')) {
+          failures.push(mode.name + ': flat photographic showroom texture still used in 3D')
+        }
+      })
       page.on('pageerror', (err) => failures.push(mode.name + ' JS: ' + err.message))
       try {
         await page.goto(base + '/playable', { waitUntil: 'domcontentloaded' })
         await page.locator('canvas').waitFor({ timeout: 30000 })
         await page.locator('.tour-start-button').waitFor({ timeout: 30000 })
+        await page.waitForLoadState('networkidle', { timeout: 16000 }).catch(() => {})
+        const verifiedBagels = [
+          'bagel-plain.webp','bagel-everything.webp','bagel-sesame.webp',
+          'bagel-classic-onion.webp','bagel-jalapeno-cheddar.webp',
+          'bagel-cheddar.webp','bagel-cinnamon-raisin.webp','bagel-blueberry.webp',
+        ]
+        if (verifiedBagels.some((asset) => !productAssets.has(asset))) {
+          failures.push(mode.name + ': 3D showcase does not load all eight individual real bagel photos')
+        }
 
         if (mode.name === 'desktop') {
           const initialX = Number(await page.locator('.playable-shell').getAttribute('data-player-x'))
