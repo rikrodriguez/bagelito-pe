@@ -372,6 +372,8 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     setBagelCounts((current) => {
       const n = current[id] ?? 0
       if (!n) return current
+      // A single-flavor pack is one choice repeated, not six separate taps.
+      if (bagelMode === 'pack' && packMix === 'single') return {}
       const next = { ...current }
       if (n === 1) delete next[id]
       else next[id] = n - 1
@@ -447,6 +449,36 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
 
   const showProgress = !['entrance', 'pay', 'receipt', 'wallet', 'handoff', 'goodbye', 'returning'].includes(scene)
   const visibleCartCount = bagelTotal + schmearTotal
+  const canEditOrder = ['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears','cross-sell','cashier'].includes(scene)
+  const canGoBack = canEditOrder && scene !== 'entrance' || (scene === 'pay' && qaMode)
+  const canReviewAtCashier = category === 'schmears'
+    ? schmearTotal === 1
+    : category === 'packs'
+      ? bagelTotal === bagelTarget
+      : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
+
+  function goBack() {
+    const previous: Scene | null = scene === 'selector' ? 'entrance'
+      : scene === 'pack-size' ? 'selector'
+      : scene === 'pack-qty' ? 'pack-size'
+      : scene === 'combos' ? 'selector'
+      : scene === 'schmear-size' ? 'selector'
+      : scene === 'bagels' ? (bagelMode === 'upsell8' || bagelMode === 'downsell2' ? 'cross-sell' : category === 'packs' ? 'pack-qty' : 'combos')
+      : scene === 'schmears' ? (category === 'schmears' ? 'schmear-size' : 'bagels')
+      : scene === 'cross-sell' ? 'schmears'
+      : scene === 'cashier' ? (bagelMode === 'upsell8' || bagelMode === 'downsell2' ? 'bagels' : 'schmears')
+      : scene === 'pay' && qaMode ? 'cashier'
+      : null
+    if (previous) setScene(previous)
+  }
+
+  function jumpToStage(index: number) {
+    if (!canEditOrder || index > progressIndex) return
+    if (index === 0) setScene('selector')
+    if (index === 1 && category !== 'schmears') setScene('bagels')
+    if (index === 2 && (category === 'schmears' || bagelTotal === bagelTarget)) setScene('schmears')
+    if (index === 3 && canReviewAtCashier) setScene('cashier')
+  }
 
   function goToEntrance() {
     setCategory(null)
@@ -492,6 +524,10 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       </button>
     </header>
 
+    {canGoBack && <button type="button" className="guided-journey-back" onClick={goBack} aria-label="Volver al paso anterior" title="Volver al paso anterior">
+      <span aria-hidden="true">←</span><span>Volver</span>
+    </button>}
+
     {menuOpen && <nav className="guided-store-menu-panel" aria-label="Menú Bagelito">
       <strong>Bagelito</strong>
       <button type="button" onClick={goToEntrance}>Inicio</button>
@@ -505,19 +541,27 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
       {selectedBagelSummary.map((item) => <div key={'bagel-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
       {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
       <small>{checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
+      {canEditOrder && category && visibleCartCount > 0 && <button type="button" onClick={() => {
+        setCartOpen(false)
+        setScene(category === 'schmears' ? 'schmears' : 'bagels')
+      }}>Editar sabores</button>}
       <button type="button" onClick={() => setCartOpen(false)}>Cerrar resumen</button>
     </aside>}
 
-    {showProgress && <div className="guided-progress-master">
-      {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => <div
-        key={label}
-        data-active={progressIndex === index}
-        data-done={progressIndex > index}
-      >
-        <i>{progressIndex > index ? '✓' : index + 1}</i>
-        <span>{label}</span>
-      </div>)}
-    </div>}
+    {showProgress && <nav className="guided-progress-master" aria-label="Pasos de compra">
+      {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => {
+        const accessible = index <= progressIndex && index < 4
+          && (index === 0
+            || index === 1 && category !== 'schmears'
+            || index === 2 && (category === 'schmears' || bagelTotal === bagelTarget)
+            || index === 3 && canReviewAtCashier)
+        return <div key={label} data-active={progressIndex === index} data-done={progressIndex > index}>
+          <button type="button" disabled={!accessible} aria-current={progressIndex === index ? 'step' : undefined} aria-label={'Ir a ' + label} onClick={() => jumpToStage(index)}>
+            <i>{progressIndex > index ? '✓' : index + 1}</i><span>{label}</span>
+          </button>
+        </div>
+      })}
+    </nav>}
 
     {scene === 'entrance' && <div className="guided-entrance-action">
       <div>
