@@ -78,6 +78,8 @@ const SCHMEAR_SPOTS = [
 
 export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; customerName?: string | null }) {
   const [scene, setScene] = useState<Scene>('entrance')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [cartOpen, setCartOpen] = useState(false)
   const [category, setCategory] = useState<Category | null>(null)
   const [packFormat, setPackFormat] = useState<PackFormat>('grande')
   const [packQty, setPackQty] = useState(6)
@@ -110,6 +112,13 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
   const qaMode = qaRequested && paymentConfig?.visualQaAllowed === true
   const receiptDrag = useRef({ startY: 0, offset: 0 })
   const receiptPulledRef = useRef(false)
+
+  // Navigation and order drawer stay in their own layer while walking.
+  // Close both when the customer moves to a new scene.
+  useEffect(() => {
+    setMenuOpen(false)
+    setCartOpen(false)
+  }, [scene])
 
   useEffect(() => {
     if (customerName) {
@@ -421,14 +430,68 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
     window.setTimeout(() => setScene('handoff'), 650)
   }
 
-  const showProgress = !['entrance', 'goodbye', 'returning'].includes(scene)
+  const showProgress = !['entrance', 'pay', 'receipt', 'wallet', 'handoff', 'goodbye', 'returning'].includes(scene)
+  const visibleCartCount = bagelTotal + schmearTotal
+
+  function goToEntrance() {
+    setCategory(null)
+    setComboId(null)
+    resetSelections()
+    setReceiptPulled(false)
+    receiptPulledRef.current = false
+    setWalletSaved(false)
+    setPaidOrderCode(null)
+    setPaidAmountPen(null)
+    setCheckoutQuote(null)
+    setScene('entrance')
+  }
 
   return <div className="guided-commerce" data-scene={scene} data-qa={qaMode ? 'true' : 'false'}>
     <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />
     {scene !== 'bagels' && scene !== 'schmears' && <img key={'master-' + scene} className="guided-scene-image" src={sceneImage} alt="" />}
     <div className="guided-scene-vignette" />
 
-    <button className="guided-close" type="button" onClick={onExit} aria-label="Cerrar experiencia">×</button>
+    <header className="guided-store-topbar">
+      <button
+        type="button"
+        className="guided-store-menu-button"
+        aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-expanded={menuOpen}
+        onClick={() => { setMenuOpen((open) => !open); setCartOpen(false) }}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        className="guided-store-cart-button"
+        aria-label={'Ver tu pedido: ' + visibleCartCount + ' productos'}
+        aria-expanded={cartOpen}
+        onClick={() => { setCartOpen((open) => !open); setMenuOpen(false) }}
+      >
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
+          <path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/>
+        </svg>
+        <span>Tu pedido ({visibleCartCount})</span>
+      </button>
+    </header>
+
+    {menuOpen && <nav className="guided-store-menu-panel" aria-label="Menú Bagelito">
+      <strong>Bagelito</strong>
+      <button type="button" onClick={goToEntrance}>Inicio</button>
+      <button type="button" onClick={() => setScene('selector')}>Packs · Combos · Schmears</button>
+      <button type="button" onClick={onExit}>Explorar tienda 3D</button>
+    </nav>}
+
+    {cartOpen && <aside className="guided-store-cart-panel" aria-label="Resumen de tu pedido">
+      <strong>Tu pedido</strong>
+      {visibleCartCount === 0 && <p>Aún no has elegido productos.</p>}
+      {selectedBagelSummary.map((item) => <div key={'bagel-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
+      {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
+      <small>{checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
+      <button type="button" onClick={() => setCartOpen(false)}>Cerrar resumen</button>
+    </aside>}
 
     {showProgress && <div className="guided-progress-master">
       {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => <div
