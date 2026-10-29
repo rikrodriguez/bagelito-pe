@@ -73,6 +73,14 @@ check('3D product tap enters matching guided category', () => {
   assert.match(three, /browseOnly=\{inspectOnly\}/)
 })
 
+check('3D failures return the customer to functional guided shopping', () => {
+  assert.match(three, /class Store3DErrorBoundary extends Component/)
+  assert.match(three, /onRecover=\{\(\)=>enterGuided\(null\)\}/)
+  assert.match(styling, /\.store-3d-fallback/)
+  assert.match(three, /window\.localStorage\.getItem/)
+  assert.match(three, /Storage may be disabled in a private mobile browser/)
+})
+
 check('Payment remains gated', () => {
   assert.match(guided, /checkoutQuote\?\.checkoutAllowed/)
   assert.match(guided, /Checkout bloqueado/)
