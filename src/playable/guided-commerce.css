@@ -1133,3 +1133,156 @@
     width:17%!important;
   }
 }
+
+
+/* BAGELITO / APPROVED VISUAL CONTRACT
+ * White retail environment, Bagelito blue (#004AAD), subtle ice-blue cards,
+ * pill-shaped progress holder, and physical blue plaques with WHITE names.
+ * Labels are live text over the clean bagel photograph, never hardcoded prices.
+ */
+.guided-commerce{
+  --bagelito-blue:#004aad;
+  --bagelito-blue-dark:#003a90;
+  --bagelito-ice:#edf5ff;
+  --bagelito-white:#fff;
+  --bagelito-ink:#133b70;
+}
+
+.bagel-vitrina-blue-labels{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+}
+.bagel-vitrina-label{
+  position:absolute;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-width:0;
+  padding:2px 5px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  background:var(--bagelito-blue);
+  color:var(--bagelito-white);
+  font-size:clamp(8px,1.02vw,15px);
+  font-weight:950;
+  letter-spacing:.01em;
+  line-height:1;
+  text-align:center;
+  text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:5px;
+  box-shadow:0 3px 8px rgba(0,23,65,.23);
+  pointer-events:none;
+  user-select:none;
+}
+.bagel-product-frame .bagel-hotspots{z-index:4}
+.bagel-product-frame .bagel-hotspots>button:focus-visible{
+  outline:3px solid #fff;
+  box-shadow:0 0 0 6px rgba(0,74,173,.65);
+}
+@media(max-width:800px){
+  .mobile-bagel-card>button>.mobile-bagel-sign{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:fit-content;
+    max-width:100%;
+    min-height:27px;
+    padding:6px 10px;
+    margin-top:2px;
+    border-radius:6px;
+    background:var(--bagelito-blue);
+    color:#fff;
+    text-align:center;
+    font-size:clamp(9px,2.7vw,12px);
+    font-weight:950;
+    line-height:1.1;
+    letter-spacing:.015em;
+    box-shadow:0 4px 10px rgba(0,74,173,.15);
+  }
+  .mobile-bagel-card>button>.mobile-bagel-sign{
+    overflow-wrap:anywhere;
+    white-space:normal;
+  }
+  .mobile-bagel-card[data-selected="true"]>button>.mobile-bagel-sign{
+    background:var(--bagelito-blue-dark);
+    color:#fff;
+  }
+}
+
+/* Keep the approved white / blue card family throughout the walk-through.
+ * Pale tints preserve hierarchy without adding unrelated branding colors. */
+.guided-commerce .live-selector-cards>button:nth-child(1){
+  background:linear-gradient(180deg,#fff,#f6faff)!important;
+}
+.guided-commerce .live-selector-cards>button:nth-child(2){
+  background:linear-gradient(180deg,#eef6ff,#e4f1ff)!important;
+}
+.guided-commerce .live-selector-cards>button:nth-child(3){
+  background:linear-gradient(180deg,#fff,#f0f6ff)!important;
+}
+.guided-commerce .live-selector-cards>button,
+.guided-commerce .pack-format-grid>button,
+.guided-commerce .pack-choice-grid>button{
+  border-color:rgba(0,74,173,.15)!important;
+}
+.guided-commerce .live-selector-cards>button:focus-visible,
+.guided-commerce .pack-format-grid>button:focus-visible,
+.guided-commerce .pack-choice-grid>button:focus-visible{
+  outline:3px solid var(--bagelito-blue);
+  outline-offset:2px;
+}
+.guided-commerce .guided-progress-master{
+  border:1px solid rgba(0,74,173,.1);
+  background:rgba(255,255,255,.97);
+}
+.guided-commerce .guided-progress-master [data-active="true"]{
+  background:var(--bagelito-blue);
+  color:#fff;
+}
+.guided-commerce .guided-progress-master [data-active="true"] i{
+  background:rgba(255,255,255,.18);
+  color:#fff;
+}
+
+/* Guided camera feel: gentle scene change, no jumpy full-page scroll.
+ * Also applies to header/cards on the next step; no navigation behavior changes. */
+.guided-scene-image{
+  animation:bagelito-scene-enter .28s ease-out both;
+}
+.guided-scene-backdrop{
+  animation:bagelito-background-enter .28s ease-out both;
+}
+.guided-commerce .guided-floating-panel,
+.guided-commerce .approved-combo-overlay,
+.guided-commerce .guided-cashier-action,
+.guided-commerce .mobile-product-stage,
+.guided-commerce .guided-entrance-action,
+.guided-commerce .goodbye-panel{
+  animation:bagelito-panel-enter .24s cubic-bezier(.2,.72,.3,1) both;
+}
+@keyframes bagelito-scene-enter{
+  from{opacity:.65;filter:saturate(.9)}
+  to{opacity:1;filter:saturate(1)}
+}
+@keyframes bagelito-background-enter{
+  from{opacity:.45}
+  to{opacity:1}
+}
+@keyframes bagelito-panel-enter{
+  from{opacity:.3;translate:0 6px}
+  to{opacity:1;translate:0 0}
+}
+@media(prefers-reduced-motion:reduce){
+  .guided-scene-image,
+  .guided-scene-backdrop,
+  .guided-commerce .guided-floating-panel,
+  .guided-commerce .approved-combo-overlay,
+  .guided-commerce .guided-cashier-action,
+  .guided-commerce .mobile-product-stage,
+  .guided-commerce .guided-entrance-action,
+  .guided-commerce .goodbye-panel{animation:none!important;transition:none!important}
+}
