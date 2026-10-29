@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@react-three/drei'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Component, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { BAGEL_SHOWCASE_ORDER, GuidedCommerce as GoldenGuidedCommerce } from './GuidedCommerce'
@@ -56,6 +56,24 @@ const ZONES = {
 
 const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 
+class Store3DErrorBoundary extends Component<{children:ReactNode;onRecover:()=>void},{failed:boolean}> {
+  state={failed:false}
+
+  static getDerivedStateFromError(){
+    return {failed:true}
+  }
+
+  render(){
+    if(this.state.failed) return <div className="store-3d-fallback interactive-ui" role="alert">
+      <img src="/images/bagelito-wordmark.svg" alt="Bagelito"/>
+      <h2>Tu visita continúa.</h2>
+      <p>La vista 3D no está disponible en este dispositivo. Puedes armar tu pedido en el recorrido guiado, con los mismos productos.</p>
+      <button type="button" onClick={this.props.onRecover}>Entrar a la tienda guiada →</button>
+    </div>
+    return this.props.children
+  }
+}
+
 export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guided'|'explore' } = {}) {
   const [ready, setReady] = useState(false)
   const [name, setName] = useState<string | null>(null)
@@ -78,8 +96,13 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
   useEffect(() => {
     setReady(true)
-    const saved = localStorage.getItem('bagelito_customer_name')
-    if (saved) setName(saved)
+    try {
+      const saved = window.localStorage.getItem('bagelito_customer_name')
+      if (saved) setName(saved)
+    } catch {
+      // Storage may be disabled in a private mobile browser. Shopping must
+      // remain usable without it.
+    }
   }, [])
 
   useEffect(() => {
@@ -181,6 +204,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       skipEntrance={skipGuidedEntrance}
       onExit={()=>setExperienceMode('explore')}
     /> : <>
+    <Store3DErrorBoundary onRecover={()=>enterGuided(null)}>
     <Canvas
       shadows
       dpr={[1,1.5]}
@@ -196,6 +220,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <ContactShadows position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
+    </Store3DErrorBoundary>
       <LookSurface look={look} disabled={Boolean(guideNode)}/>
     </>}
 
