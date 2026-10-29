@@ -22,14 +22,15 @@ type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'cas
 
 const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vector3}> = {
   // Wide establishing shot: keeps the store readable while the chooser is open.
-  totem:{position:new THREE.Vector3(0,1.72,6.65),lookAt:new THREE.Vector3(-.25,1.18,.2)},
-  vitrina:{position:new THREE.Vector3(0,1.72,5.25),lookAt:new THREE.Vector3(-.35,1.15,.15)},
-  selector:{position:new THREE.Vector3(0,1.72,5.45),lookAt:new THREE.Vector3(-.25,1.18,.1)},
-  // Product shots: frame the entire relevant display, never a wall.
-  bagels:{position:new THREE.Vector3(-2.05,1.54,3.18),lookAt:new THREE.Vector3(-2.05,1.15,.25)},
-  schmears:{position:new THREE.Vector3(4.10,1.54,2.72),lookAt:new THREE.Vector3(4.22,1.12,.1)},
-  // Checkout shot: counter + cashier + POS, no NPC in foreground.
-  cashier:{position:new THREE.Vector3(5.85,1.62,6.45),lookAt:new THREE.Vector3(5.15,1.20,4.55)},
+  // Approach the physical totem on the left — not the back wall.
+  totem:{position:new THREE.Vector3(-3.70,1.72,7.78),lookAt:new THREE.Vector3(-5.35,1.42,5.95)},
+  vitrina:{position:new THREE.Vector3(0,1.72,5.45),lookAt:new THREE.Vector3(-.35,1.15,.15)},
+  selector:{position:new THREE.Vector3(0,1.72,5.65),lookAt:new THREE.Vector3(-.25,1.18,.1)},
+  // Keep the eight-bagel case and the entire schmear station in frame.
+  bagels:{position:new THREE.Vector3(-2.05,1.58,5.25),lookAt:new THREE.Vector3(-2.05,1.15,.2)},
+  schmears:{position:new THREE.Vector3(4.20,1.58,3.70),lookAt:new THREE.Vector3(4.22,1.12,.05)},
+  // Counter + worker + POS, without slicing the physical cashier.
+  cashier:{position:new THREE.Vector3(5.65,1.65,7.25),lookAt:new THREE.Vector3(5.12,1.2,4.55)},
 }
 
 const TOUR_STOPS: ReadonlyArray<{node:GuideNode;title:string;description:string}> = [
