@@ -1760,3 +1760,21 @@
     min-height:45px;
   }
 }
+
+
+/* A closed gateway must not masquerade as a disabled primary checkout.
+   The primary conversion action is a clearly labeled human inquiry. */
+.guided-cashier-action .guided-launch-contact>a.is-primary{
+  background:#004aad;
+  border-color:#004aad;
+  color:#fff;
+  box-shadow:0 12px 26px rgba(0,74,173,.19);
+}
+.guided-cashier-action .guided-launch-contact>a.is-primary:hover{
+  background:#003b90;
+}
+.guided-cashier-action .guided-launch-contact>a.is-secondary{
+  background:#fff;
+  border-color:#004aad;
+  color:#004aad;
+}
