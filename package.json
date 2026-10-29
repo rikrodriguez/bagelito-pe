@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && tsc --noEmit",
+    "build": "vite build && tsc --noEmit && npm run qa:static && npm run qa:launch",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "qa:guided": "node scripts/qa-guided.cjs",
