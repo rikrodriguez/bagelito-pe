@@ -316,6 +316,19 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       return
     }
 
+    if (paymentConfig.enabled !== true) {
+      // Public manual-inquiry mode is not a failed online checkout. Avoid
+      // displaying server errors when the customer only needs a quote.
+      setQuoteLoading(false)
+      setCheckoutQuote({
+        status: 'manual_inquiry',
+        checkoutAllowed: false,
+        amountPen: null,
+        reasons: [],
+      })
+      return
+    }
+
     let active = true
     setQuoteLoading(true)
     setCheckoutQuote(null)
@@ -918,12 +931,18 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{category === 'schmears' ? ' · ' + schmearSize + ' g' : ''}</b></span>)}
         </div>
         <div className="guided-cashier-quote">
-          <span>{quoteLoading ? 'Validando precio e inventario…' : checkoutQuote?.checkoutAllowed ? 'Subtotal verificado' : 'Revisión requerida'}</span>
-          {checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
+          <span>{paymentConfig?.enabled !== true
+            ? 'Precio final por confirmar'
+            : quoteLoading
+              ? 'Validando precio e inventario…'
+              : checkoutQuote?.checkoutAllowed ? 'Subtotal verificado' : 'Necesita revisión'}</span>
+          {paymentConfig?.enabled === true && checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
         </div>
-        {!quoteLoading && checkoutQuote?.reasons?.length
-          ? <p>{checkoutQuote.reasons[0]}</p>
-          : <p>El delivery se calcula con tu dirección antes de crear la reserva.</p>}
+        {paymentConfig?.enabled !== true
+          ? <p>Tu selección está lista para consultar. Bagelito confirmará el precio y la fecha de entrega por WhatsApp.</p>
+          : !quoteLoading && checkoutQuote?.reasons?.length
+            ? <p>{checkoutQuote.reasons[0]}</p>
+            : <p>El delivery se calcula con tu dirección antes de crear la reserva.</p>}
       </div>
       {(canPayOnline || qaMode) && <button
         type="button"
