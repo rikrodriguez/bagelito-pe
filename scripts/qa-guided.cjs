@@ -189,6 +189,17 @@ async function audit() {
       if (await page.locator('.bagel-live-summary>b').textContent() !== '6/6') {
         failures.push(mode.name + ': returning to an unchanged pack lost its selected flavors')
       }
+      // A draft must survive leaving the screen for a 3D visit and coming back
+      // or a reload, without retaining sensitive customer/payment information.
+      await page.reload({ waitUntil: 'networkidle' })
+      await page.locator('[data-scene="bagels"]').waitFor({timeout:10000})
+      if (await page.locator('.bagel-live-summary>b').textContent() !== '6/6') {
+        failures.push(mode.name + ': an unfinished product draft was lost across navigation')
+      }
+      const rawDraft = await page.evaluate(() => sessionStorage.getItem('bagelito.guided.product-draft.v1'))
+      if (!rawDraft || rawDraft.includes('customerName') || rawDraft.includes('email') || rawDraft.includes('token')) {
+        failures.push(mode.name + ': product draft storage is missing or contains sensitive details')
+      }
 
       const orderHolderText = await page.locator('.guided-store-cart-button>span').textContent()
       if (orderHolderText !== 'Tu pedido (6)') {
