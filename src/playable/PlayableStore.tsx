@@ -472,7 +472,9 @@ function BagelShowcaseProduct({flavorId,position}:{flavorId:string;position:V3})
   texture.colorSpace=THREE.SRGBColorSpace
   return <group position={position}>
     <mesh castShadow position={[0,-.01,-.18]}>
-      <planeGeometry args={[1.36,.83]}/>
+      {/* All eight source WebPs are square with transparency; preserve the
+          aspect ratio so circular bagels are not stretched into ovals. */}
+      <planeGeometry args={[1.04,1.04]}/>
       <meshBasicMaterial map={texture} transparent alphaTest={.025} side={THREE.DoubleSide} depthWrite={false} toneMapped={false}/>
     </mesh>
     <mesh position={[0,-.43,-.21]} rotation={[0,0,0]}>
@@ -498,7 +500,7 @@ function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Rec
       const x=xs[col]
       const clickY=row===0?1.62:.98
       const signY=row===0?1.45:.73
-      const photoY=row===0?1.78:1.10
+      const photoY=row===0?1.68:1.03
       const count=bagels[bagel.id]??0
       return <group key={bagel.id}>
         <RoundedBox receiveShadow castShadow position={[x,clickY,-.15]} args={[1.57,.78,1.0]} radius={.055}>
