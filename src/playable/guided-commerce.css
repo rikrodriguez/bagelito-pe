@@ -1674,3 +1674,22 @@
   .guided-commerce .guided-product-frame,
   .guided-commerce .guided-order-counter{animation:none!important}
 }
+
+
+/* Closeable, accessible overlays: selecting outside dismisses the drawer
+   without accidentally selecting a bagel beneath it. */
+.guided-overlay-dismiss{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:119;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:rgba(1,28,67,.10);
+  cursor:default;
+}
+@media(prefers-reduced-motion:reduce){
+  .guided-overlay-dismiss{transition:none}
+}
