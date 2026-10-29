@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && tsc --noEmit",
     "preview": "vite preview",
-    "typecheck": "vite build && tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "qa:guided": "node scripts/qa-guided.cjs",
     "qa:3d": "node scripts/qa-world-tour.cjs",
     "qa:static": "node scripts/qa-tour-static.cjs",
