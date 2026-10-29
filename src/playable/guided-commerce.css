@@ -1693,3 +1693,16 @@
 @media(prefers-reduced-motion:reduce){
   .guided-overlay-dismiss{transition:none}
 }
+
+
+/* Final brand-consistency pass: selected/complete states also stay blue.
+   No unrelated green product-selection accents in the approved retail UI. */
+.guided-commerce .mobile-bagel-card[data-selected="true"]>button>b,
+.guided-commerce .mobile-schmear-card[data-selected="true"]>button>b{
+  background:#004aad!important;
+  color:#fff!important;
+}
+.guided-commerce .guided-progress-master [data-done="true"] i{
+  background:#e8f1ff!important;
+  color:#004aad!important;
+}
