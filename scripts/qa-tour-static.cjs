@@ -83,7 +83,9 @@ check('3D failures return the customer to functional guided shopping', () => {
 
 check('Payment remains gated', () => {
   assert.match(guided, /checkoutQuote\?\.checkoutAllowed/)
-  assert.match(guided, /Checkout bloqueado/)
+  assert.match(guided, /Pago online aún no disponible/)
+  assert.match(guided, /manualOrderHref/)
+  assert.match(guided, /Sin pago ni reserva automática/)
   assert.match(guided, /qaMode/)
 })
 
