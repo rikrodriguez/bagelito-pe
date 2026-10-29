@@ -1286,3 +1286,190 @@
   .guided-commerce .guided-entrance-action,
   .guided-commerce .goodbye-panel{animation:none!important;transition:none!important}
 }
+
+
+/* Approved persistent store chrome: round menu / live cart / bottom holder. */
+.guided-store-topbar{
+  position:absolute;
+  z-index:120;
+  top:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  pointer-events:none;
+}
+.guided-store-topbar>button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  pointer-events:auto;
+  border:1px solid rgba(0,74,173,.12);
+  border-radius:999px;
+  background:rgba(255,255,255,.97);
+  color:#004aad;
+  box-shadow:0 12px 30px rgba(0,27,67,.13);
+  backdrop-filter:blur(18px);
+  cursor:pointer;
+  transition:background .16s ease,transform .16s ease,box-shadow .16s ease;
+}
+.guided-store-topbar>button:hover,
+.guided-store-topbar>button[aria-expanded="true"]{
+  background:#edf5ff;
+  box-shadow:0 14px 34px rgba(0,74,173,.17);
+}
+.guided-store-topbar>button:active{transform:scale(.96)}
+.guided-store-topbar>button:focus-visible{
+  outline:3px solid #004aad;
+  outline-offset:3px;
+}
+.guided-store-menu-button{
+  width:49px;
+  height:49px;
+}
+.guided-store-cart-button{
+  min-height:49px;
+  padding:0 19px;
+  font-size:12px;
+  font-weight:950;
+}
+.guided-store-menu-panel,
+.guided-store-cart-panel{
+  position:absolute;
+  z-index:121;
+  top:78px;
+  width:min(325px,calc(100vw - 26px));
+  padding:16px;
+  border:1px solid rgba(0,74,173,.13);
+  border-radius:23px;
+  background:rgba(255,255,255,.98);
+  color:#133b70;
+  box-shadow:0 22px 58px rgba(0,22,60,.22);
+  backdrop-filter:blur(18px);
+  animation:bagelito-panel-enter .2s ease-out both;
+}
+.guided-store-menu-panel{
+  left:18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.guided-store-menu-panel strong,
+.guided-store-cart-panel>strong{
+  display:block;
+  color:#004aad;
+  font-weight:950;
+  font-size:17px;
+  letter-spacing:-.025em;
+  margin-bottom:7px;
+}
+.guided-store-menu-panel>button,
+.guided-store-cart-panel>button{
+  min-height:39px;
+  width:100%;
+  padding:10px 13px;
+  border:1px solid #e0eaf4;
+  border-radius:14px;
+  background:#f6faff;
+  color:#004aad;
+  text-align:left;
+  font-size:12px;
+  font-weight:850;
+  cursor:pointer;
+}
+.guided-store-menu-panel>button:hover,
+.guided-store-cart-panel>button:hover{
+  background:#eaf3ff;
+}
+.guided-store-cart-panel{right:18px;}
+.guided-store-cart-panel>div{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  padding:7px 0;
+  border-bottom:1px solid #edf2f7;
+  font-size:11px;
+}
+.guided-store-cart-panel>div span{font-weight:700;color:#284e7b}
+.guided-store-cart-panel>div b{color:#004aad;white-space:nowrap}
+.guided-store-cart-panel p{
+  margin:6px 0 12px;
+  font-size:11px;
+  color:#71849a;
+}
+.guided-store-cart-panel>small{
+  display:block;
+  padding:12px 0;
+  font-size:10px;
+  font-weight:750;
+  color:#70869a;
+}
+@media(min-width:801px){
+  .guided-commerce .guided-progress-master{
+    top:auto!important;
+    bottom:18px!important;
+    left:50%;
+    transform:translateX(-50%);
+    min-height:50px;
+    padding:6px;
+    gap:6px;
+  }
+  .guided-commerce .guided-progress-master>div{
+    padding:7px 12px;
+    font-size:10px;
+    gap:7px;
+  }
+  .guided-commerce .guided-progress-master i{
+    width:21px;
+    height:21px;
+  }
+}
+@media(max-width:800px){
+  .guided-store-topbar{
+    top:11px;
+    left:11px;
+    right:11px;
+  }
+  .guided-store-menu-button{width:44px;height:44px}
+  .guided-store-cart-button{
+    min-height:44px;
+    padding:0 11px;
+    gap:7px;
+    font-size:10px;
+  }
+  .guided-store-menu-panel,
+  .guided-store-cart-panel{
+    top:64px;
+    width:min(290px,calc(100vw - 22px));
+  }
+  .guided-store-menu-panel{left:11px}
+  .guided-store-cart-panel{right:11px}
+  .guided-commerce .guided-progress-master{
+    top:65px!important;
+    bottom:auto!important;
+    width:calc(100% - 24px);
+    justify-content:space-around;
+    padding:5px 4px;
+    gap:1px;
+  }
+  .guided-commerce .guided-progress-master>div{
+    flex:1;
+    justify-content:center;
+    padding:5px 3px;
+    font-size:7px;
+    gap:2px;
+  }
+  .guided-commerce .guided-progress-master i{
+    width:16px;
+    height:16px;
+    font-size:8px;
+  }
+  [data-scene="bagels"] .guided-progress-master,
+  [data-scene="schmears"] .guided-progress-master,
+  [data-scene="cashier"] .guided-progress-master,
+  [data-scene="cross-sell"] .guided-progress-master{
+    display:none!important;
+  }
+}
