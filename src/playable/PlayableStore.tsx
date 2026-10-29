@@ -66,6 +66,10 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   }, [])
 
   useEffect(() => {
+    if(experienceMode!=='explore'){
+      setMove({forward:false,backward:false,left:false,right:false,run:false})
+      return
+    }
     const map:Record<string,keyof Move> = {
       KeyW:'forward',ArrowUp:'forward',KeyS:'backward',ArrowDown:'backward',
       KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right',
@@ -73,7 +77,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     }
     const apply=(value:boolean)=>(e:KeyboardEvent)=>{
       const key=map[e.code]
-      if(!key) return
+      if(!key || (e.target instanceof HTMLElement && e.target.closest('input,textarea,select,[contenteditable="true"]'))) return
       e.preventDefault()
       setMove(v=>({...v,[key]:value}))
     }
@@ -81,7 +85,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     window.addEventListener('keydown',down,{passive:false})
     window.addEventListener('keyup',up,{passive:false})
     return()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up)}
-  },[])
+  },[experienceMode])
 
   const selectedCombo = combos.find(x=>x.id===comboId) ?? null
   const bagelTarget = category==='packs' ? packQty : selectedCombo?.bagels ?? 0
@@ -162,6 +166,20 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 </main>
 }
 
+// Collision envelopes preserve the shopping lanes while allowing customers
+// to approach every vitrina and the register. NPC routes run at the edges.
+const WALK_BLOCKERS = [
+  { minX:-5.95, maxX:6.65, minZ:-1.35, maxZ:1.52 }, // glass displays
+  { minX:3.15, maxX:7.15, minZ:3.42, maxZ:5.94 }, // cashier counter + POS
+  { minX:-7.35, maxX:-5.08, minZ:-3.03, maxZ:-.78 }, // seating island
+] as const
+
+function canWalkAt(x:number,z:number){
+  return !WALK_BLOCKERS.some(box =>
+    x>box.minX && x<box.maxX && z>box.minZ && z<box.maxZ
+  )
+}
+
 function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
   const {camera}=useThree()
   const pos=useRef(new THREE.Vector3(0,1.68,7.5))
@@ -189,9 +207,15 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
       r.set(f.z,0,-f.x)
       v.set(0,0,0)
       if(move.forward)v.add(f);if(move.backward)v.sub(f);if(move.right)v.add(r);if(move.left)v.sub(r)
-      if(v.lengthSq()){v.normalize().multiplyScalar(speed);pos.current.add(v)}
-      pos.current.x=THREE.MathUtils.clamp(pos.current.x,-7.15,7.15)
-      pos.current.z=THREE.MathUtils.clamp(pos.current.z,-8.0,8.25)
+      if(v.lengthSq()){
+        v.normalize().multiplyScalar(speed)
+        const nextX=THREE.MathUtils.clamp(pos.current.x+v.x,-7.15,7.15)
+        const nextZ=THREE.MathUtils.clamp(pos.current.z+v.z,-8.0,8.25)
+        // Separate axes so walking diagonally slides along the glass counter
+        // rather than clipping through it or sticking against the corner.
+        if(canWalkAt(nextX,pos.current.z))pos.current.x=nextX
+        if(canWalkAt(pos.current.x,nextZ))pos.current.z=nextZ
+      }
       camera.position.copy(pos.current)
       camera.rotation.order='YXZ'
       camera.rotation.set(look.current.pitch,look.current.yaw,0)
@@ -617,8 +641,8 @@ function MovingNPC({from,to,shirt,backpack,bag,phase}:{from:V3;to:V3;shirt:strin
   </group>
 }
 
-function MobilePad({move,setMove}:{move:Move;setMove:(m:Move)=>void}){
-  const set=(k:keyof Move,v:boolean)=>setMove({...move,[k]:v})
+function MobilePad({move,setMove}:{move:Move;setMove:React.Dispatch<React.SetStateAction<Move>>}){
+  const set=(k:keyof Move,v:boolean)=>setMove(prev=>({...prev,[k]:v}))
   const bind=(k:keyof Move)=>({onPointerDown:()=>set(k,true),onPointerUp:()=>set(k,false),onPointerLeave:()=>set(k,false),onPointerCancel:()=>set(k,false)})
   return <div className="mobile-pad interactive-ui"><button {...bind('forward')}>▲</button><button {...bind('left')}>◀</button><button {...bind('backward')}>▼</button><button {...bind('right')}>▶</button></div>
 }
