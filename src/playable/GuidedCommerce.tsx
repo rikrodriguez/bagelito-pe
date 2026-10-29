@@ -53,6 +53,21 @@ const BAGEL_SPOTS = [
   { left: '75%', top: '53%', width: '25%', height: '44%' },
 ] as const
 
+/** Blue-on-white inverted label plates, aligned to the printed labels
+ * in /images/bagel-vitrina-photo.webp (800 × 300 photograph). These are
+ * presentation only; product selection remains on the existing hotspots.
+ */
+export const BAGEL_SIGN_POSITIONS = [
+  { left: '6%', top: '32.5%', width: '21%', height: '12%' },
+  { left: '29%', top: '32.5%', width: '21%', height: '12%' },
+  { left: '52.5%', top: '32.5%', width: '21%', height: '12%' },
+  { left: '76%', top: '32.5%', width: '21.5%', height: '12%' },
+  { left: '5%', top: '77.5%', width: '22.5%', height: '12%' },
+  { left: '28.5%', top: '77.5%', width: '22%', height: '12%' },
+  { left: '52%', top: '77.5%', width: '22%', height: '12%' },
+  { left: '75.5%', top: '77.5%', width: '22%', height: '12%' },
+] as const
+
 const SCHMEAR_SPOTS = [
   { left: '5%', top: '20%', width: '17%', height: '61%' },
   { left: '23%', top: '20%', width: '17%', height: '61%' },
@@ -518,7 +533,7 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
             return <article key={bagel.id} className="mobile-bagel-card" data-selected={count > 0}>
               <button type="button" onClick={() => addBagel(bagel.id)} aria-label={'Agregar ' + bagel.name}>
                 <img src={'/images/bagel-' + bagel.id + '.webp'} alt={bagel.name} loading="eager" />
-                <span>{bagel.name}</span>
+                <span className="mobile-bagel-sign">{bagel.name}</span>
                 {bagel.premium && <small>Premium</small>}
                 <b aria-hidden="true">{count > 0 ? '✓' : '+'}</b>
               </button>
@@ -530,7 +545,15 @@ export function GuidedCommerce({ onExit, customerName }: { onExit: () => void; c
           })}
         </div>
       </section>
-      <div className="guided-product-frame bagel-product-frame"><img src={sceneImage} alt="Vitrina de bagels" /><div className="guided-product-hotspots bagel-hotspots">
+      <div className="guided-product-frame bagel-product-frame">
+        <img src={sceneImage} alt="Vitrina con ocho sabores de bagels" />
+        <div className="bagel-vitrina-blue-labels" aria-hidden="true">
+          {BAGEL_SHOWCASE_ORDER.map((flavorId, index) => {
+            const bagel = menu.bagels.find((item) => item.id === flavorId)
+            return bagel ? <span key={flavorId} className="bagel-vitrina-label" style={BAGEL_SIGN_POSITIONS[index]}>{bagel.name}</span> : null
+          })}
+        </div>
+        <div className="guided-product-hotspots bagel-hotspots">
         {BAGEL_SHOWCASE_ORDER.map((flavorId, index) => {
           const bagel = menu.bagels.find((item) => item.id === flavorId)
           if (!bagel) return null
