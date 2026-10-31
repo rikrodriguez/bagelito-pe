@@ -2011,7 +2011,7 @@
     grid-column:1;grid-row:1/3;width:44px!important;height:44px!important;object-fit:contain!important;
   }
   .guided-commerce[data-live-world="true"] .mobile-bagel-card > button > .mobile-bagel-sign{
-    grid-column:2;grid-row:1;min-height:0;padding:0 14px 0 0;border:0;background:transparent!important;
+    grid-column:2;grid-row:1;min-height:0;padding:0 14px 0 0;border:0;background:#fffaf4!important;
     border-radius:0;font-size:12px;line-height:14px;text-align:left;justify-content:flex-start;
     white-space:normal;overflow-wrap:normal;box-shadow:none;
   }
