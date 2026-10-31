@@ -1,0 +1,4579 @@
+{
+  "applicationSHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
+  "kind": "Compiled application focus verification; native Tab/touch after explicit initial scroll/focus setup",
+  "scriptSHA256": "6acceb7b6488789ce3350db4ebfcf1e6f336159b6a910f9d24f2a1ddc29bff81",
+  "variants": [
+    {
+      "variant": "compiled-focus",
+      "setup": "Programmatic initial scroll/focus only; all following navigation uses native Tab",
+      "tabs": [
+        {
+          "n": 0,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Everything",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Everything",
+                "visible": true,
+                "rect": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 103,
+                  "y": 655
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 595,
+                      "right": 369,
+                      "bottom": 717,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Everything",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 79,
+                      "y": 648,
+                      "width": 80.953125,
+                      "height": 14,
+                      "right": 159.953125,
+                      "bottom": 662
+                    },
+                    "glyphs": [
+                      {
+                        "x": 79,
+                        "y": 646,
+                        "right": 145.953125,
+                        "bottom": 663,
+                        "width": 66.953125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Everything",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Everything",
+                "visible": true,
+                "rect": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 103,
+                  "y": 655
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 595,
+                      "right": 369,
+                      "bottom": 717,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Everything",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 79,
+                      "y": 648,
+                      "width": 80.953125,
+                      "height": 14,
+                      "right": 159.953125,
+                      "bottom": 662
+                    },
+                    "glyphs": [
+                      {
+                        "x": 79,
+                        "y": 646,
+                        "right": 145.953125,
+                        "bottom": 663,
+                        "width": 66.953125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Everything",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Everything",
+                "visible": true,
+                "rect": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 103,
+                  "y": 655
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 595,
+                      "right": 369,
+                      "bottom": 717,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 24,
+                  "y": 596,
+                  "right": 182,
+                  "bottom": 714,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Everything",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 79,
+                      "y": 648,
+                      "width": 80.953125,
+                      "height": 14,
+                      "right": 159.953125,
+                      "bottom": 662
+                    },
+                    "glyphs": [
+                      {
+                        "x": 79,
+                        "y": 646,
+                        "right": 145.953125,
+                        "bottom": 663,
+                        "width": 66.953125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Everything",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Everything",
+                "visible": true,
+                "rect": {
+                  "x": 24,
+                  "y": 590,
+                  "right": 182,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 24,
+                  "y": 590,
+                  "right": 182,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 103,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 24,
+                  "y": 590,
+                  "right": 182,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Everything",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 79,
+                      "y": 642,
+                      "width": 80.953125,
+                      "height": 14,
+                      "right": 159.953125,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 79,
+                        "y": 640,
+                        "right": 145.953125,
+                        "bottom": 657,
+                        "width": 66.953125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 1,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Sesame",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Sesame",
+                "visible": true,
+                "rect": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 271,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Sesame",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 247,
+                      "y": 642,
+                      "width": 60.875,
+                      "height": 14,
+                      "right": 307.875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 247,
+                        "y": 640,
+                        "right": 293.875,
+                        "bottom": 657,
+                        "width": 46.875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Sesame",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Sesame",
+                "visible": true,
+                "rect": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 271,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Sesame",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 247,
+                      "y": 642,
+                      "width": 60.875,
+                      "height": 14,
+                      "right": 307.875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 247,
+                        "y": 640,
+                        "right": 293.875,
+                        "bottom": 657,
+                        "width": 46.875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Sesame",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Sesame",
+                "visible": true,
+                "rect": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 271,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Sesame",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 247,
+                      "y": 642,
+                      "width": 60.875,
+                      "height": 14,
+                      "right": 307.875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 247,
+                        "y": 640,
+                        "right": 293.875,
+                        "bottom": 657,
+                        "width": 46.875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Sesame",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Sesame",
+                "visible": true,
+                "rect": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 271,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 0,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 192,
+                  "y": 590,
+                  "right": 350,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Sesame",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 247,
+                      "y": 642,
+                      "width": 60.875,
+                      "height": 14,
+                      "right": 307.875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 247,
+                        "y": 640,
+                        "right": 293.875,
+                        "bottom": 657,
+                        "width": 46.875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 2,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Plain",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 163,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Plain",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 163,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Plain",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 44.890625,
+                      "height": 14,
+                      "right": 296.890625,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 282.890625,
+                        "bottom": 657,
+                        "width": 30.890625,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Plain",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 163,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Plain",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 163,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Plain",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 44.890625,
+                      "height": 14,
+                      "right": 296.890625,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 282.890625,
+                        "bottom": 657,
+                        "width": 30.890625,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Plain",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 163,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Plain",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 163,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Plain",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 44.890625,
+                      "height": 14,
+                      "right": 296.890625,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 282.890625,
+                        "bottom": 657,
+                        "width": 30.890625,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Plain",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 163,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Plain",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 163,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Plain",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 44.890625,
+                      "height": 14,
+                      "right": 296.890625,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 282.890625,
+                        "bottom": 657,
+                        "width": 30.890625,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 3,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Classic Onion",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 331,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Classic Onion",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 331,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Classic Onion",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 96.1875,
+                      "height": 14,
+                      "right": 348.1875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 334.1875,
+                        "bottom": 657,
+                        "width": 82.1875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Classic Onion",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 331,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Classic Onion",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 331,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Classic Onion",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 96.1875,
+                      "height": 14,
+                      "right": 348.1875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 334.1875,
+                        "bottom": 657,
+                        "width": 82.1875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Classic Onion",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 331,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Classic Onion",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 331,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Classic Onion",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 96.1875,
+                      "height": 14,
+                      "right": 348.1875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 334.1875,
+                        "bottom": 657,
+                        "width": 82.1875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Classic Onion",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 331,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Classic Onion",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 331,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Classic Onion",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 642,
+                      "width": 96.1875,
+                      "height": 14,
+                      "right": 348.1875,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 640,
+                        "right": 334.1875,
+                        "bottom": 657,
+                        "width": 82.1875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 4,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Jalapeño Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 499,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Jalapeño Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 499,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Jalapeño Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 629.5,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 657.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 627.5,
+                        "right": 305.578125,
+                        "bottom": 644.5,
+                        "width": 53.578125,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 641.5,
+                        "right": 303.78125,
+                        "bottom": 658.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Jalapeño Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 499,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Jalapeño Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 499,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Jalapeño Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 629.5,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 657.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 627.5,
+                        "right": 305.578125,
+                        "bottom": 644.5,
+                        "width": 53.578125,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 641.5,
+                        "right": 303.78125,
+                        "bottom": 658.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Jalapeño Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 499,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Jalapeño Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 499,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Jalapeño Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 629.5,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 657.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 627.5,
+                        "right": 305.578125,
+                        "bottom": 644.5,
+                        "width": 53.578125,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 641.5,
+                        "right": 303.78125,
+                        "bottom": 658.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Jalapeño Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 499,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Jalapeño Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 499,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Jalapeño Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 629.5,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 657.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 627.5,
+                        "right": 305.578125,
+                        "bottom": 644.5,
+                        "width": 53.578125,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 641.5,
+                        "right": 303.78125,
+                        "bottom": 658.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 5,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 667,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 667,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 636.5,
+                      "width": 65.78125,
+                      "height": 14,
+                      "right": 317.78125,
+                      "bottom": 650.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 634.5,
+                        "right": 303.78125,
+                        "bottom": 651.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 667,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 667,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 636.5,
+                      "width": 65.78125,
+                      "height": 14,
+                      "right": 317.78125,
+                      "bottom": 650.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 634.5,
+                        "right": 303.78125,
+                        "bottom": 651.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 667,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 667,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 636.5,
+                      "width": 65.78125,
+                      "height": 14,
+                      "right": 317.78125,
+                      "bottom": 650.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 634.5,
+                        "right": 303.78125,
+                        "bottom": 651.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Cheddar",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 667,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cheddar",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 667,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cheddar",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 636.5,
+                      "width": 65.78125,
+                      "height": 14,
+                      "right": 317.78125,
+                      "bottom": 650.5
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 634.5,
+                        "right": 303.78125,
+                        "bottom": 651.5,
+                        "width": 51.78125,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  },
+                  {
+                    "text": "Premium",
+                    "tag": "SMALL",
+                    "rect": {
+                      "x": 252,
+                      "y": 691,
+                      "width": 97,
+                      "height": 11,
+                      "right": 349,
+                      "bottom": 702
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 690,
+                        "right": 295.109375,
+                        "bottom": 703,
+                        "width": 43.109375,
+                        "height": 13
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 6,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Cinnamon Raisin",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 835,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cinnamon Raisin",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 835,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cinnamon Raisin",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 635,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 663
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 633,
+                        "right": 314.859375,
+                        "bottom": 650,
+                        "width": 62.859375,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 647,
+                        "right": 289.421875,
+                        "bottom": 664,
+                        "width": 37.421875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Cinnamon Raisin",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 835,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cinnamon Raisin",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 835,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cinnamon Raisin",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 635,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 663
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 633,
+                        "right": 314.859375,
+                        "bottom": 650,
+                        "width": 62.859375,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 647,
+                        "right": 289.421875,
+                        "bottom": 664,
+                        "width": 37.421875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Cinnamon Raisin",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 835,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cinnamon Raisin",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 835,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cinnamon Raisin",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 635,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 663
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 633,
+                        "right": 314.859375,
+                        "bottom": 650,
+                        "width": 62.859375,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 647,
+                        "right": 289.421875,
+                        "bottom": 664,
+                        "width": 37.421875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Cinnamon Raisin",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 835,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Cinnamon Raisin",
+                "visible": true,
+                "rect": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 276,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 835,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 197,
+                  "y": 590,
+                  "right": 355,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Cinnamon Raisin",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 252,
+                      "y": 635,
+                      "width": 97,
+                      "height": 28,
+                      "right": 349,
+                      "bottom": 663
+                    },
+                    "glyphs": [
+                      {
+                        "x": 252,
+                        "y": 633,
+                        "right": 314.859375,
+                        "bottom": 650,
+                        "width": 62.859375,
+                        "height": 17
+                      },
+                      {
+                        "x": 252,
+                        "y": 647,
+                        "right": 289.421875,
+                        "bottom": 664,
+                        "width": 37.421875,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "n": 7,
+          "samples": [
+            {
+              "ms": 0,
+              "focus": {
+                "label": "Agregar Blueberry",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 992,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Blueberry",
+                "visible": true,
+                "rect": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 287,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 992,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Blueberry",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 263,
+                      "y": 642,
+                      "width": 74.734375,
+                      "height": 14,
+                      "right": 337.734375,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 263,
+                        "y": 640,
+                        "right": 323.734375,
+                        "bottom": 657,
+                        "width": 60.734375,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 100,
+              "focus": {
+                "label": "Agregar Blueberry",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 992,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Blueberry",
+                "visible": true,
+                "rect": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 287,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 992,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Blueberry",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 263,
+                      "y": 642,
+                      "width": 74.734375,
+                      "height": 14,
+                      "right": 337.734375,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 263,
+                        "y": 640,
+                        "right": 323.734375,
+                        "bottom": 657,
+                        "width": 60.734375,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 500,
+              "focus": {
+                "label": "Agregar Blueberry",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 992,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Blueberry",
+                "visible": true,
+                "rect": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 287,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 992,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Blueberry",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 263,
+                      "y": 642,
+                      "width": 74.734375,
+                      "height": 14,
+                      "right": 337.734375,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 263,
+                        "y": 640,
+                        "right": 323.734375,
+                        "bottom": 657,
+                        "width": 60.734375,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            },
+            {
+              "ms": 1000,
+              "focus": {
+                "label": "Agregar Blueberry",
+                "tag": "BUTTON",
+                "scrolls": [
+                  {
+                    "class": "",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-card",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 158,
+                    "scrollWidth": 158
+                  },
+                  {
+                    "class": "mobile-bagel-grid",
+                    "left": 992,
+                    "top": 0,
+                    "clientWidth": 348,
+                    "scrollWidth": 1340
+                  },
+                  {
+                    "class": "mobile-product-stage mobile-bagel-stage",
+                    "left": 0,
+                    "top": 0,
+                    "clientWidth": 364,
+                    "scrollWidth": 364
+                  }
+                ]
+              },
+              "target": {
+                "label": "Agregar Blueberry",
+                "visible": true,
+                "rect": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "clip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118
+                },
+                "point": {
+                  "x": 287,
+                  "y": 649
+                },
+                "hit": true,
+                "topHit": {
+                  "tag": "SPAN",
+                  "className": "mobile-bagel-sign"
+                },
+                "scrollables": [
+                  {
+                    "depth": 2,
+                    "horizontal": true,
+                    "vertical": false,
+                    "rect": {
+                      "x": 21,
+                      "y": 589,
+                      "right": 369,
+                      "bottom": 711,
+                      "width": 348,
+                      "height": 122
+                    },
+                    "scrollLeft": 992,
+                    "scrollTop": 0,
+                    "clientWidth": 348,
+                    "clientHeight": 122,
+                    "scrollWidth": 1340,
+                    "scrollHeight": 122
+                  }
+                ]
+              },
+              "text": {
+                "buttonClip": {
+                  "x": 208,
+                  "y": 590,
+                  "right": 366,
+                  "bottom": 708,
+                  "width": 158,
+                  "height": 118,
+                  "visible": true
+                },
+                "texts": [
+                  {
+                    "text": "Blueberry",
+                    "tag": "SPAN",
+                    "rect": {
+                      "x": 263,
+                      "y": 642,
+                      "width": 74.734375,
+                      "height": 14,
+                      "right": 337.734375,
+                      "bottom": 656
+                    },
+                    "glyphs": [
+                      {
+                        "x": 263,
+                        "y": 640,
+                        "right": 323.734375,
+                        "bottom": 657,
+                        "width": 60.734375,
+                        "height": 17
+                      }
+                    ],
+                    "visible": true,
+                    "ellipsis": false,
+                    "complete": true,
+                    "overlapsMinus": false
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "events": [],
+  "network": {
+    "reads": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/?qa=1",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/assets/index-B-tAIt2X.css",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/assets/PlayableStore-DoRETWDx.css",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/assets/routes-BhL9tLjb.js",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/assets/index-DN4S1jGK.js",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/assets/legal-version-BguVS3S4.js",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/assets/PlayableStore-lW_yAIeU.js",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/store-reference-approved.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagelito-wordmark.svg",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/store-reference-approved.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-plain.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-everything.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-sesame.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-classic-onion.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-jalapeno-cheddar.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-cheddar.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-cinnamon-raisin.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-blueberry.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/api/payments/culqi/config",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-everything.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-plain.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-sesame.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-jalapeno-cheddar.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-classic-onion.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-cheddar.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-cinnamon-raisin.webp",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:3204/images/bagel-blueberry.webp",
+        "status": 200
+      }
+    ],
+    "fixtureReads": 1,
+    "blocked": [],
+    "httpErrors": [],
+    "routeErrors": [],
+    "closingRouteErrors": [],
+    "closingAborts": [],
+    "failures": [],
+    "callbackErrors": []
+  },
+  "pointerPreview": {
+    "target": {
+      "label": "Agregar Plain",
+      "visible": true,
+      "rect": {
+        "x": 360,
+        "y": 590,
+        "right": 518,
+        "bottom": 708,
+        "width": 158,
+        "height": 118
+      },
+      "clip": {
+        "x": 360,
+        "y": 590,
+        "right": 369,
+        "bottom": 708,
+        "width": 9,
+        "height": 118
+      },
+      "point": {
+        "x": 364.5,
+        "y": 649
+      },
+      "hit": true,
+      "topHit": {
+        "tag": "BUTTON",
+        "className": ""
+      },
+      "scrollables": [
+        {
+          "depth": 2,
+          "horizontal": true,
+          "vertical": false,
+          "rect": {
+            "x": 21,
+            "y": 589,
+            "right": 369,
+            "bottom": 711,
+            "width": 348,
+            "height": 122
+          },
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "clientWidth": 348,
+          "clientHeight": 122,
+          "scrollWidth": 1340,
+          "scrollHeight": 122
+        }
+      ]
+    },
+    "before": 0,
+    "after": 0,
+    "counter": "1/6",
+    "state": {
+      "windowY": 0,
+      "focus": "Agregar Plain",
+      "focusVisible": false,
+      "stages": [
+        {
+          "className": "guided-commerce",
+          "left": 0,
+          "top": 0
+        },
+        {
+          "className": "mobile-product-stage mobile-bagel-stage",
+          "left": 0,
+          "top": 0
+        }
+      ]
+    }
+  },
+  "finishedAt": "2026-10-31T23:11:33.026Z"
+}

@@ -1,8 +1,68 @@
 {
-  "status": "WIP: guided32 complete PASS; additional mobile16 fails real Tab visibility and is under diagnosis",
-  "applicationSHA": "a1fce7227d15482b8636b69fdbddd6d3274383bc",
+  "status": "WIP: compiled focus fix passes native focal; full mobile16 running and new guided32 pending",
+  "applicationSHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
   "qaSourceCommit": "0ab0fe5f54d9ed41b9b6019c91feda8b25495ae6",
   "files": {
+    "focus-fix/compiled-67deb30/compiled-focus.png": {
+      "bytes": 170276,
+      "sha256": "e18dae59a9855c1da05196b1bd9382d97d7d4268b9b4296bfc3067399796ac08"
+    },
+    "focus-fix/compiled-67deb30/pointer-preview.png": {
+      "bytes": 171177,
+      "sha256": "0d00c9cc07c4a9c6826eb040edaf1a9ffb0aedfdfe90eeebc8c636d28615b94d"
+    },
+    "focus-fix/compiled-67deb30/probe.cjs": {
+      "bytes": 5577,
+      "sha256": "6acceb7b6488789ce3350db4ebfcf1e6f336159b6a910f9d24f2a1ddc29bff81"
+    },
+    "focus-fix/compiled-67deb30/results.json": {
+      "bytes": 141444,
+      "sha256": "becddfbc584f41c8f60996e937fe87555abf29bcbf47b8507509671bdf617d6d"
+    },
+    "focus-fix/diagnosis-a1fce/mandatory.png": {
+      "bytes": 169350,
+      "sha256": "75bcc7a43c02bdf2e2b5e570277f97d02edbaab65d40e2995d7fafb29cf82008"
+    },
+    "focus-fix/diagnosis-a1fce/none.png": {
+      "bytes": 170597,
+      "sha256": "8899677831d8882db5095a61da37d7f5215d772234e49582997aac842cb477c5"
+    },
+    "focus-fix/diagnosis-a1fce/original.png": {
+      "bytes": 169346,
+      "sha256": "f3ed1c563664f76cd0fae001c726718c6d17520bec1abecdcaf71fb31a7a2e0f"
+    },
+    "focus-fix/diagnosis-a1fce/probe.cjs": {
+      "bytes": 3936,
+      "sha256": "1b0c6e599c622e2594c601fb6f939adbf4b2e9d64699603bd32165267180ae76"
+    },
+    "focus-fix/diagnosis-a1fce/results.json": {
+      "bytes": 254963,
+      "sha256": "73cfeff60a74c1bbc84a1e574f17dc0384cb81cc22ac1beebae25e0be0cf61b4"
+    },
+    "focus-fix/offline-review/review-results.json": {
+      "bytes": 6377,
+      "sha256": "048464ef4e56ac456cb8918875e8a5860e9818513f82df9693e9d95d28947782"
+    },
+    "focus-fix/offline-review/review.cjs": {
+      "bytes": 7029,
+      "sha256": "28fb75503d630aa7a28b9fa62f44a8f8a9c2d95eed3843f1487d3e8eab6ccf32"
+    },
+    "focus-fix/offline-review/run.log": {
+      "bytes": 357,
+      "sha256": "35d091b20a05856f9687b3500a056d13a1afe74d0164a53a8f8e4a508c1ef351"
+    },
+    "focus-fix/temporary-focus-experiment/focus-reveal.png": {
+      "bytes": 170255,
+      "sha256": "970d019f29f220d190eacb38ceb5c74f2587c99b6bf116ba050e167558f649ee"
+    },
+    "focus-fix/temporary-focus-experiment/probe.cjs": {
+      "bytes": 4006,
+      "sha256": "bf0e83016fd06e722568ca350fbacfd8dc5575f3412285f2248ce833eacb2ae5"
+    },
+    "focus-fix/temporary-focus-experiment/results.json": {
+      "bytes": 139954,
+      "sha256": "1f91007a7a4489a4150904d3bd575d9eacd48c4ba39ad4b9738840df4a7f04d3"
+    },
     "guided/README.md": {
       "bytes": 1725,
       "sha256": "baee584ff57920838b2d2fb9c0d493b350aaa20cef6f16bba38039fb03384ac0"
@@ -299,6 +359,10 @@
       "bytes": 130003,
       "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
     },
+    "logs/build-67deb30.log": {
+      "bytes": 23678,
+      "sha256": "c2232ebb6f6480b430985b03d204f61f31f92e03b20ef3153d430cc14aaa3d6a"
+    },
     "logs/build-a1fce72.log": {
       "bytes": 23678,
       "sha256": "c5beec9edc2e5bc7ee70474ecc85b6f5d94a4455faeb62866c365fcbc49db588"
@@ -315,13 +379,21 @@
       "bytes": 5037,
       "sha256": "4b2b938da5ba5ee02867521ff5d70ada6ca039d2b294e13c42bd6646db0a928b"
     },
+    "logs/node52-67deb30.log": {
+      "bytes": 5042,
+      "sha256": "0342979f33ecc13d2ccd56099f3bf0d50fd3868b71766763f0f6d28e7464d2a3"
+    },
+    "logs/source-visual7-67deb30.log": {
+      "bytes": 743,
+      "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
+    },
     "logs/source-visual7-a1fce72.log": {
       "bytes": 743,
       "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
     },
     "source-scope.json": {
-      "bytes": 2873,
-      "sha256": "adf66f94f359396d2ebc5c65fe86b373623459ada2ec7e5220667098dedcef61"
+      "bytes": 3023,
+      "sha256": "bf15d48e4199400f212ab52a114c16c85bd02c6c49a951a11db3a9232ba8d986"
     },
     "wip-b903413/focal-results.json": {
       "bytes": 31505,
@@ -336,5 +408,5 @@
       "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
     }
   },
-  "fileCount": 83
+  "fileCount": 101
 }
