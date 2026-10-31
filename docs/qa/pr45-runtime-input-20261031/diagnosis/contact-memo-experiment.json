@@ -1,0 +1,5459 @@
+{
+  "kind": "WebGL-framebuffer-contact-bake-regression",
+  "base": "http://127.0.0.1:3195/",
+  "artifactCodeSHA": "925c050659ac7682488a9bc9c9c4906787663eb1-plus-local-memo-StoreContactShadows",
+  "createdAt": "2026-10-31T21:21:36.877Z",
+  "fixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+  "driverSHA256": "d443b8f66f03420aa49f842c997a7ba18e4fe454e5081b908287135677b9eda3",
+  "network": {
+    "reads": [
+      {
+        "url": "http://127.0.0.1:3195/",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/index-B-tAIt2X.css",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/PlayableStore-DmaY3rRb.css",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/index-B0MkgKcI.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/routes-DmHpsaQx.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/legal-version-BguVS3S4.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/PlayableStore-C8fArEKD.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagelito-wordmark.svg",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/store-reference-approved.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/store-reference-approved.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-plain.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-everything.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-classic-onion.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-jalapeno-cheddar.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-sesame.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-cheddar.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-cinnamon-raisin.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-blueberry.webp",
+        "status": 200
+      }
+    ],
+    "fixtureReads": 1,
+    "blocked": [],
+    "pageErrors": []
+  },
+  "failures": [],
+  "limits": [
+    "This is a separate24-rendered-frame60-second contact-shadow study; qa:3d readiness8frames30s and strafe480ms assertions remain unchanged and are not declared PASS by this test.",
+    "Framebuffer classification uses attached color texture sizes; no application state or rendering settings are changed."
+  ],
+  "marker": 14,
+  "trace": {
+    "frame": 39,
+    "contexts": [
+      {
+        "id": 1,
+        "drawingBuffer": {
+          "width": 1280,
+          "height": 800
+        },
+        "targets": [
+          {
+            "id": 6,
+            "kind": "512-square",
+            "width": 512,
+            "height": 512,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 5
+            }
+          },
+          {
+            "id": 9,
+            "kind": "1024-square",
+            "width": 1024,
+            "height": 1024,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 8
+            }
+          },
+          {
+            "id": 12,
+            "kind": "512-square",
+            "width": 512,
+            "height": 512,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 11
+            }
+          },
+          {
+            "id": 14,
+            "kind": "other",
+            "width": 1280,
+            "height": 800,
+            "colorAttachment": {
+              "type": "renderbuffer",
+              "id": 15
+            }
+          },
+          {
+            "id": 18,
+            "kind": "other",
+            "width": 1280,
+            "height": 800,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 17
+            }
+          },
+          {
+            "id": 21,
+            "kind": "other",
+            "width": 768,
+            "height": 1024,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 20
+            }
+          },
+          {
+            "id": 24,
+            "kind": "other",
+            "width": 768,
+            "height": 1024,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 23
+            }
+          }
+        ],
+        "frames": [
+          {
+            "frame": 15,
+            "timestamp": 10199.9,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 276,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 16,
+            "timestamp": 12016.4,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 284,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 17,
+            "timestamp": 13949.7,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 264,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 385,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 499,
+                "blits": 0
+              }
+            },
+            "mainDraws": 499
+          },
+          {
+            "frame": 18,
+            "timestamp": 15883,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 143,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 19,
+            "timestamp": 17832.9,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 20,
+            "timestamp": 19516.1,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 21,
+            "timestamp": 21132.8,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 139,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 22,
+            "timestamp": 22849.3,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 135,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 23,
+            "timestamp": 24615.9,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 24,
+            "timestamp": 26249.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 136,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 25,
+            "timestamp": 27899.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 139,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 26,
+            "timestamp": 29632.4,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 142,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 27,
+            "timestamp": 31449,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 28,
+            "timestamp": 33132.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 135,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 361,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 475,
+                "blits": 0
+              }
+            },
+            "mainDraws": 475
+          },
+          {
+            "frame": 29,
+            "timestamp": 34782.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 140,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 30,
+            "timestamp": 36515.5,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 31,
+            "timestamp": 38398.7,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 32,
+            "timestamp": 40182,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 143,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 33,
+            "timestamp": 41815.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 371,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 485,
+                "blits": 0
+              }
+            },
+            "mainDraws": 485
+          },
+          {
+            "frame": 34,
+            "timestamp": 43498.5,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 35,
+            "timestamp": 45081.8,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 142,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 36,
+            "timestamp": 46648.4,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 136,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 37,
+            "timestamp": 48748.3,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 136,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 38,
+            "timestamp": 51414.8,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 140,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 356,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 470,
+                "blits": 0
+              }
+            },
+            "mainDraws": 470
+          }
+        ]
+      }
+    ]
+  },
+  "prelude": {
+    "frame": 39,
+    "contexts": [
+      {
+        "id": 1,
+        "drawingBuffer": {
+          "width": 1280,
+          "height": 800
+        },
+        "targets": [
+          {
+            "id": 6,
+            "kind": "512-square",
+            "width": 512,
+            "height": 512,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 5
+            }
+          },
+          {
+            "id": 9,
+            "kind": "1024-square",
+            "width": 1024,
+            "height": 1024,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 8
+            }
+          },
+          {
+            "id": 12,
+            "kind": "512-square",
+            "width": 512,
+            "height": 512,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 11
+            }
+          },
+          {
+            "id": 14,
+            "kind": "other",
+            "width": 1280,
+            "height": 800,
+            "colorAttachment": {
+              "type": "renderbuffer",
+              "id": 15
+            }
+          },
+          {
+            "id": 18,
+            "kind": "other",
+            "width": 1280,
+            "height": 800,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 17
+            }
+          },
+          {
+            "id": 21,
+            "kind": "other",
+            "width": 768,
+            "height": 1024,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 20
+            }
+          },
+          {
+            "id": 24,
+            "kind": "other",
+            "width": 768,
+            "height": 1024,
+            "colorAttachment": {
+              "type": "texture",
+              "id": 23
+            }
+          }
+        ],
+        "frames": [
+          {
+            "frame": 10,
+            "timestamp": 1650.2,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 264,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 353,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "21": {
+                "id": 21,
+                "kind": "other",
+                "width": 768,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 20
+                },
+                "clears": 1,
+                "draws": 11,
+                "blits": 0
+              },
+              "24": {
+                "id": 24,
+                "kind": "other",
+                "width": 768,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 23
+                },
+                "clears": 0,
+                "draws": 10,
+                "blits": 0
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 467,
+                "blits": 0
+              }
+            },
+            "mainDraws": 467
+          },
+          {
+            "frame": 11,
+            "timestamp": 3933.4,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 286,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 12,
+            "timestamp": 4016.7,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 286,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 13,
+            "timestamp": 4050.1,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 286,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 14,
+            "timestamp": 4066.8,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 286,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 15,
+            "timestamp": 10199.9,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 276,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 16,
+            "timestamp": 12016.4,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 284,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 17,
+            "timestamp": 13949.7,
+            "targets": {
+              "6": {
+                "id": 6,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 5
+                },
+                "clears": 3,
+                "draws": 504,
+                "blits": 0
+              },
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 2,
+                "draws": 264,
+                "blits": 0
+              },
+              "12": {
+                "id": 12,
+                "kind": "512-square",
+                "width": 512,
+                "height": 512,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 11
+                },
+                "clears": 2,
+                "draws": 2,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 385,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 499,
+                "blits": 0
+              }
+            },
+            "mainDraws": 499
+          },
+          {
+            "frame": 18,
+            "timestamp": 15883,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 143,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 19,
+            "timestamp": 17832.9,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 20,
+            "timestamp": 19516.1,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 21,
+            "timestamp": 21132.8,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 139,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 22,
+            "timestamp": 22849.3,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 135,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 23,
+            "timestamp": 24615.9,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 24,
+            "timestamp": 26249.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 136,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 25,
+            "timestamp": 27899.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 139,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 26,
+            "timestamp": 29632.4,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 142,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 27,
+            "timestamp": 31449,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 28,
+            "timestamp": 33132.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 135,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 361,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 475,
+                "blits": 0
+              }
+            },
+            "mainDraws": 475
+          },
+          {
+            "frame": 29,
+            "timestamp": 34782.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 140,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 30,
+            "timestamp": 36515.5,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 31,
+            "timestamp": 38398.7,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 32,
+            "timestamp": 40182,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 143,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 355,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 469,
+                "blits": 0
+              }
+            },
+            "mainDraws": 469
+          },
+          {
+            "frame": 33,
+            "timestamp": 41815.2,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 371,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 485,
+                "blits": 0
+              }
+            },
+            "mainDraws": 485
+          },
+          {
+            "frame": 34,
+            "timestamp": 43498.5,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 132,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 35,
+            "timestamp": 45081.8,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 142,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 36,
+            "timestamp": 46648.4,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 136,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 37,
+            "timestamp": 48748.3,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 136,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 386,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 500,
+                "blits": 0
+              }
+            },
+            "mainDraws": 500
+          },
+          {
+            "frame": 38,
+            "timestamp": 51414.8,
+            "targets": {
+              "9": {
+                "id": 9,
+                "kind": "1024-square",
+                "width": 1024,
+                "height": 1024,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 8
+                },
+                "clears": 1,
+                "draws": 140,
+                "blits": 0
+              },
+              "14": {
+                "id": 14,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "renderbuffer",
+                  "id": 15
+                },
+                "clears": 2,
+                "draws": 356,
+                "blits": 0
+              },
+              "18": {
+                "id": 18,
+                "kind": "other",
+                "width": 1280,
+                "height": 800,
+                "colorAttachment": {
+                  "type": "texture",
+                  "id": 17
+                },
+                "clears": 0,
+                "draws": 0,
+                "blits": 1
+              },
+              "default": {
+                "id": null,
+                "kind": "default",
+                "width": 1280,
+                "height": 800,
+                "clears": 1,
+                "draws": 470,
+                "blits": 0
+              }
+            },
+            "mainDraws": 470
+          }
+        ]
+      }
+    ]
+  },
+  "contactTargets": [
+    {
+      "id": 6,
+      "kind": "512-square",
+      "width": 512,
+      "height": 512,
+      "colorAttachment": {
+        "type": "texture",
+        "id": 5
+      }
+    },
+    {
+      "id": 12,
+      "kind": "512-square",
+      "width": 512,
+      "height": 512,
+      "colorAttachment": {
+        "type": "texture",
+        "id": 11
+      }
+    }
+  ],
+  "frames": [
+    {
+      "studyFrame": 1,
+      "rafFrame": 15,
+      "timestamp": 10199.9,
+      "mainDraws": 500,
+      "contactClears": 5,
+      "contactDraws": 506,
+      "targetSummary": [
+        {
+          "id": 6,
+          "kind": "512-square",
+          "width": 512,
+          "height": 512,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 5
+          },
+          "clears": 3,
+          "draws": 504,
+          "blits": 0
+        },
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 2,
+          "draws": 276,
+          "blits": 0
+        },
+        {
+          "id": 12,
+          "kind": "512-square",
+          "width": 512,
+          "height": 512,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 11
+          },
+          "clears": 2,
+          "draws": 2,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 2,
+      "rafFrame": 16,
+      "timestamp": 12016.4,
+      "mainDraws": 500,
+      "contactClears": 5,
+      "contactDraws": 506,
+      "targetSummary": [
+        {
+          "id": 6,
+          "kind": "512-square",
+          "width": 512,
+          "height": 512,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 5
+          },
+          "clears": 3,
+          "draws": 504,
+          "blits": 0
+        },
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 2,
+          "draws": 284,
+          "blits": 0
+        },
+        {
+          "id": 12,
+          "kind": "512-square",
+          "width": 512,
+          "height": 512,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 11
+          },
+          "clears": 2,
+          "draws": 2,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 3,
+      "rafFrame": 17,
+      "timestamp": 13949.7,
+      "mainDraws": 499,
+      "contactClears": 5,
+      "contactDraws": 506,
+      "targetSummary": [
+        {
+          "id": 6,
+          "kind": "512-square",
+          "width": 512,
+          "height": 512,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 5
+          },
+          "clears": 3,
+          "draws": 504,
+          "blits": 0
+        },
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 2,
+          "draws": 264,
+          "blits": 0
+        },
+        {
+          "id": 12,
+          "kind": "512-square",
+          "width": 512,
+          "height": 512,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 11
+          },
+          "clears": 2,
+          "draws": 2,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 385,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 499,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 4,
+      "rafFrame": 18,
+      "timestamp": 15883,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 143,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 5,
+      "rafFrame": 19,
+      "timestamp": 17832.9,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 6,
+      "rafFrame": 20,
+      "timestamp": 19516.1,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 7,
+      "rafFrame": 21,
+      "timestamp": 21132.8,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 139,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 8,
+      "rafFrame": 22,
+      "timestamp": 22849.3,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 135,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 9,
+      "rafFrame": 23,
+      "timestamp": 24615.9,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 10,
+      "rafFrame": 24,
+      "timestamp": 26249.2,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 136,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 11,
+      "rafFrame": 25,
+      "timestamp": 27899.2,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 139,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 12,
+      "rafFrame": 26,
+      "timestamp": 29632.4,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 142,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 13,
+      "rafFrame": 27,
+      "timestamp": 31449,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 14,
+      "rafFrame": 28,
+      "timestamp": 33132.2,
+      "mainDraws": 475,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 135,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 361,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 475,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 15,
+      "rafFrame": 29,
+      "timestamp": 34782.2,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 140,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 16,
+      "rafFrame": 30,
+      "timestamp": 36515.5,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 17,
+      "rafFrame": 31,
+      "timestamp": 38398.7,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 18,
+      "rafFrame": 32,
+      "timestamp": 40182,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 143,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 19,
+      "rafFrame": 33,
+      "timestamp": 41815.2,
+      "mainDraws": 485,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 371,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 485,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 20,
+      "rafFrame": 34,
+      "timestamp": 43498.5,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 21,
+      "rafFrame": 35,
+      "timestamp": 45081.8,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 142,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 22,
+      "rafFrame": 36,
+      "timestamp": 46648.4,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 136,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 23,
+      "rafFrame": 37,
+      "timestamp": 48748.3,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 136,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 24,
+      "rafFrame": 38,
+      "timestamp": 51414.8,
+      "mainDraws": 470,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 140,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 356,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 470,
+          "blits": 0
+        }
+      ]
+    }
+  ],
+  "late": [
+    {
+      "studyFrame": 17,
+      "rafFrame": 31,
+      "timestamp": 38398.7,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 18,
+      "rafFrame": 32,
+      "timestamp": 40182,
+      "mainDraws": 469,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 143,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 355,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 469,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 19,
+      "rafFrame": 33,
+      "timestamp": 41815.2,
+      "mainDraws": 485,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 371,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 485,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 20,
+      "rafFrame": 34,
+      "timestamp": 43498.5,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 132,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 21,
+      "rafFrame": 35,
+      "timestamp": 45081.8,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 142,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 22,
+      "rafFrame": 36,
+      "timestamp": 46648.4,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 136,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 23,
+      "rafFrame": 37,
+      "timestamp": 48748.3,
+      "mainDraws": 500,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 136,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 386,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 500,
+          "blits": 0
+        }
+      ]
+    },
+    {
+      "studyFrame": 24,
+      "rafFrame": 38,
+      "timestamp": 51414.8,
+      "mainDraws": 470,
+      "contactClears": 0,
+      "contactDraws": 0,
+      "targetSummary": [
+        {
+          "id": 9,
+          "kind": "1024-square",
+          "width": 1024,
+          "height": 1024,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 8
+          },
+          "clears": 1,
+          "draws": 140,
+          "blits": 0
+        },
+        {
+          "id": 14,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "renderbuffer",
+            "id": 15
+          },
+          "clears": 2,
+          "draws": 356,
+          "blits": 0
+        },
+        {
+          "id": 18,
+          "kind": "other",
+          "width": 1280,
+          "height": 800,
+          "colorAttachment": {
+            "type": "texture",
+            "id": 17
+          },
+          "clears": 0,
+          "draws": 0,
+          "blits": 1
+        },
+        {
+          "id": null,
+          "kind": "default",
+          "width": 1280,
+          "height": 800,
+          "clears": 1,
+          "draws": 470,
+          "blits": 0
+        }
+      ]
+    }
+  ],
+  "afterSixteen": {
+    "frames": 8,
+    "clears": 0,
+    "draws": 0,
+    "activeFrames": 0
+  },
+  "completedAt": "2026-10-31T21:22:33.563Z"
+}

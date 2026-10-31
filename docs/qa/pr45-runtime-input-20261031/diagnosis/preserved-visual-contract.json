@@ -1,0 +1,72 @@
+{
+  "baseline": "925c050659ac7682488a9bc9c9c4906787663eb1",
+  "changedTopLevelFunctions": [
+    "PlayableStore",
+    "CameraController",
+    "MobilePad"
+  ],
+  "unchangedTopLevelFunctions": [
+    "canWalkAt",
+    "LookSurface",
+    "World",
+    "StoreArchitecture",
+    "ProductionPortal",
+    "TileGrid",
+    "Pendant",
+    "Plant",
+    "MenuBoard",
+    "Totem",
+    "MainCounter",
+    "BagelShowcaseProduct",
+    "BagelCase",
+    "SchmearBowl",
+    "SchmearCase",
+    "PhotoHotspot",
+    "Production",
+    "Oven",
+    "DoughBalls",
+    "Worker",
+    "Cashier",
+    "ReceiptPrinter",
+    "Bag",
+    "CashierNPC",
+    "PickupShelf",
+    "Seating",
+    "AmbientPeople",
+    "CharacterBody",
+    "NPC",
+    "MovingNPC"
+  ],
+  "unchangedFiles": [
+    {
+      "path": "src/playable/StoreArchitectureVisual.tsx",
+      "sha256": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "identical": true
+    },
+    {
+      "path": "src/playable/GuidedCommerce.tsx",
+      "sha256": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "identical": true
+    },
+    {
+      "path": "src/playable/playable.css",
+      "sha256": "711597a8bc7a8383f5522ee2dce36b5c4260b440bc2a851a717482c8509c44b6",
+      "identical": true
+    },
+    {
+      "path": "src/playable/guided-commerce.css",
+      "sha256": "546c0b069febf92b85722ebd46acc0974d83d9be406392d22a62149372dbacb2",
+      "identical": true
+    },
+    {
+      "path": "public/images/store-reference-approved.webp",
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "identical": true
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11",
+      "identical": true
+    }
+  ]
+}
