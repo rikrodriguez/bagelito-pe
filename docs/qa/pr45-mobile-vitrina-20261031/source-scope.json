@@ -1,0 +1,54 @@
+{
+  "applicationSHA": "a1fce7227d15482b8636b69fdbddd6d3274383bc",
+  "runtimeMilestoneSHA": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
+  "applicationDiffFromRuntimeMilestone": [
+    "src/playable/guided-commerce.css"
+  ],
+  "identicalSources": {
+    "src/playable/GuidedCommerce.tsx": {
+      "currentSHA256": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "runtimeMilestoneSHA256": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "identical": true
+    },
+    "src/playable/PlayableStore.tsx": {
+      "currentSHA256": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "runtimeMilestoneSHA256": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "identical": true
+    },
+    "src/playable/movement-input.ts": {
+      "currentSHA256": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+      "runtimeMilestoneSHA256": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+      "identical": true
+    },
+    "src/playable/StoreArchitectureVisual.tsx": {
+      "currentSHA256": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "runtimeMilestoneSHA256": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "identical": true
+    },
+    "src/playable/playable.css": {
+      "currentSHA256": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "runtimeMilestoneSHA256": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "identical": true
+    },
+    "src/domain/lib/approved-shop-contract.ts": {
+      "currentSHA256": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+      "runtimeMilestoneSHA256": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+      "identical": true
+    },
+    "src/domain/data/verified-menu-2026-10-21.json": {
+      "currentSHA256": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080",
+      "runtimeMilestoneSHA256": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080",
+      "identical": true
+    },
+    "vercel.json": {
+      "currentSHA256": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11",
+      "runtimeMilestoneSHA256": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11",
+      "identical": true
+    }
+  },
+  "currentCSSSHA256": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+  "approvedReferenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "scope": "Only mobile live-world CSS changes the application. Existing runtime20/20 and events9/9 retain their original SHA; current guided and mobile measurements are reported separately.",
+  "wipCaptureCodeSHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
+  "wipEvidenceCommit": "695598821fa023ccad3458c8e38ef298f3a7779b"
+}

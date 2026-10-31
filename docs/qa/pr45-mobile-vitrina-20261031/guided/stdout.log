@@ -1,0 +1,399 @@
+{"at":"2026-10-31T22:49:47.563Z","mode":"desktop","stage":"context-setup","type":"mode-start","viewport":{"width":1280,"height":800}}
+{"at":"2026-10-31T22:49:47.710Z","mode":"disabled","stage":"context-setup","type":"config-verified","enabled":false,"configured":false,"intakeEnabled":false,"visualQaAllowed":true}
+{"at":"2026-10-31T22:49:47.711Z","mode":"desktop","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:49:47.778Z","mode":"desktop","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:49:47.899Z","mode":"desktop","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:50:00.228Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:50:00.229Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:50:00.229Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:50:03.557Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:50:03.558Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:50:03.558Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:50:06.990Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:06.991Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:06.991Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:07.094Z","mode":"desktop","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:50:07.094Z","mode":"desktop","stage":"scene-01-entrance","type":"scene-start","scene":"entrance","name":"01-entrance"}
+{"at":"2026-10-31T22:50:13.897Z","mode":"desktop","stage":"scene-01-entrance","type":"scene-complete","scene":"entrance","name":"01-entrance","completedScenes":1}
+{"at":"2026-10-31T22:50:16.969Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:50:16.970Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:50:16.970Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:50:20.357Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Cerrar menú"}
+{"at":"2026-10-31T22:50:20.358Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Cerrar menú"}
+{"at":"2026-10-31T22:50:20.358Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Cerrar menú"}
+{"at":"2026-10-31T22:50:26.906Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-cart-button","ariaLabel":"Ver tu pedido: 0 productos"}
+{"at":"2026-10-31T22:50:26.911Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-cart-button","ariaLabel":"Ver tu pedido: 0 productos"}
+{"at":"2026-10-31T22:50:26.912Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-cart-button","ariaLabel":"Ver tu pedido: 0 productos"}
+{"at":"2026-10-31T22:50:35.019Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:35.019Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:35.020Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:38.739Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:38.747Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:38.748Z","mode":"desktop","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:50:38.763Z","mode":"desktop","stage":"scene-02-selector","type":"scene-start","scene":"selector","name":"02-selector"}
+{"at":"2026-10-31T22:50:49.213Z","mode":"desktop","stage":"scene-02-selector","type":"scene-complete","scene":"selector","name":"02-selector","completedScenes":2}
+{"at":"2026-10-31T22:50:52.239Z","mode":"desktop","stage":"scene-02-selector","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:50:52.242Z","mode":"desktop","stage":"scene-02-selector","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:50:52.243Z","mode":"desktop","stage":"scene-02-selector","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:50:52.258Z","mode":"desktop","stage":"scene-03-pack-size","type":"scene-start","scene":"pack-size","name":"03-pack-size"}
+{"at":"2026-10-31T22:51:00.956Z","mode":"desktop","stage":"scene-03-pack-size","type":"scene-complete","scene":"pack-size","name":"03-pack-size","completedScenes":3}
+{"at":"2026-10-31T22:51:04.113Z","mode":"desktop","stage":"scene-03-pack-size","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:51:04.114Z","mode":"desktop","stage":"scene-03-pack-size","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:51:04.114Z","mode":"desktop","stage":"scene-03-pack-size","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:51:04.124Z","mode":"desktop","stage":"scene-04-pack-quantity","type":"scene-start","scene":"pack-qty","name":"04-pack-quantity"}
+{"at":"2026-10-31T22:51:12.415Z","mode":"desktop","stage":"scene-04-pack-quantity","type":"scene-complete","scene":"pack-qty","name":"04-pack-quantity","completedScenes":4}
+{"at":"2026-10-31T22:51:15.530Z","mode":"desktop","stage":"scene-04-pack-quantity","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:51:15.531Z","mode":"desktop","stage":"scene-04-pack-quantity","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:51:15.532Z","mode":"desktop","stage":"scene-04-pack-quantity","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:51:15.576Z","mode":"desktop","stage":"scene-05-bagels","type":"scene-start","scene":"bagels","name":"05-bagels"}
+{"at":"2026-10-31T22:51:22.109Z","mode":"desktop","stage":"scene-05-bagels","type":"scene-complete","scene":"bagels","name":"05-bagels","completedScenes":5}
+{"at":"2026-10-31T22:51:25.213Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:51:25.214Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:51:25.214Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:51:28.369Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:51:28.372Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:51:28.372Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:51:31.568Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:51:31.572Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:51:31.572Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:51:34.796Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:51:34.798Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:51:34.799Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:51:38.356Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:51:38.357Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:51:38.357Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:51:41.578Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:51:41.582Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:51:41.585Z","mode":"desktop","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:51:41.588Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"scene-start","scene":"bagels","name":"06-bagels-selected"}
+{"at":"2026-10-31T22:51:48.210Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"scene-complete","scene":"bagels","name":"06-bagels-selected","completedScenes":6}
+{"at":"2026-10-31T22:51:51.357Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-journey-back","ariaLabel":"Volver al paso anterior"}
+{"at":"2026-10-31T22:51:51.358Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-journey-back","ariaLabel":"Volver al paso anterior"}
+{"at":"2026-10-31T22:51:51.359Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-journey-back","ariaLabel":"Volver al paso anterior"}
+{"at":"2026-10-31T22:51:54.760Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:51:54.761Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:51:54.761Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:51:59.742Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:52:02.857Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"draft-reload-inspected","draftPresent":true,"counter":"6/6"}
+{"at":"2026-10-31T22:52:11.404Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:52:11.406Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:52:11.406Z","mode":"desktop","stage":"scene-06-bagels-selected","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:52:11.424Z","mode":"desktop","stage":"scene-07-schmears","type":"scene-start","scene":"schmears","name":"07-schmears"}
+{"at":"2026-10-31T22:52:22.616Z","mode":"desktop","stage":"scene-07-schmears","type":"scene-complete","scene":"schmears","name":"07-schmears","completedScenes":7}
+{"at":"2026-10-31T22:52:26.731Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:52:26.732Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:52:26.732Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:52:30.893Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:52:30.894Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:52:30.894Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:52:35.161Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:52:35.161Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:52:35.161Z","mode":"desktop","stage":"scene-07-schmears","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:52:35.176Z","mode":"desktop","stage":"scene-08-cashier","type":"scene-start","scene":"cashier","name":"08-cashier"}
+{"at":"2026-10-31T22:52:45.809Z","mode":"desktop","stage":"scene-08-cashier","type":"scene-complete","scene":"cashier","name":"08-cashier","completedScenes":8}
+{"at":"2026-10-31T22:52:50.087Z","mode":"desktop","stage":"scene-08-cashier","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:52:50.088Z","mode":"desktop","stage":"scene-08-cashier","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:52:50.089Z","mode":"desktop","stage":"scene-08-cashier","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:52:50.104Z","mode":"desktop","stage":"scene-09-payment","type":"scene-start","scene":"pay","name":"09-payment"}
+{"at":"2026-10-31T22:53:03.253Z","mode":"desktop","stage":"scene-09-payment","type":"scene-complete","scene":"pay","name":"09-payment","completedScenes":9}
+{"at":"2026-10-31T22:53:06.457Z","mode":"desktop","stage":"scene-09-payment","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-pay-hotspot qa-only-pay","ariaLabel":"Continuar en modo QA"}
+{"at":"2026-10-31T22:53:06.458Z","mode":"desktop","stage":"scene-09-payment","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-pay-hotspot qa-only-pay","ariaLabel":"Continuar en modo QA"}
+{"at":"2026-10-31T22:53:06.459Z","mode":"desktop","stage":"scene-09-payment","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-pay-hotspot qa-only-pay","ariaLabel":"Continuar en modo QA"}
+{"at":"2026-10-31T22:53:06.464Z","mode":"desktop","stage":"scene-10-receipt","type":"scene-start","scene":"receipt","name":"10-receipt"}
+{"at":"2026-10-31T22:53:14.966Z","mode":"desktop","stage":"scene-10-receipt","type":"scene-complete","scene":"receipt","name":"10-receipt","completedScenes":10}
+{"at":"2026-10-31T22:53:18.060Z","mode":"desktop","stage":"scene-10-receipt","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"DIV","className":"receipt-interaction","ariaLabel":"Jalar o tocar para retirar tu recibo"}
+{"at":"2026-10-31T22:53:18.062Z","mode":"desktop","stage":"scene-10-receipt","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"DIV","className":"receipt-interaction","ariaLabel":"Jalar o tocar para retirar tu recibo"}
+{"at":"2026-10-31T22:53:18.062Z","mode":"desktop","stage":"scene-10-receipt","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"DIV","className":"receipt-interaction","ariaLabel":"Jalar o tocar para retirar tu recibo"}
+{"at":"2026-10-31T22:53:18.067Z","mode":"desktop","stage":"scene-11-wallet","type":"scene-start","scene":"wallet","name":"11-wallet"}
+{"at":"2026-10-31T22:53:24.780Z","mode":"desktop","stage":"scene-11-wallet","type":"scene-complete","scene":"wallet","name":"11-wallet","completedScenes":11}
+{"at":"2026-10-31T22:53:28.001Z","mode":"desktop","stage":"scene-11-wallet","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"wallet-skip","ariaLabel":null}
+{"at":"2026-10-31T22:53:28.004Z","mode":"desktop","stage":"scene-11-wallet","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"wallet-skip","ariaLabel":null}
+{"at":"2026-10-31T22:53:28.005Z","mode":"desktop","stage":"scene-11-wallet","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"wallet-skip","ariaLabel":null}
+{"at":"2026-10-31T22:53:28.015Z","mode":"desktop","stage":"scene-12-handoff","type":"scene-start","scene":"handoff","name":"12-handoff"}
+{"at":"2026-10-31T22:53:36.222Z","mode":"desktop","stage":"scene-12-handoff","type":"scene-complete","scene":"handoff","name":"12-handoff","completedScenes":12}
+{"at":"2026-10-31T22:53:39.247Z","mode":"desktop","stage":"scene-12-handoff","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"handoff-action","ariaLabel":null}
+{"at":"2026-10-31T22:53:39.248Z","mode":"desktop","stage":"scene-12-handoff","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"handoff-action","ariaLabel":null}
+{"at":"2026-10-31T22:53:39.249Z","mode":"desktop","stage":"scene-12-handoff","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"handoff-action","ariaLabel":null}
+{"at":"2026-10-31T22:53:39.257Z","mode":"desktop","stage":"scene-13-goodbye","type":"scene-start","scene":"goodbye","name":"13-goodbye"}
+{"at":"2026-10-31T22:53:47.948Z","mode":"desktop","stage":"scene-13-goodbye","type":"scene-complete","scene":"goodbye","name":"13-goodbye","completedScenes":13}
+{"at":"2026-10-31T22:53:50.833Z","mode":"desktop","stage":"scene-13-goodbye","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:53:50.834Z","mode":"desktop","stage":"scene-13-goodbye","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:53:50.834Z","mode":"desktop","stage":"scene-13-goodbye","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:53:50.837Z","mode":"desktop","stage":"scene-14-returning","type":"scene-start","scene":"returning","name":"14-returning"}
+{"at":"2026-10-31T22:53:59.090Z","mode":"desktop","stage":"scene-14-returning","type":"scene-complete","scene":"returning","name":"14-returning","completedScenes":14}
+{"at":"2026-10-31T22:53:59.091Z","mode":"desktop","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:54:03.812Z","mode":"desktop","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:54:15.060Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:54:15.061Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:54:15.062Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:54:18.334Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:54:18.334Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:54:18.334Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:54:21.687Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:21.688Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:21.689Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:21.784Z","mode":"desktop","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:54:24.850Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:24.851Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:24.851Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:28.057Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Combos"}
+{"at":"2026-10-31T22:54:28.058Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Combos"}
+{"at":"2026-10-31T22:54:28.059Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Combos"}
+{"at":"2026-10-31T22:54:28.074Z","mode":"desktop","stage":"scene-15-combos","type":"scene-start","scene":"combos","name":"15-combos"}
+{"at":"2026-10-31T22:54:36.721Z","mode":"desktop","stage":"scene-15-combos","type":"scene-complete","scene":"combos","name":"15-combos","completedScenes":15}
+{"at":"2026-10-31T22:54:36.722Z","mode":"desktop","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:54:41.497Z","mode":"desktop","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:54:51.908Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:54:51.909Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:54:51.909Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:54:55.158Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:54:55.159Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:54:55.159Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:54:58.556Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:58.558Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:58.558Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:54:58.642Z","mode":"desktop","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:55:01.718Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:01.720Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:01.720Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:04.969Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Schmears"}
+{"at":"2026-10-31T22:55:04.971Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Schmears"}
+{"at":"2026-10-31T22:55:04.971Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Schmears"}
+{"at":"2026-10-31T22:55:04.978Z","mode":"desktop","stage":"scene-16-schmear-size","type":"scene-start","scene":"schmear-size","name":"16-schmear-size"}
+{"at":"2026-10-31T22:55:13.474Z","mode":"desktop","stage":"scene-16-schmear-size","type":"scene-complete","scene":"schmear-size","name":"16-schmear-size","completedScenes":16}
+{"at":"2026-10-31T22:55:13.474Z","mode":"desktop","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:55:18.234Z","mode":"desktop","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:55:28.397Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:55:28.400Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:55:28.400Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:55:31.710Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:55:31.711Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:55:31.712Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:55:35.092Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:35.094Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:35.095Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:35.249Z","mode":"desktop","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:55:38.511Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:38.512Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:38.513Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:41.703Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:55:41.706Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:55:41.706Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:55:44.935Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:44.937Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:44.940Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:48.311Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:48.313Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:48.313Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:55:51.592Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 mini bagels, un sabor"}
+{"at":"2026-10-31T22:55:51.593Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 mini bagels, un sabor"}
+{"at":"2026-10-31T22:55:51.594Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 mini bagels, un sabor"}
+{"at":"2026-10-31T22:55:54.885Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:55:54.886Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:55:54.887Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:55:58.112Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Quitar Everything"}
+{"at":"2026-10-31T22:55:58.114Z","mode":"desktop","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Quitar Everything"}
+{"at":"2026-10-31T22:55:58.115Z","mode":"desktop","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Quitar Everything"}
+{"at":"2026-10-31T22:55:58.121Z","mode":"desktop","stage":"visit","type":"mode-complete","completedScenes":16,"localReads":144,"fixtureReads":5,"blocked":0}
+{"at":"2026-10-31T22:55:58.122Z","mode":"desktop","stage":"visit","type":"context-closing","pendingRoutes":0}
+{"at":"2026-10-31T22:55:58.153Z","mode":"desktop","stage":"visit","type":"context-closed","routeErrors":0,"closingRouteErrors":0,"closingAborts":0}
+{"at":"2026-10-31T22:55:58.154Z","mode":"mobile","stage":"context-setup","type":"mode-start","viewport":{"width":390,"height":844}}
+{"at":"2026-10-31T22:55:59.887Z","mode":"disabled","stage":"context-setup","type":"config-verified","enabled":false,"configured":false,"intakeEnabled":false,"visualQaAllowed":true}
+{"at":"2026-10-31T22:55:59.887Z","mode":"mobile","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:55:59.929Z","mode":"mobile","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:56:00.030Z","mode":"mobile","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:56:07.112Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:56:07.114Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:56:07.115Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:56:08.419Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:56:08.420Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:56:08.421Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:56:09.763Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:09.764Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:09.765Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:09.858Z","mode":"mobile","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:56:09.859Z","mode":"mobile","stage":"scene-01-entrance","type":"scene-start","scene":"entrance","name":"01-entrance"}
+{"at":"2026-10-31T22:56:12.437Z","mode":"mobile","stage":"scene-01-entrance","type":"scene-complete","scene":"entrance","name":"01-entrance","completedScenes":17}
+{"at":"2026-10-31T22:56:13.672Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:56:13.672Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:56:13.673Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:56:14.868Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Cerrar menú"}
+{"at":"2026-10-31T22:56:14.869Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Cerrar menú"}
+{"at":"2026-10-31T22:56:14.869Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Cerrar menú"}
+{"at":"2026-10-31T22:56:16.202Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-cart-button","ariaLabel":"Ver tu pedido: 0 productos"}
+{"at":"2026-10-31T22:56:16.204Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-cart-button","ariaLabel":"Ver tu pedido: 0 productos"}
+{"at":"2026-10-31T22:56:16.205Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-cart-button","ariaLabel":"Ver tu pedido: 0 productos"}
+{"at":"2026-10-31T22:56:17.520Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:17.520Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:17.521Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:18.793Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:18.795Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:18.795Z","mode":"mobile","stage":"scene-01-entrance","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:18.808Z","mode":"mobile","stage":"scene-02-selector","type":"scene-start","scene":"selector","name":"02-selector"}
+{"at":"2026-10-31T22:56:21.926Z","mode":"mobile","stage":"scene-02-selector","type":"scene-complete","scene":"selector","name":"02-selector","completedScenes":18}
+{"at":"2026-10-31T22:56:23.168Z","mode":"mobile","stage":"scene-02-selector","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:56:23.169Z","mode":"mobile","stage":"scene-02-selector","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:56:23.169Z","mode":"mobile","stage":"scene-02-selector","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:56:23.194Z","mode":"mobile","stage":"scene-03-pack-size","type":"scene-start","scene":"pack-size","name":"03-pack-size"}
+{"at":"2026-10-31T22:56:26.353Z","mode":"mobile","stage":"scene-03-pack-size","type":"scene-complete","scene":"pack-size","name":"03-pack-size","completedScenes":19}
+{"at":"2026-10-31T22:56:27.664Z","mode":"mobile","stage":"scene-03-pack-size","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:27.665Z","mode":"mobile","stage":"scene-03-pack-size","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:27.668Z","mode":"mobile","stage":"scene-03-pack-size","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:56:27.681Z","mode":"mobile","stage":"scene-04-pack-quantity","type":"scene-start","scene":"pack-qty","name":"04-pack-quantity"}
+{"at":"2026-10-31T22:56:30.980Z","mode":"mobile","stage":"scene-04-pack-quantity","type":"scene-complete","scene":"pack-qty","name":"04-pack-quantity","completedScenes":20}
+{"at":"2026-10-31T22:56:32.257Z","mode":"mobile","stage":"scene-04-pack-quantity","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:56:32.258Z","mode":"mobile","stage":"scene-04-pack-quantity","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:56:32.259Z","mode":"mobile","stage":"scene-04-pack-quantity","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:56:32.306Z","mode":"mobile","stage":"scene-05-bagels","type":"scene-start","scene":"bagels","name":"05-bagels"}
+{"at":"2026-10-31T22:56:34.797Z","mode":"mobile","stage":"scene-05-bagels","type":"scene-complete","scene":"bagels","name":"05-bagels","completedScenes":21}
+{"at":"2026-10-31T22:56:35.874Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:56:35.875Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:56:35.875Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:56:36.973Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:56:36.974Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:56:36.974Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:56:38.148Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:56:38.150Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:56:38.150Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:56:39.281Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:56:39.282Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:56:39.283Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:56:40.382Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:56:40.383Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:56:40.384Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Sesame"}
+{"at":"2026-10-31T22:56:41.479Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:56:41.482Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:56:41.482Z","mode":"mobile","stage":"scene-05-bagels","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Plain"}
+{"at":"2026-10-31T22:56:41.485Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"scene-start","scene":"bagels","name":"06-bagels-selected"}
+{"at":"2026-10-31T22:56:43.787Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"scene-complete","scene":"bagels","name":"06-bagels-selected","completedScenes":22}
+{"at":"2026-10-31T22:56:44.957Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-journey-back","ariaLabel":"Volver al paso anterior"}
+{"at":"2026-10-31T22:56:44.958Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-journey-back","ariaLabel":"Volver al paso anterior"}
+{"at":"2026-10-31T22:56:44.958Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-journey-back","ariaLabel":"Volver al paso anterior"}
+{"at":"2026-10-31T22:56:46.148Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:56:46.152Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:56:46.152Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 bagels, mixtos"}
+{"at":"2026-10-31T22:56:48.020Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:56:50.722Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"draft-reload-inspected","draftPresent":true,"counter":"6/6"}
+{"at":"2026-10-31T22:56:56.061Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:56:56.062Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:56:56.062Z","mode":"mobile","stage":"scene-06-bagels-selected","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:56:56.097Z","mode":"mobile","stage":"scene-07-schmears","type":"scene-start","scene":"schmears","name":"07-schmears"}
+{"at":"2026-10-31T22:56:59.751Z","mode":"mobile","stage":"scene-07-schmears","type":"scene-complete","scene":"schmears","name":"07-schmears","completedScenes":23}
+{"at":"2026-10-31T22:57:00.888Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:57:00.889Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:57:00.890Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:57:02.064Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:57:02.065Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:57:02.065Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Whipped Original"}
+{"at":"2026-10-31T22:57:03.269Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:57:03.271Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:57:03.271Z","mode":"mobile","stage":"scene-07-schmears","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-primary-next","ariaLabel":null}
+{"at":"2026-10-31T22:57:03.281Z","mode":"mobile","stage":"scene-08-cashier","type":"scene-start","scene":"cashier","name":"08-cashier"}
+{"at":"2026-10-31T22:57:06.693Z","mode":"mobile","stage":"scene-08-cashier","type":"scene-complete","scene":"cashier","name":"08-cashier","completedScenes":24}
+{"at":"2026-10-31T22:57:08.289Z","mode":"mobile","stage":"scene-08-cashier","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:08.290Z","mode":"mobile","stage":"scene-08-cashier","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:08.291Z","mode":"mobile","stage":"scene-08-cashier","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:08.320Z","mode":"mobile","stage":"scene-09-payment","type":"scene-start","scene":"pay","name":"09-payment"}
+{"at":"2026-10-31T22:57:11.925Z","mode":"mobile","stage":"scene-09-payment","type":"scene-complete","scene":"pay","name":"09-payment","completedScenes":25}
+{"at":"2026-10-31T22:57:13.178Z","mode":"mobile","stage":"scene-09-payment","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-pay-hotspot qa-only-pay","ariaLabel":"Continuar en modo QA"}
+{"at":"2026-10-31T22:57:13.179Z","mode":"mobile","stage":"scene-09-payment","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-pay-hotspot qa-only-pay","ariaLabel":"Continuar en modo QA"}
+{"at":"2026-10-31T22:57:13.183Z","mode":"mobile","stage":"scene-09-payment","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-pay-hotspot qa-only-pay","ariaLabel":"Continuar en modo QA"}
+{"at":"2026-10-31T22:57:13.197Z","mode":"mobile","stage":"scene-10-receipt","type":"scene-start","scene":"receipt","name":"10-receipt"}
+{"at":"2026-10-31T22:57:16.469Z","mode":"mobile","stage":"scene-10-receipt","type":"scene-complete","scene":"receipt","name":"10-receipt","completedScenes":26}
+{"at":"2026-10-31T22:57:17.703Z","mode":"mobile","stage":"scene-10-receipt","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"DIV","className":"receipt-interaction","ariaLabel":"Jalar o tocar para retirar tu recibo"}
+{"at":"2026-10-31T22:57:17.705Z","mode":"mobile","stage":"scene-10-receipt","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"DIV","className":"receipt-interaction","ariaLabel":"Jalar o tocar para retirar tu recibo"}
+{"at":"2026-10-31T22:57:17.705Z","mode":"mobile","stage":"scene-10-receipt","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"DIV","className":"receipt-interaction","ariaLabel":"Jalar o tocar para retirar tu recibo"}
+{"at":"2026-10-31T22:57:17.707Z","mode":"mobile","stage":"scene-11-wallet","type":"scene-start","scene":"wallet","name":"11-wallet"}
+{"at":"2026-10-31T22:57:20.980Z","mode":"mobile","stage":"scene-11-wallet","type":"scene-complete","scene":"wallet","name":"11-wallet","completedScenes":27}
+{"at":"2026-10-31T22:57:22.174Z","mode":"mobile","stage":"scene-11-wallet","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"wallet-skip","ariaLabel":null}
+{"at":"2026-10-31T22:57:22.174Z","mode":"mobile","stage":"scene-11-wallet","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"wallet-skip","ariaLabel":null}
+{"at":"2026-10-31T22:57:22.181Z","mode":"mobile","stage":"scene-11-wallet","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"wallet-skip","ariaLabel":null}
+{"at":"2026-10-31T22:57:22.185Z","mode":"mobile","stage":"scene-12-handoff","type":"scene-start","scene":"handoff","name":"12-handoff"}
+{"at":"2026-10-31T22:57:25.165Z","mode":"mobile","stage":"scene-12-handoff","type":"scene-complete","scene":"handoff","name":"12-handoff","completedScenes":28}
+{"at":"2026-10-31T22:57:26.359Z","mode":"mobile","stage":"scene-12-handoff","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"handoff-action","ariaLabel":null}
+{"at":"2026-10-31T22:57:26.361Z","mode":"mobile","stage":"scene-12-handoff","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"handoff-action","ariaLabel":null}
+{"at":"2026-10-31T22:57:26.362Z","mode":"mobile","stage":"scene-12-handoff","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"handoff-action","ariaLabel":null}
+{"at":"2026-10-31T22:57:26.386Z","mode":"mobile","stage":"scene-13-goodbye","type":"scene-start","scene":"goodbye","name":"13-goodbye"}
+{"at":"2026-10-31T22:57:29.457Z","mode":"mobile","stage":"scene-13-goodbye","type":"scene-complete","scene":"goodbye","name":"13-goodbye","completedScenes":29}
+{"at":"2026-10-31T22:57:30.616Z","mode":"mobile","stage":"scene-13-goodbye","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:30.617Z","mode":"mobile","stage":"scene-13-goodbye","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:30.618Z","mode":"mobile","stage":"scene-13-goodbye","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:30.629Z","mode":"mobile","stage":"scene-14-returning","type":"scene-start","scene":"returning","name":"14-returning"}
+{"at":"2026-10-31T22:57:33.776Z","mode":"mobile","stage":"scene-14-returning","type":"scene-complete","scene":"returning","name":"14-returning","completedScenes":30}
+{"at":"2026-10-31T22:57:33.777Z","mode":"mobile","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:57:35.668Z","mode":"mobile","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:57:42.108Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:57:42.109Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:57:42.110Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:57:43.293Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:57:43.294Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:57:43.295Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:57:44.582Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:44.583Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:44.584Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:44.667Z","mode":"mobile","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:57:45.934Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:45.946Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:45.947Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:57:47.301Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Combos"}
+{"at":"2026-10-31T22:57:47.303Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Combos"}
+{"at":"2026-10-31T22:57:47.304Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Combos"}
+{"at":"2026-10-31T22:57:47.325Z","mode":"mobile","stage":"scene-15-combos","type":"scene-start","scene":"combos","name":"15-combos"}
+{"at":"2026-10-31T22:57:49.989Z","mode":"mobile","stage":"scene-15-combos","type":"scene-complete","scene":"combos","name":"15-combos","completedScenes":31}
+{"at":"2026-10-31T22:57:49.990Z","mode":"mobile","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:57:52.013Z","mode":"mobile","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:57:57.813Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:57:57.813Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:57:57.814Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:57:59.093Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:57:59.095Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:57:59.096Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:58:00.385Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:00.387Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:00.388Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:00.478Z","mode":"mobile","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:58:01.759Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:01.764Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:01.765Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:03.059Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Schmears"}
+{"at":"2026-10-31T22:58:03.064Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Schmears"}
+{"at":"2026-10-31T22:58:03.065Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Schmears"}
+{"at":"2026-10-31T22:58:03.074Z","mode":"mobile","stage":"scene-16-schmear-size","type":"scene-start","scene":"schmear-size","name":"16-schmear-size"}
+{"at":"2026-10-31T22:58:06.388Z","mode":"mobile","stage":"scene-16-schmear-size","type":"scene-complete","scene":"schmear-size","name":"16-schmear-size","completedScenes":32}
+{"at":"2026-10-31T22:58:06.390Z","mode":"mobile","stage":"visit","type":"journey-start"}
+{"at":"2026-10-31T22:58:08.220Z","mode":"mobile","stage":"visit","type":"navigation","url":"http://127.0.0.1:3203/?qa=1"}
+{"at":"2026-10-31T22:58:14.548Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:58:14.549Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:58:14.549Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"primary","ariaLabel":null}
+{"at":"2026-10-31T22:58:15.754Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:58:15.755Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:58:15.755Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"guided-store-menu-button","ariaLabel":"Abrir menú"}
+{"at":"2026-10-31T22:58:17.101Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:17.102Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:17.103Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:17.202Z","mode":"mobile","stage":"visit","type":"journey-ready"}
+{"at":"2026-10-31T22:58:18.392Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:18.393Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:18.394Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:19.696Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:58:19.698Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:58:19.698Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Packs"}
+{"at":"2026-10-31T22:58:20.998Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:20.999Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:20.999Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:22.289Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:22.290Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:22.291Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":null}
+{"at":"2026-10-31T22:58:23.575Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 mini bagels, un sabor"}
+{"at":"2026-10-31T22:58:23.576Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 mini bagels, un sabor"}
+{"at":"2026-10-31T22:58:23.577Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Elegir 6 mini bagels, un sabor"}
+{"at":"2026-10-31T22:58:24.857Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:58:24.858Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:58:24.859Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Agregar Everything"}
+{"at":"2026-10-31T22:58:26.090Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerdown","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Quitar Everything"}
+{"at":"2026-10-31T22:58:26.092Z","mode":"mobile","stage":"visit","type":"ui-event","event":"pointerup","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Quitar Everything"}
+{"at":"2026-10-31T22:58:26.092Z","mode":"mobile","stage":"visit","type":"ui-event","event":"click","pointerType":"mouse","key":null,"tag":"BUTTON","className":"","ariaLabel":"Quitar Everything"}
+{"at":"2026-10-31T22:58:26.096Z","mode":"mobile","stage":"visit","type":"mode-complete","completedScenes":16,"localReads":141,"fixtureReads":5,"blocked":0}
+{"at":"2026-10-31T22:58:26.097Z","mode":"mobile","stage":"visit","type":"context-closing","pendingRoutes":0}
+{"at":"2026-10-31T22:58:26.116Z","mode":"mobile","stage":"visit","type":"context-closed","routeErrors":0,"closingRouteErrors":0,"closingAborts":0}
+32 scene checks; 0 failures.

@@ -1,0 +1,98 @@
+{
+  "source": "same captured DOM/rects; corrected clipping uses full-ancestor sampler target rects rather than grid-only text helper",
+  "corrected": [
+    {
+      "name": "Classic Strawberry",
+      "minus": {
+        "label": "Quitar Classic Strawberry",
+        "rect": {
+          "x": 150,
+          "y": 520,
+          "width": 44,
+          "height": 44,
+          "right": 194,
+          "bottom": 564
+        },
+        "clipped": {
+          "x": 150,
+          "y": 520,
+          "right": 194,
+          "bottom": 562,
+          "width": 44,
+          "height": 42
+        },
+        "size44": true,
+        "effective44": false
+      },
+      "buttonClip": {
+        "x": 150,
+        "y": 460,
+        "right": 296,
+        "bottom": 520,
+        "width": 146,
+        "height": 60
+      },
+      "texts": [
+        {
+          "text": "Classic Strawberry",
+          "fullAllAncestors": true,
+          "overlapsMinus": false
+        },
+        {
+          "text": "con fresas frescas del mercado",
+          "fullAllAncestors": true,
+          "overlapsMinus": false
+        }
+      ],
+      "visibility": {
+        "canvas": 0.6013888888888889,
+        "physical": 1,
+        "free": 5
+      }
+    },
+    {
+      "name": "Herb & Roasted Garlic",
+      "minus": {
+        "label": "Quitar Herb & Roasted Garlic",
+        "rect": {
+          "x": 29,
+          "y": 520,
+          "width": 44,
+          "height": 44,
+          "right": 73,
+          "bottom": 564
+        },
+        "clipped": {
+          "x": 29,
+          "y": 520,
+          "right": 73,
+          "bottom": 562,
+          "width": 44,
+          "height": 42
+        },
+        "size44": true,
+        "effective44": false
+      },
+      "buttonClip": {
+        "x": 29,
+        "y": 460,
+        "right": 175,
+        "bottom": 520,
+        "width": 146,
+        "height": 60
+      },
+      "texts": [
+        {
+          "text": "Herb & Roasted Garlic",
+          "fullAllAncestors": true,
+          "overlapsMinus": false
+        }
+      ],
+      "visibility": {
+        "canvas": 0.6013888888888889,
+        "physical": 1,
+        "free": 5
+      }
+    }
+  ]
+}
