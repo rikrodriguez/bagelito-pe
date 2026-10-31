@@ -81,8 +81,8 @@ class Store3DErrorBoundary extends Component<{children:ReactNode;onRecover:()=>v
   }
 }
 
-// The contact shadow is a finite bake. Player telemetry re-renders the store
-// every eight frames; memoization keeps Drei's bake counter from restarting.
+// The contact shadow is a finite bake. Position and scene updates re-render
+// the store; memoization keeps Drei's bake counter from restarting.
 const StoreContactShadows = memo(function StoreContactShadows(){
   return <ContactShadows frames={8} position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
 })

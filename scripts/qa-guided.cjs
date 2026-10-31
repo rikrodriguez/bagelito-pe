@@ -71,6 +71,7 @@ async function audit() {
   const interruptions = []
   let activePage = null, activeMode = null, activeStage = 'browser-launched'
   let interrupted = false, handlingSignal = false
+  let failureDiagnosed = false
   metadata.browserVersion = browser.version()
 
   function checkpoint(status = 'running', final = false) {
@@ -160,25 +161,74 @@ async function audit() {
       activeStage = 'context-setup'
       record('mode-start', { viewport: mode.viewport })
       const context = await browser.newContext({ viewport: mode.viewport, deviceScaleFactor: 1, serviceWorkers: 'block' })
-      const traffic = { mode: mode.name, reads: [], fixtureReads: 0, blocked: [] }
+      const traffic = { mode: mode.name, reads: [], fixtureReads: 0, blocked: [], httpErrors: [], routeErrors: [], closingRouteErrors: [], closingAborts: [] }
+      const pendingRoutes = new Set()
+      let closing = false
+      const reportRouteError = (entry, allowedGet) => {
+        const expectedClosingError = closing && allowedGet
+          && /disposed|(?:page|browser|context).*closed|net::ERR_ABORTED/i.test(entry.message)
+          && !/timeout|timed out/i.test(entry.message)
+        if (expectedClosingError) traffic.closingRouteErrors.push(entry)
+        else {
+          traffic.routeErrors.push(entry)
+          failures.push(mode.name + ': route handler failed: ' + entry.message)
+          record('route-error', entry)
+        }
+      }
       network.push(traffic)
-      await context.route('**/*', async route => {
+      try {
+      await context.route('**/*', route => {
+        const work = (async () => {
         const request = route.request(), url = request.url()
-        if (request.method() === 'GET' && new URL(url).origin === baseURL.origin) {
+        const localGet = request.method() === 'GET' && new URL(url).origin === baseURL.origin
+        const fixtureGet = request.method() === 'GET' && url === hdrURL
+        if (closing) {
+          traffic.closingAborts.push({ method: request.method(), url })
+          if (!localGet && !fixtureGet) {
+            traffic.blocked.push({ method: request.method(), url, reason: 'forbidden-during-close' })
+            failures.push(mode.name + ': forbidden request while closing: ' + request.method() + ' ' + url)
+          }
+          await route.abort('blockedbyclient').catch(error => reportRouteError({ method: request.method(), url, message: String(error) }, localGet || fixtureGet))
+          return
+        }
+        try {
+        if (localGet) {
           const response = await route.fetch({ maxRedirects: 0 })
           traffic.reads.push({ url, status: response.status() })
+          if (response.status() >= 400) {
+            const entry = { method: 'GET', url, status: response.status() }
+            traffic.httpErrors.push(entry)
+            failures.push(mode.name + ': local GET returned HTTP ' + entry.status + ': ' + url)
+            record('local-read-error', entry)
+          }
           if (response.status() >= 300 && response.status() < 400) {
             traffic.blocked.push({ method: 'GET', url, reason: 'redirect' })
-            return route.abort('blockedbyclient')
+            failures.push(mode.name + ': local redirect is forbidden: ' + url)
+            await route.abort('blockedbyclient')
+            return
           }
-          return route.fulfill({ response })
+          await route.fulfill({ response })
+          return
         }
-        if (request.method() === 'GET' && url === hdrURL) {
+        if (fixtureGet) {
           traffic.fixtureReads++
-          return route.fulfill({ status: 200, headers: { 'content-type': 'application/octet-stream', 'access-control-allow-origin': '*' }, body: hdr })
+          await route.fulfill({ status: 200, headers: { 'content-type': 'application/octet-stream', 'access-control-allow-origin': '*' }, body: hdr })
+          return
         }
         traffic.blocked.push({ method: request.method(), url })
-        return route.abort('blockedbyclient')
+        failures.push(mode.name + ': unrelated request or write is forbidden: ' + request.method() + ' ' + url)
+        await route.abort('blockedbyclient')
+        } catch (error) {
+          const entry = { method: request.method(), url, message: String(error) }
+          reportRouteError(entry, localGet || fixtureGet)
+          await route.abort('blockedbyclient').catch(abortError => {
+            reportRouteError({ ...entry, message: String(abortError), phase: 'abort-after-error' }, localGet || fixtureGet)
+          })
+        }
+        })()
+        pendingRoutes.add(work)
+        void work.then(() => pendingRoutes.delete(work), () => pendingRoutes.delete(work))
+        return work
       })
       const page = await context.newPage()
       activePage = page
@@ -469,14 +519,27 @@ async function audit() {
       assert.deepEqual(traffic.reads.filter(read => read.status >= 400), [], 'All local resources must load')
       record('mode-complete', { completedScenes: results.filter(result => result.mode === mode.name).length, localReads: traffic.reads.length, fixtureReads: traffic.fixtureReads, blocked: traffic.blocked.length })
       if (failures.length > failuresBeforeMode) await diagnose('mode-assertion-failures')
-      await context.close()
-      activePage = null
+      } catch (error) {
+        if (!interrupted) {
+          await diagnose('operation-failure')
+          failureDiagnosed = true
+        }
+        throw error
+      } finally {
+        closing = true
+        record('context-closing', { pendingRoutes: pendingRoutes.size })
+        while (pendingRoutes.size) await Promise.allSettled([...pendingRoutes])
+        await context.close()
+        while (pendingRoutes.size) await Promise.allSettled([...pendingRoutes])
+        activePage = null
+        record('context-closed', { routeErrors: traffic.routeErrors.length, closingRouteErrors: traffic.closingRouteErrors.length, closingAborts: traffic.closingAborts.length })
+      }
     }
   } catch (error) {
     if (interrupted) record('interrupted-operation', { message: String(error) })
     else {
       failures.push(String(error.stack || error))
-      await diagnose('operation-failure')
+      if (!failureDiagnosed) await diagnose('operation-failure')
     }
   } finally {
     await browser.close().catch(() => {})
