@@ -1,0 +1,34 @@
+{
+  "codeSHA": "24fe0f8337830439d8a1cb4c470abd9a7f6e3c5d",
+  "runnerSHA256": "1451c7fec8951f160689f4db1667c8a524f7e1183f0423556d9d06f819578230",
+  "startedAt": "2026-10-31T21:06:30.278Z",
+  "finishedAt": "2026-10-31T21:09:43.547Z",
+  "reads": 47,
+  "fixtureReads": 2,
+  "blocked": [],
+  "pageErrors": [],
+  "paymentConfigs": [
+    {
+      "mode": "disabled",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false
+    },
+    {
+      "mode": "disabled",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false
+    }
+  ],
+  "artifacts": {
+    "mobile-tour-1-totem.png": "7e66a9bd19ee2fb36cc334755d8cb3866380e789c471ad0519e1edc8f63af30b",
+    "mobile-tour-2-vitrina.png": "3f93cd540ef97c1aca93475a2497d5a541407c2a929f95b5fe2632a993224ce1",
+    "mobile-tour-3-bagels.png": "b6a16d4ade20bfdf3ba20e3af82cd52363e0f78ba6b081a06d7330f842b748fa",
+    "mobile-tour-4-schmears.png": "96fca46ecab86e9ac04f2afea704b53090c280744f304d9ebffd41ca008d5996",
+    "mobile-tour-5-production.png": "531d0451eceba5213031c433804eaed18e62992b9742487caca98ad9cfb4ad06",
+    "mobile-tour-6-cashier.png": "a42c3be47ba0c7eb7c9c995de0380b4e5332588e99cbd317b9c8d03dc59debcf",
+    "mobile-tour-7-pickup.png": "cd6e2dc1ca5c5649f6a4bf80a0afad8176d3e706179c022105a88fb94c463bc1",
+    "tour-results.json": "67071a5d66eba56f75827adec5acf32a732c755b88880bd26f2e759f3f784087"
+  }
+}

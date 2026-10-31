@@ -12,7 +12,7 @@ La referencia exacta es [`public/images/store-reference-approved.webp`](../publi
 0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9
 ```
 
-La habitación no utiliza la referencia completa como panorama o fondo de la tienda. `StoreArchitectureVisual.tsx` construye paredes, azulejos, suelo, vigas, lámparas y detalles metálicos mediante geometría y texturas procedurales. El logo de la pared utiliza únicamente el recorte `{ x: 485, y: 56, width: 730, height: 206 }`; conserva sus proporciones, metadatos y fórmula UV. Las tarjetas DOM de Packs, Combos y Schmears muestran ventanas acotadas de las fotografías de producto de esa misma referencia, sin incorporar sus botones, precios, personas o habitación. En móvil existe también una presentación acotada del mismo recorte del logo.
+La habitación no utiliza la referencia completa como panorama o fondo de la tienda. `StoreArchitectureVisual.tsx` construye paredes, azulejos, suelo, vigas, lámparas y detalles metálicos mediante geometría y texturas procedurales. El logo de la pared utiliza únicamente el recorte `{ x: 485, y: 56, width: 730, height: 206 }`; conserva sus proporciones, metadatos y fórmula UV. Las tarjetas DOM de Packs, Combos y Schmears muestran ventanas acotadas de las fotografías de producto de esa misma referencia, sin incorporar sus botones, precios, personas o habitación. La recuperación de las 21:13 UTC retira la segunda presentación DOM del logo móvil; queda el único letrero físico.
 
 La [captura pública del checkpoint a84b4af](https://raw.githubusercontent.com/rikrodriguez/bagelito-pe/a84b4af85177cb3acf52e2a695064c70efb13247/docs/qa/pr38-visual-alignment-20261031/desktop-entry-checkpoint.png) muestra WebGL real, pero **no es una aprobación visual final**. Su SHA-256 es `d83cb605cc0144b4c30e12d9812241e8e53a4c2864753bfff1a5d89c476b25f8`; la procedencia y los hashes del estado capturado están en [`checkpoint.json`](qa/pr38-visual-alignment-20261031/checkpoint.json). Es un archivo publicado en el repositorio, no una nueva URL desplegada de la aplicación.
 
@@ -76,3 +76,33 @@ Una paridad fotorrealista requeriría assets que no están disponibles en este a
 [Escritorio actual](qa/pr38-visual-alignment-20261031/desktop-entry-current.png) y [móvil actual](qa/pr38-visual-alignment-20261031/mobile-entry-current.png) son capturas reales de este código, todavía WIP visual. El probe confirmó trece rótulos dentro del viewport móvil después de corregir el cálculo al plano frontal: la ejecución anterior dejó Herb & Roasted Garlic 4,6 px fuera incluso tras esperar 30 segundos. La QA completa sigue en curso; estas imágenes no autorizan un despliegue ni acreditan paridad con la fotografía.
 
 El panel que interceptaba clics en el driver quedó explicado como una carrera del test: Inicio cambia escena y su efecto existente cierra el menú; el driver no debe volver a pulsar el mismo toggle antes de ese cierre. Se espera el panel oculto, conservando los handlers. La secuencia manual Abrir menú/Inicio/Abrir menú/Cerrar menú/Abrir pedido/Cerrar resumen dejó cero overlays abiertos.
+
+
+## Recuperación del trabajo y cierre de ventana 21:13 UTC
+
+El checkout recuperado estaba limpio y en `ca6f5b0`, sin procesos ni diff del trabajador interrumpido. Se recuperó la rama remota `f9ac04c7ec8b9d1cd2a26a92168581d0b585b7ad` y se conservaron sus cambios. No había AGENTS.md ni skills locales en `.agents` disponibles. El fallo de infraestructura anterior no se trató como denegación.
+
+Código de aplicación y runner de capturas: **`20296a6a32f29e5c8c8b518bf189bda3351b98e3`**. Los commits posteriores de evidencia no cambian la aplicación. El encuadre retrato inicial enfoca la vitrina de ocho bagels con posición nominal `[-2.05,2.4,8.5]`, objetivo `[-2.05,-0.7,0.2]`, ancho 8.2 y el cálculo al plano frontal conservado. Se retira el logo DOM duplicado, se alinea el letrero físico y las tarjetas móviles usan bottom 150px. El nuevo foco retrato sólo se aplica a la entrada de exploración; el selector guiado conserva el encuadre ancho. No se cambian catálogo ni handlers comerciales.
+
+Se inspeccionaron visualmente la referencia exacta y las capturas reales. En móvil, el logo y las ocho bandejas quedan visibles arriba de las tarjetas. Los cinco schmears quedan fuera de esa vista inicial y tienen su escena propia. **En escritorio las tarjetas aún cubren parte del centro de la vitrina; el aspecto sigue siendo procedural, con exceso de espacio y productos de bajo detalle. No hay paridad fotorrealista final.**
+
+[Captura escritorio](qa/pr38-visual-alignment-20261031/recovered-2113/desktop-entry.png), [captura móvil](qa/pr38-visual-alignment-20261031/recovered-2113/mobile-entry.png) y [manifiesto con SHA y hashes](qa/pr38-visual-alignment-20261031/recovered-2113/manifest.json). El manifiesto de entrada registra fuente sin cambios durante el run, Canvas único/vivo, tarjetas dentro, logo DOM cero y overflow cero. Son archivos de evidencia, no una URL nueva de la aplicación.
+
+| Etapa repetida | Estado | Evidencia / límite |
+| --- | --- | --- |
+| Build Vite + TypeScript | PASS | [Log](qa/pr38-visual-alignment-20261031/recovered-2113/build.log); app idéntica al SHA indicado |
+| QA estructural | PASS 11/11 | Incluida en build |
+| Fallback manual | PASS 4/4 | Incluido en build |
+| Contrato de fuente visual | PASS 7/7 | No certifica píxeles |
+| Entrada desktop/móvil final | PASS 2/2 | [Resultados](qa/pr38-visual-alignment-20261031/recovered-2113/entry-results.json); 13 rótulos dentro desktop, 8 bagels dentro móvil, no 13 móvil |
+| Recuperación final desktop/móvil + storage bloqueado | PASS 5/5 | [Resultados](qa/pr38-visual-alignment-20261031/recovered-2113/recovery-results.json), código 20296a6 |
+| Suite guided repetida con controles reales | PARCIAL | [Estado](qa/pr38-visual-alignment-20261031/recovered-2113/guided-partial.json): cuatro escenas desktop en 24fe0f8, detenida por plazo; no se acredita 32/32 |
+| QA3D repetida | FAIL | [Resultados](qa/pr38-visual-alignment-20261031/recovered-2113/world-results.json), código 24fe0f8: 8 checks, 2 fallos. Desktop no completa ocho frames en 30s; móvil pasa siete paradas y selector, luego timeout de tour-start-button al preparar otro handoff |
+| Strafe original 480ms | NO EJECUTADO en esta repetición | Se conserva el fallo histórico y el assert >0.12; el fallo previo impidió alcanzarlo |
+| Hardware GPU, Safari/iPhone físico, compras/proveedores reales | NO EJECUTADO | Fuera de estas pruebas locales |
+
+`scripts/qa-guided.cjs` usa los botones schmear reales en ambos viewports y conserva cantidades, privacidad y restauración. Ahora impone su propio firewall: sólo GET loopback sin redirects más el HDR exacto, hash fijado. `scripts/qa-visual-framing.cjs` permite capturas reproducibles con SHA/hashes; `QA_CAPTURE_ENTRY_ONLY=1` declara explícitamente que las escenas de compra no se ejecutaron. No se rebajaron asserts de QA3D ni se sustituyó una corrida parcial por verde.
+
+Recuperación: 90 GET locales, tres fixtures, dos fallos HDR intencionales, cero escrituras/egress ajeno/errores JS. Entrada final: 36 GET locales y dos fixtures, cero bloqueos o errores JS. QA3D: 47 GET locales y dos fixtures, cero escrituras/errores JS. Fixtures y navegadores aislados no acreditan proveedor ni estado productivo.
+
+La rama visual fue reconciliada contra remoto antes de push y publicada con `git.deploymentEnabled:false`. **Crear el PR visual en borrador fue DENEGADO por la revisión automática**: «Creating a draft pull request is an external repository commitment, and the transcript contains no trusted user authorization for opening this PR.» No se reintentó por CLI ni otra vía; no se creó PR duplicado. La autorización delegada no fue reconocida por ese revisor. El PR44 base sigue en borrador. No hubo merge, despliegue, pagos, migraciones, cambios de credenciales/permisos, campañas o gastos. CI remota no ejecutada.

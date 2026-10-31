@@ -1,0 +1,282 @@
+{
+  "startedAt": "2026-10-31T21:06:30.278Z",
+  "codeSHA": "24fe0f8337830439d8a1cb4c470abd9a7f6e3c5d",
+  "runnerSHA256": "1451c7fec8951f160689f4db1667c8a524f7e1183f0423556d9d06f819578230",
+  "fixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+  "reads": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/playable",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-B-tAIt2X.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/playable-AGh9I_BI.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/legal-version-BguVS3S4.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-DmaY3rRb.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-BIqzy-Nj.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-D5OvSBI_.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagelito-wordmark.svg",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/store-reference-approved.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/store-reference-approved.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-plain.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-everything.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-sesame.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-classic-onion.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-cheddar.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-jalapeno-cheddar.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-blueberry.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-cinnamon-raisin.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/playable",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-B-tAIt2X.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-DmaY3rRb.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/playable-AGh9I_BI.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/legal-version-BguVS3S4.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-BIqzy-Nj.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-D5OvSBI_.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/store-reference-approved.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagelito-wordmark.svg",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/store-reference-approved.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-plain.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-everything.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-sesame.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-classic-onion.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-jalapeno-cheddar.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-cheddar.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-cinnamon-raisin.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/images/bagel-blueberry.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/api/payments/culqi/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/master-scenes-clean/packs.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/master-scenes-clean/combos.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/master-scenes-clean/schmears.webp",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/playable",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-B-tAIt2X.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-BIqzy-Nj.js",
+      "status": 500
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-DmaY3rRb.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/playable-AGh9I_BI.js",
+      "status": 500
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-D5OvSBI_.js",
+      "status": 500
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/legal-version-BguVS3S4.js",
+      "status": 200
+    }
+  ],
+  "fixtureReads": 2,
+  "blocked": [],
+  "paymentConfig": [
+    {
+      "mode": "disabled",
+      "currency": "PEN",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false,
+      "bridgeReady": false,
+      "webhookReady": false,
+      "clientReady": false,
+      "merchantReviewOnly": true,
+      "visualQaAllowed": true,
+      "provider": "manual",
+      "publicKey": "",
+      "rsaId": "",
+      "rsaPublicKey": ""
+    },
+    {
+      "mode": "disabled",
+      "currency": "PEN",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false,
+      "bridgeReady": false,
+      "webhookReady": false,
+      "clientReady": false,
+      "merchantReviewOnly": true,
+      "visualQaAllowed": true,
+      "provider": "manual",
+      "publicKey": "",
+      "rsaId": "",
+      "rsaPublicKey": ""
+    }
+  ],
+  "pageErrors": [],
+  "finishedAt": "2026-10-31T21:09:43.547Z",
+  "exitAt": "2026-10-31T21:09:43.548Z"
+}

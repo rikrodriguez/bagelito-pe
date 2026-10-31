@@ -1,0 +1,9 @@
+{
+  "code_sha": "24fe0f8337830439d8a1cb4c470abd9a7f6e3c5d",
+  "status": "interrupted-for-user-deadline",
+  "completed_scene_captures": ["desktop-01-entrance", "desktop-02-selector", "desktop-03-pack-size", "desktop-04-pack-quantity"],
+  "full_suite": "not-completed",
+  "reason": "Parent requested stopping this runner with SIGTERM to prioritize final-candidate recovery verification before 21:13 UTC. No suite failure is inferred from this interruption.",
+  "config_verified": {"mode":"disabled","enabled":false,"configured":false,"intakeEnabled":false,"merchantReviewOnly":true,"visualQaAllowed":true},
+  "log": "/tmp/bagelito-guided-recovered-final.log"
+}
