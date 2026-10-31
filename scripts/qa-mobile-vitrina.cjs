@@ -22,13 +22,15 @@ function record(type,details={}){const e={at:new Date().toISOString(),type,...de
 const delay=ms=>new Promise(done=>setTimeout(done,ms))
 async function frames(page,n=3){let timer;try{await Promise.race([page.evaluate(n=>new Promise(done=>{let count=0;function frame(){if(++count===n)done();else requestAnimationFrame(frame)}requestAnimationFrame(frame)}),n),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Real frames timed out')),45000)})])}finally{clearTimeout(timer)}}
 async function swipe(page,cdp,scrollable,axis,sign){
+ record('scroll-before',{url:page.url(),axis,sign,scrollable})
  const r=scrollable.rect,x=Math.max(12,Math.min(page.viewportSize().width-12,r.x+r.width*.5)),y=Math.max(80,Math.min(page.viewportSize().height-80,r.y+r.height*.5))
- const start=axis==='x'?{x:sign<0?r.right-16:r.x+16,y}:{x,y:sign<0?r.bottom-12:r.y+12},end=axis==='x'?{x:sign<0?r.x+16:r.right-16,y}:{x,y:sign<0?r.y+12:r.bottom-12}
+ const insetX=Math.min(64,r.width/4)
+ const start=axis==='x'?{x:sign<0?r.right-insetX:r.x+insetX,y}:{x,y:sign<0?r.bottom-12:r.y+12},end=axis==='x'?{x:sign<0?r.x+insetX:r.right-insetX,y}:{x,y:sign<0?r.y+12:r.bottom-12}
  assert.ok(Math.abs(end[axis]-start[axis])>=24,'A real scroll viewport must have room for a native gesture')
  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...start,id:1}]})
  for(let i=1;i<=6;i++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:start.x+(end.x-start.x)*i/6,y:start.y+(end.y-start.y)*i/6,id:1}]});await delay(25)}
  await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await delay(180)
- record('native-scroll',{axis,sign,ancestorDepth:scrollable.depth,start,end})
+ record('native-scroll',{url:page.url(),axis,sign,ancestorDepth:scrollable.depth,start,end})
 }
 async function reach(page,cdp,locator,fullHorizontal=false){
  for(let attempt=0;attempt<18;attempt++){
@@ -114,7 +116,7 @@ async function audit(){
  try{for(const {width,height}of report.metadata.viewportSizes){
   const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:1,isMobile:true,hasTouch:true,serviceWorkers:'block'})
   const guard=await installLoopbackGuard(context,{base,hdr,onFailure:e=>{report.failures.push({width,network:e});persist()},onEvent:e=>record('network',{width,...e})});report.network.push({width,traffic:guard.traffic})
-  const page=await context.newPage(),cdp=await context.newCDPSession(page);page.setDefaultTimeout(45000)
+  const page=await context.newPage(),cdp=await context.newCDPSession(page);page.setDefaultTimeout(45000);page.on('framenavigated',frame=>{if(frame===page.mainFrame())record('main-frame-navigation',{width,url:frame.url()})})
   page.on('pageerror',e=>{report.failures.push({width,pageError:e.message});persist()});page.on('console',e=>{if(e.type()==='error'){report.failures.push({width,consoleError:e.text()});persist()}})
   await page.addInitScript(()=>{window.__qaMobileTaps=[];window.__qaMobileTabs=[];document.addEventListener('keyup',event=>{if(event.key==='Tab')window.__qaMobileTabs.push({trusted:event.isTrusted,label:document.activeElement?.getAttribute('aria-label')})},{capture:true});document.addEventListener('pointerup',event=>{const e=event.target instanceof Element?event.target.closest('.guided-commerce button,.guided-commerce a'):null;if(e)window.__qaMobileTaps.push({pointerType:event.pointerType,trusted:event.isTrusted,label:e.getAttribute('aria-label')||e.textContent.trim()})},{capture:true})})
   try{
@@ -144,7 +146,7 @@ async function audit(){
    await selector(page,cdp);await tap(page,cdp,page.getByRole('button',{name:'Schmears',exact:true}));await capture(page,width,'schmear-size');for(const button of await page.locator('.guided-size-cards>button').all())await reach(page,cdp,button)
    const taps=await page.evaluate(()=>window.__qaMobileTaps);assert.ok(taps.length>20&&taps.every(t=>t.pointerType==='touch'&&t.trusted),'All commerce taps must be native trusted touch');const tabs=await page.evaluate(()=>window.__qaMobileTabs);assert.ok(tabs.length>=13&&tabs.every(t=>t.trusted),'Catalog Tab events must be trusted browser events');report.extras.push({width,kind:'native-taps',taps,tabs})
    assert.ok(guard.traffic.fixtureReads>0);assert.equal(report.results.filter(r=>r.width===width).length,8)
-  }catch(error){report.failures.push({width,message:String(error.stack||error)});record('mode-failed',{width,message:String(error)});try{const file=width+'-failure.png';await page.screenshot({path:resolve(output,file),animations:'disabled',timeout:10000});report.extras.push({width,kind:'failure',file,sha256:hash(readFileSync(resolve(output,file)))})}catch{}}
+  }catch(error){report.failures.push({width,message:String(error.stack||error)});record('mode-failed',{width,message:String(error),url:page.url()});try{const file=width+'-failure.png';await page.screenshot({path:resolve(output,file),animations:'disabled',timeout:10000});report.extras.push({width,kind:'failure',file,sha256:hash(readFileSync(resolve(output,file)))})}catch{}}
   finally{await cdp.detach().catch(()=>{});await guard.close();persist()}
  }}finally{await browser.close();report.metadata.finalSourceSHA256=sourceHashes();report.metadata.sourceChangedDuringRun=JSON.stringify(report.metadata.sourceSHA256)!==JSON.stringify(report.metadata.finalSourceSHA256);if(report.metadata.sourceChangedDuringRun)report.failures.push({message:'Source changed during the run'});report.status=report.failures.length?'failed':'passed';report.metadata.finishedAt=new Date().toISOString();persist()}
  console.log(report.results.length+' mobile scene checks; '+report.catalog.length+' catalog checks; '+report.failures.length+' failures');if(report.failures.length)process.exitCode=1
