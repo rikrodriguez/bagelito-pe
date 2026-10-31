@@ -37,6 +37,7 @@ for (const [locale, viewport] of [['en', { width: 1440, height: 1000 }], ['es', 
     const beforeBatch = f.count('batch');
     await f.page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
     await until(() => f.count('batch') > beforeBatch, 'Synthetic last-slot availability must refresh');
+    await f.page.locator('.reserve-batch-card.is-closed').waitFor();
     await f.page.locator('.synthetic-culqi-pay').waitFor();
     assert.equal(await f.page.locator('.reserve-closed-card').count(), 0, 'Original preparation owns its displayed last slot');
     assert.equal(f.count('reservation'), 1);
@@ -44,26 +45,32 @@ for (const [locale, viewport] of [['en', { width: 1440, height: 1000 }], ['es', 
   });
 
   test('lost charge response stays locked across query navigation and reload until verified status (' + locale + ')', async t => {
-    const f = await syntheticPage(browser, t, { locale, viewport, lostChargeResponse: true });
+    const f = await syntheticPage(browser, t, { locale, viewport, lostChargeResponse: true, holdStatus: true });
     await fillCheckout(f.page);
     await f.page.locator('.synthetic-culqi-pay').click();
     await until(() => f.count('charge') === 1, 'Synthetic token must cross the actual compiled callback');
-    await f.page.locator('.review-card').waitFor();
+    const recoveryHeading = locale === 'es' ? 'Tu pago necesita revisión' : 'Your payment needs review';
+    await f.page.getByRole('heading', { name: recoveryHeading, exact: true }).waitFor();
     const reference = await readRecovery(f.page);
     assert.equal(reference.orderCode, f.state.orderCode);
     assert.equal(reference.checkoutSessionId, f.state.reservation.checkoutSessionId);
     assert.equal(reference.state, 'review');
     await queryNavigate(f.page);
-    await f.page.locator('.review-card').waitFor();
+    await f.page.getByRole('heading', { name: recoveryHeading, exact: true }).waitFor();
     await f.page.reload();
-    await f.page.locator('.review-card').waitFor();
+    await f.page.getByRole('heading', { name: recoveryHeading, exact: true }).waitFor();
     assert.deepEqual(await readRecovery(f.page), reference);
+    assert.equal(await f.page.locator('.synthetic-culqi-pay:not([disabled])').count(), 0);
     assert.equal(await f.page.locator('.reserve-pack-option').count(), 0);
     assert.equal(f.count('reservation'), 1);
     assert.equal(f.count('session'), 1);
     assert.equal(f.count('charge'), 1, 'Recovery must never submit another token');
-    await f.page.locator('.review-card button.pink').click();
+    await f.page.locator('.review-card:has(h1) button.pink').click();
     await until(() => f.count('status') === 1, 'Status lookup must use the original private checkout reference');
+    await f.page.waitForFunction(() => document.querySelector('.review-card:has(h1) button.pink')?.disabled === true);
+    assert.deepEqual(await readRecovery(f.page), reference, 'An in-flight status lookup cannot unlock the previous payment');
+    assert.equal(await f.page.locator('.reserve-pack-option').count(), 0);
+    f.releaseStatus();
     await f.page.getByRole('heading', { name: locale === 'es' ? 'Pago confirmado' : 'Payment confirmed', exact: true }).waitFor();
     assert.equal(await readRecovery(f.page), null);
     assert.equal(f.count('charge'), 1);
@@ -72,9 +79,10 @@ for (const [locale, viewport] of [['en', { width: 1440, height: 1000 }], ['es', 
   test('malformed durable recovery fails closed after navigation without any payment write (' + locale + ')', async t => {
     const f = await syntheticPage(browser, t, { locale, viewport, recoverySeed: '{invalid-synthetic-json' });
     await f.page.goto(localURL + '/checkout?pack=6-single&flavor=cheddar');
-    await f.page.locator('.review-card').waitFor();
+    const blockedCopy = locale === 'es' ? /No vuelvas a pagar ni crees otro pedido/ : /Do not pay again or create another order/;
+    await f.page.locator('.review-card:has(h1)').getByText(blockedCopy).waitFor();
     await queryNavigate(f.page);
-    await f.page.locator('.review-card').waitFor();
+    await f.page.locator('.review-card:has(h1)').getByText(blockedCopy).waitFor();
     assert.equal(await f.page.locator('.reserve-pack-option').count(), 0);
     assert.equal(await f.page.evaluate(key => localStorage.getItem(key), recoveryKey), '{invalid-synthetic-json');
     assert.equal(f.count('reservation'), 0);

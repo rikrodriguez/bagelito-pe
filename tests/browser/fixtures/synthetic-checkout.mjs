@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { sourceModule } from '../../helpers/load-ts.mjs';
+import { fulfillLocalRead } from './local-read.mjs';
 
 const { culqiReservationPayloadSchema } = sourceModule('src/lib/reservations/schema.ts');
 const { getPackBySlug } = sourceModule('src/lib/catalog.ts');
@@ -21,14 +22,18 @@ function gate() {
   return { promise, release };
 }
 
-export async function syntheticPage(browser, t, { locale, viewport, holdReservation = false, lostChargeResponse = false,
+export async function syntheticPage(browser, t, { locale, viewport, holdReservation = false, lostChargeResponse = false, holdStatus = false,
   recoverySeed } = {}) {
   const context = await browser.newContext({ viewport, serviceWorkers: 'block' });
   const page = await context.newPage();
   page.setDefaultTimeout(10_000);
   page.setDefaultNavigationTimeout(20_000);
   const calls = [], violations = [], errors = [], blockedExternal = [];
+  let localReads = 0;
   const reservationGate = gate();
+  const statusGate = gate();
+  let closing = false;
+  if (!holdStatus) statusGate.release();
   if (!holdReservation) reservationGate.release();
   const state = {
     accepting: true,
@@ -100,6 +105,9 @@ export async function syntheticPage(browser, t, { locale, viewport, holdReservat
         assert.equal(payload.orderCode, state.orderCode);
         assert.equal(payload.email, state.reservation.email);
         assert.equal(payload.sourceId, 'ype_test_browser_synthetic');
+        const durable = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), recoveryKey);
+        assert.deepEqual(durable, { version: 1, checkoutSessionId: state.reservation.checkoutSessionId,
+          orderCode: state.orderCode, state: 'pending' }, 'Recovery must be durable before the charge request is answered');
         calls.push({ stage: 'charge', path: url.pathname, payload });
         if (lostChargeResponse) return route.abort('connectionfailed');
         return fulfill(route, { ok: true, paymentStatus: 'pending' });
@@ -110,27 +118,33 @@ export async function syntheticPage(browser, t, { locale, viewport, holdReservat
         assert.equal(payload.checkoutSessionId, submitted);
         assert.equal(payload.orderCode, state.orderCode);
         calls.push({ stage: 'status', path: url.pathname, payload });
+        await statusGate.promise;
         return fulfill(route, state.status);
       }
       if (!['GET', 'HEAD'].includes(request.method())) {
         violations.push('Unexpected write: ' + request.method() + ' ' + url.pathname);
         return route.abort('blockedbyclient');
       }
-      return route.continue();
+      localReads++;
+      return await fulfillLocalRead(route);
     } catch (error) {
+      if (closing) return;
       violations.push(url.pathname + ': ' + error.message);
+      if (error.code === 'LOCAL_REDIRECT_REJECTED') return;
       return fulfill(route, { ok: false, error: 'Synthetic boundary assertion failed' }, 500);
     }
   });
   t.after(async () => {
     reservationGate.release();
+    statusGate.release();
+    closing = true;
     await context.close();
     assert.deepEqual(violations, [], 'Only explicitly mocked and validated writes are allowed');
     assert.deepEqual(errors, [], 'No browser runtime errors');
     t.diagnostic(JSON.stringify({ syntheticCalls: calls.map(call => call.stage),
-      blockedExternalRequests: blockedExternal.length, realProviderRequests: 0 }));
+      blockedExternalRequests: blockedExternal.length, localReadRequests: localReads }));
   });
-  return { page, state, calls, releaseReservation: () => reservationGate.release(),
+  return { page, state, calls, releaseReservation: () => reservationGate.release(), releaseStatus: () => statusGate.release(),
     count: stage => calls.filter(call => call.stage === stage).length };
 }
 

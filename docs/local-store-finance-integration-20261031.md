@@ -38,7 +38,8 @@ security/rate limits. In review mode it calls a separate read-only helper:
   finalize, order insert or proof cleanup from this path.
 - Matching completed operations return their original result, independent of
   today's catalog. Matching awaiting operations return pending202 and do not
-  advance. An unknown operation fails closed503; conflicting content/owner/proof
+  advance or promise that their quote/catalog is still valid. An unknown
+  operation fails closed503; conflicting content/owner/proof
   fails409 without exposing another order.
 - Missing/denied RPCs fail503. Uncertain reads preserve the same identity; at
   most two reads are attempted. This is a retry-count bound, not a per-request
@@ -90,7 +91,28 @@ assert exact reservation/session/charge counts across URL changes and reload.
 
 ```sh
 CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium BAGELITO_TEST_URL=http://127.0.0.1:3107 npm run test:checkout-browser
-CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium BAGELITO_TEST_URL=http://127.0.0.1:3107 node --test tests/browser/checkout-financial-recovery.mjs
+CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium BAGELITO_TEST_URL=http://127.0.0.1:3107 npm run test:checkout-financial-browser
+npm run test:browser-network-guard
+```
+
+For a reproducible local build/server, the following function supplies only
+synthetic values and explicitly empties database credentials. No real provider
+or database credential is needed. Build once; start/stop the owned loopback
+server between the two runtime review modes:
+
+```sh
+synthetic_checkout() {
+  env NEXT_TELEMETRY_DISABLED=1 NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3107 \
+    PAYMENT_PROVIDER=culqi CULQI_MODE=sandbox CULQI_ENABLED=true \
+    CULQI_SECRET_KEY=sk_test_synthetic NEXT_PUBLIC_CULQI_PUBLIC_KEY=pk_test_synthetic \
+    NEXT_PUBLIC_CULQI_RSA_ID=synthetic NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY=synthetic \
+    VERCEL_ENV=preview NEXT_PUBLIC_SUPABASE_URL= SUPABASE_SERVICE_ROLE_KEY= \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY= "$@"
+}
+synthetic_checkout env BAGELITO_MERCHANT_REVIEW_ONLY=true npm run build
+synthetic_checkout env BAGELITO_MERCHANT_REVIEW_ONLY=true npm run start -- --hostname 127.0.0.1 --port 3107
+# After stopping that owned server, use false for the financial browser tests:
+synthetic_checkout env BAGELITO_MERCHANT_REVIEW_ONLY=false npm run start -- --hostname 127.0.0.1 --port 3107
 ```
 
 Do not run these browser probes against a public or deployed server. They are

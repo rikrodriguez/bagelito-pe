@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { chromium } from "playwright-core";
 import { loadTs } from "../helpers/load-ts.mjs";
+import { fulfillLocalRead } from "./fixtures/local-read.mjs";
 
 const baseURL = process.env.BAGELITO_TEST_URL ?? "http://127.0.0.1:3107";
 const origin = new URL(baseURL).origin;
@@ -25,19 +26,27 @@ async function localPage(t, locale, viewport) {
   page.setDefaultTimeout(10_000);
   page.setDefaultNavigationTimeout(20_000);
   const writes = [];
+  const rejectedReads = [];
+  let closing = false;
   const errors = [];
   await page.addInitScript(value => localStorage.setItem("bagelito-locale", value), locale);
-  await page.route("**/*", route => {
+  await page.route("**/*", async route => {
     const request = route.request();
     if (!["GET", "HEAD"].includes(request.method())) {
       writes.push(`${request.method()} ${request.url()}`);
       return route.abort();
     }
-    return new URL(request.url()).origin === origin ? route.continue() : route.abort();
+    if (new URL(request.url()).origin !== origin) return route.abort();
+    try { return await fulfillLocalRead(route); }
+    catch (error) {
+      if (!closing && error.code === "LOCAL_REDIRECT_REJECTED") rejectedReads.push(error.message);
+    }
   });
   page.on("pageerror", error => errors.push(error.message));
   t.after(async () => {
+    closing = true;
     await context.close();
+    assert.deepEqual(rejectedReads, [], "Local redirects must not bypass the network firewall");
     assert.deepEqual(writes, [], "Browsing and editing must not create an order or contact a provider");
     assert.deepEqual(errors, [], "No browser runtime errors");
   });
@@ -103,6 +112,10 @@ for (const [locale, viewport] of [["en", { width: 1440, height: 1000 }], ["es", 
     assert.ok((await page.locator(".checkout-review-card").innerText()).includes("12 x Blueberry"));
     await page.locator(".checkout-upsell-remove").click();
     assert.equal(await page.locator(".checkout-summary-total strong").innerText(), `S/${expectedTotal}`);
+    await page.locator(".culqi-review-only-note").waitFor();
+    assert.equal(await page.locator('input[name^="demo-"]').count(), 0, "Demo cannot collect card or bank fields");
+    assert.equal(await page.locator('script[src^="https://js.culqi.com"],script[src^="https://3ds.culqi.com"],iframe[src*="culqi"]').count(), 0,
+      "Merchant preview must not load the real payment SDK");
     await page.locator(".checkout-summary-heading button").click();
     await page.locator(".reserve-pack-option.selected").click();
     await next(page);
