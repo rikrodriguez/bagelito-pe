@@ -1,5 +1,5 @@
 {
-  "applicationSHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
+  "applicationSHA": "0381000a91fc8eebe235c8ebf9c034def9dc64b6",
   "runtimeMilestoneSHA": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
   "applicationDiffFromRuntimeMilestone": [
     "src/playable/GuidedCommerce.tsx",
@@ -7,7 +7,7 @@
   ],
   "identicalSources": {
     "src/playable/GuidedCommerce.tsx": {
-      "currentSHA256": "746309cfce6e2768cdcbbb4dc5926a01e3c364171e8797aa95f52cd4084f38b6",
+      "currentSHA256": "1b74c8e127b99f2788eed8e2e12aa17074e4f88d30f1c9c5ea2c278b7503a5b0",
       "runtimeMilestoneSHA256": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
       "identical": false
     },
@@ -52,5 +52,5 @@
   "scope": "Mobile live-world CSS plus presentation-only keyboard focus reveal. Core states/effects/business functions/callbacks and checkout are preserved by AST review. Earlier runtime20/events9 retain their original SHA.",
   "wipCaptureCodeSHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
   "wipEvidenceCommit": "695598821fa023ccad3458c8e38ef298f3a7779b",
-  "presentationFocusReview": "focus-fix/offline-review/review-results.json"
+  "presentationFocusReview": "focus-fix/offline-review-0381000/review-results.json"
 }

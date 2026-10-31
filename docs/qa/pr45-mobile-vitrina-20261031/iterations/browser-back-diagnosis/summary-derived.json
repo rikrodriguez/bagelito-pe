@@ -1,0 +1,8 @@
+{
+  "source": "Derived from unchanged raw navigation events/cases; raw finished.confirmedBack was overwritten when interior case ended",
+  "edgeBackObserved": true,
+  "edgeDestination": "about:blank",
+  "interiorReached": true,
+  "interiorDestination": "http://127.0.0.1:3204/?qa=1",
+  "interiorScrollLeft": 0
+}

@@ -1,0 +1,6610 @@
+{
+  "metadata": {
+    "startedAt": "2026-10-31T23:11:53.520Z",
+    "declaredBuildSHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
+    "repositorySHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
+    "base": "http://127.0.0.1:3204/",
+    "sourceSHA256": {
+      "src/playable/GuidedCommerce.tsx": "746309cfce6e2768cdcbbb4dc5926a01e3c364171e8797aa95f52cd4084f38b6",
+      "src/playable/guided-commerce.css": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "scripts/qa-mobile-vitrina.cjs": "dba758e49023a256847ffa7b3ddf6c4f2ec966f51f5f867adf38ec813fa0d442",
+      "scripts/lib/qa-mobile-layout.cjs": "b725b2902e2a71e7feb108edcdce77a0d34ca4b3048855b7b73bf3ac384f9699",
+      "scripts/lib/qa-loopback-guard.cjs": "51444e6c9bbb9a22522626b6c7ba6935344cebc0d354ea4a2d883ba57449386d"
+    },
+    "expectedScenes": 16,
+    "scenes": [
+      "selector",
+      "pack-size",
+      "pack-qty",
+      "bagels",
+      "combos",
+      "schmear-size",
+      "schmears",
+      "cashier"
+    ],
+    "declaredAppSourceSHA256": {
+      "src/playable/GuidedCommerce.tsx": "746309cfce6e2768cdcbbb4dc5926a01e3c364171e8797aa95f52cd4084f38b6",
+      "src/playable/guided-commerce.css": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6"
+    },
+    "viewportSizes": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 320,
+        "height": 700
+      }
+    ],
+    "criteria": {
+      "canvasFree": 0.45,
+      "productROIFree": 0.9,
+      "productCentres": 1,
+      "otherROIFree": 0.6,
+      "otherCentres": 0.75,
+      "tapCSSPixels": 44,
+      "numericTolerance": 0.01,
+      "minTextContrast": 4.5
+    },
+    "measurementLimit": "Opaque DOM occlusion only: projected plate anchors and live Canvas do not measure mesh-on-mesh occlusion. Physical POS blocking a bowl or a cropped logo requires separate manual pixel review.",
+    "focus": "all-eight-scenes",
+    "scope": "Real WebGL plus opaque DOM occlusion, native touch scroll/taps and catalog text; not final photorealism, physical-device or payment validation.",
+    "browserVersion": "151.0.7922.173",
+    "finalSourceSHA256": {
+      "src/playable/GuidedCommerce.tsx": "746309cfce6e2768cdcbbb4dc5926a01e3c364171e8797aa95f52cd4084f38b6",
+      "src/playable/guided-commerce.css": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "scripts/qa-mobile-vitrina.cjs": "dba758e49023a256847ffa7b3ddf6c4f2ec966f51f5f867adf38ec813fa0d442",
+      "scripts/lib/qa-mobile-layout.cjs": "b725b2902e2a71e7feb108edcdce77a0d34ca4b3048855b7b73bf3ac384f9699",
+      "scripts/lib/qa-loopback-guard.cjs": "51444e6c9bbb9a22522626b6c7ba6935344cebc0d354ea4a2d883ba57449386d"
+    },
+    "sourceChangedDuringRun": false,
+    "finishedAt": "2026-10-31T23:14:46.796Z"
+  },
+  "status": "failed",
+  "results": [
+    {
+      "width": 390,
+      "scene": "selector",
+      "file": "390-selector.png",
+      "sha256": "94b5e29637e6c0bfdf396cb66a432d183a58fe083c5a7e4f67472277b1f9f653",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scene": "selector",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 390,
+          "bufferHeight": 844
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.7388888888888889,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 31.61274642944336,
+              "y": 422.0356872558594,
+              "right": 236.32818489074708,
+              "bottom": 475.9318084716797,
+              "width": 204.71543846130373,
+              "height": 53.8961212158203
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 47.6729621887207,
+                  "y": 442.5862121582031,
+                  "width": 26.369693756103516,
+                  "height": 4.510986328125,
+                  "right": 74.04265594482422,
+                  "bottom": 447.0971984863281
+                },
+                "x": 60.85780906677246,
+                "y": 444.8417053222656,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 96.4310302734375,
+                  "y": 442.58380126953125,
+                  "width": 26.34038543701172,
+                  "height": 4.51080322265625,
+                  "right": 122.77141571044922,
+                  "bottom": 447.0946044921875
+                },
+                "x": 109.60122299194336,
+                "y": 444.8392028808594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 145.18511962890625,
+                  "y": 442.58135986328125,
+                  "width": 26.311065673828125,
+                  "height": 4.5106201171875,
+                  "right": 171.49618530273438,
+                  "bottom": 447.09197998046875
+                },
+                "x": 158.3406524658203,
+                "y": 444.836669921875,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 193.93521118164062,
+                  "y": 442.5789489746094,
+                  "width": 26.295822143554688,
+                  "height": 4.51043701171875,
+                  "right": 220.2310333251953,
+                  "bottom": 447.0893859863281
+                },
+                "x": 207.08312225341797,
+                "y": 444.83416748046875,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 48.05034255981445,
+                  "y": 463.3246765136719,
+                  "width": 26.30196762084961,
+                  "height": 4.488372802734375,
+                  "right": 74.35231018066406,
+                  "bottom": 467.81304931640625
+                },
+                "x": 61.20132637023926,
+                "y": 465.56886291503906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 96.68350982666016,
+                  "y": 463.3214111328125,
+                  "width": 26.272804260253906,
+                  "height": 4.488189697265625,
+                  "right": 122.95631408691406,
+                  "bottom": 467.8096008300781
+                },
+                "x": 109.81991195678711,
+                "y": 465.5655059814453,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 145.31271362304688,
+                  "y": 463.3181457519531,
+                  "width": 26.243637084960938,
+                  "height": 4.488006591796875,
+                  "right": 171.5563507080078,
+                  "bottom": 467.80615234375
+                },
+                "x": 158.43453216552734,
+                "y": 465.56214904785156,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 193.93792724609375,
+                  "y": 463.31488037109375,
+                  "width": 26.228485107421875,
+                  "height": 4.487823486328125,
+                  "right": 220.16641235351562,
+                  "bottom": 467.8027038574219
+                },
+                "x": 207.0521697998047,
+                "y": 465.5587921142578,
+                "inside": true,
+                "free": true
+              }
+            ]
+          },
+          {
+            "kind": "schmears",
+            "expectedCount": 5,
+            "valid": true,
+            "roi": {
+              "x": 260.74227752685545,
+              "y": 423.59652989705404,
+              "right": 372.587907409668,
+              "bottom": 476.0793444315592,
+              "width": 111.84562988281255,
+              "height": 52.48281453450517
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "WHIPPED ORIGINAL",
+                "rect": {
+                  "x": 272.4964294433594,
+                  "y": 443.9218444824219,
+                  "width": 18.433807373046875,
+                  "height": 3.763031005859375,
+                  "right": 290.93023681640625,
+                  "bottom": 447.68487548828125
+                },
+                "x": 281.7133331298828,
+                "y": 445.80335998535156,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "AJÍ AMARILLO",
+                "rect": {
+                  "x": 307.4411926269531,
+                  "y": 443.9200439453125,
+                  "width": 18.448974609375,
+                  "height": 3.762939453125,
+                  "right": 325.8901672363281,
+                  "bottom": 447.6829833984375
+                },
+                "x": 316.6656799316406,
+                "y": 445.801513671875,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HERB & ROASTED GARLIC",
+                "rect": {
+                  "x": 342.3700866699219,
+                  "y": 443.1590881347656,
+                  "width": 18.4935302734375,
+                  "height": 5.2803955078125,
+                  "right": 360.8636169433594,
+                  "bottom": 448.4394836425781
+                },
+                "x": 351.6168518066406,
+                "y": 445.7992858886719,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HONEY CINNAMON",
+                "rect": {
+                  "x": 288.8751220703125,
+                  "y": 464.1148986816406,
+                  "width": 18.3948974609375,
+                  "height": 3.74456787109375,
+                  "right": 307.27001953125,
+                  "bottom": 467.8594665527344
+                },
+                "x": 298.07257080078125,
+                "y": 465.9871826171875,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC STRAWBERRY",
+                "rect": {
+                  "x": 325.4338073730469,
+                  "y": 463.35699462890625,
+                  "width": 18.436859130859375,
+                  "height": 5.254486083984375,
+                  "right": 343.87066650390625,
+                  "bottom": 468.6114807128906
+                },
+                "x": 334.65223693847656,
+                "y": 465.98423767089844,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 248.90625,
+            "y": 12,
+            "right": 378,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 784,
+            "right": 378,
+            "bottom": 836,
+            "width": 366,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 17,
+            "y": 788,
+            "right": 87.390625,
+            "bottom": 832,
+            "width": 70.390625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 115.09375,
+            "y": 794,
+            "right": 132.09375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 186.484375,
+            "y": 794,
+            "right": 203.484375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 257.890625,
+            "y": 794,
+            "right": 274.890625,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 329.296875,
+            "y": 794,
+            "right": 346.296875,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 588,
+            "right": 128.65625,
+            "bottom": 720,
+            "width": 116.65625,
+            "height": 132,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 248, 238)"
+          },
+          {
+            "x": 21,
+            "y": 604.640625,
+            "right": 119.65625,
+            "bottom": 661.359375,
+            "width": 98.65625,
+            "height": 56.71875,
+            "className": "selector-product-photo selector-product-pack",
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 136.65625,
+            "y": 588,
+            "right": 253.328125,
+            "bottom": 720,
+            "width": 116.671875,
+            "height": 132,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(225, 239, 255)"
+          },
+          {
+            "x": 145.65625,
+            "y": 605.203125,
+            "right": 244.328125,
+            "bottom": 660.78125,
+            "width": 98.671875,
+            "height": 55.578125,
+            "className": "selector-product-photo selector-product-combo",
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 261.328125,
+            "y": 588,
+            "right": 377.984375,
+            "bottom": 720,
+            "width": 116.65625,
+            "height": 132,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(252, 232, 232)"
+          },
+          {
+            "x": 270.328125,
+            "y": 604.03125,
+            "right": 368.984375,
+            "bottom": 661.953125,
+            "width": 98.65625,
+            "height": 57.921875,
+            "className": "selector-product-photo selector-product-schmear",
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 248.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 378,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 248.90625,
+              "y": 12,
+              "right": 378,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 788,
+              "width": 70.390625,
+              "height": 44,
+              "right": 87.390625,
+              "bottom": 832
+            },
+            "clipped": {
+              "x": 17,
+              "y": 788,
+              "right": 87.390625,
+              "bottom": 832,
+              "width": 70.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Packs",
+            "rect": {
+              "x": 12,
+              "y": 588,
+              "width": 116.65625,
+              "height": 132,
+              "right": 128.65625,
+              "bottom": 720
+            },
+            "clipped": {
+              "x": 12,
+              "y": 588,
+              "right": 128.65625,
+              "bottom": 720,
+              "width": 116.65625,
+              "height": 132
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Combos",
+            "rect": {
+              "x": 136.65625,
+              "y": 588,
+              "width": 116.671875,
+              "height": 132,
+              "right": 253.328125,
+              "bottom": 720
+            },
+            "clipped": {
+              "x": 136.65625,
+              "y": 588,
+              "right": 253.328125,
+              "bottom": 720,
+              "width": 116.671875,
+              "height": 132
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Schmears",
+            "rect": {
+              "x": 261.328125,
+              "y": 588,
+              "width": 116.65625,
+              "height": 132,
+              "right": 377.984375,
+              "bottom": 720
+            },
+            "clipped": {
+              "x": 261.328125,
+              "y": 588,
+              "right": 377.984375,
+              "bottom": 720,
+              "width": 116.65625,
+              "height": 132
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": []
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "scene": "pack-size",
+      "file": "390-pack-size.png",
+      "sha256": "8949310bd209cf9336996803424de8e1acb993cf401adbaf661cc00765c4e387",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scene": "pack-size",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 390,
+          "bufferHeight": 844
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.7,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 31.888431549072266,
+              "y": 422.5242401123047,
+              "right": 236.3899745941162,
+              "bottom": 476.3632354736328,
+              "width": 204.50154304504395,
+              "height": 53.8389953613281
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 47.9340934753418,
+                  "y": 443.0497131347656,
+                  "width": 26.337688446044922,
+                  "height": 4.505126953125,
+                  "right": 74.27178192138672,
+                  "bottom": 447.5548400878906
+                },
+                "x": 61.10293769836426,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 96.63597106933594,
+                  "y": 443.0497131347656,
+                  "width": 26.310997009277344,
+                  "height": 4.505126953125,
+                  "right": 122.94696807861328,
+                  "bottom": 447.5548400878906
+                },
+                "x": 109.79146957397461,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 145.33786010742188,
+                  "y": 443.0497131347656,
+                  "width": 26.284286499023438,
+                  "height": 4.505126953125,
+                  "right": 171.6221466064453,
+                  "bottom": 447.5548400878906
+                },
+                "x": 158.4800033569336,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 194.03973388671875,
+                  "y": 443.0497131347656,
+                  "width": 26.271469116210938,
+                  "height": 4.505126953125,
+                  "right": 220.3112030029297,
+                  "bottom": 447.5548400878906
+                },
+                "x": 207.17546844482422,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 48.304813385009766,
+                  "y": 463.76837158203125,
+                  "width": 26.271129608154297,
+                  "height": 4.482421875,
+                  "right": 74.57594299316406,
+                  "bottom": 468.25079345703125
+                },
+                "x": 61.440378189086914,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 96.88392639160156,
+                  "y": 463.76837158203125,
+                  "width": 26.24456787109375,
+                  "height": 4.482421875,
+                  "right": 123.12849426269531,
+                  "bottom": 468.25079345703125
+                },
+                "x": 110.00621032714844,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 145.46304321289062,
+                  "y": 463.76837158203125,
+                  "width": 26.218002319335938,
+                  "height": 4.482421875,
+                  "right": 171.68104553222656,
+                  "bottom": 468.25079345703125
+                },
+                "x": 158.5720443725586,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 194.0421600341797,
+                  "y": 463.76837158203125,
+                  "width": 26.205245971679688,
+                  "height": 4.482421875,
+                  "right": 220.24740600585938,
+                  "bottom": 468.25079345703125
+                },
+                "x": 207.14478302001953,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              }
+            ]
+          },
+          {
+            "kind": "schmears",
+            "expectedCount": 5,
+            "valid": true,
+            "roi": {
+              "x": 260.78871154785156,
+              "y": 424.0889305114746,
+              "right": 372.55335998535156,
+              "bottom": 476.5303153991699,
+              "width": 111.7646484375,
+              "height": 52.441384887695335
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "WHIPPED ORIGINAL",
+                "rect": {
+                  "x": 272.5351867675781,
+                  "y": 444.3963317871094,
+                  "width": 18.418792724609375,
+                  "height": 3.75909423828125,
+                  "right": 290.9539794921875,
+                  "bottom": 448.1554260253906
+                },
+                "x": 281.7445831298828,
+                "y": 446.27587890625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "AJÍ AMARILLO",
+                "rect": {
+                  "x": 307.4532165527344,
+                  "y": 444.3963317871094,
+                  "width": 18.434783935546875,
+                  "height": 3.75909423828125,
+                  "right": 325.88800048828125,
+                  "bottom": 448.1554260253906
+                },
+                "x": 316.6706085205078,
+                "y": 446.27587890625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HERB & ROASTED GARLIC",
+                "rect": {
+                  "x": 342.357666015625,
+                  "y": 443.6376953125,
+                  "width": 18.479644775390625,
+                  "height": 5.275543212890625,
+                  "right": 360.8373107910156,
+                  "bottom": 448.9132385253906
+                },
+                "x": 351.5974884033203,
+                "y": 446.2754669189453,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HONEY CINNAMON",
+                "rect": {
+                  "x": 288.904541015625,
+                  "y": 464.5751953125,
+                  "width": 18.381011962890625,
+                  "height": 3.74066162109375,
+                  "right": 307.2855529785156,
+                  "bottom": 468.31585693359375
+                },
+                "x": 298.0950469970703,
+                "y": 466.4455261230469,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC STRAWBERRY",
+                "rect": {
+                  "x": 325.43792724609375,
+                  "y": 463.8202819824219,
+                  "width": 18.423431396484375,
+                  "height": 5.249664306640625,
+                  "right": 343.8613586425781,
+                  "bottom": 469.0699462890625
+                },
+                "x": 334.64964294433594,
+                "y": 466.4451141357422,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 248.90625,
+            "y": 12,
+            "right": 378,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 784,
+            "right": 378,
+            "bottom": 836,
+            "width": 366,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 17,
+            "y": 788,
+            "right": 87.390625,
+            "bottom": 832,
+            "width": 70.390625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 115.09375,
+            "y": 794,
+            "right": 132.09375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 186.484375,
+            "y": 794,
+            "right": 203.484375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 257.890625,
+            "y": 794,
+            "right": 274.890625,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 329.296875,
+            "y": 794,
+            "right": 346.296875,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 578,
+            "right": 378,
+            "bottom": 768,
+            "width": 366,
+            "height": 190,
+            "className": "guided-floating-panel pack-size-panel",
+            "tag": "DIV",
+            "background": "rgba(255, 255, 255, 0.94)"
+          },
+          {
+            "x": 22,
+            "y": 663,
+            "right": 191,
+            "bottom": 758,
+            "width": 169,
+            "height": 95,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 86.5,
+            "y": 672,
+            "right": 126.5,
+            "bottom": 712,
+            "width": 40,
+            "height": 40,
+            "className": "pack-format-art",
+            "tag": "SPAN",
+            "background": "rgb(238, 245, 251)"
+          },
+          {
+            "x": 87.5,
+            "y": 673,
+            "right": 125.5,
+            "bottom": 711,
+            "width": 38,
+            "height": 38,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 199,
+            "y": 663,
+            "right": 368,
+            "bottom": 758,
+            "width": 169,
+            "height": 95,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 263.5,
+            "y": 672,
+            "right": 303.5,
+            "bottom": 712,
+            "width": 40,
+            "height": 40,
+            "className": "pack-format-art mini",
+            "tag": "SPAN",
+            "background": "rgb(238, 245, 251)"
+          },
+          {
+            "x": 264.5,
+            "y": 673,
+            "right": 302.5,
+            "bottom": 711,
+            "width": 38,
+            "height": 38,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 248.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 378,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 248.90625,
+              "y": 12,
+              "right": 378,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 788,
+              "width": 70.390625,
+              "height": 44,
+              "right": 87.390625,
+              "bottom": 832
+            },
+            "clipped": {
+              "x": 17,
+              "y": 788,
+              "right": 87.390625,
+              "bottom": 832,
+              "width": 70.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Bagels grandes6 o 12 bagels→",
+            "rect": {
+              "x": 22,
+              "y": 663,
+              "width": 169,
+              "height": 95,
+              "right": 191,
+              "bottom": 758
+            },
+            "clipped": {
+              "x": 22,
+              "y": 663,
+              "right": 191,
+              "bottom": 758,
+              "width": 169,
+              "height": 95
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Mini bagels6, 12 o 24 minis→",
+            "rect": {
+              "x": 199,
+              "y": 663,
+              "width": 169,
+              "height": 95,
+              "right": 368,
+              "bottom": 758
+            },
+            "clipped": {
+              "x": 199,
+              "y": 663,
+              "right": 368,
+              "bottom": 758,
+              "width": 169,
+              "height": 95
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": []
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "scene": "pack-qty",
+      "file": "390-pack-qty.png",
+      "sha256": "96daa92bccdc76f8d89a488e3816f6a2cfb6553a556dcbc2dec66ca15f2d708b",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scene": "pack-qty",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 390,
+          "bufferHeight": 844
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.6361111111111111,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 31.888431549072266,
+              "y": 422.5242401123047,
+              "right": 236.3899745941162,
+              "bottom": 476.3632354736328,
+              "width": 204.50154304504395,
+              "height": 53.8389953613281
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 47.9340934753418,
+                  "y": 443.0497131347656,
+                  "width": 26.337688446044922,
+                  "height": 4.505126953125,
+                  "right": 74.27178192138672,
+                  "bottom": 447.5548400878906
+                },
+                "x": 61.10293769836426,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 96.63597106933594,
+                  "y": 443.0497131347656,
+                  "width": 26.310997009277344,
+                  "height": 4.505126953125,
+                  "right": 122.94696807861328,
+                  "bottom": 447.5548400878906
+                },
+                "x": 109.79146957397461,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 145.33786010742188,
+                  "y": 443.0497131347656,
+                  "width": 26.284286499023438,
+                  "height": 4.505126953125,
+                  "right": 171.6221466064453,
+                  "bottom": 447.5548400878906
+                },
+                "x": 158.4800033569336,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 194.03973388671875,
+                  "y": 443.0497131347656,
+                  "width": 26.271469116210938,
+                  "height": 4.505126953125,
+                  "right": 220.3112030029297,
+                  "bottom": 447.5548400878906
+                },
+                "x": 207.17546844482422,
+                "y": 445.3022766113281,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 48.304813385009766,
+                  "y": 463.76837158203125,
+                  "width": 26.271129608154297,
+                  "height": 4.482421875,
+                  "right": 74.57594299316406,
+                  "bottom": 468.25079345703125
+                },
+                "x": 61.440378189086914,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 96.88392639160156,
+                  "y": 463.76837158203125,
+                  "width": 26.24456787109375,
+                  "height": 4.482421875,
+                  "right": 123.12849426269531,
+                  "bottom": 468.25079345703125
+                },
+                "x": 110.00621032714844,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 145.46304321289062,
+                  "y": 463.76837158203125,
+                  "width": 26.218002319335938,
+                  "height": 4.482421875,
+                  "right": 171.68104553222656,
+                  "bottom": 468.25079345703125
+                },
+                "x": 158.5720443725586,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 194.0421600341797,
+                  "y": 463.76837158203125,
+                  "width": 26.205245971679688,
+                  "height": 4.482421875,
+                  "right": 220.24740600585938,
+                  "bottom": 468.25079345703125
+                },
+                "x": 207.14478302001953,
+                "y": 466.00958251953125,
+                "inside": true,
+                "free": true
+              }
+            ]
+          },
+          {
+            "kind": "schmears",
+            "expectedCount": 5,
+            "valid": true,
+            "roi": {
+              "x": 260.78871154785156,
+              "y": 424.0889305114746,
+              "right": 372.55335998535156,
+              "bottom": 476.5303153991699,
+              "width": 111.7646484375,
+              "height": 52.441384887695335
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "WHIPPED ORIGINAL",
+                "rect": {
+                  "x": 272.5351867675781,
+                  "y": 444.3963317871094,
+                  "width": 18.418792724609375,
+                  "height": 3.75909423828125,
+                  "right": 290.9539794921875,
+                  "bottom": 448.1554260253906
+                },
+                "x": 281.7445831298828,
+                "y": 446.27587890625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "AJÍ AMARILLO",
+                "rect": {
+                  "x": 307.4532165527344,
+                  "y": 444.3963317871094,
+                  "width": 18.434783935546875,
+                  "height": 3.75909423828125,
+                  "right": 325.88800048828125,
+                  "bottom": 448.1554260253906
+                },
+                "x": 316.6706085205078,
+                "y": 446.27587890625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HERB & ROASTED GARLIC",
+                "rect": {
+                  "x": 342.357666015625,
+                  "y": 443.6376953125,
+                  "width": 18.479644775390625,
+                  "height": 5.275543212890625,
+                  "right": 360.8373107910156,
+                  "bottom": 448.9132385253906
+                },
+                "x": 351.5974884033203,
+                "y": 446.2754669189453,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HONEY CINNAMON",
+                "rect": {
+                  "x": 288.904541015625,
+                  "y": 464.5751953125,
+                  "width": 18.381011962890625,
+                  "height": 3.74066162109375,
+                  "right": 307.2855529785156,
+                  "bottom": 468.31585693359375
+                },
+                "x": 298.0950469970703,
+                "y": 466.4455261230469,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC STRAWBERRY",
+                "rect": {
+                  "x": 325.43792724609375,
+                  "y": 463.8202819824219,
+                  "width": 18.423431396484375,
+                  "height": 5.249664306640625,
+                  "right": 343.8613586425781,
+                  "bottom": 469.0699462890625
+                },
+                "x": 334.64964294433594,
+                "y": 466.4451141357422,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 248.90625,
+            "y": 12,
+            "right": 378,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 784,
+            "right": 378,
+            "bottom": 836,
+            "width": 366,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 17,
+            "y": 788,
+            "right": 87.390625,
+            "bottom": 832,
+            "width": 70.390625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 115.09375,
+            "y": 794,
+            "right": 132.09375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 186.484375,
+            "y": 794,
+            "right": 203.484375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 257.890625,
+            "y": 794,
+            "right": 274.890625,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 329.296875,
+            "y": 794,
+            "right": 346.296875,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 540,
+            "right": 378,
+            "bottom": 768,
+            "width": 366,
+            "height": 228,
+            "className": "guided-floating-panel pack-config-panel",
+            "tag": "DIV",
+            "background": "rgba(255, 255, 255, 0.94)"
+          },
+          {
+            "x": 16,
+            "y": 544,
+            "right": 60,
+            "bottom": 588,
+            "width": 44,
+            "height": 44,
+            "className": "panel-back",
+            "tag": "BUTTON",
+            "background": "rgb(244, 248, 251)"
+          },
+          {
+            "x": 24,
+            "y": 603,
+            "right": 192,
+            "bottom": 663.390625,
+            "width": 168,
+            "height": 60.390625,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 198,
+            "y": 603,
+            "right": 366,
+            "bottom": 663.390625,
+            "width": 168,
+            "height": 60.390625,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 24,
+            "y": 692.390625,
+            "right": 134,
+            "bottom": 762.78125,
+            "width": 110,
+            "height": 70.390625,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 140,
+            "y": 692.390625,
+            "right": 250,
+            "bottom": 762.78125,
+            "width": 110,
+            "height": 70.390625,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 248.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 378,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 248.90625,
+              "y": 12,
+              "right": 378,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 788,
+              "width": 70.390625,
+              "height": 44,
+              "right": 87.390625,
+              "bottom": 832
+            },
+            "clipped": {
+              "x": 17,
+              "y": 788,
+              "right": 87.390625,
+              "bottom": 832,
+              "width": 70.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "←",
+            "rect": {
+              "x": 16,
+              "y": 544,
+              "width": 44,
+              "height": 44,
+              "right": 60,
+              "bottom": 588
+            },
+            "clipped": {
+              "x": 16,
+              "y": 544,
+              "right": 60,
+              "bottom": 588,
+              "width": 44,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "MixtoCombina los sabores que quieras",
+            "rect": {
+              "x": 24,
+              "y": 603,
+              "width": 168,
+              "height": 60.390625,
+              "right": 192,
+              "bottom": 663.390625
+            },
+            "clipped": {
+              "x": 24,
+              "y": 603,
+              "right": 192,
+              "bottom": 663.390625,
+              "width": 168,
+              "height": 60.390625
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Un saborTodos iguales, elige uno",
+            "rect": {
+              "x": 198,
+              "y": 603,
+              "width": 168,
+              "height": 60.390625,
+              "right": 366,
+              "bottom": 663.390625
+            },
+            "clipped": {
+              "x": 198,
+              "y": 603,
+              "right": 366,
+              "bottom": 663.390625,
+              "width": 168,
+              "height": 60.390625
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Elegir 6 bagels, mixtos",
+            "rect": {
+              "x": 24,
+              "y": 692.390625,
+              "width": 110,
+              "height": 70.390625,
+              "right": 134,
+              "bottom": 762.78125
+            },
+            "clipped": {
+              "x": 24,
+              "y": 692.390625,
+              "right": 134,
+              "bottom": 762.78125,
+              "width": 110,
+              "height": 70.390625
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Elegir 12 bagels, mixtos",
+            "rect": {
+              "x": 140,
+              "y": 692.390625,
+              "width": 110,
+              "height": 70.390625,
+              "right": 250,
+              "bottom": 762.78125
+            },
+            "clipped": {
+              "x": 140,
+              "y": 692.390625,
+              "right": 250,
+              "bottom": 762.78125,
+              "width": 110,
+              "height": 70.390625
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": []
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "scene": "bagels",
+      "file": "390-bagels.png",
+      "sha256": "2fd07bd2fa7589939f1f3498d38d9cb21e16964f606008dd4f47dc020075fd4d",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scene": "bagels",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 390,
+          "bufferHeight": 844
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.6041666666666666,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 29.264006042480467,
+              "y": 375.7186996459961,
+              "right": 356.3531852722168,
+              "bottom": 461.87923431396484,
+              "width": 327.0891792297364,
+              "height": 86.16053466796876
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 54.92675018310547,
+                  "y": 408.55279541015625,
+                  "width": 42.128562927246094,
+                  "height": 7.22772216796875,
+                  "right": 97.05531311035156,
+                  "bottom": 415.780517578125
+                },
+                "x": 75.99103164672852,
+                "y": 412.1666564941406,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 132.8271484375,
+                  "y": 408.5550842285156,
+                  "width": 42.04856872558594,
+                  "height": 7.228179931640625,
+                  "right": 174.87571716308594,
+                  "bottom": 415.78326416015625
+                },
+                "x": 153.85143280029297,
+                "y": 412.16917419433594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 210.72055053710938,
+                  "y": 408.557373046875,
+                  "width": 42.049285888671875,
+                  "height": 7.228668212890625,
+                  "right": 252.76983642578125,
+                  "bottom": 415.7860412597656
+                },
+                "x": 231.7451934814453,
+                "y": 412.1717071533203,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 288.5559387207031,
+                  "y": 408.5596618652344,
+                  "width": 42.14044189453125,
+                  "height": 7.2291259765625,
+                  "right": 330.6963806152344,
+                  "bottom": 415.7887878417969
+                },
+                "x": 309.62615966796875,
+                "y": 412.1742248535156,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 55.632774353027344,
+                  "y": 441.71978759765625,
+                  "width": 41.91570281982422,
+                  "height": 7.15625,
+                  "right": 97.54847717285156,
+                  "bottom": 448.87603759765625
+                },
+                "x": 76.59062576293945,
+                "y": 445.29791259765625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 133.14053344726562,
+                  "y": 441.7242431640625,
+                  "width": 41.83650207519531,
+                  "height": 7.156707763671875,
+                  "right": 174.97703552246094,
+                  "bottom": 448.8809509277344
+                },
+                "x": 154.05878448486328,
+                "y": 445.30259704589844,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 210.64138793945312,
+                  "y": 441.72869873046875,
+                  "width": 41.83720397949219,
+                  "height": 7.157196044921875,
+                  "right": 252.4785919189453,
+                  "bottom": 448.8858947753906
+                },
+                "x": 231.55998992919922,
+                "y": 445.3072967529297,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 288.0848083496094,
+                  "y": 441.733154296875,
+                  "width": 41.92742919921875,
+                  "height": 7.15765380859375,
+                  "right": 330.0122375488281,
+                  "bottom": 448.89080810546875
+                },
+                "x": 309.04852294921875,
+                "y": 445.3119812011719,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 248.90625,
+            "y": 12,
+            "right": 378,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 784,
+            "right": 378,
+            "bottom": 836,
+            "width": 366,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 43.6875,
+            "y": 794,
+            "right": 60.6875,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(232, 241, 255)"
+          },
+          {
+            "x": 88.390625,
+            "y": 788,
+            "right": 158.796875,
+            "bottom": 832,
+            "width": 70.40625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 186.484375,
+            "y": 794,
+            "right": 203.484375,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 257.890625,
+            "y": 794,
+            "right": 274.890625,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 329.296875,
+            "y": 794,
+            "right": 346.296875,
+            "bottom": 811,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 540,
+            "right": 378,
+            "bottom": 720,
+            "width": 366,
+            "height": 180,
+            "className": "mobile-product-stage mobile-bagel-stage",
+            "tag": "SECTION",
+            "background": "rgba(255, 250, 244, 0.97)"
+          },
+          {
+            "x": 23,
+            "y": 589,
+            "right": 183,
+            "bottom": 709,
+            "width": 160,
+            "height": 120,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 24,
+            "y": 590,
+            "right": 182,
+            "bottom": 708,
+            "width": 158,
+            "height": 118,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 30,
+            "y": 627,
+            "right": 74,
+            "bottom": 671,
+            "width": 44,
+            "height": 44,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 79,
+            "y": 642,
+            "right": 159.953125,
+            "bottom": 656,
+            "width": 80.953125,
+            "height": 14,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 159,
+            "y": 594,
+            "right": 178,
+            "bottom": 613,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 191,
+            "y": 589,
+            "right": 351,
+            "bottom": 709,
+            "width": 160,
+            "height": 120,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 192,
+            "y": 590,
+            "right": 350,
+            "bottom": 708,
+            "width": 158,
+            "height": 118,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 198,
+            "y": 627,
+            "right": 242,
+            "bottom": 671,
+            "width": 44,
+            "height": 44,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 247,
+            "y": 642,
+            "right": 307.875,
+            "bottom": 656,
+            "width": 60.875,
+            "height": 14,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 327,
+            "y": 594,
+            "right": 346,
+            "bottom": 613,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 359,
+            "y": 589,
+            "right": 369,
+            "bottom": 709,
+            "width": 10,
+            "height": 120,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 360,
+            "y": 590,
+            "right": 369,
+            "bottom": 708,
+            "width": 9,
+            "height": 118,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 366,
+            "y": 627,
+            "right": 369,
+            "bottom": 671,
+            "width": 3,
+            "height": 44,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 12,
+            "y": 724,
+            "right": 378,
+            "bottom": 776,
+            "width": 366,
+            "height": 52,
+            "className": "guided-order-counter bagel-live-summary",
+            "tag": "DIV",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 82,
+            "y": 731.5,
+            "right": 224,
+            "bottom": 759.5,
+            "width": 142,
+            "height": 28,
+            "className": "pending",
+            "tag": "SPAN",
+            "background": "rgb(247, 248, 249)"
+          },
+          {
+            "x": 86,
+            "y": 736,
+            "right": 105,
+            "bottom": 755,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(223, 229, 234)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 248.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 378,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 248.90625,
+              "y": 12,
+              "right": 378,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 788,
+              "width": 70.390625,
+              "height": 44,
+              "right": 87.390625,
+              "bottom": 832
+            },
+            "clipped": {
+              "x": 17,
+              "y": 788,
+              "right": 87.390625,
+              "bottom": 832,
+              "width": 70.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Bagels",
+            "rect": {
+              "x": 88.390625,
+              "y": 788,
+              "width": 70.40625,
+              "height": 44,
+              "right": 158.796875,
+              "bottom": 832
+            },
+            "clipped": {
+              "x": 88.390625,
+              "y": 788,
+              "right": 158.796875,
+              "bottom": 832,
+              "width": 70.40625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Everything",
+            "rect": {
+              "x": 24,
+              "y": 590,
+              "width": 158,
+              "height": 118,
+              "right": 182,
+              "bottom": 708
+            },
+            "clipped": {
+              "x": 24,
+              "y": 590,
+              "right": 182,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Sesame",
+            "rect": {
+              "x": 192,
+              "y": 590,
+              "width": 158,
+              "height": 118,
+              "right": 350,
+              "bottom": 708
+            },
+            "clipped": {
+              "x": 192,
+              "y": 590,
+              "right": 350,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Plain",
+            "rect": {
+              "x": 360,
+              "y": 590,
+              "width": 158,
+              "height": 118,
+              "right": 518,
+              "bottom": 708
+            },
+            "clipped": {
+              "x": 360,
+              "y": 590,
+              "right": 369,
+              "bottom": 708,
+              "width": 9,
+              "height": 118
+            },
+            "size44": true,
+            "effective44": false
+          }
+        ],
+        "catalogs": [
+          {
+            "className": "mobile-bagel-grid",
+            "rect": {
+              "x": 21,
+              "y": 589,
+              "width": 348,
+              "height": 122,
+              "right": 369,
+              "bottom": 711
+            },
+            "clientWidth": 348,
+            "clientHeight": 122,
+            "scrollWidth": 1340,
+            "scrollHeight": 122,
+            "scrollLeft": 0,
+            "scrollTop": 0,
+            "overflowX": "auto",
+            "overflowY": "hidden"
+          }
+        ]
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 320,
+      "scene": "selector",
+      "file": "320-selector.png",
+      "sha256": "5bd741a8fabadf9f0722d4cb3b9bd7b96862f19eaf3273146f5ba09c9bed7cbf",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "scene": "selector",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 320,
+          "bufferHeight": 700
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.6986111111111111,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 26.14081039428711,
+              "y": 350.42920074462893,
+              "right": 193.96707878112792,
+              "bottom": 394.61519622802734,
+              "width": 167.8262683868408,
+              "height": 44.185995483398415
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 39.30915832519531,
+                  "y": 367.2746276855469,
+                  "width": 21.613666534423828,
+                  "height": 3.697296142578125,
+                  "right": 60.92282485961914,
+                  "bottom": 370.971923828125
+                },
+                "x": 50.11599159240723,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 79.2767562866211,
+                  "y": 367.2746276855469,
+                  "width": 21.59198760986328,
+                  "height": 3.697296142578125,
+                  "right": 100.86874389648438,
+                  "bottom": 370.971923828125
+                },
+                "x": 90.07275009155273,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 119.24435424804688,
+                  "y": 367.2746276855469,
+                  "width": 21.5703125,
+                  "height": 3.697296142578125,
+                  "right": 140.81466674804688,
+                  "bottom": 370.971923828125
+                },
+                "x": 130.02951049804688,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 159.21194458007812,
+                  "y": 367.2746276855469,
+                  "width": 21.559906005859375,
+                  "height": 3.697296142578125,
+                  "right": 180.7718505859375,
+                  "bottom": 370.971923828125
+                },
+                "x": 169.9918975830078,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 39.61020278930664,
+                  "y": 384.2784423828125,
+                  "width": 21.559619903564453,
+                  "height": 3.67889404296875,
+                  "right": 61.169822692871094,
+                  "bottom": 387.95733642578125
+                },
+                "x": 50.39001274108887,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 79.47810363769531,
+                  "y": 384.2784423828125,
+                  "width": 21.538055419921875,
+                  "height": 3.67889404296875,
+                  "right": 101.01615905761719,
+                  "bottom": 387.95733642578125
+                },
+                "x": 90.24713134765625,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 119.34600830078125,
+                  "y": 384.2784423828125,
+                  "width": 21.5164794921875,
+                  "height": 3.67889404296875,
+                  "right": 140.86248779296875,
+                  "bottom": 387.95733642578125
+                },
+                "x": 130.104248046875,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 159.2139129638672,
+                  "y": 384.2784423828125,
+                  "width": 21.506118774414062,
+                  "height": 3.67889404296875,
+                  "right": 180.72003173828125,
+                  "bottom": 387.95733642578125
+                },
+                "x": 169.96697235107422,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              }
+            ]
+          },
+          {
+            "kind": "schmears",
+            "expectedCount": 5,
+            "valid": true,
+            "roi": {
+              "x": 213.99712905883788,
+              "y": 351.7135167439779,
+              "right": 305.7296852111816,
+              "bottom": 394.7580134073893,
+              "width": 91.73255615234373,
+              "height": 43.044496663411394
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "WHIPPED ORIGINAL",
+                "rect": {
+                  "x": 223.63839721679688,
+                  "y": 368.3821105957031,
+                  "width": 15.117172241210938,
+                  "height": 3.085418701171875,
+                  "right": 238.7555694580078,
+                  "bottom": 371.467529296875
+                },
+                "x": 231.19698333740234,
+                "y": 369.92481994628906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "AJÍ AMARILLO",
+                "rect": {
+                  "x": 252.29798889160156,
+                  "y": 368.3821105957031,
+                  "width": 15.130142211914062,
+                  "height": 3.085418701171875,
+                  "right": 267.4281311035156,
+                  "bottom": 371.467529296875
+                },
+                "x": 259.8630599975586,
+                "y": 369.92481994628906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HERB & ROASTED GARLIC",
+                "rect": {
+                  "x": 280.946533203125,
+                  "y": 367.7594299316406,
+                  "width": 15.166595458984375,
+                  "height": 4.330108642578125,
+                  "right": 296.1131286621094,
+                  "bottom": 372.08953857421875
+                },
+                "x": 288.5298309326172,
+                "y": 369.9244842529297,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HONEY CINNAMON",
+                "rect": {
+                  "x": 237.07577514648438,
+                  "y": 384.945068359375,
+                  "width": 15.086502075195312,
+                  "height": 3.070465087890625,
+                  "right": 252.1622772216797,
+                  "bottom": 388.0155334472656
+                },
+                "x": 244.61902618408203,
+                "y": 386.4803009033203,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC STRAWBERRY",
+                "rect": {
+                  "x": 267.06207275390625,
+                  "y": 384.3254089355469,
+                  "width": 15.120941162109375,
+                  "height": 4.309112548828125,
+                  "right": 282.1830139160156,
+                  "bottom": 388.634521484375
+                },
+                "x": 274.62254333496094,
+                "y": 386.47996520996094,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 178.90625,
+            "y": 12,
+            "right": 308,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 640,
+            "right": 308,
+            "bottom": 692,
+            "width": 296,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 17,
+            "y": 644,
+            "right": 73.390625,
+            "bottom": 688,
+            "width": 56.390625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 94.09375,
+            "y": 650,
+            "right": 111.09375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 151.484375,
+            "y": 650,
+            "right": 168.484375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 208.890625,
+            "y": 650,
+            "right": 225.890625,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 266.296875,
+            "y": 650,
+            "right": 283.296875,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 444,
+            "right": 105.328125,
+            "bottom": 576,
+            "width": 93.328125,
+            "height": 132,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 248, 238)"
+          },
+          {
+            "x": 21,
+            "y": 461.34375,
+            "right": 96.328125,
+            "bottom": 504.65625,
+            "width": 75.328125,
+            "height": 43.3125,
+            "className": "selector-product-photo selector-product-pack",
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 113.328125,
+            "y": 444,
+            "right": 206.65625,
+            "bottom": 576,
+            "width": 93.328125,
+            "height": 132,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(225, 239, 255)"
+          },
+          {
+            "x": 122.328125,
+            "y": 461.78125,
+            "right": 197.65625,
+            "bottom": 504.203125,
+            "width": 75.328125,
+            "height": 42.421875,
+            "className": "selector-product-photo selector-product-combo",
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 214.65625,
+            "y": 444,
+            "right": 308,
+            "bottom": 576,
+            "width": 93.34375,
+            "height": 132,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(252, 232, 232)"
+          },
+          {
+            "x": 223.65625,
+            "y": 460.875,
+            "right": 299,
+            "bottom": 505.109375,
+            "width": 75.34375,
+            "height": 44.234375,
+            "className": "selector-product-photo selector-product-schmear",
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 178.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 308,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 178.90625,
+              "y": 12,
+              "right": 308,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 644,
+              "width": 56.390625,
+              "height": 44,
+              "right": 73.390625,
+              "bottom": 688
+            },
+            "clipped": {
+              "x": 17,
+              "y": 644,
+              "right": 73.390625,
+              "bottom": 688,
+              "width": 56.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Packs",
+            "rect": {
+              "x": 12,
+              "y": 444,
+              "width": 93.328125,
+              "height": 132,
+              "right": 105.328125,
+              "bottom": 576
+            },
+            "clipped": {
+              "x": 12,
+              "y": 444,
+              "right": 105.328125,
+              "bottom": 576,
+              "width": 93.328125,
+              "height": 132
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Combos",
+            "rect": {
+              "x": 113.328125,
+              "y": 444,
+              "width": 93.328125,
+              "height": 132,
+              "right": 206.65625,
+              "bottom": 576
+            },
+            "clipped": {
+              "x": 113.328125,
+              "y": 444,
+              "right": 206.65625,
+              "bottom": 576,
+              "width": 93.328125,
+              "height": 132
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Schmears",
+            "rect": {
+              "x": 214.65625,
+              "y": 444,
+              "width": 93.34375,
+              "height": 132,
+              "right": 308,
+              "bottom": 576
+            },
+            "clipped": {
+              "x": 214.65625,
+              "y": 444,
+              "right": 308,
+              "bottom": 576,
+              "width": 93.34375,
+              "height": 132
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": []
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 320,
+      "scene": "pack-size",
+      "file": "320-pack-size.png",
+      "sha256": "4a40f38243821dab420e6f7193035077830611a8bd9305cdfc7b3fa95a38e816",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "scene": "pack-size",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 320,
+          "bufferHeight": 700
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.6291666666666667,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 26.14081039428711,
+              "y": 350.42920074462893,
+              "right": 193.96707878112792,
+              "bottom": 394.61519622802734,
+              "width": 167.8262683868408,
+              "height": 44.185995483398415
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 39.30915832519531,
+                  "y": 367.2746276855469,
+                  "width": 21.613666534423828,
+                  "height": 3.697296142578125,
+                  "right": 60.92282485961914,
+                  "bottom": 370.971923828125
+                },
+                "x": 50.11599159240723,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 79.2767562866211,
+                  "y": 367.2746276855469,
+                  "width": 21.59198760986328,
+                  "height": 3.697296142578125,
+                  "right": 100.86874389648438,
+                  "bottom": 370.971923828125
+                },
+                "x": 90.07275009155273,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 119.24435424804688,
+                  "y": 367.2746276855469,
+                  "width": 21.5703125,
+                  "height": 3.697296142578125,
+                  "right": 140.81466674804688,
+                  "bottom": 370.971923828125
+                },
+                "x": 130.02951049804688,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 159.21194458007812,
+                  "y": 367.2746276855469,
+                  "width": 21.559906005859375,
+                  "height": 3.697296142578125,
+                  "right": 180.7718505859375,
+                  "bottom": 370.971923828125
+                },
+                "x": 169.9918975830078,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 39.61020278930664,
+                  "y": 384.2784423828125,
+                  "width": 21.559619903564453,
+                  "height": 3.67889404296875,
+                  "right": 61.169822692871094,
+                  "bottom": 387.95733642578125
+                },
+                "x": 50.39001274108887,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 79.47810363769531,
+                  "y": 384.2784423828125,
+                  "width": 21.538055419921875,
+                  "height": 3.67889404296875,
+                  "right": 101.01615905761719,
+                  "bottom": 387.95733642578125
+                },
+                "x": 90.24713134765625,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 119.34600830078125,
+                  "y": 384.2784423828125,
+                  "width": 21.5164794921875,
+                  "height": 3.67889404296875,
+                  "right": 140.86248779296875,
+                  "bottom": 387.95733642578125
+                },
+                "x": 130.104248046875,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 159.2139129638672,
+                  "y": 384.2784423828125,
+                  "width": 21.506118774414062,
+                  "height": 3.67889404296875,
+                  "right": 180.72003173828125,
+                  "bottom": 387.95733642578125
+                },
+                "x": 169.96697235107422,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              }
+            ]
+          },
+          {
+            "kind": "schmears",
+            "expectedCount": 5,
+            "valid": true,
+            "roi": {
+              "x": 213.99712905883788,
+              "y": 351.7135167439779,
+              "right": 305.7296852111816,
+              "bottom": 394.7580134073893,
+              "width": 91.73255615234373,
+              "height": 43.044496663411394
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "WHIPPED ORIGINAL",
+                "rect": {
+                  "x": 223.63839721679688,
+                  "y": 368.3821105957031,
+                  "width": 15.117172241210938,
+                  "height": 3.085418701171875,
+                  "right": 238.7555694580078,
+                  "bottom": 371.467529296875
+                },
+                "x": 231.19698333740234,
+                "y": 369.92481994628906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "AJÍ AMARILLO",
+                "rect": {
+                  "x": 252.29798889160156,
+                  "y": 368.3821105957031,
+                  "width": 15.130142211914062,
+                  "height": 3.085418701171875,
+                  "right": 267.4281311035156,
+                  "bottom": 371.467529296875
+                },
+                "x": 259.8630599975586,
+                "y": 369.92481994628906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HERB & ROASTED GARLIC",
+                "rect": {
+                  "x": 280.946533203125,
+                  "y": 367.7594299316406,
+                  "width": 15.166595458984375,
+                  "height": 4.330108642578125,
+                  "right": 296.1131286621094,
+                  "bottom": 372.08953857421875
+                },
+                "x": 288.5298309326172,
+                "y": 369.9244842529297,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HONEY CINNAMON",
+                "rect": {
+                  "x": 237.07577514648438,
+                  "y": 384.945068359375,
+                  "width": 15.086502075195312,
+                  "height": 3.070465087890625,
+                  "right": 252.1622772216797,
+                  "bottom": 388.0155334472656
+                },
+                "x": 244.61902618408203,
+                "y": 386.4803009033203,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC STRAWBERRY",
+                "rect": {
+                  "x": 267.06207275390625,
+                  "y": 384.3254089355469,
+                  "width": 15.120941162109375,
+                  "height": 4.309112548828125,
+                  "right": 282.1830139160156,
+                  "bottom": 388.634521484375
+                },
+                "x": 274.62254333496094,
+                "y": 386.47996520996094,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 178.90625,
+            "y": 12,
+            "right": 308,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 640,
+            "right": 308,
+            "bottom": 692,
+            "width": 296,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 17,
+            "y": 644,
+            "right": 73.390625,
+            "bottom": 688,
+            "width": 56.390625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 94.09375,
+            "y": 650,
+            "right": 111.09375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 151.484375,
+            "y": 650,
+            "right": 168.484375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 208.890625,
+            "y": 650,
+            "right": 225.890625,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 266.296875,
+            "y": 650,
+            "right": 283.296875,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 434,
+            "right": 308,
+            "bottom": 624,
+            "width": 296,
+            "height": 190,
+            "className": "guided-floating-panel pack-size-panel",
+            "tag": "DIV",
+            "background": "rgba(255, 255, 255, 0.94)"
+          },
+          {
+            "x": 22,
+            "y": 519,
+            "right": 156,
+            "bottom": 614,
+            "width": 134,
+            "height": 95,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 69,
+            "y": 528,
+            "right": 109,
+            "bottom": 568,
+            "width": 40,
+            "height": 40,
+            "className": "pack-format-art",
+            "tag": "SPAN",
+            "background": "rgb(238, 245, 251)"
+          },
+          {
+            "x": 70,
+            "y": 529,
+            "right": 108,
+            "bottom": 567,
+            "width": 38,
+            "height": 38,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 164,
+            "y": 519,
+            "right": 298,
+            "bottom": 614,
+            "width": 134,
+            "height": 95,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 211,
+            "y": 528,
+            "right": 251,
+            "bottom": 568,
+            "width": 40,
+            "height": 40,
+            "className": "pack-format-art mini",
+            "tag": "SPAN",
+            "background": "rgb(238, 245, 251)"
+          },
+          {
+            "x": 212,
+            "y": 529,
+            "right": 250,
+            "bottom": 567,
+            "width": 38,
+            "height": 38,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 178.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 308,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 178.90625,
+              "y": 12,
+              "right": 308,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 644,
+              "width": 56.390625,
+              "height": 44,
+              "right": 73.390625,
+              "bottom": 688
+            },
+            "clipped": {
+              "x": 17,
+              "y": 644,
+              "right": 73.390625,
+              "bottom": 688,
+              "width": 56.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Bagels grandes6 o 12 bagels→",
+            "rect": {
+              "x": 22,
+              "y": 519,
+              "width": 134,
+              "height": 95,
+              "right": 156,
+              "bottom": 614
+            },
+            "clipped": {
+              "x": 22,
+              "y": 519,
+              "right": 156,
+              "bottom": 614,
+              "width": 134,
+              "height": 95
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Mini bagels6, 12 o 24 minis→",
+            "rect": {
+              "x": 164,
+              "y": 519,
+              "width": 134,
+              "height": 95,
+              "right": 298,
+              "bottom": 614
+            },
+            "clipped": {
+              "x": 164,
+              "y": 519,
+              "right": 298,
+              "bottom": 614,
+              "width": 134,
+              "height": 95
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": []
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 320,
+      "scene": "pack-qty",
+      "file": "320-pack-qty.png",
+      "sha256": "81bb6d48fb589805b1c0aa005f22d1e645e8f05b1845253b8204edc2f8711b1b",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "scene": "pack-qty",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 320,
+          "bufferHeight": 700
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.5986111111111111,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 26.14081039428711,
+              "y": 350.42920074462893,
+              "right": 193.96707878112792,
+              "bottom": 394.61519622802734,
+              "width": 167.8262683868408,
+              "height": 44.185995483398415
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 39.30915832519531,
+                  "y": 367.2746276855469,
+                  "width": 21.613666534423828,
+                  "height": 3.697296142578125,
+                  "right": 60.92282485961914,
+                  "bottom": 370.971923828125
+                },
+                "x": 50.11599159240723,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 79.2767562866211,
+                  "y": 367.2746276855469,
+                  "width": 21.59198760986328,
+                  "height": 3.697296142578125,
+                  "right": 100.86874389648438,
+                  "bottom": 370.971923828125
+                },
+                "x": 90.07275009155273,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 119.24435424804688,
+                  "y": 367.2746276855469,
+                  "width": 21.5703125,
+                  "height": 3.697296142578125,
+                  "right": 140.81466674804688,
+                  "bottom": 370.971923828125
+                },
+                "x": 130.02951049804688,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 159.21194458007812,
+                  "y": 367.2746276855469,
+                  "width": 21.559906005859375,
+                  "height": 3.697296142578125,
+                  "right": 180.7718505859375,
+                  "bottom": 370.971923828125
+                },
+                "x": 169.9918975830078,
+                "y": 369.12327575683594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 39.61020278930664,
+                  "y": 384.2784423828125,
+                  "width": 21.559619903564453,
+                  "height": 3.67889404296875,
+                  "right": 61.169822692871094,
+                  "bottom": 387.95733642578125
+                },
+                "x": 50.39001274108887,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 79.47810363769531,
+                  "y": 384.2784423828125,
+                  "width": 21.538055419921875,
+                  "height": 3.67889404296875,
+                  "right": 101.01615905761719,
+                  "bottom": 387.95733642578125
+                },
+                "x": 90.24713134765625,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 119.34600830078125,
+                  "y": 384.2784423828125,
+                  "width": 21.5164794921875,
+                  "height": 3.67889404296875,
+                  "right": 140.86248779296875,
+                  "bottom": 387.95733642578125
+                },
+                "x": 130.104248046875,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 159.2139129638672,
+                  "y": 384.2784423828125,
+                  "width": 21.506118774414062,
+                  "height": 3.67889404296875,
+                  "right": 180.72003173828125,
+                  "bottom": 387.95733642578125
+                },
+                "x": 169.96697235107422,
+                "y": 386.1178894042969,
+                "inside": true,
+                "free": true
+              }
+            ]
+          },
+          {
+            "kind": "schmears",
+            "expectedCount": 5,
+            "valid": true,
+            "roi": {
+              "x": 213.99712905883788,
+              "y": 351.7135167439779,
+              "right": 305.7296852111816,
+              "bottom": 394.7580134073893,
+              "width": 91.73255615234373,
+              "height": 43.044496663411394
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "WHIPPED ORIGINAL",
+                "rect": {
+                  "x": 223.63839721679688,
+                  "y": 368.3821105957031,
+                  "width": 15.117172241210938,
+                  "height": 3.085418701171875,
+                  "right": 238.7555694580078,
+                  "bottom": 371.467529296875
+                },
+                "x": 231.19698333740234,
+                "y": 369.92481994628906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "AJÍ AMARILLO",
+                "rect": {
+                  "x": 252.29798889160156,
+                  "y": 368.3821105957031,
+                  "width": 15.130142211914062,
+                  "height": 3.085418701171875,
+                  "right": 267.4281311035156,
+                  "bottom": 371.467529296875
+                },
+                "x": 259.8630599975586,
+                "y": 369.92481994628906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HERB & ROASTED GARLIC",
+                "rect": {
+                  "x": 280.946533203125,
+                  "y": 367.7594299316406,
+                  "width": 15.166595458984375,
+                  "height": 4.330108642578125,
+                  "right": 296.1131286621094,
+                  "bottom": 372.08953857421875
+                },
+                "x": 288.5298309326172,
+                "y": 369.9244842529297,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "HONEY CINNAMON",
+                "rect": {
+                  "x": 237.07577514648438,
+                  "y": 384.945068359375,
+                  "width": 15.086502075195312,
+                  "height": 3.070465087890625,
+                  "right": 252.1622772216797,
+                  "bottom": 388.0155334472656
+                },
+                "x": 244.61902618408203,
+                "y": 386.4803009033203,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC STRAWBERRY",
+                "rect": {
+                  "x": 267.06207275390625,
+                  "y": 384.3254089355469,
+                  "width": 15.120941162109375,
+                  "height": 4.309112548828125,
+                  "right": 282.1830139160156,
+                  "bottom": 388.634521484375
+                },
+                "x": 274.62254333496094,
+                "y": 386.47996520996094,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 178.90625,
+            "y": 12,
+            "right": 308,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 640,
+            "right": 308,
+            "bottom": 692,
+            "width": 296,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 17,
+            "y": 644,
+            "right": 73.390625,
+            "bottom": 688,
+            "width": 56.390625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 94.09375,
+            "y": 650,
+            "right": 111.09375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 151.484375,
+            "y": 650,
+            "right": 168.484375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 208.890625,
+            "y": 650,
+            "right": 225.890625,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 266.296875,
+            "y": 650,
+            "right": 283.296875,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 414,
+            "right": 308,
+            "bottom": 624,
+            "width": 296,
+            "height": 210,
+            "className": "guided-floating-panel pack-config-panel",
+            "tag": "DIV",
+            "background": "rgba(255, 255, 255, 0.94)"
+          },
+          {
+            "x": 16,
+            "y": 418,
+            "right": 60,
+            "bottom": 462,
+            "width": 44,
+            "height": 44,
+            "className": "panel-back",
+            "tag": "BUTTON",
+            "background": "rgb(244, 248, 251)"
+          },
+          {
+            "x": 24,
+            "y": 477,
+            "right": 157,
+            "bottom": 537.390625,
+            "width": 133,
+            "height": 60.390625,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 163,
+            "y": 477,
+            "right": 296,
+            "bottom": 537.390625,
+            "width": 133,
+            "height": 60.390625,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 24,
+            "y": 566.390625,
+            "right": 110.65625,
+            "bottom": 624,
+            "width": 86.65625,
+            "height": 57.609375,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 116.65625,
+            "y": 566.390625,
+            "right": 203.328125,
+            "bottom": 624,
+            "width": 86.671875,
+            "height": 57.609375,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 178.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 308,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 178.90625,
+              "y": 12,
+              "right": 308,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 644,
+              "width": 56.390625,
+              "height": 44,
+              "right": 73.390625,
+              "bottom": 688
+            },
+            "clipped": {
+              "x": 17,
+              "y": 644,
+              "right": 73.390625,
+              "bottom": 688,
+              "width": 56.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "←",
+            "rect": {
+              "x": 16,
+              "y": 418,
+              "width": 44,
+              "height": 44,
+              "right": 60,
+              "bottom": 462
+            },
+            "clipped": {
+              "x": 16,
+              "y": 418,
+              "right": 60,
+              "bottom": 462,
+              "width": 44,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "MixtoCombina los sabores que quieras",
+            "rect": {
+              "x": 24,
+              "y": 477,
+              "width": 133,
+              "height": 60.390625,
+              "right": 157,
+              "bottom": 537.390625
+            },
+            "clipped": {
+              "x": 24,
+              "y": 477,
+              "right": 157,
+              "bottom": 537.390625,
+              "width": 133,
+              "height": 60.390625
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Un saborTodos iguales, elige uno",
+            "rect": {
+              "x": 163,
+              "y": 477,
+              "width": 133,
+              "height": 60.390625,
+              "right": 296,
+              "bottom": 537.390625
+            },
+            "clipped": {
+              "x": 163,
+              "y": 477,
+              "right": 296,
+              "bottom": 537.390625,
+              "width": 133,
+              "height": 60.390625
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Elegir 6 bagels, mixtos",
+            "rect": {
+              "x": 24,
+              "y": 566.390625,
+              "width": 86.65625,
+              "height": 80.390625,
+              "right": 110.65625,
+              "bottom": 646.78125
+            },
+            "clipped": {
+              "x": 24,
+              "y": 566.390625,
+              "right": 110.65625,
+              "bottom": 624,
+              "width": 86.65625,
+              "height": 57.609375
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Elegir 12 bagels, mixtos",
+            "rect": {
+              "x": 116.65625,
+              "y": 566.390625,
+              "width": 86.671875,
+              "height": 80.390625,
+              "right": 203.328125,
+              "bottom": 646.78125
+            },
+            "clipped": {
+              "x": 116.65625,
+              "y": 566.390625,
+              "right": 203.328125,
+              "bottom": 624,
+              "width": 86.671875,
+              "height": 57.609375
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": []
+      },
+      "failures": [],
+      "pass": true
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "file": "320-bagels.png",
+      "sha256": "67af52cbbed0d69101ba09c2f25021f8da961fd0451fd67d857edebbc8ccc187",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "scene": "bagels",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 320,
+          "bufferHeight": 700
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.5680555555555555,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 24.233611297607425,
+              "y": 312.03708877563474,
+              "right": 292.38385276794435,
+              "bottom": 382.68364334106445,
+              "width": 268.15024147033694,
+              "height": 70.64655456542971
+            },
+            "clearFraction": 1,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 45.27621841430664,
+                  "y": 338.9554138183594,
+                  "width": 34.52914047241211,
+                  "height": 5.92578125,
+                  "right": 79.80535888671875,
+                  "bottom": 344.8811950683594
+                },
+                "x": 62.540788650512695,
+                "y": 341.9183044433594,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 109.12824249267578,
+                  "y": 338.95928955078125,
+                  "width": 34.468955993652344,
+                  "height": 5.92657470703125,
+                  "right": 143.59719848632812,
+                  "bottom": 344.8858642578125
+                },
+                "x": 126.36272048950195,
+                "y": 341.9225769042969,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 172.98326110839844,
+                  "y": 338.9631652832031,
+                  "width": 34.4744873046875,
+                  "height": 5.9273681640625,
+                  "right": 207.45774841308594,
+                  "bottom": 344.8905334472656
+                },
+                "x": 190.2205047607422,
+                "y": 341.9268493652344,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 236.80007934570312,
+                  "y": 338.967041015625,
+                  "width": 34.553192138671875,
+                  "height": 5.92816162109375,
+                  "right": 271.353271484375,
+                  "bottom": 344.89520263671875
+                },
+                "x": 254.07667541503906,
+                "y": 341.9311218261719,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 45.84864807128906,
+                  "y": 366.14324951171875,
+                  "width": 34.3564453125,
+                  "height": 5.868804931640625,
+                  "right": 80.20509338378906,
+                  "bottom": 372.0120544433594
+                },
+                "x": 63.02687072753906,
+                "y": 369.07765197753906,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 109.3821029663086,
+                  "y": 366.1507263183594,
+                  "width": 34.296852111816406,
+                  "height": 5.86956787109375,
+                  "right": 143.678955078125,
+                  "bottom": 372.0202941894531
+                },
+                "x": 126.5305290222168,
+                "y": 369.08551025390625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 172.91851806640625,
+                  "y": 366.158203125,
+                  "width": 34.30232238769531,
+                  "height": 5.870361328125,
+                  "right": 207.22084045410156,
+                  "bottom": 372.028564453125
+                },
+                "x": 190.0696792602539,
+                "y": 369.0933837890625,
+                "inside": true,
+                "free": true
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 236.41709899902344,
+                  "y": 366.16571044921875,
+                  "width": 34.38026428222656,
+                  "height": 5.871124267578125,
+                  "right": 270.79736328125,
+                  "bottom": 372.0368347167969
+                },
+                "x": 253.60723114013672,
+                "y": 369.1012725830078,
+                "inside": true,
+                "free": true
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 178.90625,
+            "y": 12,
+            "right": 308,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 70,
+            "right": 92,
+            "bottom": 114,
+            "width": 80,
+            "height": 44,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 640,
+            "right": 308,
+            "bottom": 692,
+            "width": 296,
+            "height": 52,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 36.6875,
+            "y": 650,
+            "right": 53.6875,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(232, 241, 255)"
+          },
+          {
+            "x": 74.390625,
+            "y": 644,
+            "right": 130.796875,
+            "bottom": 688,
+            "width": 56.40625,
+            "height": 44,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 151.484375,
+            "y": 650,
+            "right": 168.484375,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 208.890625,
+            "y": 650,
+            "right": 225.890625,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 266.296875,
+            "y": 650,
+            "right": 283.296875,
+            "bottom": 667,
+            "width": 17,
+            "height": 17,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 396,
+            "right": 308,
+            "bottom": 576,
+            "width": 296,
+            "height": 180,
+            "className": "mobile-product-stage mobile-bagel-stage",
+            "tag": "SECTION",
+            "background": "rgba(255, 250, 244, 0.97)"
+          },
+          {
+            "x": 23,
+            "y": 445,
+            "right": 183,
+            "bottom": 565,
+            "width": 160,
+            "height": 120,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 24,
+            "y": 446,
+            "right": 182,
+            "bottom": 564,
+            "width": 158,
+            "height": 118,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 30,
+            "y": 483,
+            "right": 74,
+            "bottom": 527,
+            "width": 44,
+            "height": 44,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 79,
+            "y": 498,
+            "right": 159.953125,
+            "bottom": 512,
+            "width": 80.953125,
+            "height": 14,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 159,
+            "y": 450,
+            "right": 178,
+            "bottom": 469,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 191,
+            "y": 445,
+            "right": 299,
+            "bottom": 565,
+            "width": 108,
+            "height": 120,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 192,
+            "y": 446,
+            "right": 299,
+            "bottom": 564,
+            "width": 107,
+            "height": 118,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 198,
+            "y": 483,
+            "right": 242,
+            "bottom": 527,
+            "width": 44,
+            "height": 44,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 247,
+            "y": 498,
+            "right": 299,
+            "bottom": 512,
+            "width": 52,
+            "height": 14,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 12,
+            "y": 580,
+            "right": 308,
+            "bottom": 632,
+            "width": 296,
+            "height": 52,
+            "className": "guided-order-counter bagel-live-summary",
+            "tag": "DIV",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 82,
+            "y": 587.5,
+            "right": 189,
+            "bottom": 615.5,
+            "width": 107,
+            "height": 28,
+            "className": "pending",
+            "tag": "SPAN",
+            "background": "rgb(247, 248, 249)"
+          },
+          {
+            "x": 86,
+            "y": 592,
+            "right": 105,
+            "bottom": 611,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(223, 229, 234)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 178.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 308,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 178.90625,
+              "y": 12,
+              "right": 308,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 70,
+              "width": 80,
+              "height": 44,
+              "right": 92,
+              "bottom": 114
+            },
+            "clipped": {
+              "x": 12,
+              "y": 70,
+              "right": 92,
+              "bottom": 114,
+              "width": 80,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 17,
+              "y": 644,
+              "width": 56.390625,
+              "height": 44,
+              "right": 73.390625,
+              "bottom": 688
+            },
+            "clipped": {
+              "x": 17,
+              "y": 644,
+              "right": 73.390625,
+              "bottom": 688,
+              "width": 56.390625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ir a Bagels",
+            "rect": {
+              "x": 74.390625,
+              "y": 644,
+              "width": 56.40625,
+              "height": 44,
+              "right": 130.796875,
+              "bottom": 688
+            },
+            "clipped": {
+              "x": 74.390625,
+              "y": 644,
+              "right": 130.796875,
+              "bottom": 688,
+              "width": 56.40625,
+              "height": 44
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Everything",
+            "rect": {
+              "x": 24,
+              "y": 446,
+              "width": 158,
+              "height": 118,
+              "right": 182,
+              "bottom": 564
+            },
+            "clipped": {
+              "x": 24,
+              "y": 446,
+              "right": 182,
+              "bottom": 564,
+              "width": 158,
+              "height": 118
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Sesame",
+            "rect": {
+              "x": 192,
+              "y": 446,
+              "width": 158,
+              "height": 118,
+              "right": 350,
+              "bottom": 564
+            },
+            "clipped": {
+              "x": 192,
+              "y": 446,
+              "right": 299,
+              "bottom": 564,
+              "width": 107,
+              "height": 118
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": [
+          {
+            "className": "mobile-bagel-grid",
+            "rect": {
+              "x": 21,
+              "y": 445,
+              "width": 278,
+              "height": 122,
+              "right": 299,
+              "bottom": 567
+            },
+            "clientWidth": 278,
+            "clientHeight": 122,
+            "scrollWidth": 1340,
+            "scrollHeight": 122,
+            "scrollLeft": 0,
+            "scrollTop": 0,
+            "overflowX": "auto",
+            "overflowY": "hidden"
+          }
+        ]
+      },
+      "failures": [],
+      "pass": true
+    }
+  ],
+  "extras": [
+    {
+      "width": 390,
+      "kind": "real-tab-bagels",
+      "entries": [
+        {
+          "name": "Everything",
+          "target": {
+            "label": "Agregar Everything",
+            "visible": true,
+            "rect": {
+              "x": 24,
+              "y": 590,
+              "right": 182,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 24,
+              "y": 590,
+              "right": 182,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 103,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 0,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 24,
+              "y": 590,
+              "right": 182,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Everything",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 79,
+                  "y": 642,
+                  "width": 80.953125,
+                  "height": 14,
+                  "right": 159.953125,
+                  "bottom": 656
+                },
+                "glyphs": [
+                  {
+                    "x": 79,
+                    "y": 640,
+                    "right": 145.953125,
+                    "bottom": 657,
+                    "width": 66.953125,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Everything",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Sesame",
+          "target": {
+            "label": "Agregar Sesame",
+            "visible": true,
+            "rect": {
+              "x": 192,
+              "y": 590,
+              "right": 350,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 192,
+              "y": 590,
+              "right": 350,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 271,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 0,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 192,
+              "y": 590,
+              "right": 350,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Sesame",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 247,
+                  "y": 642,
+                  "width": 60.875,
+                  "height": 14,
+                  "right": 307.875,
+                  "bottom": 656
+                },
+                "glyphs": [
+                  {
+                    "x": 247,
+                    "y": 640,
+                    "right": 293.875,
+                    "bottom": 657,
+                    "width": 46.875,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Sesame",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Plain",
+          "target": {
+            "label": "Agregar Plain",
+            "visible": true,
+            "rect": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 276,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 163,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Plain",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 252,
+                  "y": 642,
+                  "width": 44.890625,
+                  "height": 14,
+                  "right": 296.890625,
+                  "bottom": 656
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 640,
+                    "right": 282.890625,
+                    "bottom": 657,
+                    "width": 30.890625,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Plain",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Classic Onion",
+          "target": {
+            "label": "Agregar Classic Onion",
+            "visible": true,
+            "rect": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 276,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 331,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Classic Onion",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 252,
+                  "y": 642,
+                  "width": 96.1875,
+                  "height": 14,
+                  "right": 348.1875,
+                  "bottom": 656
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 640,
+                    "right": 334.1875,
+                    "bottom": 657,
+                    "width": 82.1875,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Classic Onion",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Jalapeño Cheddar",
+          "target": {
+            "label": "Agregar Jalapeño Cheddar",
+            "visible": true,
+            "rect": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 276,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 499,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Jalapeño Cheddar",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 252,
+                  "y": 629.5,
+                  "width": 97,
+                  "height": 28,
+                  "right": 349,
+                  "bottom": 657.5
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 627.5,
+                    "right": 305.578125,
+                    "bottom": 644.5,
+                    "width": 53.578125,
+                    "height": 17
+                  },
+                  {
+                    "x": 252,
+                    "y": 641.5,
+                    "right": 303.78125,
+                    "bottom": 658.5,
+                    "width": 51.78125,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              },
+              {
+                "text": "Premium",
+                "tag": "SMALL",
+                "rect": {
+                  "x": 252,
+                  "y": 691,
+                  "width": 97,
+                  "height": 11,
+                  "right": 349,
+                  "bottom": 702
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 690,
+                    "right": 295.109375,
+                    "bottom": 703,
+                    "width": 43.109375,
+                    "height": 13
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Jalapeño Cheddar",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Cheddar",
+          "target": {
+            "label": "Agregar Cheddar",
+            "visible": true,
+            "rect": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 276,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 667,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Cheddar",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 252,
+                  "y": 636.5,
+                  "width": 65.78125,
+                  "height": 14,
+                  "right": 317.78125,
+                  "bottom": 650.5
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 634.5,
+                    "right": 303.78125,
+                    "bottom": 651.5,
+                    "width": 51.78125,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              },
+              {
+                "text": "Premium",
+                "tag": "SMALL",
+                "rect": {
+                  "x": 252,
+                  "y": 691,
+                  "width": 97,
+                  "height": 11,
+                  "right": 349,
+                  "bottom": 702
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 690,
+                    "right": 295.109375,
+                    "bottom": 703,
+                    "width": 43.109375,
+                    "height": 13
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Cheddar",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Cinnamon Raisin",
+          "target": {
+            "label": "Agregar Cinnamon Raisin",
+            "visible": true,
+            "rect": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 276,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 835,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 197,
+              "y": 590,
+              "right": 355,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Cinnamon Raisin",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 252,
+                  "y": 635,
+                  "width": 97,
+                  "height": 28,
+                  "right": 349,
+                  "bottom": 663
+                },
+                "glyphs": [
+                  {
+                    "x": 252,
+                    "y": 633,
+                    "right": 314.859375,
+                    "bottom": 650,
+                    "width": 62.859375,
+                    "height": 17
+                  },
+                  {
+                    "x": 252,
+                    "y": 647,
+                    "right": 289.421875,
+                    "bottom": 664,
+                    "width": 37.421875,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Cinnamon Raisin",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        },
+        {
+          "name": "Blueberry",
+          "target": {
+            "label": "Agregar Blueberry",
+            "visible": true,
+            "rect": {
+              "x": 208,
+              "y": 590,
+              "right": 366,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "clip": {
+              "x": 208,
+              "y": 590,
+              "right": 366,
+              "bottom": 708,
+              "width": 158,
+              "height": 118
+            },
+            "point": {
+              "x": 287,
+              "y": 649
+            },
+            "hit": true,
+            "topHit": {
+              "tag": "SPAN",
+              "className": "mobile-bagel-sign"
+            },
+            "scrollables": [
+              {
+                "depth": 2,
+                "horizontal": true,
+                "vertical": false,
+                "rect": {
+                  "x": 21,
+                  "y": 589,
+                  "right": 369,
+                  "bottom": 711,
+                  "width": 348,
+                  "height": 122
+                },
+                "scrollLeft": 992,
+                "scrollTop": 0,
+                "clientWidth": 348,
+                "clientHeight": 122,
+                "scrollWidth": 1340,
+                "scrollHeight": 122
+              }
+            ]
+          },
+          "text": {
+            "buttonClip": {
+              "x": 208,
+              "y": 590,
+              "right": 366,
+              "bottom": 708,
+              "width": 158,
+              "height": 118,
+              "visible": true
+            },
+            "texts": [
+              {
+                "text": "Blueberry",
+                "tag": "SPAN",
+                "rect": {
+                  "x": 263,
+                  "y": 642,
+                  "width": 74.734375,
+                  "height": 14,
+                  "right": 337.734375,
+                  "bottom": 656
+                },
+                "glyphs": [
+                  {
+                    "x": 263,
+                    "y": 640,
+                    "right": 323.734375,
+                    "bottom": 657,
+                    "width": 60.734375,
+                    "height": 17
+                  }
+                ],
+                "visible": true,
+                "ellipsis": false,
+                "complete": true,
+                "overlapsMinus": false
+              }
+            ]
+          },
+          "focus": {
+            "label": "Agregar Blueberry",
+            "outline": "solid",
+            "outlineWidth": "3px",
+            "outlineOffset": "-3px",
+            "outlineColor": "rgb(0, 74, 173)",
+            "background": "rgb(255, 255, 255)",
+            "boxShadow": "none"
+          },
+          "focusContrast": 8.130277133287432
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "kind": "failure",
+      "file": "390-failure.png",
+      "sha256": "fb32313e11bc8ffbd5310a1660e630b64cedb4622f8462a5eae2d5464ac8279e"
+    },
+    {
+      "width": 320,
+      "kind": "failure",
+      "file": "320-failure.png",
+      "sha256": "a169b7d73bed61fbfb703478df625609165a1b0a0ea2dc1474c62310f5052e94"
+    }
+  ],
+  "catalog": [],
+  "failures": [
+    {
+      "width": 390,
+      "message": "locator.evaluate: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar Everything', exact: true })\u001b[22m\n\n    at reach (/workspace/bagelito-pe/scripts/qa-mobile-vitrina.cjs:35:25)\n    at async audit (/workspace/bagelito-pe/scripts/qa-mobile-vitrina.cjs:128:82)"
+    },
+    {
+      "width": 320,
+      "message": "AssertionError [ERR_ASSERTION]: Catalog text is hidden/truncated/overlapped: {\"text\":\"Classic Onion\",\"tag\":\"SPAN\",\"rect\":{\"x\":252,\"y\":498,\"width\":96.1875,\"height\":14,\"right\":348.1875,\"bottom\":512},\"glyphs\":[{\"x\":252,\"y\":496,\"right\":334.1875,\"bottom\":513,\"width\":82.1875,\"height\":17}],\"visible\":true,\"ellipsis\":false,\"complete\":false,\"overlapsMinus\":false}\n    at textCheck (/workspace/bagelito-pe/scripts/qa-mobile-vitrina.cjs:58:41)\n    at async tabCatalog (/workspace/bagelito-pe/scripts/qa-mobile-vitrina.cjs:74:123)\n    at async audit (/workspace/bagelito-pe/scripts/qa-mobile-vitrina.cjs:126:173)"
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-31T23:12:07.692Z",
+      "type": "scene-captured",
+      "width": 390,
+      "scene": "selector",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.7388888888888889,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        },
+        {
+          "kind": "schmears",
+          "clear": 1,
+          "free": 5,
+          "total": 5
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:12:09.049Z",
+      "type": "native-tap",
+      "label": "Packs",
+      "point": {
+        "x": 70.328125,
+        "y": 654
+      },
+      "raw": {
+        "x": 12,
+        "y": 588,
+        "right": 128.65625,
+        "bottom": 720,
+        "width": 116.65625,
+        "height": 132
+      },
+      "clipped": {
+        "x": 12,
+        "y": 588,
+        "right": 128.65625,
+        "bottom": 720,
+        "width": 116.65625,
+        "height": 132
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:13.541Z",
+      "type": "scene-captured",
+      "width": 390,
+      "scene": "pack-size",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.7,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        },
+        {
+          "kind": "schmears",
+          "clear": 1,
+          "free": 5,
+          "total": 5
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:12:14.759Z",
+      "type": "native-tap",
+      "label": "Bagels grandes6 o 12 bagels→",
+      "point": {
+        "x": 106.5,
+        "y": 710.5
+      },
+      "raw": {
+        "x": 22,
+        "y": 663,
+        "right": 191,
+        "bottom": 758,
+        "width": 169,
+        "height": 95
+      },
+      "clipped": {
+        "x": 22,
+        "y": 663,
+        "right": 191,
+        "bottom": 758,
+        "width": 169,
+        "height": 95
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:19.267Z",
+      "type": "scene-captured",
+      "width": 390,
+      "scene": "pack-qty",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.6361111111111111,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        },
+        {
+          "kind": "schmears",
+          "clear": 1,
+          "free": 5,
+          "total": 5
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:12:20.556Z",
+      "type": "native-tap",
+      "label": "Un saborTodos iguales, elige uno",
+      "point": {
+        "x": 282,
+        "y": 633.1953125
+      },
+      "raw": {
+        "x": 198,
+        "y": 603,
+        "right": 366,
+        "bottom": 663.390625,
+        "width": 168,
+        "height": 60.390625
+      },
+      "clipped": {
+        "x": 198,
+        "y": 603,
+        "right": 366,
+        "bottom": 663.390625,
+        "width": 168,
+        "height": 60.390625
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:21.823Z",
+      "type": "native-tap",
+      "label": "MixtoCombina los sabores que quieras",
+      "point": {
+        "x": 108,
+        "y": 633.1953125
+      },
+      "raw": {
+        "x": 24,
+        "y": 603,
+        "right": 192,
+        "bottom": 663.390625,
+        "width": 168,
+        "height": 60.390625
+      },
+      "clipped": {
+        "x": 24,
+        "y": 603,
+        "right": 192,
+        "bottom": 663.390625,
+        "width": 168,
+        "height": 60.390625
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:23.161Z",
+      "type": "native-tap",
+      "label": "Elegir 6 bagels, mixtos",
+      "point": {
+        "x": 79,
+        "y": 727.5859375
+      },
+      "raw": {
+        "x": 24,
+        "y": 692.390625,
+        "right": 134,
+        "bottom": 762.78125,
+        "width": 110,
+        "height": 70.390625
+      },
+      "clipped": {
+        "x": 24,
+        "y": 692.390625,
+        "right": 134,
+        "bottom": 762.78125,
+        "width": 110,
+        "height": 70.390625
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:27.500Z",
+      "type": "scene-captured",
+      "width": 390,
+      "scene": "bagels",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.6041666666666666,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:12:27.671Z",
+      "type": "tab-catalog-pass",
+      "width": 390,
+      "kind": "bagels",
+      "count": 8
+    },
+    {
+      "at": "2026-10-31T23:12:37.451Z",
+      "type": "native-scroll",
+      "axis": "x",
+      "sign": 1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 37,
+        "y": 650
+      },
+      "end": {
+        "x": 353,
+        "y": 650
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:46.968Z",
+      "type": "native-scroll",
+      "axis": "x",
+      "sign": 1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 37,
+        "y": 650
+      },
+      "end": {
+        "x": 353,
+        "y": 650
+      }
+    },
+    {
+      "at": "2026-10-31T23:12:56.300Z",
+      "type": "native-scroll",
+      "axis": "x",
+      "sign": 1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 37,
+        "y": 650
+      },
+      "end": {
+        "x": 353,
+        "y": 650
+      }
+    },
+    {
+      "at": "2026-10-31T23:13:05.845Z",
+      "type": "native-scroll",
+      "axis": "x",
+      "sign": 1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 37,
+        "y": 650
+      },
+      "end": {
+        "x": 353,
+        "y": 650
+      }
+    },
+    {
+      "at": "2026-10-31T23:13:50.851Z",
+      "type": "mode-failed",
+      "width": 390,
+      "message": "TimeoutError: locator.evaluate: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar Everything', exact: true })\u001b[22m\n"
+    },
+    {
+      "at": "2026-10-31T23:13:50.885Z",
+      "type": "context-closing",
+      "width": 390,
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T23:13:50.904Z",
+      "type": "context-closed",
+      "width": 390,
+      "routeErrors": 0,
+      "closingRouteErrors": 0
+    },
+    {
+      "at": "2026-10-31T23:14:00.158Z",
+      "type": "scene-captured",
+      "width": 320,
+      "scene": "selector",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.6986111111111111,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        },
+        {
+          "kind": "schmears",
+          "clear": 1,
+          "free": 5,
+          "total": 5
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:14:01.283Z",
+      "type": "native-tap",
+      "label": "Packs",
+      "point": {
+        "x": 58.6640625,
+        "y": 510
+      },
+      "raw": {
+        "x": 12,
+        "y": 444,
+        "right": 105.328125,
+        "bottom": 576,
+        "width": 93.328125,
+        "height": 132
+      },
+      "clipped": {
+        "x": 12,
+        "y": 444,
+        "right": 105.328125,
+        "bottom": 576,
+        "width": 93.328125,
+        "height": 132
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:05.175Z",
+      "type": "scene-captured",
+      "width": 320,
+      "scene": "pack-size",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.6291666666666667,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        },
+        {
+          "kind": "schmears",
+          "clear": 1,
+          "free": 5,
+          "total": 5
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:14:06.284Z",
+      "type": "native-tap",
+      "label": "Bagels grandes6 o 12 bagels→",
+      "point": {
+        "x": 89,
+        "y": 566.5
+      },
+      "raw": {
+        "x": 22,
+        "y": 519,
+        "right": 156,
+        "bottom": 614,
+        "width": 134,
+        "height": 95
+      },
+      "clipped": {
+        "x": 22,
+        "y": 519,
+        "right": 156,
+        "bottom": 614,
+        "width": 134,
+        "height": 95
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:09.992Z",
+      "type": "scene-captured",
+      "width": 320,
+      "scene": "pack-qty",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.5986111111111111,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        },
+        {
+          "kind": "schmears",
+          "clear": 1,
+          "free": 5,
+          "total": 5
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:14:19.098Z",
+      "type": "native-scroll",
+      "axis": "y",
+      "sign": -1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 160,
+        "y": 612
+      },
+      "end": {
+        "x": 160,
+        "y": 426
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:28.262Z",
+      "type": "native-scroll",
+      "axis": "y",
+      "sign": 1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 160,
+        "y": 426
+      },
+      "end": {
+        "x": 160,
+        "y": 612
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:29.158Z",
+      "type": "native-tap",
+      "label": "Un saborTodos iguales, elige uno",
+      "point": {
+        "x": 229.5,
+        "y": 507.1953125
+      },
+      "raw": {
+        "x": 163,
+        "y": 477,
+        "right": 296,
+        "bottom": 537.390625,
+        "width": 133,
+        "height": 60.390625
+      },
+      "clipped": {
+        "x": 163,
+        "y": 477,
+        "right": 296,
+        "bottom": 537.390625,
+        "width": 133,
+        "height": 60.390625
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:30.199Z",
+      "type": "native-tap",
+      "label": "MixtoCombina los sabores que quieras",
+      "point": {
+        "x": 90.5,
+        "y": 507.1953125
+      },
+      "raw": {
+        "x": 24,
+        "y": 477,
+        "right": 157,
+        "bottom": 537.390625,
+        "width": 133,
+        "height": 60.390625
+      },
+      "clipped": {
+        "x": 24,
+        "y": 477,
+        "right": 157,
+        "bottom": 537.390625,
+        "width": 133,
+        "height": 60.390625
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:39.745Z",
+      "type": "native-scroll",
+      "axis": "y",
+      "sign": -1,
+      "ancestorDepth": 2,
+      "start": {
+        "x": 160,
+        "y": 612
+      },
+      "end": {
+        "x": 160,
+        "y": 426
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:40.773Z",
+      "type": "native-tap",
+      "label": "Elegir 6 bagels, mixtos",
+      "point": {
+        "x": 67.328125,
+        "y": 530.5859375
+      },
+      "raw": {
+        "x": 24,
+        "y": 490.390625,
+        "right": 110.65625,
+        "bottom": 570.78125,
+        "width": 86.65625,
+        "height": 80.390625
+      },
+      "clipped": {
+        "x": 24,
+        "y": 490.390625,
+        "right": 110.65625,
+        "bottom": 570.78125,
+        "width": 86.65625,
+        "height": 80.390625
+      }
+    },
+    {
+      "at": "2026-10-31T23:14:44.268Z",
+      "type": "scene-captured",
+      "width": 320,
+      "scene": "bagels",
+      "extra": false,
+      "pass": true,
+      "canvasFree": 0.5680555555555555,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 1,
+          "free": 8,
+          "total": 8
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:14:44.399Z",
+      "type": "mode-failed",
+      "width": 320,
+      "message": "AssertionError [ERR_ASSERTION]: Catalog text is hidden/truncated/overlapped: {\"text\":\"Classic Onion\",\"tag\":\"SPAN\",\"rect\":{\"x\":252,\"y\":498,\"width\":96.1875,\"height\":14,\"right\":348.1875,\"bottom\":512},\"glyphs\":[{\"x\":252,\"y\":496,\"right\":334.1875,\"bottom\":513,\"width\":82.1875,\"height\":17}],\"visible\":true,\"ellipsis\":false,\"complete\":false,\"overlapsMinus\":false}"
+    },
+    {
+      "at": "2026-10-31T23:14:46.249Z",
+      "type": "context-closing",
+      "width": 320,
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T23:14:46.295Z",
+      "type": "context-closed",
+      "width": 320,
+      "routeErrors": 0,
+      "closingRouteErrors": 0
+    }
+  ],
+  "network": [
+    {
+      "width": 390,
+      "traffic": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/?qa=1",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/routes-BhL9tLjb.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/PlayableStore-DoRETWDx.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/index-DN4S1jGK.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/PlayableStore-lW_yAIeU.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagelito-wordmark.svg",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/api/payments/culqi/config",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/master-scenes-clean/packs.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/master-scenes-clean/combos.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/master-scenes-clean/schmears.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-classic-onion.webp",
+            "status": 200
+          }
+        ],
+        "fixtureReads": 1,
+        "blocked": [],
+        "httpErrors": [],
+        "routeErrors": [],
+        "closingRouteErrors": [],
+        "closingAborts": [],
+        "failures": [],
+        "callbackErrors": []
+      }
+    },
+    {
+      "width": 320,
+      "traffic": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/?qa=1",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/routes-BhL9tLjb.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/PlayableStore-DoRETWDx.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/index-DN4S1jGK.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/assets/PlayableStore-lW_yAIeU.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagelito-wordmark.svg",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/api/payments/culqi/config",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/master-scenes-clean/packs.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/master-scenes-clean/combos.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/master-scenes-clean/schmears.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3204/images/bagel-blueberry.webp",
+            "status": 200
+          }
+        ],
+        "fixtureReads": 1,
+        "blocked": [],
+        "httpErrors": [],
+        "routeErrors": [],
+        "closingRouteErrors": [],
+        "closingAborts": [],
+        "failures": [],
+        "callbackErrors": []
+      }
+    }
+  ]
+}

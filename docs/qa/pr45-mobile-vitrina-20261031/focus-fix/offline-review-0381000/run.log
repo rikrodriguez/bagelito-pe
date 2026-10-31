@@ -1,0 +1,6 @@
+PASS: Visible keyboard focus in a horizontally overflowing grid reveals its whole card
+PASS: A non-overflowing grid does not scroll
+PASS: A card outside the current grid does not scroll
+PASS: A non-Element focus target does not scroll
+PASS: Pointer focus without focus-visible does not scroll
+PASS: source preservation and two liveWorld-only focus bindings

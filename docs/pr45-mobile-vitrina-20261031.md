@@ -1,6 +1,6 @@
 # Vitrina 3D visible durante la compra móvil
 
-Estado en curso. Aplicación bajo prueba: `67deb30cc3b3fb30c8bb82d9c2126a565e507988`. Aún no atribuir a este cambio las suites históricas del informe de runtime.
+Estado en curso. Aplicación bajo prueba: `0381000a91fc8eebe235c8ebf9c034def9dc64b6`. Aún no atribuir a este cambio las suites históricas del informe de runtime.
 
 ## Cambio
 
@@ -34,17 +34,19 @@ Después se restauró únicamente el fondo claro de la placa de nombre (`#fffaf4
 
 El fallo de Tab fue estable durante0/100/500/1000ms; `scroll-snap-type:none` y `mandatory` no lo resolvieron. Se conserva el [diagnóstico](qa/pr45-mobile-vitrina-20261031/focus-fix/diagnosis-a1fce/results.json) como experimento de DOM temporal, no como validación del código final.
 
-La aplicación67deb30 revela la tarjeta completa al recibir `:focus-visible`, sólo si hay overflow horizontal y mundo vivo. Conserva el foco en el botón. La guardia evita mover una tarjeta entre pointerdown y click. El [focal compilado](qa/pr45-mobile-vitrina-20261031/focus-fix/compiled-67deb30/results.json) pasa: ocho nombres visibles desde el primer instante, sin scroll de stage/raíz/ventana. Un tap deliberado sobre una preview de9px incrementó0/6→1/6 sin mover el carril; no se presenta esa preview como target completo44px. El [probe offline](qa/pr45-mobile-vitrina-20261031/focus-fix/offline-review/review-results.json) verifica5 precondiciones y la preservación AST, con seams explícitos.
+La aplicación0381000 alinea la tarjeta al inicio al recibir `:focus-visible`, sólo si hay overflow horizontal y mundo vivo. La alineación `nearest` de67deb30 pasaba en390, pero con snap todavía recortaba Classic Onion en320; se conserva ese fallo. Conserva el foco en el botón. La guardia evita mover una tarjeta entre pointerdown y click. El [focal compilado de67deb30,390px](qa/pr45-mobile-vitrina-20261031/focus-fix/compiled-67deb30/results.json) pasa: ocho nombres visibles desde el primer instante, sin scroll de stage/raíz/ventana. Un tap deliberado sobre una preview de9px incrementó0/6→1/6 sin mover el carril; no se presenta esa preview como target completo44px. El [probe offline actual](qa/pr45-mobile-vitrina-20261031/focus-fix/offline-review-0381000/review-results.json) verifica5 precondiciones y la preservación AST, con seams explícitos.
+
+El [diagnóstico del gesto](qa/pr45-mobile-vitrina-20261031/iterations/browser-back-diagnosis/README.md) confirmó navegación Atrás a `about:blank` al usar el borde. El runner usa gestos interiores verificados y registra URL/scroll, sin cambiar aserciones ni umbrales.
 
 ## Verificación por etapa
 
 | Etapa | Estado | Procedencia |
 | --- | --- | --- |
-| Build y tipos | PASS | Aplicación67deb30; incluye QA estructural11/11, manual4/4 y movimiento14/14 |
-| Contrato visual de fuente | PASS7/7 |67deb30 |
-| Node completo | PASS52/52, cero skips |67deb30;40 pruebas conservadas y12 del nuevo medidor/firewall |
-| Recorrido guiado completo | PASS32/32, exit0 en a1fce72; repetición67deb30 pendiente |16 escritorio+16 móvil, auxiliares de carrito/draft/privacidad incluidos |
-| Medición móvil16 | En curso sobre67deb30 | El FAIL a1fce72 se conserva:8 capturas iniciales pasan, pero Tab oculta Plain en390 y Classic Onion en320. Ese run no es una suite16 completa |
+| Build y tipos | PASS | Aplicación0381000; incluye QA estructural11/11, manual4/4 y movimiento14/14 |
+| Contrato visual de fuente | PASS7/7 |0381000 |
+| Node completo | PASS52/52, cero skips |0381000;40 pruebas conservadas y12 del nuevo medidor/firewall |
+| Recorrido guiado completo | PASS32/32, exit0 en a1fce72; repetición0381000 pendiente |16 escritorio+16 móvil, auxiliares de carrito/draft/privacidad incluidos |
+| Medición móvil16 | En curso sobre0381000 | 390 completa8/8escenas+15/15catálogo;320 ya pasa Tab8/8. El FAIL a1fce72 se conserva:8 capturas iniciales pasan, pero Tab oculta Plain en390 y Classic Onion en320. Ese run no es una suite16 completa |
 | Comparación equivalente antes/después | Pendiente | Se ejecutará con el mismo medidor y los dos viewports |
 
 El [recorrido guiado](qa/pr45-mobile-vitrina-20261031/guided/README.md) conserva32 PNG y metadatos de fuentes/artefacto sin cambios. Tráfico registrado:285 GET locales+10 lecturas del HDR local, sin errores HTTP, bloqueos ni errores de rutas. El runner original conserva sus aserciones.

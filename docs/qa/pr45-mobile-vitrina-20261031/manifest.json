@@ -1,7 +1,7 @@
 {
-  "status": "WIP: compiled focus fix passes native focal; full mobile16 running and new guided32 pending",
-  "applicationSHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
-  "qaSourceCommit": "0ab0fe5f54d9ed41b9b6019c91feda8b25495ae6",
+  "status": "WIP: mobile390 complete PASS and320 running; current guided32 pending",
+  "applicationSHA": "0381000a91fc8eebe235c8ebf9c034def9dc64b6",
+  "qaSourceCommit": "26125636e3a1adb26025cd75176cecf368f87a48",
   "files": {
     "focus-fix/compiled-67deb30/compiled-focus.png": {
       "bytes": 170276,
@@ -48,6 +48,18 @@
       "sha256": "28fb75503d630aa7a28b9fa62f44a8f8a9c2d95eed3843f1487d3e8eab6ccf32"
     },
     "focus-fix/offline-review/run.log": {
+      "bytes": 357,
+      "sha256": "35d091b20a05856f9687b3500a056d13a1afe74d0164a53a8f8e4a508c1ef351"
+    },
+    "focus-fix/offline-review-0381000/review-results.json": {
+      "bytes": 6373,
+      "sha256": "01ee5d3a83fe9383d8f0919164625f4a9d9762041dfe65528838258c483351c7"
+    },
+    "focus-fix/offline-review-0381000/review.cjs": {
+      "bytes": 7056,
+      "sha256": "3799992acd605a1b2fb1f38a41adae11e59414206bc4e5ba6b1a1c4da01ac33b"
+    },
+    "focus-fix/offline-review-0381000/run.log": {
       "bytes": 357,
       "sha256": "35d091b20a05856f9687b3500a056d13a1afe74d0164a53a8f8e4a508c1ef351"
     },
@@ -211,6 +223,50 @@
       "bytes": 74687,
       "sha256": "d51b69d9733cc7d01bef8d49e38c8c5788b86545332cf81c64c2bdc2518e3f14"
     },
+    "iterations/67deb30-nearest-and-edge-failure/320-bagels.png": {
+      "bytes": 128904,
+      "sha256": "67af52cbbed0d69101ba09c2f25021f8da961fd0451fd67d857edebbc8ccc187"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-failure.png": {
+      "bytes": 127894,
+      "sha256": "a169b7d73bed61fbfb703478df625609165a1b0a0ea2dc1474c62310f5052e94"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-pack-qty.png": {
+      "bytes": 120000,
+      "sha256": "81bb6d48fb589805b1c0aa005f22d1e645e8f05b1845253b8204edc2f8711b1b"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-pack-size.png": {
+      "bytes": 123218,
+      "sha256": "4a40f38243821dab420e6f7193035077830611a8bd9305cdfc7b3fa95a38e816"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-selector.png": {
+      "bytes": 150177,
+      "sha256": "5bd741a8fabadf9f0722d4cb3b9bd7b96862f19eaf3273146f5ba09c9bed7cbf"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-bagels.png": {
+      "bytes": 169937,
+      "sha256": "2fd07bd2fa7589939f1f3498d38d9cb21e16964f606008dd4f47dc020075fd4d"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-failure.png": {
+      "bytes": 2740,
+      "sha256": "fb32313e11bc8ffbd5310a1660e630b64cedb4622f8462a5eae2d5464ac8279e"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-pack-qty.png": {
+      "bytes": 153753,
+      "sha256": "96daa92bccdc76f8d89a488e3816f6a2cfb6553a556dcbc2dec66ca15f2d708b"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-pack-size.png": {
+      "bytes": 157272,
+      "sha256": "8949310bd209cf9336996803424de8e1acb993cf401adbaf661cc00765c4e387"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-selector.png": {
+      "bytes": 197912,
+      "sha256": "94b5e29637e6c0bfdf396cb66a432d183a58fe083c5a7e4f67472277b1f9f653"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/mobile-vitrina-results.json": {
+      "bytes": 188270,
+      "sha256": "900c5af41f44a7066efd916322d8c3c6aebed0762a9353bb9b84ed8d9c024850"
+    },
     "iterations/a1fce-mobile-tab-failure/320-bagels.png": {
       "bytes": 128899,
       "sha256": "0ed74cd4dc4aae0b1ef77e6688a94a5cf4f69121ac47eeca05a30cd7804217b4"
@@ -303,6 +359,18 @@
       "bytes": 26427,
       "sha256": "3891a110ff7caa4a9d5c6cbaed02ae51780114f9c1925405d6a5a210fb3f068c"
     },
+    "iterations/browser-back-diagnosis/README.md": {
+      "bytes": 792,
+      "sha256": "4b2ac83307d2bb4f7e189e4b9fa58f4d696b6cb373f62bbe537c70d7f2752710"
+    },
+    "iterations/browser-back-diagnosis/results.json": {
+      "bytes": 79381,
+      "sha256": "022b574193b88e000b9916535a4998c5eb4546fea0dd2e5115ec485a47f73ff6"
+    },
+    "iterations/browser-back-diagnosis/summary-derived.json": {
+      "bytes": 311,
+      "sha256": "c8b029f0f2eab6883059cf62cac748af83af94f3837344c59ba3cf9010f3d7fb"
+    },
     "iterations/invalid-first-measurement/first-results.json": {
       "bytes": 9072,
       "sha256": "11b508c705c421f4d466718161fdd89458f21b15d344ef447db3f18764739281"
@@ -359,6 +427,10 @@
       "bytes": 130003,
       "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
     },
+    "logs/build-0381000.log": {
+      "bytes": 23679,
+      "sha256": "f2d7da9c0d8a096a93ba246750df9053ca3fb6e3727f727a4e809b5c44846afd"
+    },
     "logs/build-67deb30.log": {
       "bytes": 23678,
       "sha256": "c2232ebb6f6480b430985b03d204f61f31f92e03b20ef3153d430cc14aaa3d6a"
@@ -375,6 +447,10 @@
       "bytes": 1308,
       "sha256": "8d3d2a920008bf03139da39be5afd3987383331fc08da43d86ec0d2b6abb6c03"
     },
+    "logs/node52-0381000.log": {
+      "bytes": 5040,
+      "sha256": "6b9da067b256ec08a30cec10095d4647d228657c22fc7ec8ec53a5b7d05998d3"
+    },
     "logs/node52-0ab0fe5.log": {
       "bytes": 5037,
       "sha256": "4b2b938da5ba5ee02867521ff5d70ada6ca039d2b294e13c42bd6646db0a928b"
@@ -382,6 +458,10 @@
     "logs/node52-67deb30.log": {
       "bytes": 5042,
       "sha256": "0342979f33ecc13d2ccd56099f3bf0d50fd3868b71766763f0f6d28e7464d2a3"
+    },
+    "logs/source-visual7-0381000.log": {
+      "bytes": 743,
+      "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
     },
     "logs/source-visual7-67deb30.log": {
       "bytes": 743,
@@ -392,8 +472,8 @@
       "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
     },
     "source-scope.json": {
-      "bytes": 3023,
-      "sha256": "bf15d48e4199400f212ab52a114c16c85bd02c6c49a951a11db3a9232ba8d986"
+      "bytes": 3031,
+      "sha256": "8b0450d916ba7e4ce0864b8f660a90d206598dc76950fb738bab0726aeae42cc"
     },
     "wip-b903413/focal-results.json": {
       "bytes": 31505,
@@ -408,5 +488,5 @@
       "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
     }
   },
-  "fileCount": 101
+  "fileCount": 121
 }
