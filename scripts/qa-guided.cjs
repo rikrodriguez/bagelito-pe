@@ -6,8 +6,9 @@
  */
 const { chromium } = require('playwright')
 const assert = require('node:assert/strict')
+const { execFileSync } = require('node:child_process')
 const { createHash } = require('node:crypto')
-const { mkdirSync, readFileSync, writeFileSync } = require('node:fs')
+const { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } = require('node:fs')
 const { resolve } = require('node:path')
 
 const base = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, '')
@@ -24,6 +25,38 @@ const modes = [
 ]
 mkdirSync(output, { recursive: true })
 
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex')
+const sourceFiles = [
+  'scripts/qa-guided.cjs', 'src/playable/PlayableStore.tsx', 'src/playable/movement-input.ts',
+  'src/playable/StoreArchitectureVisual.tsx', 'src/playable/GuidedCommerce.tsx',
+  'src/playable/playable.css', 'src/playable/guided-commerce.css',
+  'src/domain/lib/approved-shop-contract.ts', 'src/domain/data/verified-menu-2026-10-21.json',
+  'package.json', 'package-lock.json', 'vercel.json',
+]
+const optionalSourceFiles = ['package-lock.json']
+const metadata = {
+  startedAt: new Date().toISOString(),
+  repositorySHA: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+  workingTree: execFileSync('git', ['status', '--short'], { encoding: 'utf8' }).trim(),
+  declaredBuildSHA: process.env.QA_CODE_SHA || null,
+  base, nodeVersion: process.version, expectedScenes: modes.length * 16,
+  hdrFixtureSHA256: sha256(hdr),
+  sourceSHA256: Object.fromEntries(sourceFiles.map(file => [file, existsSync(resolve(file)) ? sha256(readFileSync(resolve(file))) : null])),
+  missingSourceFiles: sourceFiles.filter(file => !existsSync(resolve(file))),
+  optionalSourceFiles,
+}
+const missingRequiredSources = metadata.missingSourceFiles.filter(file => !optionalSourceFiles.includes(file))
+if (missingRequiredSources.length) throw Error('Missing required QA source snapshots: ' + missingRequiredSources.join(', '))
+
+async function bounded(operation, milliseconds, label) {
+  let timer
+  try {
+    return await Promise.race([operation, new Promise((_, reject) => {
+      timer = setTimeout(() => reject(Error(label + ' timed out after ' + milliseconds + 'ms')), milliseconds)
+    })])
+  } finally { clearTimeout(timer) }
+}
+
 async function audit() {
   const browser = await chromium.launch({
     headless: true,
@@ -33,8 +66,99 @@ async function audit() {
   const results = []
   const failures = []
   const network = []
+  const events = []
+  const diagnostics = []
+  const interruptions = []
+  let activePage = null, activeMode = null, activeStage = 'browser-launched'
+  let interrupted = false, handlingSignal = false
+  metadata.browserVersion = browser.version()
+
+  function checkpoint(status = 'running', final = false) {
+    const target = resolve(output, final ? 'results.json' : 'checkpoint.json')
+    const temporary = target + '.tmp'
+    writeFileSync(temporary, JSON.stringify({ metadata, status, activeMode, activeStage, results, failures, network, events, diagnostics, interruptions }, null, 2))
+    renameSync(temporary, target)
+  }
+  function record(type, details = {}) {
+    const event = { at: new Date().toISOString(), mode: activeMode, stage: activeStage, type, ...details }
+    events.push(event)
+    console.log(JSON.stringify(event))
+    checkpoint(interrupted ? 'interrupted' : 'running')
+  }
+  async function diagnose(reason) {
+    const diagnostic = { at: new Date().toISOString(), reason, mode: activeMode, stage: activeStage }
+    diagnostics.push(diagnostic)
+    if (!activePage || activePage.isClosed()) {
+      diagnostic.pageClosed = true
+      return
+    }
+    diagnostic.url = activePage.url()
+    try {
+      diagnostic.state = await bounded(activePage.evaluate(() => {
+        const rect = element => {
+          const box = element.getBoundingClientRect()
+          return { x: box.x, y: box.y, width: box.width, height: box.height, right: box.right, bottom: box.bottom }
+        }
+        const commerce = document.querySelector('.guided-commerce'), shell = document.querySelector('.playable-shell')
+        const canvas = document.querySelector('canvas'), gl = canvas?.getContext('webgl2')
+        const hidden = []
+        for (let node = canvas; node; node = node.parentElement) {
+          const style = getComputedStyle(node)
+          if (style.display === 'none' || style.visibility !== 'visible' || Number(style.opacity) === 0) hidden.push(node.tagName + '.' + node.className)
+        }
+        // Only product state is inspected. Never copy input values, customer
+        // details, payment tokens, or the raw session-storage draft into QA logs.
+        return {
+          scene: commerce?.getAttribute('data-scene'), liveWorld: commerce?.getAttribute('data-live-world'), qa: commerce?.getAttribute('data-qa'),
+          worldScene: shell?.getAttribute('data-world-scene'), viewport: { width: innerWidth, height: innerHeight, scrollWidth: document.documentElement.scrollWidth },
+          overlays: [...document.querySelectorAll('.guided-store-menu-panel,.guided-store-cart-panel,.guided-overlay-dismiss')].map(element => ({ className: element.className, rect: rect(element) })),
+          plates: [...document.querySelectorAll('.bagelito-3d-blue-sign,.schmear-3d-sign')].map(element => ({ label: element.textContent, rect: rect(element) })),
+          productCounters: [...document.querySelectorAll('.bagel-live-summary>b,.guided-order-counter>b,.guided-store-cart-button>span')].map(element => element.textContent),
+          canvas: canvas ? { rect: rect(canvas), hidden, webgl: Boolean(gl), lost: gl?.isContextLost(), bufferWidth: gl?.drawingBufferWidth, bufferHeight: gl?.drawingBufferHeight } : null,
+        }
+      }), 5000, 'Read-only diagnostic state')
+    } catch (error) { diagnostic.stateError = String(error) }
+    if (!interrupted) {
+      try {
+        diagnostic.capture = activeMode + '-diagnostic-' + diagnostics.length + '.png'
+        const path = resolve(output, diagnostic.capture)
+        await activePage.screenshot({ path, animations: 'disabled', timeout: 10000 })
+        diagnostic.captureSHA256 = sha256(readFileSync(path))
+      } catch (error) { diagnostic.captureError = String(error) }
+    }
+    checkpoint(interrupted ? 'interrupted' : 'running')
+  }
+  async function onSignal(signal) {
+    if (handlingSignal) return
+    handlingSignal = true
+    interrupted = true
+    process.exitCode = signal === 'SIGINT' ? 130 : 143
+    interruptions.push({ signal, at: new Date().toISOString(), mode: activeMode, stage: activeStage })
+    record('interrupted', { signal })
+    // Save the durable checkpoint before closing our own browser. An intentional
+    // stop is recorded separately from a failed assertion or application error.
+    const stop = setTimeout(() => {
+      metadata.finishedAt = new Date().toISOString()
+      checkpoint('interrupted', true)
+      process.exit(signal === 'SIGINT' ? 130 : 143)
+    }, 8000)
+    stop.unref()
+    await Promise.race([diagnose('signal-' + signal), new Promise(done => setTimeout(done, 2500))])
+    await browser.close().catch(() => {})
+    clearTimeout(stop)
+    process.exitCode = signal === 'SIGINT' ? 130 : 143
+  }
+  const terminate = () => { void onSignal('SIGTERM') }
+  const interrupt = () => { void onSignal('SIGINT') }
+  process.once('SIGTERM', terminate)
+  process.once('SIGINT', interrupt)
+  checkpoint()
   try {
     for (const mode of modes) {
+      const failuresBeforeMode = failures.length
+      activeMode = mode.name
+      activeStage = 'context-setup'
+      record('mode-start', { viewport: mode.viewport })
       const context = await browser.newContext({ viewport: mode.viewport, deviceScaleFactor: 1, serviceWorkers: 'block' })
       const traffic = { mode: mode.name, reads: [], fixtureReads: 0, blocked: [] }
       network.push(traffic)
@@ -57,10 +181,23 @@ async function audit() {
         return route.abort('blockedbyclient')
       })
       const page = await context.newPage()
+      activePage = page
       page.setDefaultTimeout(45000)
-      page.on('pageerror', (err) => failures.push(mode.name + ': ' + err.message))
+      page.on('pageerror', (err) => { failures.push(mode.name + ': ' + err.message); record('page-error', { message: err.message }) })
       page.on('console', (event) => {
         if (event.type() === 'error') failures.push(mode.name + ': ' + event.text())
+        if (event.type() === 'debug' && event.text().startsWith('BAGELITO_QA_UI ')) {
+          try { record('ui-event', JSON.parse(event.text().slice('BAGELITO_QA_UI '.length))) } catch {}
+        }
+      })
+      page.on('framenavigated', frame => { if (frame === page.mainFrame()) record('navigation', { url: frame.url() }) })
+      await page.addInitScript(() => {
+        for (const type of ['pointerdown', 'pointerup', 'click', 'keydown']) document.addEventListener(type, event => {
+          if (type === 'keydown' && !['Enter', ' ', 'Escape'].includes(event.key)) return
+          const target = event.target instanceof Element ? event.target.closest('button,[role="button"],a') : null
+          if (!target) return
+          console.debug('BAGELITO_QA_UI ' + JSON.stringify({ event: type, pointerType: event.pointerType || null, key: type === 'keydown' ? event.key : null, tag: target.tagName, className: target.className, ariaLabel: target.getAttribute('aria-label') }))
+        }, { capture: true })
       })
       const config = await page.request.get(new URL('/api/payments/culqi/config', baseURL).href, { maxRedirects: 0 })
       assert.equal(config.status(), 200)
@@ -68,8 +205,11 @@ async function audit() {
       for (const key of ['enabled', 'configured', 'intakeEnabled']) assert.equal(payment[key], false, key + ' must remain disabled')
       assert.equal(payment.mode, 'disabled')
       assert.equal(payment.visualQaAllowed, true, 'The loopback server must explicitly enable visual QA')
+      record('config-verified', { mode: payment.mode, enabled: payment.enabled, configured: payment.configured, intakeEnabled: payment.intakeEnabled, visualQaAllowed: payment.visualQaAllowed })
 
       async function visit() {
+        activeStage = 'visit'
+        record('journey-start')
         const targetOrigin = new URL(base).origin
         if (!['localhost', '127.0.0.1', '[::1]'].includes(new URL(base).hostname)) {
           throw Error('Starting a fresh product journey is restricted to a loopback QA origin.')
@@ -91,8 +231,11 @@ async function audit() {
         await page.locator('[data-scene="entrance"]').waitFor()
         const qaEnabled = await page.locator('[data-qa="true"]').count()
         if (!qaEnabled) throw Error('Visual QA is not enabled. Do not use payment bypass on production.')
+        record('journey-ready')
       }
       async function scene(key, name) {
+        activeStage = 'scene-' + name
+        record('scene-start', { scene: key, name })
         await page.locator('[data-scene="' + key + '"]').waitFor()
         await page.waitForFunction(expected => document.querySelector('.playable-shell')?.getAttribute('data-world-scene') === expected, key)
         if (['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears'].includes(key)) {
@@ -123,8 +266,11 @@ async function audit() {
         }))
         if (brokenImages.length) failures.push(mode.name + '/' + name + ': broken images ' + brokenImages.join(', '))
         if (widths.document > widths.viewport + 2) failures.push(mode.name + '/' + name + ': overflow')
-        await page.screenshot({ path: resolve(output, mode.name + '-' + name + '.png'), animations:'disabled' })
-        results.push({ mode: mode.name, scene: name, pass: !brokenImages.length && widths.document <= widths.viewport + 2 })
+        const capture = mode.name + '-' + name + '.png'
+        const path = resolve(output, capture)
+        await page.screenshot({ path, animations:'disabled' })
+        results.push({ mode: mode.name, scene: name, pass: !brokenImages.length && widths.document <= widths.viewport + 2, capture, captureSHA256: sha256(readFileSync(path)) })
+        record('scene-complete', { scene: key, name, completedScenes: results.length })
       }
 
       await visit()
@@ -236,6 +382,7 @@ async function audit() {
       if (!rawDraft || rawDraft.includes('customerName') || rawDraft.includes('email') || rawDraft.includes('token')) {
         failures.push(mode.name + ': product draft storage is missing or contains sensitive details')
       }
+      record('draft-reload-inspected', { draftPresent: Boolean(rawDraft), counter: await page.locator('.bagel-live-summary>b').textContent() })
 
       const orderHolderText = await page.locator('.guided-store-cart-button>span').textContent()
       if (orderHolderText !== 'Tu pedido (6)') {
@@ -320,18 +467,31 @@ async function audit() {
       assert.equal(traffic.fixtureReads > 0, true, 'The live world must load the pinned HDR fixture')
       assert.deepEqual(traffic.blocked, [], 'No unrelated external request or write is allowed')
       assert.deepEqual(traffic.reads.filter(read => read.status >= 400), [], 'All local resources must load')
+      record('mode-complete', { completedScenes: results.filter(result => result.mode === mode.name).length, localReads: traffic.reads.length, fixtureReads: traffic.fixtureReads, blocked: traffic.blocked.length })
+      if (failures.length > failuresBeforeMode) await diagnose('mode-assertion-failures')
       await context.close()
+      activePage = null
     }
   } catch (error) {
-    failures.push(String(error.stack || error))
+    if (interrupted) record('interrupted-operation', { message: String(error) })
+    else {
+      failures.push(String(error.stack || error))
+      await diagnose('operation-failure')
+    }
   } finally {
-    await browser.close()
-    writeFileSync(resolve(output, 'results.json'), JSON.stringify({ results, failures, network }, null, 2))
+    await browser.close().catch(() => {})
+    metadata.finishedAt = new Date().toISOString()
+    checkpoint(interrupted ? 'interrupted' : failures.length ? 'failed' : 'passed', true)
+    process.removeListener('SIGTERM', terminate)
+    process.removeListener('SIGINT', interrupt)
   }
   console.log(results.length + ' scene checks; ' + failures.length + ' failures.')
-  if (failures.length) {
+  if (failures.length && !interrupted) {
     console.error(failures.join('\n'))
     process.exitCode = 1
   }
 }
-audit().catch((err) => { console.error(err); process.exitCode = 1 })
+if (process.env.QA_PREFLIGHT_ONLY === '1') {
+  writeFileSync(resolve(output, 'metadata-preflight.json'), JSON.stringify({ status: 'preflight-passed', browserExecuted: false, metadata }, null, 2))
+  console.log('Metadata preflight PASS; no browser launched; missing optional snapshots: ' + (metadata.missingSourceFiles.join(', ') || 'none'))
+} else audit().catch((err) => { console.error(err); process.exitCode = 1 })

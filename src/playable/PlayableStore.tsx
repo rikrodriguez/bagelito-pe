@@ -1,10 +1,11 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, RoundedBox, useEnvironment, useTexture } from '@react-three/drei'
-import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Component, memo, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { BAGEL_SHOWCASE_ORDER, GuidedCommerce as GoldenGuidedCommerce } from './GuidedCommerce'
 import { StoreArchitectureVisual } from './StoreArchitectureVisual'
+import { createMovementInput, type MovementInput } from './movement-input'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -80,6 +81,12 @@ class Store3DErrorBoundary extends Component<{children:ReactNode;onRecover:()=>v
   }
 }
 
+// The contact shadow is a finite bake. Player telemetry re-renders the store
+// every eight frames; memoization keeps Drei's bake counter from restarting.
+const StoreContactShadows = memo(function StoreContactShadows(){
+  return <ContactShadows frames={8} position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
+})
+
 export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guided'|'explore' } = {}) {
   const [ready, setReady] = useState(false)
   const [name, setName] = useState<string | null>(null)
@@ -101,7 +108,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   const [schmearSize, setSchmearSize] = useState(120)
   const [bagels, setBagels] = useState<Record<string,number>>({})
   const [schmears, setSchmears] = useState<Record<string,number>>({})
-  const [move, setMove] = useState<Move>({forward:false,backward:false,left:false,right:false,run:false})
+  const movementInput=useMemo(()=>createMovementInput(),[])
   const look = useRef({yaw:0,pitch:-.04})
 
   useEffect(() => {
@@ -122,7 +129,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     if(experienceMode!=='explore' || introGuide!==null || category!==null){
       // A cinematic camera owns movement during the guided tour.
       // Never carry a held key into free roaming when the tour finishes.
-      setMove({forward:false,backward:false,left:false,right:false,run:false})
+      movementInput.reset(performance.now())
       return
     }
     const map:Record<string,keyof Move> = {
@@ -138,21 +145,26 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       if(value && e.target instanceof HTMLElement
         && e.target.closest('input,textarea,select,[contenteditable="true"]')) return
       if(value)e.preventDefault()
-      setMove(v=>({...v,[key]:value}))
+      movementInput.set('keyboard:'+e.code,key,value,performance.now())
     }
     const down=apply(true), up=apply(false)
-    const release=()=>setMove({forward:false,backward:false,left:false,right:false,run:false})
+    const release=()=>movementInput.reset(performance.now())
     window.addEventListener('keydown',down,{passive:false})
     window.addEventListener('keyup',up,{passive:false})
     window.addEventListener('blur',release)
     document.addEventListener('visibilitychange',release)
     return()=>{
+      release()
       window.removeEventListener('keydown',down)
       window.removeEventListener('keyup',up)
       window.removeEventListener('blur',release)
       document.removeEventListener('visibilitychange',release)
     }
-  },[experienceMode,introGuide,category])
+  },[experienceMode,introGuide,category,movementInput])
+
+  const onPadMove=useCallback((key:keyof Move,pressed:boolean)=>{
+    movementInput.set('pad:'+key,key,pressed,performance.now())
+  },[movementInput])
 
   const selectedCombo = combos.find(x=>x.id===comboId) ?? null
   const bagelTarget = category==='packs' ? packQty : selectedCombo?.bagels ?? 0
@@ -243,8 +255,8 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <hemisphereLight args={['#fff4df','#8e8273',1.35]}/>
       <directionalLight castShadow position={[4,9,7]} color="#fff0d4" intensity={2.3} shadow-mapSize={[1024,1024]}/>
       <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0||!welcomeDismissed||experienceMode==='guided'} tourNode={introGuide}/>
-      <CameraController focusEntrance={experienceMode==='explore'&&!welcomeDismissed} move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
-      <ContactShadows frames={8} position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
+      <CameraController focusEntrance={experienceMode==='explore'&&!welcomeDismissed} movementInput={movementInput} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
+      <StoreContactShadows/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
     </Store3DErrorBoundary></div>}
@@ -291,7 +303,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       </div>
     </div>}
 
-    {experienceMode==='explore'&&!guideNode&&<MobilePad move={move} setMove={setMove}/>}
+    {experienceMode==='explore'&&!guideNode&&<MobilePad onMove={onPadMove}/>}
     {experienceMode==='explore'&&!guideNode&&<div className="playable-help interactive-ui"><b>WASD</b> caminar · <b>arrastra</b> para mirar · acércate para interactuar</div>}
 </main>
 }
@@ -310,10 +322,10 @@ function canWalkAt(x:number,z:number){
   )
 }
 
-function CameraController({move,look,guidedNode,onPosition,focusEntrance}:{focusEntrance:boolean;move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
+function CameraController({movementInput,look,guidedNode,onPosition,focusEntrance}:{focusEntrance:boolean;movementInput:MovementInput;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
   const {camera,size}=useThree()
   const pos=useRef(new THREE.Vector3(0,2.75,8.5))
-  const tick=useRef(0)
+  const publishedPosition=useRef({x:Infinity,z:Infinity})
   const wasGuided=useRef(false)
   const f=useMemo(()=>new THREE.Vector3(),[])
   const r=useMemo(()=>new THREE.Vector3(),[])
@@ -326,6 +338,7 @@ function CameraController({move,look,guidedNode,onPosition,focusEntrance}:{focus
   useFrame((_,delta)=>{
     if(guidedNode){
       wasGuided.current=true
+      movementInput.reset(performance.now())
       const portrait=size.width<size.height
       const node=portrait&&focusEntrance&&guidedNode==='entry'
         ? PORTRAIT_ENTRY_CAMERA
@@ -364,25 +377,32 @@ function CameraController({move,look,guidedNode,onPosition,focusEntrance}:{focus
         look.current.pitch=THREE.MathUtils.clamp(bearing.x,-.62,.42)
         wasGuided.current=false
       }
-      const speed=(move.run?4:2.45)*Math.min(delta,.05)
       f.set(-Math.sin(look.current.yaw),0,-Math.cos(look.current.yaw))
       r.set(-f.z,0,f.x) // positive strafe really moves right
-      v.set(0,0,0)
-      if(move.forward)v.add(f);if(move.backward)v.sub(f);if(move.right)v.add(r);if(move.left)v.sub(r)
-      if(v.lengthSq()){
-        v.normalize().multiplyScalar(speed)
-        const nextX=THREE.MathUtils.clamp(pos.current.x+v.x,-7.15,7.15)
-        const nextZ=THREE.MathUtils.clamp(pos.current.z+v.z,-8.0,21.0)
-        // Separate axes so walking diagonally slides along the glass counter
-        // rather than clipping through it or sticking against the corner.
-        if(canWalkAt(nextX,pos.current.z))pos.current.x=nextX
-        if(canWalkAt(pos.current.x,nextZ))pos.current.z=nextZ
+      // A press can begin and end between slow frames. Consume its actual
+      // elapsed interval once, with the same collision checks at <=50ms steps.
+      for(const slice of movementInput.consume(performance.now())){
+        let remaining=slice.seconds
+        while(remaining>0){
+          const stepSeconds=Math.min(remaining,.05)
+          remaining-=stepSeconds
+          v.copy(f).multiplyScalar(slice.forward).addScaledVector(r,slice.right)
+          v.multiplyScalar((slice.run?4:2.45)*stepSeconds)
+          const nextX=THREE.MathUtils.clamp(pos.current.x+v.x,-7.15,7.15)
+          const nextZ=THREE.MathUtils.clamp(pos.current.z+v.z,-8.0,21.0)
+          // Separate axes preserve sliding along the glass instead of tunneling.
+          if(canWalkAt(nextX,pos.current.z))pos.current.x=nextX
+          if(canWalkAt(pos.current.x,nextZ))pos.current.z=nextZ
+        }
       }
       camera.position.copy(pos.current)
       camera.rotation.order='YXZ'
       camera.rotation.set(look.current.pitch,look.current.yaw,0)
     }
-    if(++tick.current%8===0)onPosition(new THREE.Vector3(camera.position.x,0,camera.position.z))
+    if(Math.abs(camera.position.x-publishedPosition.current.x)>.001||Math.abs(camera.position.z-publishedPosition.current.z)>.001){
+      publishedPosition.current={x:camera.position.x,z:camera.position.z}
+      onPosition(new THREE.Vector3(camera.position.x,0,camera.position.z))
+    }
   })
   return null
 }
@@ -889,8 +909,8 @@ function MovingNPC({from,to,shirt,backpack,bag,phase}:{from:V3;to:V3;shirt:strin
   </group>
 }
 
-function MobilePad({move,setMove}:{move:Move;setMove:React.Dispatch<React.SetStateAction<Move>>}){
-  const set=(k:keyof Move,v:boolean)=>setMove(prev=>({...prev,[k]:v}))
+function MobilePad({onMove}:{onMove:(key:keyof Move,pressed:boolean)=>void}){
+  const set=(k:keyof Move,v:boolean)=>onMove(k,v)
   const bind=(k:keyof Move)=>({onPointerDown:()=>set(k,true),onPointerUp:()=>set(k,false),onPointerLeave:()=>set(k,false),onPointerCancel:()=>set(k,false)})
   return <div className="mobile-pad interactive-ui"><button {...bind('forward')}>▲</button><button {...bind('left')}>◀</button><button {...bind('backward')}>▼</button><button {...bind('right')}>▶</button></div>
 }

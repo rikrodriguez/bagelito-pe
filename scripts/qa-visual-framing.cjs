@@ -18,7 +18,7 @@ assert.ok(process.env.QA_HDR_FIXTURE_PATH,'Provide the unchanged pinned HDR fixt
 const hdr=readFileSync(process.env.QA_HDR_FIXTURE_PATH);
 assert.equal(hash(hdr),'a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb');
 const hdrURL='https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/lebombo_1k.hdr';
-const files=['scripts/qa-visual-framing.cjs','src/playable/PlayableStore.tsx','src/playable/StoreArchitectureVisual.tsx','src/playable/GuidedCommerce.tsx','src/playable/playable.css','src/playable/guided-commerce.css','src/routes/index.tsx','vercel.json'];
+const files=['scripts/qa-visual-framing.cjs','src/playable/PlayableStore.tsx', 'src/playable/movement-input.ts','src/playable/StoreArchitectureVisual.tsx','src/playable/GuidedCommerce.tsx','src/playable/playable.css','src/playable/guided-commerce.css','src/routes/index.tsx','vercel.json'];
 const sourceHashes=()=>Object.fromEntries(files.map(p=>[p,hash(readFileSync(resolve(root,p)))]));
 const report={kind:'real-WebGL-browser-captures-WIP-no-deployment',scope:entryOnly?'entry-only; purchase scenes not executed':'entry-and-purchase-scenes',createdAt:new Date().toISOString(),codeSHA:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),gitStatus:execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}),sourceFilesSHA256:sourceHashes(),fixtureSHA256:hash(hdr),results:[],failures:[],network:[]};
 async function live(page,scene){
