@@ -20,7 +20,14 @@ const originalMode = process.env.QA_DRIVER_TEST_ORIGINAL === 'true'
 const source = originalMode ? original : current
 const currentGuardTest = (name, run) => test(name, {skip: originalMode ? 'This guard does not exist in the historical baseline' : false}, run)
 function load(overrides = {}, chromium = {}) {
-  const cleared = []
+  const cleared = [], storageEvents = [], storage = new Map()
+  let phase = 'old-document'
+  const storageAPI = {
+    getItem(key) {const value = storage.get(key) ?? null; storageEvents.push({phase, operation: 'get', key, value}); return value},
+    setItem(key, value) {storage.set(key, String(value)); storageEvents.push({phase, operation: 'set', key, value: String(value)})},
+    removeItem(key) {cleared.push(key); storage.delete(key); storageEvents.push({phase, operation: 'remove', key})},
+  }
+  const location = {origin: 'http://127.0.0.1:3194'}
   const env = {BASE_URL: 'http://127.0.0.1:3194', QA_OUTPUT: resolve(outputRoot, 'helper'), QA_HDR_FIXTURE_PATH: fixturePath, ...overrides}
   const context = vm.createContext({
     require(name) {
@@ -30,33 +37,48 @@ function load(overrides = {}, chromium = {}) {
     },
     process: {env, execPath: process.execPath}, __dirname: resolve(root, 'scripts'),
     console: {log() {}, error() {}}, URL, Buffer, setTimeout, clearTimeout,
-    sessionStorage: {removeItem(key) {cleared.push(key)}},
+    sessionStorage: storageAPI, window: {location, sessionStorage: storageAPI},
   })
   vm.runInContext(source.slice(0, source.lastIndexOf('audit().catch')), context)
-  return {freshExplore: vm.runInContext('freshExplore', context), isolateRequests: vm.runInContext('typeof isolateRequests === "function" ? isolateRequests : undefined', context), audit: vm.runInContext('audit', context), cleared}
+  return {freshExplore: vm.runInContext('freshExplore', context), isolateRequests: vm.runInContext('typeof isolateRequests === "function" ? isolateRequests : undefined', context), audit: vm.runInContext('audit', context), cleared, storage, storageEvents, storageAPI, setPhase: value => {phase = value}, navigate: url => {location.origin = new URL(url).origin}}
 }
-function page({status = 200, reads = [], origin = 'http://127.0.0.1:3194'} = {}) {
-  const traffic = {reads: []}, visits = []
+function page({status = 200, reads = [], origin = 'http://127.0.0.1:3194', driver, latePersist = false} = {}) {
+  const traffic = {reads: []}, visits = [], initScripts = []
+  let mode, target = origin + '/playable'
+  async function goto(url, options) {
+    visits.push({url, options}); traffic.reads.push(...reads); target = url
+    if (driver) {
+      if (latePersist) {
+        driver.setPhase('old-document-late-effect')
+        driver.storageAPI.setItem('bagelito.guided.product-draft.v1', 'late-product-draft')
+        latePersist = false
+      }
+      driver.navigate(url); driver.setPhase('new-document-init')
+      for (const script of initScripts) await script.run(script.argument)
+      driver.setPhase('react-mount')
+      mode = driver.storageAPI.getItem('bagelito.guided.product-draft.v1') ? 'guided' : 'explore'
+    }
+    return {status: () => status}
+  }
   return {
-    traffic, visits,
-    page: {url: () => origin + '/playable', evaluate: async fn => fn(), goto: async (url, options) => {
-      visits.push({url, options}); traffic.reads.push(...reads); return {status: () => status}
-    }},
+    traffic, visits, mode: () => mode,
+    page: {url: () => target, evaluate: async (fn, argument) => fn(argument), goto, reload: () => goto(target, {waitUntil: 'domcontentloaded'}), addInitScript: async (run, argument) => {initScripts.push({run, argument})}},
   }
 }
 test('A healthy fresh journey resets only the in-tab product draft and keeps the reload', async () => {
-  const driver = load(), fake = page({reads: [{status: 200, url: 'http://127.0.0.1:3194/assets/store.js'}]})
+  const driver = load(), fake = page({driver, reads: [{status: 200, url: 'http://127.0.0.1:3194/assets/store.js'}]})
   await driver.freshExplore(fake.page, fake.traffic)
-  assert.deepEqual(driver.cleared, ['bagelito.guided.product-draft.v1'])
+  assert.deepEqual(driver.cleared.filter(key => key !== 'bagelito.qa.world.fresh-explore.once'), ['bagelito.guided.product-draft.v1'])
+  assert.equal(driver.storage.has('bagelito.qa.world.fresh-explore.once'), false)
   assert.equal(fake.visits[0].url, 'http://127.0.0.1:3194/playable')
   assert.equal(fake.visits[0].options.waitUntil, 'domcontentloaded')
 })
 test('A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup', async () => {
-  const driver = load(), fake = page({reads: [{status: 500, url: 'http://127.0.0.1:3194/assets/retired-chunk.js'}]})
+  const driver = load(), fake = page({driver, reads: [{status: 500, url: 'http://127.0.0.1:3194/assets/retired-chunk.js'}]})
   await assert.rejects(driver.freshExplore(fake.page, fake.traffic), /Fresh exploration cannot mount while local resources return HTTP errors/)
 })
 test('A failed document is reported as an HTTP setup failure', async () => {
-  const driver = load(), fake = page({status: 500})
+  const driver = load(), fake = page({driver, status: 500})
   await assert.rejects(driver.freshExplore(fake.page, fake.traffic), /Fresh exploration must return an HTTP 200 document/)
 })
 test('A non-loopback target is refused before any browser launch', () => {
@@ -159,4 +181,23 @@ currentGuardTest('The outer finally writes an explicit result even if browser la
   const report = JSON.parse(fs.readFileSync(resolve(output, 'tour-results.json')))
   assert.equal(report.results.length, 0)
   assert.match(report.failures[0], /AUDIT_STOP: Error: Deliberate fake browser launch failure/)
+})
+
+// This models a React persistence effect that runs after the old-document reset.
+test('A late old-document draft write cannot restore guided mode in the new journey', async () => {
+  const driver = load(), fake = page({driver, latePersist: true})
+  await driver.freshExplore(fake.page, fake.traffic)
+  assert.equal(fake.mode(), 'explore', 'Storage timeline: ' + JSON.stringify(driver.storageEvents))
+  const written = driver.storageEvents.findIndex(event => event.phase === 'old-document-late-effect' && event.operation === 'set')
+  const removed = driver.storageEvents.findIndex(event => event.phase === 'new-document-init' && event.operation === 'remove' && event.key === 'bagelito.guided.product-draft.v1')
+  const read = driver.storageEvents.findIndex(event => event.phase === 'react-mount' && event.operation === 'get' && event.key === 'bagelito.guided.product-draft.v1')
+  assert.ok(written >= 0 && written < removed && removed < read)
+})
+test('A later reload without the one-shot marker preserves the real product draft', async () => {
+  const driver = load(), fake = page({driver})
+  await driver.freshExplore(fake.page, fake.traffic)
+  driver.storageAPI.setItem('bagelito.guided.product-draft.v1', 'product-draft-to-restore')
+  await fake.page.reload()
+  assert.equal(fake.mode(), 'guided')
+  assert.equal(driver.storage.get('bagelito.guided.product-draft.v1'), 'product-draft-to-restore')
 })

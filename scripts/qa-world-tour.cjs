@@ -22,10 +22,24 @@ const hdrURL = 'https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf7932
 // The approved reference is now used only for its bounded wall-logo/product
 // crops. Verify exact bytes and UV bounds, rather than banning its GET alone.
 execFileSync(process.execPath, [resolve(__dirname,'qa-visual-contract.cjs')], {stdio:'inherit'})
+const freshExplorePages = new WeakSet()
+const freshExploreResetKey = 'bagelito.qa.world.fresh-explore.once'
 async function freshExplore(page, traffic) {
+  if (!freshExplorePages.has(page)) {
+    await page.addInitScript(({origin, resetKey, draftKey}) => {
+      if (window.location.origin !== origin) return
+      if (window.sessionStorage.getItem(resetKey) === 'pending') {
+        window.sessionStorage.removeItem(resetKey)
+        window.sessionStorage.removeItem(draftKey)
+      }
+    }, {origin: baseURL.origin, resetKey: freshExploreResetKey, draftKey: 'bagelito.guided.product-draft.v1'})
+    freshExplorePages.add(page)
+  }
   const firstRead = traffic.reads.length
   if (new URL(page.url()).origin === new URL(base).origin) {
-    await page.evaluate(() => sessionStorage.removeItem('bagelito.guided.product-draft.v1'))
+    // The old document can still persist a React draft after this evaluation.
+    // Consume this marker before React boots in the next document instead.
+    await page.evaluate(key => window.sessionStorage.setItem(key, 'pending'), freshExploreResetKey)
   }
   const response = await page.goto(base + '/playable', {waitUntil:'domcontentloaded'})
   assert.equal(response?.status(), 200, 'Fresh exploration must return an HTTP 200 document')

@@ -356,6 +356,9 @@
 .store-entry button:focus-visible{outline:3px solid #004aad;outline-offset:4px}
 .playable-shell:has(.store-entry) .playable-help,.playable-shell:has(.store-entry) .mobile-pad{display:none}
 @media(max-width:760px){.store-entry{top:34%;width:calc(100% - 24px)}.store-entry h1{font-size:27px;margin-bottom:14px}.store-entry-categories{gap:7px}.store-entry-categories button{padding:9px 7px 12px;border-radius:14px}.store-entry-categories img{height:61px}.store-entry-categories strong{font-size:20px}.store-entry-categories span{font-size:10px}.store-entry-actions{gap:5px}.store-entry-actions button{padding:8px 11px;font-size:11px}.playable-top .status-pill{display:none}}
+/* The header passes camera gestures through; its category button must still
+   receive clicks in free exploration. Entry has its own scoped rule below. */
+.playable-shell:not(.guided-mode) .brand-pill{pointer-events:auto}
 .playable-shell:has(.store-entry) .playable-top{opacity:1;pointer-events:none!important}
 .playable-shell:has(.store-entry) .brand-pill{min-width:48px;width:48px;height:48px;border-radius:50%;position:relative;pointer-events:auto}
 .playable-shell:has(.store-entry) .brand-pill img{display:none}
