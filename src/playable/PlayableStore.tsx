@@ -1,9 +1,10 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@react-three/drei'
-import { Component, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { BAGEL_SHOWCASE_ORDER, GuidedCommerce as GoldenGuidedCommerce } from './GuidedCommerce'
+import { StoreArchitectureVisual } from './StoreArchitectureVisual'
 import './playable.css'
 
 const BLUE = '#004aad'
@@ -18,9 +19,10 @@ type Step = 'explore' | 'choose-pack' | 'choose-combo' | 'choose-schmear-size' |
 type Move = { forward:boolean; backward:boolean; left:boolean; right:boolean; run:boolean }
 type PackFormat = 'grande' | 'mini'
 type V3 = [number,number,number]
-type GuideNode = 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'production' | 'cashier' | 'pickup'
+type GuideNode = 'entry' | 'totem' | 'vitrina' | 'selector' | 'bagels' | 'schmears' | 'production' | 'cashier' | 'pickup'
 
 const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vector3}> = {
+  entry:{position:new THREE.Vector3(0,2.75,8.5),lookAt:new THREE.Vector3(0,2.05,-1.8)},
   // Wide establishing shot: keeps the store readable while the chooser is open.
   // Approach the physical totem on the left — not the back wall.
   totem:{position:new THREE.Vector3(-3.70,1.72,7.78),lookAt:new THREE.Vector3(-5.35,1.42,5.95)},
@@ -81,6 +83,9 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   const [experienceMode, setExperienceMode] = useState<'guided'|'explore'>(initialMode)
   const [guidedStartCategory, setGuidedStartCategory] = useState<Category|null>(null)
   const [skipGuidedEntrance, setSkipGuidedEntrance] = useState(false)
+  const [commerceScene, setCommerceScene] = useState('selector')
+  const [visualAvailable, setVisualAvailable] = useState(true)
+  const onCommerceScene = useCallback((scene:string)=>setCommerceScene(scene),[])
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
   const [introGuide, setIntroGuide] = useState<GuideNode|null>(null)
@@ -99,6 +104,9 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     try {
       const saved = window.localStorage.getItem('bagelito_customer_name')
       if (saved) setName(saved)
+      if(window.sessionStorage.getItem('bagelito.guided.product-draft.v1')){
+        setExperienceMode('guided');setSkipGuidedEntrance(true)
+      }
     } catch {
       // Storage may be disabled in a private mobile browser. Shopping must
       // remain usable without it.
@@ -158,7 +166,9 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
   const tourIndex=introGuide ? TOUR_STOPS.findIndex(stop=>stop.node===introGuide) : -1
 
-  const guideNode:GuideNode|null = category
+  const guideNode:GuideNode|null = experienceMode==='guided'
+    ? commerceScene==='bagels' ? 'bagels' : commerceScene==='schmears' ? 'schmears' : commerceScene==='cashier' ? 'cashier' : 'entry'
+    : !welcomeDismissed && introGuide===null && category===null ? 'entry' : category
     ? step==='bagels' ? 'bagels'
       : step==='schmears' ? 'schmears'
       : step==='cashier' ? 'cashier'
@@ -198,35 +208,36 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   if(!ready)return <div className="playable-loading">Preparando Bagelito…</div>
 
   return <main className={'playable-shell'+(guideNode?' guided-mode':'')} data-tour-node={introGuide ?? 'none'} data-player-x={player.x.toFixed(2)}>
-    {experienceMode==='guided' ? <GoldenGuidedCommerce
+    {experienceMode==='guided' && <GoldenGuidedCommerce
+      liveWorld={visualAvailable}
+      onSceneChange={onCommerceScene}
       customerName={name}
       initialCategory={guidedStartCategory}
       skipEntrance={skipGuidedEntrance}
-      onExit={()=>setExperienceMode('explore')}
-    /> : <>
-    <Store3DErrorBoundary onRecover={()=>enterGuided(null)}>
+      onExit={()=>{setVisualAvailable(true);setWelcomeDismissed(true);setExperienceMode('explore')}}
+    />}
+    <>{visualAvailable&&<Store3DErrorBoundary onRecover={()=>{setVisualAvailable(false);enterGuided(null)}}>
     <Canvas
       shadows
       eventPrefix="client"
       dpr={[1,1.5]}
-      camera={{fov:56,near:.05,far:70,position:[0,1.68,7.5]}}
-      onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.12}}
+      camera={{fov:56,near:.05,far:70,position:[0,2.75,8.5]}}
+      onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.02}}
     >
       <color attach="background" args={['#f3f0e9']}/>
       <fog attach="fog" args={['#f3f0e9',24,42]}/>
-      <hemisphereLight args={['#fff8ec','#62717d',1.4]}/>
-      <directionalLight castShadow position={[4,9,7]} intensity={2.1} shadow-mapSize={[1536,1536]}/>
-      <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0} tourNode={introGuide}/>
+      <hemisphereLight args={['#fff4df','#8e8273',1.35]}/>
+      <directionalLight castShadow position={[4,9,7]} color="#fff0d4" intensity={2.3} shadow-mapSize={[1024,1024]}/>
+      <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0||!welcomeDismissed||experienceMode==='guided'} tourNode={introGuide}/>
       <CameraController move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
-      <ContactShadows position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
+      <ContactShadows frames={8} position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
-    </Store3DErrorBoundary>
-      <LookSurface look={look} disabled={Boolean(guideNode)}/>
-    </>}
+    </Store3DErrorBoundary>}</>
+      {experienceMode==='explore'&&<LookSurface look={look} disabled={Boolean(guideNode)}/>}
 
     {experienceMode==='explore'&&<header className="playable-top interactive-ui">
-      <button className="brand-pill" onClick={()=>enterGuided(null)}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
+      <button className="brand-pill" aria-label="Elegir categoría" onClick={()=>enterGuided(null)}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
       <div className="status-pill"><small>EXPLORA</small><b>BAGELITO STORE</b></div>
       <button type="button" className="tour-start-button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>
         Visita guiada 3D
@@ -235,11 +246,16 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
     {experienceMode==='explore'&&name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
-    {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<div className="waypoint-hint interactive-ui">
-      <span>¿Qué te provoca hoy?</span>
+    {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<div className="store-entry interactive-ui">
+      <h1>¿Qué te provoca hoy?</h1>
+      <div className="store-entry-categories">
+        {([{id:'packs',title:'Packs',image:'pack-6-mixed.webp'},{id:'combos',title:'Combos',image:'bagel-everything.webp'},{id:'schmears',title:'Schmears',image:'schmear-vitrina-photo.webp'}] as const).map(item=><button key={item.id} type="button" onClick={()=>enterGuided(item.id)}><span className={'category-photo category-photo-'+item.id} role="img" aria-label={item.title} data-asset-role="approved-product-photo-crop"/><strong>{item.title}</strong><span>Elegir →</span></button>)}
+      </div>
+      <div className="store-entry-actions">
       <button type="button" className="primary" onClick={()=>enterGuided(null)}>Empezar pedido</button>
       <button type="button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>Visita guiada 3D</button>
       <button type="button" onClick={()=>setWelcomeDismissed(true)}>Explorar libre</button>
+      </div>
     </div>}
 
     {experienceMode==='explore'&&tourIndex>=0&&<div className="guided-tour-panel interactive-ui" aria-label="Recorrido guiado por Bagelito">
@@ -278,8 +294,8 @@ function canWalkAt(x:number,z:number){
 }
 
 function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
-  const {camera}=useThree()
-  const pos=useRef(new THREE.Vector3(0,1.68,7.5))
+  const {camera,size}=useThree()
+  const pos=useRef(new THREE.Vector3(0,2.75,8.5))
   const tick=useRef(0)
   const wasGuided=useRef(false)
   const f=useMemo(()=>new THREE.Vector3(),[])
@@ -287,13 +303,30 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
   const v=useMemo(()=>new THREE.Vector3(),[])
   const desiredQuat=useMemo(()=>new THREE.Quaternion(),[])
   const targetCamera=useMemo(()=>new THREE.PerspectiveCamera(),[])
+  const fittedPosition=useMemo(()=>new THREE.Vector3(),[])
+  const fittedDelta=useMemo(()=>new THREE.Vector3(),[])
 
   useFrame((_,delta)=>{
     if(guidedNode){
       wasGuided.current=true
       const node=GUIDED_CAMERAS[guidedNode]
       const alpha=1-Math.exp(-delta*4.8)
-      camera.position.lerp(node.position,alpha)
+      // Fit actual world-space cases to the portrait frustum, preserving the
+      // camera target and horizontal identity of each physical tour stop.
+      const portrait=size.width<size.height
+      const perspective=camera as THREE.PerspectiveCamera
+      const fov=portrait?74:56
+      if(perspective.fov!==fov){perspective.fov=fov;perspective.updateProjectionMatrix()}
+      fittedPosition.copy(node.position)
+      const width=guidedNode==='entry'?13.2:guidedNode==='bagels'?8.2:guidedNode==='schmears'?5.3:guidedNode==='vitrina'||guidedNode==='selector'?13.2:0
+      if(width){
+        const required=width/(2*Math.tan(THREE.MathUtils.degToRad(fov/2))*(size.width/size.height))
+        fittedDelta.subVectors(node.position,node.lookAt)
+        const scale=Math.max(1,required/Math.max(.1,Math.abs(fittedDelta.z)))
+        fittedPosition.z=node.lookAt.z+fittedDelta.z*scale
+        fittedPosition.y=node.lookAt.y+fittedDelta.y*scale
+      }
+      camera.position.lerp(fittedPosition,alpha)
       targetCamera.position.copy(camera.position)
       targetCamera.up.copy(camera.up)
       targetCamera.lookAt(node.lookAt)
@@ -317,7 +350,7 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
       if(v.lengthSq()){
         v.normalize().multiplyScalar(speed)
         const nextX=THREE.MathUtils.clamp(pos.current.x+v.x,-7.15,7.15)
-        const nextZ=THREE.MathUtils.clamp(pos.current.z+v.z,-8.0,8.25)
+        const nextZ=THREE.MathUtils.clamp(pos.current.z+v.z,-8.0,21.0)
         // Separate axes so walking diagonally slides along the glass counter
         // rather than clipping through it or sticking against the corner.
         if(canWalkAt(nextX,pos.current.z))pos.current.x=nextX
@@ -344,7 +377,7 @@ function LookSurface({look,disabled}:{look:React.MutableRefObject<{yaw:number;pi
 
 function World({step,bagels,schmears,onBagel,onSchmear,touring=false,tourNode=null}:{step:Step;bagels:Record<string,number>;schmears:Record<string,number>;onBagel:(id:string)=>void;onSchmear:(id:string)=>void;touring?:boolean;tourNode?:GuideNode|null}) {
   return <group>
-    <StoreArchitecture/>
+    <StoreArchitectureVisual/>
     <Totem/>
     <MainCounter step={step} bagels={bagels} schmears={schmears} onBagel={onBagel} onSchmear={onSchmear} tourNode={tourNode}/>
     <Cashier/>
@@ -464,24 +497,31 @@ function MainCounter(props:{step:Step;bagels:Record<string,number>;schmears:Reco
   </group>
 }
 
-/** Each SKU is a separate photograph on a physical tray, not a panorama
- * stretched across one wall. Transparent product art keeps its real appearance,
- * while metal dividers, shadows, blue nameplates and parallax provide depth.
+/** Six small photographed products share each physical tray. The approved art
+ * supplies the visible flavor; simple dough rings add a shallow side profile.
+ * This is a photo/geometry approximation, not a scan of an entire bagel.
  */
 function BagelShowcaseProduct({flavorId,position}:{flavorId:string;position:V3}){
   const texture=useTexture('/images/bagel-'+flavorId+'.webp')
   texture.colorSpace=THREE.SRGBColorSpace
   return <group position={position}>
-    <mesh castShadow position={[0,-.01,-.18]}>
-      {/* All eight source WebPs are square with transparency; preserve the
-          aspect ratio so circular bagels are not stretched into ovals. */}
-      <planeGeometry args={[1.04,1.04]}/>
-      <meshBasicMaterial map={texture} transparent alphaTest={.025} side={THREE.DoubleSide} depthWrite={false} toneMapped={false}/>
-    </mesh>
-    <mesh position={[0,-.43,-.21]} rotation={[0,0,0]}>
-      <planeGeometry args={[1.2,.10]}/>
-      <meshBasicMaterial color="#c7a37f" transparent opacity={.20} depthWrite={false}/>
-    </mesh>
+    {Array.from({length:6},(_,index)=>{
+      const row=Math.floor(index/3), col=index%3
+      return <group key={index}
+        position={[(col-1)*.45,.015+row*.025,(row-.5)*.39]}
+        rotation={[0,[-.065,.035,-.025,.045,-.035,.065][index],0]}>
+        <mesh castShadow receiveShadow position={[0,.055,0]} rotation={[-Math.PI/2,0,0]} scale={[1,.93,.8]}>
+          <torusGeometry args={[.118,.039,8,20]}/>
+          <meshStandardMaterial color="#bd874e" roughness={.91}/>
+        </mesh>
+        <mesh position={[0,.105,.008]} rotation={[-1.10,0,(index%3-1)*.035]}>
+          {/* Square, alpha-bearing source art remains unchanged. Its small
+              baked-in light shadow rests against the pale horizontal liner. */}
+          <planeGeometry args={[.44,.44]}/>
+          <meshBasicMaterial map={texture} transparent alphaTest={.025} side={THREE.DoubleSide} depthWrite={false} toneMapped={false}/>
+        </mesh>
+      </group>
+    })}
   </group>
 }
 
@@ -489,10 +529,10 @@ function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Rec
   const xs=[-2.52,-.84,.84,2.52]
   return <group position={[-2.1,0,.2]}>
     <RoundedBox castShadow receiveShadow position={[0,.34,0]} args={[7.2,.68,1.92]} radius={.05}>
-      <meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/>
+      <meshStandardMaterial color="#bfc1ba" metalness={.76} roughness={.26}/>
     </RoundedBox>
 
-    {/* Eight individual porcelain-lined wells, each a real 3D location. */}
+    {/* Eight shallow metal trays, each with a horizontal porcelain liner. */}
     {BAGEL_SHOWCASE_ORDER.map((flavorId,index)=>{
       const bagel=menu.bagels.find(item=>item.id===flavorId)
       if(!bagel)return null
@@ -501,19 +541,27 @@ function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Rec
       const x=xs[col]
       const clickY=row===0?1.62:.98
       const signY=row===0?1.45:.73
-      const photoY=row===0?1.68:1.03
       const count=bagels[bagel.id]??0
       return <group key={bagel.id}>
-        <RoundedBox receiveShadow castShadow position={[x,clickY,-.15]} args={[1.57,.78,1.0]} radius={.055}>
-          <meshStandardMaterial color="#eee8df" metalness={.10} roughness={.67}/>
+        <RoundedBox receiveShadow castShadow position={[x,clickY-.20,.33]} args={[1.56,.13,1.04]} radius={.045}>
+          <meshStandardMaterial color="#adb0aa" metalness={.83} roughness={.28}/>
         </RoundedBox>
-        <mesh position={[x,clickY,-.147]}>
-          <planeGeometry args={[1.48,.69]}/>
-          <meshBasicMaterial color="#f8f4ed"/>
-        </mesh>
-        <BagelShowcaseProduct flavorId={bagel.id} position={[x,photoY,.78]}/>
-        <RoundedBox position={[x,signY,1.005]} args={[1.57,.29,.035]} radius={.035}>
-          <meshStandardMaterial color={BLUE} roughness={.43} metalness={.05}/>
+        <RoundedBox receiveShadow position={[x,clickY-.125,.33]} args={[1.45,.025,.92]} radius={.025}>
+          <meshStandardMaterial color="#f5f0e5" roughness={.39}/>
+        </RoundedBox>
+        {[-1,1].map(side=><group key={side}>
+          <mesh castShadow position={[x+side*.755,clickY-.08,.33]}>
+            <boxGeometry args={[.035,.12,1.04]}/>
+            <meshStandardMaterial color="#bec0b8" metalness={.86} roughness={.23}/>
+          </mesh>
+          <mesh castShadow position={[x,clickY-.08,.33+side*.505]}>
+            <boxGeometry args={[1.53,.12,.035]}/>
+            <meshStandardMaterial color="#bec0b8" metalness={.86} roughness={.23}/>
+          </mesh>
+        </group>)}
+        <BagelShowcaseProduct flavorId={bagel.id} position={[x,clickY-.075,.35]}/>
+        <RoundedBox position={[x,signY,1.005]} args={[1.57,.22,.035]} radius={.025}>
+          <meshStandardMaterial color="#fffaf1" roughness={.54}/>
         </RoundedBox>
         <Html transform position={[x,signY,1.03]} distanceFactor={2.5} className="bagelito-3d-blue-sign">
           <div>{bagel.name.toUpperCase()}</div>
@@ -524,23 +572,23 @@ function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Rec
     {/* Solid shelf structure and slim chrome frames create true perspective. */}
     {[-3.48,-1.68,0,1.68,3.48].map((x)=><mesh key={x} position={[x,1.27,.95]}>
       <boxGeometry args={[.045,1.75,.065]}/>
-      <meshStandardMaterial color="#72838e" metalness={.83} roughness={.2}/>
+      <meshStandardMaterial color="#a2a69b" metalness={.84} roughness={.22}/>
     </mesh>)}
     {[.71,1.32,2.12].map(y=><mesh key={y} position={[0,y,.95]}>
       <boxGeometry args={[7.05,.055,.065]}/>
-      <meshStandardMaterial color="#71828b" metalness={.8} roughness={.22}/>
+      <meshStandardMaterial color="#a2a69b" metalness={.84} roughness={.23}/>
     </mesh>)}
     <mesh position={[0,2.16,.42]} rotation={[-.4,0,0]}>
       <boxGeometry args={[7.1,.04,1.15]}/>
-      <meshPhysicalMaterial color="#effaff" transmission={.95} transparent opacity={.11} roughness={.04}/>
+      <meshPhysicalMaterial color="#fff7e7" transmission={.94} transparent opacity={.10} roughness={.06}/>
     </mesh>
     <mesh position={[0,1.31,.965]}>
       <boxGeometry args={[7.04,1.72,.024]}/>
-      <meshPhysicalMaterial color="#effaff" transmission={.95} transparent opacity={.055} roughness={.045} depthWrite={false}/>
+      <meshPhysicalMaterial color="#fff8e9" transmission={.94} transparent opacity={.045} roughness={.055} depthWrite={false}/>
     </mesh>
     <mesh position={[0,2.16,.92]}>
       <boxGeometry args={[7.07,.048,.07]}/>
-      <meshStandardMaterial color="#687d8c" metalness={.86} roughness={.19}/>
+      <meshStandardMaterial color="#a5a99d" metalness={.86} roughness={.21}/>
     </mesh>
   </group>
 }
@@ -549,22 +597,26 @@ function BagelCase({step,bagels,onBagel,inspectOnly=false}:{step:Step;bagels:Rec
  * or baked-in menu copy: each pan is an actual 3D object with its own label.
  */
 function SchmearBowl({position,color,herbs=false}:{position:V3;color:string;herbs?:boolean}){
-  return <group position={position} rotation={[.72,0,0]}>
+  return <group position={position} rotation={[.23,0,0]}>
     <mesh castShadow receiveShadow>
-      <cylinderGeometry args={[.38,.33,.19,32]}/>
-      <meshStandardMaterial color="#d4dce0" metalness={.78} roughness={.24}/>
+      <cylinderGeometry args={[.41,.34,.19,24]}/>
+      <meshStandardMaterial color="#c4c5ba" metalness={.81} roughness={.28}/>
+    </mesh>
+    <mesh rotation={[Math.PI/2,0,0]} position={[0,.097,0]}>
+      <torusGeometry args={[.395,.018,6,32]}/>
+      <meshStandardMaterial color="#e0dfd5" metalness={.86} roughness={.20}/>
     </mesh>
     <mesh position={[0,.108,0]}>
-      <cylinderGeometry args={[.345,.345,.035,32]}/>
+      <cylinderGeometry args={[.365,.365,.035,24]}/>
       <meshStandardMaterial color={color} roughness={.94}/>
     </mesh>
-    <mesh position={[0,.13,0]} scale={[1,.25,1]}>
-      <sphereGeometry args={[.315,24,14]}/>
+    <mesh position={[0,.14,0]} scale={[1,.38,1]}>
+      <sphereGeometry args={[.345,20,12]}/>
       <meshStandardMaterial color={color} roughness={.9}/>
     </mesh>
     {[.245,.16,.085].map((radius,i)=><mesh key={i}
       rotation={[Math.PI/2,0,0]}
-      position={[0,.19+i*.035,0]}>
+      position={[.012*(i-1),.22+i*.027,-.012*i]}>
       <torusGeometry args={[radius,.034-i*.004,8,32]}/>
       <meshStandardMaterial color={color} roughness={.96}/>
     </mesh>)}
@@ -586,19 +638,18 @@ function SchmearCase({step,counts,onSchmear,inspectOnly=false}:{step:Step;counts
   ]
   return <group position={[4.25,0,-.05]}>
     <RoundedBox castShadow position={[0,.34,0]} args={[4.25,.68,1.92]} radius={.05}>
-      <meshStandardMaterial color="#c3cbd0" metalness={.72} roughness={.22}/>
+      <meshStandardMaterial color="#bfc1ba" metalness={.76} roughness={.26}/>
     </RoundedBox>
-    <mesh position={[0,1.28,-.12]}>
-      <boxGeometry args={[4.08,1.80,.08]}/>
-      <meshStandardMaterial color="#f5f0e9" roughness={.72}/>
-    </mesh>
-    {/* Individual wells and whipped cream replace the flat photo surface. */}
+    {/* Five approved flavors only, each on a shallow horizontal chilled shelf. */}
     {menu.schmears.map((item,index)=>{
       const count=counts[item.id]??0
       const [x,y,z]=positions[index]
       return <group key={item.id}>
-        <RoundedBox position={[x,y,-.07]} args={[1.06,.62,.88]} radius={.065}>
-          <meshStandardMaterial color="#e3e5e4" metalness={.56} roughness={.34}/>
+        <RoundedBox receiveShadow position={[x,y-.14,.57]} args={[1.10,.10,.94]} radius={.035}>
+          <meshStandardMaterial color="#afb3a9" metalness={.80} roughness={.28}/>
+        </RoundedBox>
+        <RoundedBox receiveShadow position={[x,y-.075,.57]} args={[1.02,.025,.85]} radius={.025}>
+          <meshStandardMaterial color="#f4efe4" roughness={.40}/>
         </RoundedBox>
         <SchmearBowl position={[x,y+.05,z]} color={SCHMEAR_COLORS[index]} herbs={index===2}/>
         <RoundedBox position={[x,y-.34,1.02]} args={[1.12,.22,.035]} radius={.025}>
@@ -614,21 +665,25 @@ function SchmearCase({step,counts,onSchmear,inspectOnly=false}:{step:Step;counts
     })}
     <mesh position={[0,.76,.96]}>
       <boxGeometry args={[4.15,.05,.06]}/>
-      <meshStandardMaterial color="#6f7d86" metalness={.82}/>
+      <meshStandardMaterial color="#a2a69b" metalness={.84} roughness={.23}/>
     </mesh>
     <mesh position={[0,2.16,.96]}>
       <boxGeometry args={[4.15,.05,.06]}/>
-      <meshStandardMaterial color="#6f7d86" metalness={.82}/>
+      <meshStandardMaterial color="#a2a69b" metalness={.84} roughness={.23}/>
     </mesh>
+    {[-2.04,2.04].map(x=><mesh key={x} position={[x,1.43,.96]}>
+      <boxGeometry args={[.035,1.42,.05]}/>
+      <meshStandardMaterial color="#a2a69b" metalness={.84} roughness={.23}/>
+    </mesh>)}
     <mesh position={[0,1.28,.965]}>
       <boxGeometry args={[4.12,1.79,.024]}/>
-      <meshPhysicalMaterial color="#effaff" transmission={.95}
-        transparent opacity={.045} roughness={.04} depthWrite={false}/>
+      <meshPhysicalMaterial color="#fff8e9" transmission={.94}
+        transparent opacity={.045} roughness={.055} depthWrite={false}/>
     </mesh>
     <mesh position={[0,2.13,.46]} rotation={[-.38,0,0]}>
       <boxGeometry args={[4.16,.035,1.1]}/>
-      <meshPhysicalMaterial color="#effaff" transmission={.94}
-        transparent opacity={.11} roughness={.04}/>
+      <meshPhysicalMaterial color="#fff7e7" transmission={.94}
+        transparent opacity={.10} roughness={.06}/>
     </mesh>
   </group>
 }

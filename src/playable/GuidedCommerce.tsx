@@ -92,11 +92,13 @@ const SCHMEAR_SPOTS = [
   { left: '77%', top: '20%', width: '17%', height: '61%' },
 ] as const
 
-export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false }: {
+export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange }: {
   onExit: () => void
   customerName?: string | null
   initialCategory?: Category | null
   skipEntrance?: boolean
+  liveWorld?: boolean
+  onSceneChange?: (scene: string) => void
 }) {
   // A shopper coming from a physical 3D station enters the matching product
   // category or the totem selector, without repeating the entry scene.
@@ -139,6 +141,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const qaMode = qaRequested && paymentConfig?.visualQaAllowed === true
   const receiptDrag = useRef({ startY: 0, offset: 0 })
   const receiptPulledRef = useRef(false)
+  const sceneChangeCallback = useRef(onSceneChange)
 
   // Only product IDs and quantities are saved for a short-lived in-tab draft.
   // Never store contact details, 3DS tokens, payment data or confirmation state.
@@ -435,6 +438,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     return () => { assets.length = 0 }
   }, [scene])
 
+  useEffect(() => {
+    sceneChangeCallback.current = onSceneChange
+  }, [onSceneChange])
+
+  useEffect(() => {
+    sceneChangeCallback.current?.(scene)
+  }, [scene])
+
   function resetSelections() {
     setBagelCounts({})
     setSchmearCounts({})
@@ -643,9 +654,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     setScene('entrance')
   }
 
-  return <div className="guided-commerce" data-scene={scene} data-qa={qaMode ? 'true' : 'false'}>
-    <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />
-    {scene !== 'bagels' && scene !== 'schmears' && <img key={'master-' + scene} className="guided-scene-image" src={sceneImage} alt="" />}
+  return <div className="guided-commerce" data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined}>
+    {!liveWorld && <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />}
+    {!liveWorld && scene !== 'bagels' && scene !== 'schmears' && <img key={'master-' + scene} className="guided-scene-image" src={sceneImage} alt="" />}
     <div className="guided-scene-vignette" />
 
     <header className="guided-store-topbar">
@@ -726,17 +737,21 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
 
     {scene === 'selector' && <>
       {customerName && <div className="guided-welcome">Hola {customerName}. ¿Qué te provoca hoy?</div>}
+      <div className="guided-selector-heading">
+        <img src="/images/bagelito-wordmark.svg" alt="Bagelito" />
+        <h1>¿Qué te provoca hoy?</h1>
+      </div>
       <div className="guided-selector-hitboxes live-selector-cards">
         <button aria-label="Packs" onClick={() => chooseCategory('packs')}>
-          <img src="/images/pack-6-mixed.webp" alt="" />
+          <span className="selector-product-photo selector-product-pack" role="img" aria-label="Fotografía de un pack de bagels" data-art-medium="photograph-crop" />
           <span><b>Packs</b><small>Grandes o minis</small></span>
         </button>
         <button aria-label="Combos" onClick={() => chooseCategory('combos')}>
-          <span className="selector-combo-art"><img src="/images/bagel-everything.webp" alt="" /><i className="approved-schmear" /></span>
+          <span className="selector-product-photo selector-product-combo" role="img" aria-label="Fotografía de dos bagels con schmear" data-art-medium="photograph-crop" />
           <span><b>Combos</b><small>2 bagels + schmear</small></span>
         </button>
         <button aria-label="Schmears" onClick={() => chooseCategory('schmears')}>
-          <span className="selector-schmear-art" />
+          <span className="selector-product-photo selector-product-schmear" role="img" aria-label="Fotografía de un schmear" data-art-medium="photograph-crop" />
           <span><b>Schmears</b><small>120 g · 180 g · 240 g</small></span>
         </button>
       </div>
@@ -831,7 +846,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           })}
         </div>
       </section>
-      <div className="guided-product-frame bagel-product-frame">
+      {!liveWorld && <div className="guided-product-frame bagel-product-frame">
         <img src={sceneImage} alt="Vitrina con ocho sabores de bagels" />
         <div className="bagel-vitrina-blue-labels" aria-hidden="true">
           {BAGEL_SHOWCASE_ORDER.map((flavorId, index) => {
@@ -855,7 +870,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             {count > 0 && <i role="button" onClick={(e) => { e.stopPropagation(); removeBagel(bagel.id) }}>−</i>}
           </button>
         })}
-      </div></div>
+      </div></div>}
       <div className="guided-order-counter bagel-live-summary">
         <small>{bagelMode === 'upsell8' ? '6 + 2 GRATIS' : bagelMode === 'downsell2' ? 'PRUEBA CON 2' : category === 'combos' ? selectedCombo?.name : packFormat === 'mini' ? 'MINIS' : 'TU PACK'}</small>
         <b>{bagelTotal}/{bagelTarget}</b>
@@ -895,7 +910,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           })}
         </div>
       </section>
-      <div className="guided-product-frame schmear-product-frame"><img src={sceneImage} alt="Estación de schmears" /><div className="guided-product-hotspots schmear-hotspots">
+      {!liveWorld && <div className="guided-product-frame schmear-product-frame"><img src={sceneImage} alt="Estación de schmears" /><div className="guided-product-hotspots schmear-hotspots">
         {menu.schmears.map((item, index) => {
           const count = schmearCounts[item.id] ?? 0
           return <button
@@ -909,7 +924,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             {count > 0 && category === 'combos' && <i role="button" onClick={(e) => { e.stopPropagation(); removeSchmear(item.id) }}>−</i>}
           </button>
         })}
-      </div></div>
+      </div></div>}
       <div className="guided-order-counter">
         <small>SCHMEARS · {schmearSize} g</small>
         <b>{category === 'combos' ? schmearTotal + '/' + schmearTarget : schmearTotal ? '✓' : '0/1'}</b>

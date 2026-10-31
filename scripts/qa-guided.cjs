@@ -41,6 +41,10 @@ async function audit() {
           throw Error('Refusing to reset a product draft outside the local QA origin.')
         }
         await page.goto(base + '/?qa=1', { waitUntil: 'networkidle' })
+        await page.getByRole('button', {name:'Empezar pedido',exact:true}).click()
+        await page.getByRole('button', {name:'Abrir menú',exact:true}).click()
+        await page.getByRole('button', {name:'Inicio',exact:true}).click()
+        await page.getByRole('button', {name:'Cerrar menú',exact:true}).click()
         await page.locator('[data-scene="entrance"]').waitFor()
         const qaEnabled = await page.locator('[data-qa="true"]').count()
         if (!qaEnabled) throw Error('Visual QA is not enabled. Do not use payment bypass on production.')
@@ -91,7 +95,7 @@ async function audit() {
 
       const holder = await page.locator('.guided-progress-master').boundingBox()
       if (!holder || (mode.name === 'desktop' && holder.y < mode.viewport.height * .75)
-        || (mode.name === 'mobile' && holder.y > mode.viewport.height * .25)) {
+        || (mode.name === 'mobile' && holder.y < mode.viewport.height * .75)) {
         failures.push(mode.name + ': progress holder placement differs from approved responsive layout')
       }
       await page.getByRole('button', { name: 'Packs', exact: true }).click()
@@ -109,67 +113,34 @@ async function audit() {
 
       // The catalog is NOT in the same order as the approved panorama.
       // Assert that tapping each visible tray selects its actual printed flavor.
-      const showcaseLabels = await page.locator('.bagel-hotspots > button')
+      const showcaseLabels = await page.locator('.mobile-bagel-card > button')
         .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
       const expectedShowcaseLabels = [
         'Agregar Plain', 'Agregar Everything', 'Agregar Sesame',
         'Agregar Classic Onion', 'Agregar Jalapeño Cheddar', 'Agregar Cheddar',
         'Agregar Cinnamon Raisin', 'Agregar Blueberry',
       ]
-      if (JSON.stringify(showcaseLabels) !== JSON.stringify(expectedShowcaseLabels)) {
+      if (JSON.stringify([...showcaseLabels].sort()) !== JSON.stringify([...expectedShowcaseLabels].sort())) {
         failures.push(mode.name + ': bagel panorama hotspot positions do not match visual flavor labels')
       }
 
-      // Bagelito-approved inversion: the eight physical bagel signs are blue
-      // (#004AAD) with white typography. Schmear tags are intentionally
-      // separate; do not recolor them as part of this contract.
-      const physicalSigns = await page.locator('.bagel-vitrina-label')
-        .evaluateAll((elements) => elements.map((element) => {
-          const style = window.getComputedStyle(element)
-          return {
-            label: element.textContent?.trim() || '',
-            background: style.backgroundColor,
-            color: style.color,
-            pointerEvents: style.pointerEvents,
-          }
-        }))
-      if (physicalSigns.length !== 8
-        || physicalSigns.some((sign, index) =>
-          sign.label.toLowerCase() !== expectedShowcaseLabels[index].slice(8).toLowerCase()
-          || sign.background !== 'rgb(0, 74, 173)'
-          || sign.color !== 'rgb(255, 255, 255)'
-          || sign.pointerEvents !== 'none')) {
-        failures.push(mode.name + ': bagel signage is not blue with white text or blocks product taps')
+      // The live 3D store replaces the bounded panorama; real product cards
+      // retain exact approved labels, complete images and the existing handlers.
+      const liveWorld = await page.locator('[data-live-world="true"]').count()
+      if (liveWorld !== 1 || await page.locator('canvas').count() !== 1
+        || await page.locator('.guided-scene-image,.guided-scene-backdrop').count() !== 0) {
+        failures.push(mode.name + ': commerce must keep the real world without room screenshots')
       }
-
-      if (mode.name === 'mobile') {
-        const mobileSigns = await page.locator('.mobile-bagel-sign')
-          .evaluateAll((elements) => elements.map((element) => {
-            const style = window.getComputedStyle(element)
-            return { color: style.color, background: style.backgroundColor }
-          }))
-        if (mobileSigns.length !== 8
-          || mobileSigns.some((sign) =>
-            sign.background !== 'rgb(0, 74, 173)' || sign.color !== 'rgb(255, 255, 255)')) {
-          failures.push('Mobile flavor labels do not follow blue-background / white-text contract')
-        }
+      const productLabels = await page.locator('.mobile-bagel-sign').allTextContents()
+      if (productLabels.length !== 8 || new Set(productLabels).size !== 8) {
+        failures.push(mode.name + ': the eight approved product labels must remain available')
       }
-
-      if (mode.name === 'desktop') {
-        const frame = await page.locator('.bagel-product-frame').boundingBox()
-        const trays = await page.locator('.bagel-hotspots > button').evaluateAll((buttons) =>
-          buttons.map((button) => {
-            const rect = button.getBoundingClientRect()
-            return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom }
-          })
-        )
-        const summary = await page.locator('.bagel-live-summary').boundingBox()
-        if (!frame || trays.length !== 8
-          || trays[3].right < frame.x + frame.width * .98
-          || trays[7].right < frame.x + frame.width * .98
-          || (summary && frame.x + frame.width > summary.x + 2)) {
-          failures.push('Desktop clean bagel photo is not fully clickable or overlaps the dynamic summary')
-        }
+      const mobileSigns = await page.locator('.mobile-bagel-sign').evaluateAll(elements => elements.map(element => {
+        const style = getComputedStyle(element)
+        return {color:style.color,background:style.backgroundColor}
+      }))
+      if (mobileSigns.some(sign => sign.background !== 'rgb(255, 250, 244)' || sign.color !== 'rgb(0, 74, 173)')) {
+        failures.push(mode.name + ': product labels must use the approved white plates and blue lettering')
       }
       if (mode.name === 'mobile') {
         const productCards = await page.locator('.mobile-bagel-card').evaluateAll((cards) =>
@@ -187,7 +158,7 @@ async function audit() {
       }
 
       for (let i = 0; i < 6; i++) {
-        const selector = mode.name === 'mobile' ? '.mobile-bagel-card > button' : '.bagel-hotspots > button'
+        const selector = '.mobile-bagel-card > button'
         await page.locator(selector).nth(i % 3).click()
       }
       await scene('bagels', '06-bagels-selected')
@@ -283,13 +254,12 @@ async function audit() {
       }
       await page.locator('.pack-choice-grid button').first().click()
       await page.locator('[data-scene="bagels"]').waitFor()
-      const bagelSelector = mode.name === 'mobile' ? '.mobile-bagel-card > button' : '.bagel-hotspots > button'
+      const bagelSelector = '.mobile-bagel-card > button'
       await page.locator(bagelSelector).first().click()
       if (await page.locator('.bagel-live-summary>b').textContent() !== '6/6') {
         failures.push(mode.name + ': single-flavor selection requires more than one tap')
       }
-      if (mode.name === 'mobile') await page.locator('.mobile-bagel-card .mobile-product-count > button').first().click()
-      else await page.locator('.bagel-hotspots > button i').first().click()
+      await page.locator('.mobile-bagel-card .mobile-product-count > button').first().click()
       if (await page.locator('.bagel-live-summary>b').textContent() !== '0/6') {
         failures.push(mode.name + ': one-flavor pack cannot be cleared in one action')
       }

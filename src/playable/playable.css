@@ -339,3 +339,32 @@
   cursor:pointer;
 }
 .store-3d-fallback button:focus-visible{outline:3px solid #004aad;outline-offset:3px}
+
+/* Reference alignment: actual WebGL remains beneath bounded commerce controls. */
+.playable-shell .bagelito-3d-blue-sign>div,
+.playable-shell .schmear-3d-sign>div{background:#fffaf1;color:#004aad;border:1px solid rgba(0,74,173,.14);box-shadow:0 2px 5px rgba(40,30,12,.12)}
+.store-entry{position:absolute;z-index:40;left:50%;top:31%;transform:translateX(-50%);width:min(690px,calc(100% - 28px));text-align:center}
+.store-entry h1{margin:0 0 18px;color:#004aad;font-size:clamp(26px,3vw,40px);letter-spacing:-.04em;text-shadow:0 1px 8px #fff,0 1px 2px #fff}
+.store-entry-categories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.store-entry-categories button{display:flex;flex-direction:column;align-items:center;padding:12px 14px 14px;border:1px solid #fff;border-radius:19px;color:#004aad;background:rgba(255,252,246,.95);box-shadow:0 8px 24px #44351d26;cursor:pointer}
+.store-entry-categories img{width:100%;height:92px;object-fit:contain;mix-blend-mode:multiply}
+.store-entry-categories strong{font-size:25px;line-height:1.25;margin-top:6px}
+.store-entry-categories span{font-size:11px;margin-top:6px;font-weight:700}
+.store-entry-actions{display:flex;gap:7px;justify-content:center;margin-top:17px;flex-wrap:wrap}
+.store-entry-actions button{border:1px solid #004aad22;border-radius:999px;background:#fffaf4;color:#004aad;padding:10px 14px;min-height:40px;font-weight:750;cursor:pointer}
+.store-entry-actions .primary{background:#004aad;color:#fff}
+.store-entry button:focus-visible{outline:3px solid #004aad;outline-offset:4px}
+.playable-shell:has(.store-entry) .playable-help,.playable-shell:has(.store-entry) .mobile-pad{display:none}
+@media(max-width:760px){.store-entry{top:34%;width:calc(100% - 24px)}.store-entry h1{font-size:27px;margin-bottom:14px}.store-entry-categories{gap:7px}.store-entry-categories button{padding:9px 7px 12px;border-radius:14px}.store-entry-categories img{height:61px}.store-entry-categories strong{font-size:20px}.store-entry-categories span{font-size:10px}.store-entry-actions{gap:5px}.store-entry-actions button{padding:8px 11px;font-size:11px}.playable-top .status-pill{display:none}}
+.playable-shell:has(.store-entry) .playable-top{opacity:1;pointer-events:none!important}
+.playable-shell:has(.store-entry) .brand-pill{min-width:48px;width:48px;height:48px;border-radius:50%;position:relative;pointer-events:auto}
+.playable-shell:has(.store-entry) .brand-pill img{display:none}
+.playable-shell:has(.store-entry) .brand-pill::before{content:'☰';font-size:22px;color:#004aad}
+.playable-shell:has(.store-entry) .status-pill{display:none}
+.playable-shell:has(.store-entry) .tour-start-button{pointer-events:auto}
+.category-photo{display:block;width:100%;height:92px;background-image:url('/images/store-reference-approved.webp');background-repeat:no-repeat;border-radius:10px}
+.category-photo-packs{background-size:640% 742.03%;background-position:31.6358% 40.6321%}
+.category-photo-combos{background-size:626.9388% 742.03%;background-position:53.4469% 40.6321%}
+.category-photo-schmears{background-size:653.6170% 742.03%;background-position:76.0953% 40.6321%}
+.store-entry-categories button:nth-child(1){background:#fff3e6}.store-entry-categories button:nth-child(2){background:#dcefff}.store-entry-categories button:nth-child(3){background:#ffe6e7}
+@media(max-width:760px){.category-photo{height:61px}}
