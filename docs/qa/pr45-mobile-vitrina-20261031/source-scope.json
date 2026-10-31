@@ -52,5 +52,8 @@
   "scope": "Mobile live-world CSS plus presentation-only keyboard focus reveal. Core states/effects/business functions/callbacks and checkout are preserved by AST review. Earlier runtime20/events9 retain their original SHA.",
   "wipCaptureCodeSHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
   "wipEvidenceCommit": "695598821fa023ccad3458c8e38ef298f3a7779b",
-  "presentationFocusReview": "focus-fix/offline-review-0381000/review-results.json"
+  "presentationFocusReview": "focus-fix/offline-review-0381000/review-results.json",
+  "qaDriverSHA256": "22956007fefd79e1f5733bd476e65d337d57a9e31a7f66f12d718ce2711e4da3",
+  "currentMobileResults": "mobile-final-0381000/mobile-vitrina-results.json",
+  "baselineResults": "baseline-1816079/mobile-vitrina-results.json"
 }

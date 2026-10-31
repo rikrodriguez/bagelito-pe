@@ -1,8 +1,32 @@
 {
-  "status": "WIP: mobile390 complete PASS and320 running; current guided32 pending",
+  "status": "Mobile acceptance complete PASS; final guided32 in progress",
   "applicationSHA": "0381000a91fc8eebe235c8ebf9c034def9dc64b6",
-  "qaSourceCommit": "26125636e3a1adb26025cd75176cecf368f87a48",
+  "qaSourceCommit": "2612563",
   "files": {
+    "baseline-1816079/320-bagels.png": {
+      "bytes": 94109,
+      "sha256": "32b207e40b85dc7f649d008ea298d824fae1a0db1a63de88611bef168c1b3c46"
+    },
+    "baseline-1816079/390-bagels.png": {
+      "bytes": 118502,
+      "sha256": "6c3fadfef6a7c15d271b08828066116c4394c17300abafe836b470d5f24b581c"
+    },
+    "baseline-1816079/README.md": {
+      "bytes": 2823,
+      "sha256": "2be6053ecf8b70dd707e18e946a1920a4fe5b87b9945d00d3db76eefedfff9a2"
+    },
+    "baseline-1816079/SHA256SUMS": {
+      "bytes": 409,
+      "sha256": "11569e3746509c175bd77e59962050ab5dfb6296ed739d558569fa79bd0eef65"
+    },
+    "baseline-1816079/mobile-vitrina-results.json": {
+      "bytes": 64346,
+      "sha256": "1a4cf284876cd8dbcf7ac36fef790240b2a4a4890c7cc18299f37cc2787df6fd"
+    },
+    "baseline-1816079/stdout.log": {
+      "bytes": 2944,
+      "sha256": "9eac70d05b61a9e562d2a69ae289a7c2332346e95cc5fc01c037e0ae0b3ac758"
+    },
     "focus-fix/compiled-67deb30/compiled-focus.png": {
       "bytes": 170276,
       "sha256": "e18dae59a9855c1da05196b1bd9382d97d7d4268b9b4296bfc3067399796ac08"
@@ -360,12 +384,28 @@
       "sha256": "3891a110ff7caa4a9d5c6cbaed02ae51780114f9c1925405d6a5a210fb3f068c"
     },
     "iterations/browser-back-diagnosis/README.md": {
-      "bytes": 792,
-      "sha256": "4b2ac83307d2bb4f7e189e4b9fa58f4d696b6cb373f62bbe537c70d7f2752710"
+      "bytes": 1058,
+      "sha256": "812cd2bf4bb4ef6d89a151abff8933329f2a1a444af0a4c61221b6199304bc7d"
+    },
+    "iterations/browser-back-diagnosis/original-swipe-source.txt": {
+      "bytes": 1020,
+      "sha256": "c02eb816b9573a530a77411f0773413e75c8d4625e4ab9eedf11de7741cfc484"
+    },
+    "iterations/browser-back-diagnosis/probe-as-run.cjs": {
+      "bytes": 5537,
+      "sha256": "3583e88c1cdb01a0164e0d47d100080e8814a14bafbcb07e2942eca5b2229177"
+    },
+    "iterations/browser-back-diagnosis/replay-frozen.cjs": {
+      "bytes": 5443,
+      "sha256": "9c559121b234bee8a941a0f07996415355d2ce241796a8040516d1710f3c1f01"
     },
     "iterations/browser-back-diagnosis/results.json": {
       "bytes": 79381,
       "sha256": "022b574193b88e000b9916535a4998c5eb4546fea0dd2e5115ec485a47f73ff6"
+    },
+    "iterations/browser-back-diagnosis/stdout.log": {
+      "bytes": 23990,
+      "sha256": "c54c2265a578e591e13154cca0ba958d2036cf3b3117c17a5a62d8e1e61848a5"
     },
     "iterations/browser-back-diagnosis/summary-derived.json": {
       "bytes": 311,
@@ -471,9 +511,113 @@
       "bytes": 743,
       "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
     },
+    "mobile-final-0381000/320-bagels-extra-9.png": {
+      "bytes": 131419,
+      "sha256": "8fba482fe87d3eac3d79660b954d56eca8c2f654eb0f877d2bd68a162ac8862d"
+    },
+    "mobile-final-0381000/320-bagels.png": {
+      "bytes": 128851,
+      "sha256": "a951eaa80c5d1f5fdeb01029a9a0b9a7755da12a6ca160c5a5ed98e71ef9ac71"
+    },
+    "mobile-final-0381000/320-cashier.png": {
+      "bytes": 114561,
+      "sha256": "af393ec1ad24928b9f06336abde9e127ef38db2933386bd284aba066b6f88d22"
+    },
+    "mobile-final-0381000/320-combos.png": {
+      "bytes": 130736,
+      "sha256": "68bbf92570ce5042cbf13d2728230d00217a77741ca197cf8d99fd3d6ab05437"
+    },
+    "mobile-final-0381000/320-pack-qty.png": {
+      "bytes": 119987,
+      "sha256": "04335c9950de5c5aaa65c18ddf0690f70f85c808af0b02151399421f7c06f14b"
+    },
+    "mobile-final-0381000/320-pack-size.png": {
+      "bytes": 123158,
+      "sha256": "f427d2c467031ef46f71a739605905849f7d6701b7bbd36045a50f62b7147152"
+    },
+    "mobile-final-0381000/320-schmear-size.png": {
+      "bytes": 117475,
+      "sha256": "12f816c7320d470846c5607424ad4417153260e0b10687d0ebeb0eb8f6f77c76"
+    },
+    "mobile-final-0381000/320-schmears-extra-13.png": {
+      "bytes": 134873,
+      "sha256": "9f15679a277a68507092036014f4208eaff6f05f369ea7f7781a12e155989d7d"
+    },
+    "mobile-final-0381000/320-schmears-extra-14.png": {
+      "bytes": 138804,
+      "sha256": "e849a5771474bdf047d6a69743962b974dafddd00912e98388ca381f4aa3c553"
+    },
+    "mobile-final-0381000/320-schmears.png": {
+      "bytes": 136864,
+      "sha256": "f758458bceacf1ec867a8f71514a257ba1dc537d5402558080e844c5ac52e2ea"
+    },
+    "mobile-final-0381000/320-selector.png": {
+      "bytes": 150225,
+      "sha256": "c248f6a0c1bbfd4b3c5a542770149515383ee3ffa4fc6b12dccb2652d53b7967"
+    },
+    "mobile-final-0381000/390-bagels-extra-1.png": {
+      "bytes": 176358,
+      "sha256": "68e3d90f85f20ebba8c679d390da679838524509445c381717030299bec6fec2"
+    },
+    "mobile-final-0381000/390-bagels.png": {
+      "bytes": 170438,
+      "sha256": "c2f39cbc8646bb32e55fa2981552cd386b2d7ade8e69151669b65a1da8aa15bb"
+    },
+    "mobile-final-0381000/390-cashier.png": {
+      "bytes": 148649,
+      "sha256": "eb9fdb3be5fc4f4f46574d6c9ce50e6c530841050a3dc3b181de5372df725730"
+    },
+    "mobile-final-0381000/390-combos.png": {
+      "bytes": 165228,
+      "sha256": "bc59971df59e5bd77fa022caf23b676d7096c83e85a1b56df2abe480ac455fea"
+    },
+    "mobile-final-0381000/390-pack-qty.png": {
+      "bytes": 153784,
+      "sha256": "4f28620f339fa52f7661646ca1b447ed4083a0e5dcc564750e03463a844026ff"
+    },
+    "mobile-final-0381000/390-pack-size.png": {
+      "bytes": 157259,
+      "sha256": "437e38cb1017cf6736acaf0986b1998776aae3f6c0faa90d0b1d62d16b4fcedc"
+    },
+    "mobile-final-0381000/390-schmear-size.png": {
+      "bytes": 155175,
+      "sha256": "411815b0172694154d3467722e144fa1911abc2cfdbc782274130256388ce7ee"
+    },
+    "mobile-final-0381000/390-schmears-extra-5.png": {
+      "bytes": 177333,
+      "sha256": "12ab9ad94bc42bd140b4575e9b9b196a3099aba1b31b714a722c99fca5b7624e"
+    },
+    "mobile-final-0381000/390-schmears-extra-6.png": {
+      "bytes": 176125,
+      "sha256": "ff656ab046e9fc19bf6e5392f2106b9b609683cc1cd4d745900d6a7ec26a71d2"
+    },
+    "mobile-final-0381000/390-schmears.png": {
+      "bytes": 174337,
+      "sha256": "d757c0113b92c9d0dc82074c5dc13223e0bfd20b2441f2e54ccf787b68a35b47"
+    },
+    "mobile-final-0381000/390-selector.png": {
+      "bytes": 197918,
+      "sha256": "8c90eece223887074863c2f4aeea262f33f2bc301b617e356cdd24cf2ab26b4f"
+    },
+    "mobile-final-0381000/README.md": {
+      "bytes": 3839,
+      "sha256": "97da16b8d7eed9d1a2f3205aac538558b7a2ed3a6deb4cb2f4933192fd0011e7"
+    },
+    "mobile-final-0381000/SHA256SUMS": {
+      "bytes": 2119,
+      "sha256": "532eaf9281760fa72a26f1e9d2e6f88a13cff457def26752f3751e2371dbc63e"
+    },
+    "mobile-final-0381000/mobile-vitrina-results.json": {
+      "bytes": 667375,
+      "sha256": "005f32446a42df871d298b977ed020e7fa9fa105484721c28f28cf5e67df3d8f"
+    },
+    "mobile-final-0381000/stdout.log": {
+      "bytes": 70079,
+      "sha256": "0b985299b57932b684b096a3aa003f107db1139846adb65a80a54bced4f6a6c4"
+    },
     "source-scope.json": {
-      "bytes": 3031,
-      "sha256": "8b0450d916ba7e4ce0864b8f660a90d206598dc76950fb738bab0726aeae42cc"
+      "bytes": 3266,
+      "sha256": "fccb89c94ca334c75b5b571e2ad0ec75746168e948827c3f1b875eee1a5fec5e"
     },
     "wip-b903413/focal-results.json": {
       "bytes": 31505,
@@ -488,5 +632,5 @@
       "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
     }
   },
-  "fileCount": 121
+  "fileCount": 157
 }

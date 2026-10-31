@@ -1,0 +1,2301 @@
+{
+  "metadata": {
+    "startedAt": "2026-10-31T23:34:11.761Z",
+    "declaredBuildSHA": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
+    "repositorySHA": "2e923553ab7fac89390928e82944ff1b8936a4d6",
+    "base": "http://127.0.0.1:3198/",
+    "sourceSHA256": {
+      "src/playable/GuidedCommerce.tsx": "1b74c8e127b99f2788eed8e2e12aa17074e4f88d30f1c9c5ea2c278b7503a5b0",
+      "src/playable/guided-commerce.css": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "scripts/qa-mobile-vitrina.cjs": "22956007fefd79e1f5733bd476e65d337d57a9e31a7f66f12d718ce2711e4da3",
+      "scripts/lib/qa-mobile-layout.cjs": "b725b2902e2a71e7feb108edcdce77a0d34ca4b3048855b7b73bf3ac384f9699",
+      "scripts/lib/qa-loopback-guard.cjs": "51444e6c9bbb9a22522626b6c7ba6935344cebc0d354ea4a2d883ba57449386d"
+    },
+    "expectedScenes": 2,
+    "scenes": [
+      "bagels"
+    ],
+    "declaredAppSourceSHA256": {
+      "src/playable/GuidedCommerce.tsx": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "src/playable/guided-commerce.css": "546c0b069febf92b85722ebd46acc0974d83d9be406392d22a62149372dbacb2",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6"
+    },
+    "viewportSizes": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 320,
+        "height": 700
+      }
+    ],
+    "criteria": {
+      "canvasFree": 0.45,
+      "productROIFree": 0.9,
+      "productCentres": 1,
+      "otherROIFree": 0.6,
+      "otherCentres": 0.75,
+      "tapCSSPixels": 44,
+      "numericTolerance": 0.01,
+      "minTextContrast": 4.5
+    },
+    "measurementLimit": "Opaque DOM occlusion only: projected plate anchors and live Canvas do not measure mesh-on-mesh occlusion. Physical POS blocking a bowl or a cropped logo requires separate manual pixel review.",
+    "focus": "bagels-only",
+    "scope": "Real WebGL plus opaque DOM occlusion, native touch scroll/taps and catalog text; not final photorealism, physical-device or payment validation.",
+    "browserVersion": "151.0.7922.173",
+    "finalSourceSHA256": {
+      "src/playable/GuidedCommerce.tsx": "1b74c8e127b99f2788eed8e2e12aa17074e4f88d30f1c9c5ea2c278b7503a5b0",
+      "src/playable/guided-commerce.css": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "scripts/qa-mobile-vitrina.cjs": "22956007fefd79e1f5733bd476e65d337d57a9e31a7f66f12d718ce2711e4da3",
+      "scripts/lib/qa-mobile-layout.cjs": "b725b2902e2a71e7feb108edcdce77a0d34ca4b3048855b7b73bf3ac384f9699",
+      "scripts/lib/qa-loopback-guard.cjs": "51444e6c9bbb9a22522626b6c7ba6935344cebc0d354ea4a2d883ba57449386d"
+    },
+    "sourceChangedDuringRun": false,
+    "finishedAt": "2026-10-31T23:34:42.845Z"
+  },
+  "status": "failed",
+  "results": [
+    {
+      "width": 390,
+      "scene": "bagels",
+      "file": "390-bagels.png",
+      "sha256": "6c3fadfef6a7c15d271b08828066116c4394c17300abafe836b470d5f24b581c",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scene": "bagels",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 390,
+          "bufferHeight": 844
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.22777777777777777,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 29.24407958984375,
+              "y": 375.71719017028806,
+              "right": 356.3558654785156,
+              "bottom": 461.8829708099365,
+              "width": 327.1117858886719,
+              "height": 86.16578063964846
+            },
+            "clearFraction": 0,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 54.908302307128906,
+                  "y": 408.5536193847656,
+                  "width": 42.13206481933594,
+                  "height": 7.2281494140625,
+                  "right": 97.04036712646484,
+                  "bottom": 415.7817687988281
+                },
+                "x": 75.97433471679688,
+                "y": 412.1676940917969,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 132.8149871826172,
+                  "y": 408.55572509765625,
+                  "width": 42.05168151855469,
+                  "height": 7.228607177734375,
+                  "right": 174.86666870117188,
+                  "bottom": 415.7843322753906
+                },
+                "x": 153.84082794189453,
+                "y": 412.17002868652344,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 210.7139892578125,
+                  "y": 408.557861328125,
+                  "width": 42.051971435546875,
+                  "height": 7.229034423828125,
+                  "right": 252.76596069335938,
+                  "bottom": 415.7868957519531
+                },
+                "x": 231.73997497558594,
+                "y": 412.17237854003906,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 288.5542297363281,
+                  "y": 408.5599670410156,
+                  "width": 42.14276123046875,
+                  "height": 7.2294921875,
+                  "right": 330.6969909667969,
+                  "bottom": 415.7894592285156
+                },
+                "x": 309.6256103515625,
+                "y": 412.1747131347656,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 55.614402770996094,
+                  "y": 441.7231750488281,
+                  "width": 41.91918182373047,
+                  "height": 7.1566162109375,
+                  "right": 97.53358459472656,
+                  "bottom": 448.8797912597656
+                },
+                "x": 76.57399368286133,
+                "y": 445.3014831542969,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 133.12843322753906,
+                  "y": 441.7273254394531,
+                  "width": 41.839599609375,
+                  "height": 7.15704345703125,
+                  "right": 174.96803283691406,
+                  "bottom": 448.8843688964844
+                },
+                "x": 154.04823303222656,
+                "y": 445.30584716796875,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 210.63485717773438,
+                  "y": 441.7314758300781,
+                  "width": 41.83990478515625,
+                  "height": 7.157470703125,
+                  "right": 252.47476196289062,
+                  "bottom": 448.8889465332031
+                },
+                "x": 231.5548095703125,
+                "y": 445.3102111816406,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 288.0831298828125,
+                  "y": 441.735595703125,
+                  "width": 41.92974853515625,
+                  "height": 7.157928466796875,
+                  "right": 330.01287841796875,
+                  "bottom": 448.8935241699219
+                },
+                "x": 309.0480041503906,
+                "y": 445.31455993652344,
+                "inside": true,
+                "free": false
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 248.90625,
+            "y": 12,
+            "right": 378,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 72,
+            "right": 89.515625,
+            "bottom": 108,
+            "width": 77.515625,
+            "height": 36,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 772,
+            "right": 378,
+            "bottom": 832,
+            "width": 366,
+            "height": 60,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 43.484375,
+            "y": 784.5,
+            "right": 62.484375,
+            "bottom": 803.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(232, 241, 255)"
+          },
+          {
+            "x": 89,
+            "y": 778.5,
+            "right": 159,
+            "bottom": 825.5,
+            "width": 70,
+            "height": 47,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 185.5,
+            "y": 784.5,
+            "right": 204.5,
+            "bottom": 803.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 256.484375,
+            "y": 784.5,
+            "right": 275.484375,
+            "bottom": 803.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 327.484375,
+            "y": 784.5,
+            "right": 346.484375,
+            "bottom": 803.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 118,
+            "right": 378,
+            "bottom": 574,
+            "width": 366,
+            "height": 456,
+            "className": "mobile-product-stage mobile-bagel-stage",
+            "tag": "SECTION",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 27,
+            "y": 202.46875,
+            "right": 190,
+            "bottom": 360.46875,
+            "width": 163,
+            "height": 158,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 28,
+            "y": 203.46875,
+            "right": 189,
+            "bottom": 360.46875,
+            "width": 161,
+            "height": 157,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 60.5,
+            "y": 220.46875,
+            "right": 156.5,
+            "bottom": 308.46875,
+            "width": 96,
+            "height": 88,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 70.8125,
+            "y": 314.46875,
+            "right": 146.1875,
+            "bottom": 342.46875,
+            "width": 75.375,
+            "height": 28,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 155,
+            "y": 210.46875,
+            "right": 182,
+            "bottom": 237.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 200,
+            "y": 202.46875,
+            "right": 363,
+            "bottom": 360.46875,
+            "width": 163,
+            "height": 158,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 201,
+            "y": 203.46875,
+            "right": 362,
+            "bottom": 360.46875,
+            "width": 161,
+            "height": 157,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 233.5,
+            "y": 220.46875,
+            "right": 329.5,
+            "bottom": 308.46875,
+            "width": 96,
+            "height": 88,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 253.015625,
+            "y": 314.46875,
+            "right": 309.984375,
+            "bottom": 342.46875,
+            "width": 56.96875,
+            "height": 28,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 328,
+            "y": 210.46875,
+            "right": 355,
+            "bottom": 237.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 27,
+            "y": 370.46875,
+            "right": 190,
+            "bottom": 528.46875,
+            "width": 163,
+            "height": 158,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 28,
+            "y": 371.46875,
+            "right": 189,
+            "bottom": 528.46875,
+            "width": 161,
+            "height": 157,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 60.5,
+            "y": 388.46875,
+            "right": 156.5,
+            "bottom": 476.46875,
+            "width": 96,
+            "height": 88,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 87.328125,
+            "y": 482.46875,
+            "right": 129.65625,
+            "bottom": 510.46875,
+            "width": 42.328125,
+            "height": 28,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 155,
+            "y": 378.46875,
+            "right": 182,
+            "bottom": 405.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 200,
+            "y": 370.46875,
+            "right": 363,
+            "bottom": 528.46875,
+            "width": 163,
+            "height": 158,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 201,
+            "y": 371.46875,
+            "right": 362,
+            "bottom": 528.46875,
+            "width": 161,
+            "height": 157,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 233.5,
+            "y": 388.46875,
+            "right": 329.5,
+            "bottom": 476.46875,
+            "width": 96,
+            "height": 88,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 236.828125,
+            "y": 482.46875,
+            "right": 326.15625,
+            "bottom": 510.46875,
+            "width": 89.328125,
+            "height": 28,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 328,
+            "y": 378.46875,
+            "right": 355,
+            "bottom": 405.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 27,
+            "y": 538.46875,
+            "right": 190,
+            "bottom": 561,
+            "width": 163,
+            "height": 22.53125,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 28,
+            "y": 539.46875,
+            "right": 189,
+            "bottom": 561,
+            "width": 161,
+            "height": 21.53125,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 60.5,
+            "y": 546.96875,
+            "right": 156.5,
+            "bottom": 561,
+            "width": 96,
+            "height": 14.03125,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 155,
+            "y": 546.46875,
+            "right": 182,
+            "bottom": 561,
+            "width": 27,
+            "height": 14.53125,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 200,
+            "y": 538.46875,
+            "right": 363,
+            "bottom": 561,
+            "width": 163,
+            "height": 22.53125,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 201,
+            "y": 539.46875,
+            "right": 362,
+            "bottom": 561,
+            "width": 161,
+            "height": 21.53125,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 233.5,
+            "y": 546.96875,
+            "right": 329.5,
+            "bottom": 561,
+            "width": 96,
+            "height": 14.03125,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 328,
+            "y": 546.46875,
+            "right": 355,
+            "bottom": 561,
+            "width": 27,
+            "height": 14.53125,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 12,
+            "y": 590,
+            "right": 378,
+            "bottom": 696,
+            "width": 366,
+            "height": 106,
+            "className": "guided-order-counter bagel-live-summary",
+            "tag": "DIV",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 92,
+            "y": 600,
+            "right": 227,
+            "bottom": 672.203125,
+            "width": 135,
+            "height": 72.203125,
+            "className": "pending",
+            "tag": "SPAN",
+            "background": "rgb(247, 248, 249)"
+          },
+          {
+            "x": 96,
+            "y": 626.59375,
+            "right": 115,
+            "bottom": 645.59375,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(223, 229, 234)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 248.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 378,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 248.90625,
+              "y": 12,
+              "right": 378,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 72,
+              "width": 77.515625,
+              "height": 36,
+              "right": 89.515625,
+              "bottom": 108
+            },
+            "clipped": {
+              "x": 12,
+              "y": 72,
+              "right": 89.515625,
+              "bottom": 108,
+              "width": 77.515625,
+              "height": 36
+            },
+            "size44": false,
+            "effective44": false
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 42.21875,
+              "y": 782.5,
+              "width": 21.546875,
+              "height": 39,
+              "right": 63.765625,
+              "bottom": 821.5
+            },
+            "clipped": {
+              "x": 42.21875,
+              "y": 782.5,
+              "right": 63.765625,
+              "bottom": 821.5,
+              "width": 21.546875,
+              "height": 39
+            },
+            "size44": false,
+            "effective44": false
+          },
+          {
+            "label": "Ir a Bagels",
+            "rect": {
+              "x": 109.140625,
+              "y": 782.5,
+              "width": 29.71875,
+              "height": 39,
+              "right": 138.859375,
+              "bottom": 821.5
+            },
+            "clipped": {
+              "x": 109.140625,
+              "y": 782.5,
+              "right": 138.859375,
+              "bottom": 821.5,
+              "width": 29.71875,
+              "height": 39
+            },
+            "size44": false,
+            "effective44": false
+          },
+          {
+            "label": "Agregar Everything",
+            "rect": {
+              "x": 28,
+              "y": 203.46875,
+              "width": 161,
+              "height": 158,
+              "right": 189,
+              "bottom": 361.46875
+            },
+            "clipped": {
+              "x": 28,
+              "y": 203.46875,
+              "right": 189,
+              "bottom": 360.46875,
+              "width": 161,
+              "height": 157
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Sesame",
+            "rect": {
+              "x": 201,
+              "y": 203.46875,
+              "width": 161,
+              "height": 158,
+              "right": 362,
+              "bottom": 361.46875
+            },
+            "clipped": {
+              "x": 201,
+              "y": 203.46875,
+              "right": 362,
+              "bottom": 360.46875,
+              "width": 161,
+              "height": 157
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Plain",
+            "rect": {
+              "x": 28,
+              "y": 371.46875,
+              "width": 161,
+              "height": 158,
+              "right": 189,
+              "bottom": 529.46875
+            },
+            "clipped": {
+              "x": 28,
+              "y": 371.46875,
+              "right": 189,
+              "bottom": 528.46875,
+              "width": 161,
+              "height": 157
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Classic Onion",
+            "rect": {
+              "x": 201,
+              "y": 371.46875,
+              "width": 161,
+              "height": 158,
+              "right": 362,
+              "bottom": 529.46875
+            },
+            "clipped": {
+              "x": 201,
+              "y": 371.46875,
+              "right": 362,
+              "bottom": 528.46875,
+              "width": 161,
+              "height": 157
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Jalapeño Cheddar",
+            "rect": {
+              "x": 28,
+              "y": 539.46875,
+              "width": 161,
+              "height": 158,
+              "right": 189,
+              "bottom": 697.46875
+            },
+            "clipped": {
+              "x": 28,
+              "y": 539.46875,
+              "right": 189,
+              "bottom": 561,
+              "width": 161,
+              "height": 21.53125
+            },
+            "size44": true,
+            "effective44": false
+          },
+          {
+            "label": "Agregar Cheddar",
+            "rect": {
+              "x": 201,
+              "y": 539.46875,
+              "width": 161,
+              "height": 158,
+              "right": 362,
+              "bottom": 697.46875
+            },
+            "clipped": {
+              "x": 201,
+              "y": 539.46875,
+              "right": 362,
+              "bottom": 561,
+              "width": 161,
+              "height": 21.53125
+            },
+            "size44": true,
+            "effective44": false
+          }
+        ],
+        "catalogs": [
+          {
+            "className": "mobile-bagel-grid",
+            "rect": {
+              "x": 25,
+              "y": 199.46875,
+              "width": 340,
+              "height": 361.53125,
+              "right": 365,
+              "bottom": 561
+            },
+            "clientWidth": 340,
+            "clientHeight": 362,
+            "scrollWidth": 340,
+            "scrollHeight": 673,
+            "scrollLeft": 0,
+            "scrollTop": 0,
+            "overflowX": "auto",
+            "overflowY": "auto"
+          }
+        ]
+      },
+      "failures": [
+        "Less than45% clear Canvas",
+        "Physical ROI occluded: bagels",
+        "Physical plate centres covered: bagels 0/8",
+        "Enabled target below44px: Volver al paso anterior",
+        "Enabled target below44px: Ir a Elige",
+        "Enabled target below44px: Ir a Bagels"
+      ],
+      "pass": false
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "file": "320-bagels.png",
+      "sha256": "32b207e40b85dc7f649d008ea298d824fae1a0db1a63de88611bef168c1b3c46",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "scene": "bagels",
+        "liveWorld": "true",
+        "canvas": {
+          "count": 1,
+          "hidden": [],
+          "webgl": true,
+          "lost": false,
+          "bufferWidth": 320,
+          "bufferHeight": 700
+        },
+        "overflow": 0,
+        "canvasFreeFraction": 0.3625,
+        "groups": [
+          {
+            "kind": "bagels",
+            "expectedCount": 8,
+            "valid": true,
+            "roi": {
+              "x": 24.18253860473633,
+              "y": 312.0325305938721,
+              "right": 292.39247169494627,
+              "bottom": 382.69302558898926,
+              "width": 268.2099330902099,
+              "height": 70.66049499511718
+            },
+            "clearFraction": 0,
+            "anchors": [
+              {
+                "label": "PLAIN",
+                "rect": {
+                  "x": 45.22909927368164,
+                  "y": 338.9569396972656,
+                  "width": 34.53828811645508,
+                  "height": 5.927032470703125,
+                  "right": 79.76738739013672,
+                  "bottom": 344.88397216796875
+                },
+                "x": 62.49824333190918,
+                "y": 341.9204559326172,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "EVERYTHING",
+                "rect": {
+                  "x": 109.09761047363281,
+                  "y": 338.9604187011719,
+                  "width": 34.47712707519531,
+                  "height": 5.927703857421875,
+                  "right": 143.57473754882812,
+                  "bottom": 344.88812255859375
+                },
+                "x": 126.33617401123047,
+                "y": 341.9242706298828,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "SESAME",
+                "rect": {
+                  "x": 172.96734619140625,
+                  "y": 338.9638977050781,
+                  "width": 34.48164367675781,
+                  "height": 5.92840576171875,
+                  "right": 207.44898986816406,
+                  "bottom": 344.8923034667969
+                },
+                "x": 190.20816802978516,
+                "y": 341.9281005859375,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "CLASSIC ONION",
+                "rect": {
+                  "x": 236.79705810546875,
+                  "y": 338.96734619140625,
+                  "width": 34.559417724609375,
+                  "height": 5.92913818359375,
+                  "right": 271.3564758300781,
+                  "bottom": 344.896484375
+                },
+                "x": 254.07676696777344,
+                "y": 341.9319152832031,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "JALAPEÑO CHEDDAR",
+                "rect": {
+                  "x": 45.801727294921875,
+                  "y": 366.15155029296875,
+                  "width": 34.36555480957031,
+                  "height": 5.86981201171875,
+                  "right": 80.16728210449219,
+                  "bottom": 372.0213623046875
+                },
+                "x": 62.98450469970703,
+                "y": 369.0864562988281,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "CHEDDAR",
+                "rect": {
+                  "x": 109.35160064697266,
+                  "y": 366.15826416015625,
+                  "width": 34.30500030517578,
+                  "height": 5.8704833984375,
+                  "right": 143.65660095214844,
+                  "bottom": 372.02874755859375
+                },
+                "x": 126.50410079956055,
+                "y": 369.093505859375,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "CINNAMON RAISIN",
+                "rect": {
+                  "x": 172.90269470214844,
+                  "y": 366.1649475097656,
+                  "width": 34.309478759765625,
+                  "height": 5.871185302734375,
+                  "right": 207.21217346191406,
+                  "bottom": 372.0361328125
+                },
+                "x": 190.05743408203125,
+                "y": 369.1005401611328,
+                "inside": true,
+                "free": false
+              },
+              {
+                "label": "BLUEBERRY",
+                "rect": {
+                  "x": 236.41415405273438,
+                  "y": 366.1716613769531,
+                  "width": 34.386474609375,
+                  "height": 5.87188720703125,
+                  "right": 270.8006286621094,
+                  "bottom": 372.0435485839844
+                },
+                "x": 253.60739135742188,
+                "y": 369.10760498046875,
+                "inside": true,
+                "free": false
+              }
+            ]
+          }
+        ],
+        "blockers": [
+          {
+            "x": 12,
+            "y": 12,
+            "right": 58,
+            "bottom": 58,
+            "width": 46,
+            "height": 46,
+            "className": "guided-store-menu-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 178.90625,
+            "y": 12,
+            "right": 308,
+            "bottom": 58,
+            "width": 129.09375,
+            "height": 46,
+            "className": "guided-store-cart-button",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 72,
+            "right": 53,
+            "bottom": 108,
+            "width": 41,
+            "height": 36,
+            "className": "guided-journey-back",
+            "tag": "BUTTON",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 12,
+            "y": 628,
+            "right": 308,
+            "bottom": 688,
+            "width": 296,
+            "height": 60,
+            "className": "guided-progress-master",
+            "tag": "NAV",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 36.484375,
+            "y": 640.5,
+            "right": 55.484375,
+            "bottom": 659.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(232, 241, 255)"
+          },
+          {
+            "x": 75,
+            "y": 634.5,
+            "right": 131,
+            "bottom": 681.5,
+            "width": 56,
+            "height": 47,
+            "className": "",
+            "tag": "DIV",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 150.5,
+            "y": 640.5,
+            "right": 169.5,
+            "bottom": 659.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 207.484375,
+            "y": 640.5,
+            "right": 226.484375,
+            "bottom": 659.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 264.484375,
+            "y": 640.5,
+            "right": 283.484375,
+            "bottom": 659.5,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(237, 242, 246)"
+          },
+          {
+            "x": 12,
+            "y": 118,
+            "right": 308,
+            "bottom": 430,
+            "width": 296,
+            "height": 312,
+            "className": "mobile-product-stage mobile-bagel-stage",
+            "tag": "SECTION",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "x": 27,
+            "y": 202.46875,
+            "right": 155,
+            "bottom": 360.46875,
+            "width": 128,
+            "height": 158,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 28,
+            "y": 203.46875,
+            "right": 154,
+            "bottom": 360.46875,
+            "width": 126,
+            "height": 157,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 43,
+            "y": 220.46875,
+            "right": 139,
+            "bottom": 308.46875,
+            "width": 96,
+            "height": 88,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 53.3125,
+            "y": 314.46875,
+            "right": 128.6875,
+            "bottom": 342.46875,
+            "width": 75.375,
+            "height": 28,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 120,
+            "y": 210.46875,
+            "right": 147,
+            "bottom": 237.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 165,
+            "y": 202.46875,
+            "right": 293,
+            "bottom": 360.46875,
+            "width": 128,
+            "height": 158,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 166,
+            "y": 203.46875,
+            "right": 292,
+            "bottom": 360.46875,
+            "width": 126,
+            "height": 157,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 181,
+            "y": 220.46875,
+            "right": 277,
+            "bottom": 308.46875,
+            "width": 96,
+            "height": 88,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 200.515625,
+            "y": 314.46875,
+            "right": 257.484375,
+            "bottom": 342.46875,
+            "width": 56.96875,
+            "height": 28,
+            "className": "mobile-bagel-sign",
+            "tag": "SPAN",
+            "background": "rgb(255, 250, 244)"
+          },
+          {
+            "x": 258,
+            "y": 210.46875,
+            "right": 285,
+            "bottom": 237.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 27,
+            "y": 370.46875,
+            "right": 155,
+            "bottom": 417,
+            "width": 128,
+            "height": 46.53125,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 28,
+            "y": 371.46875,
+            "right": 154,
+            "bottom": 417,
+            "width": 126,
+            "height": 45.53125,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 43,
+            "y": 388.46875,
+            "right": 139,
+            "bottom": 417,
+            "width": 96,
+            "height": 28.53125,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 120,
+            "y": 378.46875,
+            "right": 147,
+            "bottom": 405.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 165,
+            "y": 370.46875,
+            "right": 293,
+            "bottom": 417,
+            "width": 128,
+            "height": 46.53125,
+            "className": "mobile-bagel-card",
+            "tag": "ARTICLE",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 166,
+            "y": 371.46875,
+            "right": 292,
+            "bottom": 417,
+            "width": 126,
+            "height": 45.53125,
+            "className": "",
+            "tag": "BUTTON",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 181,
+            "y": 388.46875,
+            "right": 277,
+            "bottom": 417,
+            "width": 96,
+            "height": 28.53125,
+            "className": "",
+            "tag": "IMG",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "x": 258,
+            "y": 378.46875,
+            "right": 285,
+            "bottom": 405.46875,
+            "width": 27,
+            "height": 27,
+            "className": "",
+            "tag": "B",
+            "background": "rgb(0, 74, 173)"
+          },
+          {
+            "x": 12,
+            "y": 446,
+            "right": 308,
+            "bottom": 552,
+            "width": 296,
+            "height": 106,
+            "className": "guided-order-counter bagel-live-summary",
+            "tag": "DIV",
+            "background": "rgb(255, 255, 255)"
+          },
+          {
+            "x": 92,
+            "y": 456,
+            "right": 192,
+            "bottom": 528.203125,
+            "width": 100,
+            "height": 72.203125,
+            "className": "pending",
+            "tag": "SPAN",
+            "background": "rgb(247, 248, 249)"
+          },
+          {
+            "x": 96,
+            "y": 482.59375,
+            "right": 115,
+            "bottom": 501.59375,
+            "width": 19,
+            "height": 19,
+            "className": "",
+            "tag": "I",
+            "background": "rgb(223, 229, 234)"
+          }
+        ],
+        "targets": [
+          {
+            "label": "Abrir menú",
+            "rect": {
+              "x": 12,
+              "y": 12,
+              "width": 46,
+              "height": 46,
+              "right": 58,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 12,
+              "y": 12,
+              "right": 58,
+              "bottom": 58,
+              "width": 46,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Ver tu pedido: 0 productos",
+            "rect": {
+              "x": 178.90625,
+              "y": 12,
+              "width": 129.09375,
+              "height": 46,
+              "right": 308,
+              "bottom": 58
+            },
+            "clipped": {
+              "x": 178.90625,
+              "y": 12,
+              "right": 308,
+              "bottom": 58,
+              "width": 129.09375,
+              "height": 46
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Volver al paso anterior",
+            "rect": {
+              "x": 12,
+              "y": 72,
+              "width": 41,
+              "height": 36,
+              "right": 53,
+              "bottom": 108
+            },
+            "clipped": {
+              "x": 12,
+              "y": 72,
+              "right": 53,
+              "bottom": 108,
+              "width": 41,
+              "height": 36
+            },
+            "size44": false,
+            "effective44": false
+          },
+          {
+            "label": "Ir a Elige",
+            "rect": {
+              "x": 35.21875,
+              "y": 638.5,
+              "width": 21.546875,
+              "height": 39,
+              "right": 56.765625,
+              "bottom": 677.5
+            },
+            "clipped": {
+              "x": 35.21875,
+              "y": 638.5,
+              "right": 56.765625,
+              "bottom": 677.5,
+              "width": 21.546875,
+              "height": 39
+            },
+            "size44": false,
+            "effective44": false
+          },
+          {
+            "label": "Ir a Bagels",
+            "rect": {
+              "x": 88.140625,
+              "y": 638.5,
+              "width": 29.71875,
+              "height": 39,
+              "right": 117.859375,
+              "bottom": 677.5
+            },
+            "clipped": {
+              "x": 88.140625,
+              "y": 638.5,
+              "right": 117.859375,
+              "bottom": 677.5,
+              "width": 29.71875,
+              "height": 39
+            },
+            "size44": false,
+            "effective44": false
+          },
+          {
+            "label": "Agregar Everything",
+            "rect": {
+              "x": 28,
+              "y": 203.46875,
+              "width": 126,
+              "height": 158,
+              "right": 154,
+              "bottom": 361.46875
+            },
+            "clipped": {
+              "x": 28,
+              "y": 203.46875,
+              "right": 154,
+              "bottom": 360.46875,
+              "width": 126,
+              "height": 157
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Sesame",
+            "rect": {
+              "x": 166,
+              "y": 203.46875,
+              "width": 126,
+              "height": 158,
+              "right": 292,
+              "bottom": 361.46875
+            },
+            "clipped": {
+              "x": 166,
+              "y": 203.46875,
+              "right": 292,
+              "bottom": 360.46875,
+              "width": 126,
+              "height": 157
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Plain",
+            "rect": {
+              "x": 28,
+              "y": 371.46875,
+              "width": 126,
+              "height": 158,
+              "right": 154,
+              "bottom": 529.46875
+            },
+            "clipped": {
+              "x": 28,
+              "y": 371.46875,
+              "right": 154,
+              "bottom": 417,
+              "width": 126,
+              "height": 45.53125
+            },
+            "size44": true,
+            "effective44": true
+          },
+          {
+            "label": "Agregar Classic Onion",
+            "rect": {
+              "x": 166,
+              "y": 371.46875,
+              "width": 126,
+              "height": 158,
+              "right": 292,
+              "bottom": 529.46875
+            },
+            "clipped": {
+              "x": 166,
+              "y": 371.46875,
+              "right": 292,
+              "bottom": 417,
+              "width": 126,
+              "height": 45.53125
+            },
+            "size44": true,
+            "effective44": true
+          }
+        ],
+        "catalogs": [
+          {
+            "className": "mobile-bagel-grid",
+            "rect": {
+              "x": 25,
+              "y": 199.46875,
+              "width": 270,
+              "height": 217.53125,
+              "right": 295,
+              "bottom": 417
+            },
+            "clientWidth": 270,
+            "clientHeight": 218,
+            "scrollWidth": 270,
+            "scrollHeight": 673,
+            "scrollLeft": 0,
+            "scrollTop": 0,
+            "overflowX": "auto",
+            "overflowY": "auto"
+          }
+        ]
+      },
+      "failures": [
+        "Less than45% clear Canvas",
+        "Physical ROI occluded: bagels",
+        "Physical plate centres covered: bagels 0/8",
+        "Enabled target below44px: Volver al paso anterior",
+        "Enabled target below44px: Ir a Elige",
+        "Enabled target below44px: Ir a Bagels"
+      ],
+      "pass": false
+    }
+  ],
+  "extras": [],
+  "catalog": [],
+  "failures": [
+    {
+      "width": 390,
+      "scene": "bagels",
+      "message": "Less than45% clear Canvas"
+    },
+    {
+      "width": 390,
+      "scene": "bagels",
+      "message": "Physical ROI occluded: bagels"
+    },
+    {
+      "width": 390,
+      "scene": "bagels",
+      "message": "Physical plate centres covered: bagels 0/8"
+    },
+    {
+      "width": 390,
+      "scene": "bagels",
+      "message": "Enabled target below44px: Volver al paso anterior"
+    },
+    {
+      "width": 390,
+      "scene": "bagels",
+      "message": "Enabled target below44px: Ir a Elige"
+    },
+    {
+      "width": 390,
+      "scene": "bagels",
+      "message": "Enabled target below44px: Ir a Bagels"
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "message": "Less than45% clear Canvas"
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "message": "Physical ROI occluded: bagels"
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "message": "Physical plate centres covered: bagels 0/8"
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "message": "Enabled target below44px: Volver al paso anterior"
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "message": "Enabled target below44px: Ir a Elige"
+    },
+    {
+      "width": 320,
+      "scene": "bagels",
+      "message": "Enabled target below44px: Ir a Bagels"
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-31T23:34:12.797Z",
+      "type": "main-frame-navigation",
+      "width": 390,
+      "url": "http://127.0.0.1:3198/?qa=1"
+    },
+    {
+      "at": "2026-10-31T23:34:12.920Z",
+      "type": "main-frame-navigation",
+      "width": 390,
+      "url": "http://127.0.0.1:3198/?qa=1"
+    },
+    {
+      "at": "2026-10-31T23:34:21.396Z",
+      "type": "native-tap",
+      "label": "Packs",
+      "point": {
+        "x": 195,
+        "y": 296.6640625
+      },
+      "raw": {
+        "x": 16,
+        "y": 236,
+        "right": 374,
+        "bottom": 357.328125,
+        "width": 358,
+        "height": 121.328125
+      },
+      "clipped": {
+        "x": 16,
+        "y": 236,
+        "right": 374,
+        "bottom": 357.328125,
+        "width": 358,
+        "height": 121.328125
+      }
+    },
+    {
+      "at": "2026-10-31T23:34:22.870Z",
+      "type": "native-tap",
+      "label": "Bagels grandes6 o 12 bagels→",
+      "point": {
+        "x": 195,
+        "y": 291
+      },
+      "raw": {
+        "x": 26,
+        "y": 239,
+        "right": 364,
+        "bottom": 343,
+        "width": 338,
+        "height": 104
+      },
+      "clipped": {
+        "x": 26,
+        "y": 239,
+        "right": 364,
+        "bottom": 343,
+        "width": 338,
+        "height": 104
+      }
+    },
+    {
+      "at": "2026-10-31T23:34:24.309Z",
+      "type": "native-tap",
+      "label": "Elegir 6 bagels, mixtos",
+      "point": {
+        "x": 107.75,
+        "y": 357
+      },
+      "raw": {
+        "x": 24,
+        "y": 319,
+        "right": 191.5,
+        "bottom": 395,
+        "width": 167.5,
+        "height": 76
+      },
+      "clipped": {
+        "x": 24,
+        "y": 319,
+        "right": 191.5,
+        "bottom": 395,
+        "width": 167.5,
+        "height": 76
+      }
+    },
+    {
+      "at": "2026-10-31T23:34:28.717Z",
+      "type": "scene-captured",
+      "width": 390,
+      "scene": "bagels",
+      "extra": false,
+      "pass": false,
+      "canvasFree": 0.22777777777777777,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 0,
+          "free": 0,
+          "total": 8
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:34:28.719Z",
+      "type": "context-closing",
+      "width": 390,
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T23:34:28.740Z",
+      "type": "context-closed",
+      "width": 390,
+      "routeErrors": 0,
+      "closingRouteErrors": 0
+    },
+    {
+      "at": "2026-10-31T23:34:29.880Z",
+      "type": "main-frame-navigation",
+      "width": 320,
+      "url": "http://127.0.0.1:3198/?qa=1"
+    },
+    {
+      "at": "2026-10-31T23:34:30.016Z",
+      "type": "main-frame-navigation",
+      "width": 320,
+      "url": "http://127.0.0.1:3198/?qa=1"
+    },
+    {
+      "at": "2026-10-31T23:34:36.269Z",
+      "type": "native-tap",
+      "label": "Packs",
+      "point": {
+        "x": 160,
+        "y": 246.328125
+      },
+      "raw": {
+        "x": 16,
+        "y": 196,
+        "right": 304,
+        "bottom": 296.65625,
+        "width": 288,
+        "height": 100.65625
+      },
+      "clipped": {
+        "x": 16,
+        "y": 196,
+        "right": 304,
+        "bottom": 296.65625,
+        "width": 288,
+        "height": 100.65625
+      }
+    },
+    {
+      "at": "2026-10-31T23:34:37.408Z",
+      "type": "native-tap",
+      "label": "Bagels grandes6 o 12 bagels→",
+      "point": {
+        "x": 160,
+        "y": 291
+      },
+      "raw": {
+        "x": 26,
+        "y": 239,
+        "right": 294,
+        "bottom": 343,
+        "width": 268,
+        "height": 104
+      },
+      "clipped": {
+        "x": 26,
+        "y": 239,
+        "right": 294,
+        "bottom": 343,
+        "width": 268,
+        "height": 104
+      }
+    },
+    {
+      "at": "2026-10-31T23:34:38.620Z",
+      "type": "native-tap",
+      "label": "Elegir 6 bagels, mixtos",
+      "point": {
+        "x": 90.25,
+        "y": 357
+      },
+      "raw": {
+        "x": 24,
+        "y": 319,
+        "right": 156.5,
+        "bottom": 395,
+        "width": 132.5,
+        "height": 76
+      },
+      "clipped": {
+        "x": 24,
+        "y": 319,
+        "right": 156.5,
+        "bottom": 395,
+        "width": 132.5,
+        "height": 76
+      }
+    },
+    {
+      "at": "2026-10-31T23:34:42.314Z",
+      "type": "scene-captured",
+      "width": 320,
+      "scene": "bagels",
+      "extra": false,
+      "pass": false,
+      "canvasFree": 0.3625,
+      "groups": [
+        {
+          "kind": "bagels",
+          "clear": 0,
+          "free": 0,
+          "total": 8
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T23:34:42.316Z",
+      "type": "context-closing",
+      "width": 320,
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T23:34:42.340Z",
+      "type": "context-closed",
+      "width": 320,
+      "routeErrors": 0,
+      "closingRouteErrors": 0
+    }
+  ],
+  "network": [
+    {
+      "width": 390,
+      "traffic": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/?qa=1",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/PlayableStore-BEY9ykFh.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/routes-BqwS7Pys.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/index-DwjDvobZ.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/PlayableStore-BIH-domP.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagelito-wordmark.svg",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/api/payments/culqi/config",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/master-scenes-clean/combos.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/master-scenes-clean/packs.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/master-scenes-clean/schmears.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+            "status": 200
+          }
+        ],
+        "fixtureReads": 1,
+        "blocked": [],
+        "httpErrors": [],
+        "routeErrors": [],
+        "closingRouteErrors": [],
+        "closingAborts": [],
+        "failures": [],
+        "callbackErrors": []
+      }
+    },
+    {
+      "width": 320,
+      "traffic": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/?qa=1",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/PlayableStore-BEY9ykFh.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/routes-BqwS7Pys.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/index-DwjDvobZ.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/assets/PlayableStore-BIH-domP.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagelito-wordmark.svg",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/api/payments/culqi/config",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/master-scenes-clean/packs.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/master-scenes-clean/combos.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/master-scenes-clean/schmears.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+            "status": 200
+          }
+        ],
+        "fixtureReads": 1,
+        "blocked": [],
+        "httpErrors": [],
+        "routeErrors": [],
+        "closingRouteErrors": [],
+        "closingAborts": [],
+        "failures": [],
+        "callbackErrors": []
+      }
+    }
+  ]
+}
