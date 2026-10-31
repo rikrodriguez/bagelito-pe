@@ -243,7 +243,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <hemisphereLight args={['#fff4df','#8e8273',1.35]}/>
       <directionalLight castShadow position={[4,9,7]} color="#fff0d4" intensity={2.3} shadow-mapSize={[1024,1024]}/>
       <World step={step} bagels={bagels} schmears={schmears} onBagel={addBagel} onSchmear={addSchmear} touring={tourIndex>=0||!welcomeDismissed||experienceMode==='guided'} tourNode={introGuide}/>
-      <CameraController move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
+      <CameraController focusEntrance={experienceMode==='explore'&&!welcomeDismissed} move={move} look={look} guidedNode={guideNode} onPosition={setPlayer}/>
       <ContactShadows frames={8} position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
@@ -310,7 +310,7 @@ function canWalkAt(x:number,z:number){
   )
 }
 
-function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
+function CameraController({move,look,guidedNode,onPosition,focusEntrance}:{focusEntrance:boolean;move:Move;look:React.MutableRefObject<{yaw:number;pitch:number}>;guidedNode:GuideNode|null;onPosition:(p:THREE.Vector3)=>void}) {
   const {camera,size}=useThree()
   const pos=useRef(new THREE.Vector3(0,2.75,8.5))
   const tick=useRef(0)
@@ -327,7 +327,7 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
     if(guidedNode){
       wasGuided.current=true
       const portrait=size.width<size.height
-      const node=portrait&&guidedNode==='entry'
+      const node=portrait&&focusEntrance&&guidedNode==='entry'
         ? PORTRAIT_ENTRY_CAMERA
         : GUIDED_CAMERAS[guidedNode]
       const alpha=1-Math.exp(-delta*4.8)
@@ -337,7 +337,7 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
       const fov=portrait?74:56
       if(perspective.fov!==fov){perspective.fov=fov;perspective.updateProjectionMatrix()}
       fittedPosition.copy(node.position)
-      const width=guidedNode==='entry'?(portrait?8.2:13.2):guidedNode==='bagels'?8.2:guidedNode==='schmears'?5.3:guidedNode==='vitrina'||guidedNode==='selector'?13.2:0
+      const width=guidedNode==='entry'?(portrait&&focusEntrance?8.2:13.2):guidedNode==='bagels'?8.2:guidedNode==='schmears'?5.3:guidedNode==='vitrina'||guidedNode==='selector'?13.2:0
       if(width){
         const required=width/(2*Math.tan(THREE.MathUtils.degToRad(fov/2))*(size.width/size.height))
         fittedDelta.subVectors(node.position,node.lookAt)
