@@ -1,0 +1,401 @@
+{
+  "results": [
+    {
+      "mode": "desktop",
+      "node": "totem",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "node": "vitrina",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "node": "bagels",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "node": "schmears",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "node": "production",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "node": "cashier",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "node": "pickup",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "mode": "desktop",
+      "input": "mouse",
+      "handoff": "physical-bagel-to-pack-size",
+      "hotspot": {
+        "box": {
+          "x": 225.60333251953125,
+          "y": 278.4038391113281,
+          "width": 40.755584716796875,
+          "height": 37.30322265625
+        },
+        "label": "→\nElegir Plain"
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "totem",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "vitrina",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "bagels",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "schmears",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "production",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "cashier",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "node": "pickup",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "contextLost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "mode": "mobile",
+      "input": "touch",
+      "handoff": "physical-bagel-to-pack-size",
+      "hotspot": {
+        "box": {
+          "x": 89.53746032714844,
+          "y": 293.716064453125,
+          "width": 57.46040344238281,
+          "height": 39.354888916015625
+        },
+        "label": "→\nElegir Everything"
+      }
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "mode": "desktop",
+      "reads": [
+        {
+          "url": "http://127.0.0.1:3188/playable",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/GuidedCommerce-CyJx6aqa.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/playable-DM6tYJ0H.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/index-CR5A75KQ.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/GuidedCommerce-B9nuLXk0.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/playable-DAI4x4o-.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-plain.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 1,
+      "blocked": [],
+      "errors": []
+    },
+    {
+      "mode": "mobile",
+      "reads": [
+        {
+          "url": "http://127.0.0.1:3188/playable",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/GuidedCommerce-CyJx6aqa.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/playable-DM6tYJ0H.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/index-CR5A75KQ.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/GuidedCommerce-B9nuLXk0.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/assets/playable-DAI4x4o-.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3188/images/bagel-plain.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 1,
+      "blocked": [],
+      "errors": []
+    }
+  ]
+}

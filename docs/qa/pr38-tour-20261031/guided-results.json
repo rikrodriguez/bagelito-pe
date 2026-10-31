@@ -1,0 +1,165 @@
+{
+  "results": [
+    {
+      "mode": "desktop",
+      "scene": "01-entrance",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "02-selector",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "03-pack-size",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "04-pack-quantity",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "05-bagels",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "06-bagels-selected",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "07-schmears",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "08-cashier",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "09-payment",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "10-receipt",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "11-wallet",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "12-handoff",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "13-goodbye",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "14-returning",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "15-combos",
+      "pass": true
+    },
+    {
+      "mode": "desktop",
+      "scene": "16-schmear-size",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "01-entrance",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "02-selector",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "03-pack-size",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "04-pack-quantity",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "05-bagels",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "06-bagels-selected",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "07-schmears",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "08-cashier",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "09-payment",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "10-receipt",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "11-wallet",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "12-handoff",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "13-goodbye",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "14-returning",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "15-combos",
+      "pass": true
+    },
+    {
+      "mode": "mobile",
+      "scene": "16-schmear-size",
+      "pass": true
+    }
+  ],
+  "failures": []
+}

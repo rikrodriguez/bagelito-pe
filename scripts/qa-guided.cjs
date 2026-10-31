@@ -29,6 +29,17 @@ async function audit() {
       })
 
       async function visit() {
+        const targetOrigin = new URL(base).origin
+        if (!['localhost', '127.0.0.1', '[::1]'].includes(new URL(base).hostname)) {
+          throw Error('Starting a fresh product journey is restricted to a loopback QA origin.')
+        }
+        // visit() starts an independent journey. Keep the explicit mid-journey
+        // page.reload() test below intact so draft recovery remains exercised.
+        if (new URL(page.url()).origin === targetOrigin) {
+          await page.evaluate(() => sessionStorage.removeItem('bagelito.guided.product-draft.v1'))
+        } else if (page.url() !== 'about:blank') {
+          throw Error('Refusing to reset a product draft outside the local QA origin.')
+        }
         await page.goto(base + '/?qa=1', { waitUntil: 'networkidle' })
         await page.locator('[data-scene="entrance"]').waitFor()
         const qaEnabled = await page.locator('[data-qa="true"]').count()

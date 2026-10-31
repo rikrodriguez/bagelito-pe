@@ -1,0 +1,180 @@
+{
+  "kind": "read-only-strafe-diagnostic",
+  "base": "http://127.0.0.1:3188/",
+  "createdAt": "2026-10-31T19:43:29.656Z",
+  "sourceSha256": "dab14ac39b7da22300cebe787af7f0b60dede462f4a5b51b5f2107411ce629ec",
+  "fixture": {
+    "url": "https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/lebombo_1k.hdr",
+    "sha256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+    "bytes": 1476953
+  },
+  "limits": {
+    "originalHoldMs": 480,
+    "telemetryWaitMs": 10000,
+    "sustainedHoldMaximumMs": 15000,
+    "minimumDelta": 0.12
+  },
+  "completedAt": "2026-10-31T19:44:08.704Z",
+  "rawSha256": "048fd1f047fda21690d98557c95bafd53dc2458ae181ff711dda6d2abdc3f74d",
+  "stages": [
+    {
+      "name": "original-480ms",
+      "scheduledHoldMs": 480,
+      "hostDownBefore": 1793475828914,
+      "hostDownAcknowledged": 1793475828946,
+      "hostUpBefore": 1793475829427,
+      "hostUpAcknowledged": 1793475829438,
+      "deltaX": 0,
+      "passesOriginalDistance": false,
+      "browserHoldMs": 510.1000000014901,
+      "browserFramesWhileDown": 0,
+      "appRAFCallbacksWhileDown": 0
+    },
+    {
+      "name": "sustained-bounded",
+      "maximumHoldMs": 15000,
+      "hostDownBefore": 1793475839539,
+      "hostDownAcknowledged": 1793475839547,
+      "reachedThresholdWhileHeld": true,
+      "hostUpBefore": 1793475846559,
+      "hostUpAcknowledged": 1793475846576,
+      "deltaX": 0.61,
+      "reportedDeltaAfterRelease": 0,
+      "browserHoldMs": 7023.89999999851,
+      "browserFramesWhileDown": 5,
+      "appRAFCallbacksWhileDown": 5
+    }
+  ],
+  "acceptedInput": [
+    {
+      "at": 18407.19999999553,
+      "epoch": 1793475828934,
+      "phase": "original-480ms",
+      "dispatchStage": "post-app-bubble",
+      "type": "keydown",
+      "code": "KeyD",
+      "key": "d",
+      "repeat": false,
+      "trusted": true,
+      "defaultPrevented": true,
+      "target": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "activeElement": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "hasFocus": true,
+      "visibility": "visible",
+      "browserFrames": 22,
+      "appRAFCallbacks": 27,
+      "x": "0.00"
+    },
+    {
+      "at": 18909.69999999553,
+      "epoch": 1793475829437,
+      "phase": "original-480ms",
+      "dispatchStage": "post-app-bubble",
+      "type": "keyup",
+      "code": "KeyD",
+      "key": "d",
+      "repeat": false,
+      "trusted": true,
+      "defaultPrevented": false,
+      "target": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "activeElement": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "hasFocus": true,
+      "visibility": "visible",
+      "browserFrames": 22,
+      "appRAFCallbacks": 27,
+      "x": "0.00"
+    },
+    {
+      "at": 29019.89999999851,
+      "epoch": 1793475839547,
+      "phase": "sustained-bounded",
+      "dispatchStage": "post-app-bubble",
+      "type": "keydown",
+      "code": "KeyD",
+      "key": "d",
+      "repeat": false,
+      "trusted": true,
+      "defaultPrevented": true,
+      "target": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "activeElement": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "hasFocus": true,
+      "visibility": "visible",
+      "browserFrames": 29,
+      "appRAFCallbacks": 34,
+      "x": "0.00"
+    },
+    {
+      "at": 36047.39999999851,
+      "epoch": 1793475846574,
+      "phase": "sustained-bounded",
+      "dispatchStage": "post-app-bubble",
+      "type": "keyup",
+      "code": "KeyD",
+      "key": "d",
+      "repeat": false,
+      "trusted": true,
+      "defaultPrevented": false,
+      "target": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "activeElement": {
+        "tag": "BODY",
+        "id": "",
+        "className": "",
+        "editable": false
+      },
+      "hasFocus": true,
+      "visibility": "visible",
+      "browserFrames": 34,
+      "appRAFCallbacks": 39,
+      "x": "0.61"
+    }
+  ],
+  "lifecycle": [],
+  "network": {
+    "reads": 17,
+    "fixtureReads": 1,
+    "blocked": 0,
+    "redirects": 0
+  },
+  "errors": [],
+  "limitsOfConclusion": [
+    "The fixed 480ms check remains failed; no browser/application RAF occurred during that observed hold.",
+    "Sustained input verifies positive displacement, not a 480ms response guarantee.",
+    "Post-release observation contained only one RAF; eight telemetry frames without drift were not verified.",
+    "Software-rendered Chromium does not establish hardware GPU or Safari/iPhone performance."
+  ]
+}
