@@ -1,0 +1,11 @@
+#demo-preview-label { padding: 12px 20px; margin: 0; background: #fff0b8; color: #162d49; font-weight: 850; text-align: center; border-bottom: 2px solid #162d49; }
+#demo-announcement { margin: 0 auto; padding: 0 20px; max-width: 1280px; color: #162d49; font-weight: 800; }
+#demo-announcement:not(:empty) { padding-top: 12px; padding-bottom: 12px; background: #fff0b8; }
+#demo-app [tabindex="-1"]:focus-visible { outline: 3px solid #1b57b3; outline-offset: 5px; border-radius: 4px; }
+#demo-app button:focus-visible, #demo-app a:focus-visible, #demo-app input:focus-visible, #demo-app select:focus-visible, #demo-app textarea:focus-visible { outline: 3px solid #1b57b3; outline-offset: 3px; }
+#demo-app .checkout-review-card .checkout-upsell { margin-top: 20px; }
+#demo-app #demo-finish { margin-top: 16px; }
+#demo-app #demo-flavor-summary { overflow-wrap: anywhere; }
+#demo-app .quantity-control button { font-size: 22px; font-weight: 800; }
+#demo-app .checkout-stage .reserve-card { min-width: 0; }
+@media (max-width: 760px) { #demo-preview-label { font-size: 13px; padding: 10px 12px; } }
