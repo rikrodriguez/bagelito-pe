@@ -20,7 +20,6 @@ export function MobileStickyReserveCTA() {
   const [isVisible, setIsVisible] = useState(false);
   const href = merchantReviewOnly ? reserveHref().replace("/reserve", "/checkout") : acceptingReservations ? packsHref : waitlistHref();
   const label = merchantReviewOnly ? review.cta : acceptingReservations ? copy.stickyReserveCta.label : copy.stickyReserveCta.waitlistLabel;
-  const ariaLabel = merchantReviewOnly ? review.cta : acceptingReservations ? copy.stickyReserveCta.aria : copy.stickyReserveCta.waitlistAria;
 
   useEffect(() => {
     const trackedSections = [document.getElementById("home"), document.getElementById("packs")].filter(Boolean) as HTMLElement[];
@@ -54,7 +53,7 @@ export function MobileStickyReserveCTA() {
   }
 
   return (
-    <Link className="mobile-sticky-reserve-cta" href={href} aria-label={ariaLabel} onClick={() => trackBagelitoEvent("CTA Click", { location: "mobile_sticky", target: merchantReviewOnly ? "checkout_preview" : acceptingReservations ? "packs" : "waitlist" })}>
+    <Link className="mobile-sticky-reserve-cta" href={href} aria-label={label} onClick={() => trackBagelitoEvent("CTA Click", { location: "mobile_sticky", target: merchantReviewOnly ? "checkout_preview" : acceptingReservations ? "packs" : "waitlist" })}>
       <ShoppingBag size={18} />
       <span>{label}</span>
     </Link>

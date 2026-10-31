@@ -91,6 +91,12 @@ type CheckoutPreparation = {
   sessionId?: string;
 };
 
+function focusCheckoutContent(element: HTMLElement | null) {
+  if (!element) return;
+  element.focus({ preventScroll: true });
+  element.scrollIntoView({ block: "center", behavior: "auto" });
+}
+
 async function readCheckoutPaymentStatus(
   reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">,
   timeoutMs = 20_000,
@@ -148,6 +154,8 @@ export function ReservationFlow({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
+  const stepFocusRef = useRef<HTMLElement | null>(null);
+  const errorFocusRef = useRef<HTMLDivElement | null>(null);
   const hasMountedRef = useRef(false);
   const flowAliveRef = useRef(true);
   const navigationSelectionRef = useRef(JSON.stringify([initialPackSlug, initialFlavorSlug ?? ""]));
@@ -407,21 +415,33 @@ export function ReservationFlow({
       return;
     }
 
-    const scrollToTop = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+    const target = stepFocusRef.current;
+    target?.focus({ preventScroll: true });
+    const scrollToStep = () => {
+      if (target) {
+        // A later Tab must retain its new focus/scroll position. Recheck the
+        // step position only while its heading still owns keyboard focus.
+        if (document.activeElement === target) target.scrollIntoView({ block: "center", behavior: "auto" });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
     };
 
-    scrollToTop();
-    const frame = window.requestAnimationFrame(scrollToTop);
-    const timeout = window.setTimeout(scrollToTop, 90);
+    scrollToStep();
+    const frame = window.requestAnimationFrame(scrollToStep);
+    const timeout = window.setTimeout(scrollToStep, 90);
 
     return () => {
       window.cancelAnimationFrame(frame);
       window.clearTimeout(timeout);
     };
   }, [step]);
+
+  useEffect(() => {
+    if (error) focusCheckoutContent(errorFocusRef.current);
+  }, [error]);
 
   useEffect(() => {
     document.body.classList.toggle("reservation-review-active", step === 4);
@@ -498,12 +518,14 @@ export function ReservationFlow({
         reason: selectedPack.packType === "mixed" ? "exact_bagel_count" : "choose_flavor",
       });
       setError(selectedPack.packType === "mixed" ? r.errors.exactBagels.replace("{units}", String(selectedPack.units)) : r.errors.chooseFlavor);
+      focusCheckoutContent(errorFocusRef.current);
       return;
     }
 
     if (step === 3 && !validateDeliveryStep()) {
       trackBagelitoEvent("Reserve Validation Error", { step, reason: "delivery_required" });
       setError(r.errors.deliveryRequired);
+      focusCheckoutContent(errorFocusRef.current);
       return;
     }
 
@@ -1021,7 +1043,7 @@ export function ReservationFlow({
         {r.steps.map((label, index) => {
           const targetStep = index + 1;
           return (
-            <button key={label} type="button" className={step === targetStep ? "active" : ""} disabled={Boolean(recovery) || targetStep > step} onClick={() => goToStep(targetStep)}>
+            <button key={label} type="button" className={step === targetStep ? "active" : ""} aria-current={step === targetStep ? "step" : undefined} disabled={Boolean(recovery) || targetStep > step} onClick={() => goToStep(targetStep)}>
               {targetStep}. {label}
             </button>
           );
@@ -1030,7 +1052,7 @@ export function ReservationFlow({
 
       <div className={checkoutPage || step === 4 ? "checkout-workspace" : "reserve-workspace"}>
         <div className={checkoutPage || step === 4 ? "checkout-stage" : "reserve-stage"}>
-          {error ? <div className="reserve-alert">{error}</div> : null}
+          {error ? <div className="reserve-alert" id="checkout-error" ref={errorFocusRef} role="alert" aria-atomic="true" tabIndex={-1}>{error}</div> : null}
 
       {step === 1 ? (
         <>
@@ -1039,7 +1061,7 @@ export function ReservationFlow({
               const localizedPack = packCopy[locale][pack.slug];
               const unitPrice = (pack.amount / pack.units).toFixed(2);
               return (
-                <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} onClick={() => selectPack(pack.slug)}>
+                <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} aria-pressed={packSlug === pack.slug} ref={packSlug === pack.slug ? element => { stepFocusRef.current = element; } : undefined} onClick={() => selectPack(pack.slug)}>
                   {pack.mostWanted ? <span className="reserve-value-badge">{copy.conversion.bestValue}</span> : null}
                   <span>{pack.units} {r.bagels}</span>
                   <strong>{localizedPack.name}</strong>
@@ -1086,7 +1108,7 @@ export function ReservationFlow({
       {step === 2 ? (
         <div className="reserve-card">
           <div className="reserve-step-title">
-            <h2>{r.chooseFlavors}</h2>
+            <h2 ref={element => { stepFocusRef.current = element; }} tabIndex={-1}>{r.chooseFlavors}</h2>
             <span>{selectedPack.packType === "mixed" ? selectedTotal + " / " + selectedPack.units + " " + r.selected : singleFlavor ? selectedPack.units + " x " + getFlavorLabel(singleFlavor) : r.chooseOneFlavor}</span>
           </div>
           <div className="flavor-select-grid">
@@ -1113,7 +1135,7 @@ export function ReservationFlow({
                       <button type="button" onClick={() => changeQuantity(flavor.slug, 1)} aria-label={r.add + " " + flavorLabel}><Plus size={15} /></button>
                     </div>
                   ) : (
-                    <button type="button" className="select-flavor-button" onClick={() => setSingleFlavor(flavor.slug)}>{isSingleSelected ? <Check size={16} /> : null} {r.select}</button>
+                    <button type="button" className="select-flavor-button" aria-label={`${r.select} ${flavorLabel}`} aria-pressed={isSingleSelected} onClick={() => setSingleFlavor(flavor.slug)}>{isSingleSelected ? <Check size={16} /> : null} {r.select}</button>
                   )}
                 </article>
               );
@@ -1124,25 +1146,25 @@ export function ReservationFlow({
 
       {step === 3 ? (
         <div className="reserve-card form-card">
-          <h2>{r.deliveryDetails}</h2>
+          <h2 ref={element => { stepFocusRef.current = element; }} tabIndex={-1}>{r.deliveryDetails}</h2>
           <div className="form-grid">
             <label className="bot-trap-field" aria-hidden="true">
               Website
               <input autoComplete="off" name="website" tabIndex={-1} value={website} onChange={(event) => setWebsite(event.target.value)} />
             </label>
-            <label>{r.fields.fullName}<input required value={details.customerName} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
-            <label>{r.fields.whatsapp}<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
-            <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
+            <label>{r.fields.fullName}<input required value={details.customerName} aria-invalid={error === r.errors.deliveryRequired && !details.customerName} aria-describedby={error === r.errors.deliveryRequired && !details.customerName ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
+            <label>{r.fields.whatsapp}<input required value={details.whatsapp} aria-invalid={error === r.errors.deliveryRequired && !details.whatsapp} aria-describedby={error === r.errors.deliveryRequired && !details.whatsapp ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
+            <label>{r.fields.email}<input type="email" required value={details.email} aria-invalid={error === r.errors.deliveryRequired && !details.email} aria-describedby={error === r.errors.deliveryRequired && !details.email ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
             <label>{r.fields.district}<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district === "Other" ? r.otherDistrict : district}</option>)}</select></label>
-            <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
-            <div className="handoff-box wide" role="radiogroup" aria-label={r.deliveryHandoff.label}>
+            <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} aria-invalid={error === r.errors.deliveryRequired && !details.deliveryAddress} aria-describedby={error === r.errors.deliveryRequired && !details.deliveryAddress ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
+            <div className="handoff-box wide" role="group" aria-label={r.deliveryHandoff.label}>
               <span>{r.deliveryHandoff.label}</span>
               <div className="handoff-options">
-                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "self" ? "active" : "")} onClick={() => setDetails({ ...details, deliveryHandoff: "self" })}>
+                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "self" ? "active" : "")} aria-pressed={details.deliveryHandoff === "self"} onClick={() => setDetails({ ...details, deliveryHandoff: "self" })}>
                   {details.deliveryHandoff === "self" ? <Check size={16} /> : null}
                   <strong>{r.deliveryHandoff.receive}</strong>
                 </button>
-                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "porteria" ? "active" : "")} onClick={() => setDetails({ ...details, deliveryHandoff: "porteria" })}>
+                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "porteria" ? "active" : "")} aria-pressed={details.deliveryHandoff === "porteria"} onClick={() => setDetails({ ...details, deliveryHandoff: "porteria" })}>
                   {details.deliveryHandoff === "porteria" ? <Check size={16} /> : null}
                   <strong>{r.deliveryHandoff.porter}</strong>
                 </button>
@@ -1164,7 +1186,7 @@ export function ReservationFlow({
             <div className="reserve-step-title">
               <div>
                 <span className="checkout-section-kicker">{checkoutText.eyebrow}</span>
-                <h2>{culqiText.secureTitle}</h2>
+                <h2 ref={element => { stepFocusRef.current = element; }} tabIndex={-1}>{culqiText.secureTitle}</h2>
               </div>
               <span>{r.payment.total}: S/{totalAmount}</span>
             </div>

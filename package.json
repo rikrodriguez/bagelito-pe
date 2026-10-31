@@ -11,7 +11,8 @@
     "test:sql": "bash tests/run-sql-tests.sh",
     "test:checkout-browser": "node --test --test-concurrency=1 tests/browser/checkout-selection.mjs",
     "test:checkout-financial-browser": "node --test --test-concurrency=1 tests/browser/checkout-financial-recovery.mjs",
-    "test:browser-network-guard": "node --test tests/browser/network-guard.mjs"
+    "test:browser-network-guard": "node --test tests/browser/network-guard.mjs",
+    "test:accessibility-browser": "node --test --test-concurrency=1 tests/browser/checkout-accessibility.mjs tests/browser/storefront-accessibility.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",

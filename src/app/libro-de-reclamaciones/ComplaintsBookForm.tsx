@@ -102,7 +102,7 @@ export function ComplaintsBookForm() {
 
   if (submitted) {
     return (
-      <main className="complaints-page complaints-receipt-page">
+      <main className="complaints-page complaints-receipt-page" lang="es">
         <section className="complaint-receipt" id="hoja-de-reclamacion">
           <div className="complaint-receipt-success">
             <CheckCircle2 size={42} />
@@ -168,7 +168,7 @@ export function ComplaintsBookForm() {
   }
 
   return (
-    <main className="complaints-page">
+    <main className="complaints-page" lang="es">
       <section className="complaints-hero">
         <div>
           <p className="kicker">Atención al consumidor</p>
