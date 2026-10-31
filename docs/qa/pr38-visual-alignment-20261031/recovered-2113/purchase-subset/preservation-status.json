@@ -1,0 +1,17 @@
+{
+  "status": "partial-at-preservation-deadline",
+  "application_code_sha": "20296a6a32f29e5c8c8b518bf189bda3351b98e3",
+  "completed": [
+    [
+      "desktop",
+      "bagels"
+    ],
+    [
+      "desktop",
+      "schmears"
+    ]
+  ],
+  "failures_at_snapshot": [],
+  "scope": "Purchasing scene visibility subset only; full guided suite not completed",
+  "preserved_at_utc": "2026-10-31T21:12:30Z"
+}

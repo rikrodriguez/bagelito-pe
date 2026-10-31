@@ -24,6 +24,10 @@
     "world-results.json": "67071a5d66eba56f75827adec5acf32a732c755b88880bd26f2e759f3f784087",
     "partial-desktop-01-entrance.png": "378a12c760e4658781c77d49a3d18c56c896b26491cde16826de8c6e65032356",
     "mobile-tour-1-totem.png": "7e66a9bd19ee2fb36cc334755d8cb3866380e789c471ad0519e1edc8f63af30b",
-    "desktop-entry.png": "163a8fabc11f9c7e86f80d90a420b69b935546ac1370df509d20c8544ac48925"
+    "desktop-entry.png": "163a8fabc11f9c7e86f80d90a420b69b935546ac1370df509d20c8544ac48925",
+    "purchase-subset/preservation-status.json": "1de5d0dec79d052e3c8b1753f6211fea1dac56af90718b4964b2916930a6aea1",
+    "purchase-subset/desktop-schmears-actual.png": "d478b3f2b1b17541754806d39165844a8d4daf8e0fbe1cd6120e84ff6789b2be",
+    "purchase-subset/captures-results.json": "f3f80e707c9a876738aee18937d6f0b6af585f15025216c075aa492f6c32c898",
+    "purchase-subset/desktop-bagels-actual.png": "4dda0cfbd50c9f5449a22dd82c63bc26216dc42045f601d8394a09735b93d353"
   }
 }
