@@ -1,6 +1,6 @@
 # Vitrina 3D visible durante la compra móvil
 
-Aplicación: `0381000a91fc8eebe235c8ebf9c034def9dc64b6`. La validación móvil está completa; la repetición del recorrido guiado completo sobre este mismo código está en curso.
+Aplicación: `0381000a91fc8eebe235c8ebf9c034def9dc64b6`. La validación móvil y el recorrido guiado completo terminaron en PASS sobre este mismo código. Las capturas, resultados y fuentes conservan hashes verificables.
 
 El catálogo anterior cubría logo y vitrinas. La composición nueva deja el mundo 3D a la vista y sitúa selección, resumen y continuación en una bandeja inferior. Los ocho bagels y cinco schmears siguen accesibles mediante scroll nativo. Formato, cantidad, tamaños, combos y caja conservan todos sus controles en paneles compactos con scroll propio.
 
@@ -18,12 +18,14 @@ El Canvas real permanece montado y visible. No se añadió una fotografía de la
 | Móvil: ocho escenas × dos tamaños | PASS 16/16 | 0381000, exit 0; fuente sin cambios durante el run |
 | Catálogo con input táctil nativo | PASS 30/30 | Ocho bagels, cinco schmears y dos variantes de combo por tamaño |
 | Foco con Tab nativo | PASS 26/26 nombres | Ocho bagels y cinco schmears en cada tamaño; nombres/notas completos |
-| Recorrido guiado completo | En curso sobre 0381000 | El PASS anterior 32/32 de a1fce72 conserva su procedencia, sin reasignarlo |
+| Recorrido guiado completo | PASS 32/32, exit 0 | 0381000; 16 desktop + 16 móvil y auxiliares de draft/carrito/privacidad |
 | Baseline comparable | FAIL conservado | 1816079: dos capturas, 12 fallos bajo los mismos criterios nuevos; no es una suite de 16 estados |
 
 [Resultados móviles, 22 PNG, hashes y reproducción](qa/pr45-mobile-vitrina-20261031/mobile-final-0381000/README.md). El run verifica añadir/quitar todos los bagels, capacidad seis y séptima selección, toggle de los cinco schmears, combos con Classic Strawberry/Herb & Roasted Garlic, targets efectivos de 44×44 px, foco visible, texto de CTA/progreso con contraste ≥4.5:1 y cero overflow de documento. Los gestos y taps son eventos nativos de Chromium; no equivalen a un móvil físico.
 
 Tráfico móvil registrado: 74 GET locales y dos lecturas del HDR aprobado; cero errores HTTP, bloqueos o errores de rutas/cierre. Se inspecciona el enlace de consulta sin abrir WhatsApp. Pagos `enabled/configured/intakeEnabled=false`, modo `disabled`. El recorrido guiado usa únicamente la simulación QA existente en sus estados de pago y recibo.
+
+[Recorrido guiado final, 32 PNG y metadatos](qa/pr45-mobile-vitrina-20261031/guided-final-0381000/README.md): 289 GET locales registrados y diez lecturas HDR, cero errores HTTP/rutas/cierre o bloqueos. Fuentes y snapshot compilado sin cambios. El PASS previo de a1fce72 se conserva separado en `guided/`.
 
 ## Comparación equivalente
 
@@ -54,8 +56,8 @@ La captura WIP inicial permanece en el commit `695598821fa023ccad3458c8e38ef298f
 
 ## Procedencia y límites
 
-[Scope de fuente](qa/pr45-mobile-vitrina-20261031/source-scope.json) y [manifiesto SHA256](qa/pr45-mobile-vitrina-20261031/manifest.json). Los snapshots compilados se sirven desde copias inmutables, con HDR local de hash fijado y firewall de GET loopback. Cambios de fuente o errores tardíos de rutas hacen fallar el runner. Las capturas finales se guardan sin editar.
+[Entorno exacto](qa/pr45-mobile-vitrina-20261031/environment.json), [scope de fuente](qa/pr45-mobile-vitrina-20261031/source-scope.json) y [manifiesto SHA256](qa/pr45-mobile-vitrina-20261031/manifest.json). Los snapshots compilados se sirven desde copias inmutables, con HDR local de hash fijado y firewall de GET loopback. Cambios de fuente o errores tardíos de rutas hacen fallar el runner. Las capturas finales se guardan sin editar.
 
 Las pruebas QA3D 20/20 y eventos 9/9 del [informe de runtime](pr45-runtime-input-qa-20261031.md) retienen su SHA `1816079`; no son ejecuciones nuevas de este cambio. Sus asserts de readiness y strafe permanecen intactos.
 
-El POS azul todavía oculta físicamente parte de un cuenco y la cámara de estación puede recortar el logo, especialmente en schmears móvil. Es trabajo visual pendiente separado del PASS de oclusión DOM. La geometría/materiales aún no tienen la fidelidad fotográfica final de la referencia. Chromium/SwiftShader y estos dos viewports no certifican fluidez de hardware móvil, Safari ni backgrounding del sistema.
+La composición desktop conserva su panelería anterior. El POS azul todavía oculta físicamente parte de un cuenco y la cámara de estación puede recortar el logo, especialmente en schmears móvil. Es trabajo visual pendiente separado del PASS de oclusión DOM. La geometría/materiales aún no tienen la fidelidad fotográfica final de la referencia. Chromium/SwiftShader y estos dos viewports no certifican fluidez de hardware móvil, Safari ni backgrounding del sistema.

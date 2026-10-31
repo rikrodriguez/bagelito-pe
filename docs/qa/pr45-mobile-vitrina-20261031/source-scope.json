@@ -55,5 +55,8 @@
   "presentationFocusReview": "focus-fix/offline-review-0381000/review-results.json",
   "qaDriverSHA256": "22956007fefd79e1f5733bd476e65d337d57a9e31a7f66f12d718ce2711e4da3",
   "currentMobileResults": "mobile-final-0381000/mobile-vitrina-results.json",
-  "baselineResults": "baseline-1816079/mobile-vitrina-results.json"
+  "baselineResults": "baseline-1816079/mobile-vitrina-results.json",
+  "qaSourceCommit": "26125636e3a1adb26025cd75176cecf368f87a48",
+  "currentGuidedResults": "guided-final-0381000/results.json",
+  "finalSummary": "final-summary.json"
 }

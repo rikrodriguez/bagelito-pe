@@ -111,3 +111,8 @@ La rama visual fue reconciliada contra remoto antes de push y publicada con `git
 
 
 Un probe adicional del mismo código `20296a6` preservó las escenas de compra **desktop/bagels y desktop/schmears**, con Canvas vivo y los ocho/cinco rótulos dentro de viewport, cero fallos hasta ese punto. [Capturas y manifiesto parcial](qa/pr38-visual-alignment-20261031/recovered-2113/purchase-subset/captures-results.json). Se preservó al llegar al plazo; no acredita la compra móvil ni la suite guiada completa, selección completa, checkout o pago. Las tarjetas DOM siguen superpuestas al mundo real y no se describen como controles WebGL.
+
+
+## Seguimiento móvil: 0381000
+
+El [informe móvil PR45](pr45-mobile-vitrina-20261031.md) documenta bandeja compacta, foco nativo y comparación de la vitrina. Código0381000: móvil16/16, catálogo30/30, Tab26/26 y guiado32/32 PASS. Este bloque no reasigna los resultados históricos de este documento; conserva geometría, catálogo y callbacks comerciales. Capturas exactas y límites físicos están en el informe nuevo.
