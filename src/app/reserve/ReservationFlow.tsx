@@ -29,6 +29,7 @@ type Props = {
   packs: Pack[];
   flavors: Flavor[];
   initialPackSlug: PackSlug;
+  initialFlavorSlug?: string;
   paymentConfig: PublicPaymentConfig;
   checkoutPage?: boolean;
 };
@@ -70,6 +71,7 @@ export function ReservationFlow({
   packs,
   flavors,
   initialPackSlug,
+  initialFlavorSlug,
   paymentConfig,
   checkoutPage = false,
 }: Props) {
@@ -79,7 +81,12 @@ export function ReservationFlow({
   const [step, setStep] = useState(1);
   const [packSlug, setPackSlug] = useState<PackSlug>(initialPackSlug);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [singleFlavor, setSingleFlavor] = useState("");
+  const [singleFlavor, setSingleFlavor] = useState(() => (
+    packs.find((pack) => pack.slug === initialPackSlug)?.packType === "single"
+      && flavors.some((flavor) => flavor.slug === initialFlavorSlug)
+      ? initialFlavorSlug ?? ""
+      : ""
+  ));
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
   // Explicit purchase consent is separate from the optional marketing consent.
@@ -288,6 +295,7 @@ export function ReservationFlow({
   }
 
   function selectPack(nextSlug: PackSlug) {
+    if (nextSlug === selectedPack.slug) return;
     const nextPack = packs.find((pack) => pack.slug === nextSlug);
     trackBagelitoEvent("Reserve Pack Selected", { pack: nextSlug, amount: nextPack?.amount });
     setPackSlug(nextSlug);
@@ -304,7 +312,9 @@ export function ReservationFlow({
   function changeQuantity(flavorSlug: string, delta: number) {
     setQuantities((current) => {
       const currentQuantity = current[flavorSlug] ?? 0;
-      const otherTotal = selectedTotal - currentQuantity;
+      const otherTotal = Object.entries(current).reduce(
+        (sum, [slug, quantity]) => sum + (slug === flavorSlug ? 0 : quantity), 0,
+      );
       const next = Math.max(0, Math.min(selectedPack.units - otherTotal, currentQuantity + delta));
       return { ...current, [flavorSlug]: next };
     });

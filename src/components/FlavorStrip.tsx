@@ -80,7 +80,7 @@ export function FlavorStrip() {
               <strong className="flavor-product-price">
                 {locale === "es" ? "Pack de 6 desde" : "6-pack from"} S/{singlePackPrice}
               </strong>
-              <Link className="flavor-product-cta" href={destination} aria-label={
+              <Link className="flavor-product-cta" href={merchantReviewOnly || accepting ? `${destination}&flavor=${encodeURIComponent(flavor.slug)}` : destination} aria-label={
                 merchantReviewOnly ? `${review.cta}: ${name}` : locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
                   : `${accepting ? "Choose pack" : "Notify me when open"}: ${name}`
               }>

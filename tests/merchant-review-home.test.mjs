@@ -55,7 +55,7 @@ for (const locale of ["es", "en"]) {
       assert.doesNotMatch(banner, /deadline-timer|batch-availability|2027|3 packs|15%/);
       const packHrefs = [...rendered.find(([name]) => name === "Packs")[1].matchAll(/<a[^>]*href="([^"]+)"/g)].map(match => match[1]);
       assert.deepEqual(packHrefs, packs.map(pack => `/checkout?pack=${pack.slug}`));
-      assert.match(rendered.find(([name]) => name === "FlavorStrip")[1], /href="\/checkout\?pack=6-single"/);
+      assert.match(rendered.find(([name]) => name === "FlavorStrip")[1], /href="\/checkout\?pack=6-single&amp;flavor=/);
     });
   }
   test(`normal home preserves open and closed purchase links (${locale})`, () => {
@@ -63,7 +63,7 @@ for (const locale of ["es", "en"]) {
     assert.match(render("Hero", locale, false, false), /href="\/waitlist"/);
     assert.match(render("Packs", locale, false, true), /href="\/reserve\?pack=12-mixed"/);
     assert.match(render("Packs", locale, false, false), /href="\/waitlist\?pack=12-mixed"/);
-    assert.match(render("FlavorStrip", locale, false, true), /href="\/checkout\?pack=6-single"/);
+    assert.match(render("FlavorStrip", locale, false, true), /href="\/checkout\?pack=6-single&amp;flavor=/);
     assert.match(render("FlavorStrip", locale, false, false), /href="\/waitlist\?pack=6-single"/);
     for (const name of ["HowMonthlyWorks", "ConversionTrustStrip", "FAQ"]) {
       const html = render(name, locale, false, true);

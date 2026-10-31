@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { flavors, getValidPack, packs } from "@/lib/catalog";
+import { flavors, getCheckoutSelection, packs, type CheckoutSearchParams } from "@/lib/catalog";
 import { getPublicPaymentConfig } from "@/lib/payments";
 import { siteDescription, siteOgImage } from "@/lib/site";
 import { ReservationFlow } from "./ReservationFlow";
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function ReservePage({ searchParams }: { searchParams?: Promise<{ pack?: string }> }) {
+export default async function ReservePage({ searchParams }: { searchParams?: Promise<CheckoutSearchParams> }) {
   const params = await searchParams;
-  const selectedPack = getValidPack(params?.pack);
+  const { pack: selectedPack, flavor: selectedFlavor } = getCheckoutSelection(params);
   const paymentConfig = getPublicPaymentConfig();
 
   return (
@@ -47,9 +47,11 @@ export default async function ReservePage({ searchParams }: { searchParams?: Pro
       <Header />
       <main className="reserve-page">
         <ReservationFlow
+          key={`${selectedPack.slug}:${selectedFlavor?.slug ?? ""}`}
           packs={packs}
           flavors={flavors}
           initialPackSlug={selectedPack.slug}
+          initialFlavorSlug={selectedFlavor?.slug}
           paymentConfig={paymentConfig}
         />
       </main>
