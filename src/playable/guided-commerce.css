@@ -1947,3 +1947,4 @@
   .guided-commerce[data-scene="cashier"] .guided-cashier-action{top:118px!important;bottom:90px!important;left:12px!important;right:12px!important;max-height:none!important;overflow-y:auto}
   .guided-commerce .guided-store-menu-panel,.guided-commerce .guided-store-cart-panel{top:70px;max-height:calc(100dvh - 170px);overflow-y:auto}
 }
+.guided-commerce[data-live-world="true"] .mobile-bagel-card > button > .mobile-bagel-sign{display:flex;align-items:center;justify-content:center;max-width:100%;min-height:28px;padding:4px 6px;border:1px solid #d7dce4;border-radius:5px;background:#fffaf4;color:#004aad;white-space:normal;text-align:center}

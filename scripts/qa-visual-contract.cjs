@@ -160,6 +160,16 @@ check('Healthy store retains one Canvas across commerce; explicit GPU recovery c
   assert.match(sceneText, /camera\.position\.lerp\(fittedPosition,alpha\)/)
 })
 
+check('Responsive fit uses the front display plane, with a finite scene diagnostic for callback readiness', () => {
+  const controller = fn(scene, 'CameraController').getText()
+  assert.match(controller, /width\/\(2\*Math\.tan\(THREE\.MathUtils\.degToRad\(fov\/2\)\)\*\(size\.width\/size\.height\)\)/)
+  assert.match(controller, /fittedPosition\.z=Math\.max\(node\.position\.z,1\.5\+required\)/)
+  assert.doesNotMatch(controller, /fittedPosition\.z=node\.lookAt\.z\+fittedDelta\.z\*scale/)
+  assert.match(controller, /perspective\.updateProjectionMatrix\(\)/)
+  const main = tags(fn(scene, 'PlayableStore'), 'main')[0]
+  assert.match(attribute(main, 'data-world-scene').getText(), /experienceMode==='guided'\?commerceScene:'explore'/)
+})
+
 const report = { kind: 'source-and-asset-structure-only', checks, manifest, limitations: ['No rendered visual parity, framing or readability assertion', 'No browser interaction or payment/provider execution'] }
 if (process.env.QA_VISUAL_OUTPUT) {
   const destination = resolve(process.env.QA_VISUAL_OUTPUT)

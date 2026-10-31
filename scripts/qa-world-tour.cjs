@@ -5,10 +5,22 @@
 const { chromium } = require('playwright')
 const { mkdirSync, writeFileSync } = require('node:fs')
 const { resolve } = require('node:path')
+const { execFileSync } = require('node:child_process')
+const assert = require('node:assert/strict')
 
 const base = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, '')
 const output = resolve(process.env.QA_OUTPUT || 'qa-artifacts')
 mkdirSync(output, { recursive: true })
+assert.ok(['localhost','127.0.0.1','[::1]'].includes(new URL(base).hostname), '3D QA requires loopback')
+// The approved reference is now used only for its bounded wall-logo/product
+// crops. Verify exact bytes and UV bounds, rather than banning its GET alone.
+execFileSync(process.execPath, [resolve(__dirname,'qa-visual-contract.cjs')], {stdio:'inherit'})
+async function freshExplore(page) {
+  if (new URL(page.url()).origin === new URL(base).origin) {
+    await page.evaluate(() => sessionStorage.removeItem('bagelito.guided.product-draft.v1'))
+  }
+  await page.goto(base + '/playable', {waitUntil:'domcontentloaded'})
+}
 
 const stops = ['totem', 'vitrina', 'bagels', 'schmears', 'production', 'cashier', 'pickup']
 const stopX = [-3.70, 0, -2.05, 4.20, 0, 5.65, 6.95]
@@ -83,8 +95,7 @@ async function audit() {
         const url = request.url()
         const item = url.match(/\/images\/(bagel-[a-z-]+\.webp)(?:\?|$)/)
         if (item) productAssets.add(item[1])
-        if (url.includes('/images/bagel-vitrina-photo.webp')
-          || url.includes('/images/store-reference-approved.webp')) {
+        if (url.includes('/images/bagel-vitrina-photo.webp')) {
           failures.push(mode.name + ': flat photographic showroom texture still used in 3D')
         }
       })
@@ -101,7 +112,7 @@ async function audit() {
       })
       page.on('pageerror', (err) => failures.push(mode.name + ' JS: ' + err.message))
       try {
-        await page.goto(base + '/playable', { waitUntil: 'domcontentloaded' })
+        await freshExplore(page)
         const readyDeadline = Date.now() + 30000
         const remaining = () => Math.max(1, readyDeadline - Date.now())
         await page.locator('canvas').waitFor({ timeout: remaining() })
@@ -116,6 +127,7 @@ async function audit() {
         }
 
         if (mode.name === 'desktop') {
+          await page.getByRole('button', {name:'Explorar libre',exact:true}).click()
           const initialX = Number(await page.locator('.playable-shell').getAttribute('data-player-x'))
           try {
             await page.keyboard.down('d')
@@ -165,7 +177,7 @@ async function audit() {
         results.push(mode.name + ': tour-to-selector')
 
         // Physical bagel station opens pack configuration immediately.
-        await page.goto(base + '/playable', { waitUntil:'domcontentloaded' })
+        await freshExplore(page)
         await page.locator('.tour-start-button').click()
         await page.locator('.guided-tour-panel').getByRole('button', { name: /Siguiente/ }).click()
         await page.locator('.guided-tour-panel').getByRole('button', { name: /Siguiente/ }).click()
@@ -175,7 +187,7 @@ async function audit() {
         results.push(mode.name + ': bagels-to-pack-configuration')
 
         // Physical schmear station opens the correct size and flavor flow.
-        await page.goto(base + '/playable', { waitUntil:'domcontentloaded' })
+        await freshExplore(page)
         await page.locator('.tour-start-button').click()
         for(let i=0;i<3;i++){
           await page.locator('.guided-tour-panel').getByRole('button', { name: /Siguiente/ }).click()

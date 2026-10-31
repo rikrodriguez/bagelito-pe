@@ -44,13 +44,26 @@ async function audit() {
         await page.getByRole('button', {name:'Empezar pedido',exact:true}).click()
         await page.getByRole('button', {name:'Abrir menú',exact:true}).click()
         await page.getByRole('button', {name:'Inicio',exact:true}).click()
-        await page.getByRole('button', {name:'Cerrar menú',exact:true}).click()
+        // Inicio changes the scene; its existing effect closes the menu.
+        // Wait for that state before interacting with the same toggle again.
+        await page.locator('.guided-store-menu-panel').waitFor({state:'hidden'})
         await page.locator('[data-scene="entrance"]').waitFor()
         const qaEnabled = await page.locator('[data-qa="true"]').count()
         if (!qaEnabled) throw Error('Visual QA is not enabled. Do not use payment bypass on production.')
       }
       async function scene(key, name) {
         await page.locator('[data-scene="' + key + '"]').waitFor()
+        await page.waitForFunction(expected => document.querySelector('.playable-shell')?.getAttribute('data-world-scene') === expected, key)
+        if (['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears'].includes(key)) {
+          await page.waitForFunction(scene => {
+            const selector = scene === 'bagels' ? '.bagelito-3d-blue-sign' : scene === 'schmears' ? '.schmear-3d-sign' : '.bagelito-3d-blue-sign,.schmear-3d-sign'
+            const plates = [...document.querySelectorAll(selector)]
+            return plates.length === (scene === 'bagels' ? 8 : scene === 'schmears' ? 5 : 13) && plates.every(plate => {
+              const box = plate.getBoundingClientRect()
+              return box.width > 0 && box.x >= 0 && box.y >= 0 && box.right <= innerWidth && box.bottom <= innerHeight
+            })
+          }, key)
+        }
         // Transitions request a new real scene image; wait for decode rather than
         // flagging a normal in-flight image request as a broken asset.
         await page.locator('[data-scene="' + key + '"]').evaluate(async (root) => {
@@ -69,7 +82,7 @@ async function audit() {
         }))
         if (brokenImages.length) failures.push(mode.name + '/' + name + ': broken images ' + brokenImages.join(', '))
         if (widths.document > widths.viewport + 2) failures.push(mode.name + '/' + name + ': overflow')
-        await page.screenshot({ path: resolve(output, mode.name + '-' + name + '.png') })
+        await page.screenshot({ path: resolve(output, mode.name + '-' + name + '.png'), animations:'disabled' })
         results.push({ mode: mode.name, scene: name, pass: !brokenImages.length && widths.document <= widths.viewport + 2 })
       }
 

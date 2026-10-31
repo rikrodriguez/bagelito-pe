@@ -81,7 +81,7 @@ check('3D product tap enters matching guided category', () => {
 
 check('3D failures return the customer to functional guided shopping', () => {
   assert.match(three, /class Store3DErrorBoundary extends Component/)
-  assert.match(three, /onRecover=\{\(\)=>\{setVisualAvailable\(false\);enterGuided\(null\)\}\}/)
+  assert.match(three, /onRecover=\{\(\)=>\{setWorldFailed\(false\);setVisualAvailable\(false\);enterGuided\(null\)\}\}/)
   assert.match(three, /liveWorld=\{visualAvailable\}/)
   assert.match(styling, /\.store-3d-fallback/)
   assert.match(three, /window\.localStorage\.getItem/)

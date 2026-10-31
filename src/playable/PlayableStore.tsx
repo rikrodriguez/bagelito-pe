@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, RoundedBox, useTexture } from '@react-three/drei'
+import { ContactShadows, Environment, Html, RoundedBox, useEnvironment, useTexture } from '@react-three/drei'
 import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import * as THREE from 'three'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
@@ -58,12 +58,14 @@ const ZONES = {
 
 const SCHMEAR_COLORS = ['#eee8dd','#e3a457','#d8ddc1','#c4936b','#efabb1']
 
-class Store3DErrorBoundary extends Component<{children:ReactNode;onRecover:()=>void},{failed:boolean}> {
+class Store3DErrorBoundary extends Component<{children:ReactNode;onRecover:()=>void;onFailure:()=>void},{failed:boolean}> {
   state={failed:false}
 
   static getDerivedStateFromError(){
     return {failed:true}
   }
+
+  componentDidCatch(){this.props.onFailure()}
 
   render(){
     if(this.state.failed) return <div className="store-3d-fallback interactive-ui" role="alert">
@@ -85,6 +87,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
   const [skipGuidedEntrance, setSkipGuidedEntrance] = useState(false)
   const [commerceScene, setCommerceScene] = useState('selector')
   const [visualAvailable, setVisualAvailable] = useState(true)
+  const [worldFailed, setWorldFailed] = useState(false)
   const onCommerceScene = useCallback((scene:string)=>setCommerceScene(scene),[])
   const [category, setCategory] = useState<Category | null>(null)
   const [step, setStep] = useState<Step>('explore')
@@ -207,16 +210,25 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
   if(!ready)return <div className="playable-loading">Preparando Bagelito…</div>
 
-  return <main className={'playable-shell'+(guideNode?' guided-mode':'')} data-tour-node={introGuide ?? 'none'} data-player-x={player.x.toFixed(2)}>
+  return <main className={'playable-shell'+(guideNode?' guided-mode':'')} data-world-scene={experienceMode==='guided'?commerceScene:'explore'} data-tour-node={introGuide ?? 'none'} data-player-x={player.x.toFixed(2)}>
     {experienceMode==='guided' && <GoldenGuidedCommerce
       liveWorld={visualAvailable}
       onSceneChange={onCommerceScene}
       customerName={name}
       initialCategory={guidedStartCategory}
       skipEntrance={skipGuidedEntrance}
-      onExit={()=>{setVisualAvailable(true);setWelcomeDismissed(true);setExperienceMode('explore')}}
+      onExit={()=>{
+        if(!visualAvailable){
+          // Explicit retry after the DOM fallback: discard failed loader cache
+          // entries so a transient texture/HDR failure is actually retryable.
+          useEnvironment.clear({preset:'apartment'})
+          useTexture.clear('/images/store-reference-approved.webp')
+          menu.bagels.forEach(item=>useTexture.clear('/images/bagel-'+item.id+'.webp'))
+        }
+        setWorldFailed(false);setVisualAvailable(true);setWelcomeDismissed(true);setExperienceMode('explore')
+      }}
     />}
-    <>{visualAvailable&&<Store3DErrorBoundary onRecover={()=>{setVisualAvailable(false);enterGuided(null)}}>
+    {visualAvailable&&<div className={'store-world'+(worldFailed?' has-failed':'')}><Store3DErrorBoundary onFailure={()=>setWorldFailed(true)} onRecover={()=>{setWorldFailed(false);setVisualAvailable(false);enterGuided(null)}}>
     <Canvas
       shadows
       eventPrefix="client"
@@ -233,8 +245,8 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <ContactShadows frames={8} position={[0,.01,0]} opacity={.22} scale={18} blur={2.2} far={8}/>
       <Environment preset="apartment" environmentIntensity={.42}/>
     </Canvas>
-    </Store3DErrorBoundary>}</>
-      {experienceMode==='explore'&&<LookSurface look={look} disabled={Boolean(guideNode)}/>}
+    </Store3DErrorBoundary></div>}
+      {experienceMode==='explore'&&<LookSurface look={look} disabled={Boolean(guideNode)||worldFailed}/>}
 
     {experienceMode==='explore'&&<header className="playable-top interactive-ui">
       <button className="brand-pill" aria-label="Elegir categoría" onClick={()=>enterGuided(null)}><img src="/images/bagelito-wordmark.svg" alt="Bagelito"/></button>
@@ -246,7 +258,9 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
 
     {experienceMode==='explore'&&name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
-    {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<div className="store-entry interactive-ui">
+    {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<>
+      <div className="store-entry-mobile-brand" role="img" aria-label="Bagelito · Classic Gringo Bagels" data-asset-role="approved-logo-only-crop"/>
+      <div className="store-entry interactive-ui">
       <h1>¿Qué te provoca hoy?</h1>
       <div className="store-entry-categories">
         {([{id:'packs',title:'Packs',image:'pack-6-mixed.webp'},{id:'combos',title:'Combos',image:'bagel-everything.webp'},{id:'schmears',title:'Schmears',image:'schmear-vitrina-photo.webp'}] as const).map(item=><button key={item.id} type="button" onClick={()=>enterGuided(item.id)}><span className={'category-photo category-photo-'+item.id} role="img" aria-label={item.title} data-asset-role="approved-product-photo-crop"/><strong>{item.title}</strong><span>Elegir →</span></button>)}
@@ -256,7 +270,9 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
       <button type="button" onClick={()=>{setWelcomeDismissed(true);setIntroGuide('totem')}}>Visita guiada 3D</button>
       <button type="button" onClick={()=>setWelcomeDismissed(true)}>Explorar libre</button>
       </div>
-    </div>}
+    </div>
+    <nav className="store-entry-progress" aria-label="Etapas de tu visita">{['Entrada','Categoría','Selecciona','Revisa','Pago'].map((label,index)=><span key={label} aria-current={index===0?'step':undefined}><i>{index+1}</i>{label}</span>)}</nav>
+    </>}
 
     {experienceMode==='explore'&&tourIndex>=0&&<div className="guided-tour-panel interactive-ui" aria-label="Recorrido guiado por Bagelito">
       <div className="guided-tour-copy">
@@ -322,8 +338,11 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
       if(width){
         const required=width/(2*Math.tan(THREE.MathUtils.degToRad(fov/2))*(size.width/size.height))
         fittedDelta.subVectors(node.position,node.lookAt)
-        const scale=Math.max(1,required/Math.max(.1,Math.abs(fittedDelta.z)))
-        fittedPosition.z=node.lookAt.z+fittedDelta.z*scale
+        // Labels sit at the front glass (z≈1.3), nearer than lookAt.
+        // Fit that plane rather than the back-wall target; otherwise the
+        // last mobile tray is clipped even after the camera settles.
+        fittedPosition.z=Math.max(node.position.z,1.5+required)
+        const scale=(fittedPosition.z-node.lookAt.z)/Math.max(.1,fittedDelta.z)
         fittedPosition.y=node.lookAt.y+fittedDelta.y*scale
       }
       camera.position.lerp(fittedPosition,alpha)
