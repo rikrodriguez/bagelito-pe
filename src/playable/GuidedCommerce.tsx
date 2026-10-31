@@ -20,7 +20,7 @@ function revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {
   // Native focus can stop at a partially visible carousel preview. Reveal the
   // whole card, including its name and removal control, without moving focus.
   const card = event.target.closest<HTMLElement>('.mobile-bagel-card,.mobile-schmear-card')
-  if (card && grid.contains(card)) card.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' })
+  if (card && grid.contains(card)) card.scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'auto' })
 }
 
 type Category = 'packs' | 'combos' | 'schmears'
