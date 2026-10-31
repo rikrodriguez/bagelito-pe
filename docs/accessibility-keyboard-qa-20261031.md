@@ -9,7 +9,8 @@ reads outside the fixture are blocked. No new scanner dependency is installed.
 
 - After changing checkout steps, keyboard focus remained on Continue or fell to
   BODY when the button disappeared. Step changes now focus the new step content;
-  scroll rechecks stop as soon as the user moves focus elsewhere.
+  focus placement bypasses the page's smooth scrolling so the target is visible
+  immediately. Scroll rechecks stop as soon as the user moves focus elsewhere.
 - Invalid flavor/delivery progression displayed an unannounced message while
   focus stayed on Continue. The error is now an alert/focus target, including
   repeated identical errors. Empty fields already rejected by the existing

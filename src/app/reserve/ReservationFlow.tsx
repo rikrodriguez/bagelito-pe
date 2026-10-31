@@ -94,7 +94,8 @@ type CheckoutPreparation = {
 function focusCheckoutContent(element: HTMLElement | null) {
   if (!element) return;
   element.focus({ preventScroll: true });
-  element.scrollIntoView({ block: "center", behavior: "auto" });
+  // "auto" inherits the document's smooth scroll and can leave focus offscreen.
+  element.scrollIntoView({ block: "center", behavior: "instant" });
 }
 
 async function readCheckoutPaymentStatus(
@@ -421,7 +422,7 @@ export function ReservationFlow({
       if (target) {
         // A later Tab must retain its new focus/scroll position. Recheck the
         // step position only while its heading still owns keyboard focus.
-        if (document.activeElement === target) target.scrollIntoView({ block: "center", behavior: "auto" });
+        if (document.activeElement === target) target.scrollIntoView({ block: "center", behavior: "instant" });
       } else {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
         document.documentElement.scrollTop = 0;

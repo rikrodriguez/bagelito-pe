@@ -71,17 +71,51 @@ async function fillDelivery(page) {
   }
 }
 
+async function deferFirstStepScroll(page) {
+  await page.addInitScript(() => {
+    const schedule = window.setTimeout.bind(window), cancel = window.clearTimeout.bind(window);
+    let deferred = null, captured = false;
+    // Hold the actual step scroll, not a simulated click or a racing sleep.
+    // All later timers keep native behavior so other visibility checks remain real.
+    window.setTimeout = (callback, delay, ...args) => {
+      if (!captured && delay === 90 && typeof callback === "function"
+        && callback.toString().includes("scrollIntoView") && callback.toString().includes("activeElement")) {
+        captured = true;
+        deferred = () => callback(...args);
+        return -9001;
+      }
+      return schedule(callback, delay, ...args);
+    };
+    window.clearTimeout = id => {
+      if (id === -9001) deferred = null;
+      else cancel(id);
+    };
+    window.__checkoutScrollProbe = {
+      pending: () => Boolean(deferred),
+      release() { const callback = deferred; deferred = null; callback?.(); },
+    };
+  });
+}
+
 for (const locale of ["es", "en"]) {
   const r = translations[locale].reserve;
   for (const [size, viewport] of [["desktop", { width: 1440, height: 1000 }], ["mobile", { width: 390, height: 844 }]]) {
     test(`keyboard step changes focus the new content (${locale}, ${size})`, async t => {
       const page = await localPage(t, locale, viewport);
+      await deferFirstStepScroll(page);
       await page.goto(`${baseURL}/checkout?pack=6-single&flavor=cheddar`);
       await page.locator(".reserve-pack-option.selected").waitFor();
       await next(page);
       await assertFocused(page.getByRole("heading", { name: r.chooseFlavors, exact: true }), "Continue must not leave focus after the new flavor controls");
       await page.keyboard.press("Tab");
       await assertFocused(page.locator(".select-flavor-button").first(), "Tab from the step heading reaches the first new control");
+      assert.equal(await page.evaluate(() => window.__checkoutScrollProbe.pending()), true, "The original 90ms callback is held until after Tab");
+      await page.locator(".select-flavor-button").first().evaluate(element => element.scrollIntoView({ block: "center", behavior: "instant" }));
+      const scrollAfterTab = await page.evaluate(() => scrollY);
+      await page.evaluate(() => window.__checkoutScrollProbe.release());
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      assert.equal(await page.locator(".select-flavor-button").first().evaluate(element => document.activeElement === element), true, "A released step timer cannot reclaim keyboard focus");
+      assert.equal(await page.evaluate(() => scrollY), scrollAfterTab, "A released step timer cannot scroll away from the new keyboard target");
       await next(page);
       await assertFocused(page.getByRole("heading", { name: r.deliveryDetails, exact: true }), "Delivery step receives focus");
       await page.keyboard.press("Tab");
