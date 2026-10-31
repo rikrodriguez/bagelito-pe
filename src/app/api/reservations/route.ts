@@ -4,6 +4,7 @@ import { getDurationMs, getRequestId, logError, logInfo, logWarn } from "@/lib/m
 import { PublicApiError, enforcePublicApiSecurity } from "@/lib/public-api-security";
 import { trackBagelitoServerEvent } from "@/lib/server-analytics";
 import { createReservation } from "@/lib/reservations/service";
+import { ManualReservationError } from "@/lib/reservations/manual-errors";
 
 export const runtime = "nodejs";
 
@@ -26,23 +27,25 @@ export async function POST(request: Request) {
       trapValue: String(formData.get("website") ?? ""),
       whatsapp: String(formData.get("whatsapp") ?? ""),
     });
-    const { amount, orderCode, packSlug } = await createReservation(formData);
-    await trackBagelitoServerEvent("Reservation Created", { pack: packSlug, amount }, request);
+    const { amount, operationId, orderCode, packSlug, replayed } = await createReservation(formData);
+    if (!replayed) await trackBagelitoServerEvent("Reservation Created", { pack: packSlug, amount }, request);
     logInfo("reservation_api_success", {
       amount,
       durationMs: getDurationMs(startedAt),
       orderCode,
+      operationId,
       packSlug,
+      replayed,
       requestId,
       route: "/api/reservations",
       status: 200,
     });
-    return NextResponse.json({ ok: true, orderCode });
+    return NextResponse.json({ ok: true, operationId, orderCode }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    const status = error instanceof PublicApiError ? error.status : 400;
+    const status = error instanceof PublicApiError || error instanceof ManualReservationError ? error.status : 400;
     const errorType = error instanceof ZodError
       ? "validation"
-      : error instanceof PublicApiError
+      : error instanceof PublicApiError || error instanceof ManualReservationError
         ? error.code
         : "server";
 
@@ -56,9 +59,12 @@ export async function POST(request: Request) {
       route: "/api/reservations",
       status,
       type: errorType,
+      ...(error instanceof ManualReservationError ? { operationId: error.operationId, state: error.state } : {}),
     };
 
-    if (error instanceof PublicApiError) {
+    if (error instanceof ManualReservationError && error.state === "pending") {
+      logWarn("reservation_api_pending", context);
+    } else if (error instanceof PublicApiError) {
       logWarn("reservation_api_public_blocked", {
         ...context,
         retryAfterSeconds: error.retryAfterSeconds ?? undefined,
@@ -76,11 +82,16 @@ export async function POST(request: Request) {
         : "Could not submit reservation.";
 
     return NextResponse.json(
-      { ok: false, error: message },
+      { ok: false, error: message,
+        ...(error instanceof ManualReservationError ? {
+          code: error.code, operationId: error.operationId,
+          ...(error.state ? { state: error.state } : {}),
+        } : {}),
+      },
       {
-        headers: error instanceof PublicApiError && error.retryAfterSeconds
-          ? { "Retry-After": String(error.retryAfterSeconds) }
-          : undefined,
+        headers: { "Cache-Control": "no-store",
+          ...(error instanceof PublicApiError && error.retryAfterSeconds ? { "Retry-After": String(error.retryAfterSeconds) } : {}),
+        },
         status,
       },
     );
