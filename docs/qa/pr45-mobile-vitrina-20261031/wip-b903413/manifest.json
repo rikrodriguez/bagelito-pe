@@ -1,0 +1,34 @@
+{
+  "status": "WIP: focal verification only; full guided and all-state mobile QA still running or pending",
+  "applicationSHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
+  "viewport": {
+    "width": 320,
+    "height": 700
+  },
+  "capture": "mobile-320-bagels-selected.png",
+  "captureSHA256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f",
+  "cssSHA256": "dde64cb8ae3a0c9edadc3023a6549deea2aa532fd8a389d52c4392841cd7d6c4",
+  "snapshot": "/tmp/bagelito-artifact-mobile-v3-3202",
+  "focalResult": "PASS: real touch add/remove, 44x44 effective removal, no overflow",
+  "canvasFreeFraction": 0.5680555555555555,
+  "physicalBagelROIUncovered": 1,
+  "bagelLabelCentresFree": 8,
+  "before": {
+    "publishedArtifactCommit": "0a611006a1a7dcebbe63f4f8db20623a69c47fb6",
+    "applicationSHA": "df504aa1f605bd620bf36be9c28963b0401a95d6",
+    "path": "docs/qa/pr45-runtime-input-20261031/guided/mobile-05-bagels.png",
+    "captureSHA256": "a254cf9c98b93afd714c66f0a0aa9f9b2a3fa1666fab00d8f9b6210b21e25856",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "comparison": "Earlier catalog starts at y118 and covers the logo and product display. The new 320px capture visibly exposes both. These are different viewports; a matched before/after measurement is pending."
+  },
+  "remaining": [
+    "Full guided32 on this application SHA is in progress",
+    "Eight affected mobile states at both viewports (16 measurements), all catalog touch targets, focus, complete labels and document overflow",
+    "Matched before/after capture and final artifact manifest"
+  ],
+  "restrictions": "No deployment, provider writes, real payments, credentials or permission changes; git.deploymentEnabled=false",
+  "note": "The reused focal probe has a generic prototype kind string. This wrapper records exact committed application parity verified by HEAD, CSS hash and immutable snapshot."
+}
