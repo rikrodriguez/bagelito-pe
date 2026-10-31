@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpenCheck, Camera, FileText, Mail, MessageCircle } from "lucide-react";
-import { siteContactEmail, siteInstagramUrl, siteLegalName, siteRuc } from "@/lib/site";
+import { siteAddress, siteContactEmail, siteInstagramUrl, siteLegalName, siteRuc } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 import { useLanguage } from "./LanguageProvider";
 
 export function Footer() {
-  const { copy } = useLanguage();
+  const { copy, locale } = useLanguage();
 
   return (
     <footer className="site-footer">
@@ -27,6 +27,7 @@ export function Footer() {
       </nav>
       <div className="footer-meta">
         <span className="footer-ruc">{siteLegalName} · RUC {siteRuc}</span>
+        <span>{locale === "es" ? "Dirección comercial" : "Business address"}: {siteAddress}</span>
         <span>{copy.footer.made} <strong>{copy.footer.love}</strong></span>
       </div>
     </footer>

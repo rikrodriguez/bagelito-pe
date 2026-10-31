@@ -1,12 +1,16 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import Image from "next/image";
 import Link from "next/link";
 import { flavors } from "@/data/flavors";
 import { packs } from "@/data/packs";
+import { flavorImages } from "@/data/flavor-images";
 import { useBatchAvailability } from "./BatchAvailabilityProvider";
 import { flavorCopy } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
+import { useReserveCampaignHref, useWaitlistCampaignHref } from "@/lib/waitlist/use-campaign-href";
 
 const flavorDescriptions = {
   en: {
@@ -35,18 +39,6 @@ const flavorDescriptions = {
   },
 } as const;
 
-const flavorImages: Record<string, string> = {
-  "jalapeno-cheddar": "/images/bagel-jalapeno-cheddar.webp",
-  cheddar: "/images/bagel-cheddar.webp",
-  sesame: "/images/bagel-sesame.webp",
-  "everything-bagel": "/images/bagel-everything.webp",
-  "cinnamon-raisin": "/images/bagel-cinnamon-raisin.webp",
-  blueberry: "/images/bagel-blueberry.webp",
-  plain: "/images/bagel-plain.webp",
-  "classic-onion": "/images/bagel-classic-onion.webp",
-  "rainbow-custom-colors": "/images/bagel-rainbow.webp",
-  snickerdoodle: "/images/bagel-snickerdoodle.webp",
-};
 const singlePackPrice: number = (() => {
   const pack = packs.find((item) => item.slug === "6-single");
   if (!pack) throw new Error("Bagelito single-flavor pack is not configured.");
@@ -55,15 +47,18 @@ const singlePackPrice: number = (() => {
 
 export function FlavorStrip() {
   const { locale, copy } = useLanguage();
-  const { accepting } = useBatchAvailability();
-  const destination = accepting ? "/checkout?pack=6-single" : "/waitlist?pack=6-single";
+  const { accepting, merchantReviewOnly } = useBatchAvailability();
+  const reserveHref = useReserveCampaignHref();
+  const waitlistHref = useWaitlistCampaignHref();
+  const review = merchantReviewCopy[locale];
+  const destination = merchantReviewOnly || accepting ? reserveHref("6-single").replace("/reserve", "/checkout") : waitlistHref("6-single");
 
   return (
     <section id="flavors" className="flavor-section section-pad">
       <h2>{copy.flavors.title}</h2>
       <p className="section-intro">{copy.flavors.intro}</p>
       <p className="flavor-catalog-note">
-        {locale === "es"
+        {merchantReviewOnly ? review.flavorNote : locale === "es"
           ? "Elige tu sabor al comprar un pack. Pedido mínimo: 6 bagels. Los precios del pack y delivery se muestran antes de pagar."
           : "Choose your flavor when ordering a pack. Minimum: 6 bagels. Full pack and delivery prices are shown before payment."}
       </p>
@@ -88,11 +83,11 @@ export function FlavorStrip() {
               <strong className="flavor-product-price">
                 {locale === "es" ? "Pack de 6 desde" : "6-pack from"} S/{singlePackPrice}
               </strong>
-              <Link className="flavor-product-cta" href={destination} aria-label={
-                locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
+              <Link className="flavor-product-cta" href={merchantReviewOnly || accepting ? `${destination}&flavor=${encodeURIComponent(flavor.slug)}` : destination} aria-label={
+                merchantReviewOnly ? `${review.cta}: ${name}` : locale === "es" ? `${accepting ? "Elegir pack" : "Avisarme de apertura"}: ${name}`
                   : `${accepting ? "Choose pack" : "Notify me when open"}: ${name}`
               }>
-                {accepting
+                {merchantReviewOnly ? review.cta : accepting
                   ? locale === "es" ? "Elegir pack" : "Choose pack"
                   : locale === "es" ? "Avisarme" : "Notify me"}
               </Link>

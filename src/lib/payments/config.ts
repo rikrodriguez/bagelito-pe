@@ -87,7 +87,9 @@ export function getPublicPaymentConfig(): PublicPaymentConfig {
   return {
     mode,
     currency,
-    enabled,
+    // Closing intake must not turn off settlement or recovery for existing
+    // server-owned sessions. Only the public checkout is a review preview.
+    enabled: enabled && process.env.BAGELITO_MERCHANT_REVIEW_ONLY !== "true",
     provider,
     publicKey,
     rsaId,

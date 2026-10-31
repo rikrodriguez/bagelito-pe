@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BookOpenCheck, Clock3, Database, Mail, MessageCircle, RotateCcw, ScrollText, ShieldCheck, Truck } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
-import { siteContactEmail, siteLegalName, siteRuc, siteServiceArea } from "@/lib/site";
+import { siteAddress, siteContactEmail, siteLegalName, siteRuc, siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 const legalCopy = {
@@ -19,7 +19,8 @@ const legalCopy = {
       ["Delivery", "One scheduled Lima delivery window"],
       ["Payments", "Shown at checkout when orders are open"],
       ["Contact", `${siteContactEmail} · +51 917 547 745`],
-      ["Legal entity", siteLegalName],
+      ["Business address", siteAddress],
+      ["Business owner", siteLegalName],
       ["RUC", siteRuc],
     ],
     sections: [
@@ -78,6 +79,7 @@ const legalCopy = {
         ],
         bullets: [
           `Provider: ${siteLegalName} · Brand: Bagelito.pe · RUC ${siteRuc}.`,
+          `Business address: ${siteAddress}.`,
           `Online service area: ${siteServiceArea}.`,
           `Official email: ${siteContactEmail}.`,
           "Submitting a complaint does not prevent the consumer from using other dispute-resolution channels or filing a complaint with Indecopi.",
@@ -88,6 +90,7 @@ const legalCopy = {
         icon: RotateCcw,
         title: "Refunds and cancellations",
         body: [
+          "We offer replacement or a refund for incorrect or defective products. The cancellation rules do not limit these remedies.",
           "Because Bagelito.pe produces handmade, perishable food by confirmed reservation, cancellations and refunds depend on the production stage of the monthly batch.",
           "If Bagelito.pe cannot produce or deliver a confirmed order due to an internal issue, the customer may choose a refund or credit for a future batch. Duplicate or excess payments can also be coordinated for correction.",
         ],
@@ -148,7 +151,8 @@ const legalCopy = {
       ["Delivery", "Una ventana programada en Lima"],
       ["Pagos", "Métodos disponibles al abrir pedidos"],
       ["Contacto", `${siteContactEmail} · +51 917 547 745`],
-      ["Razón social", siteLegalName],
+      ["Dirección comercial", siteAddress],
+      ["Titular del negocio", siteLegalName],
       ["RUC", siteRuc],
     ],
     sections: [
@@ -207,6 +211,7 @@ const legalCopy = {
         ],
         bullets: [
           `Proveedor: ${siteLegalName} · Marca: Bagelito.pe · RUC ${siteRuc}.`,
+          `Dirección comercial: ${siteAddress}.`,
           `Zona de atención online: ${siteServiceArea}.`,
           `Email oficial: ${siteContactEmail}.`,
           "La presentación de una hoja no impide acudir a otras vías de solución ni presentar una denuncia ante Indecopi.",
@@ -217,6 +222,7 @@ const legalCopy = {
         icon: RotateCcw,
         title: "Reembolsos y cancelaciones",
         body: [
+          "Ofrecemos reposición o devolución del importe por productos equivocados o defectuosos. Las reglas de cancelación no limitan estas opciones.",
           "Como Bagelito.pe produce alimentos artesanales y perecibles por reserva confirmada, las cancelaciones y reembolsos dependen de la etapa de producción del batch mensual.",
           "Si Bagelito.pe no puede producir o entregar un pedido confirmado por un problema interno, el cliente podrá elegir entre reembolso o crédito para un futuro batch. Los pagos duplicados o excedentes también pueden coordinarse para corrección.",
         ],
@@ -267,6 +273,16 @@ const legalCopy = {
   },
 } as const;
 
+// Keep existing links valid regardless of the visitor's saved language.
+const legalAnchorAliases: Record<string, string> = {
+  terms: "terminos", terminos: "terms",
+  privacy: "privacidad", privacidad: "privacy",
+  "complaints-book": "libro-reclamaciones", "libro-reclamaciones": "complaints-book",
+  refunds: "reembolsos", reembolsos: "refunds",
+  "waiting-window": "ventana-espera", "ventana-espera": "waiting-window",
+  "data-retention": "registros", registros: "data-retention",
+};
+
 export function LegalPageContent() {
   const { locale } = useLanguage();
   const copy = legalCopy[locale];
@@ -304,6 +320,7 @@ export function LegalPageContent() {
             <section className="legal-policy-block" id={section.id} key={section.id}>
               <div className="legal-policy-icon"><Icon size={25} /></div>
               <div>
+                {legalAnchorAliases[section.id] ? <span id={legalAnchorAliases[section.id]} aria-hidden="true" /> : null}
                 <h2>{section.title}</h2>
                 {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 <ul>
@@ -319,6 +336,7 @@ export function LegalPageContent() {
         <div>
           <h2>{copy.contactTitle}</h2>
           <p>{copy.contactText}</p>
+          <p>{locale === "es" ? "Dirección comercial" : "Business address"}: {siteAddress}</p>
         </div>
         <div className="legal-contact-actions">
           <a className="pill-button pink" href={getWhatsAppHref()} target="_blank" rel="noreferrer">

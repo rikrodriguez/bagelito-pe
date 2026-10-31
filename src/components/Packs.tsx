@@ -1,5 +1,7 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
@@ -19,22 +21,23 @@ const packImages: Record<PackSlug, string> = {
 
 export function Packs() {
   const { locale, copy } = useLanguage();
-  const { accepting: acceptingReservations } = useBatchAvailability();
+  const { accepting: acceptingReservations, merchantReviewOnly } = useBatchAvailability();
   const waitlistHref = useWaitlistCampaignHref();
   const reserveHref = useReserveCampaignHref();
+  const review = merchantReviewCopy[locale];
 
   return (
     <section id="packs" className="packs-section section-pad" aria-labelledby="packs-title">
       <div className="section-heading">
-        <h2 id="packs-title">{copy.packs.title}</h2>
+        <h2 id="packs-title">{merchantReviewOnly ? review.packsTitle : copy.packs.title}</h2>
         <p className="section-intro">{copy.packs.premiumNote}</p>
       </div>
 
-      <div className="pack-grid clean-pack-grid" aria-label={copy.packs.title}>
+      <div className="pack-grid clean-pack-grid" aria-label={merchantReviewOnly ? review.packsTitle : copy.packs.title}>
         {packs.map((pack) => {
           const localizedPack = packCopy[locale][pack.slug];
-          const ctaHref = acceptingReservations ? reserveHref(pack.slug) : waitlistHref(pack.slug);
-          const ctaLabel = acceptingReservations ? copy.packs.button : copy.packs.waitlistButton;
+          const ctaHref = merchantReviewOnly ? reserveHref(pack.slug).replace("/reserve", "/checkout") : acceptingReservations ? reserveHref(pack.slug) : waitlistHref(pack.slug);
+          const ctaLabel = merchantReviewOnly ? review.cta : acceptingReservations ? copy.packs.button : copy.packs.waitlistButton;
 
           return (
             <article key={pack.slug} className={`pack-card clean-pack-card ${pack.accent} ${pack.mostWanted ? "has-badge" : ""}`}>
@@ -63,10 +66,10 @@ export function Packs() {
               <p>{localizedPack.description}</p>
 
               <Link
-                className={`pill-button ${pack.accent}`}
+                className={`pill-button ${pack.accent}${merchantReviewOnly ? " review-checkout-cta" : ""}`}
                 href={ctaHref}
                 aria-label={`${ctaLabel}: ${localizedPack.name}`}
-                onClick={() => trackBagelitoEvent("Pack CTA Click", { pack: pack.slug, amount: pack.amount, target: acceptingReservations ? "reserve" : "waitlist" })}
+                onClick={() => trackBagelitoEvent("Pack CTA Click", { pack: pack.slug, amount: pack.amount, target: merchantReviewOnly ? "checkout_preview" : acceptingReservations ? "reserve" : "waitlist" })}
               >
                 <MessageCircle size={18} strokeWidth={2.6} aria-hidden="true" />
                 <span>{ctaLabel}</span>

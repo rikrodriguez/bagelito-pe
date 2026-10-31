@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import {
   BookOpenCheck,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { ComplaintPayload } from "@/lib/complaints/schema";
 import {
+  siteAddress,
   siteContactEmail,
   siteLegalName,
   siteName,
@@ -43,9 +44,12 @@ export function ComplaintsBookForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState<SubmittedComplaint | null>(null);
+  const submissionInFlight = useRef(false);
 
   async function submitComplaint(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submissionInFlight.current) return;
+    submissionInFlight.current = true;
     setError("");
     setSubmitting(true);
 
@@ -91,13 +95,14 @@ export function ComplaintsBookForm() {
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "No pudimos registrar la hoja.");
     } finally {
+      submissionInFlight.current = false;
       setSubmitting(false);
     }
   }
 
   if (submitted) {
     return (
-      <main className="complaints-page complaints-receipt-page">
+      <main className="complaints-page complaints-receipt-page" lang="es">
         <section className="complaint-receipt" id="hoja-de-reclamacion">
           <div className="complaint-receipt-success">
             <CheckCircle2 size={42} />
@@ -116,9 +121,10 @@ export function ComplaintsBookForm() {
 
           <section className="complaint-receipt-provider">
             <h2>Proveedor</h2>
-            <div><span>Razón social</span><strong>{siteLegalName}</strong></div>
+            <div><span>Nombre o razón social</span><strong>{siteLegalName}</strong></div>
             <div><span>Nombre comercial</span><strong>{siteName}</strong></div>
             <div><span>RUC</span><strong>{siteRuc}</strong></div>
+            <div><span>Dirección del proveedor</span><strong>{siteAddress}</strong></div>
             <div><span>Email</span><strong>{siteContactEmail}</strong></div>
           </section>
 
@@ -162,7 +168,7 @@ export function ComplaintsBookForm() {
   }
 
   return (
-    <main className="complaints-page">
+    <main className="complaints-page" lang="es">
       <section className="complaints-hero">
         <div>
           <p className="kicker">Atención al consumidor</p>
@@ -182,9 +188,10 @@ export function ComplaintsBookForm() {
           <fieldset className="complaints-fieldset provider-fieldset">
             <legend><BookOpenCheck size={19} /> Identificación del proveedor</legend>
             <div className="complaints-provider-grid">
-              <div><span>Razón social</span><strong>{siteLegalName}</strong></div>
+              <div><span>Nombre o razón social</span><strong>{siteLegalName}</strong></div>
               <div><span>Nombre comercial</span><strong>{siteName}</strong></div>
               <div><span>RUC</span><strong>{siteRuc}</strong></div>
+              <div><span>Dirección del proveedor</span><strong>{siteAddress}</strong></div>
               <div><span>Email</span><a href={`mailto:${siteContactEmail}`}>{siteContactEmail}</a></div>
               <div><span>Teléfono</span><strong>{siteWhatsAppPhone}</strong></div>
             </div>

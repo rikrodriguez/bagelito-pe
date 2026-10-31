@@ -83,6 +83,7 @@ type Props = {
   customerEmail: string;
   disabled?: boolean;
   locale: "en" | "es";
+  onDemoComplete?: () => Promise<void> | void;
   onError: (message: string) => void;
   onPaymentUnresolved?: () => void;
   onToken: (
@@ -112,6 +113,7 @@ export function CulqiCheckoutButton({
   customerEmail,
   disabled = false,
   locale,
+  onDemoComplete,
   onError,
   onPaymentUnresolved,
   onToken,
@@ -566,7 +568,32 @@ export function CulqiCheckoutButton({
           <span>{locale === "es" ? "Utiliza únicamente los datos de prueba oficiales de Culqi." : "Use only official Culqi test data."}</span>
         </div>
       ) : null}
-      {!config.enabled ? (
+      {!config.enabled && onDemoComplete ? (
+        <div className="culqi-preview culqi-preview-form">
+          <div className="culqi-review-only-note" role="status">
+            <strong>{locale === "es" ? "MODO DEMOSTRACIÓN — No se realizan cobros" : "DEMONSTRATION — No charges processed"}</strong>
+            <span>{locale === "es"
+              ? "Vista previa para revisión comercial. No introduzcas información bancaria ni de tarjeta."
+              : "Merchant review preview. Do not enter any card or bank details."}</span>
+          </div>
+          <p>{copy.disabled}</p>
+          <p>{locale === "es" ? "No se registrarán pedidos ni cargos." : "No orders or charges will be recorded."}</p>
+          <button className="culqi-preview-pay" type="button" disabled={disabled || state === "confirming"} onClick={() => {
+            if (disabled || actionRunningRef.current || !lifecycleRef.current.alive) return;
+            actionRunningRef.current = true;
+            setState("confirming");
+            void Promise.resolve().then(() => {
+              if (lifecycleRef.current.alive) return onDemoComplete();
+            }).catch((error) => {
+              actionRunningRef.current = false;
+              setCheckoutError(error);
+            });
+          }}>
+            {locale === "es" ? `Simular checkout de S/${amount} (sin pagar)` : `Preview S/${amount} checkout (no payment)`}
+          </button>
+          {disabled ? <small>{copy.terms}</small> : null}
+        </div>
+      ) : !config.enabled ? (
         <div className="culqi-availability-note" role="status">
           <strong>{copy.disabled}</strong>
           <span>{locale === "es" ? "No ingreses datos de tarjeta. El pago se habilitará cuando esté configurado y verificado." : "Do not enter card details. Payment will be available after setup and verification."}</span>

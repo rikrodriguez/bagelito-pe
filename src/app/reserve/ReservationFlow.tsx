@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BadgePercent, BookOpenCheck, Check, CreditCard, Gift, MessageCircle, Minus, Plus, ShieldCheck, Truck } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
+import { flavorImages } from "@/data/flavor-images";
 import type { Pack, PackSlug } from "@/data/packs";
-import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
+import { RollingBagel } from "@/components/RollingBagel";
 import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
 import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -26,7 +27,7 @@ import {
   CHECKOUT_RECOVERY_STORAGE_KEY, type CheckoutRecovery,
 } from "@/lib/payments/checkout-recovery";
 import { districtOptions } from "@/lib/reservations/schema";
-import { siteServiceArea } from "@/lib/site";
+import { siteAddress, siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 import { saveSuccessProof } from "@/lib/payments/success-proof";
 import { CHECKOUT_LEGAL_VERSION } from "@/lib/legal-terms";
@@ -36,6 +37,7 @@ type Props = {
   packs: Pack[];
   flavors: Flavor[];
   initialPackSlug: PackSlug;
+  initialFlavorSlug?: string;
   paymentConfig: PublicPaymentConfig;
   checkoutPage?: boolean;
 };
@@ -89,6 +91,16 @@ type CheckoutPreparation = {
   sessionId?: string;
 };
 
+function focusCheckoutContent(element: HTMLElement | null) {
+  if (!element) return;
+  element.focus({ preventScroll: true });
+  // Cancel native focus scrolling even when the target is already centered;
+  // scrollIntoView can otherwise leave that earlier animation running.
+  window.scrollTo({ left: window.scrollX, top: window.scrollY, behavior: "instant" });
+  // "auto" inherits the document's smooth scroll and can leave focus offscreen.
+  element.scrollIntoView({ block: "center", behavior: "instant" });
+}
+
 async function readCheckoutPaymentStatus(
   reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">,
   timeoutMs = 20_000,
@@ -122,24 +134,35 @@ export function ReservationFlow({
   packs,
   flavors,
   initialPackSlug,
+  initialFlavorSlug,
   paymentConfig,
   checkoutPage = false,
 }: Props) {
   const { locale, copy } = useLanguage();
   const batchAvailability = useBatchAvailability();
+  const merchantPreview = checkoutPage && batchAvailability.merchantReviewOnly && !paymentConfig.enabled;
   const waitlistHref = useWaitlistCampaignHref();
   const r = copy.reserve;
   const [step, setStep] = useState(1);
   const [packSlug, setPackSlug] = useState<PackSlug>(initialPackSlug);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [singleFlavor, setSingleFlavor] = useState("");
+  const [singleFlavor, setSingleFlavor] = useState(() => (
+    packs.find((pack) => pack.slug === initialPackSlug)?.packType === "single"
+      && flavors.some((flavor) => flavor.slug === initialFlavorSlug)
+      ? initialFlavorSlug ?? ""
+      : ""
+  ));
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
   // Explicit purchase consent is separate from the optional marketing checkbox.
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
+  const stepFocusRef = useRef<HTMLElement | null>(null);
+  const errorFocusRef = useRef<HTMLDivElement | null>(null);
   const hasMountedRef = useRef(false);
+  const flowAliveRef = useRef(true);
+  const navigationSelectionRef = useRef(JSON.stringify([initialPackSlug, initialFlavorSlug ?? ""]));
   const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
   const checkoutFingerprintRef = useRef("");
   const batchAcceptingRef = useRef(batchAvailability.accepting);
@@ -223,7 +246,7 @@ export function ReservationFlow({
     };
   const checkoutText = locale === "es"
     ? {
-      address: `Zona de atención: ${siteServiceArea}`,
+      address: `Dirección de contacto: ${siteAddress} · Zona de atención: ${siteServiceArea}`,
       complaints: "Libro de Reclamaciones",
       contact: "Ayuda por WhatsApp",
       delivery: "Delivery",
@@ -238,7 +261,7 @@ export function ReservationFlow({
       total: "Total",
     }
     : {
-      address: "Service area: Lima, Peru",
+      address: `Contact address: ${siteAddress} · Service area: ${siteServiceArea}`,
       complaints: "Complaints Book",
       contact: "WhatsApp support",
       delivery: "Delivery",
@@ -321,6 +344,14 @@ export function ReservationFlow({
   });
 
   useEffect(() => {
+    flowAliveRef.current = true;
+    return () => {
+      flowAliveRef.current = false;
+      preparationRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
     function restorePendingPayment() {
       try {
         const stored = readCheckoutRecovery(window.localStorage);
@@ -342,26 +373,79 @@ export function ReservationFlow({
   }, [paymentConfig.enabled]);
 
   useEffect(() => {
+    const selection = JSON.stringify([initialPackSlug, initialFlavorSlug ?? ""]);
+    if (navigationSelectionRef.current === selection) return;
+    // Query navigation must retain the owner of a prepared/in-flight payment.
+    // A new selection can be applied only after recovery has been checked.
+    const prepared = preparationRef.current;
+    if (!recoveryReady || recoveryLoadFailed || recoveryRef.current || resolvedRecovery
+      || paymentInProgress || (prepared && prepared.expiresAt > Date.now())) return;
+    try {
+      const stored = readCheckoutRecovery(window.localStorage);
+      if (stored) {
+        recoveryRef.current = stored;
+        checkoutSessionRef.current.id = stored.checkoutSessionId;
+        setRecovery(stored);
+        return;
+      }
+    } catch {
+      if (paymentConfig.enabled) {
+        setRecoveryLoadFailed(true);
+        return;
+      }
+    }
+    const nextPack = packs.find((pack) => pack.slug === initialPackSlug);
+    if (!nextPack) return;
+    const nextFlavor = nextPack.packType === "single" && flavors.some((flavor) => flavor.slug === initialFlavorSlug)
+      ? initialFlavorSlug ?? "" : "";
+    navigationSelectionRef.current = selection;
+    preparationRef.current = null;
+    setCheckoutPreparation(null);
+    checkoutSessionRef.current = { fingerprint: "", id: "" };
+    setPackSlug(nextPack.slug);
+    setQuantities({});
+    setSingleFlavor(nextFlavor);
+    setDetails(initialDetails);
+    setExtraPackAdded(false);
+    setTermsAccepted(false);
+    setError("");
+    setStep(1);
+  }, [initialPackSlug, initialFlavorSlug, packs, flavors, recoveryReady, recoveryLoadFailed,
+    resolvedRecovery, paymentInProgress, checkoutPreparation, paymentConfig.enabled]);
+
+  useEffect(() => {
     if (!hasMountedRef.current) {
       hasMountedRef.current = true;
       return;
     }
 
-    const scrollToTop = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+    const target = stepFocusRef.current;
+    target?.focus({ preventScroll: true });
+    const scrollToStep = () => {
+      if (target) {
+        // A later Tab must retain its new focus/scroll position. Recheck the
+        // step position only while its heading still owns keyboard focus.
+        if (document.activeElement === target) target.scrollIntoView({ block: "center", behavior: "instant" });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
     };
 
-    scrollToTop();
-    const frame = window.requestAnimationFrame(scrollToTop);
-    const timeout = window.setTimeout(scrollToTop, 90);
+    scrollToStep();
+    const frame = window.requestAnimationFrame(scrollToStep);
+    const timeout = window.setTimeout(scrollToStep, 90);
 
     return () => {
       window.cancelAnimationFrame(frame);
       window.clearTimeout(timeout);
     };
   }, [step]);
+
+  useEffect(() => {
+    if (error) focusCheckoutContent(errorFocusRef.current);
+  }, [error]);
 
   useEffect(() => {
     document.body.classList.toggle("reservation-review-active", step === 4);
@@ -391,6 +475,7 @@ export function ReservationFlow({
   }
 
   function selectPack(nextSlug: PackSlug) {
+    if (nextSlug === selectedPack.slug) return;
     if (checkoutIsLocked()) return;
     updateCheckoutPreparation(null);
     const nextPack = packs.find((pack) => pack.slug === nextSlug);
@@ -412,7 +497,9 @@ export function ReservationFlow({
     if (checkoutIsLocked()) return;
     setQuantities((current) => {
       const currentQuantity = current[flavorSlug] ?? 0;
-      const otherTotal = selectedTotal - currentQuantity;
+      const otherTotal = Object.entries(current).reduce(
+        (sum, [slug, quantity]) => sum + (slug === flavorSlug ? 0 : quantity), 0,
+      );
       const next = Math.max(0, Math.min(selectedPack.units - otherTotal, currentQuantity + delta));
       return { ...current, [flavorSlug]: next };
     });
@@ -435,12 +522,14 @@ export function ReservationFlow({
         reason: selectedPack.packType === "mixed" ? "exact_bagel_count" : "choose_flavor",
       });
       setError(selectedPack.packType === "mixed" ? r.errors.exactBagels.replace("{units}", String(selectedPack.units)) : r.errors.chooseFlavor);
+      focusCheckoutContent(errorFocusRef.current);
       return;
     }
 
     if (step === 3 && !validateDeliveryStep()) {
       trackBagelitoEvent("Reserve Validation Error", { step, reason: "delivery_required" });
       setError(r.errors.deliveryRequired);
+      focusCheckoutContent(errorFocusRef.current);
       return;
     }
 
@@ -507,6 +596,7 @@ export function ReservationFlow({
   }
 
   async function prepareCulqiCheckout(): Promise<CulqiCheckoutSession> {
+    if (!flowAliveRef.current) throw new CheckoutReviewError();
     if (checkoutIsLocked()) throw new CheckoutReviewError();
     if (!termsAccepted) {
       throw new Error(r.errors.terms);
@@ -537,7 +627,7 @@ export function ReservationFlow({
       }, 20_000);
     });
     const assertPreparationActive = () => {
-      if (controller.signal.aborted || Date.now() >= preparationDeadline
+      if (!flowAliveRef.current || controller.signal.aborted || Date.now() >= preparationDeadline
         || preparationRef.current?.checkoutSessionId !== checkoutSessionId
         || preparationRef.current.fingerprint !== fingerprint
         || checkoutFingerprintRef.current !== fingerprint) {
@@ -679,6 +769,7 @@ export function ReservationFlow({
       deviceId?: string;
     },
   ): Promise<CulqiTokenSubmission> {
+    if (!flowAliveRef.current) throw new CheckoutReviewError();
     if (session.checkoutSessionId !== checkoutSessionRef.current.id) throw new CheckoutReviewError();
     const preparation = preparationRef.current;
     if (!isCurrentPreparation(preparation) || preparation?.orderCode !== session.orderCode
@@ -811,7 +902,8 @@ export function ReservationFlow({
 
   function isCurrentRecovery(reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">) {
     const current = recoveryRef.current;
-    return current?.checkoutSessionId === reference.checkoutSessionId && current?.orderCode === reference.orderCode;
+    return flowAliveRef.current && current?.checkoutSessionId === reference.checkoutSessionId
+      && current?.orderCode === reference.orderCode;
   }
 
   async function checkPendingPayment() {
@@ -838,6 +930,16 @@ export function ReservationFlow({
       setError(locale === "es" ? "No pudimos consultar el estado. No vuelvas a pagar; inténtalo más tarde o contáctanos."
         : "We could not check the status. Do not pay again; check later or contact us.");
     } finally { setCheckingPayment(false); }
+  }
+
+  function completeDemoCheckout() {
+    if (!flowAliveRef.current || !merchantPreview || !termsAccepted || checkoutIsLocked() || isCurrentPreparation(preparationRef.current)) return;
+    const params = new URLSearchParams({
+      amount: String(totalAmount), order: "BAG-DEMO",
+      pack: extraPackAdded ? `2 x ${selectedPack.name}` : selectedPack.name,
+      packSlug: selectedPack.slug, payment: "demo",
+    });
+    window.location.href = `/reserve/success?${params.toString()}`;
   }
 
   if (!recoveryReady || recoveryLoadFailed || resolvedRecovery
@@ -873,7 +975,7 @@ export function ReservationFlow({
     );
   }
 
-  if (!batchAvailability.accepting && !isCurrentPreparation(checkoutPreparation) && !paymentInProgress) {
+  if (!merchantPreview && !batchAvailability.accepting && !isCurrentPreparation(checkoutPreparation) && !paymentInProgress) {
     return (
       <section className="reserve-shell">
         <div className="reserve-herolet">
@@ -931,13 +1033,21 @@ export function ReservationFlow({
         )}
       </div>
 
+      {!paymentConfig.enabled ? (
+        <div className="checkout-review-banner" role="status">
+          <strong>{locale === "es" ? "Vista de revisión — Sin cobros reales" : "Review preview — No real payments"}</strong>
+          <span>{locale === "es"
+            ? "Puedes elegir packs, sabores, delivery y revisar el total. Los pedidos y pagos online siguen deshabilitados en esta demostración. No introduzcas datos reales de tarjeta."
+            : "Choose packs, flavors, delivery, and review the total. Online orders and payments remain disabled in this demonstration. Do not enter real card information."}</span>
+        </div>
+      ) : null}
       <ConversionTrustStrip compact />
 
       <div className="reserve-progress">
         {r.steps.map((label, index) => {
           const targetStep = index + 1;
           return (
-            <button key={label} type="button" className={step === targetStep ? "active" : ""} disabled={Boolean(recovery) || targetStep > step} onClick={() => goToStep(targetStep)}>
+            <button key={label} type="button" className={step === targetStep ? "active" : ""} aria-current={step === targetStep ? "step" : undefined} disabled={Boolean(recovery) || targetStep > step} onClick={() => goToStep(targetStep)}>
               {targetStep}. {label}
             </button>
           );
@@ -946,7 +1056,7 @@ export function ReservationFlow({
 
       <div className={checkoutPage || step === 4 ? "checkout-workspace" : "reserve-workspace"}>
         <div className={checkoutPage || step === 4 ? "checkout-stage" : "reserve-stage"}>
-          {error ? <div className="reserve-alert">{error}</div> : null}
+          {error ? <div className="reserve-alert" id="checkout-error" ref={errorFocusRef} role="alert" aria-atomic="true" tabIndex={-1}>{error}</div> : null}
 
       {step === 1 ? (
         <>
@@ -955,7 +1065,7 @@ export function ReservationFlow({
               const localizedPack = packCopy[locale][pack.slug];
               const unitPrice = (pack.amount / pack.units).toFixed(2);
               return (
-                <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} onClick={() => selectPack(pack.slug)}>
+                <button key={pack.slug} type="button" className={"reserve-pack-option " + (packSlug === pack.slug ? "selected" : "")} aria-pressed={packSlug === pack.slug} ref={packSlug === pack.slug ? element => { stepFocusRef.current = element; } : undefined} onClick={() => selectPack(pack.slug)}>
                   {pack.mostWanted ? <span className="reserve-value-badge">{copy.conversion.bestValue}</span> : null}
                   <span>{pack.units} {r.bagels}</span>
                   <strong>{localizedPack.name}</strong>
@@ -1002,7 +1112,7 @@ export function ReservationFlow({
       {step === 2 ? (
         <div className="reserve-card">
           <div className="reserve-step-title">
-            <h2>{r.chooseFlavors}</h2>
+            <h2 ref={element => { stepFocusRef.current = element; }} tabIndex={-1}>{r.chooseFlavors}</h2>
             <span>{selectedPack.packType === "mixed" ? selectedTotal + " / " + selectedPack.units + " " + r.selected : singleFlavor ? selectedPack.units + " x " + getFlavorLabel(singleFlavor) : r.chooseOneFlavor}</span>
           </div>
           <div className="flavor-select-grid">
@@ -1012,7 +1122,15 @@ export function ReservationFlow({
               const flavorLabel = flavorCopy[locale][flavor.slug] ?? flavor.name;
               return (
                 <article className={"flavor-select-card " + (isSingleSelected ? "selected" : "")} key={flavor.slug}>
-                  <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorLabel} />
+                  <Image
+                    src={flavorImages[flavor.slug]}
+                    alt={locale === "es" ? `Bagel artesanal sabor ${flavorLabel} de Bagelito` : `Bagelito ${flavorLabel} flavor bagel`}
+                    width={256}
+                    height={256}
+                    sizes="(max-width: 760px) 42vw, (max-width: 1120px) 26vw, 190px"
+                    className="flavor-select-photo"
+                    loading="lazy"
+                  />
                   <h3>{flavorLabel}</h3>
                   {selectedPack.packType === "mixed" ? (
                     <div className="quantity-control">
@@ -1021,7 +1139,7 @@ export function ReservationFlow({
                       <button type="button" onClick={() => changeQuantity(flavor.slug, 1)} aria-label={r.add + " " + flavorLabel}><Plus size={15} /></button>
                     </div>
                   ) : (
-                    <button type="button" className="select-flavor-button" onClick={() => setSingleFlavor(flavor.slug)}>{isSingleSelected ? <Check size={16} /> : null} {r.select}</button>
+                    <button type="button" className="select-flavor-button" aria-label={`${r.select} ${flavorLabel}`} aria-pressed={isSingleSelected} onClick={() => setSingleFlavor(flavor.slug)}>{isSingleSelected ? <Check size={16} /> : null} {r.select}</button>
                   )}
                 </article>
               );
@@ -1032,25 +1150,25 @@ export function ReservationFlow({
 
       {step === 3 ? (
         <div className="reserve-card form-card">
-          <h2>{r.deliveryDetails}</h2>
+          <h2 ref={element => { stepFocusRef.current = element; }} tabIndex={-1}>{r.deliveryDetails}</h2>
           <div className="form-grid">
             <label className="bot-trap-field" aria-hidden="true">
               Website
               <input autoComplete="off" name="website" tabIndex={-1} value={website} onChange={(event) => setWebsite(event.target.value)} />
             </label>
-            <label>{r.fields.fullName}<input required value={details.customerName} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
-            <label>{r.fields.whatsapp}<input required value={details.whatsapp} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
-            <label>{r.fields.email}<input type="email" required value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
+            <label>{r.fields.fullName}<input required value={details.customerName} aria-invalid={error === r.errors.deliveryRequired && !details.customerName} aria-describedby={error === r.errors.deliveryRequired && !details.customerName ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, customerName: event.target.value })} /></label>
+            <label>{r.fields.whatsapp}<input required value={details.whatsapp} aria-invalid={error === r.errors.deliveryRequired && !details.whatsapp} aria-describedby={error === r.errors.deliveryRequired && !details.whatsapp ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, whatsapp: event.target.value })} /></label>
+            <label>{r.fields.email}<input type="email" required value={details.email} aria-invalid={error === r.errors.deliveryRequired && !details.email} aria-describedby={error === r.errors.deliveryRequired && !details.email ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, email: event.target.value })} /></label>
             <label>{r.fields.district}<select value={details.district} onChange={(event) => setDetails({ ...details, district: event.target.value })}>{districtOptions.map((district) => <option key={district} value={district}>{district === "Other" ? r.otherDistrict : district}</option>)}</select></label>
-            <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
-            <div className="handoff-box wide" role="radiogroup" aria-label={r.deliveryHandoff.label}>
+            <label className="wide">{r.fields.deliveryAddress}<input required value={details.deliveryAddress} aria-invalid={error === r.errors.deliveryRequired && !details.deliveryAddress} aria-describedby={error === r.errors.deliveryRequired && !details.deliveryAddress ? "checkout-error" : undefined} onChange={(event) => setDetails({ ...details, deliveryAddress: event.target.value })} /></label>
+            <div className="handoff-box wide" role="group" aria-label={r.deliveryHandoff.label}>
               <span>{r.deliveryHandoff.label}</span>
               <div className="handoff-options">
-                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "self" ? "active" : "")} onClick={() => setDetails({ ...details, deliveryHandoff: "self" })}>
+                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "self" ? "active" : "")} aria-pressed={details.deliveryHandoff === "self"} onClick={() => setDetails({ ...details, deliveryHandoff: "self" })}>
                   {details.deliveryHandoff === "self" ? <Check size={16} /> : null}
                   <strong>{r.deliveryHandoff.receive}</strong>
                 </button>
-                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "porteria" ? "active" : "")} onClick={() => setDetails({ ...details, deliveryHandoff: "porteria" })}>
+                <button type="button" className={"handoff-option " + (details.deliveryHandoff === "porteria" ? "active" : "")} aria-pressed={details.deliveryHandoff === "porteria"} onClick={() => setDetails({ ...details, deliveryHandoff: "porteria" })}>
                   {details.deliveryHandoff === "porteria" ? <Check size={16} /> : null}
                   <strong>{r.deliveryHandoff.porter}</strong>
                 </button>
@@ -1072,7 +1190,7 @@ export function ReservationFlow({
             <div className="reserve-step-title">
               <div>
                 <span className="checkout-section-kicker">{checkoutText.eyebrow}</span>
-                <h2>{culqiText.secureTitle}</h2>
+                <h2 ref={element => { stepFocusRef.current = element; }} tabIndex={-1}>{culqiText.secureTitle}</h2>
               </div>
               <span>{r.payment.total}: S/{totalAmount}</span>
             </div>
@@ -1186,6 +1304,7 @@ export function ReservationFlow({
               disabled={!termsAccepted}
               locale={locale}
               onError={setError}
+              onDemoComplete={merchantPreview ? completeDemoCheckout : undefined}
               onPaymentUnresolved={() => {
                 const active = activePaymentRef.current;
                 if (active && isCurrentRecovery(active)) markPaymentForReview();

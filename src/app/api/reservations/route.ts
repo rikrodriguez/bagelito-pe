@@ -6,6 +6,7 @@ import { trackBagelitoServerEvent } from "@/lib/server-analytics";
 import { createReservation } from "@/lib/reservations/service";
 import { ManualReservationError } from "@/lib/reservations/manual-errors";
 import { observeManual } from "@/lib/reservations/manual-observation";
+import { recoverManualReservationForReview } from "@/lib/reservations/manual-review-recovery";
 
 export const runtime = "nodejs";
 
@@ -43,7 +44,11 @@ export async function POST(request: Request) {
       whatsapp: String(formData.get("whatsapp") ?? ""),
       observe: observeManual,
     });
-    const { amount, operationId, orderCode, packSlug, replayed } = await createReservation(formData);
+    // Review closes intake while preserving private, read-only recovery of
+    // operations already bound by the full v1 request and proof identity.
+    const { amount, operationId, orderCode, packSlug, replayed } = process.env.BAGELITO_MERCHANT_REVIEW_ONLY === "true"
+      ? await recoverManualReservationForReview(formData)
+      : await createReservation(formData);
     if (!replayed) observeManual(() => trackBagelitoServerEvent("Reservation Created", { pack: packSlug, amount }, request));
     observeManual(() => logInfo("reservation_api_success", {
       amount,

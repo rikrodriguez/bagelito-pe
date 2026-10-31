@@ -1,5 +1,7 @@
 "use client";
 
+import { merchantReviewCopy } from "@/lib/merchant-review";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CalendarClock, Gauge, MessageCircle } from "lucide-react";
@@ -47,7 +49,9 @@ function getReservedPercent(batchAvailability: BatchAvailability) {
 export function BatchDeadlineBanner() {
   const { locale, copy } = useLanguage();
   const batchAvailability = useBatchAvailability();
-  const deadline = batchAvailability.accepting && batchAvailability.ordersCloseAt
+  const { merchantReviewOnly } = batchAvailability;
+  const review = merchantReviewCopy[locale];
+  const deadline = !merchantReviewOnly && batchAvailability.accepting && batchAvailability.ordersCloseAt
     ? new Date(batchAvailability.ordersCloseAt).getTime()
     : null;
   const hasFixedCapacity = Boolean(batchAvailability.capacityPacks || batchAvailability.capacityBagels);
@@ -63,10 +67,25 @@ export function BatchDeadlineBanner() {
   const ctaHref = batchAvailability.accepting ? packsHref : waitlistHref();
 
   useEffect(() => {
+    if (merchantReviewOnly) return;
     setTimeLeft(getTimeLeft(deadline));
     const interval = window.setInterval(() => setTimeLeft(getTimeLeft(deadline)), 1000);
     return () => window.clearInterval(interval);
-  }, [deadline]);
+  }, [deadline, merchantReviewOnly]);
+
+  if (merchantReviewOnly) {
+    return (
+      <aside className="batch-deadline-banner" aria-label={review.status}>
+        <div className="deadline-banner-copy">
+          <strong>{review.status}</strong>
+        </div>
+        <Link className="deadline-cta" href="/checkout" onClick={() => trackBagelitoEvent("CTA Click", { location: "deadline_banner", target: "checkout_preview" })}>
+          <MessageCircle size={17} />
+          {review.cta}
+        </Link>
+      </aside>
+    );
+  }
 
   return (
     <aside className="batch-deadline-banner" aria-label={copy.deadline.aria}>
