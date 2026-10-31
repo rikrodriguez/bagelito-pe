@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
 import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'
@@ -12,6 +12,16 @@ import './guided-commerce.css'
 
 const menu = getVerifiedDisplayMenu()
 const combos = [{ id: 'two-bagel-schmear', name: '2 Bagels + Schmear', bagels: 2, schmear_count: 1, price: null }] as const
+
+function revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {
+  const grid = event.currentTarget
+  if (grid.scrollWidth <= grid.clientWidth || !(event.target instanceof Element)
+    || !event.target.matches(':focus-visible')) return
+  // Native focus can stop at a partially visible carousel preview. Reveal the
+  // whole card, including its name and removal control, without moving focus.
+  const card = event.target.closest<HTMLElement>('.mobile-bagel-card,.mobile-schmear-card')
+  if (card && grid.contains(card)) card.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' })
+}
 
 type Category = 'packs' | 'combos' | 'schmears'
 type PackFormat = 'grande' | 'mini'
@@ -828,7 +838,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           <h2>{category === 'packs' && packMix === 'single' ? 'Elige un sabor' : 'Elige tus sabores'}</h2>
           <span>{category === 'packs' && packMix === 'single' ? 'Un toque completa todo tu pack.' : bagelTotal + ' de ' + bagelTarget + ' seleccionados'}</span>
         </header>
-        <div className="mobile-bagel-grid">
+        <div className="mobile-bagel-grid" onFocusCapture={liveWorld ? revealFocusedCatalogCard : undefined}>
           {menu.bagels.map((bagel) => {
             const count = bagelCounts[bagel.id] ?? 0
             return <article key={bagel.id} className="mobile-bagel-card" data-selected={count > 0}>
@@ -892,7 +902,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           <h2>Elige tu schmear</h2>
           <span>{category === 'packs' ? 'Opcional · toca de nuevo para quitar' : schmearTotal + ' de ' + schmearTarget + ' seleccionados'}</span>
         </header>
-        <div className="mobile-schmear-grid">
+        <div className="mobile-schmear-grid" onFocusCapture={liveWorld ? revealFocusedCatalogCard : undefined}>
           {menu.schmears.map((item, index) => {
             const count = schmearCounts[item.id] ?? 0
             return <article key={item.id} className="mobile-schmear-card" data-selected={count > 0}>
