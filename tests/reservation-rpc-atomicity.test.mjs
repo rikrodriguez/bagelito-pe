@@ -128,9 +128,11 @@ test('unknown finalize error returns pending while retaining proof and original 
   assert.equal(f.uploads.length, 1);
   assert.equal(f.objects.size, 1);
   const prepares = f.rpcCalls.filter(call => call.name === 'prepare_manual_reservation_v1');
-  assert.equal(prepares.length, 2, 'One prepare reconciliation follows the uncertain finalize');
-  assert.equal(prepares[1].input.p_operation_id, operationId);
-  assert.equal(prepares[1].input.p_request_hash, prepares[0].input.p_request_hash);
+  const reads = f.rpcCalls.filter(call => call.name === 'read_manual_reservation_v1');
+  assert.equal(prepares.length, 1);
+  assert.equal(reads.length, 2, 'One private reconciliation follows the uncertain finalize');
+  assert.equal(reads[1].input.p_operation_id, operationId);
+  assert.equal(reads[1].input.p_request_hash, prepares[0].input.p_request_hash);
   assertNoPartialOrders(f);
   assertFailureContext(f, 'finalize');
 });

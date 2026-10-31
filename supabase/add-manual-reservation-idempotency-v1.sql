@@ -27,6 +27,72 @@ create table if not exists public.manual_reservation_operations (
 alter table public.manual_reservation_operations enable row level security;
 revoke all on table public.manual_reservation_operations from public, anon, authenticated, service_role;
 
+-- Lookup uses only the frozen operation identity. Recovery of a committed
+-- order must not depend on the current catalog, quote, or batch intake.
+create or replace function public.read_manual_reservation_v1(
+  p_operation_id uuid,
+  p_owner_hash text,
+  p_request_hash text,
+  p_proof_sha256 text,
+  p_proof_type text,
+  p_proof_size integer
+)
+returns table (
+  operation_id uuid,
+  state text,
+  order_code text,
+  proof_path text,
+  amount numeric,
+  pack_slug text,
+  replayed boolean
+)
+language plpgsql
+security definer
+set search_path = pg_catalog, public
+as $$
+declare
+  operation public.manual_reservation_operations%rowtype;
+begin
+  if p_operation_id is null
+    or p_operation_id::text !~ '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$' then
+    raise exception using errcode = '22023', message = 'Invalid manual reservation operation metadata.';
+  end if;
+
+  -- Waiting for the shared lock observes an in-flight prepare/finalize commit
+  -- before selecting its row. This function never creates or completes one.
+  perform pg_catalog.pg_advisory_xact_lock(
+    pg_catalog.hashtextextended('bagelito-manual-v1:' || p_operation_id::text, 0));
+  select o.* into operation
+  from public.manual_reservation_operations as o
+  where o.operation_id = p_operation_id
+  for update;
+
+  if found then
+    if operation.owner_hash is distinct from p_owner_hash
+      or operation.request_hash is distinct from p_request_hash
+      or operation.proof_sha256 is distinct from p_proof_sha256
+      or operation.proof_type is distinct from p_proof_type
+      or operation.proof_size is distinct from p_proof_size then
+      raise exception using errcode = 'P4090', message = 'Manual reservation operation conflict.';
+    end if;
+    return query select operation.operation_id, operation.state, operation.order_code,
+      operation.proof_path, (operation.order_payload ->> 'total_amount')::numeric,
+      operation.order_payload ->> 'pack_slug', true;
+    return;
+  end if;
+
+  if p_owner_hash is null or p_owner_hash !~ '^[0-9a-f]{64}$'
+    or p_request_hash is null or p_request_hash !~ '^[0-9a-f]{64}$'
+    or p_proof_sha256 is null or p_proof_sha256 !~ '^[0-9a-f]{64}$'
+    or p_proof_type is null or p_proof_type not in ('image/jpeg', 'image/png', 'image/webp')
+    or p_proof_size is null or p_proof_size not between 1 and 5242880 then
+    raise exception using errcode = '22023', message = 'Invalid manual reservation operation metadata.';
+  end if;
+  -- No matching operation is a successful empty lookup, not a new operation.
+  return;
+end;
+$$;
+
 create or replace function public.prepare_manual_reservation_v1(
   p_operation_id uuid,
   p_owner_hash text,
@@ -326,6 +392,10 @@ begin
 end;
 $$;
 
+revoke all on function public.read_manual_reservation_v1(uuid,text,text,text,text,integer)
+  from public, anon, authenticated;
+grant execute on function public.read_manual_reservation_v1(uuid,text,text,text,text,integer)
+  to service_role;
 revoke all on function public.prepare_manual_reservation_v1(uuid,text,text,text,text,integer,jsonb)
   from public, anon, authenticated;
 revoke all on function public.finalize_manual_reservation_v1(uuid,text,text)

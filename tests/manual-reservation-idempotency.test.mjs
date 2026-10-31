@@ -4,6 +4,7 @@ import { manualFixture, manualForm, operationId, secondOperationId, sha256 } fro
 
 const prepareName = 'prepare_manual_reservation_v1';
 const finalizeName = 'finalize_manual_reservation_v1';
+const readName = 'read_manual_reservation_v1';
 const calls = (f, name) => f.rpcCalls.filter(call => call.name === name);
 
 function pending(error) {
@@ -35,8 +36,9 @@ test('commit followed by lost finalize response reconciles the original purchase
   assert.deepEqual(result, {
     amount: 58, operationId, orderCode: 'BAG-SYNTHETIC-1', packSlug: '6-single', replayed: true,
   });
-  assert.equal(calls(f, prepareName).length, 2);
-  assert.deepEqual(calls(f, prepareName)[0].input, calls(f, prepareName)[1].input);
+  assert.equal(calls(f, prepareName).length, 1);
+  assert.equal(calls(f, readName).length, 2);
+  assert.deepEqual(calls(f, readName)[0].input, calls(f, readName)[1].input);
   assert.equal(calls(f, finalizeName).length, 1);
   assert.equal(f.objects.size, 1);
   exactlyOnePurchase(f);
@@ -45,7 +47,7 @@ test('commit followed by lost finalize response reconciles the original purchase
 test('unavailable reconciliation returns 202, then the same operation recovers even after its last slot is consumed', async () => {
   const f = manualFixture({
     finalizeFaults: [{ when: 'after', throw: 'Synthetic response lost after commit' }],
-    prepareFaults: [null, { throw: 'Synthetic reconciliation unavailable' }],
+    readFaults: [null, { throw: 'Synthetic reconciliation unavailable' }],
   });
   await assert.rejects(f.createReservation(manualForm()), pending);
   exactlyOnePurchase(f);
@@ -90,8 +92,11 @@ test('a completed operation returns its original quote after a catalog price cha
   const f = manualFixture();
   const first = await f.createReservation(manualForm());
   f.quote.amount = 65;
+  const catalogReads = f.catalogCalls.length;
   const replay = await f.createReservation(manualForm());
-  assert.equal(calls(f, prepareName)[1].input.p_order_payload.total_amount, 73);
+  assert.equal(f.catalogCalls.length, catalogReads, 'Completed recovery never consults the current quote');
+  assert.equal(calls(f, prepareName).length, 1);
+  assert.equal(calls(f, readName).length, 2);
   assert.deepEqual(replay, { ...first, amount: 58, replayed: true });
   assert.equal(f.uploads.length, 1);
   exactlyOnePurchase(f);
@@ -161,7 +166,7 @@ test('normalized email, trimmed fields and proof filename changes preserve the s
     paymentScreenshot: new File(['synthetic proof'], 'another-name.png', { type: 'image/png' }),
   }));
   assert.deepEqual(replay, { ...first, replayed: true });
-  const inputs = calls(f, prepareName).map(call => call.input);
+  const inputs = calls(f, readName).map(call => call.input);
   assert.equal(inputs[0].p_owner_hash, inputs[1].p_owner_hash);
   assert.equal(inputs[0].p_request_hash, inputs[1].p_request_hash);
   exactlyOnePurchase(f);
@@ -189,7 +194,7 @@ test('different operation keys competing for the last slot preserve the atomic c
   assert.equal(results.filter(result => result.status === 'fulfilled').length, 1);
   const failure = results.find(result => result.status === 'rejected').reason;
   assert.equal(failure.status, 400);
-  assert.deepEqual(f.rpcCalls.slice(0, 2).map(call => call.name), [prepareName, prepareName],
+  assert.deepEqual(f.rpcCalls.filter(call => call.name !== readName).slice(0, 2).map(call => call.name), [prepareName, prepareName],
     'Both capacity prechecks pass before either atomic finalize runs');
   assert.equal(f.objects.size, 2, 'Evidence is retained for both bound operations');
   exactlyOnePurchase(f);
@@ -225,7 +230,8 @@ for (const code of ['EPIPE', '08007', '40003']) {
     const f = manualFixture({ finalizeError: { code, message: `Synthetic uncertain RPC ${code}` } });
     await assert.rejects(f.createReservation(manualForm()), pending);
     assert.equal(calls(f, finalizeName).length, 1);
-    assert.equal(calls(f, prepareName).length, 2);
+    assert.equal(calls(f, prepareName).length, 1);
+    assert.equal(calls(f, readName).length, 2);
     assert.equal(f.operations.size, 1);
     assert.equal(f.objects.size, 1);
     assert.deepEqual([f.orders, f.items, f.history], [[], [], []]);
@@ -305,14 +311,15 @@ for (const row of [null, {}, { state: 'completed' }, { operation_id: secondOpera
     const f = manualFixture({ finalizeFaults: [{ row }] });
     await assert.rejects(f.createReservation(manualForm()), pending);
     assert.equal(calls(f, finalizeName).length, 1);
-    assert.equal(calls(f, prepareName).length, 2);
+    assert.equal(calls(f, prepareName).length, 1);
+    assert.equal(calls(f, readName).length, 2);
     assert.equal(f.objects.size, 1);
     assert.deepEqual([f.orders, f.items, f.history], [[], [], []]);
     assert.deepEqual(f.removed, []);
   });
 }
 
-test('missing finalize acknowledgement after commit can recover through the keyed prepare lookup', async () => {
+test('missing finalize acknowledgement after commit can recover through the private keyed read', async () => {
   const f = manualFixture({ finalizeFaults: [{ when: 'after', row: null }] });
   assert.equal((await f.createReservation(manualForm())).replayed, true);
   exactlyOnePurchase(f);
@@ -348,7 +355,7 @@ test('HTTP completed replay preserves the same 200 identity, runs limits again a
 
 test('HTTP pending carries the same operation ID and later recovers instead of reporting another purchase', async () => {
   const f = apiFixture({ finalizeFaults: [{ when: 'after', throw: 'Lost commit response' }],
-    prepareFaults: [null, { throw: 'Reconciliation offline' }] });
+    readFaults: [null, { throw: 'Reconciliation offline' }] });
   const first = await f.post();
   assert.equal(first.response.status, 202);
   assert.deepEqual(Object.keys(first.body).sort(), ['code', 'error', 'ok', 'operationId', 'state']);
@@ -393,7 +400,8 @@ test('HTTP exact replays still exhaust the normal contact limit without duplicat
   assert.equal(blocked.response.status, 429);
   assert.ok(Number(blocked.response.headers.get('Retry-After')) > 0);
   assert.equal(f.rateCalls.length, 10);
-  assert.equal(calls(f, prepareName).length, 4, 'Denied retry never reaches reservation storage or RPCs');
+  assert.equal(calls(f, prepareName).length, 1);
+  assert.equal(calls(f, readName).length, 4, 'Denied retry never reaches the private recovery RPC');
   assert.equal(f.events.filter(event => event[0] === 'Reservation Created').length, 1);
   exactlyOnePurchase(f);
 });

@@ -72,6 +72,19 @@ held_case bagelito_manual_finalize_waiter 989103 \
 [[ $(grep -Ec '^BAG-[^|]+\|completed\|f$' "$WORK/bagelito_manual_finalize_waiter-holder.log") -eq 1 ]]
 [[ $(grep -Ec '^BAG-[^|]+\|completed\|t$' "$WORK/bagelito_manual_finalize_waiter-waiter.log") -eq 1 ]]
 
+# A read that starts before finalize commits must wait and observe completed,
+# rather than a stale pending state or an empty/partially written operation.
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -c \
+ "select * from bagelito_manual_fixture.prepare('00000000-0000-4000-8000-000000000914')" >> "$WORK/setup.log"
+held_case bagelito_manual_read_waiter 989105 \
+ "select order_code,state,replayed from bagelito_manual_fixture.finalize('00000000-0000-4000-8000-000000000914')" \
+ "select order_code,state,replayed,amount,pack_slug,proof_path from bagelito_manual_fixture.read('00000000-0000-4000-8000-000000000914')"
+[[ $(grep -Ec '^BAG-[^|]+\|completed\|f$' "$WORK/bagelito_manual_read_waiter-holder.log") -eq 1 ]]
+[[ $(grep -Ec '^BAG-[^|]+\|completed\|t\|58\|6-single\|manual/00000000-0000-4000-8000-000000000914/[0-9a-f]{64}\.png$' \
+ "$WORK/bagelito_manual_read_waiter-waiter.log") -eq 1 ]]
+[[ $(cat "$WORK/bagelito_manual_read_waiter-holder.log" "$WORK/bagelito_manual_read_waiter-waiter.log" \
+ | grep -E '^BAG-[^|]+\|completed\|' | cut -d '|' -f 1 | sort -u | wc -l) -eq 1 ]]
+
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 >> "$WORK/setup.log" <<'SQL'
 insert into public.batches(id,name,status,capacity_packs,capacity_bagels,created_at)
 values('00000000-0000-4000-8000-000000000912','Synthetic manual last slot','orders_open',1,6,'2999-02-02');
@@ -92,12 +105,13 @@ grep -Fq 'This Bagelito batch is full. Join the waitlist.' "$WORK/bagelito_manua
 with removed as (
  delete from public.manual_reservation_operations where operation_id in (
   '00000000-0000-4000-8000-000000000910','00000000-0000-4000-8000-000000000911',
-  '00000000-0000-4000-8000-000000000912','00000000-0000-4000-8000-000000000913') returning order_id
+  '00000000-0000-4000-8000-000000000912','00000000-0000-4000-8000-000000000913',
+  '00000000-0000-4000-8000-000000000914') returning order_id
 )
 delete from public.orders where id in (select order_id from removed);
 delete from public.batches where id in (
  '00000000-0000-4000-8000-000000000910','00000000-0000-4000-8000-000000000912');
 drop schema bagelito_manual_fixture cascade;
 SQL
-echo 'PASS: overlapping manual prepare/finalize replay; conflicting hash; exactly one last-slot order; pending proof retained; additive reapply'
+echo 'PASS: overlapping manual prepare/finalize/read replay; conflicting hash; exactly one last-slot order; pending proof retained; additive reapply'
 echo "Manual concurrency logs: $WORK"

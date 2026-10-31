@@ -11,6 +11,8 @@ do $$ declare role_name text; begin
   if has_function_privilege(role_name,'public.prepare_manual_reservation_v1(uuid,text,text,text,text,integer,jsonb)','EXECUTE')
      is distinct from (role_name='service_role')
    or has_function_privilege(role_name,'public.finalize_manual_reservation_v1(uuid,text,text)','EXECUTE')
+     is distinct from (role_name='service_role')
+   or has_function_privilege(role_name,'public.read_manual_reservation_v1(uuid,text,text,text,text,integer)','EXECUTE')
      is distinct from (role_name='service_role') then
    raise exception 'Wrong RPC execution grant for %', role_name;
   end if;
@@ -21,7 +23,8 @@ do $$ declare role_name text; begin
  end if;
  if exists(select 1 from pg_proc where oid in (
    'public.prepare_manual_reservation_v1(uuid,text,text,text,text,integer,jsonb)'::regprocedure,
-   'public.finalize_manual_reservation_v1(uuid,text,text)'::regprocedure) and not prosecdef) then
+   'public.finalize_manual_reservation_v1(uuid,text,text)'::regprocedure,
+   'public.read_manual_reservation_v1(uuid,text,text,text,text,integer)'::regprocedure) and not prosecdef) then
   raise exception 'Manual RPCs must be security definer';
  end if;
 end $$;

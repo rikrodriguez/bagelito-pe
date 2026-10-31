@@ -35,6 +35,11 @@ function sameIdentity(operation, input) {
   return operation.ownerHash === input.p_owner_hash && operation.requestHash === input.p_request_hash;
 }
 
+function sameProof(operation, input) {
+  return operation.proofSha256 === input.p_proof_sha256
+    && operation.proofType === input.p_proof_type && operation.proofSize === input.p_proof_size;
+}
+
 // A mutable transaction model complements the separate PostgreSQL tests. The
 // production service, schema, catalog, pricing and installed Supabase SDK run
 // unchanged. Every SDK fetch is intercepted here; no provider is reachable.
@@ -44,12 +49,15 @@ export function manualFixture(options = {}) {
   const rpcCalls = [], rateCalls = [], fetchCalls = [], errors = [], warnings = [], infos = [];
   const rateLimits = new Map();
   const controls = {
+    readFaults: [...(options.readFaults ?? [])],
     prepareFaults: [...(options.prepareFaults ?? [])],
     finalizeFaults: [...(options.finalizeFaults ?? [])],
     uploadFaults: [...(options.uploadFaults ?? [])],
     downloadFaults: [...(options.downloadFaults ?? [])],
+    readError: options.readError ?? null,
     prepareError: options.prepareError ?? null,
     finalizeError: options.finalizeError ?? null,
+    readThrow: options.readThrow ?? false,
     prepareThrow: options.prepareThrow ?? false,
     finalizeThrow: options.finalizeThrow ?? false,
     uploadError: options.uploadError ?? null,
@@ -89,12 +97,21 @@ export function manualFixture(options = {}) {
     };
   }
 
+  function read(input) {
+    const existing = operations.get(input.p_operation_id);
+    if (!existing) return Response.json([]);
+    if (!sameIdentity(existing, input) || !sameProof(existing, input)) {
+      return dbError({ code: 'P4090', message: 'Manual reservation operation conflict.' }, 409);
+    }
+    return Response.json([operationRow(existing, true)]);
+  }
+
   function prepare(input) {
     assert.match(input.p_operation_id, /^[0-9a-f-]{36}$/i);
     for (const field of ['p_owner_hash', 'p_request_hash', 'p_proof_sha256']) assert.match(input[field], /^[0-9a-f]{64}$/);
     const existing = operations.get(input.p_operation_id);
     if (existing) {
-      if (!sameIdentity(existing, input)) return dbError({ code: 'P4090', message: 'Manual reservation operation conflict.' }, 409);
+      if (!sameIdentity(existing, input) || !sameProof(existing, input)) return dbError({ code: 'P4090', message: 'Manual reservation operation conflict.' }, 409);
       if (existing.state !== 'completed' && !isDeepStrictEqual(existing.payload, input.p_order_payload)) {
         return dbError({ code: 'P4091', message: 'Manual reservation quote changed.' }, 409);
       }
@@ -173,14 +190,14 @@ export function manualFixture(options = {}) {
         return Response.json({ allowed: hits <= input.p_limit, hits,
           retry_after_seconds: hits <= input.p_limit ? 0 : input.p_window_seconds });
       }
-      const stage = { prepare_manual_reservation_v1: 'prepare', finalize_manual_reservation_v1: 'finalize' }[name];
+      const stage = { read_manual_reservation_v1: 'read', prepare_manual_reservation_v1: 'prepare', finalize_manual_reservation_v1: 'finalize' }[name];
       assert.ok(stage, `Unexpected RPC ${name}; no legacy fallback is allowed`);
       const fault = faultFor(stage);
       if (fault?.when !== 'after') {
         const response = faultResponse(fault);
         if (response) return response;
       }
-      const result = stage === 'prepare' ? prepare(input) : finalize(input);
+      const result = stage === 'read' ? read(input) : stage === 'prepare' ? prepare(input) : finalize(input);
       if (stage === 'prepare' && result.ok && preparedCount < (options.prepareBarrier ?? 0)) {
         if (++preparedCount === options.prepareBarrier) releasePrepared();
         await preparedBarrier;
@@ -239,12 +256,20 @@ export function manualFixture(options = {}) {
   const cache = new Map();
   const quote = { amount: null };
   const catalog = sourceModule('src/lib/catalog.ts');
+  const catalogCalls = [];
   const overrides = {
     '@/lib/env': { getMissingReservationEnv: () => [] },
     '@/lib/supabase/admin': { createSupabaseAdminClient: () => db },
     '@/lib/catalog': { ...catalog, getPackBySlug(slug) {
+      catalogCalls.push({ method: 'getPackBySlug', slug });
       const pack = catalog.getPackBySlug(slug);
       return pack && quote.amount !== null ? { ...pack, amount: quote.amount } : pack;
+    }, getFlavorBySlug(slug) {
+      catalogCalls.push({ method: 'getFlavorBySlug', slug });
+      return catalog.getFlavorBySlug(slug);
+    }, isPackSlug(slug) {
+      catalogCalls.push({ method: 'isPackSlug', slug });
+      return catalog.isPackSlug(slug);
     } },
     '@/lib/monitoring': {
       logError: (...args) => errors.push(args), logWarn: (...args) => warnings.push(args),
@@ -255,5 +280,5 @@ export function manualFixture(options = {}) {
   const load = (relative, extraOverrides = {}) => sourceModule(relative, { ...overrides, ...extraOverrides }, cache);
   const service = load('src/lib/reservations/service.ts');
   return { ...service, db, operations, objects, orders, items, history, writes, uploads, downloads, removed,
-    rpcCalls, rateCalls, fetchCalls, errors, warnings, infos, controls, batch, quote, load };
+    rpcCalls, rateCalls, fetchCalls, errors, warnings, infos, controls, batch, quote, catalog, catalogCalls, load };
 }

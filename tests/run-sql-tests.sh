@@ -215,6 +215,7 @@ fi
 # in both profiles. No existing Culqi function or historical migration changes.
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/supabase/add-manual-reservation-idempotency-v1.sql" >> "$WORK/schema.log" 2>&1
 "$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/manual-reservation-idempotency.sql"
+"$PG_BIN/psql" -X -v ON_ERROR_STOP=1 -f "$ROOT/tests/payments/sql/manual-reservation-read.sql"
 bash "$ROOT/tests/payments/sql/manual-reservation-idempotency-races.sh"
 echo "PASS: isolated SQL profile $SQL_PROFILE"
 echo "Fixture logs: $WORK"

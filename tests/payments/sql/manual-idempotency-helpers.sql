@@ -48,3 +48,12 @@ returns uuid language sql as $$
  p_payment_screenshot_path=>'synthetic/imported.png',p_terms_accepted=>true,p_exact_amount_confirmed=>true,
  p_items=>'[{"flavor_slug":"plain","flavor_name":"Plain","quantity":6}]'::jsonb) r;
 $$;
+
+create function bagelito_manual_fixture.read(
+ op uuid, owner text default repeat('1',64), request text default repeat('2',64),
+ proof text default repeat('3',64), mime text default 'image/png', size integer default 32
+)
+returns table(operation_id uuid,state text,order_code text,proof_path text,amount numeric,pack_slug text,replayed boolean)
+language sql as $$
+ select * from public.read_manual_reservation_v1(op,owner,request,proof,mime,size);
+$$;

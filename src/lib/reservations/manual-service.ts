@@ -5,7 +5,9 @@ import { CHECKOUT_LEGAL_VERSION } from "@/lib/legal-terms";
 import { logError, logWarn } from "@/lib/monitoring";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { ManualReservationError } from "./manual-errors";
-import type { ReservationPayload } from "./schema";
+import { observeManual } from "./manual-observation";
+import { canonicalManualRequestV1, manualOwnerV1HashInput, manualRequestV1FromFormData, manualRequestV1HashInput } from "./manual-request-v1";
+import { reservationPayloadSchema } from "./schema";
 
 const proofBucket = "payment-proofs";
 const maxProofBytes = 5 * 1024 * 1024;
@@ -88,31 +90,56 @@ function throwKnownRejection(error: unknown, operationId: string) {
   }
 }
 
-export async function createManualReservation(formData: FormData, payload: ReservationPayload) {
+export async function createManualReservation(formData: FormData) {
+  const payload = manualRequestV1FromFormData(formData);
   const file = formData.get("paymentScreenshot");
   if (!(file instanceof File) || file.size === 0) throw new Error("Payment screenshot is required.");
   const proofType = file.type === "image/jpg" ? "image/jpeg" : file.type;
   if (!proofExtensions[proofType]) throw new Error("Payment screenshot must be PNG, JPG, JPEG, or WEBP.");
   if (file.size > maxProofBytes) throw new Error("Payment screenshot must be 5MB or smaller.");
 
-  const { operationId, ...request } = payload;
-  const normalized = { ...request, email: request.email.toLowerCase() };
+  const { operationId } = payload;
+  const normalized = canonicalManualRequestV1(payload);
   const proofBytes = await file.arrayBuffer();
   const proofSha = sha256(proofBytes);
-  const ownerHash = sha256(JSON.stringify({ email: normalized.email, whatsapp: normalized.whatsapp }));
-  const requestHash = sha256(JSON.stringify({ version: 1, request: normalized,
-    proof: { sha256: proofSha, type: proofType, size: file.size } }));
+  const ownerHash = sha256(manualOwnerV1HashInput(payload));
+  const requestHash = sha256(manualRequestV1HashInput(payload, { sha256: proofSha, type: proofType, size: file.size }));
   const expectedPath = `manual/${operationId}/${proofSha}.${proofExtensions[proofType]}`;
+  const supabase = createSupabaseAdminClient();
+  const identity = { p_operation_id: operationId, p_owner_hash: ownerHash, p_request_hash: requestHash };
+  const recoveryIdentity = { ...identity, p_proof_sha256: proofSha, p_proof_type: proofType, p_proof_size: file.size };
+  async function recoverOperation() {
+    const { data, error } = await supabase.rpc("read_manual_reservation_v1", recoveryIdentity).maybeSingle();
+    if (error) throw new RpcReplyFailure(error);
+    return data === null ? null : validateOperation(data);
+  }
+  let existing: OperationRow | null;
+  try {
+    existing = await recoverOperation();
+  } catch (error) {
+    recordFailure("read", error);
+    throwKnownRejection(error, operationId);
+    try {
+      existing = await recoverOperation();
+    } catch (recoveryError) {
+      recordFailure("read_recovery", recoveryError);
+      if (failureCode(recoveryError) === "P4090") throwKnownRejection(recoveryError, operationId);
+      throw pending(operationId);
+    }
+  }
+  if (existing?.state === "completed") return result({ ...existing, replayed: true });
+
+  // Recovery uses frozen v1 identity first. New and pending operations still
+  // need every current catalog, quantity, delivery and consent validation.
+  reservationPayloadSchema.parse(payload);
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
   const deliveryFee = getDeliveryFee(payload.district);
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
   const deliveryNotes = [handoffNote,
     `Delivery: S/${deliveryFee} (${getDeliveryDistanceKm(payload.district)} km)`, payload.deliveryNotes].filter(Boolean).join(" | ");
-  const supabase = createSupabaseAdminClient();
-  const identity = { p_operation_id: operationId, p_owner_hash: ownerHash, p_request_hash: requestHash };
   const prepareInput = {
-    ...identity, p_proof_sha256: proofSha, p_proof_type: proofType, p_proof_size: file.size,
+    ...recoveryIdentity,
     p_order_payload: {
       address_reference: payload.addressReference, customer_name: payload.customerName,
       delivery_address: payload.deliveryAddress, delivery_notes: deliveryNotes, district: payload.district,
@@ -131,14 +158,12 @@ export async function createManualReservation(formData: FormData, payload: Reser
     },
   };
   function recordFailure(stage: string, error: unknown) {
-    logError("manual_reservation_backend_failed", errorForLog(error), {
+    observeManual(() => logError("manual_reservation_backend_failed", errorForLog(error), {
       operationId, stage, code: failureCode(error),
       outcome: stage.endsWith("_recovered") ? "recovered" : isSqlRejection(error) ? "rejected" : "unknown",
-    });
+    }));
   }
-  async function readOperation(name: "prepare_manual_reservation_v1" | "finalize_manual_reservation_v1") {
-    const { data, error } = await supabase.rpc(name, name === "prepare_manual_reservation_v1" ? prepareInput : identity).single();
-    if (error) throw new RpcReplyFailure(error);
+  function validateOperation(data: unknown) {
     const row = data as OperationRow | null;
     if (!row || row.operation_id !== operationId || row.proof_path !== expectedPath
       || !row.order_code || row.pack_slug !== payload.packSlug
@@ -148,6 +173,11 @@ export async function createManualReservation(formData: FormData, payload: Reser
       throw new Error("Manual reservation transaction returned an incomplete operation.");
     }
     return { ...row, amount: Number(row.amount) };
+  }
+  async function readOperation(name: "prepare_manual_reservation_v1" | "finalize_manual_reservation_v1") {
+    const { data, error } = await supabase.rpc(name, name === "prepare_manual_reservation_v1" ? prepareInput : identity).single();
+    if (error) throw new RpcReplyFailure(error);
+    return validateOperation(data);
   }
   function result(row: OperationRow) {
     return { amount: row.amount, operationId, orderCode: row.order_code,
@@ -180,7 +210,7 @@ export async function createManualReservation(formData: FormData, payload: Reser
   } catch (error) {
     // A lost upload response and a concurrent exact replay may both leave the
     // correct object present. Verify bytes before treating either as success.
-    logWarn("manual_reservation_proof_upload_unconfirmed", { operationId, path: operation.proof_path });
+    observeManual(() => logWarn("manual_reservation_proof_upload_unconfirmed", { operationId, path: operation.proof_path }));
     try {
       const { data: proof, error: downloadError } = await supabase.storage.from(proofBucket).download(operation.proof_path);
       if (downloadError) throw downloadError;
@@ -202,8 +232,8 @@ export async function createManualReservation(formData: FormData, payload: Reser
     recordFailure("finalize", error);
     throwKnownRejection(error, operationId);
     try {
-      const recovered = await readOperation("prepare_manual_reservation_v1");
-      if (recovered.state === "completed") return result({ ...recovered, replayed: true });
+      const recovered = await recoverOperation();
+      if (recovered?.state === "completed") return result({ ...recovered, replayed: true });
     } catch (recoveryError) {
       recordFailure("finalize_recovery", recoveryError);
       if (failureCode(recoveryError) === "P4090") throwKnownRejection(recoveryError, operationId);

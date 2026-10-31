@@ -243,7 +243,7 @@ function buildReservationItems(payload: Pick<ReservationPayload | CulqiReservati
 export async function createReservation(formData: FormData) {
   const missing = getMissingReservationEnv();
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
-  return createManualReservation(formData, payloadFromFormData(formData));
+  return createManualReservation(formData);
 }
 
 export async function createCulqiReservation(input: unknown) {

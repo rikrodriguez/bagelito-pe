@@ -1,5 +1,6 @@
 do $$ declare first_op public.manual_reservation_operations%rowtype;
- loser public.manual_reservation_operations%rowtype; begin
+ loser public.manual_reservation_operations%rowtype;
+ read_op public.manual_reservation_operations%rowtype; begin
  if current_database()<>'bagelito_test' or current_setting('bagelito.test_mode',true) is distinct from 'on' then
   raise exception 'Exact isolated database and explicit test mode are required';
  end if;
@@ -15,6 +16,14 @@ do $$ declare first_op public.manual_reservation_operations%rowtype;
   or not exists(select 1 from public.manual_reservation_operations where operation_id='00000000-0000-4000-8000-000000000911'
     and request_hash=repeat('2',64) and state='awaiting_proof') then
   raise exception 'Concurrent prepare conflict replaced first immutable operation';
+ end if;
+ select * into read_op from public.manual_reservation_operations where operation_id='00000000-0000-4000-8000-000000000914';
+ if read_op.state is distinct from 'completed' or read_op.order_id is null
+  or (select count(*) from public.orders where id=read_op.order_id)<>1
+  or (select count(*) from public.order_items where order_id=read_op.order_id)<>1
+  or (select count(*) from public.order_status_history where order_id=read_op.order_id)<>1
+  or (select payment_screenshot_path from public.orders where id=read_op.order_id) is distinct from read_op.proof_path then
+  raise exception 'Read overlapping finalize did not preserve one complete bound order';
  end if;
  select * into loser from public.manual_reservation_operations where operation_id='00000000-0000-4000-8000-000000000913';
  if loser.state is distinct from 'awaiting_proof' or loser.order_id is not null
