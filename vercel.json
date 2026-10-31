@@ -2,7 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
-      "fix/culqi-commercial-gaps-20261026": false
+      "fix/culqi-commercial-gaps-20261026": false,
+      "fix/catalog-checkout-consistency-20261031": false
     }
   }
 }
