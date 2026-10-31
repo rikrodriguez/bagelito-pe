@@ -165,7 +165,8 @@ function getContactIdentifier(email: string, whatsapp: string) {
   return "";
 }
 
-async function consumeRateLimit(scope: string, identifier: string, limit: number, windowSeconds: number) {
+async function consumeRateLimit(scope: string, identifier: string, limit: number, windowSeconds: number,
+  observe?: (effect: () => unknown) => void) {
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .rpc("consume_api_rate_limit", {
@@ -178,7 +179,9 @@ async function consumeRateLimit(scope: string, identifier: string, limit: number
 
   if (error) {
     if (isMissingFunctionError(error, "consume_api_rate_limit")) {
-      logWarn("public_rate_limit_rpc_missing", { scope });
+      const warning = () => logWarn("public_rate_limit_rpc_missing", { scope });
+      if (observe) observe(warning);
+      else warning();
       // Financial/public forms must not silently become unlimited when the
       // database migration or RPC permissions are missing.
       throw new PublicApiError("This service is temporarily unavailable. Please try again shortly.", {
@@ -208,12 +211,14 @@ export async function enforcePublicApiSecurity({
   scope,
   trapValue,
   whatsapp,
+  observe,
 }: {
   email: string;
   request: Request;
   scope: PublicApiScope;
   trapValue?: string | null | undefined;
   whatsapp: string;
+  observe?: (effect: () => unknown) => void;
 }) {
   assertBotTrapClear(trapValue);
 
@@ -226,6 +231,7 @@ export async function enforcePublicApiSecurity({
     requesterIdentifier,
     rules.requester.limit,
     rules.requester.windowSeconds,
+    observe,
   );
 
   if (contactIdentifier) {
@@ -234,6 +240,7 @@ export async function enforcePublicApiSecurity({
       contactIdentifier,
       rules.contact.limit,
       rules.contact.windowSeconds,
+      observe,
     );
   }
 }

@@ -1,9 +1,9 @@
 import { randomBytes } from "node:crypto";
+import { createManualReservation } from "./manual-service";
 import { getFlavorBySlug, getPackBySlug } from "@/lib/catalog";
 import { getCheckoutExtraPackOffer } from "@/lib/checkout-upsell";
 import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
 import { getMissingReservationEnv } from "@/lib/env";
-import { logError, logWarn } from "@/lib/monitoring";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { consumesBatchCapacity, isBatchAcceptingOrders, ordersOpenStatus } from "@/lib/batch-availability";
 import {
@@ -14,12 +14,6 @@ import {
   type ReservationPayload,
 } from "./schema";
 
-const paymentProofBucket = "payment-proofs";
-const maxPaymentScreenshotBytes = 5 * 1024 * 1024;
-const allowedPaymentScreenshotTypes = new Set(["image/png", "image/jpeg", "image/jpg", "image/webp"]);
-
-type OrderRow = { id: string; order_code: string };
-type ReservationRpcRow = { order_id: string; order_code: string };
 type CulqiReservationRpcRow = { order_id: string; order_code: string; payment_expires_at: string };
 type ReservationItemInsert = {
   flavor_name: string;
@@ -63,35 +57,6 @@ const currentBatchSelect = "id, name, status, orders_open_at, orders_close_at, d
 
 function fallbackOrderCode() {
   return "BAG-" + Date.now().toString(36).toUpperCase() + "-" + randomBytes(2).toString("hex").toUpperCase();
-}
-
-function safeFilename(filename: string) {
-  const cleaned = filename
-    .trim()
-    .replace(/[^a-zA-Z0-9._-]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^[-.]+|[-.]+$/g, "")
-    .slice(0, 90);
-
-  return cleaned || "payment-proof.png";
-}
-
-function getPaymentScreenshot(formData: FormData) {
-  const file = formData.get("paymentScreenshot");
-
-  if (!(file instanceof File) || file.size === 0) {
-    throw new Error("Payment screenshot is required.");
-  }
-
-  if (!allowedPaymentScreenshotTypes.has(file.type)) {
-    throw new Error("Payment screenshot must be PNG, JPG, JPEG, or WEBP.");
-  }
-
-  if (file.size > maxPaymentScreenshotBytes) {
-    throw new Error("Payment screenshot must be 5MB or smaller.");
-  }
-
-  return file;
 }
 
 function isMissingFunctionError(error: { code?: string; message?: string } | null | undefined, functionName: string) {
@@ -240,6 +205,7 @@ export async function getReservationBatchAvailability(): Promise<BatchAvailabili
 
 export function payloadFromFormData(formData: FormData): ReservationPayload {
   return reservationPayloadSchema.parse({
+    operationId: formData.get("operationId"),
     packSlug: formData.get("packSlug"),
     items: parseItems(formData.get("items")),
     customerName: formData.get("customerName"),
@@ -274,169 +240,10 @@ function buildReservationItems(payload: Pick<ReservationPayload | CulqiReservati
   });
 }
 
-async function removeUploadedPaymentProof(
-  supabase: ReturnType<typeof createSupabaseAdminClient>,
-  path: string,
-) {
-  const { error } = await supabase.storage.from(paymentProofBucket).remove([path]);
-  if (error) {
-    logWarn("reservation_payment_proof_cleanup_failed", {
-      error: error.message,
-      path,
-    });
-  }
-}
-
-async function createReservationViaRpc(
-  supabase: ReturnType<typeof createSupabaseAdminClient>,
-  input: {
-    addressReference: string;
-    batchId: string;
-    customerName: string;
-    deliveryAddress: string;
-    deliveryNotes: string;
-    district: string;
-    email: string;
-    exactAmountConfirmed: boolean;
-    items: ReservationItemInsert[];
-    marketingOptIn: boolean;
-    orderCode: string;
-    packName: string;
-    packSlug: string;
-    packType: string;
-    packUnits: number;
-    paymentHolderName: string;
-    paymentMethod: string;
-    paymentPhoneNumber: string;
-    paymentScreenshotPath: string;
-    paymentTransactionNumber: string;
-    termsAccepted: boolean;
-    totalAmount: number;
-    whatsapp: string;
-  },
-) {
-  const { data, error } = await supabase
-    .rpc("create_reservation_order", {
-      p_address_reference: input.addressReference || null,
-      p_batch_id: input.batchId,
-      p_customer_name: input.customerName,
-      p_delivery_address: input.deliveryAddress,
-      p_delivery_notes: input.deliveryNotes || null,
-      p_district: input.district,
-      p_email: input.email,
-      p_exact_amount_confirmed: input.exactAmountConfirmed,
-      p_items: input.items,
-      p_marketing_opt_in: input.marketingOptIn,
-      p_order_code: input.orderCode,
-      p_pack_name: input.packName,
-      p_pack_slug: input.packSlug,
-      p_pack_type: input.packType,
-      p_pack_units: input.packUnits,
-      p_payment_holder_name: input.paymentHolderName,
-      p_payment_method: input.paymentMethod,
-      p_payment_phone_number: input.paymentPhoneNumber,
-      p_payment_screenshot_path: input.paymentScreenshotPath,
-      p_payment_transaction_number: input.paymentTransactionNumber,
-      p_terms_accepted: input.termsAccepted,
-      p_total_amount: input.totalAmount,
-      p_whatsapp: input.whatsapp,
-    })
-    .single();
-
-  // Only this transaction locks the batch and atomically checks capacity while
-  // writing the order, items and history. Never replace it with direct inserts.
-  if (error) {
-    throw new Error("Could not create reservation: " + error.message);
-  }
-
-  const row = data as ReservationRpcRow | null;
-  if (!row?.order_id || !row.order_code) {
-    throw new Error("Could not create reservation: transaction returned no order row.");
-  }
-
-  return {
-    id: row.order_id,
-    order_code: row.order_code,
-  } satisfies OrderRow;
-}
-
 export async function createReservation(formData: FormData) {
   const missing = getMissingReservationEnv();
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
-
-  const payload = payloadFromFormData(formData);
-  const pack = getPackBySlug(payload.packSlug);
-  if (!pack) throw new Error("Invalid pack selected.");
-  const deliveryDistanceKm = getDeliveryDistanceKm(payload.district);
-  const deliveryFee = getDeliveryFee(payload.district);
-  const totalAmount = pack.amount + deliveryFee;
-
-  const supabase = createSupabaseAdminClient();
-  const batch = await getOrCreateCurrentBatch(supabase);
-  const usage = await getBatchCapacityUsage(supabase, batch.id);
-  const batchBlockReason = getBatchBlockReason(batch, usage, pack.units);
-  if (batchBlockReason) throw new Error(batchBlockReason);
-
-  const paymentScreenshot = getPaymentScreenshot(formData);
-  const reservationItems = buildReservationItems(payload);
-  const orderCode = await nextOrderCode(supabase);
-  const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
-  const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
-  const deliveryNotes = [handoffNote, `Delivery: S/${deliveryFee} (${deliveryDistanceKm} km)`, payload.deliveryNotes].filter(Boolean).join(" | ");
-
-  const { error: uploadError } = await supabase.storage
-    .from(paymentProofBucket)
-    .upload(paymentScreenshotPath, paymentScreenshot, {
-      contentType: paymentScreenshot.type,
-      upsert: false,
-    });
-
-  if (uploadError) {
-    throw new Error("Could not upload payment proof: " + uploadError.message);
-  }
-
-  let orderRow: OrderRow;
-  try {
-    orderRow = await createReservationViaRpc(supabase, {
-      addressReference: payload.addressReference,
-      batchId: batch.id,
-      customerName: payload.customerName,
-      deliveryAddress: payload.deliveryAddress,
-      deliveryNotes,
-      district: payload.district,
-      email: payload.email,
-      exactAmountConfirmed: payload.exactAmountConfirmed,
-      items: reservationItems,
-      marketingOptIn: payload.marketingOptIn,
-      orderCode,
-      packName: pack.name,
-      packSlug: pack.slug,
-      packType: pack.packType,
-      packUnits: pack.units,
-      paymentHolderName: payload.paymentHolderName,
-      paymentMethod: payload.paymentMethod,
-      paymentPhoneNumber: payload.paymentPhoneNumber,
-      paymentScreenshotPath,
-      paymentTransactionNumber: payload.paymentTransactionNumber,
-      termsAccepted: payload.termsAccepted,
-      totalAmount,
-      whatsapp: payload.whatsapp,
-    });
-  } catch (error) {
-    await removeUploadedPaymentProof(supabase, paymentScreenshotPath);
-    logError("reservation_create_failed_after_upload", error, {
-      batchId: batch.id,
-      orderCode,
-      paymentScreenshotPath,
-    });
-    throw error;
-  }
-
-  return {
-    amount: totalAmount,
-    orderCode: orderRow.order_code,
-    packSlug: pack.slug,
-  };
+  return createManualReservation(formData);
 }
 
 export async function createCulqiReservation(input: unknown) {

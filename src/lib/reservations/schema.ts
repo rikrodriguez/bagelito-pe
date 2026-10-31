@@ -64,6 +64,9 @@ function validatePackItems(
 }
 
 export const reservationPayloadSchema = z.object({
+  operationId: z.string().uuid("A stable reservation operation ID is required.")
+    .regex(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i, "Use a random UUID v4 operation ID.")
+    .transform((value) => value.toLowerCase()),
   ...reservationBaseShape,
   paymentMethod: z.enum(paymentMethodOptions),
   paymentTransactionNumber: z.string().trim().min(3, "Payment transaction number is required."),
