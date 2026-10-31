@@ -1,0 +1,23 @@
+{"at":"2026-10-31T22:03:13.821Z","type":"mode-start","mode":"desktop","paymentDisabled":true,"touchContext":false}
+{"at":"2026-10-31T22:03:34.705Z","type":"case-start","mode":"desktop","name":"native-repeat-keydown-keyup-480ms-no-replay"}
+{"at":"2026-10-31T22:03:47.049Z","type":"case-pass","mode":"desktop","name":"native-repeat-keydown-keyup-480ms-no-replay"}
+{"at":"2026-10-31T22:03:47.050Z","type":"case-start","mode":"desktop","name":"native-key-after-long-idle-no-jump"}
+{"at":"2026-10-31T22:04:00.615Z","type":"case-pass","mode":"desktop","name":"native-key-after-long-idle-no-jump"}
+{"at":"2026-10-31T22:04:00.616Z","type":"case-start","mode":"desktop","name":"synthetic-blur-discards-queued-held"}
+{"at":"2026-10-31T22:04:12.222Z","type":"case-pass","mode":"desktop","name":"synthetic-blur-discards-queued-held"}
+{"at":"2026-10-31T22:04:12.223Z","type":"case-start","mode":"desktop","name":"synthetic-visibilitychange-discards-queued-held"}
+{"at":"2026-10-31T22:04:25.757Z","type":"case-pass","mode":"desktop","name":"synthetic-visibilitychange-discards-queued-held"}
+{"at":"2026-10-31T22:04:25.764Z","type":"case-start","mode":"desktop","name":"paused-commerce-entry-exit-clears-input"}
+{"at":"2026-10-31T22:04:35.524Z","type":"case-pass","mode":"desktop","name":"paused-commerce-entry-exit-clears-input"}
+{"at":"2026-10-31T22:04:35.524Z","type":"case-start","mode":"desktop","name":"paused-3d-tour-entry-exit-clears-input"}
+{"at":"2026-10-31T22:04:45.714Z","type":"case-pass","mode":"desktop","name":"paused-3d-tour-entry-exit-clears-input"}
+{"at":"2026-10-31T22:04:45.714Z","type":"case-start","mode":"desktop","name":"fresh-native-key-after-guided-transitions"}
+{"at":"2026-10-31T22:04:55.905Z","type":"case-pass","mode":"desktop","name":"fresh-native-key-after-guided-transitions"}
+{"at":"2026-10-31T22:05:03.321Z","type":"mode-pass","mode":"desktop"}
+{"at":"2026-10-31T22:05:04.961Z","type":"mode-start","mode":"mobile","paymentDisabled":true,"touchContext":true}
+{"at":"2026-10-31T22:05:15.322Z","type":"case-start","mode":"mobile","name":"native-touch-480ms-no-replay"}
+{"at":"2026-10-31T22:05:18.626Z","type":"case-pass","mode":"mobile","name":"native-touch-480ms-no-replay"}
+{"at":"2026-10-31T22:05:18.626Z","type":"case-start","mode":"mobile","name":"native-touch-after-long-idle-no-jump"}
+{"at":"2026-10-31T22:05:25.299Z","type":"case-pass","mode":"mobile","name":"native-touch-after-long-idle-no-jump"}
+{"at":"2026-10-31T22:05:27.459Z","type":"mode-pass","mode":"mobile"}
+9 movement event checks; 0 failures

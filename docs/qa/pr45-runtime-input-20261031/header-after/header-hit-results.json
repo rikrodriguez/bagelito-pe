@@ -1,0 +1,314 @@
+{
+  "metadata": {
+    "declaredBuildSHA": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
+    "base": "http://127.0.0.1:3198/",
+    "scriptSHA256": "5442059545d38acbe5c7df8882312be2a00deba820ba44867292c4441bc4786b",
+    "gateInstalled": false,
+    "appHooks": false,
+    "startedAt": "2026-10-31T22:02:34.398Z",
+    "finishedAt": "2026-10-31T22:02:52.514Z"
+  },
+  "snapshots": [
+    {
+      "label": "entry-before-free",
+      "button": {
+        "tag": "BUTTON",
+        "className": "brand-pill",
+        "ariaLabel": "Elegir categoría",
+        "pointerEvents": "auto",
+        "visibility": "visible",
+        "display": "grid",
+        "box": {
+          "x": 16,
+          "y": 16,
+          "width": 48,
+          "height": 48
+        }
+      },
+      "point": {
+        "x": 40,
+        "y": 40
+      },
+      "hitIsButton": true,
+      "hitStack": [
+        {
+          "tag": "BUTTON",
+          "className": "brand-pill",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "CANVAS",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "store-world",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "MAIN",
+          "className": "playable-shell guided-mode",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "HTML",
+          "className": "",
+          "pointerEvents": "auto"
+        }
+      ],
+      "ancestors": [
+        {
+          "tag": "BUTTON",
+          "className": "brand-pill",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "HEADER",
+          "className": "playable-top interactive-ui",
+          "pointerEvents": "none"
+        },
+        {
+          "tag": "MAIN",
+          "className": "playable-shell guided-mode",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "BODY",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "HTML",
+          "className": "",
+          "pointerEvents": "auto"
+        }
+      ],
+      "entryPresent": true,
+      "guidedCommerce": false,
+      "cameraGuided": true
+    },
+    {
+      "label": "free-before-native-header-click",
+      "button": {
+        "tag": "BUTTON",
+        "className": "brand-pill",
+        "ariaLabel": "Elegir categoría",
+        "pointerEvents": "auto",
+        "visibility": "visible",
+        "display": "grid",
+        "box": {
+          "x": 16,
+          "y": 16,
+          "width": 136,
+          "height": 47
+        }
+      },
+      "point": {
+        "x": 84,
+        "y": 39.5
+      },
+      "hitIsButton": true,
+      "hitStack": [
+        {
+          "tag": "IMG",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "BUTTON",
+          "className": "brand-pill",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "look-surface",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "CANVAS",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "store-world",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "MAIN",
+          "className": "playable-shell",
+          "pointerEvents": "auto"
+        }
+      ],
+      "ancestors": [
+        {
+          "tag": "BUTTON",
+          "className": "brand-pill",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "HEADER",
+          "className": "playable-top interactive-ui",
+          "pointerEvents": "none"
+        },
+        {
+          "tag": "MAIN",
+          "className": "playable-shell",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "BODY",
+          "className": "",
+          "pointerEvents": "auto"
+        },
+        {
+          "tag": "HTML",
+          "className": "",
+          "pointerEvents": "auto"
+        }
+      ],
+      "entryPresent": false,
+      "guidedCommerce": false,
+      "cameraGuided": false
+    },
+    {
+      "label": "after-native-header-click",
+      "button": null,
+      "point": null,
+      "hitIsButton": false,
+      "hitStack": [],
+      "ancestors": [],
+      "entryPresent": false,
+      "guidedCommerce": true,
+      "cameraGuided": true
+    }
+  ],
+  "reads": [
+    {
+      "url": "http://127.0.0.1:3198/playable",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/assets/index-B-tAIt2X.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/assets/playable-BqwS7Pys.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/assets/legal-version-BguVS3S4.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/assets/PlayableStore-BEY9ykFh.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/assets/index-DwjDvobZ.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/assets/PlayableStore-BIH-domP.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagelito-wordmark.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/api/payments/culqi/config",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/master-scenes-clean/packs.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/master-scenes-clean/combos.webp",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3198/master-scenes-clean/schmears.webp",
+      "status": 200
+    }
+  ],
+  "fixtureReads": 1,
+  "blocked": [],
+  "routeErrors": [],
+  "closingErrors": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failures": [],
+  "status": "passed",
+  "capture": {
+    "file": "free-header-before-native-click.png",
+    "sha256": "0fd604ec74c4be38e55d0f102594c21be73028c2d929a7aacebd599ccc84c6fa"
+  }
+}

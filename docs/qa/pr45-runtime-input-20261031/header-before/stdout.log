@@ -1,0 +1,43 @@
+{
+  "status": "failed",
+  "failures": [
+    "Free header brand button inherits pointer-events:none",
+    "Free header center hit belongs to another element",
+    "Native free-header click did not open guided commerce"
+  ],
+  "snapshots": [
+    {
+      "label": "entry-before-free",
+      "pointerEvents": "auto",
+      "hitIsButton": true,
+      "guidedCommerce": false,
+      "topHit": {
+        "tag": "BUTTON",
+        "className": "brand-pill",
+        "pointerEvents": "auto"
+      }
+    },
+    {
+      "label": "free-before-native-header-click",
+      "pointerEvents": "none",
+      "hitIsButton": false,
+      "guidedCommerce": false,
+      "topHit": {
+        "tag": "DIV",
+        "className": "look-surface",
+        "pointerEvents": "auto"
+      }
+    },
+    {
+      "label": "after-native-header-click",
+      "pointerEvents": "none",
+      "hitIsButton": false,
+      "guidedCommerce": false,
+      "topHit": {
+        "tag": "DIV",
+        "className": "look-surface",
+        "pointerEvents": "auto"
+      }
+    }
+  ]
+}

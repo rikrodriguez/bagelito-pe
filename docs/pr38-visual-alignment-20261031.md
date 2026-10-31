@@ -1,5 +1,7 @@
 # PR38: alineación visual de la tienda real — trabajo en curso
 
+> Seguimiento posterior: [entrada fiable y QA completa de PR45](pr45-runtime-input-qa-20261031.md). Conserva los resultados históricos de este documento y distingue los SHA probados; no declara paridad visual final.
+
 Fecha: 31 de octubre de 2026. Base de comparación: `52fa55cb223e587b7619a4161b8cb263bfa61a3f`, corrección de fiabilidad publicada en el PR44 en borrador sobre PR38. Rama de trabajo: `feat/guided-store-visual-alignment-20261031`.
 
 Esta revisión acerca la aplicación real a la referencia aprobada mediante geometría, iluminación y composición. **Es una aproximación visual en curso; no acredita paridad final ni una tienda fotorrealista terminada.** El checkpoint público es `a84b4af85177cb3acf52e2a695064c70efb13247`; el árbol local incorpora ajustes posteriores de navegación, capas y recuperación. La captura de ese checkpoint no representa automáticamente el resultado final de esos ajustes.

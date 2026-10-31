@@ -1,40 +1,51 @@
-# PR45 — entradas entre frames y QA sobre build estable
+# PR45: entrada fiable y recorrido de compra verificado
 
-Continuación autorizada el 31 de octubre de 2026. No es un despliegue.
+La continuación corrige pulsaciones perdidas entre frames, cálculos repetidos de sombras y un botón de categoría que no recibía clics al explorar libre. La tienda mantiene el Canvas real y el catálogo y los handlers comerciales existentes. **La fidelidad visual sigue en curso; este informe no acredita una tienda fotorrealista terminada.**
 
-Código de aplicación final candidato: `df504aa1f605bd620bf36be9c28963b0401a95d6`. El artefacto de prueba es una copia independiente de `.output` bajo `/tmp/bagelito-artifact-final-3197`, servida sólo por loopback con pagos, configuración del proveedor e intake desactivados. No se reconstruye ese directorio durante pruebas.
+Código final de aplicación: `1816079a8e20b572bce14d9e832b2f99aff2c5c6`. Las pruebas finales usan una copia de build servida por loopback, sin reconstruirla durante la ejecución. [Metadata y hashes del artefacto](qa/pr45-runtime-input-20261031/qa3d-final/metadata.json).
 
-## Causas demostradas
-
-1. El handoff anterior recibió tres chunks JavaScript HTTP500 porque se reconstruyó `.output` mientras otro proceso seguía sirviendo su manifiesto anterior. Se conserva la prueba HTTP y se usa una copia fija por build; los runners ahora registran errores de documento/chunks.
-2. En el navegador real con SwiftShader, keydown y keyup de un hold programado de480ms ocurrieron sin un frame intermedio: desplazamiento cero. El estado booleano finalfalse borraba toda la pulsación. Se conservan intervalos monotónicos de entrada por fuente; se consumen una sola vez, con buffer máximo1s y pasos de colisión<=50ms. Blur, visibilidad, cleanup y modo guiado descartan activos y pendientes. Se publica la posición real al cambiar, sin esperar ocho frames inmóviles.
-3. La telemetría volvía a renderizar el componente de sombras. Drei guarda el contador finito de bake como variable local; el render lo reiniciaba. El baseline siguió renderizando los dos targets512² después del presupuesto8. Aislar el componente conserva exactamente sus parámetros y evita reinicios. Regresión browser: baselineFAIL (frames17–24:40clears/4048draws); memoPASS (0/0). La versión portable aprobó24frames y exactamente8bakes iniciales.
-4. Un primer rerun con14capturas terminó por una promesa de route.fulfill rechazada al cerrar el contexto. Se preserva como incompleto. Los runners drenan los handlers antes de disponer respuestas, conservan el firewall durante el cierre, registran errores reales y guardan checkpoints/JSON aun si el navegador falla. Ni el strafe ni la readiness fueron relajados.
-
-## Contratos conservados
-
-Comparación AST contra925c050: treinta helpers visuales sin cambios; sólo cambian PlayableStore, CameraController y MobilePad por la entrada/cámara. StoreArchitectureVisual, GuidedCommerce, CSS, referencia aprobada y vercel.json son idénticos. Catálogo, handlers comerciales, servidor, APIs, pagos y dominio no se modifican. El mundo sigue siendo WebGL visible durante compra sana; los controles comerciales DOM se reconocen como tales.
-
-## Verificación al cierre
-
-Checkpoint de diagnóstico y evidencia preservada; la QA3D completa y los eventos reales siguen en curso.
-
-| Comprobación | Estado acreditado en este checkpoint |
+| Verificación | Resultado y código probado |
 | --- | --- |
-| Suite guiada, escritorio1280 y viewport390 | **32/32 PASS**, cero fallos; incluye minis/un sabor, restauración, categorías, caja y cierre QA |
-| Readiness original, QA3D | **PASS ambos viewports**, ocho frames dentro del presupuesto30s |
-| Strafe original, QA3D | **PASS**, hold programado480ms, X0→1.18, umbral>0.12 sin cambios |
-| Resto de QA3D | **18/20**, faltan ambos handoffs de schmears tras reiniciar el viaje; hay dos timeouts y no se declara suitePASS |
-| Sombras finitas en navegador | **PASS**, ocho bakes iniciales, cero actividad tardía de sus targets512² |
-| Entrada nativa/RAF gate | En curso; no sustituye el runneroriginal |
+| Build Vite, TypeScript, estructural y fallback manual | PASS; estructural11/11, manual4/4; build incluye movimiento14/14 |
+| Suite Node completa, incluyendo drivers y gate QA | **40/40 PASS**, cero omitidos; [log](qa/pr45-runtime-input-20261031/diagnosis/all-node-final.log) |
+| Contrato visual de fuente y assets | PASS7/7; no certifica apariencia |
+| QA3D completa | **20/20 PASS**, exit0 en1816079; [resultados](qa/pr45-runtime-input-20261031/qa3d-final/tour-results.json), [log](qa/pr45-runtime-input-20261031/qa3d-final/stdout.log) |
+| Readiness original | PASS desktop y viewport390: ocho frames dentro del presupuesto30s, sin ampliarlo |
+| Strafe original | PASS: hold programado480ms, X0→1.18, umbral>0.12 y espera10s conservados |
+| Handoffs 3D | Los seis PASS; siete paradas por viewport y14capturas reales |
+| Eventos de movimiento en navegador | **9/9 PASS** en1816079; [resultados](qa/pr45-runtime-input-20261031/movement-events/movement-events-results.json) |
+| Botón de categoría, clic nativo sin gate | [Antes FAIL](qa/pr45-runtime-input-20261031/header-before/header-hit-results.json) / [después PASS](qa/pr45-runtime-input-20261031/header-after/header-hit-results.json), mismo probe y criterios |
+| Suite guiada completa | **32/32 PASS** en`df504aa1f605bd620bf36be9c28963b0401a95d6`; [resultados y32PNG](qa/pr45-runtime-input-20261031/guided/results.json) |
+| Sombras finitas, regresión de framebuffer | PASS: ocho bakes iniciales y cero actividad de contacto en frames17–24; [resultado portable](qa/pr45-runtime-input-20261031/diagnosis/contact-portable-final.json) |
+| Capturas adicionales de entrada y nueva recuperación HDR | **No ejecutadas** en1816079: se cancelaron antes de abrir navegador para cerrar la entrega; las14capturas QA3D identifican el código final. El5/5 de recuperación anterior pertenece a20296a6, no se reasigna al código final. |
+| Hardware GPU, Safari/iPhone físico y proveedor/pagos reales | No ejecutados |
 
-[Guiada completa y32capturas con hashes](qa/pr45-runtime-input-20261031/guided/results.json). [QA3D18/20 con fallos conservados](qa/pr45-runtime-input-20261031/qa3d-before-one-shot/tour-results.json). [Causas y experimentos](qa/pr45-runtime-input-20261031/diagnosis/).
+La guiada32 se ejecutó en1280×800 y390×844 usando clics de mouse. Tras esa corrida, el único cambio de aplicación fueron tres líneas CSS que habilitan `pointer-events:auto` en `.brand-pill` **sólo fuera de `.guided-mode`**. El funnel, sus handlers, arquitectura, catálogo, dominio, servidor y rutas permanecen idénticos. No se atribuye la corrida32 al código posterior: la regla nueva fue cubierta por la comparación de clics y por las transiciones reales de los9casos posteriores. [Diff y alcance exactos](qa/pr45-runtime-input-20261031/final-source-scope.json).
 
-El nuevo timeout de reinicio ocurre en un artefacto sin cambios y sin HTTPfallidos; es distinto del primer problema de chunks500. Se investiga una escritura tardía del borrador entre su borrado en el documento viejo y la navegación. La persistencia comercial no se altera para resolver un reinicio del driver.
+## Causas y correcciones
 
-Build/tipos y contratos estructural11/11, fuentevisual7/7, manual4/4 PASS. Pruebas movimiento14/14 PASS con Three real y seams offline; no sustituyen eventos de un dispositivo. Driver3D11/11 offline PASS; driverguided6/6 offline PASS. El recorrido QA usa la simulación explícita existente de pago/recibo en modoQA, sin crear pedidos o cargos reales.
+Una pulsación programada de480ms podía comenzar y terminar entre frames de SwiftShader; el booleano finalfalse eliminaba todo el movimiento. El navegador baseline observó cero frames durante el hold y desplazamiento cero. Ahora se conservan intervalos monotónicos por fuente, se consumen una sola vez y se aplican con las colisiones existentes en subpasos de hasta50ms. El buffer pendiente se limita a un segundo. Blur, visibilidad, cleanup y modo guiado descartan entradas activas y pendientes. La posición publicada corresponde a la cámara real y se actualiza al cambiar.
 
-La reducción de drawcalls se midió en un experimento aislado de sombras, no es una certificación de FPS. SwiftShader sigue lento; no acredita móvil físico, Safari, fluidez de hardware ni fotorrealismo final. Las tarjetas aún cubren parte de la vitrina desktop. Sigue DRAFT/no merge/no deploy; git.deploymentEnabled:false.
+Las14pruebas de movimiento incluyen reloj simulado de cinco minutos, alias, repeats, keyup, foco editable, colisiones, deslizamiento y límites. El probe de navegador conserva el reloj real y pausa sólo callbacksRAF mediante un gate de QA sin hooks en producción: comprueba pulsaciones nativas, repeats, ausencia de replay, entrada/salida de comercio y tour, y dos gestos táctiles CDP en contexto móvil. Blur y visibilitychange son eventos **sintéticos de wiring**, no prueba de backgrounding del sistema operativo. [Runner](../scripts/qa-movement-events.cjs).
 
+Drei reiniciaba el contador de sombras finitas al volver a renderizar su componente. El baseline continuaba dibujando los dos targets512² después del presupuesto8; el experimento aislado observó40clears/4048draws tardíos. Memoizar el componente conserva sus parámetros y produce exactamente ocho bakes, con0clears/0draws tardíos. Se evita además publicar telemetría inmóvil. La reducción de drawcalls no acredita fluidez de hardware: SwiftShader sigue lento. Esta regresión portable se ejecutó sobre el artefacto3b6446d; el componente de sombras no cambió después.
 
-Las capturas móviles confirman un límite visual material: los paneles blancos de compra cubren gran parte de la vitrina física y el Canvas queda visible sobre todo en los márgenes. Este PASS funcional no resuelve esa composición ni acredita que la vitrina siga siendo protagonista como en la referencia. No se sustituyó el mundo por una imagen de fondo.
+El botón de categoría heredaba `pointer-events:none` del header al entrar en exploración libre. Sin gate ni hooks, el baseline confirmó que el clic llegaba a `DIV.look-surface`. La regla nueva permite que el clic llegue al botón y abra el selector, sin habilitar ese botón durante un tour invisible. El runner portable conserva las mismas condiciones del probe probado; [comparación AST](qa/pr45-runtime-input-20261031/diagnosis/header-portability-ast.json).
+
+## Errores de la infraestructura de QA conservados
+
+El primer handoff falló porque se reconstruyó `.output` mientras un servidor seguía usando su manifiesto anterior: tres chunks dabanHTTP500. Se conservan la evidenciaHTTP y un primer rerun incompleto por `route.fulfill` dispuesto durante el cierre. Ahora se sirve una copia fija y los runners drenan lecturas pendientes sin retirar el firewall, mantienen como FAIL los errores activos y las escrituras/destinos ajenos, y guardan checkpoints/JSON final.
+
+Una corrida posterior estable pasó18/20 y falló al reiniciar el tercer viaje. El driver borraba el borrador en el documento viejo, antes de una posible escritura tardía. El caso se reprodujo determinísticamente: antes12/13 y después13/13. En tres intentos de navegador instrumentados no se reprodujo la carrera antigua, límite que se conserva. El reset nuevo consume un marcador QA una sola vez en el documento nuevo, antes de React, sólo en loopback. Las recargas sin marcador siguen restaurando el borrador; el probe real confirmó tres viajes y tres handoffs por viewport y dos restauraciones. La aplicación y su persistencia no se modifican para hacer pasar el test. [Probe](qa/pr45-runtime-input-20261031/fresh-reset/results.json), [corrida18/20 preservada](qa/pr45-runtime-input-20261031/qa3d-before-one-shot/tour-results.json).
+
+## Red, procedencia y límites
+
+QA3D final:124GET locales y seis fixtures; eventos:40GET y dos fixtures; guiada:287GET y diez fixtures. Cero solicitudes de escritura, destinos adicionales o errores de rutas. La fixture HDR tiene SHA-256 `a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb`. Los drivers bloquean redirects y toda solicitud ajena. El borrador se escribe únicamente en los contextos temporales de navegador para comprobar su restauración. El pago/recibo/wallet de la guiada usan la simulación QA existente: no crean pedidos o cargos reales.
+
+[Manifiesto de archivos, imágenes y SHA](qa/pr45-runtime-input-20261031/manifest.json). Las14capturas finales están en [qa3d-final](qa/pr45-runtime-input-20261031/qa3d-final/); las32guiadas conservan su SHA anterior y sus hashes. No hay una URL nueva de la aplicación desplegada.
+
+La inspección de píxeles mantiene un límite visual material: los paneles blancos móviles cubren buena parte de la vitrina; el Canvas queda visible principalmente en márgenes y suelo. La referencia mantiene logo y vitrinas como protagonistas. El PASS funcional no resuelve esa composición ni acredita fotorealismo. No se sustituyó el mundo por una fotografía.
+
+PR45 sigue **en borrador**. `git.deploymentEnabled:false` se verificó antes de publicar. Sin merge, despliegue, cambios de producción, pagos reales, migraciones, campañas, credenciales, permisos o presupuestos. Estos resultados locales no acreditan CI remota.
+
+Para reproducir, usar un build copiado a un directorio distinto e inalterado durante las pruebas, con `BAGELITO_VISUAL_QA_ENABLED=true`, `BAGELITO_MERCHANT_REVIEW_ONLY=true` e intake/pagos desactivados. Instalar Playwright opcionalmente y proporcionar `BASE_URL` loopback, `QA_HDR_FIXTURE_PATH` y, si hace falta, `QA_CHROMIUM_EXECUTABLE_PATH`. Comandos: `npm run build`, `node scripts/qa-visual-contract.cjs`, `QA_HDR_FIXTURE_PATH=/ruta/lebombo_1k.hdr node --test tests/*.test.cjs`, `npm run qa:guided` y `npm run qa:3d`. Ejecutar los navegadores en serie.

@@ -1,0 +1,35 @@
+{
+  "original": {
+    "path": "/tmp/bagelito-header-hit-probe.cjs",
+    "sha256": "5442059545d38acbe5c7df8882312be2a00deba820ba44867292c4441bc4786b"
+  },
+  "portable": {
+    "path": "scripts/qa-header-hit.cjs",
+    "sha256": "72c6348c293bf8fd70be832712fd2fddff2078671f5bc905361bc307286ef9ab"
+  },
+  "allowedChanges": [
+    "root resolved from __dirname/..",
+    "default loopback port4173",
+    "output relative to repository root with default qa-artifacts/header-hit"
+  ],
+  "checks": {
+    "assertions": {
+      "identical": true,
+      "count": 12
+    },
+    "failureCriteria": {
+      "identical": true,
+      "count": 12
+    },
+    "requests": {
+      "identical": true,
+      "count": 9
+    },
+    "shutdown": {
+      "identical": true,
+      "count": 4
+    }
+  },
+  "allOtherTopLevelStatementsIdentical": true,
+  "browserExecuted": false
+}

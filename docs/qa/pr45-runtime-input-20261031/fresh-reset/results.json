@@ -1,0 +1,2520 @@
+{
+  "kind": "focused-one-shot-fresh-journey-diagnostic",
+  "startedAt": "2026-10-31T21:55:15.864Z",
+  "applicationSHA": "df504aa1f605bd620bf36be9c28963b0401a95d6",
+  "repositoryHEAD": "141ce136e9279a3dcdba09be30f95078339075be",
+  "base": "http://127.0.0.1:3197",
+  "runnerSHA256": "04172bb419eccaa878fa19181d2634614d6171d32ea11d2da3d4505721df21fa",
+  "originalRunnerSHA256": "455a25589c960538a7928884c3535c3b7122f14d053a875afc42b9f5321ac6fa",
+  "storageTrace": [
+    {
+      "mode": "desktop",
+      "documentId": "bc163bf6-8587-4f99-9f10-e4aac3a854bf",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483716757,
+      "relativeMs": 42.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "bc163bf6-8587-4f99-9f10-e4aac3a854bf",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483716757,
+      "relativeMs": 42.799999999813735
+    },
+    {
+      "mode": "desktop",
+      "documentId": "bc163bf6-8587-4f99-9f10-e4aac3a854bf",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483716758,
+      "relativeMs": 42.89999999990687
+    },
+    {
+      "mode": "desktop",
+      "documentId": "bc163bf6-8587-4f99-9f10-e4aac3a854bf",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483716954,
+      "relativeMs": 239.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "bc163bf6-8587-4f99-9f10-e4aac3a854bf",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483729301,
+      "relativeMs": 12586
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483734516,
+      "relativeMs": 5211.300000000279
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483734516,
+      "relativeMs": 5211.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483734516,
+      "relativeMs": 5211.700000000186
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483734644,
+      "relativeMs": 5339.9000000003725
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483734711,
+      "relativeMs": 5406.800000000279
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483734711,
+      "relativeMs": 5407.100000000093
+    },
+    {
+      "mode": "desktop",
+      "documentId": "89cd32c9-a110-4ea2-888b-90d27dd19d71",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483734720,
+      "relativeMs": 5415.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483734874,
+      "relativeMs": 150.8000000002794
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483734874,
+      "relativeMs": 151
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483734874,
+      "relativeMs": 151.10000000009313
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483734874,
+      "relativeMs": 151.20000000018626
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483734874,
+      "relativeMs": 151.3000000002794
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483734983,
+      "relativeMs": 260.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "setItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483737458,
+      "relativeMs": 2734.600000000093
+    },
+    {
+      "mode": "desktop",
+      "documentId": "91fe1a61-8035-4e66-b9cf-3bce6f1370a0",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483737508,
+      "relativeMs": 2785.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483746410,
+      "relativeMs": 8893.30000000028
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483746411,
+      "relativeMs": 8894.200000000186
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483746411,
+      "relativeMs": 8894.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483746525,
+      "relativeMs": 9008.399999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483746552,
+      "relativeMs": 9034.80000000028
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483746552,
+      "relativeMs": 9034.899999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "47b76c42-6258-4caa-a5f6-1e6a32a7fca2",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483746554,
+      "relativeMs": 9037.100000000093
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483746590,
+      "relativeMs": 29.600000000093132
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483746590,
+      "relativeMs": 29.700000000186265
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483746590,
+      "relativeMs": 29.899999999906868
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483746590,
+      "relativeMs": 30
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483746590,
+      "relativeMs": 30
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483746676,
+      "relativeMs": 115.39999999990687
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "setItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483746741,
+      "relativeMs": 180.89999999990687
+    },
+    {
+      "mode": "desktop",
+      "documentId": "f04afe91-5340-4d4b-b76e-28b1435257f2",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483749916,
+      "relativeMs": 3355.3000000002794
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483759787,
+      "relativeMs": 9862
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483759787,
+      "relativeMs": 9862.200000000186
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483759787,
+      "relativeMs": 9862.30000000028
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483759929,
+      "relativeMs": 10004.200000000186
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483759988,
+      "relativeMs": 10063.30000000028
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483759988,
+      "relativeMs": 10063.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "4c960985-ed90-43b2-9646-ff7533447e3c",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483759994,
+      "relativeMs": 10068.900000000373
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483760206,
+      "relativeMs": 201
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483760206,
+      "relativeMs": 201.1999999997206
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483760206,
+      "relativeMs": 201.29999999981374
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483760206,
+      "relativeMs": 201.29999999981374
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483760206,
+      "relativeMs": 201.39999999990687
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483760311,
+      "relativeMs": 306.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483760456,
+      "relativeMs": 451.6999999997206
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483760456,
+      "relativeMs": 451.79999999981374
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483772525,
+      "relativeMs": 12520.69999999972
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483772579,
+      "relativeMs": 12573.899999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e48d918e-2232-4be8-9652-08857203f764",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483772606,
+      "relativeMs": 12601.399999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483776820,
+      "relativeMs": 4223.5999999996275
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483776820,
+      "relativeMs": 4224
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483776820,
+      "relativeMs": 4224.199999999721
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483776820,
+      "relativeMs": 4224.199999999721
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483776820,
+      "relativeMs": 4224.299999999814
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483776955,
+      "relativeMs": 4358.399999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483777011,
+      "relativeMs": 4414.5999999996275
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483777011,
+      "relativeMs": 4414.799999999814
+    },
+    {
+      "mode": "desktop",
+      "documentId": "e0cea740-5064-49cf-aaab-e586efa02daa",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483792478,
+      "relativeMs": 19881.599999999627
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483797552,
+      "relativeMs": 5068
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483797552,
+      "relativeMs": 5068.399999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483797552,
+      "relativeMs": 5068.600000000093
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483797552,
+      "relativeMs": 5068.699999999721
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483797552,
+      "relativeMs": 5068.699999999721
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483797659,
+      "relativeMs": 5175.299999999814
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483797684,
+      "relativeMs": 5200.799999999814
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483797685,
+      "relativeMs": 5201
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "setItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483817294,
+      "relativeMs": 24810.69999999972
+    },
+    {
+      "mode": "desktop",
+      "documentId": "0d40f1ce-d5a7-4156-8cd9-2a66a31dc176",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483817361,
+      "relativeMs": 24877.399999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483823142,
+      "relativeMs": 5733.899999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483823142,
+      "relativeMs": 5734.299999999814
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483823142,
+      "relativeMs": 5734.5
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483823333,
+      "relativeMs": 5925.299999999814
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483823341,
+      "relativeMs": 5933.0999999996275
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "setItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483823343,
+      "relativeMs": 5935.399999999907
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483823364,
+      "relativeMs": 5956
+    },
+    {
+      "mode": "desktop",
+      "documentId": "288bef28-ab04-4782-a20f-1d0d5e9f9eb0",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483823364,
+      "relativeMs": 5956.0999999996275
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483823693,
+      "relativeMs": 32.5
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483823694,
+      "relativeMs": 33
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483823694,
+      "relativeMs": 33.3000000002794
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483823923,
+      "relativeMs": 262
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483823970,
+      "relativeMs": 309.10000000009313
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483823970,
+      "relativeMs": 309.40000000037253
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483826656,
+      "relativeMs": 2995.2000000001863
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483826747,
+      "relativeMs": 3085.9000000003725
+    },
+    {
+      "mode": "mobile",
+      "documentId": "40522c3b-2da1-4c12-967b-a94f0f72f3ec",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483826757,
+      "relativeMs": 3096.600000000093
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483829182,
+      "relativeMs": 2410.1999999997206
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483829182,
+      "relativeMs": 2410.399999999907
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483829182,
+      "relativeMs": 2410.5
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483829182,
+      "relativeMs": 2410.6999999997206
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483829182,
+      "relativeMs": 2410.7999999998137
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483829295,
+      "relativeMs": 2523.1999999997206
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483829316,
+      "relativeMs": 2544.2999999998137
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483829316,
+      "relativeMs": 2544.5
+    },
+    {
+      "mode": "mobile",
+      "documentId": "a4c79af4-dc73-4394-85af-071a573f12c6",
+      "method": "setItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483836846,
+      "relativeMs": 10074.69999999972
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483838439,
+      "relativeMs": 1578.6999999997206
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483838439,
+      "relativeMs": 1578.7999999998137
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": true,
+      "epoch": 1793483838439,
+      "relativeMs": 1578.8999999999069
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "removeItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483838440,
+      "relativeMs": 1579
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "removeItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483838440,
+      "relativeMs": 1579
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483838522,
+      "relativeMs": 1660.8999999999069
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483838633,
+      "relativeMs": 1772.6999999997206
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483838633,
+      "relativeMs": 1772.7999999998137
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": false,
+      "epoch": 1793483849176,
+      "relativeMs": 12315.19999999972
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "setItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483849178,
+      "relativeMs": 12317.799999999814
+    },
+    {
+      "mode": "mobile",
+      "documentId": "6c86eac7-cfa0-4496-a03e-fd798f341b01",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483849750,
+      "relativeMs": 12889
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "document-init",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483851519,
+      "relativeMs": 1757.2000000001863
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "document-init",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483851519,
+      "relativeMs": 1757.3999999999069
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483851519,
+      "relativeMs": 1757.5
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483851606,
+      "relativeMs": 1844.1000000000931
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483851610,
+      "relativeMs": 1848.2000000001863
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "setItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483851612,
+      "relativeMs": 1850.5
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "getItem",
+      "key": "bagelito.guided.product-draft.v1",
+      "present": true,
+      "epoch": 1793483851637,
+      "relativeMs": 1874.6000000000931
+    },
+    {
+      "mode": "mobile",
+      "documentId": "ee40075f-a8fe-4bf4-9b53-fe9d8402e0c9",
+      "method": "getItem",
+      "key": "bagelito.qa.world.fresh-explore.once",
+      "present": false,
+      "epoch": 1793483851637,
+      "relativeMs": 1874.7000000001863
+    }
+  ],
+  "results": [
+    {
+      "mode": "desktop",
+      "label": "original-after-pack-size-1",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "desktop",
+      "label": "original-after-pack-size-2",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "desktop",
+      "label": "original-after-pack-size-3",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "desktop",
+      "label": "candidate-fresh-journey-1",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "desktop",
+      "label": "candidate-handoff-1",
+      "scene": "selector"
+    },
+    {
+      "mode": "desktop",
+      "label": "candidate-fresh-journey-2",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "desktop",
+      "label": "candidate-handoff-2",
+      "scene": "pack-size"
+    },
+    {
+      "mode": "desktop",
+      "label": "candidate-fresh-journey-3",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "desktop",
+      "label": "candidate-handoff-3",
+      "scene": "schmear-size"
+    },
+    {
+      "mode": "desktop",
+      "label": "reload-without-marker-preserves-draft",
+      "state": {
+        "tourButton": 0,
+        "scene": "schmear-size",
+        "draftPresent": true,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "mobile",
+      "label": "candidate-fresh-journey-1",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "mobile",
+      "label": "candidate-handoff-1",
+      "scene": "selector"
+    },
+    {
+      "mode": "mobile",
+      "label": "candidate-fresh-journey-2",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "mobile",
+      "label": "candidate-handoff-2",
+      "scene": "pack-size"
+    },
+    {
+      "mode": "mobile",
+      "label": "candidate-fresh-journey-3",
+      "state": {
+        "tourButton": 1,
+        "scene": null,
+        "draftPresent": false,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    },
+    {
+      "mode": "mobile",
+      "label": "candidate-handoff-3",
+      "scene": "schmear-size"
+    },
+    {
+      "mode": "mobile",
+      "label": "reload-without-marker-preserves-draft",
+      "state": {
+        "tourButton": 0,
+        "scene": "schmear-size",
+        "draftPresent": true,
+        "markerPresent": false,
+        "canvasCount": 1
+      }
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "mode": "desktop",
+      "reads": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/combos.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 7,
+      "blocked": [],
+      "routeErrors": [],
+      "teardownAborts": []
+    },
+    {
+      "mode": "mobile",
+      "reads": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/index-BY-ZW5pr.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/playable-J8KCImFd.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/assets/PlayableStore-DuqU3Q_u.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3197/master-scenes-clean/packs.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 3,
+      "blocked": [],
+      "routeErrors": [],
+      "teardownAborts": []
+    }
+  ],
+  "finishedAt": "2026-10-31T21:57:31.778Z",
+  "runnerSourceChanged": false,
+  "originalRaceReproduced": false,
+  "originalProbeAttempts": 3,
+  "lateOldDocumentDraftWritesAfterMarker": [],
+  "storageTracePrivacy": {
+    "allowedKeys": [
+      "bagelito.guided.product-draft.v1",
+      "bagelito.qa.world.fresh-explore.once"
+    ],
+    "fields": [
+      "mode",
+      "documentId",
+      "method",
+      "key",
+      "present",
+      "epoch",
+      "relativeMs"
+    ],
+    "draftValuesRecorded": false
+  },
+  "deterministicRegression": {
+    "before": "12/13 PASS; late-persistence case FAIL",
+    "after": "13/13 PASS",
+    "beforeLog": "/tmp/bagelito-world-newdoc-before-fix.log",
+    "afterLog": "/tmp/bagelito-world-newdoc-after-fix.log"
+  },
+  "limitations": [
+    "The original browser race did not reproduce in three instrumented attempts.",
+    "The deterministic old-document late-write model failed before the one-shot fix and passed afterward.",
+    "This focused probe is not a replacement for the full20-check3D runner."
+  ]
+}

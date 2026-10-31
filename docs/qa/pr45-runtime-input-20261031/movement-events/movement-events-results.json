@@ -1,0 +1,1234 @@
+{
+  "metadata": {
+    "startedAt": "2026-10-31T22:03:13.180Z",
+    "base": "http://127.0.0.1:3198/",
+    "repositorySHA": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
+    "declaredBuildSHA": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
+    "hdrFixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+    "scriptSHA256": "7836de612b3d5a5720a9721c62aabbe0d43b4b09cac575c9a7c1289a6cc1300a",
+    "sourceSHA256": {
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/movement-input.ts": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0"
+    },
+    "scope": "Supplementary native input/RAF-gate probe; does not replace or relax the original 480ms QA3D assertion.",
+    "lifecycleEvents": "blur and visibilitychange are explicitly synthetic wiring probes; document visibility is not changed.",
+    "gate": "QA addInitScript wraps only requestAnimationFrame/cancelAnimationFrame; real performance clock, timers, input and app handlers remain active.",
+    "tolerances": {
+      "speed": 2.45,
+      "positionRounding": 0.01,
+      "expectedDistanceTolerance": 0.035,
+      "noReplayTolerance": 0.02,
+      "holdRequestedMs": 480,
+      "observedHoldMinMs": 450,
+      "observedHoldMaxMs": 900
+    },
+    "browserExecuted": true,
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-10-31T22:05:28.051Z"
+  },
+  "status": "passed",
+  "results": [
+    {
+      "mode": "desktop",
+      "name": "native-repeat-keydown-keyup-480ms-no-replay",
+      "pass": true,
+      "requestedHoldMs": 480,
+      "observedHoldMs": 503.60000000009313,
+      "idleBeforeMs": 0,
+      "idleAfterMs": 500,
+      "beforeX": 0,
+      "afterX": 1.23,
+      "stableX": 1.23,
+      "expectedDelta": 1.2338200000002282,
+      "actualDelta": 1.23,
+      "deliveredDuringPause": 0,
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 24286.30000000028,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keydown",
+          "at": 24419.700000000186,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": true,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keydown",
+          "at": 24546.30000000028,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": true,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 24789.900000000373,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "name": "native-key-after-long-idle-no-jump",
+      "pass": true,
+      "requestedHoldMs": 480,
+      "observedHoldMs": 483.39999999990687,
+      "idleBeforeMs": 3000,
+      "idleAfterMs": 0,
+      "beforeX": 1.23,
+      "afterX": 0.05,
+      "stableX": 0.05,
+      "expectedDelta": -1.1843299999997718,
+      "actualDelta": -1.18,
+      "deliveredDuringPause": 0,
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 39550.200000000186,
+          "trusted": true,
+          "code": "KeyA",
+          "key": "a",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 40033.60000000009,
+          "trusted": true,
+          "code": "KeyA",
+          "key": "a",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "name": "synthetic-blur-discards-queued-held",
+      "pass": true,
+      "beforeX": 0.05,
+      "afterX": 0.05,
+      "stableX": 0.05,
+      "syntheticEvent": {
+        "type": "blur",
+        "at": 50325.5,
+        "trusted": false,
+        "code": null,
+        "key": null,
+        "repeat": false,
+        "pointerType": null,
+        "pointerId": null,
+        "isPad": false,
+        "targetClass": null,
+        "visibility": "visible"
+      },
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 50059.30000000028,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 50325.5,
+          "trusted": false,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 50572,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "name": "synthetic-visibilitychange-discards-queued-held",
+      "pass": true,
+      "beforeX": 0.05,
+      "afterX": 0.05,
+      "stableX": 0.05,
+      "syntheticEvent": {
+        "type": "visibilitychange",
+        "at": 61930.40000000037,
+        "trusted": false,
+        "code": null,
+        "key": null,
+        "repeat": false,
+        "pointerType": null,
+        "pointerId": null,
+        "isPad": false,
+        "targetClass": null,
+        "visibility": "visible"
+      },
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 61683.5,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "visibilitychange",
+          "at": 61930.40000000037,
+          "trusted": false,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 62174.90000000037,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "name": "paused-commerce-entry-exit-clears-input",
+      "pass": true,
+      "beforeX": 0.05,
+      "afterX": 0.05,
+      "stableX": 0.05,
+      "deliveredDuringPause": 0,
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 75226,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 75391.20000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 75397.40000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 75436.40000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": "brand-pill",
+          "visibility": "visible"
+        },
+        {
+          "type": "keydown",
+          "at": 75585.5,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": true,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 75587.20000000019,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 75655.20000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": {},
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 75656,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": {},
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 75692.90000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 75693.1000000001,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": "guided-store-menu-button",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 75693.70000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 75694.80000000028,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "name": "paused-3d-tour-entry-exit-clears-input",
+      "pass": true,
+      "beforeX": 0.05,
+      "afterX": 0.05,
+      "stableX": 0.05,
+      "deliveredDuringPause": 0,
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 85046.20000000019,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85227.5,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "tour-start-button",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85227.70000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "tour-start-button",
+          "visibility": "visible"
+        },
+        {
+          "type": "keydown",
+          "at": 85325.6000000001,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": true,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": "tour-start-button",
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 85326.80000000028,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": "tour-start-button",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85357.90000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 85358.1000000001,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": "tour-start-button",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85358.30000000028,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85395.5,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85395.6000000001,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85461.70000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85461.90000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85497.5,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85497.70000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85538.20000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85538.40000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85567.40000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85567.70000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerdown",
+          "at": 85591.40000000037,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 85591.6000000001,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "mouse",
+          "pointerId": 1,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 85592.20000000019,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": "primary",
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "name": "fresh-native-key-after-guided-transitions",
+      "pass": true,
+      "requestedHoldMs": 480,
+      "observedHoldMs": 497.89999999990687,
+      "idleBeforeMs": 0,
+      "idleAfterMs": 0,
+      "beforeX": 0.05,
+      "afterX": 1.27,
+      "stableX": 1.27,
+      "expectedDelta": 1.2198549999997719,
+      "actualDelta": 1.22,
+      "deliveredDuringPause": 0,
+      "nativeEvents": [
+        {
+          "type": "keydown",
+          "at": 95122.1000000001,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "keyup",
+          "at": 95620,
+          "trusted": true,
+          "code": "KeyD",
+          "key": "d",
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": false,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "mobile",
+      "name": "native-touch-480ms-no-replay",
+      "pass": true,
+      "padVisible": true,
+      "nativeTouchMethod": "CDP Input.dispatchTouchEvent",
+      "requestedHoldMs": 480,
+      "observedHoldMs": 538.1999999997206,
+      "idleBeforeMs": 0,
+      "beforeX": -2.05,
+      "afterX": -0.73,
+      "stableX": -0.73,
+      "expectedDelta": 1.3185899999993156,
+      "actualDelta": 1.3199999999999998,
+      "nativeEvents": [
+        {
+          "type": "pointerdown",
+          "at": 11512.600000000093,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "touch",
+          "pointerId": 2,
+          "isPad": true,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 12050.799999999814,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "touch",
+          "pointerId": 2,
+          "isPad": true,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    },
+    {
+      "mode": "mobile",
+      "name": "native-touch-after-long-idle-no-jump",
+      "pass": true,
+      "padVisible": true,
+      "nativeTouchMethod": "CDP Input.dispatchTouchEvent",
+      "requestedHoldMs": 480,
+      "observedHoldMs": 483.20000000018626,
+      "idleBeforeMs": 3000,
+      "beforeX": -0.73,
+      "afterX": -1.92,
+      "stableX": -1.92,
+      "expectedDelta": -1.1838400000004565,
+      "actualDelta": -1.19,
+      "nativeEvents": [
+        {
+          "type": "pointerdown",
+          "at": 17707.399999999907,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "touch",
+          "pointerId": 3,
+          "isPad": true,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "pointerup",
+          "at": 18190.600000000093,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": "touch",
+          "pointerId": 3,
+          "isPad": true,
+          "targetClass": null,
+          "visibility": "visible"
+        },
+        {
+          "type": "blur",
+          "at": 18192,
+          "trusted": true,
+          "code": null,
+          "key": null,
+          "repeat": false,
+          "pointerType": null,
+          "pointerId": null,
+          "isPad": true,
+          "targetClass": null,
+          "visibility": "visible"
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "mode": "desktop",
+      "reads": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/playable-BqwS7Pys.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/PlayableStore-BEY9ykFh.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/index-DwjDvobZ.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/PlayableStore-BIH-domP.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/master-scenes-clean/combos.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "routeErrors": [],
+      "closingRouteErrors": [],
+      "closingAborts": []
+    },
+    {
+      "mode": "mobile",
+      "reads": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/playable",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/playable-BqwS7Pys.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/PlayableStore-BEY9ykFh.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/index-DwjDvobZ.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/assets/PlayableStore-BIH-domP.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3198/images/bagel-blueberry.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "routeErrors": [],
+      "closingRouteErrors": [],
+      "closingAborts": []
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-31T22:03:13.821Z",
+      "type": "mode-start",
+      "mode": "desktop",
+      "paymentDisabled": true,
+      "touchContext": false
+    },
+    {
+      "at": "2026-10-31T22:03:34.705Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "native-repeat-keydown-keyup-480ms-no-replay"
+    },
+    {
+      "at": "2026-10-31T22:03:47.049Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "native-repeat-keydown-keyup-480ms-no-replay"
+    },
+    {
+      "at": "2026-10-31T22:03:47.050Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "native-key-after-long-idle-no-jump"
+    },
+    {
+      "at": "2026-10-31T22:04:00.615Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "native-key-after-long-idle-no-jump"
+    },
+    {
+      "at": "2026-10-31T22:04:00.616Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "synthetic-blur-discards-queued-held"
+    },
+    {
+      "at": "2026-10-31T22:04:12.222Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "synthetic-blur-discards-queued-held"
+    },
+    {
+      "at": "2026-10-31T22:04:12.223Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "synthetic-visibilitychange-discards-queued-held"
+    },
+    {
+      "at": "2026-10-31T22:04:25.757Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "synthetic-visibilitychange-discards-queued-held"
+    },
+    {
+      "at": "2026-10-31T22:04:25.764Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "paused-commerce-entry-exit-clears-input"
+    },
+    {
+      "at": "2026-10-31T22:04:35.524Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "paused-commerce-entry-exit-clears-input"
+    },
+    {
+      "at": "2026-10-31T22:04:35.524Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "paused-3d-tour-entry-exit-clears-input"
+    },
+    {
+      "at": "2026-10-31T22:04:45.714Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "paused-3d-tour-entry-exit-clears-input"
+    },
+    {
+      "at": "2026-10-31T22:04:45.714Z",
+      "type": "case-start",
+      "mode": "desktop",
+      "name": "fresh-native-key-after-guided-transitions"
+    },
+    {
+      "at": "2026-10-31T22:04:55.905Z",
+      "type": "case-pass",
+      "mode": "desktop",
+      "name": "fresh-native-key-after-guided-transitions"
+    },
+    {
+      "at": "2026-10-31T22:05:03.321Z",
+      "type": "mode-pass",
+      "mode": "desktop"
+    },
+    {
+      "at": "2026-10-31T22:05:04.961Z",
+      "type": "mode-start",
+      "mode": "mobile",
+      "paymentDisabled": true,
+      "touchContext": true
+    },
+    {
+      "at": "2026-10-31T22:05:15.322Z",
+      "type": "case-start",
+      "mode": "mobile",
+      "name": "native-touch-480ms-no-replay"
+    },
+    {
+      "at": "2026-10-31T22:05:18.626Z",
+      "type": "case-pass",
+      "mode": "mobile",
+      "name": "native-touch-480ms-no-replay"
+    },
+    {
+      "at": "2026-10-31T22:05:18.626Z",
+      "type": "case-start",
+      "mode": "mobile",
+      "name": "native-touch-after-long-idle-no-jump"
+    },
+    {
+      "at": "2026-10-31T22:05:25.299Z",
+      "type": "case-pass",
+      "mode": "mobile",
+      "name": "native-touch-after-long-idle-no-jump"
+    },
+    {
+      "at": "2026-10-31T22:05:27.459Z",
+      "type": "mode-pass",
+      "mode": "mobile"
+    }
+  ],
+  "captures": [
+    {
+      "mode": "desktop",
+      "capture": "desktop-free-exploration-after-events.png",
+      "sha256": "66ae33582c2ae9c621219d6f164969ba02c24b77dedad1774f7e950573d86c7d"
+    },
+    {
+      "mode": "mobile",
+      "capture": "mobile-free-exploration-after-events.png",
+      "sha256": "01ae988cecdfc50d078d83ab8a747b32ea289c6fddc9e5c3c91e940024eb2969"
+    }
+  ]
+}
