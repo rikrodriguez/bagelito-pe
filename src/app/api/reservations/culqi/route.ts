@@ -7,6 +7,10 @@ import { createCulqiReservation } from "@/lib/reservations/service";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  if (process.env.BAGELITO_MERCHANT_REVIEW_ONLY === "true") {
+    return NextResponse.json({ ok: false, error: "Merchant-review checkout cannot create orders." },
+      { status: 503, headers: { "Cache-Control": "no-store" } });
+  }
   if (!isCulqiRequestAllowed(request)) {
     return NextResponse.json(
       { ok: false, error: "Culqi payments are not enabled yet." },

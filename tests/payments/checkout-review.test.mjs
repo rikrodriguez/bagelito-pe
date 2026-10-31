@@ -105,6 +105,7 @@ function compileComponent(filename, source, customRequire) {
   componentModule.filename = filename;
   componentModule.paths = Module._nodeModulePaths(path.dirname(filename));
   componentModule.require = function requireFixtureDependency(specifier) {
+    if (specifier === '@/data/flavor-images') return sourceModule('src/data/flavor-images.ts');
     const fixture = customRequire(specifier);
     return fixture === undefined ? Module.prototype.require.call(this, specifier) : fixture;
   };

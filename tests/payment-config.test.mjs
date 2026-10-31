@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { getPaymentConfig, getPublicPaymentConfig } from '../src/lib/payments/config.ts';
 
 // Synthetic strings only; this suite never contacts a provider.
-const names = ['PAYMENT_PROVIDER','CULQI_ENABLED','CULQI_MODE','CULQI_LIVE_APPROVED','NEXT_PUBLIC_CULQI_PUBLIC_KEY','CULQI_SECRET_KEY','NEXT_PUBLIC_CULQI_RSA_ID','NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY','VERCEL_ENV','VERCEL_URL','VERCEL_BRANCH_URL','NEXT_PUBLIC_SITE_URL'];
+const names = ['PAYMENT_PROVIDER','CULQI_ENABLED','CULQI_MODE','CULQI_LIVE_APPROVED','NEXT_PUBLIC_CULQI_PUBLIC_KEY','CULQI_SECRET_KEY','NEXT_PUBLIC_CULQI_RSA_ID','NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY','VERCEL_ENV','VERCEL_URL','VERCEL_BRANCH_URL','NEXT_PUBLIC_SITE_URL','BAGELITO_MERCHANT_REVIEW_ONLY'];
 function config(overrides = {}) {
   for (const name of names) delete process.env[name];
   Object.assign(process.env, { NEXT_PUBLIC_SITE_URL:'http://localhost:3000', PAYMENT_PROVIDER:'culqi', CULQI_ENABLED:'true', CULQI_MODE:'sandbox', NEXT_PUBLIC_CULQI_PUBLIC_KEY:'pk_test_synthetic', CULQI_SECRET_KEY:'sk_test_synthetic', NEXT_PUBLIC_CULQI_RSA_ID:'synthetic', NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY:'synthetic', ...overrides });
@@ -13,6 +13,16 @@ test('sandbox mode exposes its identity to the checkout', () => {
   assert.equal(config().enabled, true);
   assert.equal(getPublicPaymentConfig().mode, 'sandbox');
   assert.equal('hasSecretKey' in getPublicPaymentConfig(), false);
+});
+test('merchant review closes public checkout while leaving already authorized private financial configuration enabled', () => {
+  assert.equal(config({BAGELITO_MERCHANT_REVIEW_ONLY:'true'}).enabled, true);
+  assert.equal(getPublicPaymentConfig().enabled, false);
+  assert.equal(getPublicPaymentConfig().mode, 'sandbox');
+  assert.equal('hasSecretKey' in getPublicPaymentConfig(), false);
+});
+test('merchant review never authorizes mismatched or unapproved private financial configuration', () => {
+  assert.equal(config({BAGELITO_MERCHANT_REVIEW_ONLY:'true',CULQI_SECRET_KEY:'sk_live_synthetic'}).enabled, false);
+  assert.equal(config({BAGELITO_MERCHANT_REVIEW_ONLY:'true',CULQI_MODE:'live',NEXT_PUBLIC_CULQI_PUBLIC_KEY:'pk_live_synthetic',CULQI_SECRET_KEY:'sk_live_synthetic'}).enabled, false);
 });
 test('missing mode fails closed even with keys configured', () => {
   assert.equal(config({CULQI_MODE:''}).enabled, false);

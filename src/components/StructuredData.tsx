@@ -1,4 +1,5 @@
 import {
+  siteAddress,
   siteContactEmail,
   siteDescription,
   siteInstagramUrl,
@@ -29,6 +30,7 @@ const structuredData = {
       logo: absoluteUrl("/images/bagelito-logo.svg"),
       telephone: siteWhatsAppPhone,
       email: siteContactEmail,
+      address: siteAddress,
       taxID: siteRuc,
       priceRange: sitePriceRange,
       servesCuisine: ["Bagels", "Bakery"],

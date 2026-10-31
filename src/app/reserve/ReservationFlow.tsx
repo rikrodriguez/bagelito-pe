@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BadgePercent, BookOpenCheck, Check, CreditCard, Gift, MessageCircle, Minus, Plus, ShieldCheck, Truck } from "lucide-react";
 import type { Flavor } from "@/data/flavors";
+import { flavorImages } from "@/data/flavor-images";
 import type { Pack, PackSlug } from "@/data/packs";
-import { RollingBagel, type BagelVariant } from "@/components/RollingBagel";
+import { RollingBagel } from "@/components/RollingBagel";
 import { ConversionTrustStrip } from "@/components/ConversionTrustStrip";
 import { useBatchAvailability } from "@/components/BatchAvailabilityProvider";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -26,7 +27,7 @@ import {
   CHECKOUT_RECOVERY_STORAGE_KEY, type CheckoutRecovery,
 } from "@/lib/payments/checkout-recovery";
 import { districtOptions } from "@/lib/reservations/schema";
-import { siteServiceArea } from "@/lib/site";
+import { siteAddress, siteServiceArea } from "@/lib/site";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 import { saveSuccessProof } from "@/lib/payments/success-proof";
 import { CHECKOUT_LEGAL_VERSION } from "@/lib/legal-terms";
@@ -36,6 +37,7 @@ type Props = {
   packs: Pack[];
   flavors: Flavor[];
   initialPackSlug: PackSlug;
+  initialFlavorSlug?: string;
   paymentConfig: PublicPaymentConfig;
   checkoutPage?: boolean;
 };
@@ -122,17 +124,24 @@ export function ReservationFlow({
   packs,
   flavors,
   initialPackSlug,
+  initialFlavorSlug,
   paymentConfig,
   checkoutPage = false,
 }: Props) {
   const { locale, copy } = useLanguage();
   const batchAvailability = useBatchAvailability();
+  const merchantPreview = checkoutPage && batchAvailability.merchantReviewOnly && !paymentConfig.enabled;
   const waitlistHref = useWaitlistCampaignHref();
   const r = copy.reserve;
   const [step, setStep] = useState(1);
   const [packSlug, setPackSlug] = useState<PackSlug>(initialPackSlug);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [singleFlavor, setSingleFlavor] = useState("");
+  const [singleFlavor, setSingleFlavor] = useState(() => (
+    packs.find((pack) => pack.slug === initialPackSlug)?.packType === "single"
+      && flavors.some((flavor) => flavor.slug === initialFlavorSlug)
+      ? initialFlavorSlug ?? ""
+      : ""
+  ));
   const [details, setDetails] = useState<Details>(initialDetails);
   const [extraPackAdded, setExtraPackAdded] = useState(false);
   // Explicit purchase consent is separate from the optional marketing checkbox.
@@ -140,6 +149,8 @@ export function ReservationFlow({
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
   const hasMountedRef = useRef(false);
+  const flowAliveRef = useRef(true);
+  const navigationSelectionRef = useRef(JSON.stringify([initialPackSlug, initialFlavorSlug ?? ""]));
   const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
   const checkoutFingerprintRef = useRef("");
   const batchAcceptingRef = useRef(batchAvailability.accepting);
@@ -223,7 +234,7 @@ export function ReservationFlow({
     };
   const checkoutText = locale === "es"
     ? {
-      address: `Zona de atención: ${siteServiceArea}`,
+      address: `Dirección de contacto: ${siteAddress} · Zona de atención: ${siteServiceArea}`,
       complaints: "Libro de Reclamaciones",
       contact: "Ayuda por WhatsApp",
       delivery: "Delivery",
@@ -238,7 +249,7 @@ export function ReservationFlow({
       total: "Total",
     }
     : {
-      address: "Service area: Lima, Peru",
+      address: `Contact address: ${siteAddress} · Service area: ${siteServiceArea}`,
       complaints: "Complaints Book",
       contact: "WhatsApp support",
       delivery: "Delivery",
@@ -321,6 +332,14 @@ export function ReservationFlow({
   });
 
   useEffect(() => {
+    flowAliveRef.current = true;
+    return () => {
+      flowAliveRef.current = false;
+      preparationRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
     function restorePendingPayment() {
       try {
         const stored = readCheckoutRecovery(window.localStorage);
@@ -340,6 +359,47 @@ export function ReservationFlow({
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, [paymentConfig.enabled]);
+
+  useEffect(() => {
+    const selection = JSON.stringify([initialPackSlug, initialFlavorSlug ?? ""]);
+    if (navigationSelectionRef.current === selection) return;
+    // Query navigation must retain the owner of a prepared/in-flight payment.
+    // A new selection can be applied only after recovery has been checked.
+    const prepared = preparationRef.current;
+    if (!recoveryReady || recoveryLoadFailed || recoveryRef.current || resolvedRecovery
+      || paymentInProgress || (prepared && prepared.expiresAt > Date.now())) return;
+    try {
+      const stored = readCheckoutRecovery(window.localStorage);
+      if (stored) {
+        recoveryRef.current = stored;
+        checkoutSessionRef.current.id = stored.checkoutSessionId;
+        setRecovery(stored);
+        return;
+      }
+    } catch {
+      if (paymentConfig.enabled) {
+        setRecoveryLoadFailed(true);
+        return;
+      }
+    }
+    const nextPack = packs.find((pack) => pack.slug === initialPackSlug);
+    if (!nextPack) return;
+    const nextFlavor = nextPack.packType === "single" && flavors.some((flavor) => flavor.slug === initialFlavorSlug)
+      ? initialFlavorSlug ?? "" : "";
+    navigationSelectionRef.current = selection;
+    preparationRef.current = null;
+    setCheckoutPreparation(null);
+    checkoutSessionRef.current = { fingerprint: "", id: "" };
+    setPackSlug(nextPack.slug);
+    setQuantities({});
+    setSingleFlavor(nextFlavor);
+    setDetails(initialDetails);
+    setExtraPackAdded(false);
+    setTermsAccepted(false);
+    setError("");
+    setStep(1);
+  }, [initialPackSlug, initialFlavorSlug, packs, flavors, recoveryReady, recoveryLoadFailed,
+    resolvedRecovery, paymentInProgress, checkoutPreparation, paymentConfig.enabled]);
 
   useEffect(() => {
     if (!hasMountedRef.current) {
@@ -391,6 +451,7 @@ export function ReservationFlow({
   }
 
   function selectPack(nextSlug: PackSlug) {
+    if (nextSlug === selectedPack.slug) return;
     if (checkoutIsLocked()) return;
     updateCheckoutPreparation(null);
     const nextPack = packs.find((pack) => pack.slug === nextSlug);
@@ -412,7 +473,9 @@ export function ReservationFlow({
     if (checkoutIsLocked()) return;
     setQuantities((current) => {
       const currentQuantity = current[flavorSlug] ?? 0;
-      const otherTotal = selectedTotal - currentQuantity;
+      const otherTotal = Object.entries(current).reduce(
+        (sum, [slug, quantity]) => sum + (slug === flavorSlug ? 0 : quantity), 0,
+      );
       const next = Math.max(0, Math.min(selectedPack.units - otherTotal, currentQuantity + delta));
       return { ...current, [flavorSlug]: next };
     });
@@ -507,6 +570,7 @@ export function ReservationFlow({
   }
 
   async function prepareCulqiCheckout(): Promise<CulqiCheckoutSession> {
+    if (!flowAliveRef.current) throw new CheckoutReviewError();
     if (checkoutIsLocked()) throw new CheckoutReviewError();
     if (!termsAccepted) {
       throw new Error(r.errors.terms);
@@ -537,7 +601,7 @@ export function ReservationFlow({
       }, 20_000);
     });
     const assertPreparationActive = () => {
-      if (controller.signal.aborted || Date.now() >= preparationDeadline
+      if (!flowAliveRef.current || controller.signal.aborted || Date.now() >= preparationDeadline
         || preparationRef.current?.checkoutSessionId !== checkoutSessionId
         || preparationRef.current.fingerprint !== fingerprint
         || checkoutFingerprintRef.current !== fingerprint) {
@@ -679,6 +743,7 @@ export function ReservationFlow({
       deviceId?: string;
     },
   ): Promise<CulqiTokenSubmission> {
+    if (!flowAliveRef.current) throw new CheckoutReviewError();
     if (session.checkoutSessionId !== checkoutSessionRef.current.id) throw new CheckoutReviewError();
     const preparation = preparationRef.current;
     if (!isCurrentPreparation(preparation) || preparation?.orderCode !== session.orderCode
@@ -811,7 +876,8 @@ export function ReservationFlow({
 
   function isCurrentRecovery(reference: Pick<CheckoutRecovery, "checkoutSessionId" | "orderCode">) {
     const current = recoveryRef.current;
-    return current?.checkoutSessionId === reference.checkoutSessionId && current?.orderCode === reference.orderCode;
+    return flowAliveRef.current && current?.checkoutSessionId === reference.checkoutSessionId
+      && current?.orderCode === reference.orderCode;
   }
 
   async function checkPendingPayment() {
@@ -838,6 +904,16 @@ export function ReservationFlow({
       setError(locale === "es" ? "No pudimos consultar el estado. No vuelvas a pagar; inténtalo más tarde o contáctanos."
         : "We could not check the status. Do not pay again; check later or contact us.");
     } finally { setCheckingPayment(false); }
+  }
+
+  function completeDemoCheckout() {
+    if (!flowAliveRef.current || !merchantPreview || !termsAccepted || checkoutIsLocked() || isCurrentPreparation(preparationRef.current)) return;
+    const params = new URLSearchParams({
+      amount: String(totalAmount), order: "BAG-DEMO",
+      pack: extraPackAdded ? `2 x ${selectedPack.name}` : selectedPack.name,
+      packSlug: selectedPack.slug, payment: "demo",
+    });
+    window.location.href = `/reserve/success?${params.toString()}`;
   }
 
   if (!recoveryReady || recoveryLoadFailed || resolvedRecovery
@@ -873,7 +949,7 @@ export function ReservationFlow({
     );
   }
 
-  if (!batchAvailability.accepting && !isCurrentPreparation(checkoutPreparation) && !paymentInProgress) {
+  if (!merchantPreview && !batchAvailability.accepting && !isCurrentPreparation(checkoutPreparation) && !paymentInProgress) {
     return (
       <section className="reserve-shell">
         <div className="reserve-herolet">
@@ -931,6 +1007,14 @@ export function ReservationFlow({
         )}
       </div>
 
+      {!paymentConfig.enabled ? (
+        <div className="checkout-review-banner" role="status">
+          <strong>{locale === "es" ? "Vista de revisión — Sin cobros reales" : "Review preview — No real payments"}</strong>
+          <span>{locale === "es"
+            ? "Puedes elegir packs, sabores, delivery y revisar el total. Los pedidos y pagos online siguen deshabilitados en esta demostración. No introduzcas datos reales de tarjeta."
+            : "Choose packs, flavors, delivery, and review the total. Online orders and payments remain disabled in this demonstration. Do not enter real card information."}</span>
+        </div>
+      ) : null}
       <ConversionTrustStrip compact />
 
       <div className="reserve-progress">
@@ -1012,7 +1096,15 @@ export function ReservationFlow({
               const flavorLabel = flavorCopy[locale][flavor.slug] ?? flavor.name;
               return (
                 <article className={"flavor-select-card " + (isSingleSelected ? "selected" : "")} key={flavor.slug}>
-                  <RollingBagel variant={flavor.variant as BagelVariant} size="sm" label={flavorLabel} />
+                  <Image
+                    src={flavorImages[flavor.slug]}
+                    alt={locale === "es" ? `Bagel artesanal sabor ${flavorLabel} de Bagelito` : `Bagelito ${flavorLabel} flavor bagel`}
+                    width={256}
+                    height={256}
+                    sizes="(max-width: 760px) 42vw, (max-width: 1120px) 26vw, 190px"
+                    className="flavor-select-photo"
+                    loading="lazy"
+                  />
                   <h3>{flavorLabel}</h3>
                   {selectedPack.packType === "mixed" ? (
                     <div className="quantity-control">
@@ -1186,6 +1278,7 @@ export function ReservationFlow({
               disabled={!termsAccepted}
               locale={locale}
               onError={setError}
+              onDemoComplete={merchantPreview ? completeDemoCheckout : undefined}
               onPaymentUnresolved={() => {
                 const active = activePaymentRef.current;
                 if (active && isCurrentRecovery(active)) markPaymentForReview();
