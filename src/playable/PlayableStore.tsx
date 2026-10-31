@@ -207,6 +207,7 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     <Store3DErrorBoundary onRecover={()=>enterGuided(null)}>
     <Canvas
       shadows
+      eventPrefix="client"
       dpr={[1,1.5]}
       camera={{fov:56,near:.05,far:70,position:[0,1.68,7.5]}}
       onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.12}}

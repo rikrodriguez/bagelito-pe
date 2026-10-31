@@ -1,0 +1,269 @@
+{
+  "results": [
+    "desktop: totem",
+    "desktop: vitrina",
+    "desktop: bagels",
+    "desktop: schmears",
+    "desktop: production",
+    "desktop: cashier",
+    "desktop: pickup",
+    "desktop: tour-to-selector",
+    "desktop: bagels-to-pack-configuration",
+    "desktop: schmears-to-size-configuration",
+    "mobile: totem",
+    "mobile: vitrina",
+    "mobile: bagels",
+    "mobile: schmears",
+    "mobile: production",
+    "mobile: cashier",
+    "mobile: pickup",
+    "mobile: tour-to-selector",
+    "mobile: bagels-to-pack-configuration",
+    "mobile: schmears-to-size-configuration"
+  ],
+  "failures": [
+    "Right strafe does not move in the correct direction."
+  ],
+  "diagnostics": {
+    "readiness": [
+      {
+        "mode": "desktop",
+        "at": 1793475296805,
+        "assets": [
+          {
+            "name": "bagel-plain.webp",
+            "status": 200,
+            "responseAt": 1793475281474,
+            "finished": true,
+            "finishedAt": 1793475281475
+          },
+          {
+            "name": "bagel-everything.webp",
+            "status": 200,
+            "responseAt": 1793475281532,
+            "finished": true,
+            "finishedAt": 1793475281532
+          },
+          {
+            "name": "bagel-sesame.webp",
+            "status": 200,
+            "responseAt": 1793475281562,
+            "finished": true,
+            "finishedAt": 1793475281562
+          },
+          {
+            "name": "bagel-classic-onion.webp",
+            "status": 200,
+            "responseAt": 1793475281562,
+            "finished": true,
+            "finishedAt": 1793475281562
+          },
+          {
+            "name": "bagel-jalapeno-cheddar.webp",
+            "status": 200,
+            "responseAt": 1793475281562,
+            "finished": true,
+            "finishedAt": 1793475281563
+          },
+          {
+            "name": "bagel-cheddar.webp",
+            "status": 200,
+            "responseAt": 1793475281565,
+            "finished": true,
+            "finishedAt": 1793475281565
+          },
+          {
+            "name": "bagel-cinnamon-raisin.webp",
+            "status": 200,
+            "responseAt": 1793475281566,
+            "finished": true,
+            "finishedAt": 1793475281566
+          },
+          {
+            "name": "bagel-blueberry.webp",
+            "status": 200,
+            "responseAt": 1793475281566,
+            "finished": true,
+            "finishedAt": 1793475281566
+          }
+        ],
+        "worldSigns": 8,
+        "browserFrames": 8
+      },
+      {
+        "mode": "mobile",
+        "at": 1793475446269,
+        "assets": [
+          {
+            "name": "bagel-plain.webp",
+            "status": 200,
+            "responseAt": 1793475439243,
+            "finished": true,
+            "finishedAt": 1793475439243
+          },
+          {
+            "name": "bagel-everything.webp",
+            "status": 200,
+            "responseAt": 1793475439267,
+            "finished": true,
+            "finishedAt": 1793475439267
+          },
+          {
+            "name": "bagel-sesame.webp",
+            "status": 200,
+            "responseAt": 1793475439284,
+            "finished": true,
+            "finishedAt": 1793475439284
+          },
+          {
+            "name": "bagel-classic-onion.webp",
+            "status": 200,
+            "responseAt": 1793475439284,
+            "finished": true,
+            "finishedAt": 1793475439284
+          },
+          {
+            "name": "bagel-jalapeno-cheddar.webp",
+            "status": 200,
+            "responseAt": 1793475439284,
+            "finished": true,
+            "finishedAt": 1793475439286
+          },
+          {
+            "name": "bagel-cheddar.webp",
+            "status": 200,
+            "responseAt": 1793475439286,
+            "finished": true,
+            "finishedAt": 1793475439286
+          },
+          {
+            "name": "bagel-cinnamon-raisin.webp",
+            "status": 200,
+            "responseAt": 1793475439286,
+            "finished": true,
+            "finishedAt": 1793475439286
+          },
+          {
+            "name": "bagel-blueberry.webp",
+            "status": 200,
+            "responseAt": 1793475439286,
+            "finished": true,
+            "finishedAt": 1793475439286
+          }
+        ],
+        "worldSigns": 8,
+        "browserFrames": 8
+      }
+    ],
+    "movement": [
+      {
+        "mode": "desktop",
+        "initialX": 0,
+        "movedX": 0,
+        "holdMs": 480,
+        "minimumDelta": 0.12,
+        "sampledAt": 1793475307408
+      }
+    ],
+    "cameras": [
+      {
+        "mode": "desktop",
+        "node": "totem",
+        "target": -3.7,
+        "first": -3.7,
+        "second": -3.7
+      },
+      {
+        "mode": "desktop",
+        "node": "vitrina",
+        "target": 0,
+        "first": 0,
+        "second": 0
+      },
+      {
+        "mode": "desktop",
+        "node": "bagels",
+        "target": -2.05,
+        "first": -2.05,
+        "second": -2.05
+      },
+      {
+        "mode": "desktop",
+        "node": "schmears",
+        "target": 4.2,
+        "first": 4.2,
+        "second": 4.2
+      },
+      {
+        "mode": "desktop",
+        "node": "production",
+        "target": 0,
+        "first": 0,
+        "second": 0
+      },
+      {
+        "mode": "desktop",
+        "node": "cashier",
+        "target": 5.65,
+        "first": 5.65,
+        "second": 5.65
+      },
+      {
+        "mode": "desktop",
+        "node": "pickup",
+        "target": 6.95,
+        "first": 6.95,
+        "second": 6.95
+      },
+      {
+        "mode": "mobile",
+        "node": "totem",
+        "target": -3.7,
+        "first": -3.7,
+        "second": -3.7
+      },
+      {
+        "mode": "mobile",
+        "node": "vitrina",
+        "target": 0,
+        "first": 0,
+        "second": 0
+      },
+      {
+        "mode": "mobile",
+        "node": "bagels",
+        "target": -2.05,
+        "first": -2.04,
+        "second": -2.04
+      },
+      {
+        "mode": "mobile",
+        "node": "schmears",
+        "target": 4.2,
+        "first": 4.17,
+        "second": 4.17
+      },
+      {
+        "mode": "mobile",
+        "node": "production",
+        "target": 0,
+        "first": 0.01,
+        "second": 0.01
+      },
+      {
+        "mode": "mobile",
+        "node": "cashier",
+        "target": 5.65,
+        "first": 5.65,
+        "second": 5.65
+      },
+      {
+        "mode": "mobile",
+        "node": "pickup",
+        "target": 6.95,
+        "first": 6.95,
+        "second": 6.95
+      }
+    ]
+  }
+}
