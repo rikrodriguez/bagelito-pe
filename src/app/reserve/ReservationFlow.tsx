@@ -94,6 +94,9 @@ type CheckoutPreparation = {
 function focusCheckoutContent(element: HTMLElement | null) {
   if (!element) return;
   element.focus({ preventScroll: true });
+  // Cancel native focus scrolling even when the target is already centered;
+  // scrollIntoView can otherwise leave that earlier animation running.
+  window.scrollTo({ left: window.scrollX, top: window.scrollY, behavior: "instant" });
   // "auto" inherits the document's smooth scroll and can leave focus offscreen.
   element.scrollIntoView({ block: "center", behavior: "instant" });
 }

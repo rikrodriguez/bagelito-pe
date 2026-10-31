@@ -9,10 +9,11 @@ reads outside the fixture are blocked. No new scanner dependency is installed.
 
 - After changing checkout steps, keyboard focus remained on Continue or fell to
   BODY when the button disappeared. Step changes now focus the new step content;
-  focus placement bypasses the page's smooth scrolling so the target is visible
-  immediately. Scroll rechecks stop as soon as the user moves focus elsewhere.
-- Invalid flavor/delivery progression displayed an unannounced message while
-  focus stayed on Continue. The error is now an alert/focus target, including
+  focus placement cancels prior native scrolling and bypasses the page's smooth
+  scrolling so the target is visible immediately. Scroll rechecks stop as soon
+  as the user moves focus elsewhere.
+- Invalid flavor/delivery progression displayed a message without alert/live
+  semantics while focus stayed on Continue. The error is now an alert/focus target, including
   repeated identical errors. Empty fields already rejected by the existing
   validation reference that error; validation rules are unchanged.
 - Ten single-flavor buttons had the same Select/Seleccionar accessible name and
@@ -39,6 +40,9 @@ step changes, flavor selection, handoff state, empty/repeated errors, invalid
 field associations and quantity limits. Focus assertions check the active
 element and viewport position after160ms, beyond the existing90ms scroll timer,
 including that a later Tab is not pulled back to a heading.
+Native Tab traversal and rapid programmatic focus followed by activation are
+checked separately; the latter is a browser/API edge, not an observed failure
+of a particular assistive technology.
 
 Store/legal/complaints: ES/EN at320,360,390 and1440px, checking24 page/locale/
 viewport combinations, names, keyboard links, legal/contact destinations and

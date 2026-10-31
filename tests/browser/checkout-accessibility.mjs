@@ -56,12 +56,18 @@ async function assertFocused(locator, message) {
   // The existing step effect schedules another scroll after 90ms. Check the
   // final position too, so an initially focused but hidden target cannot pass.
   await locator.page().waitForTimeout(160);
-  assert.equal(await locator.evaluate(element => element === document.activeElement), true, message);
-  const box = await locator.boundingBox();
-  const viewport = locator.page().viewportSize();
-  const header = await locator.page().locator("header").first().boundingBox();
-  assert.ok(box && box.y >= Math.max(0, (header?.y ?? 0) + (header?.height ?? 0)), "Focused content must not be hidden behind the sticky header");
-  assert.ok(box.y + box.height <= viewport.height, "Focused content must remain visible after the scroll timers");
+  const geometry = await locator.evaluate(element => {
+    const rect = element.getBoundingClientRect();
+    return {
+      focused: element === document.activeElement,
+      y: rect.y, height: rect.height,
+      headerBottom: document.querySelector("header")?.getBoundingClientRect().bottom ?? 0,
+      viewportHeight: innerHeight,
+    };
+  });
+  assert.equal(geometry.focused, true, message);
+  assert.ok(geometry.y >= Math.max(0, geometry.headerBottom), `Focused content must not be hidden behind the sticky header: ${JSON.stringify(geometry)}`);
+  assert.ok(geometry.y + geometry.height <= geometry.viewportHeight, `Focused content must remain visible after the scroll timers: ${JSON.stringify(geometry)}`);
 }
 async function fillDelivery(page) {
   const fields = page.locator(".form-grid input[required]");
@@ -152,10 +158,17 @@ for (const locale of ["es", "en"]) {
       }
       await fields.first().focus();
       await page.keyboard.insertText("Synthetic Keyboard");
-      await next(page);
+      let tabs = 0;
+      while (!await page.locator(".reserve-nav button.pink").evaluate(element => element === document.activeElement)) {
+        assert.ok(++tabs <= 20, "The normal Tab order must reach Continue");
+        await page.keyboard.press("Tab");
+      }
+      await page.keyboard.press("Enter");
       await assertFocused(error, "The same validation message must receive focus on a second attempt");
       assert.equal(await fields.first().getAttribute("aria-invalid"), "false");
       assert.equal(await fields.nth(1).getAttribute("aria-invalid"), "true");
+      await next(page);
+      await assertFocused(error, "Fast programmatic focus before Enter must not leave native scrolling running after the error receives focus");
     });
 
     test(`selection names and state remain accessible with Space and Enter (${locale}, ${size})`, async t => {
