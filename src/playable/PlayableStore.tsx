@@ -39,6 +39,8 @@ const GUIDED_CAMERAS: Record<GuideNode,{position:THREE.Vector3;lookAt:THREE.Vect
   pickup:{position:new THREE.Vector3(6.95,1.70,-1.65),lookAt:new THREE.Vector3(6.68,1.45,-5.72)},
 }
 
+const PORTRAIT_ENTRY_CAMERA = {position:new THREE.Vector3(-2.05,2.4,8.5),lookAt:new THREE.Vector3(-2.05,-.7,.2)}
+
 const TOUR_STOPS: ReadonlyArray<{node:GuideNode;title:string;description:string}> = [
   {node:'totem', title:'Bienvenido a Bagelito', description:'Mira la tienda antes de elegir.'},
   {node:'vitrina', title:'La vitrina', description:'Bagels y schmears hechos para combinar.'},
@@ -259,7 +261,6 @@ export function PlayableStore({ initialMode = 'guided' }: { initialMode?: 'guide
     {experienceMode==='explore'&&name&&step==='explore'&&<div className="hello-card interactive-ui"><small>BIENVENIDA DE VUELTA</small><strong>¡Hola {name}!</strong><span>Qué bueno verte de nuevo ;)</span></div>}
 
     {experienceMode==='explore'&&step==='explore'&&!category&&!welcomeDismissed&&tourIndex<0&&<>
-      <div className="store-entry-mobile-brand" role="img" aria-label="Bagelito · Classic Gringo Bagels" data-asset-role="approved-logo-only-crop"/>
       <div className="store-entry interactive-ui">
       <h1>¿Qué te provoca hoy?</h1>
       <div className="store-entry-categories">
@@ -325,16 +326,18 @@ function CameraController({move,look,guidedNode,onPosition}:{move:Move;look:Reac
   useFrame((_,delta)=>{
     if(guidedNode){
       wasGuided.current=true
-      const node=GUIDED_CAMERAS[guidedNode]
+      const portrait=size.width<size.height
+      const node=portrait&&guidedNode==='entry'
+        ? PORTRAIT_ENTRY_CAMERA
+        : GUIDED_CAMERAS[guidedNode]
       const alpha=1-Math.exp(-delta*4.8)
       // Fit actual world-space cases to the portrait frustum, preserving the
       // camera target and horizontal identity of each physical tour stop.
-      const portrait=size.width<size.height
       const perspective=camera as THREE.PerspectiveCamera
       const fov=portrait?74:56
       if(perspective.fov!==fov){perspective.fov=fov;perspective.updateProjectionMatrix()}
       fittedPosition.copy(node.position)
-      const width=guidedNode==='entry'?13.2:guidedNode==='bagels'?8.2:guidedNode==='schmears'?5.3:guidedNode==='vitrina'||guidedNode==='selector'?13.2:0
+      const width=guidedNode==='entry'?(portrait?8.2:13.2):guidedNode==='bagels'?8.2:guidedNode==='schmears'?5.3:guidedNode==='vitrina'||guidedNode==='selector'?13.2:0
       if(width){
         const required=width/(2*Math.tan(THREE.MathUtils.degToRad(fov/2))*(size.width/size.height))
         fittedDelta.subVectors(node.position,node.lookAt)

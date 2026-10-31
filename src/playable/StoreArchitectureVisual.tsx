@@ -149,7 +149,7 @@ export function StoreArchitectureVisual() {
       <meshStandardMaterial color="#383b37" metalness={0.72} roughness={0.34} />
     </mesh>)}
 
-    <mesh name="approved-reference-logo-crop" position={[0, 5.8, -8.13]}
+    <mesh name="approved-reference-logo-crop" position={[-2.05, 5.8, -8.13]}
       userData={{ assetRole: 'wall-logo-crop-only', source: REFERENCE, sourceRegion: LOGO_CROP, excludesReferenceInterface: true }}>
       <planeGeometry args={[10.5, 10.5 * LOGO_CROP.height / LOGO_CROP.width]} />
       <meshBasicMaterial map={logo} toneMapped={false} />

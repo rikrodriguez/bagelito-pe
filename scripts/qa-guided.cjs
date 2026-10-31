@@ -1,14 +1,22 @@
 /**
- * Bagelito visual journey smoke QA. Run only against a non-production preview
+ * Bagelito visual journey smoke QA. Run only against a loopback preview
  * with BAGELITO_VISUAL_QA_ENABLED=true and all payment intake disabled.
  * Install locally: npm i --no-save playwright@1.56.1 && npx playwright install chromium
- * Run: BASE_URL=http://localhost:4173 npm run qa:guided
+ * Run: BASE_URL=http://localhost:4173 QA_HDR_FIXTURE_PATH=/path/lebombo_1k.hdr npm run qa:guided
  */
 const { chromium } = require('playwright')
-const { mkdirSync, writeFileSync } = require('node:fs')
+const assert = require('node:assert/strict')
+const { createHash } = require('node:crypto')
+const { mkdirSync, readFileSync, writeFileSync } = require('node:fs')
 const { resolve } = require('node:path')
 
 const base = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, '')
+const baseURL = new URL(base)
+assert.ok(baseURL.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(baseURL.hostname), 'Only a loopback preview is allowed')
+assert.ok(process.env.QA_HDR_FIXTURE_PATH, 'Provide the pinned HDR as a local fixture')
+const hdr = readFileSync(process.env.QA_HDR_FIXTURE_PATH)
+assert.equal(createHash('sha256').update(hdr).digest('hex'), 'a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb')
+const hdrURL = 'https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/lebombo_1k.hdr'
 const output = resolve(process.env.QA_OUTPUT || 'qa-artifacts')
 const modes = [
   { name: 'desktop', viewport: { width: 1280, height: 800 } },
@@ -17,16 +25,49 @@ const modes = [
 mkdirSync(output, { recursive: true })
 
 async function audit() {
-  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] })
+  const browser = await chromium.launch({
+    headless: true,
+    ...(process.env.QA_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.QA_CHROMIUM_EXECUTABLE_PATH } : {}),
+    args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'],
+  })
   const results = []
   const failures = []
+  const network = []
   try {
     for (const mode of modes) {
-      const page = await browser.newPage({ viewport: mode.viewport, deviceScaleFactor: 1 })
+      const context = await browser.newContext({ viewport: mode.viewport, deviceScaleFactor: 1, serviceWorkers: 'block' })
+      const traffic = { mode: mode.name, reads: [], fixtureReads: 0, blocked: [] }
+      network.push(traffic)
+      await context.route('**/*', async route => {
+        const request = route.request(), url = request.url()
+        if (request.method() === 'GET' && new URL(url).origin === baseURL.origin) {
+          const response = await route.fetch({ maxRedirects: 0 })
+          traffic.reads.push({ url, status: response.status() })
+          if (response.status() >= 300 && response.status() < 400) {
+            traffic.blocked.push({ method: 'GET', url, reason: 'redirect' })
+            return route.abort('blockedbyclient')
+          }
+          return route.fulfill({ response })
+        }
+        if (request.method() === 'GET' && url === hdrURL) {
+          traffic.fixtureReads++
+          return route.fulfill({ status: 200, headers: { 'content-type': 'application/octet-stream', 'access-control-allow-origin': '*' }, body: hdr })
+        }
+        traffic.blocked.push({ method: request.method(), url })
+        return route.abort('blockedbyclient')
+      })
+      const page = await context.newPage()
+      page.setDefaultTimeout(45000)
       page.on('pageerror', (err) => failures.push(mode.name + ': ' + err.message))
       page.on('console', (event) => {
         if (event.type() === 'error') failures.push(mode.name + ': ' + event.text())
       })
+      const config = await page.request.get(new URL('/api/payments/culqi/config', baseURL).href, { maxRedirects: 0 })
+      assert.equal(config.status(), 200)
+      const payment = await config.json()
+      for (const key of ['enabled', 'configured', 'intakeEnabled']) assert.equal(payment[key], false, key + ' must remain disabled')
+      assert.equal(payment.mode, 'disabled')
+      assert.equal(payment.visualQaAllowed, true, 'The loopback server must explicitly enable visual QA')
 
       async function visit() {
         const targetOrigin = new URL(base).origin
@@ -202,9 +243,9 @@ async function audit() {
       }
       await page.getByRole('button', { name: /Continuar/ }).last().click()
       await scene('schmears', '07-schmears')
-      const optionalSchmear = mode.name === 'mobile'
-        ? page.locator('.mobile-schmear-card > button').first()
-        : page.locator('.schmear-hotspots > button').first()
+      // Both viewports use these real commerce controls over the mounted world.
+      // The panorama hotspots are deliberately absent while liveWorld is true.
+      const optionalSchmear = page.locator('.mobile-schmear-card > button').first()
       await optionalSchmear.click()
       if (await page.locator('.guided-store-cart-button>span').textContent() !== 'Tu pedido (7)') {
         failures.push(mode.name + ': optional schmear not added to live order count')
@@ -213,7 +254,7 @@ async function audit() {
       if (await page.locator('.guided-store-cart-button>span').textContent() !== 'Tu pedido (6)') {
         failures.push(mode.name + ': optional schmear could not be removed again')
       }
-      const schmearLabels = await page.locator('.schmear-hotspots > button')
+      const schmearLabels = await page.locator('.mobile-schmear-card > button')
         .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
       const expectedSchmearLabels = [
         'Agregar Whipped Original', 'Agregar Ají Amarillo', 'Agregar Herb & Roasted Garlic',
@@ -276,12 +317,17 @@ async function audit() {
       if (await page.locator('.bagel-live-summary>b').textContent() !== '0/6') {
         failures.push(mode.name + ': one-flavor pack cannot be cleared in one action')
       }
-      await page.close()
+      assert.equal(traffic.fixtureReads > 0, true, 'The live world must load the pinned HDR fixture')
+      assert.deepEqual(traffic.blocked, [], 'No unrelated external request or write is allowed')
+      assert.deepEqual(traffic.reads.filter(read => read.status >= 400), [], 'All local resources must load')
+      await context.close()
     }
+  } catch (error) {
+    failures.push(String(error.stack || error))
   } finally {
     await browser.close()
+    writeFileSync(resolve(output, 'results.json'), JSON.stringify({ results, failures, network }, null, 2))
   }
-  writeFileSync(resolve(output, 'results.json'), JSON.stringify({ results, failures }, null, 2))
   console.log(results.length + ' scene checks; ' + failures.length + ' failures.')
   if (failures.length) {
     console.error(failures.join('\n'))

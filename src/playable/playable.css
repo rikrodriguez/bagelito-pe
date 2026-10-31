@@ -368,12 +368,11 @@
 .category-photo-schmears{background-size:653.6170% 742.03%;background-position:76.0953% 40.6321%}
 .store-entry-categories button:nth-child(1){background:#fff3e6}.store-entry-categories button:nth-child(2){background:#dcefff}.store-entry-categories button:nth-child(3){background:#ffe6e7}
 @media(max-width:760px){.category-photo{height:61px}}
-.store-entry-mobile-brand{display:none}
 .store-entry-progress{position:absolute;z-index:42;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:8px;padding:8px;border:1px solid #fff;border-radius:999px;background:#fffaf4ed;box-shadow:0 8px 24px #44351d22;color:#365574;font-size:11px}
 .store-entry-progress span{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:75px;padding:8px;border-radius:999px}
 .store-entry-progress span[aria-current]{background:#004aad;color:white}
 .store-entry-progress i{font-style:normal;font-weight:800}
-@media(max-width:760px){.store-entry-mobile-brand{display:block;position:absolute;z-index:30;top:17%;left:50%;transform:translateX(-50%);width:280px;height:79px;background:url('/images/store-reference-approved.webp') no-repeat;background-size:210.410959% 497.087379%;background-position:60.173697% 6.845966%;border-radius:5px}.store-entry-progress{bottom:18px;width:calc(100% - 24px);gap:0;justify-content:space-around;padding:5px}.store-entry-progress span{min-width:0;padding:8px 7px;font-size:9px}}
+@media(max-width:760px){.store-entry{top:auto;bottom:150px}.store-entry-progress{bottom:18px;width:calc(100% - 24px);gap:0;justify-content:space-around;padding:5px}.store-entry-progress span{min-width:0;padding:8px 7px;font-size:9px}}
 /* Drei HTML labels must stay within the world stacking context. Commerce
    controls above it remain actual clickable DOM throughout the guided flow. */
 .store-world{position:absolute;inset:0;z-index:0;isolation:isolate}
