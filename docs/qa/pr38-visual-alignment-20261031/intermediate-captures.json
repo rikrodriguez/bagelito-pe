@@ -1,0 +1,19 @@
+{
+  "status": "intermediate-visual-checkpoint-not-finished-or-deployed",
+  "captured_utc": "2026-10-31T20:46:00Z",
+  "application_base": "52fa55cb223e587b7619a4161b8cb263bfa61a3f",
+  "provenance": "Real local Chromium/SwiftShader screenshots from the working visual branch before the final front-plane camera correction. They show the improved branding, lamps, 48 products across eight trays and five schmear pans.",
+  "files": {
+    "mobile-entry-checkpoint.png": "b9dcfa07958aa5a5a6a04e8ad8c5349343521415ca8e33ee443de481cc54b5d1",
+    "desktop-entry-with-progress-checkpoint.png": "585b94d38eb66e221f9eb0995c6bad383bfbea219e1af733bc4b8780fc1f4d0b"
+  },
+  "known_limit": "At this checkpoint one mobile physical label extended 4.6 px outside the viewport. A front-plane fit correction is prepared and undergoing separate regression QA; these images must not be described as the final corrected camera result.",
+  "panel_result": "The full journey driver clicked the same menu toggle before the existing scene-close effect settled. Waiting for the menu panel to become hidden fixes the driver race; an independent manual browser sequence confirms that Close summary dismisses the overlay. No domain/payment handler was changed.",
+  "pr44": {
+    "url": "https://github.com/rikrodriguez/bagelito-pe/pull/44",
+    "draft": true,
+    "head": "52fa55cb223e587b7619a4161b8cb263bfa61a3f",
+    "creation_retry": "The single authorized retry succeeded; remote metadata was reverified."
+  },
+  "preview_deployed": false
+}
