@@ -1,0 +1,18 @@
+{
+  "codeSHA": "2199afb6b51a3321259f512242bd47268ac3300c",
+  "build": {
+    "command": "npm run build",
+    "observedExitCode": 0,
+    "log": "build.log.gz",
+    "format": "gzip of unchanged raw log bytes"
+  },
+  "node": {
+    "command": "QA_HDR_FIXTURE_PATH=/tmp/bagelito-lebombo_1k.hdr node --test tests/*.test.cjs",
+    "observedExitCode": 0,
+    "passed": 58,
+    "failed": 0,
+    "skipped": 0,
+    "log": "node.log"
+  },
+  "scope": "No full purchase rerun on cleanup source. Current entry/read-only/label taps rerun; earlier complete journeys retain their original source SHA."
+}

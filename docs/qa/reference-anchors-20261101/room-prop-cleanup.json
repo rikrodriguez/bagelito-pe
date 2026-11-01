@@ -1,0 +1,46 @@
+{
+  "workflow": "Two native imagegen edits, one exact own generated PNG input per edit. No user reference screenshot input in these cleanup calls. No local content repaint/crop/stretch.",
+  "scope": "Remove all far-left drinking-cup stacks/checkeredcupwrappers and all far-right canvas totes/bodies/handles, naturally continue background, add no replacement products.",
+  "assets": [
+    {
+      "role": "wide",
+      "input": "/workspace/generated_images/exec-64439a92-4053-4334-beaa-9ef938a89ca1.png",
+      "inputSHA256": "4d3518e5cb31000bd5795e7f9797505dd1b677e2b06c9c1a1a7dfcbfe34ca7af",
+      "output": "/workspace/generated_images/exec-6f125f6d-ae14-488b-b846-a0e430c3b4d5.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "bytes": 2058351,
+      "sha256": "59bd61eba6e98bf7c002b1441a24a441887427481d4333c320de77ba37c06b66",
+      "inspection": {
+        "method": "native output and exact local file visually inspected at original detail",
+        "noCupStacksOrCupWrappersVisibleAtLeft": true,
+        "noCanvasToteBagBodiesOrHandlesVisibleAtRight": true,
+        "blankTextAndUIAreasRetained": true,
+        "roomCameraStaffLightingEmptyCaseAnchorsVisuallyRetained": true
+      },
+      "limits": "Native generative targeted edit; not a claim of byte-identical pixels outside prop regions, not verified photography or a pixel-perfect reconstruction."
+    },
+    {
+      "role": "portrait",
+      "input": "/workspace/generated_images/exec-b45867dd-fb47-49e4-87b7-2e8158dad538.png",
+      "inputSHA256": "899ab458054cdf465b618e69b86478061c21938db30c813cecc61433a14cf0da",
+      "output": "/workspace/generated_images/exec-3d0b60d7-2bc6-4f22-922e-97f92e5adf98.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "bytes": 2009279,
+      "sha256": "714d9a4d949e643ce707d859c0f6d323b11a0c239f49211048a895daa0f2c852",
+      "inspection": {
+        "method": "native output and exact local file visually inspected at original detail",
+        "noCupStacksOrCupWrappersVisibleAtLeft": true,
+        "noCanvasToteBagBodiesOrHandlesVisibleAtRight": true,
+        "blankTextAndUIAreasRetained": true,
+        "roomCameraStaffLightingEmptyCaseAnchorsVisuallyRetained": true
+      },
+      "limits": "Native generative targeted edit; not a claim of byte-identical pixels outside prop regions, not verified photography or a pixel-perfect reconstruction."
+    }
+  ]
+}

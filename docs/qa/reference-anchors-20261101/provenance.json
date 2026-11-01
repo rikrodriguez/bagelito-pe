@@ -1,0 +1,58 @@
+{
+  "currentCodeSHA": "2199afb6b51a3321259f512242bd47268ac3300c",
+  "referenceRuntimeRequestsAllowed": false,
+  "referenceInput": "public/images/store-reference-approved.webp",
+  "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "mode": "Reference-guided new conceptual imagegen layers, not independently unrelated venue photography, not a runtime screenshot/crop of the approved mockup.",
+  "selectedAssets": {
+    "public/images/rebuilt-aligned-room.webp": {
+      "originalPNG": "/workspace/generated_images/exec-6f125f6d-ae14-488b-b846-a0e430c3b4d5.png",
+      "originalSHA256": "59bd61eba6e98bf7c002b1441a24a441887427481d4333c320de77ba37c06b66",
+      "runtimeSHA256": "626cde972ada339f31a461aa39080b874b07cfd9b15b5627ad84ca5fe7369c3e",
+      "RGBA8Equal": true,
+      "cleanup": "Native targeted removal of left cups and right tote from our own previously generated room",
+      "ancestorPNG": "/workspace/generated_images/exec-64439a92-4053-4334-beaa-9ef938a89ca1.png",
+      "ancestorSHA256": "4d3518e5cb31000bd5795e7f9797505dd1b677e2b06c9c1a1a7dfcbfe34ca7af"
+    },
+    "public/images/rebuilt-aligned-room-mobile.webp": {
+      "originalPNG": "/workspace/generated_images/exec-3d0b60d7-2bc6-4f22-922e-97f92e5adf98.png",
+      "originalSHA256": "714d9a4d949e643ce707d859c0f6d323b11a0c239f49211048a895daa0f2c852",
+      "runtimeSHA256": "12a0629770075556bd27a86a6f6489a9f598599173c9336fcfd472be00a63dfc",
+      "RGBA8Equal": true,
+      "cleanup": "Native targeted removal of left cups and right tote from our own previously generated room",
+      "ancestorPNG": "/workspace/generated_images/exec-b45867dd-fb47-49e4-87b7-2e8158dad538.png",
+      "ancestorSHA256": "899ab458054cdf465b618e69b86478061c21938db30c813cecc61433a14cf0da"
+    },
+    "public/images/rebuilt-aligned-counter.webp": {
+      "originalPNG": "/workspace/generated_images/exec-0ed65123-8fb8-4dc5-8b57-653447b7c61e.png",
+      "originalSHA256": "4be0f7a3f6d9659d015abb048555363eab18269fc1a1bc7e24656fe9cc9019bf",
+      "runtimeSHA256": "490bbcf7545bf3d2deb3bbbc8768358765b710010145101ce4325ef176496074",
+      "RGBA8Equal": true
+    },
+    "public/images/rebuilt-aligned-combo.webp": {
+      "originalPNG": "/workspace/generated_images/exec-33003002-7f44-4e17-9ab9-2e9b5a9a7bb3.png",
+      "originalSHA256": "d939acd24921d9814accf122b7f9e38a2dd0f8b78eda0ca4c9f038bdf5bdb20c",
+      "runtimeSHA256": "8bf111ef1cd6b37642c0a472dabe95e01636925e575d08f5aed4df37b9a6a763",
+      "RGBA8Equal": true
+    }
+  },
+  "selectedNativeGenerations": 4,
+  "rejectedCounterRefinement": 1,
+  "roomPortraitInputs": [
+    "approved reference",
+    "new wide room"
+  ],
+  "counterViews": "Two native SVG windows on mobile reuse only the newly generated counter texture. They are not original-reference crops.",
+  "rasterTextOrUIInNewLayers": false,
+  "nativeUI": "Wordmark/tagline, question, three categories, menu board, shirt lettering, 8+5 placards, menu/cart/progress and two accessible case actions. No tote markup remains.",
+  "scope": "Conceptual products/staff; not verified recipe, inventory or real staff photography. No new commercial rules.",
+  "totalNativeGenerationCallsThisIteration": 7,
+  "targetedRoomCleanupCalls": 2,
+  "intentionalReferenceExclusions": [
+    "Fresh bagels / Happier days slogan",
+    "left drinking cup stacks and blue checkered cup wrappers",
+    "right canvas tote bodies and handles",
+    "sixth schmear and unsupported side-menu prices"
+  ],
+  "cleanupScope": "Two edits of our own previously generated PNGs. No reference image passed to cleanup calls; no local content crop or repaint. No claim of unchanged pixels outside edited regions."
+}

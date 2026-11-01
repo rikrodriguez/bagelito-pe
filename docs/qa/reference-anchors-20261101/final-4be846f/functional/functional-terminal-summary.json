@@ -1,0 +1,38 @@
+{
+  "codeSHA": "4be846f06e0cf8ab4ba20df37b114104f96955db",
+  "scope": "ONLY affected320combo full review-only journey. Prior1536entry and390pack results remain attributed solely tocbf10f7. No new entry or broad matrix.",
+  "status": "passed",
+  "exitCode": 0,
+  "completed": {
+    "entryViewports": 0,
+    "categoryCallbacks": 0,
+    "vitrineCallbacks": 0,
+    "keyboardEntries": 0,
+    "decodedEntryPhotos": 0,
+    "mobileSVGWindows": 0,
+    "referenceAnchorViewports": 0,
+    "productTextStates": 0,
+    "productTextCards": 0,
+    "secondaryStates": 0,
+    "completeJourneys": 1,
+    "legalNewTabs": 1,
+    "screenshots": 53
+  },
+  "failures": [],
+  "reportSHA256": "0cdbe5c289eba35e695ae1c0de01c703c780c04cce08506c706182ec342e65c0",
+  "screenshots": 53,
+  "verifiedPNGHashes": 53,
+  "missingOrMismatch": [],
+  "sourcesUnchangedThroughTerminal": true,
+  "frozenSourceFiles": 43,
+  "safety": {
+    "knownFrameworkReads": 2,
+    "capabilityErrors": 0,
+    "blockedRequests": 0,
+    "networkErrors": 0,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "callbackErrors": 0,
+    "documents": 2
+  }
+}

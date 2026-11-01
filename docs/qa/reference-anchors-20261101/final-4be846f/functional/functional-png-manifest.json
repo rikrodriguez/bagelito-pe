@@ -1,0 +1,320 @@
+[
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-01-first-pixels.png",
+    "sha256": "87d9853194ea3549be73d01c08aca817500d09c759efab335c29eb5e0399f548",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-01-first-pixels-full.png",
+    "sha256": "60066f11e1d81b8e2e1dd8f13de241a433c7c0d33f88b84ce6f563ef72cdc70d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-02-scene-combos.png",
+    "sha256": "647cef01d702ac8fc9b88689cc53f63bea7e0f31732bb01c7ccf8d32bbd088d5",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-02-scene-combos-full.png",
+    "sha256": "2268088acf8268a63380de12b3fff6397432c3fef8b49e7942844c84d351505a",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-03-scene-bagels.png",
+    "sha256": "b0515b140ba75808296a009d3b1179b2178a1d123baa242ab7b32d946b77f734",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-03-scene-bagels-full.png",
+    "sha256": "a416151897d9c0d56968105414c4f2cdba5bf752571b7d2e04f47d8622d94912",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-04-combo-bagels-selected.png",
+    "sha256": "0c654e726f0486417a1010bda58b622c3abf3a6297ef9ce0e5cebb4e09dd5cad",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-04-combo-bagels-selected-full.png",
+    "sha256": "f60d548889133f53a70797eb9359350fe9cbfb15235206c6966dc34e143dacc0",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-05-scene-schmears.png",
+    "sha256": "d9d9822355dd945979d878ff435c1e18b045670ffdc98d38140e93fca723cdb2",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-05-scene-schmears-full.png",
+    "sha256": "198f8692a9a99717cc757c3c11c6849879fed8b2e7fd1a82458a261bbdbfe5e4",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-06-combo-schmear-selected.png",
+    "sha256": "6997b5afb4e6ed7cf689d4528fe90d5446ce51e81244dbf83777aa8162ce8a04",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-06-combo-schmear-selected-full.png",
+    "sha256": "2c38a1e8a838b9dcdc16a3473c28282fe9cd51ab1b8fbea45913987222d53222",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-07-scene-cashier.png",
+    "sha256": "93739a16e4eff0ef73ad4db5c77dd381b61e17c66d7a63ef2af4321788c97d4c",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-07-scene-cashier-full.png",
+    "sha256": "6726c32649309a3f195a1ef9cea4c10cfe2433860d25d5651be3404f043627a3",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-08-summary.png",
+    "sha256": "fd2f2dbd1b20e138cfd87abf13c41a2513474e73596dd6a5395eaaa8a4c7b26f",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-08-summary-full.png",
+    "sha256": "b83ccdfd35678282c4fda731a7accd9a50c7e7aa0a92cba27373756ecd5870d2",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-09-scene-pay.png",
+    "sha256": "a534a260ee6ae4b70be86e906b08d9a534dd7ac4bdab8338f647eee4071a7ac1",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-09-scene-pay-full.png",
+    "sha256": "f41eb98aec3841fc5ff8154f156b1ff9464d6c4166c03bc53491aa3543f345c5",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-10-review-unfilled.png",
+    "sha256": "a534a260ee6ae4b70be86e906b08d9a534dd7ac4bdab8338f647eee4071a7ac1",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-10-review-unfilled-full.png",
+    "sha256": "f41eb98aec3841fc5ff8154f156b1ff9464d6c4166c03bc53491aa3543f345c5",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-11-review-consented.png",
+    "sha256": "f1db6b5c7e3fe31a0e737feec678e34dbcf0f13d1199d90ebfeeedc039f9cc21",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-11-review-consented-full.png",
+    "sha256": "a085940dacb3a8f15b2240016168f2a67d51fe94aae129250bd9be27c4849dad",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-12-scene-cashier.png",
+    "sha256": "af184925257de0b1e2cadcc985d64a947b38b118e94d845b5edab6ac76272f47",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-12-scene-cashier-full.png",
+    "sha256": "feb2e811e0b17dd07763297bca933f6491ef2721262d1a4880a78bc48fa11cfd",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-13-cart-with-selection.png",
+    "sha256": "a0d0b7e999ab986987ff8883dc422facac63475dcfdcc2cebe467b5a8bd05539",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-13-cart-with-selection-full.png",
+    "sha256": "78b082d849c4c2025d07beb9610ca14be544d10a6ea143a6dd02bc026a0b10c4",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-14-scene-bagels.png",
+    "sha256": "c233ca74616f869dc55cf2df6b964d9a04dc580a2c66c4ce7d3f7262320ff6c1",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-14-scene-bagels-full.png",
+    "sha256": "36e1f43e5beef61d8f01d232c0203debf747375d4c80db33e377cbdd9839056a",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-15-scene-schmears.png",
+    "sha256": "ef0e440be638caf06825fca435ce91c066282c53050941fd96388a5c3d65f7cb",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-15-scene-schmears-full.png",
+    "sha256": "b81857e11189ea996f19ee1513e0ec7beeea7e2ad63eb3cf3d4ab1c4134dc70d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-16-scene-cashier.png",
+    "sha256": "93739a16e4eff0ef73ad4db5c77dd381b61e17c66d7a63ef2af4321788c97d4c",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-16-scene-cashier-full.png",
+    "sha256": "6726c32649309a3f195a1ef9cea4c10cfe2433860d25d5651be3404f043627a3",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-17-scene-combos.png",
+    "sha256": "a8f302e5cf8f695d876c58688bdb1be68b1c077d960b9067dba446c22f109e66",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-17-scene-combos-full.png",
+    "sha256": "4589d295f3c5f3d18c34027895798c97e293262909976329f3fb4ab7ed8fba19",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-18-scene-bagels.png",
+    "sha256": "97b2339111a986ac33795aad7a1dc76aa1afd3311b8f00e597187e3b657b5e7b",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-18-scene-bagels-full.png",
+    "sha256": "de301a365a9c65a275aa9147381a9b1e08322a580eeaf3f306fe78ed21e0a822",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-19-scene-schmears.png",
+    "sha256": "ef0e440be638caf06825fca435ce91c066282c53050941fd96388a5c3d65f7cb",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-19-scene-schmears-full.png",
+    "sha256": "b81857e11189ea996f19ee1513e0ec7beeea7e2ad63eb3cf3d4ab1c4134dc70d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-20-scene-cashier.png",
+    "sha256": "93739a16e4eff0ef73ad4db5c77dd381b61e17c66d7a63ef2af4321788c97d4c",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-20-scene-cashier-full.png",
+    "sha256": "6726c32649309a3f195a1ef9cea4c10cfe2433860d25d5651be3404f043627a3",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-21-scene-bagels.png",
+    "sha256": "97b2339111a986ac33795aad7a1dc76aa1afd3311b8f00e597187e3b657b5e7b",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-21-scene-bagels-full.png",
+    "sha256": "de301a365a9c65a275aa9147381a9b1e08322a580eeaf3f306fe78ed21e0a822",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-22-scene-schmears.png",
+    "sha256": "ef0e440be638caf06825fca435ce91c066282c53050941fd96388a5c3d65f7cb",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-22-scene-schmears-full.png",
+    "sha256": "b81857e11189ea996f19ee1513e0ec7beeea7e2ad63eb3cf3d4ab1c4134dc70d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-23-scene-cashier.png",
+    "sha256": "93739a16e4eff0ef73ad4db5c77dd381b61e17c66d7a63ef2af4321788c97d4c",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-23-scene-cashier-full.png",
+    "sha256": "6726c32649309a3f195a1ef9cea4c10cfe2433860d25d5651be3404f043627a3",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-24-scene-selector.png",
+    "sha256": "2fc2b65ac0e721a8a38a4346915a1e58af03a9968650251d62841d162c192a7d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-24-scene-selector-full.png",
+    "sha256": "18838493f53f54f0e5a46173315471d6353c4595eb927f0cb544b5fdff148ef5",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-25-scene-entrance.png",
+    "sha256": "87d9853194ea3549be73d01c08aca817500d09c759efab335c29eb5e0399f548",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-25-scene-entrance-full.png",
+    "sha256": "60066f11e1d81b8e2e1dd8f13de241a433c7c0d33f88b84ce6f563ef72cdc70d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-26-returned-entry.png",
+    "sha256": "87d9853194ea3549be73d01c08aca817500d09c759efab335c29eb5e0399f548",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-26-returned-entry-full.png",
+    "sha256": "60066f11e1d81b8e2e1dd8f13de241a433c7c0d33f88b84ce6f563ef72cdc70d",
+    "matches": true,
+    "kind": "page-capture"
+  },
+  {
+    "path": "/workspace/bagelito-boutique-evidence-20261101/anchors-4be846f/functional/combo-320/320-combo-legal.png",
+    "sha256": "eb77393852da202cc37c709100ba594f700d03e1aeec5f917f0c9bb6e2d2bb9a",
+    "matches": true,
+    "kind": "legal-new-tab"
+  }
+]

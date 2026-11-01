@@ -1,0 +1,16 @@
+{
+  "stage": "pack-390",
+  "command": [
+    "node",
+    "scripts/qa-rebuilt-storefront.cjs"
+  ],
+  "widths": "390",
+  "scenarios": "pack-flavoured",
+  "startedAt": "2026-11-01T15:44:14.806915+00:00",
+  "codeSHA": "cbf10f7f101742a899f9a681d0a6ddd24dc9e36b",
+  "log": "/workspace/bagelito-boutique-evidence-20261101/anchors-cbf10f7/functional/pack-390.log",
+  "pid": 74625,
+  "exitCode": 0,
+  "endedAt": "2026-11-01T15:44:31.464762+00:00",
+  "sourcesUnchanged": true
+}

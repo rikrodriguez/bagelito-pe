@@ -1,0 +1,26 @@
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:reference:entry
+> node scripts/qa-rebuilt-storefront.cjs --profile=entry
+
+{"at":"2026-11-01T15:44:00.748Z","type":"captured","case":"1536-entry","name":"first-pixels","scene":"selector","file":"1536-entry-01-first-pixels.png","sha256":"6611a5dc49f89f94b0a5304a129af48077b5594839a8e19bf5a86877804f600f"}
+{"at":"2026-11-01T15:44:01.097Z","type":"captured","case":"1536-entry","name":"keyboard-enter-schmears","scene":"schmear-size","file":"1536-entry-02-keyboard-enter-schmears.png","sha256":"a4a93f714bb029a09b464f1e3c4412a4a735945a38a3a22e85161aef7f63d4bc"}
+{"at":"2026-11-01T15:44:02.683Z","type":"captured","case":"1536-entry","name":"scene-entrance","scene":"entrance","file":"1536-entry-03-scene-entrance.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:03.828Z","type":"captured","case":"1536-entry","name":"empty-cart","scene":"entrance","file":"1536-entry-04-empty-cart.png","sha256":"424bd9837a6d9a72e146ac0bb255a86ded669f9eae30d2fd62a7aa3471b5730c"}
+{"at":"2026-11-01T15:44:04.384Z","type":"captured","case":"1536-entry","name":"scene-pack-size","scene":"pack-size","file":"1536-entry-05-scene-pack-size.png","sha256":"f53dd0d0ec67c827e1ed61c171cc5deb1655da61bbd861a201dcb7c3ccbd6aa6"}
+{"at":"2026-11-01T15:44:05.870Z","type":"captured","case":"1536-entry","name":"scene-entrance","scene":"entrance","file":"1536-entry-06-scene-entrance.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:06.238Z","type":"captured","case":"1536-entry","name":"scene-combos","scene":"combos","file":"1536-entry-07-scene-combos.png","sha256":"7f6a5c9872a5ecad3da288054e2feb33daa9dc563619b2e0f66503de191fa27f"}
+{"at":"2026-11-01T15:44:07.705Z","type":"captured","case":"1536-entry","name":"scene-entrance","scene":"entrance","file":"1536-entry-08-scene-entrance.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:08.055Z","type":"captured","case":"1536-entry","name":"scene-schmear-size","scene":"schmear-size","file":"1536-entry-09-scene-schmear-size.png","sha256":"1d2bfb3b0422f15ac255de418a766a69ea123862900ceef5eccd9734bdc3e674"}
+{"at":"2026-11-01T15:44:09.510Z","type":"captured","case":"1536-entry","name":"scene-entrance","scene":"entrance","file":"1536-entry-10-scene-entrance.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:09.878Z","type":"captured","case":"1536-entry","name":"scene-pack-size","scene":"pack-size","file":"1536-entry-11-scene-pack-size.png","sha256":"85f7bc0c7b97d256304e855a14cd1e224f74bf20ff7fad7719f9a993a7acde5c"}
+{"at":"2026-11-01T15:44:11.343Z","type":"captured","case":"1536-entry","name":"scene-entrance","scene":"entrance","file":"1536-entry-12-scene-entrance.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:11.710Z","type":"captured","case":"1536-entry","name":"scene-schmear-size","scene":"schmear-size","file":"1536-entry-13-scene-schmear-size.png","sha256":"1d2bfb3b0422f15ac255de418a766a69ea123862900ceef5eccd9734bdc3e674"}
+{"at":"2026-11-01T15:44:13.187Z","type":"captured","case":"1536-entry","name":"scene-entrance","scene":"entrance","file":"1536-entry-14-scene-entrance.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:14.458Z","type":"captured","case":"1536-entry","name":"entry-gallery-loaded","scene":"entrance","file":"1536-entry-15-entry-gallery-loaded.png","sha256":"5cd25706813e3a9314b4d5de417589ac94d8d41a15413730a8954e3e7c22cf48"}
+{"at":"2026-11-01T15:44:14.599Z","type":"case-finished","case":"1536-entry","pass":true,"completeJourney":false,"captures":15,"callbacks":3}
+{"status":"passed","planned":{"entryViewports":1,"categoryCallbacks":3,"vitrineCallbacks":2,"keyboardEntries":1,"decodedEntryPhotos":5,"mobileSVGWindows":0,"referenceAnchorViewports":1,"productTextStates":0,"productTextCards":0,"secondaryStates":0,"completeJourneys":0},"completed":{"entryViewports":1,"categoryCallbacks":3,"vitrineCallbacks":2,"keyboardEntries":1,"decodedEntryPhotos":5,"mobileSVGWindows":0,"referenceAnchorViewports":1,"productTextStates":0,"productTextCards":0,"secondaryStates":0,"completeJourneys":0,"legalNewTabs":0,"screenshots":30},"failures":0,"output":"/workspace/bagelito-boutique-evidence-20261101/anchors-cbf10f7/functional/entry"}
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
