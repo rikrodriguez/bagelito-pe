@@ -54,7 +54,7 @@ La instrucción posterior de Ricardo autoriza estas reglas; no se deriva de los 
 
 En la UI de revisión, la fidelidad sólo puede aparecer como texto con estado **Pendiente** al final, en pago/fin; no como saldo, progreso inventado o confirmación. Un texto fiel a la autorización es: «Fidelidad pendiente de implementación: cada 10 pedidos, 2 bagels + 1 schmear gratis». Mostrar esa regla no significa que una recompensa esté ganada o se pueda canjear en la preview.
 
-**Sin Wallet ahora:** no se integra ni promete Apple Wallet o Google Wallet. **GHL sólo está en evaluación junto con Culqi**; no hay decisión, auditoría ni dependencia aprobada de GHL para esta regla. La autorización de fidelidad no activa esos servicios ni requiere mostrar un pass o un saldo.
+**Sin Wallet ahora:** no se integra ni promete Apple Wallet o Google Wallet. **Arquitectura aprobada posteriormente por Ricardo:** el backend será la fuente de verdad y GHL reflejará el progreso. La implementación, auditoría, credenciales, dependencias e integración siguen pendientes; esta entrega de UI no las activa. La regla de fidelidad no requiere mostrar un pass ni un saldo ficticio.
 
 ## Aplicación al modo revisión
 
