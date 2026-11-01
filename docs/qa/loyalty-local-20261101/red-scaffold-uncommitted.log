@@ -76,9 +76,9 @@ test at tests/loyalty-ledger.test.cjs:51:1
 test at tests/loyalty-ledger.test.cjs:63:3
 ✖ does not credit payment state pending (1.841171ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -101,9 +101,9 @@ test at tests/loyalty-ledger.test.cjs:63:3
 test at tests/loyalty-ledger.test.cjs:63:3
 ✖ does not credit payment state failed (1.305157ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -126,9 +126,9 @@ test at tests/loyalty-ledger.test.cjs:63:3
 test at tests/loyalty-ledger.test.cjs:63:3
 ✖ does not credit payment state cancelled (1.285047ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -151,9 +151,9 @@ test at tests/loyalty-ledger.test.cjs:63:3
 test at tests/loyalty-ledger.test.cjs:63:3
 ✖ does not credit payment state expired (1.431066ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -176,9 +176,9 @@ test at tests/loyalty-ledger.test.cjs:63:3
 test at tests/loyalty-ledger.test.cjs:63:3
 ✖ does not credit payment state refunded (1.005619ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -201,9 +201,9 @@ test at tests/loyalty-ledger.test.cjs:63:3
 test at tests/loyalty-ledger.test.cjs:63:3
 ✖ does not credit payment state review (0.961622ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -226,9 +226,9 @@ test at tests/loyalty-ledger.test.cjs:63:3
 test at tests/loyalty-ledger.test.cjs:70:3
 ✖ rejects paid claims from null (1.197736ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -251,9 +251,9 @@ test at tests/loyalty-ledger.test.cjs:70:3
 test at tests/loyalty-ledger.test.cjs:70:3
 ✖ rejects paid claims from browser (1.145037ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -276,9 +276,9 @@ test at tests/loyalty-ledger.test.cjs:70:3
 test at tests/loyalty-ledger.test.cjs:70:3
 ✖ rejects paid claims from ghl (1.069044ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -301,9 +301,9 @@ test at tests/loyalty-ledger.test.cjs:70:3
 test at tests/loyalty-ledger.test.cjs:70:3
 ✖ rejects paid claims from unverified-webhook (1.106409ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -326,9 +326,9 @@ test at tests/loyalty-ledger.test.cjs:70:3
 test at tests/loyalty-ledger.test.cjs:85:1
 ✖ missing order and structured browser payment claims cannot produce a credit (1.012698ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:87:3)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -467,9 +467,9 @@ test at tests/loyalty-ledger.test.cjs:157:1
 test at tests/loyalty-ledger.test.cjs:169:3
 ✖ invalid identifiers fail closed without writes: "" (0.93335ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -492,9 +492,9 @@ test at tests/loyalty-ledger.test.cjs:169:3
 test at tests/loyalty-ledger.test.cjs:169:3
 ✖ invalid identifiers fail closed without writes: " " (0.860641ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -517,9 +517,9 @@ test at tests/loyalty-ledger.test.cjs:169:3
 test at tests/loyalty-ledger.test.cjs:169:3
 ✖ invalid identifiers fail closed without writes: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" (0.979408ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -542,9 +542,9 @@ test at tests/loyalty-ledger.test.cjs:169:3
 test at tests/loyalty-ledger.test.cjs:169:3
 ✖ invalid identifiers fail closed without writes: null (0.768743ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -567,9 +567,9 @@ test at tests/loyalty-ledger.test.cjs:169:3
 test at tests/loyalty-ledger.test.cjs:169:3
 ✖ invalid identifiers fail closed without writes: 17 (0.745768ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -592,9 +592,9 @@ test at tests/loyalty-ledger.test.cjs:169:3
 test at tests/loyalty-ledger.test.cjs:169:3
 ✖ invalid identifiers fail closed without writes: {} (1.072449ms)
   AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
-  
+
   Caught error:
-  
+
   Error: Loyalty core not implemented
       at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
