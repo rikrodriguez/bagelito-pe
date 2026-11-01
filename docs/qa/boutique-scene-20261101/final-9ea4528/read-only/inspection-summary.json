@@ -1,0 +1,103 @@
+{
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "scope": "Read-only actual browser captures; no interaction/purchase coverage; no final fidelity certification.",
+  "captureProcessExit": 0,
+  "geometryStatus": "PASS",
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": true,
+      "casesCompleteInViewport": true,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": false,
+      "casesCompleteInViewport": false,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": true,
+      "casesCompleteInViewport": true,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": false,
+      "casesCompleteInViewport": false,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    }
+  ],
+  "pixelInspectionCompleted": [
+    1920,
+    390,
+    1280,
+    1024
+  ],
+  "limitations": [
+    "390/1024 require normal vertical scroll to see both complete cases.",
+    "1280 cases fit within800px; progress begins below the first viewport.",
+    "Conceptual room/food art is not actual product photography, verified recipes or inventory.",
+    "Reference layout is approximated; no claim of exact visual fidelity or Safari/device certification."
+  ],
+  "reportSHA256": "39b215db65ee86bc0474e69479888390de8dae88b2f95431fed6061750583e76",
+  "captures": [
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/1920-entry.png",
+      "sha256": "e0e13f2d0674f41de2e10c26dc164df63c9ee0f2a459c5fd385a534899ac13b1",
+      "sizeBytes": 2663819
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/1920-entry-full.png",
+      "sha256": "74fc376244ae45928957cf8c986f2c7fb4397512f0e0796048241a2d050ea459",
+      "sizeBytes": 2714029
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/390-entry.png",
+      "sha256": "06f3b2d1468743457b3101fe098bc7debd71b911dcbda43fb04453de2f180b60",
+      "sizeBytes": 410146
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/390-entry-full.png",
+      "sha256": "e8b53ee3014a92684109b130dd6ae7d05fac4eea39c71129aad655509fad87b9",
+      "sizeBytes": 556778
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/1280-entry.png",
+      "sha256": "82d4c3fcafb3b8ab96ba5cce3f67a6c75825517c12ff8aed4d532716ada17451",
+      "sizeBytes": 1405886
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/1280-entry-full.png",
+      "sha256": "ab3c47a4a56d7445fd0535f931275a1207af1989f614cad65b2fadddc53d2917",
+      "sizeBytes": 1479575
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/1024-entry.png",
+      "sha256": "d27c41dab5074f3fbfd9ddf679a16a81e6c5d27f88e5bd76ff4274c827f40c86",
+      "sizeBytes": 879651
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/read-only/1024-entry-full.png",
+      "sha256": "023bae07dc8fa7a58d83ea93663e93cf05b9a0dfb611fa00c230f8735fbe341e",
+      "sizeBytes": 1471980
+    }
+  ]
+}

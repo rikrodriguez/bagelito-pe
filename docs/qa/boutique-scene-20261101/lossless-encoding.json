@@ -1,0 +1,45 @@
+{
+  "scope": "Format encoding only; no resize/crop/color/content changes. Raw RGBA8 byte SHA verified for both formats. Earlier unsupported identify signature command emitted warning; empty signatures are not verification.",
+  "assets": [
+    {
+      "source": "public/images/rebuilt-boutique-room.png",
+      "output": "public/images/rebuilt-boutique-room.webp",
+      "sourceSHA256": "abab505bb2494be6a1ff76c5b0bb066bdd4669033f30269ee015f4ead6c89537",
+      "outputSHA256": "31739bc6cee98eccaf4c4084b6f3e1fbd44dd6635c1ca22094943bfbd995e98b",
+      "pngBytes": 2270033,
+      "webpBytes": 1687986,
+      "decodedRGBA8SHA256": "29b19afe5ca256e7c298bbc62203ead6addb0c3bd302748ab1ebcadcf482520a",
+      "identicalDecodedPixels": true
+    },
+    {
+      "source": "public/images/rebuilt-boutique-room-mobile.png",
+      "output": "public/images/rebuilt-boutique-room-mobile.webp",
+      "sourceSHA256": "3e1163ad7d0de14d474a1b1e233d110a04bec070be2dcd65bb8d8d222a7be19f",
+      "outputSHA256": "f29328f2d01f5f901b87624f54ad56a1ad9d6694834b4559a0a9259ab7b83406",
+      "pngBytes": 2285966,
+      "webpBytes": 1637890,
+      "decodedRGBA8SHA256": "02ee18a8dda380b37ee3e0b2cb8f2ef3d27f7465a6a56ddc3056b6a8823b10c0",
+      "identicalDecodedPixels": true
+    },
+    {
+      "source": "public/images/rebuilt-bagel-trays.png",
+      "output": "public/images/rebuilt-bagel-trays.webp",
+      "sourceSHA256": "353b90295a62c889cdd95d5394767e7606aa96062f357c4ac9eac4fdd28c623c",
+      "outputSHA256": "372bad047d09ff053251cd17cf6285d95fb4388145f4391ce1f03709cf6c9de0",
+      "pngBytes": 3297911,
+      "webpBytes": 2306446,
+      "decodedRGBA8SHA256": "5d085b19c27726676f5f5c914f4e00b17d4151bc7322867b0b96f90844333d49",
+      "identicalDecodedPixels": true
+    },
+    {
+      "source": "public/images/rebuilt-schmear-trays.png",
+      "output": "public/images/rebuilt-schmear-trays.webp",
+      "sourceSHA256": "d5a453454efadf1d125da7f86338a309fbb012a7348ab240fff56d52aeeb9094",
+      "outputSHA256": "2e36cb529874f5b03e975f5a6ba7528f4f908115b334045a4497d1d9d0d6106e",
+      "pngBytes": 2484701,
+      "webpBytes": 1724608,
+      "decodedRGBA8SHA256": "355042c6a1a218d99d1f498e3a172a335e9ffae57aec274fae16f8ae0969f00b",
+      "identicalDecodedPixels": true
+    }
+  ]
+}
