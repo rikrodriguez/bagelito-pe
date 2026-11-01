@@ -32,7 +32,7 @@
 /* Match the foreground priority at short desktop heights; every food asset keeps its native ratio. */
 @media(min-width:1051px){
  .rebuilt-store[data-compact="false"]{padding-top:12px}
- .rebuilt-store[data-compact="false"] .rebuilt-brand{width:min(52vw,62dvh);margin:-44px auto 2px}
+ .rebuilt-store[data-compact="false"] .rebuilt-brand{width:min(52vw,62dvh);margin:-39px auto 2px}
  .rebuilt-store[data-compact="false"] .rebuilt-brand>p{font-size:22px}
  .rebuilt-store[data-compact="false"] .rebuilt-wall-copy{top:155px;font-size:24px}
  .rebuilt-store[data-compact="false"] .rebuilt-hero{margin:8px auto 12px}
