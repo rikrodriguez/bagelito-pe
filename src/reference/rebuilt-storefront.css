@@ -255,3 +255,6 @@
  .rebuilt-category-copy>small{font-size:14px;line-height:1.4}
  .rebuilt-store[data-compact="true"] .rebuilt-brand{width:220px;margin:-54px auto 0}
 }
+/* Keep action targets comfortably above the minimum through fractional layout. */
+.rebuilt-case-link{min-height:48px}
+.rebuilt-display{padding-bottom:2px}
