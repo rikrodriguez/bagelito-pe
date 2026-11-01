@@ -1,0 +1,26 @@
+[
+  {
+    "png": "public/images/rebuilt-pack-bagels.png",
+    "webp": "public/images/rebuilt-pack-bagels.webp",
+    "pngBytes": 2663082,
+    "webpBytes": 1757450,
+    "rgbaSha256": "c03cea0120513a45184e70cfa9e44b4dfbb2d30430b58a99852ca51624a31b7d",
+    "identicalDecodedPixels": true
+  },
+  {
+    "png": "public/images/rebuilt-schmear-bowl.png",
+    "webp": "public/images/rebuilt-schmear-bowl.webp",
+    "pngBytes": 1985260,
+    "webpBytes": 1282160,
+    "rgbaSha256": "c07036ecf2d7f9429ed546c7b7758bd9de15bcc643828303e136fded99f11046",
+    "identicalDecodedPixels": true
+  },
+  {
+    "png": "public/images/rebuilt-schmear-neutral.png",
+    "webp": "public/images/rebuilt-schmear-neutral.webp",
+    "pngBytes": 1576970,
+    "webpBytes": 997168,
+    "rgbaSha256": "7dcd774105bdea2e90f6395937c3a65be355c819060c3de35d9d302df7342c9f",
+    "identicalDecodedPixels": true
+  }
+]

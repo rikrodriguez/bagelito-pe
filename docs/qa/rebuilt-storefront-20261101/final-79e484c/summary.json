@@ -1,0 +1,112 @@
+{
+  "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "status": "passed within the declared bounded scope",
+  "build": {
+    "exitCode": 0,
+    "types": "PASS",
+    "inheritedChecks": {
+      "structural": 11,
+      "manual": 4,
+      "movement": 14
+    }
+  },
+  "node": {
+    "passed": 58,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "browserRuns": {
+    "entry": {
+      "status": "passed",
+      "cases": 7,
+      "completed": {
+        "entryViewports": 7,
+        "categoryCallbacks": 21,
+        "vitrineCallbacks": 14,
+        "completeJourneys": 0,
+        "legalNewTabs": 0,
+        "screenshots": 168
+      },
+      "failures": 0
+    },
+    "journeys-desktop": {
+      "status": "passed",
+      "cases": 5,
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "completeJourneys": 5,
+        "legalNewTabs": 5,
+        "screenshots": 267
+      },
+      "failures": 0
+    },
+    "journeys-mobile": {
+      "status": "passed",
+      "cases": 4,
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "completeJourneys": 4,
+        "legalNewTabs": 4,
+        "screenshots": 224
+      },
+      "failures": 0
+    },
+    "journeys-responsive": {
+      "status": "passed",
+      "cases": 3,
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "completeJourneys": 3,
+        "legalNewTabs": 3,
+        "screenshots": 165
+      },
+      "failures": 0
+    },
+    "loaded-entry": {
+      "status": "passed",
+      "cases": 7,
+      "completed": null,
+      "failures": 0
+    }
+  },
+  "completeJourneys": 12,
+  "legalNewTabs": 12,
+  "entryViewports": 7,
+  "loadedViewports": 7,
+  "decodedImagesPerLoadedViewport": 18,
+  "knownFrameworkStorageReads": 38,
+  "applicationStorageReads": 0,
+  "storageWrites": 0,
+  "API_fetch_XHR_or_providerCalls": 0,
+  "blockedEgressAttempts": 0,
+  "minimumEffectiveTargetCSSPx": 44,
+  "minimumCopyCSSPx": 12,
+  "minimumHeadingCSSPx": 16,
+  "selectedScreenshots": 94,
+  "allCapturedPNGs": 838,
+  "mobileScope": "pack-flavoured and combo at320/390; five paths at1280; pack-decline at768/1024/844; entry also1920. Not eighteen purchases or every path at every width.",
+  "newCompositionGuard": "RED13 on b974, PASS on79e; conservative image rectangles stay in art region and outside copy. Original thresholds not relaxed.",
+  "limits": [
+    "Chromium151 emulation/DPR1; Safari and physical devices not certified",
+    "Editorial DOM/CSS interpretation, not a photographic replica of the kitchen",
+    "Three synthetic concept assets, neutral cream repeated for four flavors; existing bagel source softness retained",
+    "Review-only; no orders/payments or loyalty activation; current private preview unchanged",
+    "Remote CI not executed by this worker"
+  ],
+  "conceptResourceBodyBytesByViewport": {
+    "320": 441956,
+    "390": 441956,
+    "768": 441956,
+    "1024": 441956,
+    "844": 441956,
+    "1280": 441956,
+    "1920": 441956
+  }
+}

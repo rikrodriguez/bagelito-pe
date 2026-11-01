@@ -1,0 +1,25 @@
+{
+  "browserExecuted": false,
+  "cases": [
+    "allowed exact document legal redirect 301",
+    "allowed exact document legal redirect 308",
+    "rejected non-exact legal redirect {\"status\":302}",
+    "rejected non-exact legal redirect {\"type\":\"script\"}",
+    "rejected non-exact legal redirect {\"location\":\"https://provider.example/legal/\"}",
+    "rejected non-exact legal redirect {\"url\":\"/other\"}",
+    "rejected non-exact legal redirect {\"url\":\"/legal?query=1\"}",
+    "rejected non-exact legal redirect {\"location\":\"/legal/?query=1\"}",
+    "blocked source/API before fetch /nested/api/charge",
+    "blocked source/API before fetch /%2561pi/order",
+    "blocked source/API before fetch /api",
+    "blocked source/API before fetch /images/store-reference-approved.svg",
+    "blocked source/API before fetch /images/bagel-vitrina-photo.webp",
+    "blocked source/API before fetch /scene-storyboard.svg",
+    "blocked source/API before fetch /original/source.png",
+    "one paired exact-key read only; duplicate/local forbidden",
+    "closing does not hide Timeout while waiting for context closed",
+    "closing does not hide ordinary transport failure",
+    "closing does not hide Execution context was destroyed"
+  ],
+  "errors": []
+}

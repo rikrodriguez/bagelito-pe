@@ -1,0 +1,80 @@
+[
+  {
+    "source": "/tmp/bagelito-rebuilt-source-review-b974ddc.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/source-review.json",
+    "sourceSHA256": "b85af06383bbdecfd76c6758727f68e45dbf96766c4bacacef9f15004060245d",
+    "publishedSHA256": "b85af06383bbdecfd76c6758727f68e45dbf96766c4bacacef9f15004060245d"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-geometry-portable-v1/results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/geometry-fixtures.json",
+    "sourceSHA256": "3b186a225444d43e4f4fb41a0d293045f4000d9f2f27729140d670d9bc329d08",
+    "publishedSHA256": "3b186a225444d43e4f4fb41a0d293045f4000d9f2f27729140d670d9bc329d08"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-safety-offline-results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/safety-offline.json",
+    "sourceSHA256": "0ab8955fc5553062903cea528b715ecd5c5f8152702e441c069e4059b684c319",
+    "publishedSHA256": "0ab8955fc5553062903cea528b715ecd5c5f8152702e441c069e4059b684c319"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-lossless-assets.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/lossless-assets.json",
+    "sourceSHA256": "dc844cb4b96cfc55d9a5d7f52e10b393c5c1a97a7f5c6bd591a036d5c340c367",
+    "publishedSHA256": "dc844cb4b96cfc55d9a5d7f52e10b393c5c1a97a7f5c6bd591a036d5c340c367"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-responsive-assets.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/responsive-assets.json",
+    "sourceSHA256": "a1e4e835c6d6306609572e58957724a445d38c9c040a07fc2ae9ad2b69840806",
+    "publishedSHA256": "a1e4e835c6d6306609572e58957724a445d38c9c040a07fc2ae9ad2b69840806"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-b974ddc/app-source-manifest.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/compiled-snapshot.json",
+    "sourceSHA256": "321b61a0cdbc414340942964be68efda1aad95036bd4f0f9c754dfd066c421a4",
+    "publishedSHA256": "321b61a0cdbc414340942964be68efda1aad95036bd4f0f9c754dfd066c421a4"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-b974ddc-build.log",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/build.log.gz",
+    "sourceSHA256": "f5ff3de967b4d7e7ffac2109f15fba3e3078e34fda77af0694dd50b335856a2a",
+    "publishedSHA256": "ffe30d6003c0671361cfe0565d4b73655ec894f510708186826d8f7bc77c5d2e"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-b974ddc-node.log",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/node.log.gz",
+    "sourceSHA256": "6c8fc9c662b74342e87371bb5fdb6e2b41b3ce93517d60a613f6fc2607ee4c61",
+    "publishedSHA256": "a0c5e6e6b90c5287939728477ebfbd90c25d109c6e382fad4f6070147ba9aa6e"
+  },
+  {
+    "source": "/workspace/bagelito-rebuilt-storefront/docs/qa/rebuilt-storefront-20261101/entry-e27ab1b/rebuilt-results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/prior/entry-e27ab1b.json.gz",
+    "sourceSHA256": "10a95094f4e6dab8f49b206ff2d4ebdf7845c7824712e5dfbea72e825ea4bb25",
+    "publishedSHA256": "d9587040fb0429ec0864242770ebf52d53ccf068b806e158de6916b77b3acf0c"
+  },
+  {
+    "source": "/workspace/bagelito-rebuilt-storefront/docs/qa/rebuilt-storefront-20261101/entry-e27ab1b-v2/rebuilt-results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/prior/entry-e27ab1b-v2.json.gz",
+    "sourceSHA256": "86679aa094c50e364a82244b261f073e451d096754d8430e9f01b6c183664df0",
+    "publishedSHA256": "c26fd3f67583de7aa365a697f436d860867a8b6ab795b204af5f76e8a82c4c36"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-QA-b5fa47e/entry/rebuilt-results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/prior/entry-b5fa47e.json.gz",
+    "sourceSHA256": "822071ad53cdd39e26803965259e5067e2f42ea15b0cfafe11d2eb9fd311a790",
+    "publishedSHA256": "e2b1445404ed812ae6d3e6c98f1a4d9465b0cc2bbc4cb567ab59fd65f2d42698"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-QA-8fdf88e/entry/rebuilt-results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/prior/entry-8fdf88e.json.gz",
+    "sourceSHA256": "e735a7a9124b528751916ede1a8e27a0fe12182d1e6f0daec10fa6174254395c",
+    "publishedSHA256": "3916f2348d2fe0261432e8f56a11a913fbe6f5d661dcaaeadf6fc4b5f94f1ef4"
+  },
+  {
+    "source": "/tmp/bagelito-rebuilt-QA-8fdf88e/journeys-main/rebuilt-results.json",
+    "published": "docs/qa/rebuilt-storefront-20261101/candidate-b974ddc/prior/journeys-8fdf88e.json.gz",
+    "sourceSHA256": "e5a2d1ec2c87e2fc746b958cf4e42e7be1593854c3a337c191cd994fdddcc288",
+    "publishedSHA256": "87b8027c0cee9390d57595edbe37a4f11f8c407ab5c5d044a25faff9090767a7"
+  }
+]

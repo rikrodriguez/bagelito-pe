@@ -1,0 +1,253 @@
+{
+  "appSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "scope": "Existing closed reports only; no browser or test execution.",
+  "reports": [
+    {
+      "name": "entry",
+      "status": "passed",
+      "cases": 7,
+      "journeys": 0,
+      "legal": 0,
+      "pngs": 168,
+      "reads": 133,
+      "documents": 7,
+      "frameworkReads": 7,
+      "capabilityEvents": 14
+    },
+    {
+      "name": "journeys-desktop",
+      "status": "passed",
+      "cases": 5,
+      "journeys": 5,
+      "legal": 5,
+      "pngs": 267,
+      "reads": 120,
+      "documents": 10,
+      "frameworkReads": 10,
+      "capabilityEvents": 20
+    },
+    {
+      "name": "journeys-mobile",
+      "status": "passed",
+      "cases": 4,
+      "journeys": 4,
+      "legal": 4,
+      "pngs": 224,
+      "reads": 96,
+      "documents": 8,
+      "frameworkReads": 8,
+      "capabilityEvents": 16
+    },
+    {
+      "name": "journeys-responsive",
+      "status": "passed",
+      "cases": 3,
+      "journeys": 3,
+      "legal": 3,
+      "pngs": 165,
+      "reads": 72,
+      "documents": 6,
+      "frameworkReads": 6,
+      "capabilityEvents": 12
+    },
+    {
+      "name": "loaded-entry",
+      "status": "passed",
+      "cases": 7,
+      "journeys": 0,
+      "legal": 0,
+      "pngs": 14,
+      "reads": 133,
+      "documents": 7,
+      "frameworkReads": 7,
+      "capabilityEvents": 14
+    }
+  ],
+  "mismatches": [],
+  "cartChecks": [
+    {
+      "id": "1280-pack-decline",
+      "expected": 6,
+      "counts": [
+        6
+      ],
+      "pass": true
+    },
+    {
+      "id": "1280-pack-original",
+      "expected": 7,
+      "counts": [
+        7
+      ],
+      "pass": true
+    },
+    {
+      "id": "1280-pack-flavoured",
+      "expected": 7,
+      "counts": [
+        7
+      ],
+      "pass": true
+    },
+    {
+      "id": "1280-combo",
+      "expected": 3,
+      "counts": [
+        3
+      ],
+      "pass": true
+    },
+    {
+      "id": "1280-schmear",
+      "expected": 1,
+      "counts": [
+        1
+      ],
+      "pass": true
+    },
+    {
+      "id": "390-pack-flavoured",
+      "expected": 7,
+      "counts": [
+        7
+      ],
+      "pass": true
+    },
+    {
+      "id": "390-combo",
+      "expected": 3,
+      "counts": [
+        3
+      ],
+      "pass": true
+    },
+    {
+      "id": "320-pack-flavoured",
+      "expected": 7,
+      "counts": [
+        7
+      ],
+      "pass": true
+    },
+    {
+      "id": "320-combo",
+      "expected": 3,
+      "counts": [
+        3
+      ],
+      "pass": true
+    },
+    {
+      "id": "768-pack-decline",
+      "expected": 6,
+      "counts": [
+        6
+      ],
+      "pass": true
+    },
+    {
+      "id": "1024-pack-decline",
+      "expected": 6,
+      "counts": [
+        6
+      ],
+      "pass": true
+    },
+    {
+      "id": "844-pack-decline",
+      "expected": 6,
+      "counts": [
+        6
+      ],
+      "pass": true
+    }
+  ],
+  "total": {
+    "cases": 26,
+    "journeys": 12,
+    "legal": 12,
+    "pngs": 838,
+    "reads": 554,
+    "documents": 38,
+    "frameworkReads": 38,
+    "capabilityEvents": 76,
+    "blocked": 0,
+    "errors": 0,
+    "failures": 0
+  },
+  "loadedDriverMatches": [
+    "/workspace/bagelito-rebuilt-storefront/scripts/qa-rebuilt-loaded-entry.cjs"
+  ],
+  "completedAt": "2026-11-01T07:03:06.304Z",
+  "provenance": {
+    "applicationCommit": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+    "sourceFilesCheckedAgainstGitShowAndCurrentCheckout": 24,
+    "helpersCheckedAgainstGitShowAndCurrentCheckout": 6,
+    "initialAndFinalSourceHashesEqual": true,
+    "initialAndFinalHelperHashesEqual": true,
+    "primaryDriverMatchesRecordedSHA256AndDeclaredCommit": true,
+    "loadedDriverMatchesRecordedSHA256": true,
+    "documentationOnlyHEADPermitted": true
+  },
+  "imageIntegrity": {
+    "algorithm": "SHA-256",
+    "uniqueReferencedPNGFiles": 838,
+    "missing": 0,
+    "mismatches": 0
+  },
+  "loadedClosure": {
+    "status": "passed",
+    "finishedAt": "2026-11-01T07:01:03.302Z",
+    "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+    "cases": 7,
+    "photosPerViewport": [
+      {
+        "width": 320,
+        "count": 18,
+        "complete": true
+      },
+      {
+        "width": 390,
+        "count": 18,
+        "complete": true
+      },
+      {
+        "width": 768,
+        "count": 18,
+        "complete": true
+      },
+      {
+        "width": 1024,
+        "count": 18,
+        "complete": true
+      },
+      {
+        "width": 844,
+        "count": 18,
+        "complete": true
+      },
+      {
+        "width": 1280,
+        "count": 18,
+        "complete": true
+      },
+      {
+        "width": 1920,
+        "count": 18,
+        "complete": true
+      }
+    ],
+    "sourceFilesCheckedAgainstGitShowAndCurrentCheckout": 5,
+    "scope": "Loopback Chromium DPR1 emulation. Real scroll reveals lazy images; no loading attributes or DOM/app state changed. Selected resource body sizes are local-file bytes, not a device speed benchmark."
+  },
+  "status": "passed",
+  "sealedAt": "2026-11-01T07:03:21.155Z",
+  "executionObservations": {
+    "source": "Parent-reported exec tool completions; audit itself only read existing reports/images and local git objects.",
+    "allFiveRunnersExitCode": 0,
+    "loadedSession": 42963,
+    "loadedExecutionWorktree": "/workspace/bagelito-immutable-79e484c",
+    "loadedWorktreeHEAD": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+    "loadedBrowserClosedBeforeFinishedAt": true
+  }
+}

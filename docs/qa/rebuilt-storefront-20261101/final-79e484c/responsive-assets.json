@@ -1,0 +1,56 @@
+[
+  {
+    "master": "public/images/rebuilt-pack-bagels.png",
+    "variant": "public/images/rebuilt-pack-bagels-480.webp",
+    "width": 480,
+    "height": 439,
+    "bytes": 257950,
+    "method": "LANCZOS scale; lossless WebP encoding",
+    "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+  },
+  {
+    "master": "public/images/rebuilt-pack-bagels.png",
+    "variant": "public/images/rebuilt-pack-bagels-800.webp",
+    "width": 800,
+    "height": 731,
+    "bytes": 697840,
+    "method": "LANCZOS scale; lossless WebP encoding",
+    "sha256": "e7d89f977b8b59b3c85372150b2b6ec2d888cfc7d90e712d978f4429b274775f"
+  },
+  {
+    "master": "public/images/rebuilt-schmear-bowl.png",
+    "variant": "public/images/rebuilt-schmear-bowl-480.webp",
+    "width": 480,
+    "height": 320,
+    "bytes": 108862,
+    "method": "LANCZOS scale; lossless WebP encoding",
+    "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+  },
+  {
+    "master": "public/images/rebuilt-schmear-bowl.png",
+    "variant": "public/images/rebuilt-schmear-bowl-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 281378,
+    "method": "LANCZOS scale; lossless WebP encoding",
+    "sha256": "ad8b3bf0ca2093ef95354b8fe896ac5dc8bc250bf8a4427db8b16bd5f069a9fc"
+  },
+  {
+    "master": "public/images/rebuilt-schmear-neutral.png",
+    "variant": "public/images/rebuilt-schmear-neutral-480.webp",
+    "width": 480,
+    "height": 320,
+    "bytes": 75144,
+    "method": "LANCZOS scale; lossless WebP encoding",
+    "sha256": "f4dd4afe1f06ea3c74aac6313332ba6f57f4323be13b87a8c168f6ef1bac7efd"
+  },
+  {
+    "master": "public/images/rebuilt-schmear-neutral.png",
+    "variant": "public/images/rebuilt-schmear-neutral-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 190224,
+    "method": "LANCZOS scale; lossless WebP encoding",
+    "sha256": "d41644ab33e4bc2d916e8cd7bf2d928afbc3b509bd70b9d561c4e982ebe21cf5"
+  }
+]
