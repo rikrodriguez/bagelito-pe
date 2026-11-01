@@ -1,0 +1,78 @@
+{
+  "version": "0.1.0",
+  "name": "bagelito-ai-studio-tanstack-preview",
+  "dependencies": {
+    "@react-three/drei": {
+      "version": "10.7.9",
+      "overridden": false
+    },
+    "@react-three/fiber": {
+      "version": "9.8.2",
+      "overridden": false
+    },
+    "@react-three/rapier": {
+      "version": "2.2.0",
+      "overridden": false
+    },
+    "@supabase/supabase-js": {
+      "version": "2.118.0",
+      "overridden": false
+    },
+    "@tanstack/react-router": {
+      "version": "1.170.46",
+      "overridden": false
+    },
+    "@tanstack/react-start": {
+      "version": "1.169.4",
+      "overridden": false
+    },
+    "@types/node": {
+      "version": "24.19.2",
+      "overridden": false
+    },
+    "@types/react-dom": {
+      "version": "19.3.0",
+      "overridden": false
+    },
+    "@types/react": {
+      "version": "19.3.0",
+      "overridden": false
+    },
+    "@vitejs/plugin-react": {
+      "version": "6.1.2",
+      "overridden": false
+    },
+    "howler": {
+      "version": "2.2.4",
+      "overridden": false
+    },
+    "nitro": {
+      "version": "3.0.260903-beta",
+      "overridden": false
+    },
+    "react-dom": {
+      "version": "19.3.1",
+      "overridden": false
+    },
+    "react": {
+      "version": "19.3.1",
+      "overridden": false
+    },
+    "three": {
+      "version": "0.186.1",
+      "overridden": false
+    },
+    "typescript": {
+      "version": "5.9.3",
+      "overridden": false
+    },
+    "vite": {
+      "version": "8.3.5",
+      "overridden": false
+    },
+    "zustand": {
+      "version": "5.0.16",
+      "overridden": false
+    }
+  }
+}

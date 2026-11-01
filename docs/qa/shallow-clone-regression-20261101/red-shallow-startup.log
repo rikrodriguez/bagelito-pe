@@ -1,0 +1,91 @@
+✔ a 480ms right hold survives keyup before the first rendered frame (2.044458ms)
+✔ sampling frames during a hold does not double-count time when keyup arrives (0.355836ms)
+✔ repeat keydown events preserve one continuous hold rather than adding impulses (0.173401ms)
+✔ releasing one alias or pointer source leaves another held source active (0.162024ms)
+✔ diagonal movement has unit length and opposing directions cancel over each interval (0.158839ms)
+✔ run transitions retain their own elapsed intervals and modifier aliases (0.166761ms)
+✔ reset discards held inputs and queued travel before a later fresh press (0.259931ms)
+✔ a long frame stalls at the configured travel budget rather than building an unbounded backlog (0.141413ms)
+✔ the input clock is monotonic and rejects non-finite timestamps or invalid budgets (0.409707ms)
+✔ CameraController consumes a complete between-frame press once and publishes the resulting position (31.904963ms)
+✔ collision integration approaches the display, slides sideways, and respects the room bounds (16.44008ms)
+✔ the guided controller discards queued and held free-roam movement (12.57332ms)
+✔ the keyboard handler ignores editable targets and still releases a key after focus changes (5.668679ms)
+✔ blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap (18.309355ms)
+✔ a disposed response while the context is live remains a failure without an unhandled rejection (1.770235ms)
+✔ closing drains pending requests before context.close and records expected disposal separately (0.396337ms)
+✔ new allowed GETs during closing are aborted without fetching online (0.406411ms)
+✔ closing never permits an unrelated destination or write (0.217357ms)
+✔ HTTP500 completing during the closing drain is an immediate failure (0.366642ms)
+✔ a timeout during closing remains a failure even when its text also mentions context closed (0.309156ms)
+✔ a disposed response while the context is live is a real callback failure without a rejected handler (7.091847ms)
+✔ close drains deferred reads before disposing context, records expected disposal, and is idempotent (2.59748ms)
+✔ new loopback or exact-fixture GETs during close are safely aborted without any online fetch (1.719979ms)
+✔ closing never permits an unrelated destination or a write (1.590755ms)
+✔ a local HTTP500 finishing during the closing drain immediately fails the caller (1.34194ms)
+✔ a timeout during close is a failure even if its message also mentions context closed (1.278445ms)
+✔ zero-height BODY/root overflow does not clip fixed UI or complete card text (7.032628ms)
+✔ real article/scroll clipping preserves the distinction between raw44 and effective42 (1.955854ms)
+✔ an opaque pointer-inert overlay blocks the projected physical vitrina ROI (3.784347ms)
+✔ missing cashier or product anchors cannot manufacture a free positive ROI (0.971743ms)
+✔ zero-size, non-finite or offscreen anchor rectangles explicitly invalidate the group (2.993687ms)
+✔ card glyphs with ellipsis or overlapping the remove control are reported honestly (0.596207ms)
+✔ requestAnimationFrame returns its original native ID (2.665353ms)
+✔ paused app callbacks stay queued while native pause fences complete (1.238184ms)
+✔ cancelling a queued original ID prevents delivery after resume (1.099025ms)
+✔ cancel(original ID) also cancels its reprogrammed native handle (1.336012ms)
+✔ resume supplies a fresh native timestamp without rebasing the real clock (3.549184ms)
+✔ callbacks retain the native Window receiver (0.962139ms)
+✔ invalid callbacks retain native synchronous validation (1.144573ms)
+fatal: path 'scripts/qa-world-tour.cjs' exists on disk, but not in '925c050659ac7682488a9bc9c9c4906787663eb1'
+node:internal/test_runner/harness:124
+      throw err;
+      ^
+
+Error: Command failed: git show 925c050659ac7682488a9bc9c9c4906787663eb1:scripts/qa-world-tour.cjs
+fatal: path 'scripts/qa-world-tour.cjs' exists on disk, but not in '925c050659ac7682488a9bc9c9c4906787663eb1'
+
+    at genericNodeError (node:internal/errors:986:15)
+    at wrappedFn (node:internal/errors:540:14)
+    at checkExecSyncError (node:child_process:943:11)
+    at execFileSync (node:child_process:979:15)
+    at Object.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/qa-world-driver.test.cjs:18:18)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    '',
+    "fatal: path 'scripts/qa-world-tour.cjs' exists on disk, but not in '925c050659ac7682488a9bc9c9c4906787663eb1'\n"
+  ],
+  pid: 76,
+  stdout: '',
+  stderr: "fatal: path 'scripts/qa-world-tour.cjs' exists on disk, but not in '925c050659ac7682488a9bc9c9c4906787663eb1'\n"
+}
+
+Node.js v24.22.1
+✖ tests/qa-world-driver.test.cjs (143.838098ms)
+✔ review mode stops every HTTP method before downstream effects (11.66392ms)
+✔ all existing API families and canonical API paths are covered (3.220549ms)
+✔ landing, image assets, and unrelated prefixes remain available (1.615422ms)
+✔ false or absent flag leaves downstream behavior unchanged (2.017848ms)
+✔ flag is read at request time rather than frozen by the build/import (1.104563ms)
+✔ Nitro registers the guard as global middleware outside the financial routes (0.552582ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 45
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 551.680721
+
+✖ failing tests:
+
+test at tests/qa-world-driver.test.cjs:1:1
+✖ tests/qa-world-driver.test.cjs (143.838098ms)
+  'test failed'

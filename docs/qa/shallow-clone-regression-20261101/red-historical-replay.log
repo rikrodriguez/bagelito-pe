@@ -1,0 +1,70 @@
+✔ A healthy fresh journey resets only the in-tab product draft and keeps the reload (3.303039ms)
+✖ A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup (1.45315ms)
+✖ A failed document is reported as an HTTP setup failure (1.211787ms)
+✔ A non-loopback target is refused before any browser launch (1.071224ms)
+✔ The original readiness and strafe logic remains intact apart from comments and result checkpoints (0.311068ms)
+﹣ Teardown drains an in-flight fulfill before disposing the context and records a marked cancellation (0.123617ms) # This guard does not exist in the historical baseline
+﹣ The same disposed fulfill error while the context is live remains a FAIL (0.082424ms) # This guard does not exist in the historical baseline
+﹣ An unrelated fulfill error during teardown remains a FAIL (0.157808ms) # This guard does not exist in the historical baseline
+﹣ New allowed reads during closing are aborted without fetching or fulfilling (0.087491ms) # This guard does not exist in the historical baseline
+﹣ A POST during closing is aborted and remains a forbidden request FAIL with no egress (0.120902ms) # This guard does not exist in the historical baseline
+﹣ The outer finally writes an explicit result even if browser launch fails (0.103326ms) # This guard does not exist in the historical baseline
+✖ A late old-document draft write cannot restore guided mode in the new journey (2.032213ms)
+✔ A later reload without the one-shot marker preserves the real product draft (1.000868ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 6
+ℹ todo 0
+ℹ duration_ms 96.852206
+
+✖ failing tests:
+
+test at tests/qa-world-driver.test.cjs:79:1
+✖ A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup (1.45315ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/tmp/bagelito-historyless-20261101/tests/qa-world-driver.test.cjs:81:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Fresh exploration cannot mount while local resources return HTTP errors/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/qa-world-driver.test.cjs:83:1
+✖ A failed document is reported as an HTTP setup failure (1.211787ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/tmp/bagelito-historyless-20261101/tests/qa-world-driver.test.cjs:85:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Fresh exploration must return an HTTP 200 document/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/qa-world-driver.test.cjs:190:1
+✖ A late old-document draft write cannot restore guided mode in the new journey (2.032213ms)
+  AssertionError [ERR_ASSERTION]: Storage timeline: [{"phase":"old-document","operation":"remove","key":"bagelito.guided.product-draft.v1"},{"phase":"old-document-late-effect","operation":"set","key":"bagelito.guided.product-draft.v1","value":"late-product-draft"},{"phase":"react-mount","operation":"get","key":"bagelito.guided.product-draft.v1","value":"late-product-draft"}]
+  + actual - expected
+  
+  + 'guided'
+  - 'explore'
+  
+      at TestContext.<anonymous> (/tmp/bagelito-historyless-20261101/tests/qa-world-driver.test.cjs:193:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'guided',
+    expected: 'explore',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
