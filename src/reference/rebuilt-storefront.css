@@ -71,9 +71,6 @@
 .rebuilt-schmear-tray:nth-child(4){grid-column:2/span 2}.rebuilt-schmear-tray:nth-child(5){grid-column:4/span 2}
 .rebuilt-schmear-tray>.rebuilt-schmear-photo{width:100%;height:92px;transform:none;filter:none}
 .rebuilt-schmear-tray figcaption{min-height:36px;font-size:13px;letter-spacing:-.02em}
-.rebuilt-schmear-tray.rebuilt-flavour-aji>.rebuilt-schmear-photo{filter:sepia(.14) saturate(1.15)}
-.rebuilt-schmear-tray.rebuilt-flavour-herbs>.rebuilt-schmear-photo{filter:sepia(.04)}
-.rebuilt-schmear-tray.rebuilt-flavour-honey>.rebuilt-schmear-photo{filter:sepia(.12)}
 .rebuilt-schmear-tray.rebuilt-flavour-strawberry>.rebuilt-schmear-photo{filter:none}
 .rebuilt-case-link{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px;min-height:44px;margin-top:7px;padding:8px 0 0;border:0;background:transparent;color:var(--rebuilt-blue);font-size:15px;font-weight:700;cursor:pointer;text-align:left}
 .rebuilt-case-link>.rebuilt-arrow{width:29px;height:29px;font-size:22px;background:#ffffffa6}
