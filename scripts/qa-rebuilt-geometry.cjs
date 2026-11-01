@@ -6,7 +6,8 @@
 function inspectRebuiltGeometry(options = {}) {
   const thresholds = { target: 44, bodyFont: 12, titleFont: 16, geometryTolerance: .5, targetTolerance: .01 }
   const failures = [], styles = new WeakMap(), all = [...document.querySelectorAll('*')]
-  const viewport = { x: 0, y: 0, right: innerWidth, bottom: innerHeight, width: innerWidth, height: innerHeight }
+  const layoutWidth = document.documentElement.clientWidth
+  const viewport = { x: 0, y: 0, right: layoutWidth, bottom: innerHeight, width: layoutWidth, height: innerHeight }
   const style = e => { if (!styles.has(e)) styles.set(e, getComputedStyle(e)); return styles.get(e) }
   const box = e => { const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, right: r.right, bottom: r.bottom, width: r.width, height: r.height } }
   const finish = r => ({ ...r, width: Math.max(0, r.right - r.x), height: Math.max(0, r.bottom - r.y) })
@@ -105,8 +106,8 @@ function inspectRebuiltGeometry(options = {}) {
       }
     }
   }
-  const documentOverflow = Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0) - innerWidth
-  if (documentOverflow > 1) fail('horizontal-document-overflow', document.documentElement, { excess: documentOverflow, viewportWidth: innerWidth })
+  const documentOverflow = Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0) - layoutWidth
+  if (documentOverflow > 1) fail('horizontal-document-overflow', document.documentElement, { excess: documentOverflow, viewportWidth: layoutWidth })
 
   const targets = [], selector = options.targetSelector || 'button,a[href],input:not([type="hidden"]),select,textarea,[role="button"],[role="link"],[tabindex]'
   for (const e of document.querySelectorAll(selector)) {

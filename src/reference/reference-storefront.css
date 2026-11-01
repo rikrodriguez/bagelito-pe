@@ -1,3 +1,7 @@
+/* The older fixed-screen tour locks body scrolling. This document-flow shop
+   must remain reachable with real wheel, keyboard and touch input, not only
+   scrollIntoView() calls. Scope the override to this route's mounted shell. */
+body:has(.reference-storefront){overflow-x:hidden;overflow-y:auto}
 .reference-storefront{min-height:100dvh;background:#fffaf4;color:#004aad;font-family:Inter,"Helvetica Neue",system-ui,sans-serif}
 .reference-storefront .guided-commerce.reference-mode{position:relative!important;inset:auto!important;min-height:0;overflow:visible!important;background:transparent!important;pointer-events:auto!important}
 .reference-presentation{position:relative;z-index:1;width:100%;max-width:min(1536px,150dvh);margin:0 auto}

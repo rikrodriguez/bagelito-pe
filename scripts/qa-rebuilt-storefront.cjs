@@ -13,6 +13,7 @@ const {inspectSecondaryReadability} = require('./qa-reference-secondary-readabil
 const {inspectRebuiltGeometry} = require('./qa-rebuilt-geometry.cjs')
 const {inspectComboComposition} = require('./qa-rebuilt-composition.cjs')
 const {installSafety} = require('./qa-rebuilt-safety.cjs')
+const {exerciseNativeDocumentScroll, isLayoutFullBleed} = require('./lib/qa-native-document-scroll.cjs')
 
 const hash = value => createHash('sha256').update(value).digest('hex')
 const repo = path.resolve(process.env.QA_REPO_ROOT || path.join(__dirname, '..'))
@@ -66,7 +67,7 @@ const scheduledCases = viewports.flatMap(viewport => scenarios
 assert.ok(scheduledCases.length, 'Requested scenarios do not intersect the scoped viewport matrix')
 const root = '.guided-commerce[data-reference-mode="true"][data-review-only="true"]'
 const sourceFiles = [
-  'src/routes/index.tsx',
+  'src/routes/index.tsx', 'src/styles.css',
   'src/reference/ReferenceScene.tsx', 'src/reference/ReferenceStorefront.tsx', 'src/reference/reference-storefront.css',
   'src/playable/GuidedCommerce.tsx', 'src/playable/guided-commerce.css', 'src/domain/lib/approved-shop-contract.ts',
   'src/domain/data/verified-menu-2026-10-21.json', 'public/fonts/fredoka-variable.ttf', 'public/fonts/OFL-Fredoka.txt',
@@ -85,7 +86,7 @@ function sources() {
   return Object.fromEntries([...files].sort().map(file => [file, hash(fs.readFileSync(path.join(repo, file)))]))
 }
 const sourceHashes = sources()
-const helperFiles = ['qa-rebuilt-geometry.cjs', 'qa-rebuilt-composition.cjs', 'qa-rebuilt-safety.cjs', 'qa-reference-review-steps.cjs', 'qa-reference-text-geometry.cjs', 'qa-reference-secondary-readability.cjs']
+const helperFiles = ['qa-rebuilt-geometry.cjs', 'qa-rebuilt-composition.cjs', 'qa-rebuilt-safety.cjs', 'qa-reference-review-steps.cjs', 'qa-reference-text-geometry.cjs', 'qa-reference-secondary-readability.cjs', 'lib/qa-native-document-scroll.cjs']
 const helpers = () => Object.fromEntries(helperFiles.map(file => [file, hash(fs.readFileSync(path.join(__dirname, file)))]))
 const report = {
   metadata: {
@@ -223,7 +224,7 @@ async function runCase(browser, viewport, scenario) {
           const r = element.getBoundingClientRect()
           return {x: r.x, right: r.right, width: r.width, innerWidth, layoutViewportWidth: document.documentElement.clientWidth, scrollX}
         })
-        if (Math.abs(shot.fullBleed.width - shot.fullBleed.innerWidth) > 1 || Math.abs(shot.fullBleed.x) > 1 || Math.abs(shot.fullBleed.right - shot.fullBleed.innerWidth) > 1) failure({stage: name, rebuiltSceneNotFullBleed: shot.fullBleed}, record)
+        if (!isLayoutFullBleed(shot.fullBleed)) failure({stage: name, rebuiltSceneNotFullBleed: shot.fullBleed}, record)
         shot.geometry = await page.evaluate(inspectRebuiltGeometry)
         for (const issue of shot.geometry.failures) failure({stage: name, geometry: issue}, record)
         shot.flow = await page.evaluate(inspectReferenceFlow)
@@ -252,7 +253,7 @@ async function runCase(browser, viewport, scenario) {
       const target = await locator.evaluate(element => {
         const r = element.getBoundingClientRect(); const x = r.x + r.width / 2, y = r.y + r.height / 2
         const hit = document.elementFromPoint(x, y)
-        const visible = {x: Math.max(0, r.x), y: Math.max(0, r.y), right: Math.min(innerWidth, r.right), bottom: Math.min(innerHeight, r.bottom)}
+        const visible = {x: Math.max(0, r.x), y: Math.max(0, r.y), right: Math.min(document.documentElement.clientWidth, r.right), bottom: Math.min(innerHeight, r.bottom)}
         for (let parent = element.parentElement; parent && !parent.matches('html,body'); parent = parent.parentElement) {
           const style = getComputedStyle(parent), box = parent.getBoundingClientRect()
           if (/hidden|clip|auto|scroll/.test(style.overflowX)) {visible.x = Math.max(visible.x, box.x + parent.clientLeft); visible.right = Math.min(visible.right, box.x + parent.clientLeft + parent.clientWidth)}
@@ -320,6 +321,8 @@ async function runCase(browser, viewport, scenario) {
     await capture('first-pixels')
     await shell(page)
     if (scenario === 'entry') {
+      record.nativeDocumentScroll = await exerciseNativeDocumentScroll(page)
+      persist()
       assert.equal(await page.locator('.reference-category').count(), 3)
       assert.match(steps.normalize(await page.locator('[data-reference-category="combos"]').innerText()), /bagels\s*\+\s*schmears/i)
       assert.deepEqual((await page.locator('.rebuilt-bagel-tray figcaption').allTextContents()).map(steps.normalize).sort(), steps.menu.bagels.map(item => item.name).sort())
@@ -543,7 +546,12 @@ async function runCase(browser, viewport, scenario) {
             ['.rebuilt-counter', {x: 90, y: 600, width: 1440, height: 300}],
             ['.rebuilt-progress', {x: 465, y: 916, width: 605, height: 79}],
           ]
-          const failures = [], anchors = expected.map(([selector, target]) => {
+          // A classic scrollbar consumes layout width; retain the reference's
+          // proportions and the original 1px tolerance, not an artificial gutter.
+          const layoutViewportWidth = document.documentElement.clientWidth
+          const referenceScale = layoutViewportWidth / 1536
+          const failures = [], anchors = expected.map(([selector, nominal]) => {
+            const target = Object.fromEntries(Object.entries(nominal).map(([key, value]) => [key, value * referenceScale]))
             const elements = document.querySelectorAll(selector)
             if (elements.length !== 1) {failures.push({selector, count: elements.length}); return {selector, target}}
             const rect = elements[0].getBoundingClientRect(), actual = {x: rect.x, y: rect.y, width: rect.width, height: rect.height}
@@ -551,10 +559,10 @@ async function runCase(browser, viewport, scenario) {
             return {selector, target, actual}
           })
           const headlineFont = parseFloat(getComputedStyle(document.querySelector('.rebuilt-hero h1')).fontSize)
-          if (Math.abs(headlineFont - 60) > 1) failures.push({selector: '.rebuilt-hero h1', field: 'fontSize', expected: 60, actual: headlineFont})
+          if (Math.abs(headlineFont - 60 * referenceScale) > 1) failures.push({selector: '.rebuilt-hero h1', field: 'fontSize', expected: 60 * referenceScale, actual: headlineFont})
           const svg = document.querySelector('.rebuilt-wordmark'), ink = svg.getBBox()
-          return {toleranceCSSPx: 1, anchors, headlineFont, wordmarkLocalGeometry: {x: ink.x, y: ink.y, width: ink.width, height: ink.height},
-            geometryScope: 'Nominal DOM anchors from the1536x1024 reference spec. SVG geometry excludes exact painted ink/antialias; counter alpha and source-window band are reported separately. No fidelity score.', failures, pass: failures.length === 0}
+          return {toleranceCSSPx: 1, layoutViewportWidth, referenceScale, anchors, headlineFont, wordmarkLocalGeometry: {x: ink.x, y: ink.y, width: ink.width, height: ink.height},
+            geometryScope: 'Nominal DOM anchors from the1536x1024 reference spec, proportionally scaled to layout clientWidth excluding any native scrollbar. SVG geometry excludes exact painted ink/antialias; counter alpha and source-window band are reported separately. No fidelity score.', failures, pass: failures.length === 0}
         })
         for (const issue of record.referenceAnchors.failures) failure({referenceAnchor: issue}, record)
       }
