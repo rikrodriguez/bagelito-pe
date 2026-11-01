@@ -384,3 +384,15 @@ for (const bad of ['', ' ', null, {}, 'x'.repeat(201)]) {
     assert.equal(f.receiver.get('a').envelope, null)
   })
 }
+
+test('persisted JSON key order does not change the projection or block acknowledgement', async t => {
+  const f = setup(t)
+  await credit(f, 10)
+  await f.mirror.capture('a')
+  const original = f.store.get('a').envelope
+  const reordered = {...original.summary, rule:{schmears:1, bagels:2, orders:10, id:'paid-orders-10-v1'}}
+  f.backend.db.prepare('UPDATE mirror_projection SET summaryJSON=? WHERE subjectId=?').run(JSON.stringify(reordered), 'a')
+  assert.equal((await f.mirror.deliver('a')).status, 'delivered')
+  assert.deepEqual(f.receiver.get('a').envelope, original)
+  assert.equal(f.store.get('a').pending, false)
+})

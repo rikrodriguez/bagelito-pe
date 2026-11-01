@@ -62,7 +62,8 @@ function checkedEnvelope(value: MirrorEnvelope, subjectId: string, destinationRe
   requireId(value.messageId)
   const summary = summaryOf(value.summary)
   if (value.schema !== 1 || !Number.isSafeInteger(value.revision) || value.revision < 1
-    || fingerprint(summary) !== value.payloadHash || JSON.stringify(value.summary.rule) !== JSON.stringify(LOYALTY_RULE)) {
+    || fingerprint(summary) !== value.payloadHash || !value.summary.rule
+    || (Object.keys(LOYALTY_RULE) as Array<keyof typeof LOYALTY_RULE>).some(key => value.summary.rule[key] !== LOYALTY_RULE[key])) {
     throw new MirrorError('projection_integrity_error')
   }
   return Object.freeze({schema: 1, messageId: value.messageId, subjectId, destinationRef,
