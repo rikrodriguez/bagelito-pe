@@ -856,15 +856,15 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     </div>}
 
     {scene === 'combos' && <div className="guided-combo-overlay approved-combo-overlay">
-      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={combo.name}>
+      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={referenceMode ? 'Bagels + schmears' : combo.name}>
         <span className="approved-combo-art">
           <img src="/images/bagel-everything.webp" alt="" />
           <img src="/images/bagel-sesame.webp" alt="" />
-          <i className="approved-schmear" />
+          {referenceMode ? <img className="rebuilt-combo-schmear" src="/images/rebuilt-schmear-bowl.png" alt="" /> : <i className="approved-schmear" />}
         </span>
         <span className="approved-combo-copy">
           <small>COMBO BAGELITO</small>
-          <b>{combo.name}</b>
+          <b>{referenceMode ? 'Bagels + schmears' : combo.name}</b>
           <em>Elige 2 bagels + 1 schmear</em>
           <strong>Precio por confirmar</strong>
         </span>
@@ -955,7 +955,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             const count = schmearCounts[item.id] ?? 0
             return <article key={item.id} className="mobile-schmear-card" data-selected={count > 0}>
               <button type="button" onClick={() => addSchmear(item.id)} aria-label={'Agregar ' + item.name}>
-                <span className="mobile-schmear-pot" style={{backgroundImage: 'url("' + sceneImage + '")', backgroundPosition: (index * 25) + '% center'}} />
+                {referenceMode
+                  ? <img className="mobile-schmear-pot rebuilt-flow-schmear" data-flavour={item.id} src="/images/rebuilt-schmear-bowl.png" alt="" />
+                  : <span className="mobile-schmear-pot" style={{backgroundImage: 'url("' + sceneImage + '")', backgroundPosition: (index * 25) + '% center'}} />}
                 <span className="mobile-schmear-label">{item.name}</span>
                 {item.note && <small>{item.note}</small>}
                 {referenceMode && category === 'packs' && optionalPackSchmearSize && <small className="reference-schmear-price">

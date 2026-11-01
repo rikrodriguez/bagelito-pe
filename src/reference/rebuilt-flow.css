@@ -1,0 +1,78 @@
+/* The purchase controls remain the existing commerce components and handlers.
+   These styles extend the rebuilt bakery's typography and materials into them. */
+.reference-storefront{background:#fffaf3;font-family:"Avenir Next","Trebuchet MS",system-ui,sans-serif;color:#034caf}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-floating-panel,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-config-panel,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{
+  width:min(1040px,calc(100% - 32px))!important;max-width:1040px;padding:clamp(20px,4vw,42px)!important;
+  border:0;border-radius:26px;background:#fffdf9;box-shadow:0 12px 50px #775c3810;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] :is(.guided-floating-panel,.pack-config-panel,.mobile-product-stage,.guided-cashier-copy) h2{
+  font-family:Fredoka,"Arial Rounded MT Bold",sans-serif!important;font-weight:600;font-size:clamp(28px,3.2vw,40px)!important;line-height:1.13!important;letter-spacing:-.025em;margin:8px 0 18px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-grid button{
+  border:1px solid #d5dce4;border-radius:20px;background:#edf4fa;min-height:170px;padding:20px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-art{
+  border-radius:0;background:none;width:130px;height:110px;overflow:visible;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-art img{width:120px;height:110px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-art.mini img{width:90px;height:90px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-grid b,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-qty-grid b{
+  font-family:Fredoka,sans-serif;font-weight:600;font-size:28px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header{
+  padding-bottom:16px;border-bottom:1px solid #e5ddd2;gap:8px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{gap:16px;margin-top:6px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{
+  border:1px solid #d9dfe1;background:linear-gradient(145deg,#fcfdfb,#f0f3f2);border-radius:18px;box-shadow:0 6px 14px #3f4b4a08;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card[data-selected="true"],
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card[data-selected="true"]{
+  border-color:#034caf;background:#edf4fc;box-shadow:inset 0 0 0 1px #034caf;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button>img{
+  width:106px!important;height:106px!important;filter:drop-shadow(0 8px 8px #87603d16);
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-sign{
+  background:transparent;color:#034caf;font-size:15px!important;font-weight:800;padding:8px 2px!important;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .rebuilt-flow-schmear{
+  display:block;width:130px;height:94px;max-width:100%;object-fit:contain;border-radius:0;background:none;align-self:center;filter:drop-shadow(0 8px 8px #87603d12);
+}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="whipped-original"]{filter:grayscale(1) brightness(1.22)!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="aji-amarillo"]{filter:hue-rotate(43deg) saturate(.7) brightness(1.1)!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="herb-roasted-garlic"]{filter:hue-rotate(80deg) saturate(.25) brightness(1.15)!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="honey-cinnamon"]{filter:hue-rotate(30deg) saturate(.45) brightness(1.05)!important}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-label{font-size:16px!important;line-height:1.25}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy b{font-family:Fredoka,sans-serif;font-weight:600;line-height:1.1;font-size:clamp(26px,4vw,40px)}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay>button{box-shadow:none;background:#e7f2fc!important;border-color:#c7d7e6!important}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art .rebuilt-combo-schmear{
+  position:absolute;left:52px;top:70px;width:140px;height:95px;object-fit:contain;transform:none;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-primary-next{
+  min-height:54px;padding:9px 12px 9px 24px;font-size:16px;background:#034caf;box-shadow:0 6px 0 #003582;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines{max-height:none;overflow:visible;gap:12px;padding-bottom:20px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines>span{font-size:15px;line-height:1.4}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines b{font-size:15px}
+.reference-storefront .reference-loyalty{background:#e7f2fc;border:0;border-radius:24px;padding:24px}
+.reference-storefront .reference-loyalty h2{font-family:Fredoka,sans-serif;font-weight:600;line-height:1.15}
+.reference-storefront button:focus-visible,.reference-storefront a:focus-visible{outline:3px solid #ed856f;outline-offset:4px}
+.reference-review-note{color:#52647a;font-size:12px;margin:20px auto 0}
+@media(max-width:800px){
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{gap:10px}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] :is(.guided-floating-panel,.pack-config-panel,.approved-combo-overlay,.mobile-product-stage,.guided-cashier-action){width:calc(100% - 24px)!important;padding:20px 14px!important;border-radius:22px}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button{padding:12px 6px}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button>img{width:90px!important;height:90px!important}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art .rebuilt-combo-schmear{left:18px;top:52px;width:90px;height:62px}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-label{font-size:15px!important}
+}
+@media(prefers-reduced-motion:reduce){.reference-storefront *, .reference-storefront *::before,.reference-storefront *::after{scroll-behavior:auto!important;transition:none!important}}

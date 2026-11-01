@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import './rebuilt-storefront.css'
 
 type Category = 'packs' | 'combos' | 'schmears'
 type Props = {
@@ -14,69 +14,156 @@ type Props = {
   cartOpen?: boolean
 }
 
-const referenceImage = '/images/store-reference-approved.webp'
-const categories: Array<{ id: Category; label: string; description: string; left: number; right: number }> = [
-  { id: 'packs', label: 'Packs', description: 'Grandes o minis', left: 396, right: 660 },
-  { id: 'combos', label: 'Combos', description: '2 bagels + 1 schmear', left: 674, right: 951 },
-  { id: 'schmears', label: 'Schmears', description: '120, 180 o 240 g', left: 966, right: 1230 },
+const bagels = [
+  {id: 'plain', name: 'Plain'},
+  {id: 'everything', name: 'Everything'},
+  {id: 'sesame', name: 'Sesame'},
+  {id: 'classic-onion', name: 'Classic Onion'},
+  {id: 'jalapeno-cheddar', name: 'Jalapeño Cheddar'},
+  {id: 'cheddar', name: 'Cheddar'},
+  {id: 'cinnamon-raisin', name: 'Cinnamon Raisin'},
+  {id: 'blueberry', name: 'Blueberry'},
+]
+const schmears = [
+  {id: 'original', name: 'Whipped Original'},
+  {id: 'aji', name: 'Ají Amarillo'},
+  {id: 'herbs', name: 'Herb & Roasted Garlic'},
+  {id: 'honey', name: 'Honey Cinnamon'},
+  {id: 'strawberry', name: 'Classic Strawberry'},
 ]
 const steps = ['Entrada', 'Categoría', 'Selecciona', 'Revisa', 'Pago']
-const stepCentres = [540, 658, 775, 892, 1013]
+const logoLetters = [
+  {letter:'B', x:100, y:170, rotate:-17}, {letter:'A', x:211, y:145, rotate:-12},
+  {letter:'G', x:326, y:128, rotate:-7}, {letter:'E', x:441, y:119, rotate:-2},
+  {letter:'L', x:544, y:121, rotate:4}, {letter:'I', x:635, y:133, rotate:9},
+  {letter:'T', x:731, y:153, rotate:14}, {letter:'O', x:849, y:178, rotate:20},
+]
 
+function BagelPhoto({id, className = ''}: {id: string; className?: string}) {
+  return <img className={'rebuilt-bagel-photo ' + className} src={`/images/bagel-${id}.webp`}
+    alt="" width={900} height={900} draggable={false} />
+}
+
+function SchmearPhoto({className = ''}: {className?: string}) {
+  return <span className={'rebuilt-schmear-photo ' + className} data-art-medium="independent-product-concept">
+    <img src="/images/rebuilt-schmear-bowl.png" alt="" width={1024} height={1024} draggable={false} />
+  </span>
+}
+
+function Arrow() {
+  return <span className="rebuilt-arrow" aria-hidden="true">→</span>
+}
+
+function Wordmark() {
+  return <div className="rebuilt-brand">
+    <svg className="rebuilt-wordmark" viewBox="0 0 960 235" role="img" aria-label="Bagelito">
+      <g textAnchor="middle" paintOrder="stroke fill" strokeLinejoin="round" strokeLinecap="round">
+        {logoLetters.map(item => <text key={item.letter} x={item.x} y={item.y}
+          transform={`rotate(${item.rotate} ${item.x} ${item.y - 60})`}>{item.letter}</text>)}
+      </g>
+    </svg>
+    <p>Classic Gringo Bagels</p>
+  </div>
+}
+
+/** A responsive bakery built from DOM, vector lettering and individual product assets.
+ * The approved storefront mockup is a visual reference, never a rendering asset.
+ */
 export function ReferenceScene(props: Props) {
-  return <section className="reference-presentation" aria-label="Vitrina Bagelito">
-    <div className="reference-scroll">
-      <div className="reference-art" data-reference-art="exact-approved-image">
-        <img className="reference-image" src={referenceImage}
-          width={1536} height={1024} alt="Bagelito: vitrina de bagels y schmears con opciones Packs, Combos y Schmears"
-          fetchPriority="high" draggable={false} />
-        <div className="reference-top-controls">
-          <button type="button" className="reference-hotspot reference-menu"
-            aria-label={props.menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={!!props.menuOpen}
-            onClick={props.onMenu}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
-            <span className="reference-sr-only">Menú</span>
-          </button>
-          <button type="button" className={'reference-hotspot reference-cart' + (props.cartCount > 0 ? ' is-dynamic' : '')}
-            aria-label={`Ver tu pedido: ${props.cartCount} productos`} aria-expanded={!!props.cartOpen}
-            onClick={props.onCart}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></svg>
-            <span>Tu pedido ({props.cartCount})</span>
-          </button>
-        </div>
-        <svg className="reference-mobile-hero" viewBox="400 0 840 340" role="img"
-          aria-label="Bagelito. ¿Qué te provoca hoy?" data-reference-crop="hero">
-          <image href={referenceImage} x="0" y="0" width="1536" height="1024" />
-        </svg>
-        {categories.map(item => <button key={item.id} type="button"
-          className="reference-hotspot reference-category" aria-label={item.label}
-          data-reference-category={item.id}
-          style={{ left: `${item.left / 1536 * 100}%`, top: `${350 / 1024 * 100}%`,
-            width: `${(item.right - item.left) / 1536 * 100}%`, height: `${234 / 1024 * 100}%` }}
-          onClick={() => props.onCategory(item.id)}>
-          <svg className="reference-category-art" viewBox={`${item.left} 350 ${item.right - item.left} 146`}
-            aria-hidden="true" data-reference-crop={item.id}>
-            <image href={referenceImage} x="0" y="0" width="1536" height="1024" />
-          </svg>
-          <span className="reference-category-copy reference-sr-only"><strong>{item.label}</strong><small>{item.description}</small></span>
-        </button>)}
-        <svg className="reference-mobile-vitrine" viewBox="95 600 1435 310" role="img"
-          aria-label="Vitrina de bagels y schmears" data-reference-crop="vitrine">
-          <image href={referenceImage} x="0" y="0" width="1536" height="1024" />
-        </svg>
-        <nav className={'reference-progress ' + (props.dynamicChrome ? 'reference-progress-live' : 'reference-progress-hotspots')}
-          aria-label="Pasos de compra">
-          {steps.map((label, index) => <button key={label} type="button"
-            className={props.dynamicChrome ? undefined : 'reference-hotspot reference-step'}
-            style={{ '--step-x': `${stepCentres[index] / 1536 * 100}%` } as CSSProperties}
-            aria-label={`Ir a ${label}`} disabled={!props.accessibleSteps[index]}
-            aria-current={props.progressIndex === index ? 'step' : undefined} onClick={() => props.onStep(index)}>
-            <i aria-hidden="true">{index + 1}</i>
-            <span className="reference-step-desktop-label">{label}</span>
-            <span className="reference-step-mobile-label">{label === 'Selecciona' ? 'Elige' : label}</span>
-          </button>)}
-        </nav>
-      </div>
+  const compact = props.progressIndex > 0
+  return <section className="reference-presentation rebuilt-store" aria-label="Vitrina Bagelito"
+    data-rebuilt-scene="live-components" data-compact={compact ? 'true' : 'false'}>
+    <div className="rebuilt-architecture" aria-hidden="true">
+      <div className="rebuilt-pendant rebuilt-pendant-left"><i /><span /></div>
+      <div className="rebuilt-pendant rebuilt-pendant-right"><i /><span /></div>
+      <span className="rebuilt-wall-shadow" />
     </div>
+    <header className="rebuilt-topbar">
+      <button type="button" className="rebuilt-menu" aria-label={props.menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-expanded={!!props.menuOpen} onClick={props.onMenu}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
+      <button type="button" className="rebuilt-cart" aria-label={`Ver tu pedido: ${props.cartCount} productos`}
+        aria-expanded={!!props.cartOpen} onClick={props.onCart}>
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></svg>
+        <span>Tu pedido <b>({props.cartCount})</b></span>
+      </button>
+    </header>
+
+    <Wordmark />
+    <p className="rebuilt-wall-copy rebuilt-wall-copy-left" aria-hidden="true">Fresh bagels.<br />Happier days.</p>
+    <p className="rebuilt-wall-copy rebuilt-wall-copy-right" aria-hidden="true">Hechos para<br />bagel lovers.<span>♡</span></p>
+
+    <div className="rebuilt-hero">
+      <h1>¿Qué te provoca hoy?</h1>
+      <p>Elige tu antojo. Nosotros ponemos los bagels.</p>
+    </div>
+
+    <div className="rebuilt-categories" aria-label="Elige una categoría">
+      <button type="button" className="rebuilt-category reference-category rebuilt-category-packs"
+        aria-label="Packs" data-reference-category="packs" onClick={() => props.onCategory('packs')}>
+        <span className="rebuilt-category-visual rebuilt-pack-visual" aria-hidden="true">
+          <span className="rebuilt-pack-box">
+            {['everything','plain','sesame','classic-onion','cheddar','blueberry'].map(id => <BagelPhoto key={id} id={id} />)}
+            <span className="rebuilt-pack-front">BAGELITO</span>
+          </span>
+        </span>
+        <span className="rebuilt-category-copy"><strong>Packs</strong><small>Grandes o minis.<br />Para compartir.</small></span>
+        <Arrow />
+      </button>
+      <button type="button" className="rebuilt-category reference-category rebuilt-category-combos"
+        aria-label="Combos" data-reference-category="combos" onClick={() => props.onCategory('combos')}>
+        <span className="rebuilt-category-visual rebuilt-combo-visual" aria-hidden="true">
+          <BagelPhoto id="everything" className="rebuilt-combo-one" />
+          <BagelPhoto id="sesame" className="rebuilt-combo-two" />
+          <SchmearPhoto className="rebuilt-combo-schmear" />
+        </span>
+        <span className="rebuilt-category-copy"><strong>Combos</strong><small>Bagels + schmears</small></span>
+        <Arrow />
+      </button>
+      <button type="button" className="rebuilt-category reference-category rebuilt-category-schmears"
+        aria-label="Schmears" data-reference-category="schmears" onClick={() => props.onCategory('schmears')}>
+        <span className="rebuilt-category-visual rebuilt-schmear-visual" aria-hidden="true"><SchmearPhoto /></span>
+        <span className="rebuilt-category-copy"><strong>Schmears</strong><small>El toque que faltaba.<br />120, 180 o 240 g.</small></span>
+        <Arrow />
+      </button>
+    </div>
+
+    <div className="rebuilt-counter" aria-label="Nuestros bagels y schmears">
+      <section className="rebuilt-display rebuilt-bagel-display" aria-label="Vitrina de bagels">
+        <header className="rebuilt-case-header"><h2>Bagels</h2><span>Encuentra tu favorito</span></header>
+        <div className="rebuilt-case-glass" aria-hidden="true" />
+        <div className="rebuilt-bagel-trays">
+          {bagels.map(item => <figure className="rebuilt-bagel-tray" key={item.id}>
+            <span className="rebuilt-bagel-pile">
+              <BagelPhoto id={item.id} className="rebuilt-pile-back" />
+              <BagelPhoto id={item.id} className="rebuilt-pile-side" />
+              <BagelPhoto id={item.id} className="rebuilt-pile-front" />
+            </span>
+            <figcaption>{item.name}</figcaption>
+          </figure>)}
+        </div>
+        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('packs')}>Elige tus bagels <Arrow /></button>
+      </section>
+      <section className="rebuilt-display rebuilt-schmear-display" aria-label="Vitrina de schmears">
+        <header className="rebuilt-case-header"><h2>Schmears</h2><span>Un buen bagel pide uno</span></header>
+        <div className="rebuilt-case-glass" aria-hidden="true" />
+        <div className="rebuilt-schmear-trays">
+          {schmears.map(item => <figure key={item.id} className={`rebuilt-schmear-tray rebuilt-flavour-${item.id}`}>
+            <SchmearPhoto />
+            <figcaption>{item.name}</figcaption>
+          </figure>)}
+        </div>
+        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('schmears')}>Descubre los sabores <Arrow /></button>
+      </section>
+    </div>
+
+    <nav className="rebuilt-progress" aria-label="Pasos de compra">
+      {steps.map((label, index) => <button type="button" key={label} aria-label={`Ir a ${label}`}
+        disabled={!props.accessibleSteps[index]} aria-current={props.progressIndex === index ? 'step' : undefined}
+        onClick={() => props.onStep(index)}>
+        <i aria-hidden="true">{index + 1}</i><span>{label === 'Selecciona' ? 'Elige' : label}</span>
+      </button>)}
+    </nav>
   </section>
 }
