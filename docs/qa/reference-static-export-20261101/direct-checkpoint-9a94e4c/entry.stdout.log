@@ -1,0 +1,16 @@
+{"at":"2026-11-01T01:45:38.167Z","type":"nozoom-captured","width":390,"file":"390-nozoom-presentation.png","failures":0}
+{"at":"2026-11-01T01:45:38.274Z","type":"category-callback","width":390,"name":"Packs","scene":"pack-size"}
+{"at":"2026-11-01T01:45:38.452Z","type":"category-callback","width":390,"name":"Combos","scene":"combos"}
+{"at":"2026-11-01T01:45:38.626Z","type":"category-callback","width":390,"name":"Schmears","scene":"schmear-size"}
+{"at":"2026-11-01T01:45:38.641Z","type":"capabilities-drained","width":390,"knownFrameworkReads":3,"forbidden":0}
+{"at":"2026-11-01T01:45:39.024Z","type":"nozoom-captured","width":320,"file":"320-nozoom-presentation.png","failures":0}
+{"at":"2026-11-01T01:45:39.110Z","type":"category-callback","width":320,"name":"Packs","scene":"pack-size"}
+{"at":"2026-11-01T01:45:39.304Z","type":"category-callback","width":320,"name":"Combos","scene":"combos"}
+{"at":"2026-11-01T01:45:39.457Z","type":"category-callback","width":320,"name":"Schmears","scene":"schmear-size"}
+{"at":"2026-11-01T01:45:39.473Z","type":"capabilities-drained","width":320,"knownFrameworkReads":3,"forbidden":0}
+{"at":"2026-11-01T01:45:40.290Z","type":"nozoom-captured","width":1280,"file":"1280-nozoom-presentation.png","failures":0}
+{"at":"2026-11-01T01:45:40.368Z","type":"category-callback","width":1280,"name":"Packs","scene":"pack-size"}
+{"at":"2026-11-01T01:45:40.539Z","type":"category-callback","width":1280,"name":"Combos","scene":"combos"}
+{"at":"2026-11-01T01:45:40.748Z","type":"category-callback","width":1280,"name":"Schmears","scene":"schmear-size"}
+{"at":"2026-11-01T01:45:40.763Z","type":"capabilities-drained","width":1280,"knownFrameworkReads":3,"forbidden":0}
+3 image cases; 0 failures
