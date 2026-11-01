@@ -96,3 +96,9 @@
 }
 
 @media(max-width:640px){.rebuilt-counter .rebuilt-product-placard figcaption{font-size:16px}}
+
+@media(max-width:360px){
+ .rebuilt-counter .rebuilt-product-placard{width:24%}
+ .rebuilt-counter .rebuilt-schmear-tray{width:28%}
+ .rebuilt-counter .rebuilt-product-placard figcaption{font-size:16px;text-transform:none;font-variation-settings:"wdth" 75,"wght" 500;font-weight:500}
+}
