@@ -1,4 +1,10 @@
-# Boutique scene — first visual checkpoint
+# Boutique scene — current evidence and preserved checkpoints
+
+Current source: **`7323f9a70888538e3db96071eaf022dce5a06a80`**, after rejected-copy removal. Broader prior QA epoch: `9ea4528`. Read the [verified candidate report](../../boutique-storefront-review-20261101.md) and [current affected-QA terminal summary](final-7323f9a/functional-terminal-summary.json). Current screenshots are under `final-7323f9a`; the prior6+4matrix remains under `final-9ea4528`, with original hashes. This is a candidate awaiting visual review, not final acceptance.
+
+The `red-8895043` directory preserves the reproducible Full HD glyph-clipping failure and exit1 before its5px correction. The historical material below is deliberately retained as WIP rather than reassigned to the current source.
+
+## First visual checkpoint
 
 This is a **WIP**, not final visual acceptance or a complete purchase suite.
 

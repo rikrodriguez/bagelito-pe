@@ -13,6 +13,6 @@
 
 No Figma, Adobe, MagicPath, Higgsfield generation/hosting, Sites, deployment, external payment, GHL HTTP call, credential or permission configuration was used in this iteration.
 
-## What the previous PR47 record actually establishes
+## Specialized design references and historical PR47 record
 
-`docs/rebuilt-storefront-design-20261101.md` records previous use of native imagegen for three product concepts, Playwright/Chromium, Node and Vite. It also records that the coordinating root consulted `design-taste-frontend`, `image-to-code` and Onyx Coffee Lab for editorial direction. Those two design-reference resources were not re-read or invoked in this boutique iteration; no exact resource path is asserted beyond that historical record. Recovered skill history directly verifies prior `using-git-worktrees` and `verification-before-completion` use. Available tools alone are not evidence of use.
+`docs/rebuilt-storefront-design-20261101.md` records previous use of native imagegen for three product concepts, Playwright/Chromium, Node and Vite. It also records that the coordinating root consulted `design-taste-frontend`, `image-to-code` and Onyx Coffee Lab for editorial direction. At the coordinator's subsequent explicit request, both specialized design references were read from the available cloud package and applied as a final contextual review; exact URIs, scope and decisions are in `specialized-visual-review.md`. This does not retroactively claim they were read before the first boutique candidate. Recovered skill history directly verifies prior `using-git-worktrees` and `verification-before-completion` use. Available tools alone are not evidence of use.

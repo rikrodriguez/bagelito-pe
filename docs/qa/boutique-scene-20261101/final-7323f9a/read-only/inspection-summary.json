@@ -1,0 +1,165 @@
+{
+  "codeSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+  "scope": "Read-only actual browser captures and visual comparison. No interaction/purchase assertions or fidelity certification.",
+  "captureProcessExit": 0,
+  "geometryStatus": "PASS",
+  "retiredCopyAbsentStatus": "PASS",
+  "viewports": [
+    {
+      "width": 1536,
+      "height": 1024,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": true,
+      "casesCompleteInViewport": true,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": false,
+      "casesCompleteInViewport": false,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": true,
+      "casesCompleteInViewport": true,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": false,
+      "casesCompleteInViewport": false,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "geometryFailures": 0,
+      "decodedImages": 8,
+      "foodCompleteInViewport": true,
+      "casesCompleteInViewport": true,
+      "safetyErrors": 0,
+      "capabilityErrors": 0
+    }
+  ],
+  "pixelInspectionCompleted": [
+    1536,
+    390,
+    1280,
+    1024,
+    1920
+  ],
+  "limitations": [
+    "390/1024 require normal vertical scroll for both complete cases.",
+    "1536/1280 food and cases fit in the viewport; progress extends below the first viewport.",
+    "Conceptual architecture/food art is not actual product photography, verified recipes or inventory.",
+    "No exact fidelity, Safari/device or functional journey certification from these captures."
+  ],
+  "reportSHA256": "529ffeda2947a2e126fab8fc0f6e3363e67417f6d0dabfadf6a0ee588f4bf530",
+  "captures": [
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1536-entry.png",
+      "sha256": "14c0d1e9e6b11130ac68f70fcc6765c8789a8d4c64f88d64f9fa7797f8cdb3ab",
+      "sizeBytes": 2167939,
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1536-entry-full.png",
+      "sha256": "ebd353380ce95f07bc8b95a93850a7b2dd8d01a62182f1be3b343dd3d1cadbc8",
+      "sizeBytes": 2177874,
+      "dimensions": [
+        1536,
+        1133
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/390-entry.png",
+      "sha256": "06f3b2d1468743457b3101fe098bc7debd71b911dcbda43fb04453de2f180b60",
+      "sizeBytes": 410146,
+      "dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/390-entry-full.png",
+      "sha256": "e8b53ee3014a92684109b130dd6ae7d05fac4eea39c71129aad655509fad87b9",
+      "sizeBytes": 556778,
+      "dimensions": [
+        390,
+        1273
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1280-entry.png",
+      "sha256": "db0511151392033b724b489a6fc96d263a1fd5d1d38383708bc9aadbfb2e7979",
+      "sizeBytes": 1401722,
+      "dimensions": [
+        1280,
+        800
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1280-entry-full.png",
+      "sha256": "147f1b9c87ebb1e35bb032a17c786299b970f50327c629d8ac0a2c09f80da257",
+      "sizeBytes": 1475419,
+      "dimensions": [
+        1280,
+        966
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1024-entry.png",
+      "sha256": "d27c41dab5074f3fbfd9ddf679a16a81e6c5d27f88e5bd76ff4274c827f40c86",
+      "sizeBytes": 879651,
+      "dimensions": [
+        1024,
+        768
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1024-entry-full.png",
+      "sha256": "023bae07dc8fa7a58d83ea93663e93cf05b9a0dfb611fa00c230f8735fbe341e",
+      "sizeBytes": 1471980,
+      "dimensions": [
+        1024,
+        1211
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1920-entry.png",
+      "sha256": "c8f45a8842f9e85bef77e2e230ba2478aef5eebc0e506696018076f1fc40becc",
+      "sizeBytes": 2657919,
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/read-only/1920-entry-full.png",
+      "sha256": "aff266052ac3a31902159f597a0d91361c96fbf90d521e8e8033f06b59a8079c",
+      "sizeBytes": 2707611,
+      "dimensions": [
+        1920,
+        1176
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "stage": "entry",
+    "command": [
+      "npm",
+      "run",
+      "qa:reference:entry"
+    ],
+    "widths": "320,390,768,844,1280,1920",
+    "scenarios": null,
+    "startedAt": "2026-11-01T14:18:45.860438+00:00",
+    "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+    "log": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/entry.log",
+    "pid": 68737,
+    "exitCode": 0,
+    "endedAt": "2026-11-01T14:20:02.125684+00:00",
+    "sourcesUnchanged": true
+  },
+  {
+    "stage": "pack-390",
+    "command": [
+      "node",
+      "scripts/qa-rebuilt-storefront.cjs"
+    ],
+    "widths": "390",
+    "scenarios": "pack-flavoured,pack-decline",
+    "startedAt": "2026-11-01T14:20:02.162219+00:00",
+    "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+    "log": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/pack-390.log",
+    "pid": 69288,
+    "exitCode": 0,
+    "endedAt": "2026-11-01T14:20:32.087556+00:00",
+    "sourcesUnchanged": true
+  },
+  {
+    "stage": "combo-320",
+    "command": [
+      "node",
+      "scripts/qa-rebuilt-storefront.cjs"
+    ],
+    "widths": "320",
+    "scenarios": "combo",
+    "startedAt": "2026-11-01T14:20:32.122137+00:00",
+    "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+    "log": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/combo-320.log",
+    "pid": 69592,
+    "exitCode": 0,
+    "endedAt": "2026-11-01T14:20:45.515109+00:00",
+    "sourcesUnchanged": true
+  },
+  {
+    "stage": "schmear-1280",
+    "command": [
+      "node",
+      "scripts/qa-rebuilt-storefront.cjs"
+    ],
+    "widths": "1280",
+    "scenarios": "schmear",
+    "startedAt": "2026-11-01T14:20:45.550674+00:00",
+    "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+    "log": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/schmear-1280.log",
+    "pid": 69771,
+    "exitCode": 0,
+    "endedAt": "2026-11-01T14:20:58.071543+00:00",
+    "sourcesUnchanged": true
+  }
+]

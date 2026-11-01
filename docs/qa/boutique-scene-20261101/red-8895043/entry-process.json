@@ -1,0 +1,17 @@
+{
+  "stage": "entry",
+  "command": [
+    "npm",
+    "run",
+    "qa:reference:entry"
+  ],
+  "widths": "320,390,768,844,1280,1920",
+  "scenarios": null,
+  "startedAt": "2026-11-01T14:15:40.126134+00:00",
+  "codeSHA": "88950437bc28a9557032df1181ebec67899c757a",
+  "log": "/workspace/bagelito-boutique-evidence-20261101/final-8895043/entry.log",
+  "pid": 67800,
+  "exitCode": 1,
+  "endedAt": "2026-11-01T14:16:57.317734+00:00",
+  "sourcesUnchanged": true
+}

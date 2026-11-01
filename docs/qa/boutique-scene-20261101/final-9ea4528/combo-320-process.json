@@ -1,0 +1,16 @@
+{
+  "stage": "combo-320",
+  "command": [
+    "node",
+    "scripts/qa-rebuilt-storefront.cjs"
+  ],
+  "widths": "320",
+  "scenarios": "combo",
+  "startedAt": "2026-11-01T14:20:32.122137+00:00",
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "log": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/combo-320.log",
+  "pid": 69592,
+  "exitCode": 0,
+  "endedAt": "2026-11-01T14:20:45.515109+00:00",
+  "sourcesUnchanged": true
+}

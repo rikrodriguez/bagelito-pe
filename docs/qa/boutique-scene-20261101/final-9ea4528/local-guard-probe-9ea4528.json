@@ -1,0 +1,15 @@
+{
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "scope": "Separate intentional loopback GET negative probe, not a browser application request. No POST or external provider.",
+  "status": 503,
+  "headers": {
+    "cache-control": "private, no-store, max-age=0",
+    "cdn-cache-control": "no-store",
+    "content-type": "application/json",
+    "x-content-type-options": "nosniff",
+    "Date": "Sun, 01 Nov 2026 14:20:29 GMT",
+    "Connection": "close",
+    "Transfer-Encoding": "chunked"
+  },
+  "body": "{\"ok\":false,\"reviewOnly\":true,\"error\":\"API disabled in image reference review.\"}"
+}

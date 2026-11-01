@@ -2,7 +2,6 @@
   "tool": "native image_gen__imagegen",
   "nativeCalls": 5,
   "selectedAssets": 4,
-  "referenceInputs": [],
   "externalPaidGenerationTools": [],
   "scope": "Independent conceptual architecture and food art; not verified product photography, recipes or inventory. PNG originals retained in generated_images; runtime derivatives lossless WebP. No reference screenshot/crops used as rendering assets. CSS room-only saturation/brightness styling differs from source pixels.",
   "assets": [
@@ -39,5 +38,10 @@
       "supersededOriginal": "/workspace/generated_images/exec-52e4873d-0ae7-485a-b8ed-a9ec94e1b5af.png",
       "direction": "Five steel pans3+2: white/golden/herb/beige/pink conceptual appearances based on current names. No sixth flavor, ingredient recipe verification, labels/UI or invented offer."
     }
-  ]
+  ],
+  "userReferenceImageInputs": [],
+  "ownGeneratedImageEditInput": {
+    "path": "/workspace/generated_images/exec-52e4873d-0ae7-485a-b8ed-a9ec94e1b5af.png",
+    "sha256": "9c8d9ba8e845f234b126dafa8ba1ba91b853371e0630bf08291d2de43ac6bcc1"
+  }
 }

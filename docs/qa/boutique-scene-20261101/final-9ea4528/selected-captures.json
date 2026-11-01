@@ -1,0 +1,113 @@
+{
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "captures": [
+    {
+      "case": "320-entry",
+      "state": "entry-gallery-loaded",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/320-entry-15-entry-gallery-loaded.png",
+      "sha256": "589be06c92751093eab41ae4730dc03d33a835056a39abdd5929280d6adef327"
+    },
+    {
+      "case": "320-entry",
+      "state": "entry-gallery-loaded",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/320-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "708982f0eadb897473e882a1f2912a830f5cf57d3461358de403c8d1e89fa9da"
+    },
+    {
+      "case": "768-entry",
+      "state": "entry-gallery-loaded",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/768-entry-15-entry-gallery-loaded.png",
+      "sha256": "edd3e4479e2b7e9b9df47891e4fbabb2a6d5eec61fa2253f173e77acf85a5c99"
+    },
+    {
+      "case": "768-entry",
+      "state": "entry-gallery-loaded",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/768-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "7feb83493a19c003cd8c765b1d53c272ea42a76a8096eba00e9748cdd3d26623"
+    },
+    {
+      "case": "844-entry",
+      "state": "entry-gallery-loaded",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/844-entry-15-entry-gallery-loaded.png",
+      "sha256": "dca7179d3169afb41b793b3fcc0fc491c9ff81e70510aa0cc9994b423949442e"
+    },
+    {
+      "case": "844-entry",
+      "state": "entry-gallery-loaded",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/844-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "487181bceae8dee8ff56479832e387691d01c0727238f9f0f130c39f3ef697db"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "state": "optional-selected",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-flavoured-07-optional-selected.png",
+      "sha256": "ae0eef39638a1c4f5fcbad7ca20931430da1d323018a2cd64397ec4d63eafd5f"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "state": "optional-selected",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-flavoured-07-optional-selected-full.png",
+      "sha256": "bc6f929880e7567927e2b0a7fa330a8f548753ecadd9861490023cf34d3b7fa9"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "state": "optional-deselected",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-flavoured-08-optional-deselected.png",
+      "sha256": "5040b56e25bbae20b9527fbad35230fd206b92527a7183891750c20ecd3f474c"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "state": "optional-deselected",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-flavoured-08-optional-deselected-full.png",
+      "sha256": "46abcf3280d68f0b6050adca0c6af226bed598ab53dd8ea43d0a14c15ef32067"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-flavoured-13-review-consented.png",
+      "sha256": "89267cb93fb9baf3e6b91bf0218e1191069178b8ba5992c3ab25b9a5c200499e"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-flavoured-13-review-consented-full.png",
+      "sha256": "46eea01921da12ba6389449709210077618133aa7a37245ed208583d133c7ffa"
+    },
+    {
+      "case": "390-pack-decline",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-decline-11-review-consented.png",
+      "sha256": "89267cb93fb9baf3e6b91bf0218e1191069178b8ba5992c3ab25b9a5c200499e"
+    },
+    {
+      "case": "390-pack-decline",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/390-pack-decline-11-review-consented-full.png",
+      "sha256": "ccf9202f3834dd00aa58144a708af37afdf7b254893769bc083dfa634ec186f1"
+    },
+    {
+      "case": "320-combo",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/320-combo-11-review-consented.png",
+      "sha256": "35eff8675e82e423f1ec437f5ab8458e1fed6a6776624bf9535d7aba734a0888"
+    },
+    {
+      "case": "320-combo",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/320-combo-11-review-consented-full.png",
+      "sha256": "843ab25b8cf7a6eb4c15903e37c594aa6f3b9d77620bfb32b3ad7feab4a7da96"
+    },
+    {
+      "case": "1280-schmear",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/1280-schmear-08-review-consented.png",
+      "sha256": "629ee24222e91345fd95f7dc0e5becb9f1be0533efc9cb6ee2626a5624d0818b"
+    },
+    {
+      "case": "1280-schmear",
+      "state": "review-consented",
+      "path": "docs/qa/boutique-scene-20261101/final-9ea4528/captures/1280-schmear-08-review-consented-full.png",
+      "sha256": "56ce0b7267c51129c9ef6071a8c1337a958622a6aeee1bd4a454ae1cc19538dc"
+    }
+  ]
+}

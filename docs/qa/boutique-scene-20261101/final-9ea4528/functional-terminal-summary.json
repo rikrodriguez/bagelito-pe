@@ -1,0 +1,162 @@
+{
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "status": "passed",
+  "stages": [
+    {
+      "stage": "entry",
+      "status": "passed",
+      "completed": {
+        "entryViewports": 6,
+        "categoryCallbacks": 18,
+        "vitrineCallbacks": 12,
+        "keyboardEntries": 6,
+        "decodedEntryPhotos": 48,
+        "productTextStates": 0,
+        "productTextCards": 0,
+        "secondaryStates": 0,
+        "completeJourneys": 0,
+        "legalNewTabs": 0,
+        "screenshots": 180
+      },
+      "failures": 0,
+      "reportSHA256": "67b0e49d8739dafe930307237120f4884bb748002b46d71877af92f5e37e334c"
+    },
+    {
+      "stage": "pack-390",
+      "status": "passed",
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "keyboardEntries": 0,
+        "decodedEntryPhotos": 0,
+        "productTextStates": 0,
+        "productTextCards": 0,
+        "secondaryStates": 0,
+        "completeJourneys": 2,
+        "legalNewTabs": 2,
+        "screenshots": 114
+      },
+      "failures": 0,
+      "reportSHA256": "1bfdb3ed21085aafc27a890e1a0112856bc4f5056ad6ebc3d5e69a6b9c035934"
+    },
+    {
+      "stage": "combo-320",
+      "status": "passed",
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "keyboardEntries": 0,
+        "decodedEntryPhotos": 0,
+        "productTextStates": 0,
+        "productTextCards": 0,
+        "secondaryStates": 0,
+        "completeJourneys": 1,
+        "legalNewTabs": 1,
+        "screenshots": 53
+      },
+      "failures": 0,
+      "reportSHA256": "ae6dddbda9117aa845d46f044dfde162100d273be5a30c75c26d7b252c59b0c5"
+    },
+    {
+      "stage": "schmear-1280",
+      "status": "passed",
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "keyboardEntries": 0,
+        "decodedEntryPhotos": 0,
+        "productTextStates": 0,
+        "productTextCards": 0,
+        "secondaryStates": 0,
+        "completeJourneys": 1,
+        "legalNewTabs": 1,
+        "screenshots": 41
+      },
+      "failures": 0,
+      "reportSHA256": "9483f17a9f9f7b001c7f78772fcfb8c753dd68dbe3e7e8108ab0bd7706bcf8de"
+    }
+  ],
+  "caseResults": [
+    {
+      "id": "390-entry",
+      "pass": true,
+      "completeJourney": false,
+      "legalNewTab": false
+    },
+    {
+      "id": "320-entry",
+      "pass": true,
+      "completeJourney": false,
+      "legalNewTab": false
+    },
+    {
+      "id": "1280-entry",
+      "pass": true,
+      "completeJourney": false,
+      "legalNewTab": false
+    },
+    {
+      "id": "768-entry",
+      "pass": true,
+      "completeJourney": false,
+      "legalNewTab": false
+    },
+    {
+      "id": "844-entry",
+      "pass": true,
+      "completeJourney": false,
+      "legalNewTab": false
+    },
+    {
+      "id": "1920-entry",
+      "pass": true,
+      "completeJourney": false,
+      "legalNewTab": false
+    },
+    {
+      "id": "390-pack-flavoured",
+      "pass": true,
+      "completeJourney": true,
+      "legalNewTab": true
+    },
+    {
+      "id": "390-pack-decline",
+      "pass": true,
+      "completeJourney": true,
+      "legalNewTab": true
+    },
+    {
+      "id": "320-combo",
+      "pass": true,
+      "completeJourney": true,
+      "legalNewTab": true
+    },
+    {
+      "id": "1280-schmear",
+      "pass": true,
+      "completeJourney": true,
+      "legalNewTab": true
+    }
+  ],
+  "screenshots": 388,
+  "mainPNG": 384,
+  "legalPNG": 4,
+  "verifiedPNGHashes": 388,
+  "missingOrMismatch": [],
+  "sourcesUnchangedThroughAllTerminalStages": true,
+  "frozenSourceFiles": 38,
+  "safety": {
+    "knownFrameworkReads": 14,
+    "capabilityErrors": 0,
+    "blockedRequests": 0,
+    "networkErrors": 0,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "callbackErrors": 0,
+    "documents": 14
+  },
+  "scope": "Six responsive entry contexts and four complete review-only journeys; not the historical full matrix."
+}
