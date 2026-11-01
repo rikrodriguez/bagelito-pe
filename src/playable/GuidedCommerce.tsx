@@ -680,6 +680,23 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         || index === 2 && (category === 'schmears' || bagelTotal === bagelTarget)
         || index === 3 && canReviewAtCashier))
 
+  // The reference artwork has category configuration before product selection.
+  // Keep its five labels aligned without changing the legacy journey mapping.
+  const referenceProgressIndex = ['entrance', 'selector'].includes(scene) ? 0
+    : ['pack-size', 'pack-qty', 'combos', 'schmear-size'].includes(scene) ? 1
+      : ['bagels', 'schmears', 'cross-sell'].includes(scene) ? 2
+        : scene === 'cashier' ? 3 : 4
+  const referenceAccessibleSteps = [true, !!category, !!category, canReviewAtCashier, false]
+    .map((available, index) => available && index <= referenceProgressIndex)
+
+  function jumpToReferenceStage(index: number) {
+    if (!canEditOrder || !referenceAccessibleSteps[index]) return
+    if (index === 0) setScene('selector')
+    if (index === 1 && category) setScene(category === 'packs' ? 'pack-size' : category === 'combos' ? 'combos' : 'schmear-size')
+    if (index === 2 && category) setScene(category === 'schmears' ? 'schmears' : 'bagels')
+    if (index === 3 && canReviewAtCashier) setScene('cashier')
+  }
+
   return <div className={'guided-commerce' + (referenceMode ? ' reference-mode' : '')} data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined} data-direct-catalog={directCatalog ? 'true' : undefined} data-reference-mode={referenceMode ? 'true' : undefined} data-review-only={reviewOnly ? 'true' : undefined}>
     {referenceMode && <ReferenceScene
       onCategory={(value) => {
@@ -691,9 +708,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       cartCount={visibleCartCount}
       menuOpen={menuOpen}
       cartOpen={cartOpen}
-      progressIndex={progressIndex}
-      accessibleSteps={accessibleSteps}
-      onStep={jumpToStage}
+      progressIndex={referenceProgressIndex}
+      accessibleSteps={referenceAccessibleSteps}
+      onStep={jumpToReferenceStage}
       dynamicChrome={!['entrance', 'selector'].includes(scene) || visibleCartCount > 0}
     />}
     {!referenceMode && !liveWorld && <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />}

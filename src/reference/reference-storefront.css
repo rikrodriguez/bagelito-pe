@@ -24,37 +24,37 @@
 .reference-review-note{max-width:900px;margin:14px auto;padding:10px 16px 24px;color:#5b6e85;font-size:12px;line-height:1.6;text-align:center}
 .reference-loyalty{max-width:700px;margin:20px auto;padding:20px;border:1px solid #c6d9ef;border-radius:20px;background:#eaf4ff;color:#004aad}
 .reference-loyalty small{font-size:10px;letter-spacing:.08em;font-weight:800}.reference-loyalty h2{font-size:22px}.reference-loyalty p{font-size:13px;line-height:1.5}
-.reference-mode .guided-store-menu-panel,.reference-mode .guided-store-cart-panel{position:fixed;z-index:140;top:70px!important;max-height:calc(100dvh - 90px);overflow:auto}
-.reference-mode .guided-store-menu-panel button,.reference-mode .guided-store-cart-panel button{min-height:44px}
-.reference-mode .guided-overlay-dismiss{position:fixed;inset:0;z-index:130}
-.reference-storefront .reference-mode .guided-journey-back{position:relative!important;inset:auto!important;margin:12px auto 0 12px;min-width:88px;min-height:44px;transform:none}
-body .reference-mode .guided-floating-panel,body .reference-mode .pack-config-panel,body .reference-mode .approved-combo-overlay,body .reference-mode .mobile-product-stage,body .reference-mode .guided-cashier-action{position:relative!important;inset:auto!important;transform:none!important;width:min(900px,calc(100% - 24px))!important;max-width:900px;height:auto!important;min-height:0;max-height:none!important;margin:12px auto;padding:20px;overflow:visible!important;background:#fffaf4;border:1px solid #dce5ee;border-radius:20px;box-shadow:0 5px 18px #1534530b}
-body .reference-mode .mobile-product-stage{display:flex!important;flex-direction:column;gap:14px}
-body .reference-mode .mobile-product-stage>header{min-height:44px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-body .reference-mode .mobile-product-stage>header h2{font-size:24px;margin:0}body .reference-mode .mobile-product-stage>header small{font-size:11px}
-body .reference-mode .mobile-bagel-grid,body .reference-mode .mobile-schmear-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-flow:row;grid-auto-columns:auto;gap:10px;height:auto;min-height:0;overflow:visible;scroll-snap-type:none;flex:none}
-body .reference-mode .mobile-bagel-card,body .reference-mode .mobile-schmear-card{display:flex;height:170px;min-height:170px;overflow:hidden}
-body .reference-mode .mobile-bagel-card>button,body .reference-mode .mobile-schmear-card>button{min-height:110px}
-body .reference-mode .bagel-live-summary,body .reference-mode .guided-order-counter{position:relative!important;inset:auto!important;transform:none!important;width:min(900px,calc(100% - 24px))!important;height:auto!important;min-height:70px;margin:12px auto;padding:12px!important;overflow:visible;display:flex!important;flex-direction:column;gap:7px}
-body .reference-mode .bagel-summary-lines{display:flex!important;flex-wrap:wrap;overflow:visible!important;gap:8px}
-body .reference-mode .bagel-summary-lines>span{font-size:13px;white-space:normal}
-body .reference-mode .guided-primary-next{position:relative!important;inset:auto!important;width:max-content;max-width:calc(100% - 24px);min-height:48px;margin:12px auto 22px;font-size:15px}
-body .reference-mode .guided-cashier-action{display:flex;flex-direction:column;gap:14px}
-body .reference-mode .guided-cashier-action>button{min-height:48px}
-body .reference-mode .guided-payment-gate{position:relative!important;inset:auto!important;width:min(760px,calc(100% - 24px));margin:16px auto;background:transparent;overflow:visible}
-body .reference-mode .guided-payment-sheet{width:100%;max-height:none;padding:20px}
-body .reference-mode .checkout-customer-grid input,body .reference-mode .checkout-customer-grid select{min-height:44px}
-body .reference-mode .checkout-terms-check{min-height:44px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-menu-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-cart-panel{position:fixed;z-index:140;top:70px!important;max-height:calc(100dvh - 90px);overflow:auto}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-menu-panel button,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-cart-panel button{min-height:44px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-overlay-dismiss{position:fixed;inset:0;z-index:130}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-journey-back{position:relative!important;inset:auto!important;margin:12px auto 0 12px;min-width:88px;min-height:44px;transform:none}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-floating-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-config-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{position:relative!important;inset:auto!important;transform:none!important;width:min(900px,calc(100% - 24px))!important;max-width:900px;height:auto!important;min-height:0;max-height:none!important;margin:12px auto;padding:20px;overflow:visible!important;background:#fffaf4;border:1px solid #dce5ee;border-radius:20px;box-shadow:0 5px 18px #1534530b}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage{display:flex!important;flex-direction:column;gap:14px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header{min-height:44px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header h2{font-size:24px;margin:0}.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header small{font-size:11px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-flow:row;grid-auto-columns:auto;gap:10px;height:auto;min-height:0;overflow:visible;scroll-snap-type:none;flex:none}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{display:flex;height:170px;min-height:170px;overflow:hidden}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button{min-height:110px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .bagel-live-summary,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-order-counter{position:relative!important;inset:auto!important;transform:none!important;width:min(900px,calc(100% - 24px))!important;height:auto!important;min-height:70px;margin:12px auto;padding:12px!important;overflow:visible!important;display:flex!important;flex-direction:column;gap:7px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .bagel-summary-lines{display:flex!important;flex-wrap:wrap;overflow:visible!important;gap:8px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .bagel-summary-lines>span{font-size:13px;white-space:normal}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-primary-next{position:relative!important;inset:auto!important;width:max-content;max-width:calc(100% - 24px);min-height:48px;margin:12px auto 22px;font-size:15px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{display:flex;flex-direction:column;gap:14px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action>button{min-height:48px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-gate{position:relative!important;inset:auto!important;width:min(760px,calc(100% - 24px));margin:16px auto;padding:0!important;height:auto!important;min-height:0!important;max-height:none!important;background:transparent;overflow:visible!important}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-sheet{width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:20px!important}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid input,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid select{min-height:44px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check{min-height:44px}
 @media(max-width:800px){
   .reference-mobile-tools{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:8px 12px;background:#fffaf4}
   .reference-mobile-tools button{min-height:44px;padding:8px 16px;border:1px solid #b9cde5;border-radius:999px;background:#fff;color:#004aad;font-weight:700}
   .reference-mobile-tools span{font-size:11px;color:#5b6e85}
-  body .reference-mode .mobile-bagel-grid,body .reference-mode .mobile-schmear-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  body .reference-mode .mobile-bagel-card,body .reference-mode .mobile-schmear-card{height:180px;min-height:180px}
-  body .reference-mode .mobile-product-stage>header{display:flex;grid-template-columns:none;grid-template-rows:none}
-  body .reference-mode .mobile-product-stage>header>span{font-size:12px;max-width:none}
-  body .reference-mode .guided-floating-panel,body .reference-mode .pack-config-panel,body .reference-mode .approved-combo-overlay,body .reference-mode .mobile-product-stage,body .reference-mode .guided-cashier-action{padding:12px}
-  body .reference-mode .pack-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:none}
-  body .reference-mode .checkout-customer-grid{grid-template-columns:1fr}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{height:180px;min-height:180px}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header{display:flex;grid-template-columns:none;grid-template-rows:none}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header>span{font-size:12px;max-width:none}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-floating-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-config-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{padding:12px}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:none}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid{grid-template-columns:1fr}
   .reference-review-note{font-size:11px;margin-top:4px}
 }
