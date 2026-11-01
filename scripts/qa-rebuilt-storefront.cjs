@@ -37,19 +37,20 @@ const sizes = [
   {width: 768, height: 1024, touch: true},
   {width: 1024, height: 768, touch: true},
   {width: 844, height: 390, touch: true},
+  {width: 1536, height: 1024, touch: false}, // Reference anchors; entry only, never extra journey coverage.
   {width: 1920, height: 1080, touch: false},
 ]
 assert.ok(!process.env.QA_WIDTHS || !process.env.QA_EXACT_WIDTH || process.env.QA_WIDTHS === process.env.QA_EXACT_WIDTH, 'QA_WIDTHS and legacy QA_EXACT_WIDTH must agree')
 const widthInput = process.env.QA_WIDTHS || process.env.QA_EXACT_WIDTH || (profile === 'text' || profile === 'secondary' ? '390,320,1280' : null)
 const widths = widthInput?.split(',').map(Number)
 const viewports = widths ? sizes.filter(size => widths.includes(size.width)) : sizes
-assert.ok(viewports.length && (!widths || widths.length === viewports.length), 'QA_WIDTHS must be drawn from 320,390,768,844,1024,1280,1920')
+assert.ok(viewports.length && (!widths || widths.length === viewports.length), 'QA_WIDTHS must be drawn from 320,390,768,844,1024,1280,1536,1920')
 const journeyScenarios = ['pack-decline', 'pack-original', 'pack-flavoured', 'combo', 'schmear']
 const defaultScenarios = ['entry', ...journeyScenarios]
 const allScenarios = [...defaultScenarios, 'product-text', 'secondary']
-// Five category images, one responsive room and two independent food-case images.
-// The former 18-image gallery rendered eight isolated bagels and five bowls.
-const entryPhotoCount = 8
+// Three category images, one responsive room and one shared counter texture.
+// Two SVG windows reuse the NEW counter texture on mobile; they are not HTML img.
+const entryPhotoCount = 5
 const scenarios = profile ? [profile === 'text' ? 'product-text' : profile] : process.env.QA_SCENARIOS ? process.env.QA_SCENARIOS.split(',') : defaultScenarios
 assert.ok(scenarios.length && new Set(scenarios).size === scenarios.length && scenarios.every(value => allScenarios.includes(value)), 'Unknown or duplicate QA scenario')
 // The extended tablet/landscape scope is entry plus the complete decline path.
@@ -103,6 +104,8 @@ const report = {
     vitrineCallbacks: scenarios.includes('entry') ? viewports.length * 2 : 0,
     keyboardEntries: scheduledCases.filter(value => value.scenario === 'entry').length,
     decodedEntryPhotos: scheduledCases.filter(value => value.scenario === 'entry').length * entryPhotoCount,
+    mobileSVGWindows: scheduledCases.filter(value => value.scenario === 'entry' && value.viewport.width <= 1050).length * 2,
+    referenceAnchorViewports: scheduledCases.filter(value => value.scenario === 'entry' && value.viewport.width === 1536).length,
     productTextStates: scheduledCases.filter(value => value.scenario === 'product-text').length * 6,
     productTextCards: scheduledCases.filter(value => value.scenario === 'product-text').length * 30,
     secondaryStates: scheduledCases.filter(value => value.scenario === 'secondary').length * 12,
@@ -350,40 +353,134 @@ async function runCase(browser, viewport, scenario) {
         await menuReset()
       }
       const photos = page.locator('.rebuilt-store img')
-      assert.equal(await photos.count(), entryPhotoCount, 'Entry must include all five category images, the room and both food cases')
-      assert.equal(await page.locator('.rebuilt-categories img').count(), 5, 'Keep every category product image')
+      assert.equal(await photos.count(), entryPhotoCount, 'Entry must include three category images, one responsive room and one shared counter texture')
+      assert.equal(await page.locator('.rebuilt-categories img').count(), 3, 'Keep one real image per category')
       const portraitRoom = viewport.width <= 1050
       const artRoles = [
-        {selector: '.rebuilt-room-photo', pathname: portraitRoom ? '/images/rebuilt-boutique-room-mobile.webp' : '/images/rebuilt-boutique-room.webp', width: portraitRoom ? 1024 : 1536, height: portraitRoom ? 1536 : 1024, medium: 'independent-architectural-concept'},
-        {selector: '.rebuilt-bagel-case-photo', pathname: '/images/rebuilt-bagel-trays.webp', width: 1536, height: 1024, medium: 'independent-product-concept'},
-        {selector: '.rebuilt-schmear-case-photo', pathname: '/images/rebuilt-schmear-trays.webp', width: 1536, height: 1024, medium: 'independent-product-concept'},
+        {selector: '.rebuilt-room-photo', pathname: portraitRoom ? '/images/rebuilt-aligned-room-mobile.webp' : '/images/rebuilt-aligned-room.webp', width: portraitRoom ? 1024 : 1536, height: portraitRoom ? 1536 : 1024, medium: 'reference-guided-architectural-concept', visible: true, proportionalBox: true},
+        {selector: '.rebuilt-counter-photo', pathname: '/images/rebuilt-aligned-counter.webp', width: 2020, height: 778, medium: 'reference-guided-product-concept', visible: !portraitRoom, proportionalBox: true},
+        {selector: '.rebuilt-combo-photo', pathname: '/images/rebuilt-aligned-combo.webp', width: 1683, height: 935, medium: 'reference-guided-product-concept', visible: true, proportionalBox: false},
       ]
       for (const role of artRoles) assert.equal(await page.locator(role.selector).count(), 1, 'One explicit image required for ' + role.selector)
+      const htmlPhotoRoles = [
+        {role: 'room', selector: '.rebuilt-room-photo', paths: [artRoles[0].pathname]},
+        {role: 'category-packs', selector: '.rebuilt-categories .rebuilt-pack-photo', paths: ['/images/rebuilt-pack-bagels-480.webp', '/images/rebuilt-pack-bagels-800.webp', '/images/rebuilt-pack-bagels.webp']},
+        {role: 'category-combos', selector: '.rebuilt-categories .rebuilt-combo-photo', paths: [artRoles[2].pathname]},
+        {role: 'category-schmears', selector: '.rebuilt-categories .rebuilt-schmear-visual img', paths: ['/images/rebuilt-schmear-bowl-480.webp', '/images/rebuilt-schmear-bowl-800.webp', '/images/rebuilt-schmear-bowl.webp']},
+        {role: 'shared-counter', selector: '.rebuilt-counter-photo', paths: [artRoles[1].pathname]},
+      ]
+      record.decodedEntryImages = []
       for (const photo of await photos.all()) {
-        await photo.scrollIntoViewIfNeeded()
+        // The shared HTML counter is hidden on mobile; its visible SVG windows
+        // reuse these same bytes. Decode it without changing CSS or scrolling it.
+        if (await photo.isVisible()) await photo.scrollIntoViewIfNeeded()
         await photo.evaluate(async image => {await image.decode(); if (!image.complete || !image.naturalWidth) throw new Error('Visible product did not decode: ' + image.currentSrc)})
+      }
+      for (const role of htmlPhotoRoles) {
+        assert.equal(await page.locator(role.selector).count(), 1, 'One exact HTML image required for ' + role.role)
+        const image = await page.locator(role.selector).evaluate(element => ({source: element.currentSrc, pathname: new URL(element.currentSrc).pathname,
+          naturalWidth: element.naturalWidth, naturalHeight: element.naturalHeight, medium: element.closest('[data-art-medium]')?.dataset.artMedium || null}))
+        assert.ok(role.paths.includes(image.pathname), 'Unexpected entry source for ' + role.role + ': ' + image.pathname)
+        record.decodedEntryImages.push({role: role.role, selector: role.selector, ...image})
       }
       record.entryArt = []
       for (const role of artRoles) {
         const image = await page.locator(role.selector).evaluate(element => {
           const rect = element.getBoundingClientRect(), style = getComputedStyle(element)
+          let visible = rect.width > 0 && rect.height > 0
+          for (let parent = element; parent; parent = parent.parentElement) {
+            const value = getComputedStyle(parent)
+            if (value.display === 'none' || value.visibility !== 'visible' || Number(value.opacity) === 0) visible = false
+          }
           return {source: element.currentSrc, pathname: new URL(element.currentSrc).pathname, medium: element.dataset.artMedium,
             naturalWidth: element.naturalWidth, naturalHeight: element.naturalHeight, renderedWidth: rect.width, renderedHeight: rect.height,
-            objectFit: style.objectFit, devicePixelRatio,
-            sourcePixelsPerRenderedCSSPixel: {x: element.naturalWidth / rect.width, y: element.naturalHeight / rect.height}}
+            visible, objectFit: style.objectFit, objectPosition: style.objectPosition, devicePixelRatio,
+            sourcePixelsPerRenderedCSSPixel: visible ? {x: element.naturalWidth / rect.width, y: element.naturalHeight / rect.height} : null}
         })
-        assert.equal(image.pathname, role.pathname, 'Responsive scene must select the appropriate independent asset')
+        assert.equal(image.pathname, role.pathname, 'Responsive scene must select the appropriate reference-guided asset')
         assert.equal(image.medium, role.medium, 'Preserve explicit conceptual-art provenance')
         assert.equal(image.naturalWidth, role.width); assert.equal(image.naturalHeight, role.height)
-        assert.ok(image.renderedWidth > 0 && image.renderedHeight > 0, 'Scene art must have a real rendered area')
-        assert.notEqual(image.objectFit, 'cover', 'Do not crop room or food-case art with object-fit:cover')
-        assert.ok(Math.abs(image.renderedWidth - image.renderedHeight * image.naturalWidth / image.naturalHeight) <= .5,
-          'Room and food-case image boxes must preserve the intrinsic aspect ratio')
+        assert.equal(image.visible, role.visible, 'Only the shared counter HTML image may be hidden, and only on mobile')
+        assert.ok(['fill', 'contain', 'scale-down'].includes(image.objectFit), 'No cover/none cropping of the HTML scene images')
+        if (image.visible && (role.proportionalBox || image.objectFit === 'fill')) {
+          assert.ok(Math.abs(image.renderedWidth - image.renderedHeight * image.naturalWidth / image.naturalHeight) <= .5,
+            'Room/counter or fill-mode images must preserve the intrinsic aspect ratio')
+        }
+        if (image.visible && !role.proportionalBox) assert.equal(image.objectFit, 'contain', 'The combo must letterbox proportionally within its allocated art region')
         record.entryArt.push({selector: role.selector, ...image})
       }
+      record.mobileCaseWindows = await page.locator('.rebuilt-mobile-case-art').evaluateAll(elements => elements.map(svg => {
+        const rect = svg.getBoundingClientRect(), box = svg.viewBox.baseVal, image = svg.querySelector('image')
+        const aspect = value => ({align: value.align, meetOrSlice: value.meetOrSlice})
+        return {viewBox: [box.x, box.y, box.width, box.height], visible: rect.width > 0 && rect.height > 0 && getComputedStyle(svg).display !== 'none',
+          renderedWidth: rect.width, renderedHeight: rect.height, preserveAspectRatio: aspect(svg.preserveAspectRatio.baseVal),
+          imageCount: svg.querySelectorAll('image').length, source: image?.href.baseVal || null,
+          imageWidth: image?.width.baseVal.value, imageHeight: image?.height.baseVal.value,
+          imagePreserveAspectRatio: image ? aspect(image.preserveAspectRatio.baseVal) : null}
+      }))
+      assert.equal(record.mobileCaseWindows.length, 2, 'Keep exactly two mobile SVG windows over the new counter texture')
+      assert.equal(await page.locator('.rebuilt-store svg image').count(), 2, 'No additional SVG image sources')
+      for (const [index, window] of record.mobileCaseWindows.entries()) {
+        assert.deepEqual(window.viewBox, index ? [1165, 169, 855, 493] : [0, 169, 1165, 493])
+        assert.equal(window.imageCount, 1); assert.equal(window.source, '/images/rebuilt-aligned-counter.webp')
+        assert.equal(window.imageWidth, 2020); assert.equal(window.imageHeight, 778)
+        assert.equal(window.visible, portraitRoom, 'SVG windows must be visible only at the mobile/tablet breakpoint')
+        for (const aspect of [window.preserveAspectRatio, window.imagePreserveAspectRatio]) {
+          assert.notEqual(aspect.align, 1, 'SVG preserveAspectRatio=none would distort the new food art')
+          assert.equal(aspect.meetOrSlice, 1, 'SVG windows must meet, not slice/cover, their intentional source window')
+        }
+        if (window.visible) assert.ok(Math.abs(window.renderedWidth - window.renderedHeight * window.viewBox[2] / window.viewBox[3]) <= .5,
+          'Mobile SVG viewport must preserve its explicit source-window aspect ratio')
+      }
       await page.evaluate(() => window.scrollTo({top: 0, behavior: 'instant'}))
+      // Read pixels into an unattached QA canvas. No DOM/asset/loading changes,
+      // writes or new requests. These alpha bounds are NOT a fidelity assertion.
+      record.counterArtAudit = await page.locator('.rebuilt-counter-photo').evaluate(image => {
+        const canvas = document.createElement('canvas'); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight
+        const context = canvas.getContext('2d', {willReadFrequently: true}); context.drawImage(image, 0, 0)
+        const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data
+        const bounds = [1, 16].map(threshold => ({threshold, x: canvas.width, y: canvas.height, right: -1, bottom: -1}))
+        for (let y = 0; y < canvas.height; y++) for (let x = 0; x < canvas.width; x++) {
+          const alpha = pixels[(y * canvas.width + x) * 4 + 3]
+          for (const box of bounds) if (alpha >= box.threshold) {box.x = Math.min(box.x, x); box.y = Math.min(box.y, y); box.right = Math.max(box.right, x + 1); box.bottom = Math.max(box.bottom, y + 1)}
+        }
+        const rect = image.getBoundingClientRect(), visible = rect.width > 0 && rect.height > 0, scale = visible ? rect.width / image.naturalWidth : null
+        return {method: 'Off-DOM readback of the already-decoded NEW counter asset; alpha>=1 and alpha>=16 are separate measurements, not acceptance thresholds.',
+          naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight,
+          alphaBounds: bounds.map(box => ({...box, width: box.right - box.x, height: box.bottom - box.y})),
+          renderedImageBox: visible ? {x: rect.x, y: rect.y, width: rect.width, height: rect.height} : null,
+          nominalSourceWindow: {x: 0, y: 169, width: 2020, height: 493},
+          renderedNominalWindow: visible ? {x: rect.x, y: rect.y + 169 * scale, width: rect.width, height: 493 * scale} : null,
+          sourceSplit: {bagels: 1165 / 2020, schmears: 855 / 2020},
+          scope: 'Nominal DOM anchor, full alpha bounds, stronger alpha band and source-window split differ. Container matching does not certify visual fidelity.'}
+      })
+      if (viewport.width === 1536) {
+        record.referenceAnchors = await page.evaluate(() => {
+          const expected = [
+            ['.rebuilt-store', {x: 0, y: 0, width: 1536, height: 1024}],
+            ['.rebuilt-brand', {x: 460, y: 45, width: 780, height: 243.75}],
+            ['.rebuilt-hero', {x: 493, y: 270, width: 706.56, height: 66}],
+            ['.rebuilt-categories', {x: 395, y: 350, width: 835, height: 234}],
+            ['.rebuilt-counter', {x: 90, y: 600, width: 1440, height: 300}],
+            ['.rebuilt-progress', {x: 465, y: 916, width: 605, height: 79}],
+          ]
+          const failures = [], anchors = expected.map(([selector, target]) => {
+            const elements = document.querySelectorAll(selector)
+            if (elements.length !== 1) {failures.push({selector, count: elements.length}); return {selector, target}}
+            const rect = elements[0].getBoundingClientRect(), actual = {x: rect.x, y: rect.y, width: rect.width, height: rect.height}
+            for (const [field, value] of Object.entries(target)) if (Math.abs(actual[field] - value) > 1) failures.push({selector, field, expected: value, actual: actual[field]})
+            return {selector, target, actual}
+          })
+          const headlineFont = parseFloat(getComputedStyle(document.querySelector('.rebuilt-hero h1')).fontSize)
+          if (Math.abs(headlineFont - 60) > 1) failures.push({selector: '.rebuilt-hero h1', field: 'fontSize', expected: 60, actual: headlineFont})
+          const svg = document.querySelector('.rebuilt-wordmark'), ink = svg.getBBox()
+          return {toleranceCSSPx: 1, anchors, headlineFont, wordmarkLocalGeometry: {x: ink.x, y: ink.y, width: ink.width, height: ink.height},
+            geometryScope: 'Nominal DOM anchors from the1536x1024 reference spec. SVG geometry excludes exact painted ink/antialias; counter alpha and source-window band are reported separately. No fidelity score.', failures, pass: failures.length === 0}
+        })
+        for (const issue of record.referenceAnchors.failures) failure({referenceAnchor: issue}, record)
+      }
       record.decodedPhotos = await photos.count(); await capture('entry-gallery-loaded')
-      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-gallery', 'responsive-independent-room', 'independent-abundant-food-cases', 'intrinsic-art-ratios', 'recorded-source-pixel-density', 'empty-cart', 'menu', 'reset')
+      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-five-html-images', 'reference-guided-art-provenance', 'two-mobile-svg-source-windows', 'proportional-image-rendering', 'recorded-source-pixel-density', 'counter-alpha-separate-from-anchor', 'empty-cart', 'menu', 'reset')
       return
     }
     if (scenario === 'product-text') {
@@ -587,6 +684,8 @@ async function main() {
       vitrineCallbacks: report.cases.reduce((sum, record) => sum + record.vitrineCallbacks.length, 0),
       keyboardEntries: report.cases.filter(record => record.keyboardEntry).length,
       decodedEntryPhotos: report.cases.reduce((sum, record) => sum + (record.decodedPhotos || 0), 0),
+      mobileSVGWindows: report.cases.reduce((sum, record) => sum + (record.mobileCaseWindows || []).filter(window => window.visible).length, 0),
+      referenceAnchorViewports: report.cases.filter(record => record.referenceAnchors).length,
       productTextStates: report.cases.reduce((sum, record) => sum + record.productTextStates.length, 0),
       productTextCards: report.cases.reduce((sum, record) => sum + record.productTextStates.reduce((cards, state) => cards + state.cards, 0), 0),
       secondaryStates: report.cases.reduce((sum, record) => sum + record.secondaryStates.length, 0),

@@ -160,7 +160,7 @@ export function ReferenceScene(props: Props) {
     <div className="rebuilt-counter" aria-label="Nuestros bagels y schmears">
       <img className="rebuilt-counter-photo" src="/images/rebuilt-aligned-counter.webp" width={2020} height={778} alt="" decoding="async" data-art-medium="reference-guided-product-concept" />
       <section className="rebuilt-display rebuilt-bagel-display" aria-label="Vitrina de bagels">
-        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('packs')}><span className="reference-sr-only">Elige tus bagels</span><Arrow /></button>
+        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('packs')}><span className="rebuilt-case-label">Elige tus bagels</span><Arrow /></button>
         <svg className="rebuilt-mobile-case-art" viewBox="0 169 1165 493" aria-hidden="true"><image href="/images/rebuilt-aligned-counter.webp" width={2020} height={778} /></svg>
         <div className="rebuilt-bagel-trays">
           {bagels.map(item => <figure className="rebuilt-bagel-tray rebuilt-product-placard" key={item.id} style={placardStyle(item.id, 'bagel')}>
@@ -169,7 +169,7 @@ export function ReferenceScene(props: Props) {
         </div>
       </section>
       <section className="rebuilt-display rebuilt-schmear-display" aria-label="Vitrina de schmears">
-        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('schmears')}><span className="reference-sr-only">Descubre los sabores</span><Arrow /></button>
+        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('schmears')}><span className="rebuilt-case-label">Descubre los sabores</span><Arrow /></button>
         <svg className="rebuilt-mobile-case-art" viewBox="1165 169 855 493" aria-hidden="true"><image href="/images/rebuilt-aligned-counter.webp" width={2020} height={778} /></svg>
         <div className="rebuilt-schmear-trays">
           {schmears.map(item => <figure key={item.id} className={`rebuilt-schmear-tray rebuilt-product-placard rebuilt-flavour-${item.id}`} style={placardStyle(item.id, 'schmear')}>

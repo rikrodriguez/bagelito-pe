@@ -82,3 +82,17 @@
 
 .rebuilt-progress>button>i{display:flex;align-items:center;justify-content:center}
 .rebuilt-progress>button>i>svg{display:block;width:24px;height:24px}
+
+/* Explicit source-text placards and a visible mobile action; no enlarged-image UI. */
+.rebuilt-case-label{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:1050px){
+ .rebuilt-counter .rebuilt-display{margin-bottom:50px}
+ .rebuilt-counter .rebuilt-product-placard{width:23%}
+ .rebuilt-counter .rebuilt-schmear-tray{width:28%}
+ .rebuilt-counter .rebuilt-product-placard figcaption{padding:2px 3px;background:#fffdf4;border-radius:1px;font-size:clamp(14px,1.5cqw,18px);line-height:1.1;font-variation-settings:"wdth" 85,"wght" 600;font-weight:600}
+ .rebuilt-counter .rebuilt-case-label{left:0;top:calc(100% + 6px);display:flex;align-items:center;justify-content:center;width:100%;height:44px;margin:0;padding:4px 48px 4px 12px;overflow:visible;clip-path:none;white-space:normal;border:1px solid #ffffffd9;border-radius:999px;background:#fffdf4;color:#004aad;font-size:15px;font-weight:700;line-height:1.2;box-shadow:0 2px 9px #5e48301a}
+ .rebuilt-counter .rebuilt-case-link>.rebuilt-arrow{top:calc(100% + 6px);right:0;background:transparent;box-shadow:none}
+ .rebuilt-counter .rebuilt-case-link:focus-visible .rebuilt-case-label{outline:3px solid #004aad;outline-offset:3px}
+}
+
+@media(max-width:640px){.rebuilt-counter .rebuilt-product-placard figcaption{font-size:16px}}
