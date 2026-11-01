@@ -1,0 +1,63 @@
+{
+  "archivedAt": "2026-11-01T00:32:44.954Z",
+  "applicationSourceCommit": "fe4c3ec460a9fb7bdd33cd2e6ebaec8156db9ecc",
+  "archiveWorkspaceHEAD": "f7bc3cd234391c63dada7573595ff9b7b926d312",
+  "applicationSourceDiffSinceRecordedCommit": "",
+  "guardSourceSHA256": "1016d6e467145286c73de2c8a69cda129298a1d5fd9b72b90f4eba7388d8a3e9",
+  "currentGuardSourceMatchesRecordedCommit": true,
+  "nitroVersion": "3.0.260903-beta",
+  "fixtureBundleSHA256": "583c16aa2a1f0cfdd5470f155656b5cf6f3eeeefa99aab0dcfe452f70a5e34d8",
+  "fixture": {
+    "kind": "separate-built-Nitro-fixture-with-in-memory-downstream-counter",
+    "businessModulesImported": false,
+    "databaseOrProviderUsed": false,
+    "flagTruePassed": true,
+    "flagFalsePassed": true,
+    "falseFlagAppOrFinancialExecution": false,
+    "originalExecutionBeforeRecordedCommit": true,
+    "sourceRelationship": "Guard bytes match the recorded commit; the fixture was executed earlier, before that commit existed."
+  },
+  "actualApplicationCheck": {
+    "url": "http://127.0.0.1:3208/api/batch",
+    "method": "GET",
+    "status": 503,
+    "reviewOnly": true,
+    "observedAt": "2026-11-01T00:30:42Z",
+    "applicationBuildDeclaredByParent": "fe4c3ec460a9fb7bdd33cd2e6ebaec8156db9ecc",
+    "appFlagFalseTested": false,
+    "otherAPIRequestsExecutedForThisArchive": false
+  },
+  "nodeSuite": {
+    "command": "QA_HDR_FIXTURE_PATH=/path/to/pinned.hdr node --test tests/*.test.cjs",
+    "passed": 58,
+    "failed": 0,
+    "skipped": 0,
+    "browserExecuted": false
+  },
+  "originalFilesSHA256": {
+    "original/results.json": "109a2fdd23b116db7389d36f1160709743c786098227156eca1bd533ec6dc3d6",
+    "original/server-true.log": "07fcdb1cbea5ff779ceb1f7d8bf554ec944cc328915712701813d3129761cd3a",
+    "original/server-false.log": "07fcdb1cbea5ff779ceb1f7d8bf554ec944cc328915712701813d3129761cd3a",
+    "original/probe.cjs": "9495bfd8f20c1525c9ec00dbedb8acfd33d740f4034f404e68e6d7e951a42195",
+    "original/nitro.config.ts": "f6c0a50e5d7caa6ce7ffcb1441adf551894e3c12d41a778d1d5154ffe1c56924",
+    "original/downstream.ts": "e1fb1e3a0d9fc2b570bdc7aa5e011263c0edfb9cc2813ff5f24310169b7349c5",
+    "original/package.json": "ca1cf4fe69e8a7b9c8879ad1f330e0d940cda9dd62ef2ac00c3d65ce028a68d7",
+    "original/build.log": "9003752a090b55797efdbf8d539c8193282183d669451e1311f178197940d0a2",
+    "original/probe.stdout.log": "f44ba0a0244c29db3593bfd482b8f7c41a1feb6197c984d519b88b53f04a9f1a",
+    "original/guard-unit6.log": "740e80f306e27687ed0b3477939a42dd7b3759be7af8cb93cb221959116ef468",
+    "node58.log": "fb25cc5886e5dc9791956052f740b8ad3900ce9b70960a55ee86fd8fe8405ea3",
+    "app-3208-api-batch.headers": "7464fe8c7ed48552c2295995ee9137dd3cf7164207fedc19b9bcef728c8a209f",
+    "app-3208-api-batch.body": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+    "source/reference-review-guard.server.ts": "1016d6e467145286c73de2c8a69cda129298a1d5fd9b72b90f4eba7388d8a3e9",
+    "source/vite.config.ts": "af546f3228201a21f813d8ab51aa14cf3f9b4edb238dfca1b89f4a06936cc1c6",
+    "source/reference-review-guard.test.cjs": "784a3260cdcf41b59ff8e8b7f5eb9aa31c30fe535453f5ce035ed4d0428c8f3f"
+  },
+  "fixtureBundleFilesSHA256": {
+    "nitro.json": "e7be3605f506cb97b04568d47a91db4138ddf13becd4ff151b3080e54a90b8ab",
+    "server/_libs/h3+rou3+srvx.mjs": "7e3b596fd813a645d356bd95ea1187e9598e0d68652c0867b97bb1979f8c930b",
+    "server/_libs/hookable.mjs": "b09f168e6f31841f3adb5aa1b2206dd7606b969a08380a0105329a42bb3df140",
+    "server/index.mjs": "583c16aa2a1f0cfdd5470f155656b5cf6f3eeeefa99aab0dcfe452f70a5e34d8"
+  },
+  "reproductionDriverSHA256": "47f635f446e5e66e26682cc607f84f09b3956032b230845a3e30c804d4f85bf5",
+  "reproductionDriverValidation": "node --check PASS; not executed during archival"
+}

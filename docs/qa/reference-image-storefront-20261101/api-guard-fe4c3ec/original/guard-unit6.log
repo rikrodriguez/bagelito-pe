@@ -1,0 +1,14 @@
+✔ review mode stops every HTTP method before downstream effects (9.955091ms)
+✔ all existing API families and canonical API paths are covered (3.168732ms)
+✔ landing, image assets, and unrelated prefixes remain available (1.521121ms)
+✔ false or absent flag leaves downstream behavior unchanged (2.082143ms)
+✔ flag is read at request time rather than frozen by the build/import (1.297436ms)
+✔ Nitro registers the guard as global middleware outside the financial routes (0.441703ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 324.294761

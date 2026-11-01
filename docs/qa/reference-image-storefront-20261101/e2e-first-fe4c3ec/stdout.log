@@ -1,0 +1,7 @@
+{"at":"2026-11-01T00:32:35.473Z","type":"exact-image-captured","width":390,"file":"390-exact-storefront.png"}
+{"at":"2026-11-01T00:32:37.379Z","type":"flow-captured","width":390,"name":"upsell-selected","file":"390-upsell-selected.png","sha256":"aae98b9c6a71b22dbe933e9e509ea1c3b451c1f098deb9af94f7594f212d88fb"}
+{"at":"2026-11-01T00:32:37.513Z","type":"flow-captured","width":390,"name":"upsell-deselected","file":"390-upsell-deselected.png","sha256":"6f3c9ab1bab553902d1e58b8276290084da1aed571d2f9ad92b4c5a4ac3fcc1e"}
+{"at":"2026-11-01T00:32:37.978Z","type":"flow-captured","width":390,"name":"cashier","file":"390-cashier.png","sha256":"5fb7e724e2dfd2db06a180fe829ee1c409cb81c35aa8eb162a4a7949bf6a76c6"}
+{"at":"2026-11-01T00:32:58.077Z","type":"case-failed","width":390,"message":"TimeoutError: locator.selectOption: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Distrito', { exact: true })\u001b[22m\n"}
+{"at":"2026-11-01T00:32:58.132Z","type":"capabilities-drained","width":390,"knownFrameworkReads":1,"forbidden":0}
+1 image cases; 1 failures

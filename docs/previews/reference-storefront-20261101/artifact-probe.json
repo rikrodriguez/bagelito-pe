@@ -1,0 +1,121 @@
+{
+  "applicationSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "archiveSHA256": "a8429039f9b911094b76dfb794692c6d1f07750ded8dddf16d3607ebf86c9f48",
+  "node": "v24.19.0",
+  "startedAt": "2026-11-01T00:37:22.373Z",
+  "requests": [
+    {
+      "port": 3210,
+      "route": "/",
+      "status": 200,
+      "bytes": 5494,
+      "sha256": "6a5ba651be181e592dcdb6d88853465396e74938f8a530a84068f74129433531",
+      "cacheControl": null,
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/images/store-reference-approved.webp",
+      "status": 200,
+      "bytes": 328894,
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "cacheControl": null,
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/index-B-tAIt2X.css",
+      "status": 200,
+      "bytes": 1610,
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/ReferenceStorefront-CF3L9wuz.css",
+      "status": 200,
+      "bytes": 99472,
+      "sha256": "0b8a757f212e5fe36080bca2bfdd3bb3a77c276385969b963849bc1d84eea5f0",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/index-aRb2m3Gb.js",
+      "status": 200,
+      "bytes": 341955,
+      "sha256": "516b8e18daf86acca55cea8365f0a2b723e39c58525b2784da01b810fae37833",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/routes-BSbH2qWw.js",
+      "status": 200,
+      "bytes": 162,
+      "sha256": "1242b226367d8cb5533059f1eda4d4e846f6bf8429fa97201b34428cdafd4280",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/ReferenceStorefront-BMQQ7NiK.js",
+      "status": 200,
+      "bytes": 60058,
+      "sha256": "2b0bf37bd3ec7e121ca626f28662cb72d1d8cdb849273777cbe1ef57aca61fc6",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/legal-version-BguVS3S4.js",
+      "status": 200,
+      "bytes": 34,
+      "sha256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/assets/index-aRb2m3Gb.js",
+      "status": 200,
+      "bytes": 341955,
+      "sha256": "516b8e18daf86acca55cea8365f0a2b723e39c58525b2784da01b810fae37833",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/api/batch",
+      "status": 503,
+      "bytes": 80,
+      "sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "cacheControl": "private, no-store, max-age=0",
+      "setCookie": null
+    },
+    {
+      "port": 3210,
+      "route": "/api/payments/culqi/config",
+      "status": 503,
+      "bytes": 80,
+      "sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "cacheControl": "private, no-store, max-age=0",
+      "setCookie": null
+    },
+    {
+      "port": 3211,
+      "route": "/api/batch",
+      "status": 503,
+      "bytes": 80,
+      "sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "cacheControl": "private, no-store, max-age=0",
+      "setCookie": null
+    }
+  ],
+  "directEntryLog": "➜ Listening on: http://127.0.0.1:3211/\n",
+  "verifiedFiles": 113,
+  "forcedReviewAndLoopback": true,
+  "status": "passed",
+  "finishedAt": "2026-11-01T00:37:22.630Z"
+}

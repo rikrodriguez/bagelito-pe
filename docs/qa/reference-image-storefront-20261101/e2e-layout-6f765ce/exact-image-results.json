@@ -1,0 +1,938 @@
+{
+  "metadata": {
+    "startedAt": "2026-11-01T00:35:56.266Z",
+    "base": "http://127.0.0.1:3209/",
+    "declaredCodeSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+    "repositorySHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+    "driverSHA256": "64394046725aca06aa3922306d31971bad31f1325ba7a6b2e668e85d59233c79",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "scope": "Exact approved image bytes, uncropped image and accessible category hotspots; existing commercial review-only flow smoke. No3D, fetch/XHR/API/provider requests, application storage reads or writes. One exact-key TanStack initialization read per document is recorded, not claimed absent.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T00:36:01.205Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "status": "passed",
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-exact-storefront.png",
+      "sha256": "43742d590671bb920667ea22b5ab6563dd595b3d217bc04672f83acfdf4e2f90",
+      "metrics": {
+        "source": "http://127.0.0.1:3209/images/store-reference-approved.webp",
+        "complete": true,
+        "naturalWidth": 1536,
+        "naturalHeight": 1024,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "painted": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "right": 390,
+          "bottom": 260
+        },
+        "entireImageVisible": true,
+        "ancestorIssues": [],
+        "objectFit": "contain",
+        "objectPosition": "50% 50%",
+        "filter": "none",
+        "opacity": "1",
+        "canvasCount": 0,
+        "overflowX": 0,
+        "buttons": [
+          {
+            "name": "Packs",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 100.546875,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Combos",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 171.125,
+              "y": 88.859375,
+              "width": 70.328125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Schmears",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 245.265625,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          }
+        ]
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "flow": [
+        {
+          "name": "upsell-selected",
+          "file": "390-upsell-selected.png",
+          "sha256": "e9ea05eb59d9a1b507f327357f3521fd5970924410e52f2a7617de662d11fe8a",
+          "full": "390-upsell-selected-full.png",
+          "fullSHA256": "99b67643b94f759b402121181c6d5829436efcead964dfb55ded01d6cde1333f",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -56,
+                "right": 100,
+                "bottom": -12,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": {
+              "rect": {
+                "x": 12,
+                "y": 671,
+                "right": 378,
+                "bottom": 758,
+                "width": 366,
+                "height": 87
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-primary-next": {
+              "rect": {
+                "x": 131,
+                "y": 770,
+                "right": 259,
+                "bottom": 818,
+                "width": 128,
+                "height": 48
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "98",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "upsell-deselected",
+          "file": "390-upsell-deselected.png",
+          "sha256": "0afa918676b85f1102d27ec6c12192dd91fd5a59fd977954c074c2a3333ab505",
+          "full": "390-upsell-deselected-full.png",
+          "fullSHA256": "a5c389082bbd5e9be68819517be5f0d7c65581766012460dcace78a8d8c072d2",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -56,
+                "right": 100,
+                "bottom": -12,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": {
+              "rect": {
+                "x": 12,
+                "y": 671,
+                "right": 378,
+                "bottom": 758,
+                "width": 366,
+                "height": 87
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-primary-next": {
+              "rect": {
+                "x": 88.953125,
+                "y": 770,
+                "right": 301.046875,
+                "bottom": 818,
+                "width": 212.09375,
+                "height": 48
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "98",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "cashier",
+          "file": "390-cashier.png",
+          "sha256": "542f0f7dfa2912a5571a6394f79ba460923b0ae57bf8c9956ca1ed9b43d057e3",
+          "full": "390-cashier-full.png",
+          "fullSHA256": "f965dadc259b5279b8615e2fc676eee0354febf6f03d753cdec1dce890c73e74",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": 332,
+                "right": 100,
+                "bottom": 376,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": {
+              "rect": {
+                "x": 12,
+                "y": 388,
+                "right": 378,
+                "bottom": 640.640625,
+                "width": 366,
+                "height": 252.640625
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "pay-review",
+          "file": "390-pay-review.png",
+          "sha256": "9724d9e43656c27081f1665436d685ee85e893d66393322708c99bac13e4adf3",
+          "full": "390-pay-review-full.png",
+          "fullSHA256": "67b466ae334da32bdbf957ef6f8c30b8ce4254369229549a6d1a677779dda655",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -60,
+                "right": 100,
+                "bottom": -16,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": {
+              "rect": {
+                "x": 12,
+                "y": 0,
+                "right": 378,
+                "bottom": 502.140625,
+                "width": 366,
+                "height": 502.140625
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "96",
+              "display": "block",
+              "overflow": "visible"
+            },
+            ".guided-payment-sheet": {
+              "rect": {
+                "x": 12,
+                "y": 0,
+                "right": 378,
+                "bottom": 502.140625,
+                "width": 366,
+                "height": 502.140625
+              },
+              "position": "static",
+              "top": "auto",
+              "left": "auto",
+              "right": "auto",
+              "bottom": "auto",
+              "zIndex": "auto",
+              "display": "block",
+              "overflow": "visible"
+            }
+          }
+        },
+        {
+          "name": "loyalty",
+          "file": "390-loyalty.png",
+          "sha256": "848b3cef92a9d992eedb56f56afc78eb8e751e4d6b4af033aab6b73287c90c8f",
+          "full": "390-loyalty-full.png",
+          "fullSHA256": "f0de9f408587b73cbe9cf0d34db7aa8f2f0984b0c5e7135057ad03291e5d5706",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -60,
+                "right": 100,
+                "bottom": -16,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": {
+              "rect": {
+                "x": 12,
+                "y": 0,
+                "right": 378,
+                "bottom": 502.140625,
+                "width": 366,
+                "height": 502.140625
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "96",
+              "display": "block",
+              "overflow": "visible"
+            },
+            ".guided-payment-sheet": {
+              "rect": {
+                "x": 12,
+                "y": 0,
+                "right": 378,
+                "bottom": 502.140625,
+                "width": 366,
+                "height": 502.140625
+              },
+              "position": "static",
+              "top": "auto",
+              "left": "auto",
+              "right": "auto",
+              "bottom": "auto",
+              "zIndex": "auto",
+              "display": "block",
+              "overflow": "visible"
+            }
+          }
+        }
+      ],
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793493357457",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:64983",
+            "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:65097",
+            "url": "http://127.0.0.1:3209/?qa=1"
+          }
+        ],
+        "errors": []
+      }
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3209/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3209/master-scenes-clean/schmears-vitrina.webp",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3209/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793493357457,
+            "url": "http://127.0.0.1:3209/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793493357457,
+            "url": "http://127.0.0.1:3209/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793493357457",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3209/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3209/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T00:35:57.880Z",
+      "type": "exact-image-captured",
+      "width": 390,
+      "file": "390-exact-storefront.png"
+    },
+    {
+      "at": "2026-11-01T00:35:59.786Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "upsell-selected",
+      "file": "390-upsell-selected.png",
+      "sha256": "e9ea05eb59d9a1b507f327357f3521fd5970924410e52f2a7617de662d11fe8a",
+      "full": "390-upsell-selected-full.png",
+      "fullSHA256": "99b67643b94f759b402121181c6d5829436efcead964dfb55ded01d6cde1333f",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -56,
+            "right": 100,
+            "bottom": -12,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": {
+          "rect": {
+            "x": 12,
+            "y": 671,
+            "right": 378,
+            "bottom": 758,
+            "width": 366,
+            "height": 87
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-primary-next": {
+          "rect": {
+            "x": 131,
+            "y": 770,
+            "right": 259,
+            "bottom": 818,
+            "width": 128,
+            "height": 48
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "98",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T00:36:00.014Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "upsell-deselected",
+      "file": "390-upsell-deselected.png",
+      "sha256": "0afa918676b85f1102d27ec6c12192dd91fd5a59fd977954c074c2a3333ab505",
+      "full": "390-upsell-deselected-full.png",
+      "fullSHA256": "a5c389082bbd5e9be68819517be5f0d7c65581766012460dcace78a8d8c072d2",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -56,
+            "right": 100,
+            "bottom": -12,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": {
+          "rect": {
+            "x": 12,
+            "y": 671,
+            "right": 378,
+            "bottom": 758,
+            "width": 366,
+            "height": 87
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-primary-next": {
+          "rect": {
+            "x": 88.953125,
+            "y": 770,
+            "right": 301.046875,
+            "bottom": 818,
+            "width": 212.09375,
+            "height": 48
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "98",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T00:36:00.553Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "cashier",
+      "file": "390-cashier.png",
+      "sha256": "542f0f7dfa2912a5571a6394f79ba460923b0ae57bf8c9956ca1ed9b43d057e3",
+      "full": "390-cashier-full.png",
+      "fullSHA256": "f965dadc259b5279b8615e2fc676eee0354febf6f03d753cdec1dce890c73e74",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": 332,
+            "right": 100,
+            "bottom": 376,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": {
+          "rect": {
+            "x": 12,
+            "y": 388,
+            "right": 378,
+            "bottom": 640.640625,
+            "width": 366,
+            "height": 252.640625
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T00:36:00.904Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "pay-review",
+      "file": "390-pay-review.png",
+      "sha256": "9724d9e43656c27081f1665436d685ee85e893d66393322708c99bac13e4adf3",
+      "full": "390-pay-review-full.png",
+      "fullSHA256": "67b466ae334da32bdbf957ef6f8c30b8ce4254369229549a6d1a677779dda655",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -60,
+            "right": 100,
+            "bottom": -16,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": {
+          "rect": {
+            "x": 12,
+            "y": 0,
+            "right": 378,
+            "bottom": 502.140625,
+            "width": 366,
+            "height": 502.140625
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "96",
+          "display": "block",
+          "overflow": "visible"
+        },
+        ".guided-payment-sheet": {
+          "rect": {
+            "x": 12,
+            "y": 0,
+            "right": 378,
+            "bottom": 502.140625,
+            "width": 366,
+            "height": 502.140625
+          },
+          "position": "static",
+          "top": "auto",
+          "left": "auto",
+          "right": "auto",
+          "bottom": "auto",
+          "zIndex": "auto",
+          "display": "block",
+          "overflow": "visible"
+        }
+      }
+    },
+    {
+      "at": "2026-11-01T00:36:01.097Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "loyalty",
+      "file": "390-loyalty.png",
+      "sha256": "848b3cef92a9d992eedb56f56afc78eb8e751e4d6b4af033aab6b73287c90c8f",
+      "full": "390-loyalty-full.png",
+      "fullSHA256": "f0de9f408587b73cbe9cf0d34db7aa8f2f0984b0c5e7135057ad03291e5d5706",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -60,
+            "right": 100,
+            "bottom": -16,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": {
+          "rect": {
+            "x": 12,
+            "y": 0,
+            "right": 378,
+            "bottom": 502.140625,
+            "width": 366,
+            "height": 502.140625
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "96",
+          "display": "block",
+          "overflow": "visible"
+        },
+        ".guided-payment-sheet": {
+          "rect": {
+            "x": 12,
+            "y": 0,
+            "right": 378,
+            "bottom": 502.140625,
+            "width": 366,
+            "height": 502.140625
+          },
+          "position": "static",
+          "top": "auto",
+          "left": "auto",
+          "right": "auto",
+          "bottom": "auto",
+          "zIndex": "auto",
+          "display": "block",
+          "overflow": "visible"
+        }
+      }
+    },
+    {
+      "at": "2026-11-01T00:36:01.123Z",
+      "type": "capabilities-drained",
+      "width": 390,
+      "knownFrameworkReads": 1,
+      "forbidden": 0
+    }
+  ]
+}
