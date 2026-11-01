@@ -14,7 +14,10 @@
     "qa:launch": "node scripts/qa-manual-order.cjs",
     "qa:tour-visibility": "node scripts/qa-tour-visibility.cjs",
     "qa:movement": "node --test tests/movement-input.test.cjs tests/movement-integration.test.cjs",
-    "qa:contact-shadows": "node scripts/qa-contact-shadow-bake.cjs"
+    "qa:contact-shadows": "node scripts/qa-contact-shadow-bake.cjs",
+    "qa:reference:text": "node scripts/qa-reference-card-text.cjs",
+    "qa:reference:secondary": "node scripts/qa-reference-secondary-text.cjs",
+    "qa:reference:entry": "node scripts/qa-reference-direct-entry.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

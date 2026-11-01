@@ -210,3 +210,25 @@
   .reference-progress button:disabled{color:#8190a2}
   .reference-progress button:focus-visible{outline:3px solid #fa967f;outline-offset:-3px}
 }
+
+/* Product names keep the full card width; the quantity control has its own row. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card{
+  flex-direction:column;height:auto;min-height:180px;overflow:visible;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button{
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  flex:1 0 auto;gap:8px;height:auto;min-height:180px;padding:12px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button>img{
+  width:72px!important;height:72px!important;object-fit:contain!important;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-sign{
+  display:block!important;min-width:0;width:100%;max-width:100%;padding:4px 6px;
+  text-align:center;font-size:14px;line-height:1.3;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-count{
+  position:static;display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:6px;gap:8px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines b{
+  font-size:13px;line-height:1.5;
+}
