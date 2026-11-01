@@ -47,6 +47,9 @@ assert.ok(viewports.length && (!widths || widths.length === viewports.length), '
 const journeyScenarios = ['pack-decline', 'pack-original', 'pack-flavoured', 'combo', 'schmear']
 const defaultScenarios = ['entry', ...journeyScenarios]
 const allScenarios = [...defaultScenarios, 'product-text', 'secondary']
+// Five category images, one responsive room and two independent food-case images.
+// The former 18-image gallery rendered eight isolated bagels and five bowls.
+const entryPhotoCount = 8
 const scenarios = profile ? [profile === 'text' ? 'product-text' : profile] : process.env.QA_SCENARIOS ? process.env.QA_SCENARIOS.split(',') : defaultScenarios
 assert.ok(scenarios.length && new Set(scenarios).size === scenarios.length && scenarios.every(value => allScenarios.includes(value)), 'Unknown or duplicate QA scenario')
 // The extended tablet/landscape scope is entry plus the complete decline path.
@@ -99,7 +102,7 @@ const report = {
   planned: {entryViewports: scenarios.includes('entry') ? viewports.length : 0, categoryCallbacks: scenarios.includes('entry') ? viewports.length * 3 : 0,
     vitrineCallbacks: scenarios.includes('entry') ? viewports.length * 2 : 0,
     keyboardEntries: scheduledCases.filter(value => value.scenario === 'entry').length,
-    decodedEntryPhotos: scheduledCases.filter(value => value.scenario === 'entry').length * 18,
+    decodedEntryPhotos: scheduledCases.filter(value => value.scenario === 'entry').length * entryPhotoCount,
     productTextStates: scheduledCases.filter(value => value.scenario === 'product-text').length * 6,
     productTextCards: scheduledCases.filter(value => value.scenario === 'product-text').length * 30,
     secondaryStates: scheduledCases.filter(value => value.scenario === 'secondary').length * 12,
@@ -347,14 +350,40 @@ async function runCase(browser, viewport, scenario) {
         await menuReset()
       }
       const photos = page.locator('.rebuilt-store img')
-      assert.equal(await photos.count(), 18)
+      assert.equal(await photos.count(), entryPhotoCount, 'Entry must include all five category images, the room and both food cases')
+      assert.equal(await page.locator('.rebuilt-categories img').count(), 5, 'Keep every category product image')
+      const portraitRoom = viewport.width <= 1050
+      const artRoles = [
+        {selector: '.rebuilt-room-photo', pathname: portraitRoom ? '/images/rebuilt-boutique-room-mobile.webp' : '/images/rebuilt-boutique-room.webp', width: portraitRoom ? 1024 : 1536, height: portraitRoom ? 1536 : 1024, medium: 'independent-architectural-concept'},
+        {selector: '.rebuilt-bagel-case-photo', pathname: '/images/rebuilt-bagel-trays.webp', width: 1536, height: 1024, medium: 'independent-product-concept'},
+        {selector: '.rebuilt-schmear-case-photo', pathname: '/images/rebuilt-schmear-trays.webp', width: 1536, height: 1024, medium: 'independent-product-concept'},
+      ]
+      for (const role of artRoles) assert.equal(await page.locator(role.selector).count(), 1, 'One explicit image required for ' + role.selector)
       for (const photo of await photos.all()) {
         await photo.scrollIntoViewIfNeeded()
         await photo.evaluate(async image => {await image.decode(); if (!image.complete || !image.naturalWidth) throw new Error('Visible product did not decode: ' + image.currentSrc)})
       }
+      record.entryArt = []
+      for (const role of artRoles) {
+        const image = await page.locator(role.selector).evaluate(element => {
+          const rect = element.getBoundingClientRect(), style = getComputedStyle(element)
+          return {source: element.currentSrc, pathname: new URL(element.currentSrc).pathname, medium: element.dataset.artMedium,
+            naturalWidth: element.naturalWidth, naturalHeight: element.naturalHeight, renderedWidth: rect.width, renderedHeight: rect.height,
+            objectFit: style.objectFit, devicePixelRatio,
+            sourcePixelsPerRenderedCSSPixel: {x: element.naturalWidth / rect.width, y: element.naturalHeight / rect.height}}
+        })
+        assert.equal(image.pathname, role.pathname, 'Responsive scene must select the appropriate independent asset')
+        assert.equal(image.medium, role.medium, 'Preserve explicit conceptual-art provenance')
+        assert.equal(image.naturalWidth, role.width); assert.equal(image.naturalHeight, role.height)
+        assert.ok(image.renderedWidth > 0 && image.renderedHeight > 0, 'Scene art must have a real rendered area')
+        assert.notEqual(image.objectFit, 'cover', 'Do not crop room or food-case art with object-fit:cover')
+        assert.ok(Math.abs(image.renderedWidth - image.renderedHeight * image.naturalWidth / image.naturalHeight) <= .5,
+          'Room and food-case image boxes must preserve the intrinsic aspect ratio')
+        record.entryArt.push({selector: role.selector, ...image})
+      }
       await page.evaluate(() => window.scrollTo({top: 0, behavior: 'instant'}))
       record.decodedPhotos = await photos.count(); await capture('entry-gallery-loaded')
-      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-gallery', 'empty-cart', 'menu', 'reset')
+      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-gallery', 'responsive-independent-room', 'independent-abundant-food-cases', 'intrinsic-art-ratios', 'recorded-source-pixel-density', 'empty-cart', 'menu', 'reset')
       return
     }
     if (scenario === 'product-text') {

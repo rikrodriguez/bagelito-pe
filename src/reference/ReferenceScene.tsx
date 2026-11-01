@@ -75,8 +75,11 @@ export function ReferenceScene(props: Props) {
   return <section className="reference-presentation rebuilt-store" aria-label="Vitrina Bagelito"
     data-rebuilt-scene="live-components" data-compact={compact ? 'true' : 'false'}>
     <div className="rebuilt-architecture" aria-hidden="true">
-      <img className="rebuilt-room-photo" src="/images/rebuilt-boutique-room.png" width={1536} height={1024}
-        alt="" fetchPriority="high" decoding="async" data-art-medium="independent-architectural-concept" />
+      <picture>
+        <source media="(max-width:1050px)" srcSet="/images/rebuilt-boutique-room-mobile.webp" width={1024} height={1536} />
+        <img className="rebuilt-room-photo" src="/images/rebuilt-boutique-room.webp" width={1536} height={1024}
+          alt="" fetchPriority="high" decoding="async" data-art-medium="independent-architectural-concept" />
+      </picture>
       <span className="rebuilt-room-shade" />
     </div>
     <header className="rebuilt-topbar">
@@ -129,27 +132,26 @@ export function ReferenceScene(props: Props) {
 
     <div className="rebuilt-counter" aria-label="Nuestros bagels y schmears">
       <section className="rebuilt-display rebuilt-bagel-display" aria-label="Vitrina de bagels">
-        <header className="rebuilt-case-header"><h2>Bagels</h2><span>Encuentra tu favorito</span></header>
+        <header className="rebuilt-case-header"><h2>Bagels</h2><button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('packs')}>Elige tus bagels <Arrow /></button></header>
         <div className="rebuilt-case-glass" aria-hidden="true" />
         <div className="rebuilt-bagel-trays">
-          <img className="rebuilt-bagel-case-photo" src="/images/rebuilt-bagel-trays.png" alt="" width={1536} height={1024}
+          <img className="rebuilt-bagel-case-photo" src="/images/rebuilt-bagel-trays.webp" alt="" width={1536} height={1024}
             decoding="async" data-art-medium="independent-product-concept" />
           {bagels.map(item => <figure className="rebuilt-bagel-tray" key={item.id}>
             <figcaption>{item.name}</figcaption>
           </figure>)}
         </div>
-        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('packs')}>Elige tus bagels <Arrow /></button>
       </section>
       <section className="rebuilt-display rebuilt-schmear-display" aria-label="Vitrina de schmears">
-        <header className="rebuilt-case-header"><h2>Schmears</h2><span>Un buen bagel pide uno</span></header>
+        <header className="rebuilt-case-header"><h2>Schmears</h2><button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('schmears')}>Descubre los sabores <Arrow /></button></header>
         <div className="rebuilt-case-glass" aria-hidden="true" />
         <div className="rebuilt-schmear-trays">
+          <img className="rebuilt-schmear-case-photo" src="/images/rebuilt-schmear-trays.webp" alt="" width={1536} height={1024}
+            decoding="async" data-art-medium="independent-product-concept" />
           {schmears.map(item => <figure key={item.id} className={`rebuilt-schmear-tray rebuilt-flavour-${item.id}`}>
-            <SchmearPhoto variant={item.id === 'strawberry' ? 'strawberry' : 'neutral'} />
             <figcaption>{item.name}</figcaption>
           </figure>)}
         </div>
-        <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('schmears')}>Descubre los sabores <Arrow /></button>
       </section>
     </div>
 
