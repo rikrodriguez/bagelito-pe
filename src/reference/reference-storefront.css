@@ -1,0 +1,234 @@
+.reference-storefront{min-height:100dvh;background:#fffaf4;color:#004aad;font-family:Inter,"Helvetica Neue",system-ui,sans-serif}
+.reference-storefront .guided-commerce.reference-mode{position:relative!important;inset:auto!important;min-height:0;overflow:visible!important;background:transparent!important;pointer-events:auto!important}
+.reference-presentation{position:relative;z-index:1;width:100%;max-width:min(1536px,150dvh);margin:0 auto}
+.reference-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin}
+.reference-art{position:relative;width:100%;aspect-ratio:3/2;margin:0 auto;isolation:isolate}
+.reference-image{display:block;width:100%;height:100%;object-fit:contain;filter:none;user-select:none}
+.reference-hotspot{position:absolute;z-index:3;display:block;margin:0;padding:0;border:0;border-radius:18px;background:transparent;color:transparent;min-width:44px;min-height:44px;cursor:pointer;box-shadow:none;pointer-events:auto}
+.reference-hotspot:focus-visible{outline:3px solid #004aad;outline-offset:-3px;background:rgba(255,255,255,.08)}
+.reference-hotspot:hover{box-shadow:inset 0 0 0 2px rgba(0,74,173,.38)}
+.reference-hotspot:disabled{pointer-events:none;cursor:default}
+.reference-menu{left:clamp(22px,3.255208%,calc(100% - 22px));top:clamp(22px,4.589844%,calc(100% - 22px));width:3.90625%;height:5.859375%;border-radius:50%;transform:translate(-50%,-50%)}
+.reference-cart{right:1.3%;top:max(0px,1.9%);width:max(11.85%,44px);height:max(5.27%,44px);border-radius:999px}
+.reference-cart.is-dynamic{width:max(11.85%,136px);display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#004aad;font-size:clamp(11px,1.15vw,18px);font-weight:800}
+.reference-step{left:var(--step-x);top:clamp(22px,93.55%,calc(100% - 22px));width:7.4%;height:6.7%;border-radius:999px;transform:translate(-50%,-50%)}
+.reference-progress-live{position:absolute;z-index:4;left:50%;bottom:2.2%;width:max(39.6%,226px);max-width:calc(100% - 24px);min-height:50px;height:8.4%;display:grid;grid-template-columns:repeat(5,minmax(44px,1fr));gap:0;padding:3px;border-radius:999px;transform:translateX(-50%);background:#fff;box-shadow:0 2px 8px #00275c18;pointer-events:auto}
+.reference-progress-live button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:44px;min-height:44px;padding:3px 0;border:0;border-radius:999px;background:transparent;color:#657b97;font-size:clamp(7px,.8vw,12px);cursor:pointer}
+.reference-progress-live button[aria-current="step"]{background:#004aad;color:#fff}
+.reference-progress-live button:disabled{color:#96a5b7;cursor:default}
+.reference-progress-live i{font-style:normal;font-size:11px}
+.reference-progress-live button:focus-visible{outline:3px solid #fa967f;outline-offset:-3px}
+.reference-sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.reference-review-note{max-width:900px;margin:14px auto;padding:10px 16px 24px;color:#5b6e85;font-size:12px;line-height:1.6;text-align:center}
+.reference-loyalty{max-width:700px;margin:20px auto;padding:20px;border:1px solid #c6d9ef;border-radius:20px;background:#eaf4ff;color:#004aad}
+.reference-loyalty small{font-size:10px;letter-spacing:.08em;font-weight:800}.reference-loyalty h2{font-size:22px}.reference-loyalty p{font-size:13px;line-height:1.5}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-menu-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-cart-panel{position:fixed;z-index:140;top:70px!important;max-height:calc(100dvh - 90px);overflow:auto}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-menu-panel button,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-store-cart-panel button{min-height:44px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-overlay-dismiss{position:fixed;inset:0;z-index:130}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-journey-back{position:relative!important;inset:auto!important;margin:12px auto 0 12px;min-width:88px;min-height:44px;transform:none}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-floating-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-config-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{position:relative!important;inset:auto!important;transform:none!important;width:min(900px,calc(100% - 24px))!important;max-width:900px;height:auto!important;min-height:0;max-height:none!important;margin:12px auto;padding:20px;overflow:visible!important;background:#fffaf4;border:1px solid #dce5ee;border-radius:20px;box-shadow:0 5px 18px #1534530b}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage{display:flex!important;flex-direction:column;gap:14px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header{min-height:44px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header h2{font-size:24px;margin:0}.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header small{font-size:11px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-flow:row;grid-auto-columns:auto;gap:10px;height:auto;min-height:0;overflow:visible;scroll-snap-type:none;flex:none}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{display:flex;height:170px;min-height:170px;overflow:hidden}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button{min-height:110px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .bagel-live-summary,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-order-counter{position:relative!important;inset:auto!important;transform:none!important;width:min(900px,calc(100% - 24px))!important;height:auto!important;min-height:70px;margin:12px auto;padding:12px!important;overflow:visible!important;display:flex!important;flex-direction:column;gap:7px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .bagel-summary-lines{display:flex!important;flex-wrap:wrap;overflow:visible!important;gap:8px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .bagel-summary-lines>span{font-size:13px;white-space:normal}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-primary-next{position:relative!important;inset:auto!important;width:max-content;max-width:calc(100% - 24px);min-height:48px;margin:12px auto 22px;font-size:15px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{display:flex;flex-direction:column;gap:14px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action>button{min-height:48px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-gate{position:relative!important;inset:auto!important;width:min(760px,calc(100% - 24px));margin:16px auto;padding:0!important;height:auto!important;min-height:0!important;max-height:none!important;background:transparent;overflow:visible!important}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-sheet{width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:20px!important}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid input,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid select{min-height:44px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check{min-height:44px}
+@media(max-width:800px){
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{height:180px;min-height:180px}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header{display:flex;grid-template-columns:none;grid-template-rows:none}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header>span{font-size:12px;max-width:none}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-floating-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-config-panel,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-action{padding:12px}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:none}
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid{grid-template-columns:1fr}
+  .reference-review-note{font-size:11px;margin-top:4px}
+}
+
+/* Reference cards use normal flow: a flavour note and its price are separate
+   rows, even when the legacy catalog stylesheet assigns both to one grid cell. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{
+  flex-direction:column;height:auto;min-height:180px;overflow:visible;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+  flex:1 0 auto;gap:8px;width:100%;height:auto;min-height:180px;padding:12px;text-align:left;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-pot{
+  flex-shrink:0;width:72px;height:56px;align-self:flex-start;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-label{
+  display:block;max-width:100%;padding:0;font-size:14px;line-height:1.3;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>small{
+  position:static;display:block;align-self:stretch;max-width:100%;margin:0;
+  font-size:12px;line-height:1.4;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>.reference-schmear-price{
+  margin-top:auto;font-size:13px;font-weight:700;color:#365d82;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>b{
+  position:absolute;top:8px;right:8px;width:24px;height:24px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card .mobile-product-count{
+  position:static;display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:6px;gap:8px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card .mobile-product-count>button{
+  width:44px;height:44px;min-width:44px;min-height:44px;
+}
+
+/* Readable commerce copy and full touch targets in the reference journey. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>small{
+  color:#3f5873;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-sign{
+  font-size:14px;line-height:1.3;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button>small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-grid small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-pack-mix small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-size-cards span{
+  font-size:12px;line-height:1.4;color:#3f5873;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid span{
+  font-size:13px;line-height:1.4;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-count>button,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .panel-back{
+  min-width:44px;min-height:44px;width:44px;height:44px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay{
+  display:flex!important;flex-direction:column;gap:16px;align-items:stretch;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay::before{
+  position:static;display:block;font-size:24px;line-height:1.3;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay>button{
+  width:100%;max-width:100%;gap:10px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy{
+  min-width:0;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy em,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy strong{
+  font-size:12px;line-height:1.4;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-copy>small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-copy span,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-copy p{
+  font-size:13px;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-copy>small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-copy>span{
+  font-size:13px!important;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid label>span{
+  font-size:12px!important;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid input,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid select{
+  min-height:44px!important;padding:10px 12px!important;font-size:16px!important;line-height:1.4;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check{
+  min-height:44px;font-size:13px!important;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check input{
+  flex:0 0 44px;width:44px;height:44px;margin:0;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check a{
+  display:inline-flex;align-items:center;min-height:44px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .reference-payment-review button{
+  min-height:44px;padding:8px 12px;font-size:16px;
+}
+@media(max-width:800px){
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid{
+    grid-template-columns:minmax(0,1fr)!important;gap:12px!important;
+  }
+}
+
+/* The desktop keeps the approved artwork. Mobile uses exact crops around live,
+   readable category cards, without an image-enlargement step. */
+.reference-top-controls{display:contents}
+.reference-menu>svg,.reference-mobile-hero,.reference-mobile-vitrine,.reference-category-art,.reference-step-mobile-label{display:none}
+.reference-cart:not(.is-dynamic)>*,.reference-progress-hotspots button>*{visibility:hidden}
+@media(max-width:800px){
+  .reference-scroll{overflow:visible}
+  .reference-art{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px;aspect-ratio:auto;padding:12px;background:#fffaf4}
+  .reference-image{display:none}
+  .reference-top-controls{display:flex;grid-column:1/-1;grid-row:1;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+  .reference-art .reference-menu,.reference-art .reference-cart{
+    position:static;inset:auto;transform:none;min-height:44px;background:#fff;color:#004aad;
+    display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #c6d9ef;
+  }
+  .reference-art .reference-menu{width:44px;height:44px}
+  .reference-menu>svg{display:block}
+  .reference-art .reference-cart{width:auto;height:44px;padding:8px 12px;font-size:14px;font-weight:800}
+  .reference-art .reference-cart>*{visibility:visible}
+  .reference-mobile-hero,.reference-mobile-vitrine{display:block;grid-column:1/-1;width:calc(100% + 24px);height:auto;margin-left:-12px;overflow:hidden}
+  .reference-mobile-hero{grid-row:2}
+  .reference-mobile-vitrine{grid-row:4}
+  .reference-art .reference-category{
+    position:static;inset:auto!important;transform:none;width:100%!important;height:auto!important;
+    grid-row:3;min-width:0;min-height:44px;display:flex;flex-direction:column;justify-content:flex-start;
+    overflow:hidden;border:1px solid #dfdfdf;border-radius:16px;color:#004aad;background:#fff0e3;
+  }
+  .reference-category[data-reference-category="combos"]{background:#dfF1ff}
+  .reference-category[data-reference-category="schmears"]{background:#ffe6e6}
+  .reference-category-art{display:block;width:100%;height:auto;aspect-ratio:264/146;overflow:hidden}
+  .reference-category-copy{
+    position:static;display:flex;flex-direction:column;gap:5px;width:100%;height:auto;margin:0;padding:8px 3px 10px;
+    overflow:visible;clip:auto;white-space:normal;text-align:center;
+  }
+  .reference-category-copy strong{font-size:16px;line-height:1.25;font-weight:900;letter-spacing:-.03em}
+  .reference-category-copy small{font-size:12px;line-height:1.4;color:#3f5873}
+  .reference-progress{
+    position:static;grid-column:1/-1;grid-row:5;transform:none;display:grid;grid-template-columns:repeat(5,minmax(44px,1fr));
+    width:100%;max-width:none;height:auto;min-height:54px;padding:3px;border-radius:20px;background:#fff;box-shadow:0 2px 8px #00275c18;
+  }
+  .reference-progress button{
+    position:static;inset:auto;transform:none;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;width:100%;height:auto;min-width:44px;min-height:48px;padding:5px 0;border:0;border-radius:16px;
+    background:transparent;color:#3f5873;font-size:12px;line-height:1.3;
+  }
+  .reference-progress button>*{visibility:visible}
+  .reference-progress i{font-size:12px;font-style:normal}
+  .reference-step-desktop-label{display:none}
+  .reference-step-mobile-label{display:block}
+  .reference-progress button[aria-current="step"]{background:#004aad;color:#fff}
+  .reference-progress button:disabled{color:#8190a2}
+  .reference-progress button:focus-visible{outline:3px solid #fa967f;outline-offset:-3px}
+}
+
+/* Product names keep the full card width; the quantity control has its own row. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card{
+  flex-direction:column;height:auto;min-height:180px;overflow:visible;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button{
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  flex:1 0 auto;gap:8px;height:auto;min-height:180px;padding:12px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button>img{
+  width:72px!important;height:72px!important;object-fit:contain!important;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-sign{
+  display:block!important;min-width:0;width:100%;max-width:100%;padding:4px 6px;
+  text-align:center;font-size:14px;line-height:1.3;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-count{
+  position:static;display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:6px;gap:8px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines b{
+  font-size:13px;line-height:1.5;
+}

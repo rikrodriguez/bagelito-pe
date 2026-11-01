@@ -1,0 +1,330 @@
+{
+  "metadata": {
+    "kind": "real browser mobile prototype capture; not committed application parity",
+    "declaredSnapshot": "/tmp/bagelito-artifact-mobile-v1-3200",
+    "HEAD": "0a611006a1a7dcebbe63f4f8db20623a69c47fb6",
+    "cssSHA256": "8a624256c583383ec4a9ed6438b9e5878a466e2ac7d3ebae80227d185c6f10d7",
+    "scriptSHA256": "065c2e6b82e43df9cc12d5d49c9313ae74fceda711ac010bac3b563bd9501938",
+    "startedAt": "2026-10-31T22:29:31.014Z",
+    "thresholds": {
+      "canvasFree": 0.45,
+      "physicalFree": 0.9,
+      "plateCentres": 8
+    },
+    "finishedAt": "2026-10-31T22:29:51.273Z",
+    "finalCssSHA256": "8a624256c583383ec4a9ed6438b9e5878a466e2ac7d3ebae80227d185c6f10d7"
+  },
+  "failures": [],
+  "events": [
+    {
+      "at": "2026-10-31T22:29:50.602Z",
+      "type": "captured",
+      "canvasFree": 1,
+      "physicalFree": 1,
+      "freePlates": 8,
+      "smallTargets": [],
+      "capture": "/tmp/bagelito-mobile-v1-first/mobile390-bagels-prototype.png"
+    },
+    {
+      "at": "2026-10-31T22:29:51.273Z",
+      "type": "finished",
+      "status": "passed"
+    }
+  ],
+  "network": [
+    {
+      "mode": "mobile390-first",
+      "reads": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/?qa=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/assets/PlayableStore-DX3GCX7g.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/assets/routes-CAmeVuvE.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/assets/index-B3Qa1RLx.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/assets/PlayableStore-BfnFi4Bq.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:3200/images/bagel-blueberry.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "routeErrors": [],
+      "closingRouteErrors": [],
+      "closingAborts": []
+    }
+  ],
+  "metrics": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "scene": "bagels",
+    "liveWorld": "true",
+    "canvas": {
+      "hidden": [],
+      "webgl": true,
+      "lost": false,
+      "bufferWidth": 390,
+      "bufferHeight": 844
+    },
+    "overflow": 0,
+    "canvasFreeFraction": 1,
+    "physicalROI": {
+      "x": 28.97877655029297,
+      "y": 375.70016860961914,
+      "right": 356.3830284118652,
+      "bottom": 461.9336128234863,
+      "width": 327.4042518615722,
+      "height": 86.23344421386719
+    },
+    "physicalFreeFraction": 1,
+    "anchors": [
+      {
+        "label": "PLAIN",
+        "rect": {
+          "x": 54.66204833984375,
+          "y": 408.5664978027344,
+          "width": 42.177528381347656,
+          "height": 7.23406982421875,
+          "right": 96.8395767211914,
+          "bottom": 415.8005676269531
+        },
+        "x": 75.75081253051758,
+        "y": 412.18353271484375,
+        "free": true
+      },
+      {
+        "label": "EVERYTHING",
+        "rect": {
+          "x": 132.65049743652344,
+          "y": 408.5665283203125,
+          "width": 42.091949462890625,
+          "height": 7.234039306640625,
+          "right": 174.74244689941406,
+          "bottom": 415.8005676269531
+        },
+        "x": 153.69647216796875,
+        "y": 412.1835479736328,
+        "free": true
+      },
+      {
+        "label": "SESAME",
+        "rect": {
+          "x": 210.621826171875,
+          "y": 408.5665283203125,
+          "width": 42.08686828613281,
+          "height": 7.234039306640625,
+          "right": 252.7086944580078,
+          "bottom": 415.8005676269531
+        },
+        "x": 231.6652603149414,
+        "y": 412.1835479736328,
+        "free": true
+      },
+      {
+        "label": "CLASSIC ONION",
+        "rect": {
+          "x": 288.5247497558594,
+          "y": 408.5665283203125,
+          "width": 42.1724853515625,
+          "height": 7.23406982421875,
+          "right": 330.6972351074219,
+          "bottom": 415.80059814453125
+        },
+        "x": 309.6109924316406,
+        "y": 412.1835632324219,
+        "free": true
+      },
+      {
+        "label": "JALAPEÑO CHEDDAR",
+        "rect": {
+          "x": 55.36909484863281,
+          "y": 441.76953125,
+          "width": 41.96449279785156,
+          "height": 7.161376953125,
+          "right": 97.33358764648438,
+          "bottom": 448.930908203125
+        },
+        "x": 76.3513412475586,
+        "y": 445.3502197265625,
+        "free": true
+      },
+      {
+        "label": "CHEDDAR",
+        "rect": {
+          "x": 132.96463012695312,
+          "y": 441.76953125,
+          "width": 41.8797607421875,
+          "height": 7.161407470703125,
+          "right": 174.84439086914062,
+          "bottom": 448.9309387207031
+        },
+        "x": 153.90451049804688,
+        "y": 445.35023498535156,
+        "free": true
+      },
+      {
+        "label": "CINNAMON RAISIN",
+        "rect": {
+          "x": 210.543212890625,
+          "y": 441.7695617675781,
+          "width": 41.87474060058594,
+          "height": 7.161376953125,
+          "right": 252.41795349121094,
+          "bottom": 448.9309387207031
+        },
+        "x": 231.48058319091797,
+        "y": 445.3502502441406,
+        "free": true
+      },
+      {
+        "label": "BLUEBERRY",
+        "rect": {
+          "x": 288.0540771484375,
+          "y": 441.7695617675781,
+          "width": 41.959503173828125,
+          "height": 7.161407470703125,
+          "right": 330.0135803222656,
+          "bottom": 448.93096923828125
+        },
+        "x": 309.03382873535156,
+        "y": 445.3502655029297,
+        "free": true
+      }
+    ],
+    "blockers": [],
+    "targets": []
+  },
+  "status": "passed",
+  "capture": {
+    "file": "mobile390-bagels-prototype.png",
+    "sha256": "5e622cbb938462a41ff3d2b340776819b28af065225f4115fe54c3ca09c7d964"
+  }
+}

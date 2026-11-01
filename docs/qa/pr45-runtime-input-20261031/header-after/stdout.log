@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "failures": [],
+  "snapshots": [
+    {
+      "label": "entry-before-free",
+      "pointerEvents": "auto",
+      "hitIsButton": true,
+      "guidedCommerce": false,
+      "topHit": {
+        "tag": "BUTTON",
+        "className": "brand-pill",
+        "pointerEvents": "auto"
+      }
+    },
+    {
+      "label": "free-before-native-header-click",
+      "pointerEvents": "auto",
+      "hitIsButton": true,
+      "guidedCommerce": false,
+      "topHit": {
+        "tag": "IMG",
+        "className": "",
+        "pointerEvents": "auto"
+      }
+    },
+    {
+      "label": "after-native-header-click",
+      "pointerEvents": null,
+      "hitIsButton": false,
+      "guidedCommerce": true
+    }
+  ]
+}

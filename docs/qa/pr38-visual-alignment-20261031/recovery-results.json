@@ -1,0 +1,526 @@
+{
+  "results": [
+    {
+      "scenario": "desktop-recovery",
+      "check": "failed-HDR-to-usable-DOM-pack-selector"
+    },
+    {
+      "scenario": "desktop-recovery",
+      "check": "explicit-retry-restores-live-world-and-tour",
+      "canvas": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "lost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800
+      }
+    },
+    {
+      "scenario": "mobile-recovery",
+      "check": "failed-HDR-to-usable-DOM-pack-selector"
+    },
+    {
+      "scenario": "mobile-recovery",
+      "check": "explicit-retry-restores-live-world-and-tour",
+      "canvas": {
+        "hidden": [],
+        "width": 390,
+        "height": 844,
+        "webgl": true,
+        "lost": false,
+        "bufferWidth": 390,
+        "bufferHeight": 844
+      }
+    },
+    {
+      "scenario": "storage-blocked",
+      "check": "blocked-storage-keeps-category-and-exploration-usable"
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "scenario": "desktop-recovery",
+      "reads": [
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/PlayableStore-L6PZ8atG.css",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/index-CL6P7q5D.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/routes-B802l20G.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/selector.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-blueberry.webp",
+          "status": 200
+        }
+      ],
+      "hdrAborts": 1,
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": [],
+      "expectedHdrErrors": [
+        {
+          "phase": "initial-failure",
+          "message": "Could not load lebombo_1k.hdr: Failed to fetch"
+        }
+      ],
+      "consoleErrors": [
+        {
+          "phase": "initial-failure",
+          "message": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "phase": "initial-failure",
+          "message": "Error: Could not load lebombo_1k.hdr: Failed to fetch\n    at Object.onError (http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js:4220:77822)\n    at http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js:5:35550"
+        }
+      ]
+    },
+    {
+      "scenario": "mobile-recovery",
+      "reads": [
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/PlayableStore-L6PZ8atG.css",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/routes-B802l20G.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/index-CL6P7q5D.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "phase": "initial-failure",
+          "url": "http://127.0.0.1:3190/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/selector.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "dom-fallback",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "explicit-retry",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        }
+      ],
+      "hdrAborts": 1,
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": [],
+      "expectedHdrErrors": [
+        {
+          "phase": "initial-failure",
+          "message": "Could not load lebombo_1k.hdr: Failed to fetch"
+        }
+      ],
+      "consoleErrors": [
+        {
+          "phase": "initial-failure",
+          "message": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "phase": "initial-failure",
+          "message": "Error: Could not load lebombo_1k.hdr: Failed to fetch\n    at Object.onError (http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js:4220:77822)\n    at http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js:5:35550"
+        }
+      ]
+    },
+    {
+      "scenario": "storage-blocked",
+      "reads": [
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/assets/PlayableStore-L6PZ8atG.css",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/assets/routes-B802l20G.js",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/assets/index-CL6P7q5D.js",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/assets/PlayableStore-BuwNOmX7.js",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "phase": "storage-blocked",
+          "url": "http://127.0.0.1:3190/master-scenes-clean/schmears.webp",
+          "status": 200
+        }
+      ],
+      "hdrAborts": 0,
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": [],
+      "expectedHdrErrors": [],
+      "consoleErrors": []
+    }
+  ]
+}

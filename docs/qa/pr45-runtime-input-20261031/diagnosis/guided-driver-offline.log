@@ -1,0 +1,14 @@
+✔ a disposed response while the context is live remains a failure without an unhandled rejection (1.310435ms)
+✔ closing drains pending requests before context.close and records expected disposal separately (1.839148ms)
+✔ new allowed GETs during closing are aborted without fetching online (0.36004ms)
+✔ closing never permits an unrelated destination or write (0.301352ms)
+✔ HTTP500 completing during the closing drain is an immediate failure (0.340821ms)
+✔ a timeout during closing remains a failure even when its text also mentions context closed (0.225749ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.156388

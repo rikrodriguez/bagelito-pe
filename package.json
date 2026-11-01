@@ -5,14 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && tsc --noEmit && npm run qa:static && npm run qa:launch",
+    "build": "vite build && tsc --noEmit && npm run qa:static && npm run qa:launch && npm run qa:movement",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "qa:guided": "node scripts/qa-guided.cjs",
     "qa:3d": "node scripts/qa-world-tour.cjs",
     "qa:static": "node scripts/qa-tour-static.cjs",
     "qa:launch": "node scripts/qa-manual-order.cjs",
-    "qa:tour-visibility": "node scripts/qa-tour-visibility.cjs"
+    "qa:tour-visibility": "node scripts/qa-tour-visibility.cjs",
+    "qa:movement": "node --test tests/movement-input.test.cjs tests/movement-integration.test.cjs",
+    "qa:contact-shadows": "node scripts/qa-contact-shadow-bake.cjs",
+    "qa:reference:text": "node scripts/qa-reference-card-text.cjs",
+    "qa:reference:secondary": "node scripts/qa-reference-secondary-text.cjs",
+    "qa:reference:entry": "node scripts/qa-reference-direct-entry.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

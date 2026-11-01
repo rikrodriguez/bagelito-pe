@@ -1,0 +1,1286 @@
+{
+  "metadata": {
+    "startedAt": "2026-10-31T22:46:41.301Z",
+    "repositorySHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
+    "workingTree": "?? .output/\n?? docs/pr45-mobile-vitrina-20261031.md\n?? docs/qa/pr45-mobile-vitrina-20261031/\n?? scripts/lib/\n?? scripts/qa-mobile-vitrina.cjs\n?? tests/qa-loopback-guard.test.cjs",
+    "declaredBuildSHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
+    "base": "http://127.0.0.1:3202",
+    "nodeVersion": "v24.19.0",
+    "expectedScenes": 32,
+    "hdrFixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+    "sourceSHA256": {
+      "scripts/qa-guided.cjs": "331d31b1064104e57853c9a207cb7d0aa17284dbedd57210b4d722b582d6948f",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/movement-input.ts": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+      "src/playable/StoreArchitectureVisual.tsx": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "src/playable/GuidedCommerce.tsx": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "src/playable/guided-commerce.css": "dde64cb8ae3a0c9edadc3023a6549deea2aa532fd8a389d52c4392841cd7d6c4",
+      "src/domain/lib/approved-shop-contract.ts": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+      "src/domain/data/verified-menu-2026-10-21.json": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080",
+      "package.json": "f23987681e4551c8ec1a1c405b9f8cec37a5f7defc263ee11fb54663d6543d35",
+      "package-lock.json": null,
+      "vercel.json": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+    },
+    "missingSourceFiles": [
+      "package-lock.json"
+    ],
+    "optionalSourceFiles": [
+      "package-lock.json"
+    ],
+    "browserVersion": "151.0.7922.173"
+  },
+  "status": "interrupted",
+  "activeMode": "desktop",
+  "activeStage": "scene-07-schmears",
+  "results": [
+    {
+      "mode": "desktop",
+      "scene": "01-entrance",
+      "pass": true,
+      "capture": "desktop-01-entrance.png",
+      "captureSHA256": "6b0d618a132b8b40fccf146ef1ade04a44b0f25a28418b98ee757bb231ecce28"
+    },
+    {
+      "mode": "desktop",
+      "scene": "02-selector",
+      "pass": true,
+      "capture": "desktop-02-selector.png",
+      "captureSHA256": "614c650c64e616cb98cc07d919ec722f4e07b837a2454ea3c314610282247e98"
+    },
+    {
+      "mode": "desktop",
+      "scene": "03-pack-size",
+      "pass": true,
+      "capture": "desktop-03-pack-size.png",
+      "captureSHA256": "00a7735b1c381df67e55ff2071904b40e93b75bc1580f15bb22d9bc0ee583e50"
+    },
+    {
+      "mode": "desktop",
+      "scene": "04-pack-quantity",
+      "pass": true,
+      "capture": "desktop-04-pack-quantity.png",
+      "captureSHA256": "2747377ee245b367dc3bdee8aa09b1b14843fd8bd146ca98902aa9c401586019"
+    },
+    {
+      "mode": "desktop",
+      "scene": "05-bagels",
+      "pass": true,
+      "capture": "desktop-05-bagels.png",
+      "captureSHA256": "bf2dd1169144efa7337471d4d9341e5937bb1e9b48dce4f732fb9eb63bff814a"
+    },
+    {
+      "mode": "desktop",
+      "scene": "06-bagels-selected",
+      "pass": true,
+      "capture": "desktop-06-bagels-selected.png",
+      "captureSHA256": "6d01af07ec301841f4d3a73cf487b97faceff4c1be9ca8b35e054b19ca733107"
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "mode": "desktop",
+      "reads": [
+        {
+          "url": "http://127.0.0.1:3202/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/PlayableStore-DbeY3QU8.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/routes-DyoDPoOf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/index-BgqKmAYW.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/PlayableStore-CnSTRtNs.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/PlayableStore-DbeY3QU8.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/routes-DyoDPoOf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/index-BgqKmAYW.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/assets/PlayableStore-CnSTRtNs.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3202/master-scenes-clean/schmears-vitrina.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 2,
+      "blocked": [],
+      "httpErrors": [],
+      "routeErrors": [],
+      "closingRouteErrors": [],
+      "closingAborts": []
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-31T22:46:41.942Z",
+      "mode": "desktop",
+      "stage": "context-setup",
+      "type": "mode-start",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      }
+    },
+    {
+      "at": "2026-10-31T22:46:42.178Z",
+      "mode": "disabled",
+      "stage": "context-setup",
+      "type": "config-verified",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false,
+      "visualQaAllowed": true
+    },
+    {
+      "at": "2026-10-31T22:46:42.179Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:46:42.244Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3202/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:46:42.390Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3202/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:46:51.461Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:46:51.461Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:46:51.462Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:46:54.776Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:46:54.778Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:46:54.780Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:46:58.344Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:46:58.345Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:46:58.346Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:46:58.449Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:46:58.449Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "scene-start",
+      "scene": "entrance",
+      "name": "01-entrance"
+    },
+    {
+      "at": "2026-10-31T22:47:05.398Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "scene-complete",
+      "scene": "entrance",
+      "name": "01-entrance",
+      "completedScenes": 1
+    },
+    {
+      "at": "2026-10-31T22:47:10.038Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:47:10.039Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:47:10.039Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:47:13.309Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:47:13.310Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:47:13.310Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:47:16.652Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:47:16.653Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:47:16.654Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:47:19.926Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:19.928Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:19.928Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:23.176Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:23.177Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:23.177Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:23.185Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "scene-start",
+      "scene": "selector",
+      "name": "02-selector"
+    },
+    {
+      "at": "2026-10-31T22:47:33.147Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "scene-complete",
+      "scene": "selector",
+      "name": "02-selector",
+      "completedScenes": 2
+    },
+    {
+      "at": "2026-10-31T22:47:36.269Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:47:36.270Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:47:36.272Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:47:36.292Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "scene-start",
+      "scene": "pack-size",
+      "name": "03-pack-size"
+    },
+    {
+      "at": "2026-10-31T22:47:46.628Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "scene-complete",
+      "scene": "pack-size",
+      "name": "03-pack-size",
+      "completedScenes": 3
+    },
+    {
+      "at": "2026-10-31T22:47:49.844Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:49.844Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:49.844Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:47:49.857Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "scene-start",
+      "scene": "pack-qty",
+      "name": "04-pack-quantity"
+    },
+    {
+      "at": "2026-10-31T22:47:59.991Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "scene-complete",
+      "scene": "pack-qty",
+      "name": "04-pack-quantity",
+      "completedScenes": 4
+    },
+    {
+      "at": "2026-10-31T22:48:03.137Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:48:03.139Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:48:03.139Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:48:03.217Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "scene-start",
+      "scene": "bagels",
+      "name": "05-bagels"
+    },
+    {
+      "at": "2026-10-31T22:48:13.418Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "scene-complete",
+      "scene": "bagels",
+      "name": "05-bagels",
+      "completedScenes": 5
+    },
+    {
+      "at": "2026-10-31T22:48:16.488Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:48:16.489Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:48:16.490Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:48:19.722Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:48:19.722Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:48:19.723Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:48:22.974Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:48:22.974Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:48:22.975Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:48:26.271Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:48:26.272Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:48:26.272Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:48:29.630Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:48:29.632Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:48:29.633Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:48:32.922Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:48:32.923Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:48:32.924Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:48:32.934Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "scene-start",
+      "scene": "bagels",
+      "name": "06-bagels-selected"
+    },
+    {
+      "at": "2026-10-31T22:48:39.496Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "scene-complete",
+      "scene": "bagels",
+      "name": "06-bagels-selected",
+      "completedScenes": 6
+    },
+    {
+      "at": "2026-10-31T22:48:42.820Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:48:42.822Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:48:42.822Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:48:46.276Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:48:46.278Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:48:46.278Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:48:51.526Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3202/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:48:59.701Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "draft-reload-inspected",
+      "draftPresent": true,
+      "counter": "6/6"
+    },
+    {
+      "at": "2026-10-31T22:49:05.347Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:49:05.348Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:49:05.348Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:49:05.360Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "scene-start",
+      "scene": "schmears",
+      "name": "07-schmears"
+    },
+    {
+      "at": "2026-10-31T22:49:09.056Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "interrupted",
+      "signal": "SIGINT"
+    },
+    {
+      "at": "2026-10-31T22:49:09.104Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "context-closing",
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T22:49:09.143Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "interrupted-operation",
+      "message": "Error: browserContext.close: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --enable-unsafe-swiftshader --use-gl=angle --use-angle=swiftshader --user-data-dir=/tmp/playwright_chromiumdev_profile-5olvJR --remote-debugging-pipe --no-startup-window\n<launched> pid=14520\n[pid=14520][err] [14520:14520:1031/224641.472344:ERROR:third_party/crashpad/crashpad/util/file/filesystem_posix.cc:63] mkdir : No such file or directory (2)\n[pid=14520][err] chrome_crashpad_handler: --database is required\n[pid=14520][err] Try 'chrome_crashpad_handler --help' for more information.\n[pid=14520][err] [14520:14548:1031/224641.547524:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=14520][err] [14520:14548:1031/224641.554196:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14548:1031/224641.554371:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=14520][err] [14520:14548:1031/224641.554411:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=14520][err] [14520:14548:1031/224641.554416:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14560:1031/224641.561264:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:279] Failed to adjust OOM score of renderer with pid 14563: Read-only file system (30)\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] Fontconfig error: No writable cache directories\n[pid=14520][err] [14520:14548:1031/224641.907388:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14560:1031/224641.928141:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:279] Failed to adjust OOM score of renderer with pid 14579: Read-only file system (30)\n[pid=14520][err] [14520:14520:1031/224641.929162:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14520:1031/224641.929252:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14548:1031/224641.929318:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14548:1031/224641.929349:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14520:1031/224641.936100:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14548:1031/224641.937350:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=14520][err] [14520:14548:1031/224641.937368:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=14520][err] [14520:14520:1031/224641.937843:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14520:1031/224641.938519:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14548:1031/224641.938654:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14520:1031/224641.939573:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: unknown error type: \n[pid=14520][err] [14520:14520:1031/224641.940202:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14548:1031/224641.944253:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14520:1031/224641.950238:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] [14520:14548:1031/224641.952427:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=14520][err] [14520:14520:1031/224641.955196:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=14520][err] \n[pid=14520][err] (process:14520): dconf-CRITICAL **: 22:46:41.963: unable to create directory '/home/agent/.cache/dconf': Read-only file system.  dconf will not work properly.\n[pid=14520][err] \n[pid=14520][err] (process:14520): dconf-CRITICAL **: 22:46:41.963: unable to create directory '/home/agent/.cache/dconf': Read-only file system.  dconf will not work properly.\n[pid=14520][err] \n[pid=14520][err] (process:14520): dconf-CRITICAL **: 22:46:41.963: unable to create directory '/home/agent/.cache/dconf': Read-only file system.  dconf will not work properly.\n[pid=14520][err] [14520:14560:1031/224641.989546:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:279] Failed to adjust OOM score of renderer with pid 14609: Read-only file system (30)\n[pid=14520][err] [14520:14560:1031/224642.017355:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:279] Failed to adjust OOM score of renderer with pid 14616: Read-only file system (30)\n[pid=14520][err] [14520:14560:1031/224642.019154:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:279] Failed to adjust OOM score of renderer with pid 14617: Read-only file system (30)\n[pid=14520] <gracefully close start>\n[pid=14520] <forcefully close>\n[pid=14520] <kill>\n[pid=14520] <will force kill>"
+    }
+  ],
+  "diagnostics": [
+    {
+      "at": "2026-10-31T22:49:09.057Z",
+      "reason": "signal-SIGINT",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "url": "http://127.0.0.1:3202/?qa=1",
+      "stateError": "Error: page.evaluate: Target page, context or browser has been closed"
+    }
+  ],
+  "interruptions": [
+    {
+      "signal": "SIGINT",
+      "at": "2026-10-31T22:49:09.056Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears"
+    }
+  ]
+}

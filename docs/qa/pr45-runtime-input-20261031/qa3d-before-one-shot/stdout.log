@@ -1,0 +1,18 @@
+Bagelito visual source/asset contract: 7/7 passed
+  OK Exact verified eight bagel names and spatial order; exact five schmear names
+  OK Eight catalog trays each construct six photographed products with shallow 3D geometry
+  OK Exactly five mapped schmear pans; no sixth reference flavor added
+  OK Approved reference bytes, dimensions and bounded logo-only crop
+  OK Logo is a cropped mesh texture, never a full photo/UI backdrop
+  OK Healthy store retains one Canvas across commerce; explicit GPU recovery can switch to DOM fallback
+  OK Responsive fit uses the front display plane, with a finite scene diagnostic for callback readiness
+Structural only: browser rendering, responsive framing and physical hit testing remain separate checks.
+18 checks; 2 failures
+desktop FLOW_STOP: TimeoutError: locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.tour-start-button')[22m
+
+mobile FLOW_STOP: TimeoutError: locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.tour-start-button')[22m
+

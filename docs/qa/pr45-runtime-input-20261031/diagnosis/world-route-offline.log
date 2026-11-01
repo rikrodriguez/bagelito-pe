@@ -1,0 +1,19 @@
+✔ A healthy fresh journey resets only the in-tab product draft and keeps the reload (16.620286ms)
+✔ A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup (7.34074ms)
+✔ A failed document is reported as an HTTP setup failure (8.285667ms)
+✔ A non-loopback target is refused before any browser launch (1.63991ms)
+✔ The original readiness and strafe logic remains intact apart from comments and result checkpoints (0.495754ms)
+✔ Teardown drains an in-flight fulfill before disposing the context and records a marked cancellation (16.083026ms)
+✔ The same disposed fulfill error while the context is live remains a FAIL (8.048711ms)
+✔ An unrelated fulfill error during teardown remains a FAIL (7.378377ms)
+✔ New allowed reads during closing are aborted without fetching or fulfilling (8.464604ms)
+✔ A POST during closing is aborted and remains a forbidden request FAIL with no egress (7.250434ms)
+✔ The outer finally writes an explicit result even if browser launch fails (10.818024ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.422144

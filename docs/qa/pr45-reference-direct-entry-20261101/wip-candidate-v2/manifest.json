@@ -1,0 +1,19 @@
+{
+  "status": "WIP",
+  "baseSHA": "d43cc5f77df6ccea7161ecb190d91631108f9d02",
+  "capturedBeforeCommit": true,
+  "sourceHashes": {
+    "src/reference/ReferenceScene.tsx": "723ca7bad1c9cbf466fb0c8ef60145f79c9df727d29d2a9a3fc92928c8be9d93",
+    "src/reference/reference-storefront.css": "93bbb0c601f7b3609c1a08499d3e65248849bd9b0f49fb9b718c5d71c7927e1a"
+  },
+  "snapshot": "/tmp/bagelito-reference-direct-candidate-v2-3215",
+  "checks": "Mobile direct entry320/390, 6categorycallbacks PASS; no complete updated suite claim",
+  "files": {
+    "390-results.json": "a3dbdeaf44a66d567989bc47c78c8c8e287a4115a75a55765083b53933d6ab40",
+    "390-nozoom-presentation.png": "24c1a3dbf9bba6cdf7035852d870617e4aed412eb3227b7f0494719df3fbfe4c",
+    "320-results.json": "2282e6265e37172fb2b729d04d165b33dfe57be488457551dd2568dcff5085d9",
+    "320-nozoom-presentation.png": "dcbb5b72393bd08289ea22dd24195d1c4d1c310ee44f66a8217e7106dbd18cbe",
+    "sources/nozoom-audit-frozen.cjs": "36d5fe1a24d31fa045701666e8a2c2e61c9972dada91aaba928598ea81f9d4f9",
+    "sources/nozoom-driver-frozen.cjs": "8bc9c97d852b642c6e2f29e66b3db66f16c00ecd7ea9752a539c102ecd9e184b"
+  }
+}

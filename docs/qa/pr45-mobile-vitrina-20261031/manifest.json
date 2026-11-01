@@ -1,0 +1,793 @@
+{
+  "status": "Final current mobile16 and guided32 PASS; historical failures retained separately",
+  "applicationSHA": "0381000a91fc8eebe235c8ebf9c034def9dc64b6",
+  "qaSourceCommit": "26125636e3a1adb26025cd75176cecf368f87a48",
+  "summary": "final-summary.json",
+  "files": {
+    "baseline-1816079/320-bagels.png": {
+      "bytes": 94109,
+      "sha256": "32b207e40b85dc7f649d008ea298d824fae1a0db1a63de88611bef168c1b3c46"
+    },
+    "baseline-1816079/390-bagels.png": {
+      "bytes": 118502,
+      "sha256": "6c3fadfef6a7c15d271b08828066116c4394c17300abafe836b470d5f24b581c"
+    },
+    "baseline-1816079/README.md": {
+      "bytes": 2823,
+      "sha256": "2be6053ecf8b70dd707e18e946a1920a4fe5b87b9945d00d3db76eefedfff9a2"
+    },
+    "baseline-1816079/SHA256SUMS": {
+      "bytes": 409,
+      "sha256": "11569e3746509c175bd77e59962050ab5dfb6296ed739d558569fa79bd0eef65"
+    },
+    "baseline-1816079/mobile-vitrina-results.json": {
+      "bytes": 64346,
+      "sha256": "1a4cf284876cd8dbcf7ac36fef790240b2a4a4890c7cc18299f37cc2787df6fd"
+    },
+    "baseline-1816079/stdout.log": {
+      "bytes": 2944,
+      "sha256": "9eac70d05b61a9e562d2a69ae289a7c2332346e95cc5fc01c037e0ae0b3ac758"
+    },
+    "environment.json": {
+      "bytes": 494,
+      "sha256": "e8edab5d18e27a907478de4307a8077313d2de69a527933d656536ee022779a0"
+    },
+    "final-summary.json": {
+      "bytes": 2414,
+      "sha256": "055fc789eccdf59cb980a855004deb6e566cd1adce66c1cd9102045a985e84ad"
+    },
+    "focus-fix/compiled-67deb30/compiled-focus.png": {
+      "bytes": 170276,
+      "sha256": "e18dae59a9855c1da05196b1bd9382d97d7d4268b9b4296bfc3067399796ac08"
+    },
+    "focus-fix/compiled-67deb30/pointer-preview.png": {
+      "bytes": 171177,
+      "sha256": "0d00c9cc07c4a9c6826eb040edaf1a9ffb0aedfdfe90eeebc8c636d28615b94d"
+    },
+    "focus-fix/compiled-67deb30/probe.cjs": {
+      "bytes": 5577,
+      "sha256": "6acceb7b6488789ce3350db4ebfcf1e6f336159b6a910f9d24f2a1ddc29bff81"
+    },
+    "focus-fix/compiled-67deb30/results.json": {
+      "bytes": 141444,
+      "sha256": "becddfbc584f41c8f60996e937fe87555abf29bcbf47b8507509671bdf617d6d"
+    },
+    "focus-fix/diagnosis-a1fce/mandatory.png": {
+      "bytes": 169350,
+      "sha256": "75bcc7a43c02bdf2e2b5e570277f97d02edbaab65d40e2995d7fafb29cf82008"
+    },
+    "focus-fix/diagnosis-a1fce/none.png": {
+      "bytes": 170597,
+      "sha256": "8899677831d8882db5095a61da37d7f5215d772234e49582997aac842cb477c5"
+    },
+    "focus-fix/diagnosis-a1fce/original.png": {
+      "bytes": 169346,
+      "sha256": "f3ed1c563664f76cd0fae001c726718c6d17520bec1abecdcaf71fb31a7a2e0f"
+    },
+    "focus-fix/diagnosis-a1fce/probe.cjs": {
+      "bytes": 3936,
+      "sha256": "1b0c6e599c622e2594c601fb6f939adbf4b2e9d64699603bd32165267180ae76"
+    },
+    "focus-fix/diagnosis-a1fce/results.json": {
+      "bytes": 254963,
+      "sha256": "73cfeff60a74c1bbc84a1e574f17dc0384cb81cc22ac1beebae25e0be0cf61b4"
+    },
+    "focus-fix/offline-review/review-results.json": {
+      "bytes": 6377,
+      "sha256": "048464ef4e56ac456cb8918875e8a5860e9818513f82df9693e9d95d28947782"
+    },
+    "focus-fix/offline-review/review.cjs": {
+      "bytes": 7029,
+      "sha256": "28fb75503d630aa7a28b9fa62f44a8f8a9c2d95eed3843f1487d3e8eab6ccf32"
+    },
+    "focus-fix/offline-review/run.log": {
+      "bytes": 357,
+      "sha256": "35d091b20a05856f9687b3500a056d13a1afe74d0164a53a8f8e4a508c1ef351"
+    },
+    "focus-fix/offline-review-0381000/review-results.json": {
+      "bytes": 6373,
+      "sha256": "01ee5d3a83fe9383d8f0919164625f4a9d9762041dfe65528838258c483351c7"
+    },
+    "focus-fix/offline-review-0381000/review.cjs": {
+      "bytes": 7056,
+      "sha256": "3799992acd605a1b2fb1f38a41adae11e59414206bc4e5ba6b1a1c4da01ac33b"
+    },
+    "focus-fix/offline-review-0381000/run.log": {
+      "bytes": 357,
+      "sha256": "35d091b20a05856f9687b3500a056d13a1afe74d0164a53a8f8e4a508c1ef351"
+    },
+    "focus-fix/temporary-focus-experiment/focus-reveal.png": {
+      "bytes": 170255,
+      "sha256": "970d019f29f220d190eacb38ceb5c74f2587c99b6bf116ba050e167558f649ee"
+    },
+    "focus-fix/temporary-focus-experiment/probe.cjs": {
+      "bytes": 4006,
+      "sha256": "bf0e83016fd06e722568ca350fbacfd8dc5575f3412285f2248ce833eacb2ae5"
+    },
+    "focus-fix/temporary-focus-experiment/results.json": {
+      "bytes": 139954,
+      "sha256": "1f91007a7a4489a4150904d3bd575d9eacd48c4ba39ad4b9738840df4a7f04d3"
+    },
+    "guided/README.md": {
+      "bytes": 1725,
+      "sha256": "baee584ff57920838b2d2fb9c0d493b350aaa20cef6f16bba38039fb03384ac0"
+    },
+    "guided/artifact-metadata.json": {
+      "bytes": 19072,
+      "sha256": "6c7856395eebaec70e4adc8f6e4f01e4f73e633a9ac5e9f10d851a1ae9ce212e"
+    },
+    "guided/checkpoint.json": {
+      "bytes": 150065,
+      "sha256": "38f944a9547e0c0704e61b207bd56ecc9664ae40104dcbfe1271faf64a175ff9"
+    },
+    "guided/desktop-01-entrance.png": {
+      "bytes": 534238,
+      "sha256": "899216eb80293481b10b897ee9bd2d06b0a610b05adc6602dd9cba480f7c7dc1"
+    },
+    "guided/desktop-02-selector.png": {
+      "bytes": 556752,
+      "sha256": "0bb828d14b02530269fe07d8af86761b26fade3042acc872ba13d28d22fa84a8"
+    },
+    "guided/desktop-03-pack-size.png": {
+      "bytes": 459707,
+      "sha256": "f798fb5f14da334c71aefdb4316ff48e0b6784602cd82f826fda02c540aac947"
+    },
+    "guided/desktop-04-pack-quantity.png": {
+      "bytes": 432831,
+      "sha256": "02f78fddbdf4d2c9815c53adab1395c10f8d4c615394cd32f8d76f28ef7ba533"
+    },
+    "guided/desktop-05-bagels.png": {
+      "bytes": 453006,
+      "sha256": "73d86e83b64acde65e1952cd8855287e67c65fc500bbfe8fc0ac21168e4e7df4"
+    },
+    "guided/desktop-06-bagels-selected.png": {
+      "bytes": 460274,
+      "sha256": "7eaf3239b200c4f5a4a681f72409fad78b6d6b53bf6aac73c4eb037b3e6c9195"
+    },
+    "guided/desktop-07-schmears.png": {
+      "bytes": 225191,
+      "sha256": "f09f774e9bd3ca3c357ae9b018a02f0af1b529ffb9361dd1d7b213df77707e69"
+    },
+    "guided/desktop-08-cashier.png": {
+      "bytes": 389067,
+      "sha256": "128fbe7e5f816f49d8374e84c0d26ab200d673e8aec920b016f8918cb9f923b4"
+    },
+    "guided/desktop-09-payment.png": {
+      "bytes": 359555,
+      "sha256": "7b4fc9b09185871309930e8077776489978e351def38e3e86eb8c17fe879d606"
+    },
+    "guided/desktop-10-receipt.png": {
+      "bytes": 432980,
+      "sha256": "994c16a4f053742dcefee74df274052eeac93536d6e130add75a3c7fc18fe19a"
+    },
+    "guided/desktop-11-wallet.png": {
+      "bytes": 461906,
+      "sha256": "e68aa293aed6eaa115b1b5dbd8ff62ecbdfdf66232d1b34f3094c331076d7f20"
+    },
+    "guided/desktop-12-handoff.png": {
+      "bytes": 529883,
+      "sha256": "68947fa52f3801102ecba0385f76471c757b2fc1f6a21912f31ee64da4d9507c"
+    },
+    "guided/desktop-13-goodbye.png": {
+      "bytes": 523043,
+      "sha256": "f816c5070fd8a4b63c39aeb9e5ce1f0a51acb33ba50c2b8eee5f4f287cf631f6"
+    },
+    "guided/desktop-14-returning.png": {
+      "bytes": 541209,
+      "sha256": "79218674a0b2f8fa28ed037fdf8a1814483a84f3a32473c52b882369c0b45d63"
+    },
+    "guided/desktop-15-combos.png": {
+      "bytes": 522704,
+      "sha256": "85fb7224fe37e9f1680e3dd70c1fb16fca988a132db7a4f163e39d1405ab28df"
+    },
+    "guided/desktop-16-schmear-size.png": {
+      "bytes": 464440,
+      "sha256": "b012721b77934eb5eef5f9227b8483fbb57538b5a5d4fae8d554970167772ae9"
+    },
+    "guided/mobile-01-entrance.png": {
+      "bytes": 156735,
+      "sha256": "ba380129e8373892e4a0529afca7f59d0a59c3c4bd1b2c48fc245c18733c5f91"
+    },
+    "guided/mobile-02-selector.png": {
+      "bytes": 197715,
+      "sha256": "dbfdc67089aeb4ebc58bc91f1e9ff341fc7c9cbaf43baa084b104eb6630c11b4"
+    },
+    "guided/mobile-03-pack-size.png": {
+      "bytes": 157404,
+      "sha256": "3b67127f6f6bb525d64fae9672aec703e4749dc1638a4e9792cde8fdff5477c7"
+    },
+    "guided/mobile-04-pack-quantity.png": {
+      "bytes": 155979,
+      "sha256": "1ccc780588c093beba6d139fdce9718dc2831e478abd3a8ec301e70054f97fda"
+    },
+    "guided/mobile-05-bagels.png": {
+      "bytes": 170244,
+      "sha256": "5471bd2fbde60fd4fa50dc685a925817e5554a1ae6ff7e406371fd5e059c2222"
+    },
+    "guided/mobile-06-bagels-selected.png": {
+      "bytes": 175812,
+      "sha256": "d39ebab09cc3f25c06d5377217a608a3b40b0c13af097f7409d0af003fe77056"
+    },
+    "guided/mobile-07-schmears.png": {
+      "bytes": 175213,
+      "sha256": "2e24d0d6f0ff0c98ebbbdd6b110d08c00144b26af423e303db53a39e8fd46784"
+    },
+    "guided/mobile-08-cashier.png": {
+      "bytes": 145618,
+      "sha256": "0b46bfca46d764fa2a97c5950f25de6440a53b040330e37e4cded43d77454022"
+    },
+    "guided/mobile-09-payment.png": {
+      "bytes": 46052,
+      "sha256": "245f41533d6b223309b2f83e5da311f35f6c7babf32e5845185538afadbb1daa"
+    },
+    "guided/mobile-10-receipt.png": {
+      "bytes": 139284,
+      "sha256": "4ec2726f8b995118080fb74069afa3164ddf7937861aa1ac3d2e6646c438eaca"
+    },
+    "guided/mobile-11-wallet.png": {
+      "bytes": 137917,
+      "sha256": "cc4b63914a9d53bf18e3000b4bfd8733ebeceb14187f674f4ac9c87e58987e9e"
+    },
+    "guided/mobile-12-handoff.png": {
+      "bytes": 149665,
+      "sha256": "c82386daf102aab3765aadea707e880a34ddb937981fd2adf56b8306b228fc0f"
+    },
+    "guided/mobile-13-goodbye.png": {
+      "bytes": 151755,
+      "sha256": "6251f150a7cb2c0e8376ff11179a20412a4ea5866c2b4aaa38c0343f538b86c0"
+    },
+    "guided/mobile-14-returning.png": {
+      "bytes": 154320,
+      "sha256": "bbaa2160ea5f6aa566b3fc5ec6aed735d6290b8b6148c77765aeeac14aa4a672"
+    },
+    "guided/mobile-15-combos.png": {
+      "bytes": 166302,
+      "sha256": "3b0286b028148edb4c0fec4871c8f2aa230170e4ad7f0c0acabf99d7638b5e5a"
+    },
+    "guided/mobile-16-schmear-size.png": {
+      "bytes": 155364,
+      "sha256": "1296016f3a4fcf3e013677fd4d2a8aa7262bb8ce4bb5ff614121d8dd842fce89"
+    },
+    "guided/results.json": {
+      "bytes": 150110,
+      "sha256": "9686eea168e63e98e07be14f9432c66ef2561822a13b6076a1e7b95c22c36cdb"
+    },
+    "guided/stdout.log": {
+      "bytes": 74687,
+      "sha256": "d51b69d9733cc7d01bef8d49e38c8c5788b86545332cf81c64c2bdc2518e3f14"
+    },
+    "guided-final-0381000/README.md": {
+      "bytes": 1617,
+      "sha256": "5d430abf38a75c54f88924701905e9673a58cb05bb87325e19ee4a0aa3d45368"
+    },
+    "guided-final-0381000/artifact-metadata.json": {
+      "bytes": 19502,
+      "sha256": "4ca6245f9dc570a6adcfb39e1a2db9fcafee4d44d1ea06dc86f43810f4596e05"
+    },
+    "guided-final-0381000/checkpoint.json": {
+      "bytes": 150816,
+      "sha256": "e0471bce3768ea1cc5754fd94ee36e5650867c84ae6aabf838270d585aadbe62"
+    },
+    "guided-final-0381000/desktop-01-entrance.png": {
+      "bytes": 534226,
+      "sha256": "fa69d11ef960da6c5110352ea054524876e0ff062bf2b13ffcfad722ec5d2222"
+    },
+    "guided-final-0381000/desktop-02-selector.png": {
+      "bytes": 562287,
+      "sha256": "9d8249155ad1b1d9e993c381c3a1dbae34c0530b8cfca1c329552b91aa6591da"
+    },
+    "guided-final-0381000/desktop-03-pack-size.png": {
+      "bytes": 456344,
+      "sha256": "53ffb4aead195df91eb302c88de24dea06ba4ee8c76fca9f294e6019e1a70f92"
+    },
+    "guided-final-0381000/desktop-04-pack-quantity.png": {
+      "bytes": 432921,
+      "sha256": "5ba2620b9cf26028c7727eca0fddcc20fba5defbb12b7c77f2e45b65b6b5a287"
+    },
+    "guided-final-0381000/desktop-05-bagels.png": {
+      "bytes": 455172,
+      "sha256": "b003fc4f698ad855edf2d9876d5c73c8a9076672d75e443415655db595dfb0f8"
+    },
+    "guided-final-0381000/desktop-06-bagels-selected.png": {
+      "bytes": 459455,
+      "sha256": "a22d0ca76cbe059b670082e7050f6b04c0bf840e1bf93ec315f9f61aeee2c09d"
+    },
+    "guided-final-0381000/desktop-07-schmears.png": {
+      "bytes": 225193,
+      "sha256": "239068b14ca1bb9b2b38b14d7aa07f3dbdda8d1dac2ad4a117baff55e7cb41c0"
+    },
+    "guided-final-0381000/desktop-08-cashier.png": {
+      "bytes": 390586,
+      "sha256": "a97eb353a37004ea154530b564e992be5c82d3d0486a36874033e32f7ea4f5e5"
+    },
+    "guided-final-0381000/desktop-09-payment.png": {
+      "bytes": 359578,
+      "sha256": "003c0b9c8d320b17fde150ec0eb9da07df2a2da2c3a22390ca409fa0fa087fc0"
+    },
+    "guided-final-0381000/desktop-10-receipt.png": {
+      "bytes": 432946,
+      "sha256": "0639324664038605cbd5f51f8ee140e0b4940d5a0f01d25267071c02b1dd2246"
+    },
+    "guided-final-0381000/desktop-11-wallet.png": {
+      "bytes": 462496,
+      "sha256": "4a77a8b4ce61d604bb42bec0f8619d9a56e48070c15ba6cdc8cb2ce5b33308c4"
+    },
+    "guided-final-0381000/desktop-12-handoff.png": {
+      "bytes": 529918,
+      "sha256": "0f73fd88cbc4d601227cc6be10be0950e1319db29608505cd289ba7474bb683e"
+    },
+    "guided-final-0381000/desktop-13-goodbye.png": {
+      "bytes": 522473,
+      "sha256": "ba85373fadbbbb703caf5b1ce278469ddd471a268b01538d5825a5f535342783"
+    },
+    "guided-final-0381000/desktop-14-returning.png": {
+      "bytes": 535774,
+      "sha256": "5d545c6e71849442c56825b3fdac899462a7c04917e0a16e8b2c358ce7f1cc0e"
+    },
+    "guided-final-0381000/desktop-15-combos.png": {
+      "bytes": 522421,
+      "sha256": "269b96dcdf6732056e64fb676264c80555a510a4384471ccae6c38f0b36a8c0a"
+    },
+    "guided-final-0381000/desktop-16-schmear-size.png": {
+      "bytes": 464214,
+      "sha256": "f87518352bfd9e5284b2cbf1c465a8e1af4e6d068c8341f9a3e0784f75e26a56"
+    },
+    "guided-final-0381000/mobile-01-entrance.png": {
+      "bytes": 156711,
+      "sha256": "5a833b8a56bf5926da34b301b0e4d746d48973e5f7ffdb2ddcd5dd70cb1b618d"
+    },
+    "guided-final-0381000/mobile-02-selector.png": {
+      "bytes": 197717,
+      "sha256": "2dc646eb37bc4557e12affce32b69cae4dacda6748f193bf59366b708e5ce4eb"
+    },
+    "guided-final-0381000/mobile-03-pack-size.png": {
+      "bytes": 157540,
+      "sha256": "53609966a7c134c0f4ca1dbca179ecbfcfe573bacc42b71e5e21c4031405391e"
+    },
+    "guided-final-0381000/mobile-04-pack-quantity.png": {
+      "bytes": 155986,
+      "sha256": "82d3f78118f0a519f8ad85533c406690893289f1e2dd115bdbabc3ce2260bd68"
+    },
+    "guided-final-0381000/mobile-05-bagels.png": {
+      "bytes": 170397,
+      "sha256": "e14c61487040b73e28d18ae1e86000ed66334027f34c69d4a7b9130b51861461"
+    },
+    "guided-final-0381000/mobile-06-bagels-selected.png": {
+      "bytes": 175886,
+      "sha256": "01409035b7d48fffea2f87e8acbadf8672352a25133364cf6cc3dc50abf82dd1"
+    },
+    "guided-final-0381000/mobile-07-schmears.png": {
+      "bytes": 175185,
+      "sha256": "5a81418722724a2fa76b7c7a4a4e7b533eb1a96bbf8250a76e2dfe810fdd1cde"
+    },
+    "guided-final-0381000/mobile-08-cashier.png": {
+      "bytes": 146058,
+      "sha256": "019ff8abefa17fa6fb6bbbd3723c0756c4c92545f83b7d97a390187d0fb23955"
+    },
+    "guided-final-0381000/mobile-09-payment.png": {
+      "bytes": 46698,
+      "sha256": "512f3e7788d5147bc7bba00c8c60928d2c8f0b1fae8cbf218777eefd22e519a7"
+    },
+    "guided-final-0381000/mobile-10-receipt.png": {
+      "bytes": 139015,
+      "sha256": "ff36426e62245f5e91f4909e2f22d0400fb73bf12c51bd7dab2373129747a45d"
+    },
+    "guided-final-0381000/mobile-11-wallet.png": {
+      "bytes": 137836,
+      "sha256": "ca508ec86b565137ee5f2b2df176ef53a42e7816eeb103d439d22fb180cb7558"
+    },
+    "guided-final-0381000/mobile-12-handoff.png": {
+      "bytes": 149680,
+      "sha256": "a7db35c96f2ade65bc17ae57981a095025300d05422cee05c2a5ac2b3799a17c"
+    },
+    "guided-final-0381000/mobile-13-goodbye.png": {
+      "bytes": 151776,
+      "sha256": "be9a415f5ace467897d761b7752e10cee18feb238aeae139a54b48c52f41564a"
+    },
+    "guided-final-0381000/mobile-14-returning.png": {
+      "bytes": 154104,
+      "sha256": "a01e97b31a66804acafb923de2f35b724ba5f9eb9ebfd4a8579559c88a909abd"
+    },
+    "guided-final-0381000/mobile-15-combos.png": {
+      "bytes": 166334,
+      "sha256": "653cdfd09ca98804584278248e5ebe5053468e8ccd6259655e566591157aaa38"
+    },
+    "guided-final-0381000/mobile-16-schmear-size.png": {
+      "bytes": 155312,
+      "sha256": "d6ac3a24626b19e55dc7f329c5f9763e256566d80664b880d84ce6c79e938006"
+    },
+    "guided-final-0381000/results.json": {
+      "bytes": 150861,
+      "sha256": "72457f3b2a110a7d8c635f4a297179928058f1c67705394a63dd58b286221618"
+    },
+    "guided-final-0381000/stdout.log": {
+      "bytes": 74687,
+      "sha256": "5e0031b80591de23c65df09e0274858fd7428ca5658039365719b7a1456c369c"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-bagels.png": {
+      "bytes": 128904,
+      "sha256": "67af52cbbed0d69101ba09c2f25021f8da961fd0451fd67d857edebbc8ccc187"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-failure.png": {
+      "bytes": 127894,
+      "sha256": "a169b7d73bed61fbfb703478df625609165a1b0a0ea2dc1474c62310f5052e94"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-pack-qty.png": {
+      "bytes": 120000,
+      "sha256": "81bb6d48fb589805b1c0aa005f22d1e645e8f05b1845253b8204edc2f8711b1b"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-pack-size.png": {
+      "bytes": 123218,
+      "sha256": "4a40f38243821dab420e6f7193035077830611a8bd9305cdfc7b3fa95a38e816"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/320-selector.png": {
+      "bytes": 150177,
+      "sha256": "5bd741a8fabadf9f0722d4cb3b9bd7b96862f19eaf3273146f5ba09c9bed7cbf"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-bagels.png": {
+      "bytes": 169937,
+      "sha256": "2fd07bd2fa7589939f1f3498d38d9cb21e16964f606008dd4f47dc020075fd4d"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-failure.png": {
+      "bytes": 2740,
+      "sha256": "fb32313e11bc8ffbd5310a1660e630b64cedb4622f8462a5eae2d5464ac8279e"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-pack-qty.png": {
+      "bytes": 153753,
+      "sha256": "96daa92bccdc76f8d89a488e3816f6a2cfb6553a556dcbc2dec66ca15f2d708b"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-pack-size.png": {
+      "bytes": 157272,
+      "sha256": "8949310bd209cf9336996803424de8e1acb993cf401adbaf661cc00765c4e387"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/390-selector.png": {
+      "bytes": 197912,
+      "sha256": "94b5e29637e6c0bfdf396cb66a432d183a58fe083c5a7e4f67472277b1f9f653"
+    },
+    "iterations/67deb30-nearest-and-edge-failure/mobile-vitrina-results.json": {
+      "bytes": 188270,
+      "sha256": "900c5af41f44a7066efd916322d8c3c6aebed0762a9353bb9b84ed8d9c024850"
+    },
+    "iterations/a1fce-mobile-tab-failure/320-bagels.png": {
+      "bytes": 128899,
+      "sha256": "0ed74cd4dc4aae0b1ef77e6688a94a5cf4f69121ac47eeca05a30cd7804217b4"
+    },
+    "iterations/a1fce-mobile-tab-failure/320-failure.png": {
+      "bytes": 127893,
+      "sha256": "499318bac72fcbd51680e40230a6c1b2ffee490494190017b35c3eddfe23f7bd"
+    },
+    "iterations/a1fce-mobile-tab-failure/320-pack-qty.png": {
+      "bytes": 119981,
+      "sha256": "dd8d1a5f78bf035017fd5709294973b9829e7378a6a80b3646b18ff9867fd69e"
+    },
+    "iterations/a1fce-mobile-tab-failure/320-pack-size.png": {
+      "bytes": 123241,
+      "sha256": "f08438e094f13e37cf7aa1731b746c9e92d7cedc37a84d2e7f724801138e3e36"
+    },
+    "iterations/a1fce-mobile-tab-failure/320-selector.png": {
+      "bytes": 150236,
+      "sha256": "92e9ffe1db828213e0b1dacf872ce2a981a8a9589b699735c35e9b8c5b70eeca"
+    },
+    "iterations/a1fce-mobile-tab-failure/390-bagels.png": {
+      "bytes": 170372,
+      "sha256": "7c1332792dc7ef0a23c29e72d03805a97706ac309ea4c4f603cec213a9ac6848"
+    },
+    "iterations/a1fce-mobile-tab-failure/390-failure.png": {
+      "bytes": 169725,
+      "sha256": "5690a717e1a34745d3bf3b11393968d888bada52b51c86d6d40d4158cd25c901"
+    },
+    "iterations/a1fce-mobile-tab-failure/390-pack-qty.png": {
+      "bytes": 153798,
+      "sha256": "3590cad29c30fd44fa1a2da05f059bc4f6716c9d5d17c556111fada09803a33a"
+    },
+    "iterations/a1fce-mobile-tab-failure/390-pack-size.png": {
+      "bytes": 157276,
+      "sha256": "25c3e87d09ba65a54b9edd94a15b0c7451556fa5053c1e8e9e8ef92055721c27"
+    },
+    "iterations/a1fce-mobile-tab-failure/390-selector.png": {
+      "bytes": 197896,
+      "sha256": "c409a6198cb2194d4a817fdfe8624a6647b29a266a992402d10f80a0375bc7d9"
+    },
+    "iterations/a1fce-mobile-tab-failure/mobile-vitrina-results.json": {
+      "bytes": 162843,
+      "sha256": "0ee56c1790638162f52ed6d08a4f96f283da35100a53f9e018f488a61cd64609"
+    },
+    "iterations/b903-guided-interrupted/README.md": {
+      "bytes": 862,
+      "sha256": "0765fb4fc67d92ef1957847360cd6da3a3c16ceed83a39a9ff82357d96c12ee0"
+    },
+    "iterations/b903-guided-interrupted/artifact-metadata.json": {
+      "bytes": 14934,
+      "sha256": "75f254b63a58311667c7cc81e018dabab3e24a4d566b5cb3443ee2bad84aed3f"
+    },
+    "iterations/b903-guided-interrupted/checkpoint.json": {
+      "bytes": 44963,
+      "sha256": "7b63b6d03fc596a9f9436f0a4729a76c8023d4ad55a6135e6d632b2bd872c871"
+    },
+    "iterations/b903-guided-interrupted/desktop-01-entrance.png": {
+      "bytes": 534345,
+      "sha256": "6b0d618a132b8b40fccf146ef1ade04a44b0f25a28418b98ee757bb231ecce28"
+    },
+    "iterations/b903-guided-interrupted/desktop-02-selector.png": {
+      "bytes": 556521,
+      "sha256": "614c650c64e616cb98cc07d919ec722f4e07b837a2454ea3c314610282247e98"
+    },
+    "iterations/b903-guided-interrupted/desktop-03-pack-size.png": {
+      "bytes": 456350,
+      "sha256": "00a7735b1c381df67e55ff2071904b40e93b75bc1580f15bb22d9bc0ee583e50"
+    },
+    "iterations/b903-guided-interrupted/desktop-04-pack-quantity.png": {
+      "bytes": 429855,
+      "sha256": "2747377ee245b367dc3bdee8aa09b1b14843fd8bd146ca98902aa9c401586019"
+    },
+    "iterations/b903-guided-interrupted/desktop-05-bagels.png": {
+      "bytes": 454428,
+      "sha256": "bf2dd1169144efa7337471d4d9341e5937bb1e9b48dce4f732fb9eb63bff814a"
+    },
+    "iterations/b903-guided-interrupted/desktop-06-bagels-selected.png": {
+      "bytes": 459468,
+      "sha256": "6d01af07ec301841f4d3a73cf487b97faceff4c1be9ca8b35e054b19ca733107"
+    },
+    "iterations/b903-guided-interrupted/metadata-preflight.json": {
+      "bytes": 1893,
+      "sha256": "7d0082712de2023b0b55eb614a5f2d8cf31af74f69e575c1d46f36fb2eefb726"
+    },
+    "iterations/b903-guided-interrupted/results.json": {
+      "bytes": 45009,
+      "sha256": "e784297002cff787617bc2f12a6a3660ed9dc666496dfe23fbd36328fb99dfe6"
+    },
+    "iterations/b903-guided-interrupted/stdout.log": {
+      "bytes": 26427,
+      "sha256": "3891a110ff7caa4a9d5c6cbaed02ae51780114f9c1925405d6a5a210fb3f068c"
+    },
+    "iterations/browser-back-diagnosis/README.md": {
+      "bytes": 1058,
+      "sha256": "812cd2bf4bb4ef6d89a151abff8933329f2a1a444af0a4c61221b6199304bc7d"
+    },
+    "iterations/browser-back-diagnosis/original-swipe-source.txt": {
+      "bytes": 1020,
+      "sha256": "c02eb816b9573a530a77411f0773413e75c8d4625e4ab9eedf11de7741cfc484"
+    },
+    "iterations/browser-back-diagnosis/probe-as-run.cjs": {
+      "bytes": 5537,
+      "sha256": "3583e88c1cdb01a0164e0d47d100080e8814a14bafbcb07e2942eca5b2229177"
+    },
+    "iterations/browser-back-diagnosis/replay-frozen.cjs": {
+      "bytes": 5443,
+      "sha256": "9c559121b234bee8a941a0f07996415355d2ce241796a8040516d1710f3c1f01"
+    },
+    "iterations/browser-back-diagnosis/results.json": {
+      "bytes": 79381,
+      "sha256": "022b574193b88e000b9916535a4998c5eb4546fea0dd2e5115ec485a47f73ff6"
+    },
+    "iterations/browser-back-diagnosis/stdout.log": {
+      "bytes": 23990,
+      "sha256": "c54c2265a578e591e13154cca0ba958d2036cf3b3117c17a5a62d8e1e61848a5"
+    },
+    "iterations/browser-back-diagnosis/summary-derived.json": {
+      "bytes": 311,
+      "sha256": "c8b029f0f2eab6883059cf62cac748af83af94f3837344c59ba3cf9010f3d7fb"
+    },
+    "iterations/invalid-first-measurement/first-results.json": {
+      "bytes": 9072,
+      "sha256": "11b508c705c421f4d466718161fdd89458f21b15d344ef447db3f18764739281"
+    },
+    "iterations/v1-390-target-width-failure/first-results.json": {
+      "bytes": 34366,
+      "sha256": "212974ee37666bd4e3b3631618dfdf94ec952e170b972d2c315fa62605e5e4a8"
+    },
+    "iterations/v1-390-target-width-failure/mobile390-bagels-prototype.png": {
+      "bytes": 170030,
+      "sha256": "541cca3251026f1e0371f78606ce951240cbe839f48448d91002d55f6039fe37"
+    },
+    "iterations/v1-390-target-width-failure/mobile390-bagels-selected-prototype.png": {
+      "bytes": 171971,
+      "sha256": "7029f78919e607d20a1ca2b6f8cba4ed285b55f38838ce7ef24aa6e8989917cc"
+    },
+    "iterations/v2-320-clipped-remove-failure/first-results.json": {
+      "bytes": 31419,
+      "sha256": "02e0a1fb1302c772d0971ee3aa41b2d4e2085de99f4b822a913ab9609a712b35"
+    },
+    "iterations/v2-320-clipped-remove-failure/mobile320-bagels-prototype.png": {
+      "bytes": 130151,
+      "sha256": "8e1c336b7c0db3837b129f3736179f6e972d3d76ed453f7e6760029e3b1549a3"
+    },
+    "iterations/v2-320-clipped-remove-failure/mobile320-bagels-selected-prototype.png": {
+      "bytes": 131290,
+      "sha256": "6b9bcd39dbcbb21d9d9fb9cf70768fc23687fccd84c31069f2ad70e9f17b2128"
+    },
+    "iterations/v2-320-combo-ancestor-review/all-ancestor-review.json": {
+      "bytes": 2150,
+      "sha256": "fd63a1d7176fc56dd0aef3358379ae5b44625862334db103d487de62011e6328"
+    },
+    "iterations/v2-320-combo-ancestor-review/first-results.json": {
+      "bytes": 41178,
+      "sha256": "412f13377183200022c11bb53593374fa979ad531a3a8f4507ff0a522677c921"
+    },
+    "iterations/v2-320-combo-ancestor-review/mobile320-combo-classic-strawberry-selected.png": {
+      "bytes": 139375,
+      "sha256": "ac5a644d6cc84bdaabfcaa276a2911dd56056caed892374bf66b23a27e80b679"
+    },
+    "iterations/v2-320-combo-ancestor-review/mobile320-combo-herb-roasted-garlic-selected.png": {
+      "bytes": 140682,
+      "sha256": "4801d06fdb4a52bfec84e0ec0024382c8990dc060ec65a9ebe0d234bbb2851b6"
+    },
+    "iterations/v3-320-focal/first-results.json": {
+      "bytes": 31505,
+      "sha256": "dca03f9b3d9f4a49deca1d882cb66745c7a3c4ef0b3054e211797126667fc592"
+    },
+    "iterations/v3-320-focal/mobile320-bagels-prototype.png": {
+      "bytes": 128763,
+      "sha256": "87e990801db95e35ce0e510811ea39d30825929ae3ba872aef04873f1bea445c"
+    },
+    "iterations/v3-320-focal/mobile320-bagels-selected-prototype.png": {
+      "bytes": 130003,
+      "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
+    },
+    "logs/build-0381000.log": {
+      "bytes": 23679,
+      "sha256": "f2d7da9c0d8a096a93ba246750df9053ca3fb6e3727f727a4e809b5c44846afd"
+    },
+    "logs/build-67deb30.log": {
+      "bytes": 23678,
+      "sha256": "c2232ebb6f6480b430985b03d204f61f31f92e03b20ef3153d430cc14aaa3d6a"
+    },
+    "logs/build-a1fce72.log": {
+      "bytes": 23678,
+      "sha256": "c5beec9edc2e5bc7ee70474ecc85b6f5d94a4455faeb62866c365fcbc49db588"
+    },
+    "logs/build-b903413.log": {
+      "bytes": 23676,
+      "sha256": "8b0880b36ba4c8d34e76dc056470edeace6d3c05dce97745633651e35169a8fe"
+    },
+    "logs/harness12.log": {
+      "bytes": 1308,
+      "sha256": "8d3d2a920008bf03139da39be5afd3987383331fc08da43d86ec0d2b6abb6c03"
+    },
+    "logs/node52-0381000.log": {
+      "bytes": 5040,
+      "sha256": "6b9da067b256ec08a30cec10095d4647d228657c22fc7ec8ec53a5b7d05998d3"
+    },
+    "logs/node52-0ab0fe5.log": {
+      "bytes": 5037,
+      "sha256": "4b2b938da5ba5ee02867521ff5d70ada6ca039d2b294e13c42bd6646db0a928b"
+    },
+    "logs/node52-67deb30.log": {
+      "bytes": 5042,
+      "sha256": "0342979f33ecc13d2ccd56099f3bf0d50fd3868b71766763f0f6d28e7464d2a3"
+    },
+    "logs/source-visual7-0381000.log": {
+      "bytes": 743,
+      "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
+    },
+    "logs/source-visual7-67deb30.log": {
+      "bytes": 743,
+      "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
+    },
+    "logs/source-visual7-a1fce72.log": {
+      "bytes": 743,
+      "sha256": "fa2154f7fc7939c5fe44ee64e1a282f56ac9213f90783562a63de8a78c181a5e"
+    },
+    "mobile-final-0381000/320-bagels-extra-9.png": {
+      "bytes": 131419,
+      "sha256": "8fba482fe87d3eac3d79660b954d56eca8c2f654eb0f877d2bd68a162ac8862d"
+    },
+    "mobile-final-0381000/320-bagels.png": {
+      "bytes": 128851,
+      "sha256": "a951eaa80c5d1f5fdeb01029a9a0b9a7755da12a6ca160c5a5ed98e71ef9ac71"
+    },
+    "mobile-final-0381000/320-cashier.png": {
+      "bytes": 114561,
+      "sha256": "af393ec1ad24928b9f06336abde9e127ef38db2933386bd284aba066b6f88d22"
+    },
+    "mobile-final-0381000/320-combos.png": {
+      "bytes": 130736,
+      "sha256": "68bbf92570ce5042cbf13d2728230d00217a77741ca197cf8d99fd3d6ab05437"
+    },
+    "mobile-final-0381000/320-pack-qty.png": {
+      "bytes": 119987,
+      "sha256": "04335c9950de5c5aaa65c18ddf0690f70f85c808af0b02151399421f7c06f14b"
+    },
+    "mobile-final-0381000/320-pack-size.png": {
+      "bytes": 123158,
+      "sha256": "f427d2c467031ef46f71a739605905849f7d6701b7bbd36045a50f62b7147152"
+    },
+    "mobile-final-0381000/320-schmear-size.png": {
+      "bytes": 117475,
+      "sha256": "12f816c7320d470846c5607424ad4417153260e0b10687d0ebeb0eb8f6f77c76"
+    },
+    "mobile-final-0381000/320-schmears-extra-13.png": {
+      "bytes": 134873,
+      "sha256": "9f15679a277a68507092036014f4208eaff6f05f369ea7f7781a12e155989d7d"
+    },
+    "mobile-final-0381000/320-schmears-extra-14.png": {
+      "bytes": 138804,
+      "sha256": "e849a5771474bdf047d6a69743962b974dafddd00912e98388ca381f4aa3c553"
+    },
+    "mobile-final-0381000/320-schmears.png": {
+      "bytes": 136864,
+      "sha256": "f758458bceacf1ec867a8f71514a257ba1dc537d5402558080e844c5ac52e2ea"
+    },
+    "mobile-final-0381000/320-selector.png": {
+      "bytes": 150225,
+      "sha256": "c248f6a0c1bbfd4b3c5a542770149515383ee3ffa4fc6b12dccb2652d53b7967"
+    },
+    "mobile-final-0381000/390-bagels-extra-1.png": {
+      "bytes": 176358,
+      "sha256": "68e3d90f85f20ebba8c679d390da679838524509445c381717030299bec6fec2"
+    },
+    "mobile-final-0381000/390-bagels.png": {
+      "bytes": 170438,
+      "sha256": "c2f39cbc8646bb32e55fa2981552cd386b2d7ade8e69151669b65a1da8aa15bb"
+    },
+    "mobile-final-0381000/390-cashier.png": {
+      "bytes": 148649,
+      "sha256": "eb9fdb3be5fc4f4f46574d6c9ce50e6c530841050a3dc3b181de5372df725730"
+    },
+    "mobile-final-0381000/390-combos.png": {
+      "bytes": 165228,
+      "sha256": "bc59971df59e5bd77fa022caf23b676d7096c83e85a1b56df2abe480ac455fea"
+    },
+    "mobile-final-0381000/390-pack-qty.png": {
+      "bytes": 153784,
+      "sha256": "4f28620f339fa52f7661646ca1b447ed4083a0e5dcc564750e03463a844026ff"
+    },
+    "mobile-final-0381000/390-pack-size.png": {
+      "bytes": 157259,
+      "sha256": "437e38cb1017cf6736acaf0986b1998776aae3f6c0faa90d0b1d62d16b4fcedc"
+    },
+    "mobile-final-0381000/390-schmear-size.png": {
+      "bytes": 155175,
+      "sha256": "411815b0172694154d3467722e144fa1911abc2cfdbc782274130256388ce7ee"
+    },
+    "mobile-final-0381000/390-schmears-extra-5.png": {
+      "bytes": 177333,
+      "sha256": "12ab9ad94bc42bd140b4575e9b9b196a3099aba1b31b714a722c99fca5b7624e"
+    },
+    "mobile-final-0381000/390-schmears-extra-6.png": {
+      "bytes": 176125,
+      "sha256": "ff656ab046e9fc19bf6e5392f2106b9b609683cc1cd4d745900d6a7ec26a71d2"
+    },
+    "mobile-final-0381000/390-schmears.png": {
+      "bytes": 174337,
+      "sha256": "d757c0113b92c9d0dc82074c5dc13223e0bfd20b2441f2e54ccf787b68a35b47"
+    },
+    "mobile-final-0381000/390-selector.png": {
+      "bytes": 197918,
+      "sha256": "8c90eece223887074863c2f4aeea262f33f2bc301b617e356cdd24cf2ab26b4f"
+    },
+    "mobile-final-0381000/README.md": {
+      "bytes": 3839,
+      "sha256": "97da16b8d7eed9d1a2f3205aac538558b7a2ed3a6deb4cb2f4933192fd0011e7"
+    },
+    "mobile-final-0381000/SHA256SUMS": {
+      "bytes": 2119,
+      "sha256": "532eaf9281760fa72a26f1e9d2e6f88a13cff457def26752f3751e2371dbc63e"
+    },
+    "mobile-final-0381000/mobile-vitrina-results.json": {
+      "bytes": 667375,
+      "sha256": "005f32446a42df871d298b977ed020e7fa9fa105484721c28f28cf5e67df3d8f"
+    },
+    "mobile-final-0381000/stdout.log": {
+      "bytes": 70079,
+      "sha256": "0b985299b57932b684b096a3aa003f107db1139846adb65a80a54bced4f6a6c4"
+    },
+    "source-scope.json": {
+      "bytes": 3433,
+      "sha256": "d78beecdca0e6a49d9d2ec54dfbd24bb89c1a4afa8a7c1045582c0d585f30f60"
+    },
+    "wip-b903413/focal-results.json": {
+      "bytes": 31505,
+      "sha256": "dca03f9b3d9f4a49deca1d882cb66745c7a3c4ef0b3054e211797126667fc592"
+    },
+    "wip-b903413/manifest.json": {
+      "bytes": 1904,
+      "sha256": "78a1194c6ae5b7b244c35b9aed96b65148993e5208bfd58b69ce2af9ccf314f9"
+    },
+    "wip-b903413/mobile-320-bagels-selected.png": {
+      "bytes": 130003,
+      "sha256": "ac1b171523e56041f308b2a95709634c68677f8938e07c75e9f0719521199e5f"
+    }
+  },
+  "fileCount": 196
+}

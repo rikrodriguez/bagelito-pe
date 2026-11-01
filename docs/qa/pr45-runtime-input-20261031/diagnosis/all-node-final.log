@@ -1,0 +1,48 @@
+✔ a 480ms right hold survives keyup before the first rendered frame (2.30041ms)
+✔ sampling frames during a hold does not double-count time when keyup arrives (0.374041ms)
+✔ repeat keydown events preserve one continuous hold rather than adding impulses (0.235543ms)
+✔ releasing one alias or pointer source leaves another held source active (0.261943ms)
+✔ diagonal movement has unit length and opposing directions cancel over each interval (0.169354ms)
+✔ run transitions retain their own elapsed intervals and modifier aliases (0.187812ms)
+✔ reset discards held inputs and queued travel before a later fresh press (0.268112ms)
+✔ a long frame stalls at the configured travel budget rather than building an unbounded backlog (0.190045ms)
+✔ the input clock is monotonic and rejects non-finite timestamps or invalid budgets (0.488883ms)
+✔ CameraController consumes a complete between-frame press once and publishes the resulting position (49.504819ms)
+✔ collision integration approaches the display, slides sideways, and respects the room bounds (22.059286ms)
+✔ the guided controller discards queued and held free-roam movement (14.673923ms)
+✔ the keyboard handler ignores editable targets and still releases a key after focus changes (5.390565ms)
+✔ blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap (24.654698ms)
+✔ a disposed response while the context is live remains a failure without an unhandled rejection (1.399269ms)
+✔ closing drains pending requests before context.close and records expected disposal separately (0.489474ms)
+✔ new allowed GETs during closing are aborted without fetching online (0.88673ms)
+✔ closing never permits an unrelated destination or write (0.311076ms)
+✔ HTTP500 completing during the closing drain is an immediate failure (0.332339ms)
+✔ a timeout during closing remains a failure even when its text also mentions context closed (1.068993ms)
+✔ requestAnimationFrame returns its original native ID (2.10739ms)
+✔ paused app callbacks stay queued while native pause fences complete (0.862794ms)
+✔ cancelling a queued original ID prevents delivery after resume (2.008682ms)
+✔ cancel(original ID) also cancels its reprogrammed native handle (0.830555ms)
+✔ resume supplies a fresh native timestamp without rebasing the real clock (1.393389ms)
+✔ callbacks retain the native Window receiver (1.132729ms)
+✔ invalid callbacks retain native synchronous validation (1.326159ms)
+✔ A healthy fresh journey resets only the in-tab product draft and keeps the reload (11.332396ms)
+✔ A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup (7.057965ms)
+✔ A failed document is reported as an HTTP setup failure (3.708723ms)
+✔ A non-loopback target is refused before any browser launch (1.230446ms)
+✔ The original readiness and strafe logic remains intact apart from comments and result checkpoints (0.30039ms)
+✔ Teardown drains an in-flight fulfill before disposing the context and records a marked cancellation (9.805867ms)
+✔ The same disposed fulfill error while the context is live remains a FAIL (3.819709ms)
+✔ An unrelated fulfill error during teardown remains a FAIL (5.719037ms)
+✔ New allowed reads during closing are aborted without fetching or fulfilling (4.81385ms)
+✔ A POST during closing is aborted and remains a forbidden request FAIL with no egress (7.737065ms)
+✔ The outer finally writes an explicit result even if browser launch fails (10.429257ms)
+✔ A late old-document draft write cannot restore guided mode in the new journey (3.458347ms)
+✔ A later reload without the one-shot marker preserves the real product draft (3.739599ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 550.287927

@@ -1,0 +1,494 @@
+{
+  "metadata": {
+    "startedAt": "2026-11-01T00:28:16.432Z",
+    "base": "http://127.0.0.1:3208/",
+    "declaredCodeSHA": "fe4c3ec460a9fb7bdd33cd2e6ebaec8156db9ecc",
+    "repositorySHA": "fe4c3ec460a9fb7bdd33cd2e6ebaec8156db9ecc",
+    "driverSHA256": "440c76e82f76cd79b7e3b88b88dba417c80edbba7494768b508d56fd3d82537a",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "scope": "Exact approved image bytes, uncropped image and accessible category hotspots; existing commercial review-only flow smoke. No3D, fetch/XHR/API/provider requests, application storage reads or writes. One exact-key TanStack initialization read per document is recorded, not claimed absent.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T00:28:18.333Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "status": "passed",
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-exact-storefront.png",
+      "sha256": "43742d590671bb920667ea22b5ab6563dd595b3d217bc04672f83acfdf4e2f90",
+      "metrics": {
+        "source": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+        "complete": true,
+        "naturalWidth": 1536,
+        "naturalHeight": 1024,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "painted": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "right": 390,
+          "bottom": 260
+        },
+        "entireImageVisible": true,
+        "ancestorIssues": [],
+        "objectFit": "contain",
+        "objectPosition": "50% 50%",
+        "filter": "none",
+        "opacity": "1",
+        "canvasCount": 0,
+        "overflowX": 0,
+        "buttons": [
+          {
+            "name": "Packs",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 100.546875,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Combos",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 171.125,
+              "y": 88.859375,
+              "width": 70.328125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Schmears",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 245.265625,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          }
+        ]
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "documentId": 1793492897441.6,
+              "url": "http://127.0.0.1:3208/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "documentId": 1793492897441.6,
+              "url": "http://127.0.0.1:3208/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793492897441.6",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+                "url": "http://127.0.0.1:3208/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "documentId": 1793492897888.1,
+              "url": "http://127.0.0.1:3208/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "documentId": 1793492897888.1,
+              "url": "http://127.0.0.1:3208/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793492897888.1",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+                "url": "http://127.0.0.1:3208/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "documentId": 1793492898077.1,
+              "url": "http://127.0.0.1:3208/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "documentId": 1793492898077.1,
+              "url": "http://127.0.0.1:3208/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793492898077.1",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+                "url": "http://127.0.0.1:3208/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3208/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-_fyLhM4Y.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/routes-DIZbFZd-.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-BSAbt8eF.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-DdAl8CHC.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-_fyLhM4Y.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/routes-DIZbFZd-.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-DdAl8CHC.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-BSAbt8eF.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-_fyLhM4Y.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-DdAl8CHC.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/routes-DIZbFZd-.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-BSAbt8eF.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+            "documentId": 1793492897441.6,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+            "documentId": 1793492897441.6,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+            "documentId": 1793492897888.1,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+            "documentId": 1793492897888.1,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+            "documentId": 1793492898077.1,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+            "documentId": 1793492898077.1,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793492897441.6",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "url": "http://127.0.0.1:3208/?qa=1"
+            },
+            {
+              "documentId": "1793492897888.1",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "url": "http://127.0.0.1:3208/?qa=1"
+            },
+            {
+              "documentId": "1793492898077.1",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "url": "http://127.0.0.1:3208/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T00:28:17.769Z",
+      "type": "exact-image-captured",
+      "width": 390,
+      "file": "390-exact-storefront.png"
+    },
+    {
+      "at": "2026-11-01T00:28:17.884Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T00:28:18.074Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T00:28:18.259Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T00:28:18.275Z",
+      "type": "capabilities-drained",
+      "width": 390,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    }
+  ]
+}

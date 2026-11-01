@@ -1,0 +1,5792 @@
+{
+  "metadata": {
+    "startedAt": "2026-10-31T22:49:46.797Z",
+    "repositorySHA": "a1fce7227d15482b8636b69fdbddd6d3274383bc",
+    "workingTree": "?? .output/\n?? docs/pr45-mobile-vitrina-20261031.md\n?? docs/qa/pr45-mobile-vitrina-20261031/iterations/\n?? docs/qa/pr45-mobile-vitrina-20261031/logs/\n?? scripts/lib/\n?? scripts/qa-mobile-vitrina.cjs\n?? tests/qa-loopback-guard.test.cjs",
+    "declaredBuildSHA": "a1fce7227d15482b8636b69fdbddd6d3274383bc",
+    "base": "http://127.0.0.1:3203",
+    "nodeVersion": "v24.19.0",
+    "expectedScenes": 32,
+    "hdrFixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+    "sourceSHA256": {
+      "scripts/qa-guided.cjs": "331d31b1064104e57853c9a207cb7d0aa17284dbedd57210b4d722b582d6948f",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/movement-input.ts": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+      "src/playable/StoreArchitectureVisual.tsx": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "src/playable/GuidedCommerce.tsx": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "src/playable/guided-commerce.css": "386f491e27df15ffb211bc425c46f7c8ec084ef6eaf3cc8d32363516b1d5891e",
+      "src/domain/lib/approved-shop-contract.ts": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+      "src/domain/data/verified-menu-2026-10-21.json": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080",
+      "package.json": "f23987681e4551c8ec1a1c405b9f8cec37a5f7defc263ee11fb54663d6543d35",
+      "package-lock.json": null,
+      "vercel.json": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+    },
+    "missingSourceFiles": [
+      "package-lock.json"
+    ],
+    "optionalSourceFiles": [
+      "package-lock.json"
+    ],
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-10-31T22:58:26.724Z"
+  },
+  "status": "passed",
+  "activeMode": "mobile",
+  "activeStage": "visit",
+  "results": [
+    {
+      "mode": "desktop",
+      "scene": "01-entrance",
+      "pass": true,
+      "capture": "desktop-01-entrance.png",
+      "captureSHA256": "899216eb80293481b10b897ee9bd2d06b0a610b05adc6602dd9cba480f7c7dc1"
+    },
+    {
+      "mode": "desktop",
+      "scene": "02-selector",
+      "pass": true,
+      "capture": "desktop-02-selector.png",
+      "captureSHA256": "0bb828d14b02530269fe07d8af86761b26fade3042acc872ba13d28d22fa84a8"
+    },
+    {
+      "mode": "desktop",
+      "scene": "03-pack-size",
+      "pass": true,
+      "capture": "desktop-03-pack-size.png",
+      "captureSHA256": "f798fb5f14da334c71aefdb4316ff48e0b6784602cd82f826fda02c540aac947"
+    },
+    {
+      "mode": "desktop",
+      "scene": "04-pack-quantity",
+      "pass": true,
+      "capture": "desktop-04-pack-quantity.png",
+      "captureSHA256": "02f78fddbdf4d2c9815c53adab1395c10f8d4c615394cd32f8d76f28ef7ba533"
+    },
+    {
+      "mode": "desktop",
+      "scene": "05-bagels",
+      "pass": true,
+      "capture": "desktop-05-bagels.png",
+      "captureSHA256": "73d86e83b64acde65e1952cd8855287e67c65fc500bbfe8fc0ac21168e4e7df4"
+    },
+    {
+      "mode": "desktop",
+      "scene": "06-bagels-selected",
+      "pass": true,
+      "capture": "desktop-06-bagels-selected.png",
+      "captureSHA256": "7eaf3239b200c4f5a4a681f72409fad78b6d6b53bf6aac73c4eb037b3e6c9195"
+    },
+    {
+      "mode": "desktop",
+      "scene": "07-schmears",
+      "pass": true,
+      "capture": "desktop-07-schmears.png",
+      "captureSHA256": "f09f774e9bd3ca3c357ae9b018a02f0af1b529ffb9361dd1d7b213df77707e69"
+    },
+    {
+      "mode": "desktop",
+      "scene": "08-cashier",
+      "pass": true,
+      "capture": "desktop-08-cashier.png",
+      "captureSHA256": "128fbe7e5f816f49d8374e84c0d26ab200d673e8aec920b016f8918cb9f923b4"
+    },
+    {
+      "mode": "desktop",
+      "scene": "09-payment",
+      "pass": true,
+      "capture": "desktop-09-payment.png",
+      "captureSHA256": "7b4fc9b09185871309930e8077776489978e351def38e3e86eb8c17fe879d606"
+    },
+    {
+      "mode": "desktop",
+      "scene": "10-receipt",
+      "pass": true,
+      "capture": "desktop-10-receipt.png",
+      "captureSHA256": "994c16a4f053742dcefee74df274052eeac93536d6e130add75a3c7fc18fe19a"
+    },
+    {
+      "mode": "desktop",
+      "scene": "11-wallet",
+      "pass": true,
+      "capture": "desktop-11-wallet.png",
+      "captureSHA256": "e68aa293aed6eaa115b1b5dbd8ff62ecbdfdf66232d1b34f3094c331076d7f20"
+    },
+    {
+      "mode": "desktop",
+      "scene": "12-handoff",
+      "pass": true,
+      "capture": "desktop-12-handoff.png",
+      "captureSHA256": "68947fa52f3801102ecba0385f76471c757b2fc1f6a21912f31ee64da4d9507c"
+    },
+    {
+      "mode": "desktop",
+      "scene": "13-goodbye",
+      "pass": true,
+      "capture": "desktop-13-goodbye.png",
+      "captureSHA256": "f816c5070fd8a4b63c39aeb9e5ce1f0a51acb33ba50c2b8eee5f4f287cf631f6"
+    },
+    {
+      "mode": "desktop",
+      "scene": "14-returning",
+      "pass": true,
+      "capture": "desktop-14-returning.png",
+      "captureSHA256": "79218674a0b2f8fa28ed037fdf8a1814483a84f3a32473c52b882369c0b45d63"
+    },
+    {
+      "mode": "desktop",
+      "scene": "15-combos",
+      "pass": true,
+      "capture": "desktop-15-combos.png",
+      "captureSHA256": "85fb7224fe37e9f1680e3dd70c1fb16fca988a132db7a4f163e39d1405ab28df"
+    },
+    {
+      "mode": "desktop",
+      "scene": "16-schmear-size",
+      "pass": true,
+      "capture": "desktop-16-schmear-size.png",
+      "captureSHA256": "b012721b77934eb5eef5f9227b8483fbb57538b5a5d4fae8d554970167772ae9"
+    },
+    {
+      "mode": "mobile",
+      "scene": "01-entrance",
+      "pass": true,
+      "capture": "mobile-01-entrance.png",
+      "captureSHA256": "ba380129e8373892e4a0529afca7f59d0a59c3c4bd1b2c48fc245c18733c5f91"
+    },
+    {
+      "mode": "mobile",
+      "scene": "02-selector",
+      "pass": true,
+      "capture": "mobile-02-selector.png",
+      "captureSHA256": "dbfdc67089aeb4ebc58bc91f1e9ff341fc7c9cbaf43baa084b104eb6630c11b4"
+    },
+    {
+      "mode": "mobile",
+      "scene": "03-pack-size",
+      "pass": true,
+      "capture": "mobile-03-pack-size.png",
+      "captureSHA256": "3b67127f6f6bb525d64fae9672aec703e4749dc1638a4e9792cde8fdff5477c7"
+    },
+    {
+      "mode": "mobile",
+      "scene": "04-pack-quantity",
+      "pass": true,
+      "capture": "mobile-04-pack-quantity.png",
+      "captureSHA256": "1ccc780588c093beba6d139fdce9718dc2831e478abd3a8ec301e70054f97fda"
+    },
+    {
+      "mode": "mobile",
+      "scene": "05-bagels",
+      "pass": true,
+      "capture": "mobile-05-bagels.png",
+      "captureSHA256": "5471bd2fbde60fd4fa50dc685a925817e5554a1ae6ff7e406371fd5e059c2222"
+    },
+    {
+      "mode": "mobile",
+      "scene": "06-bagels-selected",
+      "pass": true,
+      "capture": "mobile-06-bagels-selected.png",
+      "captureSHA256": "d39ebab09cc3f25c06d5377217a608a3b40b0c13af097f7409d0af003fe77056"
+    },
+    {
+      "mode": "mobile",
+      "scene": "07-schmears",
+      "pass": true,
+      "capture": "mobile-07-schmears.png",
+      "captureSHA256": "2e24d0d6f0ff0c98ebbbdd6b110d08c00144b26af423e303db53a39e8fd46784"
+    },
+    {
+      "mode": "mobile",
+      "scene": "08-cashier",
+      "pass": true,
+      "capture": "mobile-08-cashier.png",
+      "captureSHA256": "0b46bfca46d764fa2a97c5950f25de6440a53b040330e37e4cded43d77454022"
+    },
+    {
+      "mode": "mobile",
+      "scene": "09-payment",
+      "pass": true,
+      "capture": "mobile-09-payment.png",
+      "captureSHA256": "245f41533d6b223309b2f83e5da311f35f6c7babf32e5845185538afadbb1daa"
+    },
+    {
+      "mode": "mobile",
+      "scene": "10-receipt",
+      "pass": true,
+      "capture": "mobile-10-receipt.png",
+      "captureSHA256": "4ec2726f8b995118080fb74069afa3164ddf7937861aa1ac3d2e6646c438eaca"
+    },
+    {
+      "mode": "mobile",
+      "scene": "11-wallet",
+      "pass": true,
+      "capture": "mobile-11-wallet.png",
+      "captureSHA256": "cc4b63914a9d53bf18e3000b4bfd8733ebeceb14187f674f4ac9c87e58987e9e"
+    },
+    {
+      "mode": "mobile",
+      "scene": "12-handoff",
+      "pass": true,
+      "capture": "mobile-12-handoff.png",
+      "captureSHA256": "c82386daf102aab3765aadea707e880a34ddb937981fd2adf56b8306b228fc0f"
+    },
+    {
+      "mode": "mobile",
+      "scene": "13-goodbye",
+      "pass": true,
+      "capture": "mobile-13-goodbye.png",
+      "captureSHA256": "6251f150a7cb2c0e8376ff11179a20412a4ea5866c2b4aaa38c0343f538b86c0"
+    },
+    {
+      "mode": "mobile",
+      "scene": "14-returning",
+      "pass": true,
+      "capture": "mobile-14-returning.png",
+      "captureSHA256": "bbaa2160ea5f6aa566b3fc5ec6aed735d6290b8b6148c77765aeeac14aa4a672"
+    },
+    {
+      "mode": "mobile",
+      "scene": "15-combos",
+      "pass": true,
+      "capture": "mobile-15-combos.png",
+      "captureSHA256": "3b0286b028148edb4c0fec4871c8f2aa230170e4ad7f0c0acabf99d7638b5e5a"
+    },
+    {
+      "mode": "mobile",
+      "scene": "16-schmear-size",
+      "pass": true,
+      "capture": "mobile-16-schmear-size.png",
+      "captureSHA256": "1296016f3a4fcf3e013677fd4d2a8aa7262bb8ce4bb5ff614121d8dd842fce89"
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "mode": "desktop",
+      "reads": [
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears-vitrina.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/receipt.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/store-entry-door.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/bag-handoff.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/store-entry-door.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 5,
+      "blocked": [],
+      "httpErrors": [],
+      "routeErrors": [],
+      "closingRouteErrors": [],
+      "closingAborts": []
+    },
+    {
+      "mode": "mobile",
+      "reads": [
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears-vitrina.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/receipt.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/store-entry-door.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/bag-handoff.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/?qa=1",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DoRETWDx.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/index-S3xoFlqf.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/routes-D4S5p8Tx.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/assets/PlayableStore-DIOE1i28.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3203/images/bagel-blueberry.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 5,
+      "blocked": [],
+      "httpErrors": [],
+      "routeErrors": [],
+      "closingRouteErrors": [],
+      "closingAborts": []
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-31T22:49:47.563Z",
+      "mode": "desktop",
+      "stage": "context-setup",
+      "type": "mode-start",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      }
+    },
+    {
+      "at": "2026-10-31T22:49:47.710Z",
+      "mode": "disabled",
+      "stage": "context-setup",
+      "type": "config-verified",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false,
+      "visualQaAllowed": true
+    },
+    {
+      "at": "2026-10-31T22:49:47.711Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:49:47.778Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:49:47.899Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:50:00.228Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:00.229Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:00.229Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:03.557Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:50:03.558Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:50:03.558Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:50:06.990Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:06.991Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:06.991Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:07.094Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:50:07.094Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "scene-start",
+      "scene": "entrance",
+      "name": "01-entrance"
+    },
+    {
+      "at": "2026-10-31T22:50:13.897Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "scene-complete",
+      "scene": "entrance",
+      "name": "01-entrance",
+      "completedScenes": 1
+    },
+    {
+      "at": "2026-10-31T22:50:16.969Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:50:16.970Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:50:16.970Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:50:20.357Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:50:20.358Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:50:20.358Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:50:26.906Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:50:26.911Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:50:26.912Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:50:35.019Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:35.019Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:35.020Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:38.739Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:38.747Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:38.748Z",
+      "mode": "desktop",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:50:38.763Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "scene-start",
+      "scene": "selector",
+      "name": "02-selector"
+    },
+    {
+      "at": "2026-10-31T22:50:49.213Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "scene-complete",
+      "scene": "selector",
+      "name": "02-selector",
+      "completedScenes": 2
+    },
+    {
+      "at": "2026-10-31T22:50:52.239Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:50:52.242Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:50:52.243Z",
+      "mode": "desktop",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:50:52.258Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "scene-start",
+      "scene": "pack-size",
+      "name": "03-pack-size"
+    },
+    {
+      "at": "2026-10-31T22:51:00.956Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "scene-complete",
+      "scene": "pack-size",
+      "name": "03-pack-size",
+      "completedScenes": 3
+    },
+    {
+      "at": "2026-10-31T22:51:04.113Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:51:04.114Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:51:04.114Z",
+      "mode": "desktop",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:51:04.124Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "scene-start",
+      "scene": "pack-qty",
+      "name": "04-pack-quantity"
+    },
+    {
+      "at": "2026-10-31T22:51:12.415Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "scene-complete",
+      "scene": "pack-qty",
+      "name": "04-pack-quantity",
+      "completedScenes": 4
+    },
+    {
+      "at": "2026-10-31T22:51:15.530Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:51:15.531Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:51:15.532Z",
+      "mode": "desktop",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:51:15.576Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "scene-start",
+      "scene": "bagels",
+      "name": "05-bagels"
+    },
+    {
+      "at": "2026-10-31T22:51:22.109Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "scene-complete",
+      "scene": "bagels",
+      "name": "05-bagels",
+      "completedScenes": 5
+    },
+    {
+      "at": "2026-10-31T22:51:25.213Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:51:25.214Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:51:25.214Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:51:28.369Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:51:28.372Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:51:28.372Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:51:31.568Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:51:31.572Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:51:31.572Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:51:34.796Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:51:34.798Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:51:34.799Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:51:38.356Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:51:38.357Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:51:38.357Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:51:41.578Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:51:41.582Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:51:41.585Z",
+      "mode": "desktop",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:51:41.588Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "scene-start",
+      "scene": "bagels",
+      "name": "06-bagels-selected"
+    },
+    {
+      "at": "2026-10-31T22:51:48.210Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "scene-complete",
+      "scene": "bagels",
+      "name": "06-bagels-selected",
+      "completedScenes": 6
+    },
+    {
+      "at": "2026-10-31T22:51:51.357Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:51:51.358Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:51:51.359Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:51:54.760Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:51:54.761Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:51:54.761Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:51:59.742Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:52:02.857Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "draft-reload-inspected",
+      "draftPresent": true,
+      "counter": "6/6"
+    },
+    {
+      "at": "2026-10-31T22:52:11.404Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:11.406Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:11.406Z",
+      "mode": "desktop",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:11.424Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "scene-start",
+      "scene": "schmears",
+      "name": "07-schmears"
+    },
+    {
+      "at": "2026-10-31T22:52:22.616Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "scene-complete",
+      "scene": "schmears",
+      "name": "07-schmears",
+      "completedScenes": 7
+    },
+    {
+      "at": "2026-10-31T22:52:26.731Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:52:26.732Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:52:26.732Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:52:30.893Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:52:30.894Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:52:30.894Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:52:35.161Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:35.161Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:35.161Z",
+      "mode": "desktop",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:35.176Z",
+      "mode": "desktop",
+      "stage": "scene-08-cashier",
+      "type": "scene-start",
+      "scene": "cashier",
+      "name": "08-cashier"
+    },
+    {
+      "at": "2026-10-31T22:52:45.809Z",
+      "mode": "desktop",
+      "stage": "scene-08-cashier",
+      "type": "scene-complete",
+      "scene": "cashier",
+      "name": "08-cashier",
+      "completedScenes": 8
+    },
+    {
+      "at": "2026-10-31T22:52:50.087Z",
+      "mode": "desktop",
+      "stage": "scene-08-cashier",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:50.088Z",
+      "mode": "desktop",
+      "stage": "scene-08-cashier",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:50.089Z",
+      "mode": "desktop",
+      "stage": "scene-08-cashier",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:52:50.104Z",
+      "mode": "desktop",
+      "stage": "scene-09-payment",
+      "type": "scene-start",
+      "scene": "pay",
+      "name": "09-payment"
+    },
+    {
+      "at": "2026-10-31T22:53:03.253Z",
+      "mode": "desktop",
+      "stage": "scene-09-payment",
+      "type": "scene-complete",
+      "scene": "pay",
+      "name": "09-payment",
+      "completedScenes": 9
+    },
+    {
+      "at": "2026-10-31T22:53:06.457Z",
+      "mode": "desktop",
+      "stage": "scene-09-payment",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-pay-hotspot qa-only-pay",
+      "ariaLabel": "Continuar en modo QA"
+    },
+    {
+      "at": "2026-10-31T22:53:06.458Z",
+      "mode": "desktop",
+      "stage": "scene-09-payment",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-pay-hotspot qa-only-pay",
+      "ariaLabel": "Continuar en modo QA"
+    },
+    {
+      "at": "2026-10-31T22:53:06.459Z",
+      "mode": "desktop",
+      "stage": "scene-09-payment",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-pay-hotspot qa-only-pay",
+      "ariaLabel": "Continuar en modo QA"
+    },
+    {
+      "at": "2026-10-31T22:53:06.464Z",
+      "mode": "desktop",
+      "stage": "scene-10-receipt",
+      "type": "scene-start",
+      "scene": "receipt",
+      "name": "10-receipt"
+    },
+    {
+      "at": "2026-10-31T22:53:14.966Z",
+      "mode": "desktop",
+      "stage": "scene-10-receipt",
+      "type": "scene-complete",
+      "scene": "receipt",
+      "name": "10-receipt",
+      "completedScenes": 10
+    },
+    {
+      "at": "2026-10-31T22:53:18.060Z",
+      "mode": "desktop",
+      "stage": "scene-10-receipt",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "DIV",
+      "className": "receipt-interaction",
+      "ariaLabel": "Jalar o tocar para retirar tu recibo"
+    },
+    {
+      "at": "2026-10-31T22:53:18.062Z",
+      "mode": "desktop",
+      "stage": "scene-10-receipt",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "DIV",
+      "className": "receipt-interaction",
+      "ariaLabel": "Jalar o tocar para retirar tu recibo"
+    },
+    {
+      "at": "2026-10-31T22:53:18.062Z",
+      "mode": "desktop",
+      "stage": "scene-10-receipt",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "DIV",
+      "className": "receipt-interaction",
+      "ariaLabel": "Jalar o tocar para retirar tu recibo"
+    },
+    {
+      "at": "2026-10-31T22:53:18.067Z",
+      "mode": "desktop",
+      "stage": "scene-11-wallet",
+      "type": "scene-start",
+      "scene": "wallet",
+      "name": "11-wallet"
+    },
+    {
+      "at": "2026-10-31T22:53:24.780Z",
+      "mode": "desktop",
+      "stage": "scene-11-wallet",
+      "type": "scene-complete",
+      "scene": "wallet",
+      "name": "11-wallet",
+      "completedScenes": 11
+    },
+    {
+      "at": "2026-10-31T22:53:28.001Z",
+      "mode": "desktop",
+      "stage": "scene-11-wallet",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "wallet-skip",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:28.004Z",
+      "mode": "desktop",
+      "stage": "scene-11-wallet",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "wallet-skip",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:28.005Z",
+      "mode": "desktop",
+      "stage": "scene-11-wallet",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "wallet-skip",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:28.015Z",
+      "mode": "desktop",
+      "stage": "scene-12-handoff",
+      "type": "scene-start",
+      "scene": "handoff",
+      "name": "12-handoff"
+    },
+    {
+      "at": "2026-10-31T22:53:36.222Z",
+      "mode": "desktop",
+      "stage": "scene-12-handoff",
+      "type": "scene-complete",
+      "scene": "handoff",
+      "name": "12-handoff",
+      "completedScenes": 12
+    },
+    {
+      "at": "2026-10-31T22:53:39.247Z",
+      "mode": "desktop",
+      "stage": "scene-12-handoff",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "handoff-action",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:39.248Z",
+      "mode": "desktop",
+      "stage": "scene-12-handoff",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "handoff-action",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:39.249Z",
+      "mode": "desktop",
+      "stage": "scene-12-handoff",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "handoff-action",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:39.257Z",
+      "mode": "desktop",
+      "stage": "scene-13-goodbye",
+      "type": "scene-start",
+      "scene": "goodbye",
+      "name": "13-goodbye"
+    },
+    {
+      "at": "2026-10-31T22:53:47.948Z",
+      "mode": "desktop",
+      "stage": "scene-13-goodbye",
+      "type": "scene-complete",
+      "scene": "goodbye",
+      "name": "13-goodbye",
+      "completedScenes": 13
+    },
+    {
+      "at": "2026-10-31T22:53:50.833Z",
+      "mode": "desktop",
+      "stage": "scene-13-goodbye",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:50.834Z",
+      "mode": "desktop",
+      "stage": "scene-13-goodbye",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:50.834Z",
+      "mode": "desktop",
+      "stage": "scene-13-goodbye",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:53:50.837Z",
+      "mode": "desktop",
+      "stage": "scene-14-returning",
+      "type": "scene-start",
+      "scene": "returning",
+      "name": "14-returning"
+    },
+    {
+      "at": "2026-10-31T22:53:59.090Z",
+      "mode": "desktop",
+      "stage": "scene-14-returning",
+      "type": "scene-complete",
+      "scene": "returning",
+      "name": "14-returning",
+      "completedScenes": 14
+    },
+    {
+      "at": "2026-10-31T22:53:59.091Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:54:03.812Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:54:15.060Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:15.061Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:15.062Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:18.334Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:54:18.334Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:54:18.334Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:54:21.687Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:21.688Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:21.689Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:21.784Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:54:24.850Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:24.851Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:24.851Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:28.057Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Combos"
+    },
+    {
+      "at": "2026-10-31T22:54:28.058Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Combos"
+    },
+    {
+      "at": "2026-10-31T22:54:28.059Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Combos"
+    },
+    {
+      "at": "2026-10-31T22:54:28.074Z",
+      "mode": "desktop",
+      "stage": "scene-15-combos",
+      "type": "scene-start",
+      "scene": "combos",
+      "name": "15-combos"
+    },
+    {
+      "at": "2026-10-31T22:54:36.721Z",
+      "mode": "desktop",
+      "stage": "scene-15-combos",
+      "type": "scene-complete",
+      "scene": "combos",
+      "name": "15-combos",
+      "completedScenes": 15
+    },
+    {
+      "at": "2026-10-31T22:54:36.722Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:54:41.497Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:54:51.908Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:51.909Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:51.909Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:55.158Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:54:55.159Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:54:55.159Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:54:58.556Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:58.558Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:58.558Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:54:58.642Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:55:01.718Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:01.720Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:01.720Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:04.969Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Schmears"
+    },
+    {
+      "at": "2026-10-31T22:55:04.971Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Schmears"
+    },
+    {
+      "at": "2026-10-31T22:55:04.971Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Schmears"
+    },
+    {
+      "at": "2026-10-31T22:55:04.978Z",
+      "mode": "desktop",
+      "stage": "scene-16-schmear-size",
+      "type": "scene-start",
+      "scene": "schmear-size",
+      "name": "16-schmear-size"
+    },
+    {
+      "at": "2026-10-31T22:55:13.474Z",
+      "mode": "desktop",
+      "stage": "scene-16-schmear-size",
+      "type": "scene-complete",
+      "scene": "schmear-size",
+      "name": "16-schmear-size",
+      "completedScenes": 16
+    },
+    {
+      "at": "2026-10-31T22:55:13.474Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:55:18.234Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:55:28.397Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:28.400Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:28.400Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:31.710Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:55:31.711Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:55:31.712Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:55:35.092Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:35.094Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:35.095Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:35.249Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:55:38.511Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:38.512Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:38.513Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:41.703Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:55:41.706Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:55:41.706Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:55:44.935Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:44.937Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:44.940Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:48.311Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:48.313Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:48.313Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:55:51.592Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 mini bagels, un sabor"
+    },
+    {
+      "at": "2026-10-31T22:55:51.593Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 mini bagels, un sabor"
+    },
+    {
+      "at": "2026-10-31T22:55:51.594Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 mini bagels, un sabor"
+    },
+    {
+      "at": "2026-10-31T22:55:54.885Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:55:54.886Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:55:54.887Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:55:58.112Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Quitar Everything"
+    },
+    {
+      "at": "2026-10-31T22:55:58.114Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Quitar Everything"
+    },
+    {
+      "at": "2026-10-31T22:55:58.115Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Quitar Everything"
+    },
+    {
+      "at": "2026-10-31T22:55:58.121Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "mode-complete",
+      "completedScenes": 16,
+      "localReads": 144,
+      "fixtureReads": 5,
+      "blocked": 0
+    },
+    {
+      "at": "2026-10-31T22:55:58.122Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "context-closing",
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T22:55:58.153Z",
+      "mode": "desktop",
+      "stage": "visit",
+      "type": "context-closed",
+      "routeErrors": 0,
+      "closingRouteErrors": 0,
+      "closingAborts": 0
+    },
+    {
+      "at": "2026-10-31T22:55:58.154Z",
+      "mode": "mobile",
+      "stage": "context-setup",
+      "type": "mode-start",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "at": "2026-10-31T22:55:59.887Z",
+      "mode": "disabled",
+      "stage": "context-setup",
+      "type": "config-verified",
+      "enabled": false,
+      "configured": false,
+      "intakeEnabled": false,
+      "visualQaAllowed": true
+    },
+    {
+      "at": "2026-10-31T22:55:59.887Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:55:59.929Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:56:00.030Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:56:07.112Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:07.114Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:07.115Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:08.419Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:56:08.420Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:56:08.421Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:56:09.763Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:09.764Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:09.765Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:09.858Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:56:09.859Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "scene-start",
+      "scene": "entrance",
+      "name": "01-entrance"
+    },
+    {
+      "at": "2026-10-31T22:56:12.437Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "scene-complete",
+      "scene": "entrance",
+      "name": "01-entrance",
+      "completedScenes": 17
+    },
+    {
+      "at": "2026-10-31T22:56:13.672Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:56:13.672Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:56:13.673Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:56:14.868Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:56:14.869Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:56:14.869Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Cerrar menú"
+    },
+    {
+      "at": "2026-10-31T22:56:16.202Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:56:16.204Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:56:16.205Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-cart-button",
+      "ariaLabel": "Ver tu pedido: 0 productos"
+    },
+    {
+      "at": "2026-10-31T22:56:17.520Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:17.520Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:17.521Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:18.793Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:18.795Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:18.795Z",
+      "mode": "mobile",
+      "stage": "scene-01-entrance",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:18.808Z",
+      "mode": "mobile",
+      "stage": "scene-02-selector",
+      "type": "scene-start",
+      "scene": "selector",
+      "name": "02-selector"
+    },
+    {
+      "at": "2026-10-31T22:56:21.926Z",
+      "mode": "mobile",
+      "stage": "scene-02-selector",
+      "type": "scene-complete",
+      "scene": "selector",
+      "name": "02-selector",
+      "completedScenes": 18
+    },
+    {
+      "at": "2026-10-31T22:56:23.168Z",
+      "mode": "mobile",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:56:23.169Z",
+      "mode": "mobile",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:56:23.169Z",
+      "mode": "mobile",
+      "stage": "scene-02-selector",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:56:23.194Z",
+      "mode": "mobile",
+      "stage": "scene-03-pack-size",
+      "type": "scene-start",
+      "scene": "pack-size",
+      "name": "03-pack-size"
+    },
+    {
+      "at": "2026-10-31T22:56:26.353Z",
+      "mode": "mobile",
+      "stage": "scene-03-pack-size",
+      "type": "scene-complete",
+      "scene": "pack-size",
+      "name": "03-pack-size",
+      "completedScenes": 19
+    },
+    {
+      "at": "2026-10-31T22:56:27.664Z",
+      "mode": "mobile",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:27.665Z",
+      "mode": "mobile",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:27.668Z",
+      "mode": "mobile",
+      "stage": "scene-03-pack-size",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:27.681Z",
+      "mode": "mobile",
+      "stage": "scene-04-pack-quantity",
+      "type": "scene-start",
+      "scene": "pack-qty",
+      "name": "04-pack-quantity"
+    },
+    {
+      "at": "2026-10-31T22:56:30.980Z",
+      "mode": "mobile",
+      "stage": "scene-04-pack-quantity",
+      "type": "scene-complete",
+      "scene": "pack-qty",
+      "name": "04-pack-quantity",
+      "completedScenes": 20
+    },
+    {
+      "at": "2026-10-31T22:56:32.257Z",
+      "mode": "mobile",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:56:32.258Z",
+      "mode": "mobile",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:56:32.259Z",
+      "mode": "mobile",
+      "stage": "scene-04-pack-quantity",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:56:32.306Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "scene-start",
+      "scene": "bagels",
+      "name": "05-bagels"
+    },
+    {
+      "at": "2026-10-31T22:56:34.797Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "scene-complete",
+      "scene": "bagels",
+      "name": "05-bagels",
+      "completedScenes": 21
+    },
+    {
+      "at": "2026-10-31T22:56:35.874Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:56:35.875Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:56:35.875Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:56:36.973Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:56:36.974Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:56:36.974Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:56:38.148Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:56:38.150Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:56:38.150Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:56:39.281Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:56:39.282Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:56:39.283Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:56:40.382Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:56:40.383Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:56:40.384Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Sesame"
+    },
+    {
+      "at": "2026-10-31T22:56:41.479Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:56:41.482Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:56:41.482Z",
+      "mode": "mobile",
+      "stage": "scene-05-bagels",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Plain"
+    },
+    {
+      "at": "2026-10-31T22:56:41.485Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "scene-start",
+      "scene": "bagels",
+      "name": "06-bagels-selected"
+    },
+    {
+      "at": "2026-10-31T22:56:43.787Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "scene-complete",
+      "scene": "bagels",
+      "name": "06-bagels-selected",
+      "completedScenes": 22
+    },
+    {
+      "at": "2026-10-31T22:56:44.957Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:56:44.958Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:56:44.958Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-journey-back",
+      "ariaLabel": "Volver al paso anterior"
+    },
+    {
+      "at": "2026-10-31T22:56:46.148Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:56:46.152Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:56:46.152Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 bagels, mixtos"
+    },
+    {
+      "at": "2026-10-31T22:56:48.020Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:56:50.722Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "draft-reload-inspected",
+      "draftPresent": true,
+      "counter": "6/6"
+    },
+    {
+      "at": "2026-10-31T22:56:56.061Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:56.062Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:56.062Z",
+      "mode": "mobile",
+      "stage": "scene-06-bagels-selected",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:56:56.097Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "scene-start",
+      "scene": "schmears",
+      "name": "07-schmears"
+    },
+    {
+      "at": "2026-10-31T22:56:59.751Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "scene-complete",
+      "scene": "schmears",
+      "name": "07-schmears",
+      "completedScenes": 23
+    },
+    {
+      "at": "2026-10-31T22:57:00.888Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:57:00.889Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:57:00.890Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:57:02.064Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:57:02.065Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:57:02.065Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Whipped Original"
+    },
+    {
+      "at": "2026-10-31T22:57:03.269Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:03.271Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:03.271Z",
+      "mode": "mobile",
+      "stage": "scene-07-schmears",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-primary-next",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:03.281Z",
+      "mode": "mobile",
+      "stage": "scene-08-cashier",
+      "type": "scene-start",
+      "scene": "cashier",
+      "name": "08-cashier"
+    },
+    {
+      "at": "2026-10-31T22:57:06.693Z",
+      "mode": "mobile",
+      "stage": "scene-08-cashier",
+      "type": "scene-complete",
+      "scene": "cashier",
+      "name": "08-cashier",
+      "completedScenes": 24
+    },
+    {
+      "at": "2026-10-31T22:57:08.289Z",
+      "mode": "mobile",
+      "stage": "scene-08-cashier",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:08.290Z",
+      "mode": "mobile",
+      "stage": "scene-08-cashier",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:08.291Z",
+      "mode": "mobile",
+      "stage": "scene-08-cashier",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:08.320Z",
+      "mode": "mobile",
+      "stage": "scene-09-payment",
+      "type": "scene-start",
+      "scene": "pay",
+      "name": "09-payment"
+    },
+    {
+      "at": "2026-10-31T22:57:11.925Z",
+      "mode": "mobile",
+      "stage": "scene-09-payment",
+      "type": "scene-complete",
+      "scene": "pay",
+      "name": "09-payment",
+      "completedScenes": 25
+    },
+    {
+      "at": "2026-10-31T22:57:13.178Z",
+      "mode": "mobile",
+      "stage": "scene-09-payment",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-pay-hotspot qa-only-pay",
+      "ariaLabel": "Continuar en modo QA"
+    },
+    {
+      "at": "2026-10-31T22:57:13.179Z",
+      "mode": "mobile",
+      "stage": "scene-09-payment",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-pay-hotspot qa-only-pay",
+      "ariaLabel": "Continuar en modo QA"
+    },
+    {
+      "at": "2026-10-31T22:57:13.183Z",
+      "mode": "mobile",
+      "stage": "scene-09-payment",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-pay-hotspot qa-only-pay",
+      "ariaLabel": "Continuar en modo QA"
+    },
+    {
+      "at": "2026-10-31T22:57:13.197Z",
+      "mode": "mobile",
+      "stage": "scene-10-receipt",
+      "type": "scene-start",
+      "scene": "receipt",
+      "name": "10-receipt"
+    },
+    {
+      "at": "2026-10-31T22:57:16.469Z",
+      "mode": "mobile",
+      "stage": "scene-10-receipt",
+      "type": "scene-complete",
+      "scene": "receipt",
+      "name": "10-receipt",
+      "completedScenes": 26
+    },
+    {
+      "at": "2026-10-31T22:57:17.703Z",
+      "mode": "mobile",
+      "stage": "scene-10-receipt",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "DIV",
+      "className": "receipt-interaction",
+      "ariaLabel": "Jalar o tocar para retirar tu recibo"
+    },
+    {
+      "at": "2026-10-31T22:57:17.705Z",
+      "mode": "mobile",
+      "stage": "scene-10-receipt",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "DIV",
+      "className": "receipt-interaction",
+      "ariaLabel": "Jalar o tocar para retirar tu recibo"
+    },
+    {
+      "at": "2026-10-31T22:57:17.705Z",
+      "mode": "mobile",
+      "stage": "scene-10-receipt",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "DIV",
+      "className": "receipt-interaction",
+      "ariaLabel": "Jalar o tocar para retirar tu recibo"
+    },
+    {
+      "at": "2026-10-31T22:57:17.707Z",
+      "mode": "mobile",
+      "stage": "scene-11-wallet",
+      "type": "scene-start",
+      "scene": "wallet",
+      "name": "11-wallet"
+    },
+    {
+      "at": "2026-10-31T22:57:20.980Z",
+      "mode": "mobile",
+      "stage": "scene-11-wallet",
+      "type": "scene-complete",
+      "scene": "wallet",
+      "name": "11-wallet",
+      "completedScenes": 27
+    },
+    {
+      "at": "2026-10-31T22:57:22.174Z",
+      "mode": "mobile",
+      "stage": "scene-11-wallet",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "wallet-skip",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:22.174Z",
+      "mode": "mobile",
+      "stage": "scene-11-wallet",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "wallet-skip",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:22.181Z",
+      "mode": "mobile",
+      "stage": "scene-11-wallet",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "wallet-skip",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:22.185Z",
+      "mode": "mobile",
+      "stage": "scene-12-handoff",
+      "type": "scene-start",
+      "scene": "handoff",
+      "name": "12-handoff"
+    },
+    {
+      "at": "2026-10-31T22:57:25.165Z",
+      "mode": "mobile",
+      "stage": "scene-12-handoff",
+      "type": "scene-complete",
+      "scene": "handoff",
+      "name": "12-handoff",
+      "completedScenes": 28
+    },
+    {
+      "at": "2026-10-31T22:57:26.359Z",
+      "mode": "mobile",
+      "stage": "scene-12-handoff",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "handoff-action",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:26.361Z",
+      "mode": "mobile",
+      "stage": "scene-12-handoff",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "handoff-action",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:26.362Z",
+      "mode": "mobile",
+      "stage": "scene-12-handoff",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "handoff-action",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:26.386Z",
+      "mode": "mobile",
+      "stage": "scene-13-goodbye",
+      "type": "scene-start",
+      "scene": "goodbye",
+      "name": "13-goodbye"
+    },
+    {
+      "at": "2026-10-31T22:57:29.457Z",
+      "mode": "mobile",
+      "stage": "scene-13-goodbye",
+      "type": "scene-complete",
+      "scene": "goodbye",
+      "name": "13-goodbye",
+      "completedScenes": 29
+    },
+    {
+      "at": "2026-10-31T22:57:30.616Z",
+      "mode": "mobile",
+      "stage": "scene-13-goodbye",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:30.617Z",
+      "mode": "mobile",
+      "stage": "scene-13-goodbye",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:30.618Z",
+      "mode": "mobile",
+      "stage": "scene-13-goodbye",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:30.629Z",
+      "mode": "mobile",
+      "stage": "scene-14-returning",
+      "type": "scene-start",
+      "scene": "returning",
+      "name": "14-returning"
+    },
+    {
+      "at": "2026-10-31T22:57:33.776Z",
+      "mode": "mobile",
+      "stage": "scene-14-returning",
+      "type": "scene-complete",
+      "scene": "returning",
+      "name": "14-returning",
+      "completedScenes": 30
+    },
+    {
+      "at": "2026-10-31T22:57:33.777Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:57:35.668Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:57:42.108Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:42.109Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:42.110Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:43.293Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:57:43.294Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:57:43.295Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:57:44.582Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:44.583Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:44.584Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:44.667Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:57:45.934Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:45.946Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:45.947Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:47.301Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Combos"
+    },
+    {
+      "at": "2026-10-31T22:57:47.303Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Combos"
+    },
+    {
+      "at": "2026-10-31T22:57:47.304Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Combos"
+    },
+    {
+      "at": "2026-10-31T22:57:47.325Z",
+      "mode": "mobile",
+      "stage": "scene-15-combos",
+      "type": "scene-start",
+      "scene": "combos",
+      "name": "15-combos"
+    },
+    {
+      "at": "2026-10-31T22:57:49.989Z",
+      "mode": "mobile",
+      "stage": "scene-15-combos",
+      "type": "scene-complete",
+      "scene": "combos",
+      "name": "15-combos",
+      "completedScenes": 31
+    },
+    {
+      "at": "2026-10-31T22:57:49.990Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:57:52.013Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:57:57.813Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:57.813Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:57.814Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:57:59.093Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:57:59.095Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:57:59.096Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:58:00.385Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:00.387Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:00.388Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:00.478Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:58:01.759Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:01.764Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:01.765Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:03.059Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Schmears"
+    },
+    {
+      "at": "2026-10-31T22:58:03.064Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Schmears"
+    },
+    {
+      "at": "2026-10-31T22:58:03.065Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Schmears"
+    },
+    {
+      "at": "2026-10-31T22:58:03.074Z",
+      "mode": "mobile",
+      "stage": "scene-16-schmear-size",
+      "type": "scene-start",
+      "scene": "schmear-size",
+      "name": "16-schmear-size"
+    },
+    {
+      "at": "2026-10-31T22:58:06.388Z",
+      "mode": "mobile",
+      "stage": "scene-16-schmear-size",
+      "type": "scene-complete",
+      "scene": "schmear-size",
+      "name": "16-schmear-size",
+      "completedScenes": 32
+    },
+    {
+      "at": "2026-10-31T22:58:06.390Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-start"
+    },
+    {
+      "at": "2026-10-31T22:58:08.220Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "navigation",
+      "url": "http://127.0.0.1:3203/?qa=1"
+    },
+    {
+      "at": "2026-10-31T22:58:14.548Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:14.549Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:14.549Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "primary",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:15.754Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:58:15.755Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:58:15.755Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "guided-store-menu-button",
+      "ariaLabel": "Abrir menú"
+    },
+    {
+      "at": "2026-10-31T22:58:17.101Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:17.102Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:17.103Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:17.202Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "journey-ready"
+    },
+    {
+      "at": "2026-10-31T22:58:18.392Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:18.393Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:18.394Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:19.696Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:58:19.698Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:58:19.698Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Packs"
+    },
+    {
+      "at": "2026-10-31T22:58:20.998Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:20.999Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:20.999Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:22.289Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:22.290Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:22.291Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": null
+    },
+    {
+      "at": "2026-10-31T22:58:23.575Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 mini bagels, un sabor"
+    },
+    {
+      "at": "2026-10-31T22:58:23.576Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 mini bagels, un sabor"
+    },
+    {
+      "at": "2026-10-31T22:58:23.577Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Elegir 6 mini bagels, un sabor"
+    },
+    {
+      "at": "2026-10-31T22:58:24.857Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:58:24.858Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:58:24.859Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Agregar Everything"
+    },
+    {
+      "at": "2026-10-31T22:58:26.090Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerdown",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Quitar Everything"
+    },
+    {
+      "at": "2026-10-31T22:58:26.092Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "pointerup",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Quitar Everything"
+    },
+    {
+      "at": "2026-10-31T22:58:26.092Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "ui-event",
+      "event": "click",
+      "pointerType": "mouse",
+      "key": null,
+      "tag": "BUTTON",
+      "className": "",
+      "ariaLabel": "Quitar Everything"
+    },
+    {
+      "at": "2026-10-31T22:58:26.096Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "mode-complete",
+      "completedScenes": 16,
+      "localReads": 141,
+      "fixtureReads": 5,
+      "blocked": 0
+    },
+    {
+      "at": "2026-10-31T22:58:26.097Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "context-closing",
+      "pendingRoutes": 0
+    },
+    {
+      "at": "2026-10-31T22:58:26.116Z",
+      "mode": "mobile",
+      "stage": "visit",
+      "type": "context-closed",
+      "routeErrors": 0,
+      "closingRouteErrors": 0,
+      "closingAborts": 0
+    }
+  ],
+  "diagnostics": [],
+  "interruptions": []
+}

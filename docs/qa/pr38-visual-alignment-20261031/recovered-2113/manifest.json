@@ -1,0 +1,33 @@
+{
+  "application_code_sha": "20296a6a32f29e5c8c8b518bf189bda3351b98e3",
+  "base_sha": "52fa55cb223e587b7619a4161b8cb263bfa61a3f",
+  "entry_capture_scope": "entry-only",
+  "guided_and_world_attempt_code_sha": "24fe0f8337830439d8a1cb4c470abd9a7f6e3c5d",
+  "files_sha256": {
+    "build.log": "71089e3f6d5c4288d323e6ca9973129765de55a500b882b53d4385b3a28e3294",
+    "entry-results.json": "41d99e8936da46d04ceaf01f1a684561f683b7e86d29541cf6ffef2ee2035984",
+    "recovery-results.json": "8a92a99d45f10a05b049f0ea3e991b1681129e1166b590490d6dbedb8ea937ec",
+    "partial-desktop-04-pack-quantity.png": "3ee76598b3bcf34c73cf53e74d63c6e97533d6d9853239c0278eb6b14568ab8c",
+    "mobile-tour-7-pickup.png": "cd6e2dc1ca5c5649f6a4bf80a0afad8176d3e706179c022105a88fb94c463bc1",
+    "mobile-tour-5-production.png": "531d0451eceba5213031c433804eaed18e62992b9742487caca98ad9cfb4ad06",
+    "mobile-tour-3-bagels.png": "b6a16d4ade20bfdf3ba20e3af82cd52363e0f78ba6b081a06d7330f842b748fa",
+    "mobile-tour-6-cashier.png": "a42c3be47ba0c7eb7c9c995de0380b4e5332588e99cbd317b9c8d03dc59debcf",
+    "mobile-tour-4-schmears.png": "96fca46ecab86e9ac04f2afea704b53090c280744f304d9ebffd41ca008d5996",
+    "mobile-entry.png": "2b6a43ffbc14432b1dab2688ded5134a24e411166caeecc98a9799c81548856c",
+    "mobile-tour-2-vitrina.png": "3f93cd540ef97c1aca93475a2497d5a541407c2a929f95b5fe2632a993224ce1",
+    "guided-partial.json": "14876d0d3cf0bc0a49b16029f63628c8aac9d71011e565eef275f915619d317e",
+    "world-network.json": "eeb6fcd65660158017fb46b7403c83d6dc44ec0f96435cc26ef093ae4ca43a56",
+    "partial-desktop-05-bagels.png": "c3d7866ad60dda3e9efd3826122c442d76895e16fa860722dc6fcd2e74d1ecb4",
+    "partial-desktop-03-pack-size.png": "ee5658573091cb0283c6e02ad513d167f122085a9d7563f88badcfc0a3b16497",
+    "partial-desktop-02-selector.png": "2d8d72d7618046ebedb0071cb61f5175ff3b6f4be8d720a1206830d5d2464f67",
+    "world-summary.json": "778ec9a7b93693012fccf2fec9cdaff5b663b7cc2f05be4ad4ca25675ae1deb6",
+    "world-results.json": "67071a5d66eba56f75827adec5acf32a732c755b88880bd26f2e759f3f784087",
+    "partial-desktop-01-entrance.png": "378a12c760e4658781c77d49a3d18c56c896b26491cde16826de8c6e65032356",
+    "mobile-tour-1-totem.png": "7e66a9bd19ee2fb36cc334755d8cb3866380e789c471ad0519e1edc8f63af30b",
+    "desktop-entry.png": "163a8fabc11f9c7e86f80d90a420b69b935546ac1370df509d20c8544ac48925",
+    "purchase-subset/preservation-status.json": "1de5d0dec79d052e3c8b1753f6211fea1dac56af90718b4964b2916930a6aea1",
+    "purchase-subset/desktop-schmears-actual.png": "d478b3f2b1b17541754806d39165844a8d4daf8e0fbe1cd6120e84ff6789b2be",
+    "purchase-subset/captures-results.json": "f3f80e707c9a876738aee18937d6f0b6af585f15025216c075aa492f6c32c898",
+    "purchase-subset/desktop-bagels-actual.png": "4dda0cfbd50c9f5449a22dd82c63bc26216dc42045f601d8394a09735b93d353"
+  }
+}

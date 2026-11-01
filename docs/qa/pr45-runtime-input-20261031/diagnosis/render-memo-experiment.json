@@ -1,0 +1,837 @@
+{
+  "signsMountedMs": 7904,
+  "before": {
+    "perf": {
+      "started": 266,
+      "frames": [
+        {
+          "t": 311.1,
+          "delta": 0,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 327.8,
+          "delta": 16.69999999999999,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 394.4,
+          "delta": 66.59999999999997,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 411.1,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 561.1,
+          "delta": 150,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 711.1,
+          "delta": 150,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1311.1,
+          "delta": 599.9999999999999,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1327.8,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1727.7,
+          "delta": 399.9000000000001,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1744.4,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1761,
+          "delta": 16.59999999999991,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1777.7,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1794.4,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1811,
+          "delta": 16.59999999999991,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1844.4,
+          "delta": 33.40000000000009,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 7760.8,
+          "delta": 5916.4,
+          "keyDown": false,
+          "draw": 1611,
+          "bind": 61,
+          "program": 134
+        },
+        {
+          "t": 7877.5,
+          "delta": 116.69999999999982,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 7894.2,
+          "delta": 16.699999999999818,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 10077.4,
+          "delta": 2183.2,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 11827.3,
+          "delta": 1749.8999999999996,
+          "keyDown": false,
+          "draw": 1670,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 13527.3,
+          "delta": 1700,
+          "keyDown": false,
+          "draw": 1676,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 15260.5,
+          "delta": 1733.2000000000007,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 16960.4,
+          "delta": 1699.9000000000015,
+          "keyDown": false,
+          "draw": 1616,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 18677,
+          "delta": 1716.5999999999985,
+          "keyDown": false,
+          "draw": 964,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 20343.6,
+          "delta": 1666.5999999999985,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 21943.5,
+          "delta": 1599.9000000000015,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 23476.8,
+          "delta": 1533.2999999999993,
+          "keyDown": false,
+          "draw": 967,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 25010.1,
+          "delta": 1533.2999999999993,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 26576.8,
+          "delta": 1566.7000000000007,
+          "keyDown": false,
+          "draw": 1018,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 28159.9,
+          "delta": 1583.1000000000022,
+          "keyDown": false,
+          "draw": 1025,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 29759.9,
+          "delta": 1600,
+          "keyDown": false,
+          "draw": 1025,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 31643.2,
+          "delta": 1883.2999999999993,
+          "keyDown": false,
+          "draw": 1028,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 33476.4,
+          "delta": 1833.2000000000007,
+          "keyDown": false,
+          "draw": 1018,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 35093.1,
+          "delta": 1616.699999999997,
+          "keyDown": false,
+          "draw": 967,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 36726.3,
+          "delta": 1633.2000000000044,
+          "keyDown": false,
+          "draw": 963,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 38259.6,
+          "delta": 1533.2999999999956,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 39842.9,
+          "delta": 1583.300000000003,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 41376.1,
+          "delta": 1533.199999999997,
+          "keyDown": false,
+          "draw": 966,
+          "bind": 9,
+          "program": 126
+        }
+      ],
+      "longTasks": [
+        {
+          "start": 665.2999999999302,
+          "duration": 639
+        },
+        {
+          "start": 1851.3999999999069,
+          "duration": 353
+        },
+        {
+          "start": 2205.5,
+          "duration": 5569
+        },
+        {
+          "start": 7774.79999999993,
+          "duration": 50
+        }
+      ],
+      "keys": [],
+      "drawing": {
+        "draw": 957,
+        "bind": 9,
+        "program": 126
+      },
+      "last": 41376.1
+    },
+    "x": "0.00"
+  },
+  "initialX": 0,
+  "after": {
+    "perf": {
+      "started": 266,
+      "frames": [
+        {
+          "t": 311.1,
+          "delta": 0,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 327.8,
+          "delta": 16.69999999999999,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 394.4,
+          "delta": 66.59999999999997,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 411.1,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 561.1,
+          "delta": 150,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 711.1,
+          "delta": 150,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1311.1,
+          "delta": 599.9999999999999,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1327.8,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1727.7,
+          "delta": 399.9000000000001,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1744.4,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1761,
+          "delta": 16.59999999999991,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1777.7,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1794.4,
+          "delta": 16.700000000000045,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1811,
+          "delta": 16.59999999999991,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 1844.4,
+          "delta": 33.40000000000009,
+          "keyDown": false,
+          "draw": 0,
+          "bind": 0,
+          "program": 0
+        },
+        {
+          "t": 7760.8,
+          "delta": 5916.4,
+          "keyDown": false,
+          "draw": 1611,
+          "bind": 61,
+          "program": 134
+        },
+        {
+          "t": 7877.5,
+          "delta": 116.69999999999982,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 7894.2,
+          "delta": 16.699999999999818,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 10077.4,
+          "delta": 2183.2,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 11827.3,
+          "delta": 1749.8999999999996,
+          "keyDown": false,
+          "draw": 1670,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 13527.3,
+          "delta": 1700,
+          "keyDown": false,
+          "draw": 1676,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 15260.5,
+          "delta": 1733.2000000000007,
+          "keyDown": false,
+          "draw": 1656,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 16960.4,
+          "delta": 1699.9000000000015,
+          "keyDown": false,
+          "draw": 1616,
+          "bind": 17,
+          "program": 132
+        },
+        {
+          "t": 18677,
+          "delta": 1716.5999999999985,
+          "keyDown": false,
+          "draw": 964,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 20343.6,
+          "delta": 1666.5999999999985,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 21943.5,
+          "delta": 1599.9000000000015,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 23476.8,
+          "delta": 1533.2999999999993,
+          "keyDown": false,
+          "draw": 967,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 25010.1,
+          "delta": 1533.2999999999993,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 26576.8,
+          "delta": 1566.7000000000007,
+          "keyDown": false,
+          "draw": 1018,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 28159.9,
+          "delta": 1583.1000000000022,
+          "keyDown": false,
+          "draw": 1025,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 29759.9,
+          "delta": 1600,
+          "keyDown": false,
+          "draw": 1025,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 31643.2,
+          "delta": 1883.2999999999993,
+          "keyDown": false,
+          "draw": 1028,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 33476.4,
+          "delta": 1833.2000000000007,
+          "keyDown": false,
+          "draw": 1018,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 35093.1,
+          "delta": 1616.699999999997,
+          "keyDown": false,
+          "draw": 967,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 36726.3,
+          "delta": 1633.2000000000044,
+          "keyDown": false,
+          "draw": 963,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 38259.6,
+          "delta": 1533.2999999999956,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 39842.9,
+          "delta": 1583.300000000003,
+          "keyDown": false,
+          "draw": 956,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 41376.1,
+          "delta": 1533.199999999997,
+          "keyDown": false,
+          "draw": 966,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 42976.1,
+          "delta": 1600,
+          "keyDown": false,
+          "draw": 957,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 44642.6,
+          "delta": 1666.5,
+          "keyDown": false,
+          "draw": 1018,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 46342.6,
+          "delta": 1700,
+          "keyDown": false,
+          "draw": 1027,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 47975.9,
+          "delta": 1633.300000000003,
+          "keyDown": false,
+          "draw": 1036,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 49642.5,
+          "delta": 1666.5999999999985,
+          "keyDown": false,
+          "draw": 1040,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 51392.4,
+          "delta": 1749.9000000000015,
+          "keyDown": false,
+          "draw": 1030,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 53092.3,
+          "delta": 1699.9000000000015,
+          "keyDown": false,
+          "draw": 984,
+          "bind": 9,
+          "program": 126
+        },
+        {
+          "t": 54942.2,
+          "delta": 1849.8999999999942,
+          "keyDown": false,
+          "draw": 975,
+          "bind": 9,
+          "program": 126
+        }
+      ],
+      "longTasks": [
+        {
+          "start": 665.2999999999302,
+          "duration": 639
+        },
+        {
+          "start": 1851.3999999999069,
+          "duration": 353
+        },
+        {
+          "start": 2205.5,
+          "duration": 5569
+        },
+        {
+          "start": 7774.79999999993,
+          "duration": 50
+        },
+        {
+          "start": 44689.29999999993,
+          "duration": 65
+        }
+      ],
+      "keys": [
+        {
+          "type": "keydown",
+          "at": 44774.89999999991,
+          "trusted": true,
+          "x": "0.00"
+        },
+        {
+          "type": "keyup",
+          "at": 45276.09999999998,
+          "trusted": true,
+          "x": "0.00"
+        }
+      ],
+      "drawing": {
+        "draw": 968,
+        "bind": 9,
+        "program": 126
+      },
+      "last": 54942.2
+    },
+    "x": "0.00"
+  },
+  "network": {
+    "reads": [
+      {
+        "url": "http://127.0.0.1:3195/",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/index-B-tAIt2X.css",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/PlayableStore-DmaY3rRb.css",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/routes-DmHpsaQx.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/index-B0MkgKcI.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/legal-version-BguVS3S4.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/assets/PlayableStore-C8fArEKD.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagelito-wordmark.svg",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/store-reference-approved.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/store-reference-approved.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-plain.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-everything.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-sesame.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-classic-onion.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-jalapeno-cheddar.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-cheddar.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-cinnamon-raisin.webp",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3195/images/bagel-blueberry.webp",
+        "status": 200
+      }
+    ],
+    "blocked": [],
+    "errors": []
+  }
+}

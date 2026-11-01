@@ -1,0 +1,11 @@
+[nitro] ✔ Generated public .output/public
+[nitro] ℹ Building server (builder: rolldown, preset: node-server, compatibility date: 2026-11-01)
+MISSING_CODE_SPLITTING_GROUP_DEBUG_NAME
+`output.codeSplitting.groups[0].name` is a function. Set `output.codeSplitting.groups[0].debugName` so the bundler timing report can identify this group.
+ℹ Generated .output/nitro.json
+[nitro] ✔ Server built in 66ms
+  ├─ .output/server/_libs/h3+rou3+srvx.mjs (56.9 kB) (14.5 kB gzip)
+  ├─ .output/server/_libs/hookable.mjs (1.18 kB) (523 B gzip)
+  └─ .output/server/index.mjs (5.69 kB) (2.18 kB gzip)
+Σ Total size: 63.8 kB (17.3 kB gzip)
+[nitro] ✔ You can preview this build using npx nitro preview

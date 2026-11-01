@@ -1,0 +1,10 @@
+async function swipe(page,cdp,scrollable,axis,sign){
+ record('scroll-before',{url:page.url(),axis,sign,scrollable})
+ const r=scrollable.rect,x=Math.max(12,Math.min(page.viewportSize().width-12,r.x+r.width*.5)),y=Math.max(80,Math.min(page.viewportSize().height-80,r.y+r.height*.5))
+ const start=axis==='x'?{x:sign<0?r.right-16:r.x+16,y}:{x,y:sign<0?r.bottom-12:r.y+12},end=axis==='x'?{x:sign<0?r.x+16:r.right-16,y}:{x,y:sign<0?r.y+12:r.bottom-12}
+ assert.ok(Math.abs(end[axis]-start[axis])>=24,'A real scroll viewport must have room for a native gesture')
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...start,id:1}]})
+ for(let i=1;i<=6;i++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:start.x+(end.x-start.x)*i/6,y:start.y+(end.y-start.y)*i/6,id:1}]});await delay(25)}
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await delay(180)
+ record('native-scroll',{url:page.url(),axis,sign,ancestorDepth:scrollable.depth,start,end})
+}

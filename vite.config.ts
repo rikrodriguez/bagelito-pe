@@ -8,7 +8,13 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     tanstackStart(),
-    nitro(),
+    nitro({
+      handlers: [{
+        route: '/**',
+        middleware: true,
+        handler: './src/server/reference-review-guard.server.ts',
+      }],
+    }),
     viteReact(),
   ],
 })

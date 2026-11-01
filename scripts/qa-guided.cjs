@@ -1,14 +1,23 @@
 /**
- * Bagelito visual journey smoke QA. Run only against a non-production preview
+ * Bagelito visual journey smoke QA. Run only against a loopback preview
  * with BAGELITO_VISUAL_QA_ENABLED=true and all payment intake disabled.
  * Install locally: npm i --no-save playwright@1.56.1 && npx playwright install chromium
- * Run: BASE_URL=http://localhost:4173 npm run qa:guided
+ * Run: BASE_URL=http://localhost:4173 QA_HDR_FIXTURE_PATH=/path/lebombo_1k.hdr npm run qa:guided
  */
 const { chromium } = require('playwright')
-const { mkdirSync, writeFileSync } = require('node:fs')
+const assert = require('node:assert/strict')
+const { execFileSync } = require('node:child_process')
+const { createHash } = require('node:crypto')
+const { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } = require('node:fs')
 const { resolve } = require('node:path')
 
 const base = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, '')
+const baseURL = new URL(base)
+assert.ok(baseURL.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(baseURL.hostname), 'Only a loopback preview is allowed')
+assert.ok(process.env.QA_HDR_FIXTURE_PATH, 'Provide the pinned HDR as a local fixture')
+const hdr = readFileSync(process.env.QA_HDR_FIXTURE_PATH)
+assert.equal(createHash('sha256').update(hdr).digest('hex'), 'a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb')
+const hdrURL = 'https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/lebombo_1k.hdr'
 const output = resolve(process.env.QA_OUTPUT || 'qa-artifacts')
 const modes = [
   { name: 'desktop', viewport: { width: 1280, height: 800 } },
@@ -16,19 +25,241 @@ const modes = [
 ]
 mkdirSync(output, { recursive: true })
 
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex')
+const sourceFiles = [
+  'scripts/qa-guided.cjs', 'src/playable/PlayableStore.tsx', 'src/playable/movement-input.ts',
+  'src/playable/StoreArchitectureVisual.tsx', 'src/playable/GuidedCommerce.tsx',
+  'src/playable/playable.css', 'src/playable/guided-commerce.css',
+  'src/domain/lib/approved-shop-contract.ts', 'src/domain/data/verified-menu-2026-10-21.json',
+  'package.json', 'package-lock.json', 'vercel.json',
+]
+const optionalSourceFiles = ['package-lock.json']
+const metadata = {
+  startedAt: new Date().toISOString(),
+  repositorySHA: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+  workingTree: execFileSync('git', ['status', '--short'], { encoding: 'utf8' }).trim(),
+  declaredBuildSHA: process.env.QA_CODE_SHA || null,
+  base, nodeVersion: process.version, expectedScenes: modes.length * 16,
+  hdrFixtureSHA256: sha256(hdr),
+  sourceSHA256: Object.fromEntries(sourceFiles.map(file => [file, existsSync(resolve(file)) ? sha256(readFileSync(resolve(file))) : null])),
+  missingSourceFiles: sourceFiles.filter(file => !existsSync(resolve(file))),
+  optionalSourceFiles,
+}
+const missingRequiredSources = metadata.missingSourceFiles.filter(file => !optionalSourceFiles.includes(file))
+if (missingRequiredSources.length) throw Error('Missing required QA source snapshots: ' + missingRequiredSources.join(', '))
+
+async function bounded(operation, milliseconds, label) {
+  let timer
+  try {
+    return await Promise.race([operation, new Promise((_, reject) => {
+      timer = setTimeout(() => reject(Error(label + ' timed out after ' + milliseconds + 'ms')), milliseconds)
+    })])
+  } finally { clearTimeout(timer) }
+}
+
 async function audit() {
-  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] })
+  const browser = await chromium.launch({
+    headless: true,
+    ...(process.env.QA_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.QA_CHROMIUM_EXECUTABLE_PATH } : {}),
+    args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'],
+  })
   const results = []
   const failures = []
+  const network = []
+  const events = []
+  const diagnostics = []
+  const interruptions = []
+  let activePage = null, activeMode = null, activeStage = 'browser-launched'
+  let interrupted = false, handlingSignal = false
+  let failureDiagnosed = false
+  metadata.browserVersion = browser.version()
+
+  function checkpoint(status = 'running', final = false) {
+    const target = resolve(output, final ? 'results.json' : 'checkpoint.json')
+    const temporary = target + '.tmp'
+    writeFileSync(temporary, JSON.stringify({ metadata, status, activeMode, activeStage, results, failures, network, events, diagnostics, interruptions }, null, 2))
+    renameSync(temporary, target)
+  }
+  function record(type, details = {}) {
+    const event = { at: new Date().toISOString(), mode: activeMode, stage: activeStage, type, ...details }
+    events.push(event)
+    console.log(JSON.stringify(event))
+    checkpoint(interrupted ? 'interrupted' : 'running')
+  }
+  async function diagnose(reason) {
+    const diagnostic = { at: new Date().toISOString(), reason, mode: activeMode, stage: activeStage }
+    diagnostics.push(diagnostic)
+    if (!activePage || activePage.isClosed()) {
+      diagnostic.pageClosed = true
+      return
+    }
+    diagnostic.url = activePage.url()
+    try {
+      diagnostic.state = await bounded(activePage.evaluate(() => {
+        const rect = element => {
+          const box = element.getBoundingClientRect()
+          return { x: box.x, y: box.y, width: box.width, height: box.height, right: box.right, bottom: box.bottom }
+        }
+        const commerce = document.querySelector('.guided-commerce'), shell = document.querySelector('.playable-shell')
+        const canvas = document.querySelector('canvas'), gl = canvas?.getContext('webgl2')
+        const hidden = []
+        for (let node = canvas; node; node = node.parentElement) {
+          const style = getComputedStyle(node)
+          if (style.display === 'none' || style.visibility !== 'visible' || Number(style.opacity) === 0) hidden.push(node.tagName + '.' + node.className)
+        }
+        // Only product state is inspected. Never copy input values, customer
+        // details, payment tokens, or the raw session-storage draft into QA logs.
+        return {
+          scene: commerce?.getAttribute('data-scene'), liveWorld: commerce?.getAttribute('data-live-world'), qa: commerce?.getAttribute('data-qa'),
+          worldScene: shell?.getAttribute('data-world-scene'), viewport: { width: innerWidth, height: innerHeight, scrollWidth: document.documentElement.scrollWidth },
+          overlays: [...document.querySelectorAll('.guided-store-menu-panel,.guided-store-cart-panel,.guided-overlay-dismiss')].map(element => ({ className: element.className, rect: rect(element) })),
+          plates: [...document.querySelectorAll('.bagelito-3d-blue-sign,.schmear-3d-sign')].map(element => ({ label: element.textContent, rect: rect(element) })),
+          productCounters: [...document.querySelectorAll('.bagel-live-summary>b,.guided-order-counter>b,.guided-store-cart-button>span')].map(element => element.textContent),
+          canvas: canvas ? { rect: rect(canvas), hidden, webgl: Boolean(gl), lost: gl?.isContextLost(), bufferWidth: gl?.drawingBufferWidth, bufferHeight: gl?.drawingBufferHeight } : null,
+        }
+      }), 5000, 'Read-only diagnostic state')
+    } catch (error) { diagnostic.stateError = String(error) }
+    if (!interrupted) {
+      try {
+        diagnostic.capture = activeMode + '-diagnostic-' + diagnostics.length + '.png'
+        const path = resolve(output, diagnostic.capture)
+        await activePage.screenshot({ path, animations: 'disabled', timeout: 10000 })
+        diagnostic.captureSHA256 = sha256(readFileSync(path))
+      } catch (error) { diagnostic.captureError = String(error) }
+    }
+    checkpoint(interrupted ? 'interrupted' : 'running')
+  }
+  async function onSignal(signal) {
+    if (handlingSignal) return
+    handlingSignal = true
+    interrupted = true
+    process.exitCode = signal === 'SIGINT' ? 130 : 143
+    interruptions.push({ signal, at: new Date().toISOString(), mode: activeMode, stage: activeStage })
+    record('interrupted', { signal })
+    // Save the durable checkpoint before closing our own browser. An intentional
+    // stop is recorded separately from a failed assertion or application error.
+    const stop = setTimeout(() => {
+      metadata.finishedAt = new Date().toISOString()
+      checkpoint('interrupted', true)
+      process.exit(signal === 'SIGINT' ? 130 : 143)
+    }, 8000)
+    stop.unref()
+    await Promise.race([diagnose('signal-' + signal), new Promise(done => setTimeout(done, 2500))])
+    await browser.close().catch(() => {})
+    clearTimeout(stop)
+    process.exitCode = signal === 'SIGINT' ? 130 : 143
+  }
+  const terminate = () => { void onSignal('SIGTERM') }
+  const interrupt = () => { void onSignal('SIGINT') }
+  process.once('SIGTERM', terminate)
+  process.once('SIGINT', interrupt)
+  checkpoint()
   try {
     for (const mode of modes) {
-      const page = await browser.newPage({ viewport: mode.viewport, deviceScaleFactor: 1 })
-      page.on('pageerror', (err) => failures.push(mode.name + ': ' + err.message))
+      const failuresBeforeMode = failures.length
+      activeMode = mode.name
+      activeStage = 'context-setup'
+      record('mode-start', { viewport: mode.viewport })
+      const context = await browser.newContext({ viewport: mode.viewport, deviceScaleFactor: 1, serviceWorkers: 'block' })
+      const traffic = { mode: mode.name, reads: [], fixtureReads: 0, blocked: [], httpErrors: [], routeErrors: [], closingRouteErrors: [], closingAborts: [] }
+      const pendingRoutes = new Set()
+      let closing = false
+      const reportRouteError = (entry, allowedGet) => {
+        const expectedClosingError = closing && allowedGet
+          && /disposed|(?:page|browser|context).*closed|net::ERR_ABORTED/i.test(entry.message)
+          && !/timeout|timed out/i.test(entry.message)
+        if (expectedClosingError) traffic.closingRouteErrors.push(entry)
+        else {
+          traffic.routeErrors.push(entry)
+          failures.push(mode.name + ': route handler failed: ' + entry.message)
+          record('route-error', entry)
+        }
+      }
+      network.push(traffic)
+      try {
+      await context.route('**/*', route => {
+        const work = (async () => {
+        const request = route.request(), url = request.url()
+        const localGet = request.method() === 'GET' && new URL(url).origin === baseURL.origin
+        const fixtureGet = request.method() === 'GET' && url === hdrURL
+        if (closing) {
+          traffic.closingAborts.push({ method: request.method(), url })
+          if (!localGet && !fixtureGet) {
+            traffic.blocked.push({ method: request.method(), url, reason: 'forbidden-during-close' })
+            failures.push(mode.name + ': forbidden request while closing: ' + request.method() + ' ' + url)
+          }
+          await route.abort('blockedbyclient').catch(error => reportRouteError({ method: request.method(), url, message: String(error) }, localGet || fixtureGet))
+          return
+        }
+        try {
+        if (localGet) {
+          const response = await route.fetch({ maxRedirects: 0 })
+          traffic.reads.push({ url, status: response.status() })
+          if (response.status() >= 400) {
+            const entry = { method: 'GET', url, status: response.status() }
+            traffic.httpErrors.push(entry)
+            failures.push(mode.name + ': local GET returned HTTP ' + entry.status + ': ' + url)
+            record('local-read-error', entry)
+          }
+          if (response.status() >= 300 && response.status() < 400) {
+            traffic.blocked.push({ method: 'GET', url, reason: 'redirect' })
+            failures.push(mode.name + ': local redirect is forbidden: ' + url)
+            await route.abort('blockedbyclient')
+            return
+          }
+          await route.fulfill({ response })
+          return
+        }
+        if (fixtureGet) {
+          traffic.fixtureReads++
+          await route.fulfill({ status: 200, headers: { 'content-type': 'application/octet-stream', 'access-control-allow-origin': '*' }, body: hdr })
+          return
+        }
+        traffic.blocked.push({ method: request.method(), url })
+        failures.push(mode.name + ': unrelated request or write is forbidden: ' + request.method() + ' ' + url)
+        await route.abort('blockedbyclient')
+        } catch (error) {
+          const entry = { method: request.method(), url, message: String(error) }
+          reportRouteError(entry, localGet || fixtureGet)
+          await route.abort('blockedbyclient').catch(abortError => {
+            reportRouteError({ ...entry, message: String(abortError), phase: 'abort-after-error' }, localGet || fixtureGet)
+          })
+        }
+        })()
+        pendingRoutes.add(work)
+        void work.then(() => pendingRoutes.delete(work), () => pendingRoutes.delete(work))
+        return work
+      })
+      const page = await context.newPage()
+      activePage = page
+      page.setDefaultTimeout(45000)
+      page.on('pageerror', (err) => { failures.push(mode.name + ': ' + err.message); record('page-error', { message: err.message }) })
       page.on('console', (event) => {
         if (event.type() === 'error') failures.push(mode.name + ': ' + event.text())
+        if (event.type() === 'debug' && event.text().startsWith('BAGELITO_QA_UI ')) {
+          try { record('ui-event', JSON.parse(event.text().slice('BAGELITO_QA_UI '.length))) } catch {}
+        }
       })
+      page.on('framenavigated', frame => { if (frame === page.mainFrame()) record('navigation', { url: frame.url() }) })
+      await page.addInitScript(() => {
+        for (const type of ['pointerdown', 'pointerup', 'click', 'keydown']) document.addEventListener(type, event => {
+          if (type === 'keydown' && !['Enter', ' ', 'Escape'].includes(event.key)) return
+          const target = event.target instanceof Element ? event.target.closest('button,[role="button"],a') : null
+          if (!target) return
+          console.debug('BAGELITO_QA_UI ' + JSON.stringify({ event: type, pointerType: event.pointerType || null, key: type === 'keydown' ? event.key : null, tag: target.tagName, className: target.className, ariaLabel: target.getAttribute('aria-label') }))
+        }, { capture: true })
+      })
+      const config = await page.request.get(new URL('/api/payments/culqi/config', baseURL).href, { maxRedirects: 0 })
+      assert.equal(config.status(), 200)
+      const payment = await config.json()
+      for (const key of ['enabled', 'configured', 'intakeEnabled']) assert.equal(payment[key], false, key + ' must remain disabled')
+      assert.equal(payment.mode, 'disabled')
+      assert.equal(payment.visualQaAllowed, true, 'The loopback server must explicitly enable visual QA')
+      record('config-verified', { mode: payment.mode, enabled: payment.enabled, configured: payment.configured, intakeEnabled: payment.intakeEnabled, visualQaAllowed: payment.visualQaAllowed })
 
       async function visit() {
+        activeStage = 'visit'
+        record('journey-start')
         const targetOrigin = new URL(base).origin
         if (!['localhost', '127.0.0.1', '[::1]'].includes(new URL(base).hostname)) {
           throw Error('Starting a fresh product journey is restricted to a loopback QA origin.')
@@ -41,12 +272,32 @@ async function audit() {
           throw Error('Refusing to reset a product draft outside the local QA origin.')
         }
         await page.goto(base + '/?qa=1', { waitUntil: 'networkidle' })
+        await page.getByRole('button', {name:'Empezar pedido',exact:true}).click()
+        await page.getByRole('button', {name:'Abrir menú',exact:true}).click()
+        await page.getByRole('button', {name:'Inicio',exact:true}).click()
+        // Inicio changes the scene; its existing effect closes the menu.
+        // Wait for that state before interacting with the same toggle again.
+        await page.locator('.guided-store-menu-panel').waitFor({state:'hidden'})
         await page.locator('[data-scene="entrance"]').waitFor()
         const qaEnabled = await page.locator('[data-qa="true"]').count()
         if (!qaEnabled) throw Error('Visual QA is not enabled. Do not use payment bypass on production.')
+        record('journey-ready')
       }
       async function scene(key, name) {
+        activeStage = 'scene-' + name
+        record('scene-start', { scene: key, name })
         await page.locator('[data-scene="' + key + '"]').waitFor()
+        await page.waitForFunction(expected => document.querySelector('.playable-shell')?.getAttribute('data-world-scene') === expected, key)
+        if (['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears'].includes(key)) {
+          await page.waitForFunction(scene => {
+            const selector = scene === 'bagels' ? '.bagelito-3d-blue-sign' : scene === 'schmears' ? '.schmear-3d-sign' : '.bagelito-3d-blue-sign,.schmear-3d-sign'
+            const plates = [...document.querySelectorAll(selector)]
+            return plates.length === (scene === 'bagels' ? 8 : scene === 'schmears' ? 5 : 13) && plates.every(plate => {
+              const box = plate.getBoundingClientRect()
+              return box.width > 0 && box.x >= 0 && box.y >= 0 && box.right <= innerWidth && box.bottom <= innerHeight
+            })
+          }, key)
+        }
         // Transitions request a new real scene image; wait for decode rather than
         // flagging a normal in-flight image request as a broken asset.
         await page.locator('[data-scene="' + key + '"]').evaluate(async (root) => {
@@ -65,8 +316,11 @@ async function audit() {
         }))
         if (brokenImages.length) failures.push(mode.name + '/' + name + ': broken images ' + brokenImages.join(', '))
         if (widths.document > widths.viewport + 2) failures.push(mode.name + '/' + name + ': overflow')
-        await page.screenshot({ path: resolve(output, mode.name + '-' + name + '.png') })
-        results.push({ mode: mode.name, scene: name, pass: !brokenImages.length && widths.document <= widths.viewport + 2 })
+        const capture = mode.name + '-' + name + '.png'
+        const path = resolve(output, capture)
+        await page.screenshot({ path, animations:'disabled' })
+        results.push({ mode: mode.name, scene: name, pass: !brokenImages.length && widths.document <= widths.viewport + 2, capture, captureSHA256: sha256(readFileSync(path)) })
+        record('scene-complete', { scene: key, name, completedScenes: results.length })
       }
 
       await visit()
@@ -91,7 +345,7 @@ async function audit() {
 
       const holder = await page.locator('.guided-progress-master').boundingBox()
       if (!holder || (mode.name === 'desktop' && holder.y < mode.viewport.height * .75)
-        || (mode.name === 'mobile' && holder.y > mode.viewport.height * .25)) {
+        || (mode.name === 'mobile' && holder.y < mode.viewport.height * .75)) {
         failures.push(mode.name + ': progress holder placement differs from approved responsive layout')
       }
       await page.getByRole('button', { name: 'Packs', exact: true }).click()
@@ -109,67 +363,34 @@ async function audit() {
 
       // The catalog is NOT in the same order as the approved panorama.
       // Assert that tapping each visible tray selects its actual printed flavor.
-      const showcaseLabels = await page.locator('.bagel-hotspots > button')
+      const showcaseLabels = await page.locator('.mobile-bagel-card > button')
         .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
       const expectedShowcaseLabels = [
         'Agregar Plain', 'Agregar Everything', 'Agregar Sesame',
         'Agregar Classic Onion', 'Agregar Jalapeño Cheddar', 'Agregar Cheddar',
         'Agregar Cinnamon Raisin', 'Agregar Blueberry',
       ]
-      if (JSON.stringify(showcaseLabels) !== JSON.stringify(expectedShowcaseLabels)) {
+      if (JSON.stringify([...showcaseLabels].sort()) !== JSON.stringify([...expectedShowcaseLabels].sort())) {
         failures.push(mode.name + ': bagel panorama hotspot positions do not match visual flavor labels')
       }
 
-      // Bagelito-approved inversion: the eight physical bagel signs are blue
-      // (#004AAD) with white typography. Schmear tags are intentionally
-      // separate; do not recolor them as part of this contract.
-      const physicalSigns = await page.locator('.bagel-vitrina-label')
-        .evaluateAll((elements) => elements.map((element) => {
-          const style = window.getComputedStyle(element)
-          return {
-            label: element.textContent?.trim() || '',
-            background: style.backgroundColor,
-            color: style.color,
-            pointerEvents: style.pointerEvents,
-          }
-        }))
-      if (physicalSigns.length !== 8
-        || physicalSigns.some((sign, index) =>
-          sign.label.toLowerCase() !== expectedShowcaseLabels[index].slice(8).toLowerCase()
-          || sign.background !== 'rgb(0, 74, 173)'
-          || sign.color !== 'rgb(255, 255, 255)'
-          || sign.pointerEvents !== 'none')) {
-        failures.push(mode.name + ': bagel signage is not blue with white text or blocks product taps')
+      // The live 3D store replaces the bounded panorama; real product cards
+      // retain exact approved labels, complete images and the existing handlers.
+      const liveWorld = await page.locator('[data-live-world="true"]').count()
+      if (liveWorld !== 1 || await page.locator('canvas').count() !== 1
+        || await page.locator('.guided-scene-image,.guided-scene-backdrop').count() !== 0) {
+        failures.push(mode.name + ': commerce must keep the real world without room screenshots')
       }
-
-      if (mode.name === 'mobile') {
-        const mobileSigns = await page.locator('.mobile-bagel-sign')
-          .evaluateAll((elements) => elements.map((element) => {
-            const style = window.getComputedStyle(element)
-            return { color: style.color, background: style.backgroundColor }
-          }))
-        if (mobileSigns.length !== 8
-          || mobileSigns.some((sign) =>
-            sign.background !== 'rgb(0, 74, 173)' || sign.color !== 'rgb(255, 255, 255)')) {
-          failures.push('Mobile flavor labels do not follow blue-background / white-text contract')
-        }
+      const productLabels = await page.locator('.mobile-bagel-sign').allTextContents()
+      if (productLabels.length !== 8 || new Set(productLabels).size !== 8) {
+        failures.push(mode.name + ': the eight approved product labels must remain available')
       }
-
-      if (mode.name === 'desktop') {
-        const frame = await page.locator('.bagel-product-frame').boundingBox()
-        const trays = await page.locator('.bagel-hotspots > button').evaluateAll((buttons) =>
-          buttons.map((button) => {
-            const rect = button.getBoundingClientRect()
-            return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom }
-          })
-        )
-        const summary = await page.locator('.bagel-live-summary').boundingBox()
-        if (!frame || trays.length !== 8
-          || trays[3].right < frame.x + frame.width * .98
-          || trays[7].right < frame.x + frame.width * .98
-          || (summary && frame.x + frame.width > summary.x + 2)) {
-          failures.push('Desktop clean bagel photo is not fully clickable or overlaps the dynamic summary')
-        }
+      const mobileSigns = await page.locator('.mobile-bagel-sign').evaluateAll(elements => elements.map(element => {
+        const style = getComputedStyle(element)
+        return {color:style.color,background:style.backgroundColor}
+      }))
+      if (mobileSigns.some(sign => sign.background !== 'rgb(255, 250, 244)' || sign.color !== 'rgb(0, 74, 173)')) {
+        failures.push(mode.name + ': product labels must use the approved white plates and blue lettering')
       }
       if (mode.name === 'mobile') {
         const productCards = await page.locator('.mobile-bagel-card').evaluateAll((cards) =>
@@ -187,7 +408,7 @@ async function audit() {
       }
 
       for (let i = 0; i < 6; i++) {
-        const selector = mode.name === 'mobile' ? '.mobile-bagel-card > button' : '.bagel-hotspots > button'
+        const selector = '.mobile-bagel-card > button'
         await page.locator(selector).nth(i % 3).click()
       }
       await scene('bagels', '06-bagels-selected')
@@ -211,6 +432,7 @@ async function audit() {
       if (!rawDraft || rawDraft.includes('customerName') || rawDraft.includes('email') || rawDraft.includes('token')) {
         failures.push(mode.name + ': product draft storage is missing or contains sensitive details')
       }
+      record('draft-reload-inspected', { draftPresent: Boolean(rawDraft), counter: await page.locator('.bagel-live-summary>b').textContent() })
 
       const orderHolderText = await page.locator('.guided-store-cart-button>span').textContent()
       if (orderHolderText !== 'Tu pedido (6)') {
@@ -218,9 +440,9 @@ async function audit() {
       }
       await page.getByRole('button', { name: /Continuar/ }).last().click()
       await scene('schmears', '07-schmears')
-      const optionalSchmear = mode.name === 'mobile'
-        ? page.locator('.mobile-schmear-card > button').first()
-        : page.locator('.schmear-hotspots > button').first()
+      // Both viewports use these real commerce controls over the mounted world.
+      // The panorama hotspots are deliberately absent while liveWorld is true.
+      const optionalSchmear = page.locator('.mobile-schmear-card > button').first()
       await optionalSchmear.click()
       if (await page.locator('.guided-store-cart-button>span').textContent() !== 'Tu pedido (7)') {
         failures.push(mode.name + ': optional schmear not added to live order count')
@@ -229,7 +451,7 @@ async function audit() {
       if (await page.locator('.guided-store-cart-button>span').textContent() !== 'Tu pedido (6)') {
         failures.push(mode.name + ': optional schmear could not be removed again')
       }
-      const schmearLabels = await page.locator('.schmear-hotspots > button')
+      const schmearLabels = await page.locator('.mobile-schmear-card > button')
         .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')))
       const expectedSchmearLabels = [
         'Agregar Whipped Original', 'Agregar Ají Amarillo', 'Agregar Herb & Roasted Garlic',
@@ -283,26 +505,56 @@ async function audit() {
       }
       await page.locator('.pack-choice-grid button').first().click()
       await page.locator('[data-scene="bagels"]').waitFor()
-      const bagelSelector = mode.name === 'mobile' ? '.mobile-bagel-card > button' : '.bagel-hotspots > button'
+      const bagelSelector = '.mobile-bagel-card > button'
       await page.locator(bagelSelector).first().click()
       if (await page.locator('.bagel-live-summary>b').textContent() !== '6/6') {
         failures.push(mode.name + ': single-flavor selection requires more than one tap')
       }
-      if (mode.name === 'mobile') await page.locator('.mobile-bagel-card .mobile-product-count > button').first().click()
-      else await page.locator('.bagel-hotspots > button i').first().click()
+      await page.locator('.mobile-bagel-card .mobile-product-count > button').first().click()
       if (await page.locator('.bagel-live-summary>b').textContent() !== '0/6') {
         failures.push(mode.name + ': one-flavor pack cannot be cleared in one action')
       }
-      await page.close()
+      assert.equal(traffic.fixtureReads > 0, true, 'The live world must load the pinned HDR fixture')
+      assert.deepEqual(traffic.blocked, [], 'No unrelated external request or write is allowed')
+      assert.deepEqual(traffic.reads.filter(read => read.status >= 400), [], 'All local resources must load')
+      record('mode-complete', { completedScenes: results.filter(result => result.mode === mode.name).length, localReads: traffic.reads.length, fixtureReads: traffic.fixtureReads, blocked: traffic.blocked.length })
+      if (failures.length > failuresBeforeMode) await diagnose('mode-assertion-failures')
+      } catch (error) {
+        if (!interrupted) {
+          await diagnose('operation-failure')
+          failureDiagnosed = true
+        }
+        throw error
+      } finally {
+        closing = true
+        record('context-closing', { pendingRoutes: pendingRoutes.size })
+        while (pendingRoutes.size) await Promise.allSettled([...pendingRoutes])
+        await context.close()
+        while (pendingRoutes.size) await Promise.allSettled([...pendingRoutes])
+        activePage = null
+        record('context-closed', { routeErrors: traffic.routeErrors.length, closingRouteErrors: traffic.closingRouteErrors.length, closingAborts: traffic.closingAborts.length })
+      }
+    }
+  } catch (error) {
+    if (interrupted) record('interrupted-operation', { message: String(error) })
+    else {
+      failures.push(String(error.stack || error))
+      if (!failureDiagnosed) await diagnose('operation-failure')
     }
   } finally {
-    await browser.close()
+    await browser.close().catch(() => {})
+    metadata.finishedAt = new Date().toISOString()
+    checkpoint(interrupted ? 'interrupted' : failures.length ? 'failed' : 'passed', true)
+    process.removeListener('SIGTERM', terminate)
+    process.removeListener('SIGINT', interrupt)
   }
-  writeFileSync(resolve(output, 'results.json'), JSON.stringify({ results, failures }, null, 2))
   console.log(results.length + ' scene checks; ' + failures.length + ' failures.')
-  if (failures.length) {
+  if (failures.length && !interrupted) {
     console.error(failures.join('\n'))
     process.exitCode = 1
   }
 }
-audit().catch((err) => { console.error(err); process.exitCode = 1 })
+if (process.env.QA_PREFLIGHT_ONLY === '1') {
+  writeFileSync(resolve(output, 'metadata-preflight.json'), JSON.stringify({ status: 'preflight-passed', browserExecuted: false, metadata }, null, 2))
+  console.log('Metadata preflight PASS; no browser launched; missing optional snapshots: ' + (metadata.missingSourceFiles.join(', ') || 'none'))
+} else audit().catch((err) => { console.error(err); process.exitCode = 1 })

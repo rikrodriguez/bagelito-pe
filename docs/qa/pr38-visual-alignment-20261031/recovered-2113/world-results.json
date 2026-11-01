@@ -1,0 +1,136 @@
+{
+  "results": [
+    "mobile: totem",
+    "mobile: vitrina",
+    "mobile: bagels",
+    "mobile: schmears",
+    "mobile: production",
+    "mobile: cashier",
+    "mobile: pickup",
+    "mobile: tour-to-selector"
+  ],
+  "failures": [
+    "desktop FLOW_STOP: Error: Eight browser animation frames did not complete before the readiness deadline",
+    "mobile FLOW_STOP: TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.tour-start-button')\u001b[22m\n"
+  ],
+  "diagnostics": {
+    "readiness": [
+      {
+        "mode": "mobile",
+        "at": 1793480853362,
+        "assets": [
+          {
+            "name": "bagel-plain.webp",
+            "status": 200,
+            "responseAt": 1793480828816,
+            "finished": true,
+            "finishedAt": 1793480828816
+          },
+          {
+            "name": "bagel-everything.webp",
+            "status": 200,
+            "responseAt": 1793480828859,
+            "finished": true,
+            "finishedAt": 1793480828860
+          },
+          {
+            "name": "bagel-sesame.webp",
+            "status": 200,
+            "responseAt": 1793480828875,
+            "finished": true,
+            "finishedAt": 1793480828875
+          },
+          {
+            "name": "bagel-classic-onion.webp",
+            "status": 200,
+            "responseAt": 1793480828891,
+            "finished": true,
+            "finishedAt": 1793480828891
+          },
+          {
+            "name": "bagel-jalapeno-cheddar.webp",
+            "status": 200,
+            "responseAt": 1793480828902,
+            "finished": true,
+            "finishedAt": 1793480828903
+          },
+          {
+            "name": "bagel-cheddar.webp",
+            "status": 200,
+            "responseAt": 1793480828913,
+            "finished": true,
+            "finishedAt": 1793480828913
+          },
+          {
+            "name": "bagel-cinnamon-raisin.webp",
+            "status": 200,
+            "responseAt": 1793480828946,
+            "finished": true,
+            "finishedAt": 1793480828946
+          },
+          {
+            "name": "bagel-blueberry.webp",
+            "status": 200,
+            "responseAt": 1793480828956,
+            "finished": true,
+            "finishedAt": 1793480828957
+          }
+        ],
+        "worldSigns": 8,
+        "browserFrames": 8
+      }
+    ],
+    "movement": [],
+    "cameras": [
+      {
+        "mode": "mobile",
+        "node": "totem",
+        "target": -3.7,
+        "first": -3.7,
+        "second": -3.7
+      },
+      {
+        "mode": "mobile",
+        "node": "vitrina",
+        "target": 0,
+        "first": 0,
+        "second": 0
+      },
+      {
+        "mode": "mobile",
+        "node": "bagels",
+        "target": -2.05,
+        "first": -2.05,
+        "second": -2.05
+      },
+      {
+        "mode": "mobile",
+        "node": "schmears",
+        "target": 4.2,
+        "first": 4.2,
+        "second": 4.2
+      },
+      {
+        "mode": "mobile",
+        "node": "production",
+        "target": 0,
+        "first": 0,
+        "second": 0
+      },
+      {
+        "mode": "mobile",
+        "node": "cashier",
+        "target": 5.65,
+        "first": 5.65,
+        "second": 5.65
+      },
+      {
+        "mode": "mobile",
+        "node": "pickup",
+        "target": 6.95,
+        "first": 6.95,
+        "second": 6.95
+      }
+    ]
+  }
+}

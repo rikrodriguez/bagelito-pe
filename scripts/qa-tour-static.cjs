@@ -43,18 +43,24 @@ check('Five physical schmear pans and labels', () => {
   assert.doesNotMatch(three, /useTexture\('\/images\/store-reference-approved\.webp'\)/)
 })
 
-check('Approved blue-background white-letter bagel signage', () => {
+check('Reference-aligned white plates with Bagelito blue lettering', () => {
   assert.match(three, /className="bagelito-3d-blue-sign"/)
   assert.match(styling, /\.bagelito-3d-blue-sign>div/)
-  assert.match(styling, /background:#004aad/)
-  assert.match(styling, /color:#fff/)
+  // Inspect the scoped override, rather than accepting an obsolete color
+  // anywhere in this stylesheet. Computed rendering is checked in browser QA.
+  const plateRule = styling.match(/\.playable-shell \.bagelito-3d-blue-sign>div,\s*\.playable-shell \.schmear-3d-sign>div\{([^}]+)\}/)
+  assert.ok(plateRule, 'Both physical product labels need the reference override')
+  assert.match(plateRule[1], /background:#fffaf1(?:;|$)/)
+  assert.match(plateRule[1], /color:#004aad(?:;|$)/)
 })
 
 check('No stuck motion in camera stops', () => {
   assert.match(three, /if\(experienceMode!=='explore' \|\| introGuide!==null \|\| category!==null\)/)
   assert.match(three, /window\.addEventListener\('blur',release\)/)
   assert.doesNotMatch(three, /\[experienceMode,guideNode\]/)
-  assert.match(three, /camera\.position\.lerp\(node\.position,alpha\)/)
+  assert.match(three, /fittedPosition\.copy\(node\.position\)/)
+  assert.match(three, /camera\.position\.lerp\(fittedPosition,alpha\)/)
+  assert.match(three, /perspective\.updateProjectionMatrix\(\)/)
 })
 
 check('Collision shields and correct strafing', () => {
@@ -75,7 +81,8 @@ check('3D product tap enters matching guided category', () => {
 
 check('3D failures return the customer to functional guided shopping', () => {
   assert.match(three, /class Store3DErrorBoundary extends Component/)
-  assert.match(three, /onRecover=\{\(\)=>enterGuided\(null\)\}/)
+  assert.match(three, /onRecover=\{\(\)=>\{setWorldFailed\(false\);setVisualAvailable\(false\);enterGuided\(null\)\}\}/)
+  assert.match(three, /liveWorld=\{visualAvailable\}/)
   assert.match(styling, /\.store-3d-fallback/)
   assert.match(three, /window\.localStorage\.getItem/)
   assert.match(three, /Storage may be disabled in a private mobile browser/)
@@ -91,7 +98,8 @@ check('Unfinished cart can resume without storing personal or payment data', () 
 
 check('Payment remains gated', () => {
   assert.match(guided, /checkoutQuote\?\.checkoutAllowed/)
-  assert.match(guided, /const canPayOnline = paymentConfig\?\.enabled === true/)
+  assert.match(guided, /const canPayOnline = !reviewOnly && paymentConfig\?\.enabled === true/)
+  assert.match(guided, /!reviewOnly && paymentConfig && checkoutQuote\?\.amountPen != null && <CulqiBrowserCheckout/)
   assert.match(guided, /manualOrderHref/)
   assert.match(guided, /Consultar mi pedido por WhatsApp/)
   assert.match(guided, /Sin pago ni reserva automática/)

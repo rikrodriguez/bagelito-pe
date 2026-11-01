@@ -1,0 +1,156 @@
+{
+  "kind": "offline-focus-helper-and-source-preservation-review",
+  "createdAt": "2026-10-31T23:12:33.971Z",
+  "codeSHA": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
+  "baselineSHA": "74595b8b42a6576f931c18ce95578a9a41a7bdc3",
+  "repositoryHEAD": "67deb30cc3b3fb30c8bb82d9c2126a565e507988",
+  "sourcePath": "src/playable/GuidedCommerce.tsx",
+  "sourceHashesUseExactCommittedFileBytes": true,
+  "sourceSHA256": "746309cfce6e2768cdcbbb4dc5926a01e3c364171e8797aa95f52cd4084f38b6",
+  "baselineSourceSHA256": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+  "scriptSHA256": "28fb75503d630aa7a28b9fa62f44a8f8a9c2d95eed3843f1487d3e8eab6ccf32",
+  "helperChecks": [
+    {
+      "name": "Visible keyboard focus in a horizontally overflowing grid reveals its whole card",
+      "status": "PASS",
+      "scrollCalls": [
+        {
+          "block": "nearest",
+          "inline": "nearest",
+          "behavior": "auto"
+        }
+      ]
+    },
+    {
+      "name": "A non-overflowing grid does not scroll",
+      "status": "PASS",
+      "scrollCalls": []
+    },
+    {
+      "name": "A card outside the current grid does not scroll",
+      "status": "PASS",
+      "scrollCalls": []
+    },
+    {
+      "name": "A non-Element focus target does not scroll",
+      "status": "PASS",
+      "scrollCalls": []
+    },
+    {
+      "name": "Pointer focus without focus-visible does not scroll",
+      "status": "PASS",
+      "scrollCalls": []
+    }
+  ],
+  "preservation": {
+    "status": "PASS",
+    "componentStatementsBeforeRenderCount": 73,
+    "componentStatementsBeforeRenderSHA256": "24ba096d9c79ec399854bbaaa3618b538139974819ce9a0792844fdfa3b957ef",
+    "baselineComponentStatementsBeforeRenderSHA256": "24ba096d9c79ec399854bbaaa3618b538139974819ce9a0792844fdfa3b957ef",
+    "namedFunctionsBelowComponent": [
+      {
+        "name": "resetSelections",
+        "sha256": "cfbe8e0d95f398c2352c2d60be34869b38a59d93b6746b3c2f72867aec7a74af"
+      },
+      {
+        "name": "chooseCategory",
+        "sha256": "67c07c01185989828f4ffd0b67b95141a952cf411a175b746e74ee22c1f2ae4e"
+      },
+      {
+        "name": "choosePackFormat",
+        "sha256": "22552ed07429f7932f2d63d86fd8cc26f974b25a516616fa09d90ca525d126af"
+      },
+      {
+        "name": "choosePackMix",
+        "sha256": "9d111144f901525a4c86a0d199450b7b01821f5be3f5c67fea211b63d4ffba9f"
+      },
+      {
+        "name": "choosePack",
+        "sha256": "4731dba1d85d044cbcc37de3f36f76d5735dd04de0fd7fba4db3377d6014aa78"
+      },
+      {
+        "name": "chooseCombo",
+        "sha256": "c2b32666d607b2bf6945218b8ebef3483cc3508f5f5bca2d7666dd014f85e298"
+      },
+      {
+        "name": "chooseSchmearSize",
+        "sha256": "2938f9099f22102d6094a60130b63c801248f44d99c95be5ddf548d8b1f02b18"
+      },
+      {
+        "name": "addBagel",
+        "sha256": "b4bd7332917a9902f2b4a34eb8464dc90946a14d12b9bdb01fdca7f0fa37db57"
+      },
+      {
+        "name": "removeBagel",
+        "sha256": "4be6e6983454e4bd89182188764611f792d8788d7fd0f5404646b132f9897057"
+      },
+      {
+        "name": "addSchmear",
+        "sha256": "84a95f0942f7535fb6b16ce86498b43bb66b7bdd0290ab5c125857ba2cfd8ed0"
+      },
+      {
+        "name": "removeSchmear",
+        "sha256": "e413d3618d2173c31baaa7bb4d5a2283452ddb3252f1b3208b353f23e668a08a"
+      },
+      {
+        "name": "nextFromBagels",
+        "sha256": "eb91cff0f3a7a2494ec498338e65b7380725dc19e4bd10a10ba265ab26a69b18"
+      },
+      {
+        "name": "nextFromSchmears",
+        "sha256": "1552fa3117defb6e42428475ecd81ce16d0f42b20bc6d537a3f05a6d76be02f8"
+      },
+      {
+        "name": "acceptPrimaryUpsell",
+        "sha256": "e1d2a4cbadae77d36b3d0a02606f48e80b45d8b964c7f9fbc10a7734eed4327d"
+      },
+      {
+        "name": "acceptDownsell",
+        "sha256": "79df36ed72c42edf2f2a6d7f611ff7c8fa1499256917e16f583689ff689de210"
+      },
+      {
+        "name": "pullReceipt",
+        "sha256": "2f800612702b594bdbe0ce758643c76835be50ba172f97307ed5ecefe526456c"
+      },
+      {
+        "name": "saveWallet",
+        "sha256": "54ad0c2c3bd42f1938d1ae2f4887c65d3704a0bec66adc13baa6fa5f8b99d4e7"
+      },
+      {
+        "name": "goBack",
+        "sha256": "7583d8693787468a78345f3b95143ed6f3a8ac48d25c88fc10b33417942c55c7"
+      },
+      {
+        "name": "jumpToStage",
+        "sha256": "369039ba1e4318ef4ea295b483cb196dce9255026a3774d76a86a5f11df3f974"
+      },
+      {
+        "name": "goToEntrance",
+        "sha256": "f40f13afd3a7624adfcb49eba7ab83e66632d49944a20874996d4095c0166297"
+      }
+    ],
+    "existingOnClickAndOnChangeCount": 54,
+    "existingOnClickAndOnChangeSHA256": "b948a3a033c6533505696929cbe32aea8d7bdab831cbd81d5c69e72e182c768c",
+    "baselineOnClickAndOnChangeSHA256": "b948a3a033c6533505696929cbe32aea8d7bdab831cbd81d5c69e72e182c768c",
+    "checkoutElementSHA256": "d27a24c08b7bdada5a6c71a3f33ce90b676c5f312fa1f1e35e89ccc37d900981",
+    "baselineCheckoutElementSHA256": "d27a24c08b7bdada5a6c71a3f33ce90b676c5f312fa1f1e35e89ccc37d900981"
+  },
+  "limitations": [
+    "No browser, native Tab, layout, scrolling, pointer sequence, GPU, or provider execution.",
+    "Element, closest, matches and scrollIntoView are explicit controlled seams.",
+    "Source identity does not certify runtime checkout or payment behavior.",
+    "The original browser RED and browser focus PASS remain separate evidence."
+  ],
+  "helperSHA256": "d2de62b753f29793f36a6e04a024a1363f82bc76af06c79eabf6939586c12356",
+  "helperSource": "function revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {\n  const grid = event.currentTarget\n  if (grid.scrollWidth <= grid.clientWidth || !(event.target instanceof Element)\n    || !event.target.matches(':focus-visible')) return\n  // Native focus can stop at a partially visible carousel preview. Reveal the\n  // whole card, including its name and removal control, without moving focus.\n  const card = event.target.closest<HTMLElement>('.mobile-bagel-card,.mobile-schmear-card')\n  if (card && grid.contains(card)) card.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' })\n}",
+  "focusScopeProps": [
+    "onFocusCapture={liveWorld ? revealFocusedCatalogCard : undefined}",
+    "onFocusCapture={liveWorld ? revealFocusedCatalogCard : undefined}"
+  ],
+  "status": "PASS",
+  "summary": {
+    "helperChecksPassed": 5,
+    "helperChecksFailed": 0
+  },
+  "completedAt": "2026-10-31T23:12:34.113Z"
+}

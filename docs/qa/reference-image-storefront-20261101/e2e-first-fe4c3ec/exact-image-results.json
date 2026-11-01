@@ -1,0 +1,329 @@
+{
+  "metadata": {
+    "startedAt": "2026-11-01T00:32:34.345Z",
+    "base": "http://127.0.0.1:3208/",
+    "declaredCodeSHA": "fe4c3ec460a9fb7bdd33cd2e6ebaec8156db9ecc",
+    "repositorySHA": "f7bc3cd234391c63dada7573595ff9b7b926d312",
+    "driverSHA256": "6a69a5d68865e064641471ed042b09777405e451ddc683047e23bb60b767fe77",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "scope": "Exact approved image bytes, uncropped image and accessible category hotspots; existing commercial review-only flow smoke. No3D, fetch/XHR/API/provider requests, application storage reads or writes. One exact-key TanStack initialization read per document is recorded, not claimed absent.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T00:32:58.216Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "status": "failed",
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-exact-storefront.png",
+      "sha256": "43742d590671bb920667ea22b5ab6563dd595b3d217bc04672f83acfdf4e2f90",
+      "metrics": {
+        "source": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+        "complete": true,
+        "naturalWidth": 1536,
+        "naturalHeight": 1024,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "painted": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "right": 390,
+          "bottom": 260
+        },
+        "entireImageVisible": true,
+        "ancestorIssues": [],
+        "objectFit": "contain",
+        "objectPosition": "50% 50%",
+        "filter": "none",
+        "opacity": "1",
+        "canvasCount": 0,
+        "overflowX": 0,
+        "buttons": [
+          {
+            "name": "Packs",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 100.546875,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Combos",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 171.125,
+              "y": 88.859375,
+              "width": 70.328125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Schmears",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 245.265625,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          }
+        ]
+      },
+      "pass": false,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "flow": [
+        {
+          "name": "upsell-selected",
+          "file": "390-upsell-selected.png",
+          "sha256": "aae98b9c6a71b22dbe933e9e509ea1c3b451c1f098deb9af94f7594f212d88fb"
+        },
+        {
+          "name": "upsell-deselected",
+          "file": "390-upsell-deselected.png",
+          "sha256": "6f3c9ab1bab553902d1e58b8276290084da1aed571d2f9ad92b4c5a4ac3fcc1e"
+        },
+        {
+          "name": "cashier",
+          "file": "390-cashier.png",
+          "sha256": "5fb7e724e2dfd2db06a180fe829ee1c409cb81c35aa8eb162a4a7949bf6a76c6"
+        }
+      ],
+      "error": "TimeoutError: locator.selectOption: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Distrito', { exact: true })\u001b[22m\n"
+    }
+  ],
+  "failures": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "message": "locator.selectOption: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Distrito', { exact: true })\u001b[22m\n\n    at main (/tmp/bagelito-reference-e2e.cjs:121:52)"
+    }
+  ],
+  "network": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3208/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-_fyLhM4Y.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/routes-DIZbFZd-.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/ReferenceStorefront-BSAbt8eF.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/index-DdAl8CHC.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3208/master-scenes-clean/schmears-vitrina.webp",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3208/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+            "documentId": 1793493155187.9,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+            "documentId": 1793493155187.9,
+            "url": "http://127.0.0.1:3208/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793493155187.9",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64907)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65028)\n    at http://127.0.0.1:3208/assets/index-DdAl8CHC.js:10:65097",
+              "url": "http://127.0.0.1:3208/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T00:32:35.473Z",
+      "type": "exact-image-captured",
+      "width": 390,
+      "file": "390-exact-storefront.png"
+    },
+    {
+      "at": "2026-11-01T00:32:37.379Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "upsell-selected",
+      "file": "390-upsell-selected.png",
+      "sha256": "aae98b9c6a71b22dbe933e9e509ea1c3b451c1f098deb9af94f7594f212d88fb"
+    },
+    {
+      "at": "2026-11-01T00:32:37.513Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "upsell-deselected",
+      "file": "390-upsell-deselected.png",
+      "sha256": "6f3c9ab1bab553902d1e58b8276290084da1aed571d2f9ad92b4c5a4ac3fcc1e"
+    },
+    {
+      "at": "2026-11-01T00:32:37.978Z",
+      "type": "flow-captured",
+      "width": 390,
+      "name": "cashier",
+      "file": "390-cashier.png",
+      "sha256": "5fb7e724e2dfd2db06a180fe829ee1c409cb81c35aa8eb162a4a7949bf6a76c6"
+    },
+    {
+      "at": "2026-11-01T00:32:58.077Z",
+      "type": "case-failed",
+      "width": 390,
+      "message": "TimeoutError: locator.selectOption: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Distrito', { exact: true })\u001b[22m\n"
+    },
+    {
+      "at": "2026-11-01T00:32:58.132Z",
+      "type": "capabilities-drained",
+      "width": 390,
+      "knownFrameworkReads": 1,
+      "forbidden": 0
+    }
+  ]
+}

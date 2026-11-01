@@ -1,0 +1,495 @@
+{
+  "kind": "real-WebGL-browser-captures-WIP-no-deployment",
+  "scope": "purchase-only subset: bagels and schmears; entry and full guided suite not executed",
+  "createdAt": "2026-10-31T21:11:24.479Z",
+  "codeSHA": "20296a6a32f29e5c8c8b518bf189bda3351b98e3",
+  "gitStatus": "?? .output/\n",
+  "sourceFilesSHA256": {
+    "scripts/qa-visual-framing.cjs": "130dc2a1a935f96972cebe91a9f90bc407dfe24bc01068327012a6570c1a3a57",
+    "src/playable/PlayableStore.tsx": "359dc7f4766fafc557c6e74919d1bd28f7b2bd240cf9f34f50fb7302b738000f",
+    "src/playable/StoreArchitectureVisual.tsx": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+    "src/playable/GuidedCommerce.tsx": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+    "src/playable/playable.css": "711597a8bc7a8383f5522ee2dce36b5c4260b440bc2a851a717482c8509c44b6",
+    "src/playable/guided-commerce.css": "546c0b069febf92b85722ebd46acc0974d83d9be406392d22a62149372dbacb2",
+    "src/routes/index.tsx": "d77f937565b3c26995dee42abcc470f06ed46d6d0b9e3d28341cb2007c896aa1",
+    "vercel.json": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+  },
+  "fixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+  "results": [
+    {
+      "mode": "desktop",
+      "scene": "bagels",
+      "file": "desktop-bagels-actual.png",
+      "sha256": "4dda0cfbd50c9f5449a22dd82c63bc26216dc42045f601d8394a09735b93d353",
+      "metrics": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "lost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800,
+        "canvasCount": 1,
+        "overflow": 0,
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "cameraX": "0.00",
+        "worldScene": "bagels",
+        "logoDOM": 0,
+        "labels": [
+          {
+            "kind": "bagel",
+            "label": "PLAIN",
+            "rect": {
+              "x": 192.5857391357422,
+              "y": 357.1733093261719,
+              "width": 134.9374542236328,
+              "height": 23.0926513671875
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "EVERYTHING",
+            "rect": {
+              "x": 441.2211608886719,
+              "y": 357.1733093261719,
+              "width": 134.29067993164062,
+              "height": 23.0926513671875
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "SESAME",
+            "rect": {
+              "x": 689.7268676757812,
+              "y": 357.1733093261719,
+              "width": 134.25225830078125,
+              "height": 23.0926513671875
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "CLASSIC ONION",
+            "rect": {
+              "x": 937.715576171875,
+              "y": 357.1733093261719,
+              "width": 134.89892578125,
+              "height": 23.0926513671875
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "JALAPEÑO CHEDDAR",
+            "rect": {
+              "x": 197.89862060546875,
+              "y": 462.59490966796875,
+              "width": 133.32559204101562,
+              "height": 22.548187255859375
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "CHEDDAR",
+            "rect": {
+              "x": 443.5815734863281,
+              "y": 462.59490966796875,
+              "width": 132.69412231445312,
+              "height": 22.548187255859375
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "CINNAMON RAISIN",
+            "rect": {
+              "x": 689.137939453125,
+              "y": 462.59490966796875,
+              "width": 132.656494140625,
+              "height": 22.548187255859375
+            },
+            "inside": true
+          },
+          {
+            "kind": "bagel",
+            "label": "BLUEBERRY",
+            "rect": {
+              "x": 934.1893920898438,
+              "y": 462.59490966796875,
+              "width": 133.28802490234375,
+              "height": 22.548187255859375
+            },
+            "inside": true
+          },
+          {
+            "kind": "schmear",
+            "label": "WHIPPED ORIGINAL",
+            "rect": {
+              "x": 1311.1177978515625,
+              "y": 366.44451904296875,
+              "width": 92.1375732421875,
+              "height": 18.6180419921875
+            },
+            "inside": false
+          },
+          {
+            "kind": "schmear",
+            "label": "AJÍ AMARILLO",
+            "rect": {
+              "x": 1483.1630859375,
+              "y": 366.44451904296875,
+              "width": 92.4996337890625,
+              "height": 18.6180419921875
+            },
+            "inside": false
+          },
+          {
+            "kind": "schmear",
+            "label": "HERB & ROASTED GARLIC",
+            "rect": {
+              "x": 1654.7786865234375,
+              "y": 362.6796569824219,
+              "width": 93.7615966796875,
+              "height": 26.1287841796875
+            },
+            "inside": false
+          },
+          {
+            "kind": "schmear",
+            "label": "HONEY CINNAMON",
+            "rect": {
+              "x": 1384.5030517578125,
+              "y": 465.6749572753906,
+              "width": 91.25927734375,
+              "height": 18.204193115234375
+            },
+            "inside": false
+          },
+          {
+            "kind": "schmear",
+            "label": "CLASSIC STRAWBERRY",
+            "rect": {
+              "x": 1562.6077880859375,
+              "y": 461.993896484375,
+              "width": 92.44287109375,
+              "height": 25.5479736328125
+            },
+            "inside": false
+          }
+        ],
+        "entryCards": []
+      }
+    },
+    {
+      "mode": "desktop",
+      "scene": "schmears",
+      "file": "desktop-schmears-actual.png",
+      "sha256": "d478b3f2b1b17541754806d39165844a8d4daf8e0fbe1cd6120e84ff6789b2be",
+      "metrics": {
+        "hidden": [],
+        "width": 1280,
+        "height": 800,
+        "webgl": true,
+        "lost": false,
+        "bufferWidth": 1280,
+        "bufferHeight": 800,
+        "canvasCount": 1,
+        "overflow": 0,
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "cameraX": "-0.00",
+        "worldScene": "schmears",
+        "logoDOM": 0,
+        "labels": [
+          {
+            "kind": "bagel",
+            "label": "PLAIN",
+            "rect": {
+              "x": -1452.6246337890625,
+              "y": 343.11273193359375,
+              "width": 217.3677978515625,
+              "height": 35.100189208984375
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "EVERYTHING",
+            "rect": {
+              "x": -1070.3712158203125,
+              "y": 343.0300598144531,
+              "width": 214.23370361328125,
+              "height": 35.024444580078125
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "SESAME",
+            "rect": {
+              "x": -689.7825317382812,
+              "y": 342.94775390625,
+              "width": 211.12466430664062,
+              "height": 34.949005126953125
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "CLASSIC ONION",
+            "rect": {
+              "x": -310.8477478027344,
+              "y": 342.8658142089844,
+              "width": 208.04055786132812,
+              "height": 34.8739013671875
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "JALAPEÑO CHEDDAR",
+            "rect": {
+              "x": -1397.6834716796875,
+              "y": 501.14727783203125,
+              "width": 211.326171875,
+              "height": 33.4691162109375
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "CHEDDAR",
+            "rect": {
+              "x": -1025.5614013671875,
+              "y": 500.7313232421875,
+              "width": 208.35504150390625,
+              "height": 33.4002685546875
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "CINNAMON RAISIN",
+            "rect": {
+              "x": -655.017578125,
+              "y": 500.317138671875,
+              "width": 205.4071044921875,
+              "height": 33.3316650390625
+            },
+            "inside": false
+          },
+          {
+            "kind": "bagel",
+            "label": "BLUEBERRY",
+            "rect": {
+              "x": -286.0420227050781,
+              "y": 499.9046936035156,
+              "width": 202.48223876953125,
+              "height": 33.263397216796875
+            },
+            "inside": false
+          },
+          {
+            "kind": "schmear",
+            "label": "WHIPPED ORIGINAL",
+            "rect": {
+              "x": 326.4174499511719,
+              "y": 355.3484191894531,
+              "width": 134.55792236328125,
+              "height": 27.371917724609375
+            },
+            "inside": true
+          },
+          {
+            "kind": "schmear",
+            "label": "AJÍ AMARILLO",
+            "rect": {
+              "x": 580.3909912109375,
+              "y": 355.2749938964844,
+              "width": 133.34979248046875,
+              "height": 27.332305908203125
+            },
+            "inside": true
+          },
+          {
+            "kind": "schmear",
+            "label": "HERB & ROASTED GARLIC",
+            "rect": {
+              "x": 832.5680541992188,
+              "y": 349.6785888671875,
+              "width": 134.31353759765625,
+              "height": 38.28338623046875
+            },
+            "inside": true
+          },
+          {
+            "kind": "schmear",
+            "label": "HONEY CINNAMON",
+            "rect": {
+              "x": 451.8687438964844,
+              "y": 499.2595520019531,
+              "width": 130.61074829101562,
+              "height": 26.170501708984375
+            },
+            "inside": true
+          },
+          {
+            "kind": "schmear",
+            "label": "CLASSIC STRAWBERRY",
+            "rect": {
+              "x": 711.1915283203125,
+              "y": 493.7030029296875,
+              "width": 130.52557373046875,
+              "height": 36.6121826171875
+            },
+            "inside": true
+          }
+        ],
+        "entryCards": []
+      }
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "mode": "desktop",
+      "reads": [
+        {
+          "url": "http://127.0.0.1:3192/",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/assets/index-B-tAIt2X.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/assets/PlayableStore-DmaY3rRb.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/assets/index-Cd-IACJy.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/assets/routes-Bel-7BFZ.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/assets/PlayableStore-DjaKCNpe.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/assets/legal-version-BguVS3S4.js",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagelito-wordmark.svg",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/store-reference-approved.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/api/payments/culqi/config",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-everything.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-plain.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-sesame.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-jalapeno-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-classic-onion.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-cheddar.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-cinnamon-raisin.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/images/bagel-blueberry.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/master-scenes-clean/packs.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/master-scenes-clean/combos.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/master-scenes-clean/schmears.webp",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:3192/master-scenes-clean/schmears-vitrina.webp",
+          "status": 200
+        }
+      ],
+      "fixtureReads": 1,
+      "blocked": [],
+      "pageErrors": []
+    }
+  ]
+}

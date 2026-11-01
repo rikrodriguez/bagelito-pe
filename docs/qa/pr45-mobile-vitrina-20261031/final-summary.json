@@ -1,0 +1,74 @@
+{
+  "applicationSHA": "0381000a91fc8eebe235c8ebf9c034def9dc64b6",
+  "qaSourceCommit": "26125636e3a1adb26025cd75176cecf368f87a48",
+  "status": "PASS for current mobile and guided acceptance; photographic fidelity remains WIP",
+  "completedAtUTC": "2026-10-31T23:47:18.491442+00:00",
+  "verification": {
+    "buildTypes": "PASS",
+    "structural": "11/11 PASS",
+    "manual": "4/4 PASS",
+    "movementBuild": "14/14 PASS",
+    "visualSource": "7/7 PASS",
+    "node": "52/52 PASS, zero skipped",
+    "mobileScenes": "16/16 PASS, exit0",
+    "catalog": "30/30 PASS",
+    "tabCatalogNames": "26/26 PASS",
+    "guided": "32/32 PASS, exit0",
+    "baseline": "Historical1816079:2 captures,12 layout failures,exit1; not a complete suite"
+  },
+  "results": {
+    "mobile": "mobile-final-0381000/mobile-vitrina-results.json",
+    "guided": "guided-final-0381000/results.json",
+    "baseline": "baseline-1816079/mobile-vitrina-results.json"
+  },
+  "captureCount": {
+    "mobile": 22,
+    "guided": 32,
+    "baseline": 2
+  },
+  "comparison": [
+    {
+      "width": 390,
+      "height": 844,
+      "beforeCanvasFree": 0.22777777777777777,
+      "afterCanvasFree": 0.6041666666666666,
+      "beforeBagelROIFree": 0,
+      "afterBagelROIFree": 1,
+      "beforeCentres": 0,
+      "afterCentres": 8
+    },
+    {
+      "width": 320,
+      "height": 700,
+      "beforeCanvasFree": 0.3625,
+      "afterCanvasFree": 0.5680555555555555,
+      "beforeBagelROIFree": 0,
+      "afterBagelROIFree": 1,
+      "beforeCentres": 0,
+      "afterCentres": 8
+    }
+  ],
+  "traffic": {
+    "guided": {
+      "registeredLocalGETs": 289,
+      "localHDRFixtureReads": 10,
+      "blocked": 0,
+      "routeErrors": 0,
+      "httpErrors": 0
+    },
+    "mobile": {
+      "registeredLocalGETs": 74,
+      "localHDRFixtureReads": 2,
+      "blocked": 0,
+      "routeErrors": 0,
+      "httpErrors": 0
+    }
+  },
+  "limitations": [
+    "Opaque DOM occlusion differs from mesh occlusion. POS still masks part of a bowl; station camera may crop logo.",
+    "Desktop composition retains its earlier panels.",
+    "Photographic material fidelity, Safari, physical mobile fluency and OS backgrounding are not certified.",
+    "Earlier QA3D20/events9 results retain applicationSHA1816079 and were not rerun here."
+  ],
+  "restrictions": "No deployment, real payments/provider writes, production/credentials/permission/budget changes. git.deploymentEnabled=false."
+}

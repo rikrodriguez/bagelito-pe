@@ -1,0 +1,11 @@
+{
+  "guided_code_sha": "df504aa1f605bd620bf36be9c28963b0401a95d6",
+  "final_application_code_sha": "1816079a8e20b572bce14d9e832b2f99aff2c5c6",
+  "only_application_change_since_guided": {
+    "file": "src/playable/playable.css",
+    "addition": "/* The header passes camera gestures through; its category button must still\n   receive clicks in free exploration. Entry has its own scoped rule below. */\n.playable-shell:not(.guided-mode) .brand-pill{pointer-events:auto}\n",
+    "only_this_addition": true
+  },
+  "guided_commerce_source_identical": true,
+  "scope": "The added selector excludes guided-mode; guided32 is attributed to df504aa, not silently reassigned to the later code."
+}

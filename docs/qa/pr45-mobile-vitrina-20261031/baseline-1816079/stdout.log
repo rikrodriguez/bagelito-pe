@@ -1,0 +1,17 @@
+{"at":"2026-10-31T23:34:12.797Z","type":"main-frame-navigation","width":390,"url":"http://127.0.0.1:3198/?qa=1"}
+{"at":"2026-10-31T23:34:12.920Z","type":"main-frame-navigation","width":390,"url":"http://127.0.0.1:3198/?qa=1"}
+{"at":"2026-10-31T23:34:21.396Z","type":"native-tap","label":"Packs","point":{"x":195,"y":296.6640625},"raw":{"x":16,"y":236,"right":374,"bottom":357.328125,"width":358,"height":121.328125},"clipped":{"x":16,"y":236,"right":374,"bottom":357.328125,"width":358,"height":121.328125}}
+{"at":"2026-10-31T23:34:22.870Z","type":"native-tap","label":"Bagels grandes6 o 12 bagels→","point":{"x":195,"y":291},"raw":{"x":26,"y":239,"right":364,"bottom":343,"width":338,"height":104},"clipped":{"x":26,"y":239,"right":364,"bottom":343,"width":338,"height":104}}
+{"at":"2026-10-31T23:34:24.309Z","type":"native-tap","label":"Elegir 6 bagels, mixtos","point":{"x":107.75,"y":357},"raw":{"x":24,"y":319,"right":191.5,"bottom":395,"width":167.5,"height":76},"clipped":{"x":24,"y":319,"right":191.5,"bottom":395,"width":167.5,"height":76}}
+{"at":"2026-10-31T23:34:28.717Z","type":"scene-captured","width":390,"scene":"bagels","extra":false,"pass":false,"canvasFree":0.22777777777777777,"groups":[{"kind":"bagels","clear":0,"free":0,"total":8}]}
+{"at":"2026-10-31T23:34:28.719Z","type":"context-closing","width":390,"pendingRoutes":0}
+{"at":"2026-10-31T23:34:28.740Z","type":"context-closed","width":390,"routeErrors":0,"closingRouteErrors":0}
+{"at":"2026-10-31T23:34:29.880Z","type":"main-frame-navigation","width":320,"url":"http://127.0.0.1:3198/?qa=1"}
+{"at":"2026-10-31T23:34:30.016Z","type":"main-frame-navigation","width":320,"url":"http://127.0.0.1:3198/?qa=1"}
+{"at":"2026-10-31T23:34:36.269Z","type":"native-tap","label":"Packs","point":{"x":160,"y":246.328125},"raw":{"x":16,"y":196,"right":304,"bottom":296.65625,"width":288,"height":100.65625},"clipped":{"x":16,"y":196,"right":304,"bottom":296.65625,"width":288,"height":100.65625}}
+{"at":"2026-10-31T23:34:37.408Z","type":"native-tap","label":"Bagels grandes6 o 12 bagels→","point":{"x":160,"y":291},"raw":{"x":26,"y":239,"right":294,"bottom":343,"width":268,"height":104},"clipped":{"x":26,"y":239,"right":294,"bottom":343,"width":268,"height":104}}
+{"at":"2026-10-31T23:34:38.620Z","type":"native-tap","label":"Elegir 6 bagels, mixtos","point":{"x":90.25,"y":357},"raw":{"x":24,"y":319,"right":156.5,"bottom":395,"width":132.5,"height":76},"clipped":{"x":24,"y":319,"right":156.5,"bottom":395,"width":132.5,"height":76}}
+{"at":"2026-10-31T23:34:42.314Z","type":"scene-captured","width":320,"scene":"bagels","extra":false,"pass":false,"canvasFree":0.3625,"groups":[{"kind":"bagels","clear":0,"free":0,"total":8}]}
+{"at":"2026-10-31T23:34:42.316Z","type":"context-closing","width":320,"pendingRoutes":0}
+{"at":"2026-10-31T23:34:42.340Z","type":"context-closed","width":320,"routeErrors":0,"closingRouteErrors":0}
+2 mobile scene checks; 0 catalog checks; 12 failures

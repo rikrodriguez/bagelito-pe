@@ -1,0 +1,14 @@
+{
+  "source": "/workspace/bagelito-pe/scripts/qa-guided.cjs",
+  "scope": "actual route registration and error classifier extracted",
+  "browserExecuted": false,
+  "results": [
+    "live disposal is captured as a real failure, without rejected handler",
+    "pending response is settled before context.close; expected closing disposal is recorded",
+    "new allowed read during close is aborted safely without fetching online",
+    "closing never permits an unrelated destination or write",
+    "HTTP500 completing during drain is an immediate real failure",
+    "ordinary timeout during close remains a real failure"
+  ],
+  "failures": []
+}

@@ -1,0 +1,34 @@
+{
+  "status": "preflight-passed",
+  "browserExecuted": false,
+  "metadata": {
+    "startedAt": "2026-10-31T22:44:49.866Z",
+    "repositorySHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
+    "workingTree": "?? .output/\n?? scripts/lib/\n?? tests/qa-loopback-guard.test.cjs",
+    "declaredBuildSHA": "b9034136ca9c8f3f60fb7176e72b93afe8d002e1",
+    "base": "http://127.0.0.1:3202",
+    "nodeVersion": "v24.19.0",
+    "expectedScenes": 32,
+    "hdrFixtureSHA256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+    "sourceSHA256": {
+      "scripts/qa-guided.cjs": "331d31b1064104e57853c9a207cb7d0aa17284dbedd57210b4d722b582d6948f",
+      "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "src/playable/movement-input.ts": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+      "src/playable/StoreArchitectureVisual.tsx": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "src/playable/GuidedCommerce.tsx": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+      "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "src/playable/guided-commerce.css": "dde64cb8ae3a0c9edadc3023a6549deea2aa532fd8a389d52c4392841cd7d6c4",
+      "src/domain/lib/approved-shop-contract.ts": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+      "src/domain/data/verified-menu-2026-10-21.json": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080",
+      "package.json": "f23987681e4551c8ec1a1c405b9f8cec37a5f7defc263ee11fb54663d6543d35",
+      "package-lock.json": null,
+      "vercel.json": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+    },
+    "missingSourceFiles": [
+      "package-lock.json"
+    ],
+    "optionalSourceFiles": [
+      "package-lock.json"
+    ]
+  }
+}

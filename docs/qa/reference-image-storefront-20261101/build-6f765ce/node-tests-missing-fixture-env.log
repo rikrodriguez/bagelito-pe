@@ -1,0 +1,125 @@
+✔ a 480ms right hold survives keyup before the first rendered frame (1.492508ms)
+✔ sampling frames during a hold does not double-count time when keyup arrives (0.282314ms)
+✔ repeat keydown events preserve one continuous hold rather than adding impulses (0.178508ms)
+✔ releasing one alias or pointer source leaves another held source active (0.230306ms)
+✔ diagonal movement has unit length and opposing directions cancel over each interval (0.211817ms)
+✔ run transitions retain their own elapsed intervals and modifier aliases (0.182674ms)
+✔ reset discards held inputs and queued travel before a later fresh press (0.157346ms)
+✔ a long frame stalls at the configured travel budget rather than building an unbounded backlog (0.154922ms)
+✔ the input clock is monotonic and rejects non-finite timestamps or invalid budgets (0.59325ms)
+✔ CameraController consumes a complete between-frame press once and publishes the resulting position (22.006535ms)
+✔ collision integration approaches the display, slides sideways, and respects the room bounds (9.592987ms)
+✔ the guided controller discards queued and held free-roam movement (8.58108ms)
+✔ the keyboard handler ignores editable targets and still releases a key after focus changes (5.044055ms)
+✔ blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap (15.651884ms)
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: Provide QA_HDR_FIXTURE_PATH with the approved offline HDR
+    at Object.<anonymous> (/workspace/bagelito-pe/tests/qa-guided-driver.test.cjs:9:8)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+✖ tests/qa-guided-driver.test.cjs (39.951608ms)
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: Provide QA_HDR_FIXTURE_PATH with the approved offline HDR
+    at readPinnedHDR (/workspace/bagelito-pe/scripts/lib/qa-loopback-guard.cjs:13:10)
+    at Object.<anonymous> (/workspace/bagelito-pe/tests/qa-loopback-guard.test.cjs:7:13)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+✖ tests/qa-loopback-guard.test.cjs (36.986251ms)
+✔ zero-height BODY/root overflow does not clip fixed UI or complete card text (4.895762ms)
+✔ real article/scroll clipping preserves the distinction between raw44 and effective42 (1.20059ms)
+✔ an opaque pointer-inert overlay blocks the projected physical vitrina ROI (1.237376ms)
+✔ missing cashier or product anchors cannot manufacture a free positive ROI (0.932319ms)
+✔ zero-size, non-finite or offscreen anchor rectangles explicitly invalidate the group (1.20015ms)
+✔ card glyphs with ellipsis or overlapping the remove control are reported honestly (0.40054ms)
+✔ requestAnimationFrame returns its original native ID (2.470665ms)
+✔ paused app callbacks stay queued while native pause fences complete (1.923665ms)
+✔ cancelling a queued original ID prevents delivery after resume (2.545267ms)
+✔ cancel(original ID) also cancels its reprogrammed native handle (1.939679ms)
+✔ resume supplies a fresh native timestamp without rebasing the real clock (1.258307ms)
+✔ callbacks retain the native Window receiver (0.651767ms)
+✔ invalid callbacks retain native synchronous validation (0.790526ms)
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: Set QA_HDR_FIXTURE_PATH to the pinned HDR fixture used by qa:3d
+    at Object.<anonymous> (/workspace/bagelito-pe/tests/qa-world-driver.test.cjs:13:8)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+✖ tests/qa-world-driver.test.cjs (43.727562ms)
+✔ review mode stops every HTTP method before downstream effects (11.175921ms)
+✔ all existing API families and canonical API paths are covered (2.827741ms)
+✔ landing, image assets, and unrelated prefixes remain available (1.281843ms)
+✔ false or absent flag leaves downstream behavior unchanged (1.582504ms)
+✔ flag is read at request time rather than frozen by the build/import (0.887511ms)
+✔ Nitro registers the guard as global middleware outside the financial routes (0.432689ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 33
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 538.026017
+
+✖ failing tests:
+
+test at tests/qa-guided-driver.test.cjs:1:1
+✖ tests/qa-guided-driver.test.cjs (39.951608ms)
+  'test failed'
+
+test at tests/qa-loopback-guard.test.cjs:1:1
+✖ tests/qa-loopback-guard.test.cjs (36.986251ms)
+  'test failed'
+
+test at tests/qa-world-driver.test.cjs:1:1
+✖ tests/qa-world-driver.test.cjs (43.727562ms)
+  'test failed'

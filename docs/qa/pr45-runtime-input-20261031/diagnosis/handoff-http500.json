@@ -1,0 +1,54 @@
+{
+  "kind": "handoff-timeout-root-cause-read-only",
+  "createdAt": "2026-10-31T21:16:05.091Z",
+  "codeSHA": "925c050659ac7682488a9bc9c9c4906787663eb1",
+  "originalRun": "/tmp/bagelito-world-final/network-isolation.json",
+  "observedFailure": "freshExplore reload was served an HTML document pointing to unavailable JavaScript chunks; React did not mount the tour-start button.",
+  "originalFailedRequests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/index-BIqzy-Nj.js",
+      "status": 500
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/playable-AGh9I_BI.js",
+      "status": 500
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:3191/assets/PlayableStore-D5OvSBI_.js",
+      "status": 500
+    }
+  ],
+  "reproduced": {
+    "page": {
+      "url": "http://127.0.0.1:3191/playable",
+      "status": 200,
+      "assetReferences": [
+        "/assets/index-BIqzy-Nj.js",
+        "/assets/playable-AGh9I_BI.js",
+        "/assets/PlayableStore-D5OvSBI_.js",
+        "/assets/legal-version-BguVS3S4.js",
+        "/assets/index-BIqzy-Nj.js"
+      ]
+    },
+    "asset": {
+      "url": "http://127.0.0.1:3191/assets/index-BIqzy-Nj.js",
+      "status": 500
+    },
+    "currentPublicJavaScript": [
+      "PlayableStore-DjaKCNpe.js",
+      "index-Cd-IACJy.js",
+      "legal-BR9aK0Gf.js",
+      "legal-version-BguVS3S4.js",
+      "playable-Bel-7BFZ.js",
+      "routes-Bel-7BFZ.js"
+    ]
+  },
+  "inference": "The server kept its pre-rebuild module/manifest while .output/public was replaced. A new immutable build/server is necessary for a valid handoff rerun.",
+  "notEstablished": [
+    "No evidence that the draft helper or application persistence caused this timeout.",
+    "No complete handoff pass claimed by the HTTP probe."
+  ]
+}

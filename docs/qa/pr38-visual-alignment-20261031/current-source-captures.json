@@ -1,0 +1,34 @@
+{
+  "status": "WIP-visual-no-deployment",
+  "source_files_sha256": {
+    "src/playable/PlayableStore.tsx": "2227a6b7c7af10cf01beaa2a2e77c8386be87b066e7a2125097b6f663d0d4186",
+    "src/playable/StoreArchitectureVisual.tsx": "943b61ddfd5ea5d07df5ceedf4dfab5336f77474856f5fa6fef932072255d2eb",
+    "src/playable/GuidedCommerce.tsx": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+    "src/playable/playable.css": "aeb956ff9b3640684d5b1e65c5552e6858f3b383a61bf0c21fde21a6b0ce2e76",
+    "src/playable/guided-commerce.css": "546c0b069febf92b85722ebd46acc0974d83d9be406392d22a62149372dbacb2",
+    "src/routes/index.tsx": "d77f937565b3c26995dee42abcc470f06ed46d6d0b9e3d28341cb2007c896aa1",
+    "vercel.json": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+  },
+  "captures_sha256": {
+    "desktop-entry-current.png": "e8095ea835ac9fb34f8313aef3164d1113854cb9f8140a027dcfe90a5a4afef6",
+    "mobile-entry-current.png": "955a70e8608de1315f9b4432036f8582d364b6baf62de2e7f21f24e622e828ad"
+  },
+  "passed": [
+    "build and TypeScript",
+    "structural11/11",
+    "manual4/4",
+    "visual-source7/7",
+    "recovery5/5",
+    "front-plane mobile entry:13labels inside390px"
+  ],
+  "pending": [
+    "full guided browser suite",
+    "full3D software-renderer suite",
+    "portable framing runner final run"
+  ],
+  "limits": [
+    "Not final photorealistic parity",
+    "HardwareGPU/Safari/physicaliPhone untested",
+    "No deployed preview URL"
+  ]
+}

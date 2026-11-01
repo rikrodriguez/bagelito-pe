@@ -1,0 +1,42 @@
+✔ A healthy fresh journey resets only the in-tab product draft and keeps the reload (35.055265ms)
+✔ A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup (4.508421ms)
+✔ A failed document is reported as an HTTP setup failure (2.617286ms)
+✔ A non-loopback target is refused before any browser launch (0.979479ms)
+✔ The original readiness and strafe logic remains intact apart from comments and result checkpoints (0.355543ms)
+✔ Teardown drains an in-flight fulfill before disposing the context and records a marked cancellation (6.792207ms)
+✔ The same disposed fulfill error while the context is live remains a FAIL (2.341431ms)
+✔ An unrelated fulfill error during teardown remains a FAIL (3.311186ms)
+✔ New allowed reads during closing are aborted without fetching or fulfilling (3.611176ms)
+✔ A POST during closing is aborted and remains a forbidden request FAIL with no egress (3.253199ms)
+✔ The outer finally writes an explicit result even if browser launch fails (3.16705ms)
+✖ A late old-document draft write cannot restore guided mode in the new journey (2.570906ms)
+✔ A later reload without the one-shot marker preserves the real product draft (2.577966ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.535933
+
+✖ failing tests:
+
+test at tests/qa-world-driver.test.cjs:186:1
+✖ A late old-document draft write cannot restore guided mode in the new journey (2.570906ms)
+  AssertionError [ERR_ASSERTION]: Storage timeline: [{"phase":"old-document","operation":"remove","key":"bagelito.guided.product-draft.v1"},{"phase":"old-document-late-effect","operation":"set","key":"bagelito.guided.product-draft.v1","value":"late-product-draft"},{"phase":"react-mount","operation":"get","key":"bagelito.guided.product-draft.v1","value":"late-product-draft"}]
+  + actual - expected
+  
+  + 'guided'
+  - 'explore'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-pe/tests/qa-world-driver.test.cjs:189:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'guided',
+    expected: 'explore',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

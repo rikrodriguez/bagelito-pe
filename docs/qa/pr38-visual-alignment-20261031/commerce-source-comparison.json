@@ -1,0 +1,91 @@
+{
+  "base": "52fa55cb223e587b7619a4161b8cb263bfa61a3f",
+  "typescriptVersion": "5.9.3",
+  "baselineSha256": "973e0065bfc01aa1eca0872c7fb46f269115d6defd2db783d2e8e83a9e561c89",
+  "currentSha256": "b7394f5f1b7fd89b96ca82e6c635a92535b148b650bbaa6910a1f080ca858888",
+  "groups": {
+    "top-level-declaration": 8,
+    "named-function": 21,
+    "component-prefix": 2,
+    "component-declaration": 43,
+    "component-effect": 8,
+    "jsx-gate": 46,
+    "jsx-control": 80,
+    "payment-element": 1
+  },
+  "changed": [
+    {
+      "key": "component-prefix:GuidedCommerce",
+      "baselineCount": 1,
+      "currentCount": 1
+    },
+    {
+      "key": "jsx-gate:scene !== 'bagels' && scene !== 'schmears'",
+      "baselineCount": 1,
+      "currentCount": 0
+    },
+    {
+      "key": "component-declaration:sceneChangeCallback",
+      "baselineCount": 0,
+      "currentCount": 1
+    },
+    {
+      "key": "component-effect:useEffect:9",
+      "baselineCount": 0,
+      "currentCount": 1
+    },
+    {
+      "key": "component-effect:useEffect:10",
+      "baselineCount": 0,
+      "currentCount": 1
+    },
+    {
+      "key": "jsx-gate:!liveWorld",
+      "baselineCount": 0,
+      "currentCount": 3
+    },
+    {
+      "key": "jsx-gate:!liveWorld && scene !== 'bagels' && scene !== 'schmears'",
+      "baselineCount": 0,
+      "currentCount": 1
+    }
+  ],
+  "exactChanged": [
+    {
+      "key": "component-prefix:GuidedCommerce",
+      "baselineCount": 1,
+      "currentCount": 1
+    },
+    {
+      "key": "jsx-gate:scene !== 'bagels' && scene !== 'schmears'",
+      "baselineCount": 1,
+      "currentCount": 0
+    },
+    {
+      "key": "component-declaration:sceneChangeCallback",
+      "baselineCount": 0,
+      "currentCount": 1
+    },
+    {
+      "key": "component-effect:useEffect:9",
+      "baselineCount": 0,
+      "currentCount": 1
+    },
+    {
+      "key": "component-effect:useEffect:10",
+      "baselineCount": 0,
+      "currentCount": 1
+    },
+    {
+      "key": "jsx-gate:!liveWorld",
+      "baselineCount": 0,
+      "currentCount": 3
+    },
+    {
+      "key": "jsx-gate:!liveWorld && scene !== 'bagels' && scene !== 'schmears'",
+      "baselineCount": 0,
+      "currentCount": 1
+    }
+  ],
+  "output": "/tmp/bagelito-pr38-guided-business"
+}

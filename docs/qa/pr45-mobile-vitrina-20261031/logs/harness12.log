@@ -1,0 +1,20 @@
+✔ a disposed response while the context is live is a real callback failure without a rejected handler (2.941051ms)
+✔ close drains deferred reads before disposing context, records expected disposal, and is idempotent (2.092829ms)
+✔ new loopback or exact-fixture GETs during close are safely aborted without any online fetch (1.596184ms)
+✔ closing never permits an unrelated destination or a write (1.290275ms)
+✔ a local HTTP500 finishing during the closing drain immediately fails the caller (1.2271ms)
+✔ a timeout during close is a failure even if its message also mentions context closed (1.249615ms)
+✔ zero-height BODY/root overflow does not clip fixed UI or complete card text (9.599238ms)
+✔ real article/scroll clipping preserves the distinction between raw44 and effective42 (4.180701ms)
+✔ an opaque pointer-inert overlay blocks the projected physical vitrina ROI (2.703665ms)
+✔ missing cashier or product anchors cannot manufacture a free positive ROI (1.398618ms)
+✔ zero-size, non-finite or offscreen anchor rectangles explicitly invalidate the group (4.305258ms)
+✔ card glyphs with ellipsis or overlapping the remove control are reported honestly (1.08697ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 188.945032
