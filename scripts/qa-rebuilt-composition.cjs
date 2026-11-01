@@ -37,7 +37,23 @@ function inspectComboComposition() {
     })
     return {index, artRect, copyRect, fields, images}
   })
-  return {toleranceCSSPx: tolerance, cards: results, failures, pass: failures.length === 0,
+  // Preserve the former secondary suite's pseudo-heading collision check.
+  const overlay = document.querySelector('.approved-combo-overlay')
+  let heading = null
+  if (overlay && cards.length) {
+    const box = rect(overlay), style = getComputedStyle(overlay), pseudo = getComputedStyle(overlay, '::before')
+    const pixels = (value, total) => value.endsWith('%') ? parseFloat(value) * total / 100 : parseFloat(value) || 0
+    const height = parseFloat(pseudo.height) || parseFloat(pseudo.lineHeight) || parseFloat(pseudo.fontSize) * 1.2
+    const x = pseudo.left === 'auto' ? box.x + pixels(style.paddingLeft, box.width) : box.x + pixels(pseudo.left, box.width)
+    const y = pseudo.top === 'auto' ? box.y + pixels(style.borderTopWidth, box.height) + pixels(style.paddingTop, box.height) : box.y + pixels(pseudo.top, box.height)
+    const width = parseFloat(pseudo.width) || box.width
+    heading = {content: pseudo.content, display: pseudo.display, rect: {x, y, right: x + width, bottom: y + height}, method: 'Resolved pseudo dimensions; line-height fallback when height is auto'}
+    for (const card of cards) {
+      const overlap = collision(heading.rect, rect(card))
+      if (heading.content !== 'none' && heading.display !== 'none' && overlap.width > tolerance && overlap.height > tolerance) failures.push({kind: 'pseudo-heading-overlap', heading, button: rect(card), overlap})
+    }
+  }
+  return {toleranceCSSPx: tolerance, cards: results, heading, failures, pass: failures.length === 0,
     scope: 'Each image rectangle must remain within its allocated art region and outside the copy rectangle/fields. Transparent image padding is conservatively part of the image rectangle.'}
 }
 

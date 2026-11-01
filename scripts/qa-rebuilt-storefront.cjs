@@ -16,10 +16,19 @@ const {installSafety} = require('./qa-rebuilt-safety.cjs')
 
 const hash = value => createHash('sha256').update(value).digest('hex')
 const repo = path.resolve(process.env.QA_REPO_ROOT || path.join(__dirname, '..'))
+const profileArguments = process.argv.slice(2).filter(value => value.startsWith('--profile='))
+assert.ok(profileArguments.length <= 1, 'Choose one QA profile')
+assert.ok(process.argv.slice(2).every(value => value === '--preflight' || value.startsWith('--profile=')), 'Unknown QA argument')
+const profile = profileArguments.length ? profileArguments[0].slice('--profile='.length) : null
+assert.ok(profile === null || ['entry', 'text', 'secondary'].includes(profile), 'Unknown rebuilt QA profile')
+if (profile) {
+  assert.ok(process.env.BASE_URL || process.env.QA_URL, 'Set an explicit loopback BASE_URL for the QA profile')
+  assert.ok(!process.env.QA_SCENARIOS && !process.env.QA_E2E_SCENARIO, 'Profiles have fixed coverage; use QA_WIDTHS to choose viewports, or run the journey driver without --profile')
+}
 const base = new URL(process.env.BASE_URL || process.env.QA_URL || 'http://127.0.0.1:3230/')
 assert.ok(base.protocol === 'http:' && ['127.0.0.1', 'localhost', '[::1]'].includes(base.hostname), 'Loopback HTTP origin required')
 assert.ok(/^[a-f0-9]{40}$/.test(process.env.QA_CODE_SHA || ''), 'QA_CODE_SHA must declare the complete application commit')
-const out = path.resolve(process.env.QA_OUTPUT_DIR || process.env.QA_OUTPUT || path.join(repo, 'qa-artifacts', 'rebuilt-storefront'))
+const out = path.resolve(process.env.QA_OUTPUT_DIR || process.env.QA_OUTPUT || path.join(repo, 'qa-artifacts', 'rebuilt-storefront', profile || 'journeys'))
 const resultFile = path.join(out, 'rebuilt-results.json')
 const sizes = [
   {width: 390, height: 844, touch: true},
@@ -30,17 +39,22 @@ const sizes = [
   {width: 844, height: 390, touch: true},
   {width: 1920, height: 1080, touch: false},
 ]
-const widths = process.env.QA_WIDTHS?.split(',').map(Number)
+assert.ok(!process.env.QA_WIDTHS || !process.env.QA_EXACT_WIDTH || process.env.QA_WIDTHS === process.env.QA_EXACT_WIDTH, 'QA_WIDTHS and legacy QA_EXACT_WIDTH must agree')
+const widthInput = process.env.QA_WIDTHS || process.env.QA_EXACT_WIDTH || (profile === 'text' || profile === 'secondary' ? '390,320,1280' : null)
+const widths = widthInput?.split(',').map(Number)
 const viewports = widths ? sizes.filter(size => widths.includes(size.width)) : sizes
 assert.ok(viewports.length && (!widths || widths.length === viewports.length), 'QA_WIDTHS must be drawn from 320,390,768,844,1024,1280,1920')
-const allScenarios = ['entry', 'pack-decline', 'pack-original', 'pack-flavoured', 'combo', 'schmear']
-const scenarios = process.env.QA_SCENARIOS ? process.env.QA_SCENARIOS.split(',') : allScenarios
+const journeyScenarios = ['pack-decline', 'pack-original', 'pack-flavoured', 'combo', 'schmear']
+const defaultScenarios = ['entry', ...journeyScenarios]
+const allScenarios = [...defaultScenarios, 'product-text', 'secondary']
+const scenarios = profile ? [profile === 'text' ? 'product-text' : profile] : process.env.QA_SCENARIOS ? process.env.QA_SCENARIOS.split(',') : defaultScenarios
 assert.ok(scenarios.length && new Set(scenarios).size === scenarios.length && scenarios.every(value => allScenarios.includes(value)), 'Unknown or duplicate QA scenario')
 // The extended tablet/landscape scope is entry plus the complete decline path.
 // Keep the five original journeys at 320/390/1280 rather than multiplying them
 // into an unrequested full matrix across every additional viewport.
 const originalWidths = new Set([320, 390, 1280])
 const extendedJourneyWidths = new Set([768, 1024, 844])
+if (scenarios.some(value => value === 'product-text' || value === 'secondary')) assert.ok(viewports.every(viewport => originalWidths.has(viewport.width)), 'Text/secondary sweeps cover 320,390,1280; use entry/journey scenarios for extended viewports')
 const scheduledCases = viewports.flatMap(viewport => scenarios
   .filter(scenario => scenario === 'entry' || originalWidths.has(viewport.width) || scenario === 'pack-decline' && extendedJourneyWidths.has(viewport.width))
   .map(scenario => ({viewport, scenario})))
@@ -71,6 +85,7 @@ const helpers = () => Object.fromEntries(helperFiles.map(file => [file, hash(fs.
 const report = {
   metadata: {
     startedAt: new Date().toISOString(), baseURL: base.href, declaredCodeSHA: process.env.QA_CODE_SHA,
+    profile,
     repositorySHA: execFileSync('git', ['rev-parse', 'HEAD'], {cwd: repo, encoding: 'utf8'}).trim(),
     driverSHA256: hash(fs.readFileSync(__filename)), sourceHashes,
     helperHashes: helpers(),
@@ -83,7 +98,12 @@ const report = {
     applicationStorageReads: 0, storageWrites: 0, apiFetchXHR: 0, knownFrameworkReadKey: 'tsr-scroll-restoration-v1_3', maximumKnownReadsPerDocument: 1},
   planned: {entryViewports: scenarios.includes('entry') ? viewports.length : 0, categoryCallbacks: scenarios.includes('entry') ? viewports.length * 3 : 0,
     vitrineCallbacks: scenarios.includes('entry') ? viewports.length * 2 : 0,
-    completeJourneys: scheduledCases.filter(value => value.scenario !== 'entry').length},
+    keyboardEntries: scheduledCases.filter(value => value.scenario === 'entry').length,
+    decodedEntryPhotos: scheduledCases.filter(value => value.scenario === 'entry').length * 18,
+    productTextStates: scheduledCases.filter(value => value.scenario === 'product-text').length * 6,
+    productTextCards: scheduledCases.filter(value => value.scenario === 'product-text').length * 30,
+    secondaryStates: scheduledCases.filter(value => value.scenario === 'secondary').length * 12,
+    completeJourneys: scheduledCases.filter(value => journeyScenarios.includes(value.scenario)).length},
   status: 'prepared', cases: [], failures: [], events: [],
 }
 function persist() { fs.mkdirSync(out, {recursive: true}); fs.writeFileSync(resultFile, JSON.stringify(report, null, 2)) }
@@ -101,6 +121,27 @@ function assertCleanSecondary(audit) {
     ...audit.overlaps.map(value => ({type: 'text-overlap', ...value})),
     ...audit.undersizedTargets.map(value => ({type: 'target44', ...value})),
     ...(audit.documentOverflowX > 1 ? [{type: 'document-overflow', overflow: audit.documentOverflowX}] : [])]
+}
+function inspectReferenceFlow() {
+  const selectors = ['.guided-journey-back', '.guided-floating-panel', '.mobile-product-stage', '.approved-combo-overlay', '.guided-order-counter', '.guided-primary-next', '.guided-cashier-action', '.guided-payment-gate', '.guided-payment-sheet']
+  const boxes = {}, failures = []
+  for (const selector of selectors) {
+    const element = document.querySelector(selector)
+    if (!element || !element.getClientRects().length) continue
+    const r = element.getBoundingClientRect(), style = getComputedStyle(element)
+    if (!r.width || !r.height) continue
+    boxes[selector] = {rect: {x: r.x, y: r.y, right: r.right, bottom: r.bottom, width: r.width, height: r.height}, position: style.position, top: style.top, overflow: style.overflow}
+  }
+  const back = boxes['.guided-journey-back']?.rect
+  const target = boxes['.guided-floating-panel']?.rect || boxes['.mobile-product-stage']?.rect || boxes['.approved-combo-overlay']?.rect || boxes['.guided-cashier-action']?.rect
+  if (back && target && Math.min(back.right, target.right) > Math.max(back.x, target.x) && Math.min(back.bottom, target.bottom) > Math.max(back.y, target.y)) failures.push({kind: 'back-over-active-panel', back, target})
+  for (const selector of selectors.slice(4)) if (boxes[selector]) {
+    const value = boxes[selector]
+    if (!['relative', 'static'].includes(value.position)) failures.push({kind: 'control-out-of-document-flow', selector, ...value})
+    if (value.overflow !== 'visible') failures.push({kind: 'reference-control-clips-content', selector, ...value})
+    if (value.position === 'relative' && !['auto', '0px'].includes(value.top)) failures.push({kind: 'legacy-top-offset', selector, ...value})
+  }
+  return {boxes, failures}
 }
 async function shell(page) {
   assert.equal(await page.locator(root).count(), 1)
@@ -130,11 +171,7 @@ async function fillBagels(page, {quantity = 6, flavors = ['Plain', 'Everything',
 }
 async function chooseSchmear(page, {grams = 180, flavor = 'Classic Strawberry'} = {}, act) {
   await act(page.locator(steps.selectors.category('schmears'))); await steps.scene(page, 'schmear-size')
-  for (const size of steps.prices.schmearSizes) {
-    const button = page.getByRole('button', {name: new RegExp('^' + size.grams + ' g')})
-    assert.equal(steps.normalize(await button.locator('b').textContent()), `${size.grams} g`)
-    assert.equal(steps.normalize(await button.locator('span').textContent()), `Original S/${size.original} · Sabores S/${size.flavoured}`)
-  }
+  await assertSchmearSizes(page)
   await act(page.getByRole('button', {name: new RegExp('^' + grams + ' g')})); await steps.scene(page, 'schmears')
   await steps.counter(page, steps.selectors.schmearCounter, '0/1'); assert.equal(await page.locator(steps.selectors.primary).count(), 0)
   await act(page.getByRole('button', {name: `Agregar ${flavor}`, exact: true}))
@@ -144,9 +181,16 @@ async function chooseSchmear(page, {grams = 180, flavor = 'Classic Strawberry'} 
   assert.equal(await page.locator('.cross-sell-actions').count(), 0)
   assert.deepEqual(await steps.summaryRows(page), [{quantity: 1, name: `${flavor} · ${grams} g`}])
 }
+async function assertSchmearSizes(page) {
+  for (const size of steps.prices.schmearSizes) {
+    const button = page.getByRole('button', {name: new RegExp('^' + size.grams + ' g')})
+    assert.equal(steps.normalize(await button.locator('b').textContent()), `${size.grams} g`)
+    assert.equal(steps.normalize(await button.locator('span').textContent()), `Original S/${size.original} · Sabores S/${size.flavoured}`)
+  }
+}
 
 async function runCase(browser, viewport, scenario) {
-  const record = {id: `${viewport.width}-${scenario}`, viewport, scenario, pass: true, captures: [], actions: [], callbacks: [], vitrineCallbacks: [], coverage: []}
+  const record = {id: `${viewport.width}-${scenario}`, viewport, scenario, pass: true, captures: [], actions: [], callbacks: [], vitrineCallbacks: [], productTextStates: [], secondaryStates: [], coverage: []}
   report.cases.push(record); persist()
   const context = await browser.newContext({viewport: {width: viewport.width, height: viewport.height}, deviceScaleFactor: 1,
     hasTouch: viewport.touch, isMobile: viewport.touch, serviceWorkers: 'block'})
@@ -173,6 +217,8 @@ async function runCase(browser, viewport, scenario) {
         if (Math.abs(shot.fullBleed.width - shot.fullBleed.innerWidth) > 1 || Math.abs(shot.fullBleed.x) > 1 || Math.abs(shot.fullBleed.right - shot.fullBleed.innerWidth) > 1) failure({stage: name, rebuiltSceneNotFullBleed: shot.fullBleed}, record)
         shot.geometry = await page.evaluate(inspectRebuiltGeometry)
         for (const issue of shot.geometry.failures) failure({stage: name, geometry: issue}, record)
+        shot.flow = await page.evaluate(inspectReferenceFlow)
+        for (const issue of shot.flow.failures) failure({stage: name, flow: issue}, record)
         if (scene === 'combos') {
           shot.comboComposition = await page.evaluate(inspectComboComposition)
           shot.comboComposition.declaredCodeSHA = report.metadata.declaredCodeSHA
@@ -225,6 +271,40 @@ async function runCase(browser, viewport, scenario) {
       await scene('entrance'); await page.getByRole('navigation', {name: 'Menú Bagelito'}).waitFor({state: 'hidden'})
       await cart(page, 0)
     }
+    async function reviewCheckout() {
+      assert.equal(steps.normalize(await page.locator('.guided-cashier-copy > p').textContent()), steps.text.summaryReview)
+      await act(page.getByRole('button', {name: /^Revisar entrega y consentimiento/})); await scene('pay')
+      await shell(page)
+      assert.equal(steps.normalize(await page.locator('.guided-payment-copy > span').textContent()), steps.text.deliveryReview)
+      assert.equal(await page.getByRole('link', {name: 'términos vigentes', exact: true}).getAttribute('href'), '/legal')
+      assert.equal(await page.locator('.checkout-customer-grid input').count(), 6)
+      assert.equal(await page.locator('.checkout-customer-grid select').count(), 1)
+      const disabledPay = page.getByRole('button', {name: 'Pago no activo', exact: true})
+      assert.equal(await disabledPay.isDisabled(), true)
+      assert.equal(await page.locator(steps.selectors.terms).isChecked(), false)
+      await capture('review-unfilled')
+      await page.getByLabel('Nombre', {exact: true}).fill('QA Tienda')
+      await page.getByLabel('Email', {exact: true}).fill('qa-storefront@example.invalid')
+      await page.getByLabel('WhatsApp', {exact: true}).fill('900000000')
+      const district = page.locator('.checkout-customer-grid select')
+      assert.equal(await district.evaluate(element => element.closest('label').querySelector('span').textContent.trim()), 'Distrito')
+      await district.selectOption('Lince')
+      await page.getByLabel('Dirección de delivery', {exact: true}).fill('Dirección sintética de prueba, número 123, edificio largo')
+      await page.getByLabel('Referencia', {exact: true}).fill('Solo revisión local, sin enviar ni reservar')
+      await page.getByLabel('Notas', {exact: true}).fill('Datos sintéticos. No cobrar ni crear un pedido.')
+      if (viewport.touch) await page.locator(steps.selectors.terms).tap()
+      else await page.locator(steps.selectors.terms).check()
+      assert.equal(await page.locator(steps.selectors.terms).isChecked(), true)
+      assert.equal(await disabledPay.isDisabled(), true, 'Consent cannot enable payment in review-only mode')
+      assert.equal(steps.normalize(await page.locator(steps.selectors.reviewStatus).textContent()), steps.text.finalStatus)
+      assert.equal(await page.locator('a[href*="wa.me"],.culqi-start-button,.qa-only-pay,.receipt-interaction,.wallet-actions').count(), 0)
+      await capture('review-consented')
+      assert.equal(steps.normalize(await page.locator('.reference-loyalty h2').textContent()), 'Cada 10 pedidos, 2 bagels + 1 schmear gratis.')
+      const loyalty = steps.normalize(await page.locator('.reference-loyalty p').textContent())
+      assert.match(loyalty, /pedidos verificados por el backend/)
+      assert.match(loyalty, /seguimiento y el canje aún no están activados/)
+      assert.match(loyalty, /no genera pedidos ni recompensas/)
+    }
     await page.goto(base.href, {waitUntil: 'networkidle'})
     await page.locator(root).waitFor(); await page.evaluate(() => document.fonts.ready)
     await capture('first-pixels')
@@ -234,6 +314,23 @@ async function runCase(browser, viewport, scenario) {
       assert.match(steps.normalize(await page.locator('[data-reference-category="combos"]').innerText()), /bagels\s*\+\s*schmears/i)
       assert.deepEqual((await page.locator('.rebuilt-bagel-tray figcaption').allTextContents()).map(steps.normalize).sort(), steps.menu.bagels.map(item => item.name).sort())
       assert.deepEqual((await page.locator('.rebuilt-schmear-tray figcaption').allTextContents()).map(steps.normalize).sort(), steps.menu.schmears.map(item => item.name).sort())
+      record.keyboardFocus = []
+      for (let index = 0; index < 30 && record.keyboardFocus.length < 3; index++) {
+        await page.keyboard.press('Tab')
+        const focus = await page.evaluate(() => {
+          const element = document.activeElement, name = element?.getAttribute('aria-label')
+          if (!['Packs', 'Combos', 'Schmears'].includes(name)) return null
+          const style = getComputedStyle(element)
+          return {name, focusVisible: element.matches(':focus-visible'), outline: style.outlineStyle, outlineWidth: parseFloat(style.outlineWidth)}
+        })
+        if (focus && !record.keyboardFocus.some(value => value.name === focus.name)) {
+          assert.ok(focus.focusVisible && focus.outline !== 'none' && focus.outlineWidth > 0, 'Category keyboard focus must have a visible outline')
+          record.keyboardFocus.push(focus)
+        }
+      }
+      assert.deepEqual(record.keyboardFocus.map(value => value.name).sort(), ['Combos', 'Packs', 'Schmears'])
+      await page.keyboard.press('Enter'); await scene('schmear-size'); await capture('keyboard-enter-schmears')
+      await menuReset(); record.keyboardEntry = true
       await act(cartButton(page))
       await page.getByRole('complementary', {name: 'Resumen de tu pedido'}).waitFor()
       assert.match(await page.locator('.guided-store-cart-panel').innerText(), /Aún no has elegido productos/)
@@ -248,7 +345,74 @@ async function runCase(browser, viewport, scenario) {
         record.vitrineCallbacks.push({name, scene: next, pass: true})
         await menuReset()
       }
-      record.coverage.push('three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'empty-cart', 'menu', 'reset')
+      const photos = page.locator('.rebuilt-store img')
+      assert.equal(await photos.count(), 18)
+      for (const photo of await photos.all()) {
+        await photo.scrollIntoViewIfNeeded()
+        await photo.evaluate(async image => {await image.decode(); if (!image.complete || !image.naturalWidth) throw new Error('Visible product did not decode: ' + image.currentSrc)})
+      }
+      await page.evaluate(() => window.scrollTo({top: 0, behavior: 'instant'}))
+      record.decodedPhotos = await photos.count(); await capture('entry-gallery-loaded')
+      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-gallery', 'empty-cart', 'menu', 'reset')
+      return
+    }
+    if (scenario === 'product-text') {
+      await steps.choosePack(page, {format: 'grande', quantity: 6, mix: 'mixed'}, act)
+      await fillBagels(page, {quantity: 6, flavors: ['Plain']}, act)
+      await act(page.locator(steps.selectors.primary)); await steps.assertOptional120(page)
+      const textState = async name => {
+        const shot = await capture('text-' + name)
+        assert.equal(shot.scene, 'schmears'); assert.equal(shot.products.cards.length, 5)
+        record.productTextStates.push({name, capture: shot.file, cards: shot.products.cards.length, pass: shot.products.pass})
+      }
+      await textState('all-unselected')
+      for (const flavor of steps.menu.schmears) {
+        const button = page.getByRole('button', {name: `Agregar ${flavor.name}`, exact: true})
+        await act(button); await steps.counter(page, steps.selectors.schmearCounter, '✓'); await cart(page, 7)
+        assert.equal(await page.locator('.mobile-schmear-card[data-selected="true"]').count(), 1)
+        await textState(flavor.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))
+        await act(button); await steps.counter(page, steps.selectors.schmearCounter, '0/1'); await cart(page, 6)
+        assert.equal(await page.locator('.mobile-schmear-card[data-selected="true"]').count(), 0)
+      }
+      assert.equal(record.productTextStates.length, 6)
+      record.coverage.push('five-schmears-six-selection-states', 'five-product-cards-per-state', 'verified-optional-120g-S12-S16', 'native-add-remove')
+      return
+    }
+    if (scenario === 'secondary') {
+      const secondaryState = async name => {
+        const shot = await capture('secondary-' + name)
+        record.secondaryStates.push({name, scene: shot.scene, capture: shot.file})
+      }
+      await act(page.locator(steps.selectors.category('packs'))); await scene('pack-size'); await secondaryState('pack-format')
+      await act(page.getByRole('button', {name: /Mini bagels/})); await scene('pack-qty'); await secondaryState('mini-quantity')
+      assert.equal(await page.locator('.pack-choice-grid > button').count(), 3)
+      await act(page.locator('.panel-back')); await scene('pack-size')
+      await act(page.getByRole('button', {name: /Bagels grandes/})); await scene('pack-qty'); await secondaryState('large-quantity')
+      assert.equal(await page.locator('.pack-choice-grid > button').count(), 2)
+      await act(page.getByRole('button', {name: 'Elegir 6 bagels, mixtos', exact: true})); await scene('bagels'); await secondaryState('bagels-unselected')
+      await fillBagels(page, {quantity: 6, flavors: ['Plain', 'Everything', 'Cinnamon Raisin']}, act); await secondaryState('bagels-selected')
+      await act(page.locator(steps.selectors.primary)); await steps.assertOptional120(page); await secondaryState('optional-schmears')
+      await act(page.locator(steps.selectors.primary)); await scene('cashier'); await secondaryState('cashier')
+      assert.equal(steps.normalize(await page.locator('.guided-cashier-quote > span').textContent()), steps.text.priceUnconfirmed)
+      assert.equal(await page.locator('.guided-cashier-quote > strong').count(), 0)
+      await reviewCheckout(); await secondaryState('checkout-longtexts')
+      await menuReset()
+      await act(page.locator(steps.selectors.category('combos'))); await scene('combos'); await secondaryState('combo-heading')
+      const combo = page.getByRole('button', {name: 'Bagels + schmears', exact: true})
+      assert.equal(steps.normalize(await combo.locator('strong').textContent()), steps.prices.currentCombo.display)
+      await act(combo); await scene('bagels'); await fillBagels(page, {quantity: 2, flavors: ['Plain', 'Everything']}, act)
+      await act(page.locator(steps.selectors.primary)); await scene('schmears')
+      assert.equal(await page.locator(steps.selectors.primary).count(), 0)
+      assert.equal(await page.locator('.reference-schmear-price').count(), 0)
+      await act(page.getByRole('button', {name: 'Agregar Herb & Roasted Garlic', exact: true}))
+      await steps.counter(page, steps.selectors.schmearCounter, '1/1'); await cart(page, 3); await secondaryState('combo-selected-schmear')
+      await menuReset()
+      await act(page.locator(steps.selectors.category('schmears'))); await scene('schmear-size'); await assertSchmearSizes(page); await secondaryState('standalone-sizes')
+      await act(page.getByRole('button', {name: /^180 g/})); await scene('schmears')
+      await act(page.getByRole('button', {name: 'Agregar Classic Strawberry', exact: true}))
+      await steps.counter(page, steps.selectors.schmearCounter, '✓'); await cart(page, 1); await secondaryState('standalone-selected')
+      assert.equal(new Set(record.secondaryStates.map(value => value.name)).size, 12)
+      record.coverage.push('twelve-secondary-states', 'mini-and-large-quantity', 'eight-bagel-labels-counts', 'five-schmear-labels-prices', 'null-combo-price', 'checkout-longtexts-consent-disabled-payment', 'inactive-backend-loyalty-program', 'three-standalone-size-price-labels')
       return
     }
     const isPack = scenario.startsWith('pack-'), isCombo = scenario === 'combo'
@@ -301,30 +465,7 @@ async function runCase(browser, viewport, scenario) {
     assert.equal(steps.normalize(await page.locator('.guided-cashier-quote > span').textContent()), steps.text.priceUnconfirmed)
     assert.equal(await page.locator('.guided-cashier-quote > strong').count(), 0, 'No fabricated paid/verified total')
     await capture('summary')
-    await act(page.getByRole('button', {name: /^Revisar entrega y consentimiento/})); await scene('pay')
-    await shell(page)
-    assert.equal(await page.locator('.checkout-customer-grid input').count(), 6)
-    assert.equal(await page.locator('.checkout-customer-grid select').count(), 1)
-    const disabledPay = page.getByRole('button', {name: 'Pago no activo', exact: true})
-    assert.equal(await disabledPay.isDisabled(), true)
-    assert.equal(await page.locator(steps.selectors.terms).isChecked(), false)
-    await capture('review-unfilled')
-    await page.getByLabel('Nombre', {exact: true}).fill('QA Tienda')
-    await page.getByLabel('Email', {exact: true}).fill('qa-storefront@example.invalid')
-    await page.getByLabel('WhatsApp', {exact: true}).fill('900000000')
-    const district = page.locator('.checkout-customer-grid select')
-    assert.equal(await district.evaluate(element => element.closest('label').querySelector('span').textContent.trim()), 'Distrito')
-    await district.selectOption('Lince')
-    await page.getByLabel('Dirección de delivery', {exact: true}).fill('Dirección sintética de prueba, número 123, edificio largo')
-    await page.getByLabel('Referencia', {exact: true}).fill('Solo revisión local, sin enviar ni reservar')
-    await page.getByLabel('Notas', {exact: true}).fill('Datos sintéticos. No cobrar ni crear un pedido.')
-    if (viewport.touch) await page.locator(steps.selectors.terms).tap()
-    else await page.locator(steps.selectors.terms).check()
-    assert.equal(await page.locator(steps.selectors.terms).isChecked(), true)
-    assert.equal(await disabledPay.isDisabled(), true, 'Consent cannot enable payment in review-only mode')
-    assert.equal(steps.normalize(await page.locator(steps.selectors.reviewStatus).textContent()), steps.text.finalStatus)
-    assert.equal(await page.locator('a[href*="wa.me"],.culqi-start-button,.qa-only-pay,.receipt-interaction,.wallet-actions').count(), 0)
-    await capture('review-consented')
+    await reviewCheckout()
 
     const legalLink = page.getByRole('link', {name: 'términos vigentes', exact: true})
     assert.equal(await legalLink.getAttribute('href'), '/legal'); assert.equal(await legalLink.getAttribute('target'), '_blank')
@@ -414,9 +555,14 @@ async function main() {
     report.completed = {entryViewports: report.cases.filter(record => record.scenario === 'entry' && record.callbacks.length === 3).length,
       categoryCallbacks: report.cases.reduce((sum, record) => sum + record.callbacks.length, 0),
       vitrineCallbacks: report.cases.reduce((sum, record) => sum + record.vitrineCallbacks.length, 0),
+      keyboardEntries: report.cases.filter(record => record.keyboardEntry).length,
+      decodedEntryPhotos: report.cases.reduce((sum, record) => sum + (record.decodedPhotos || 0), 0),
+      productTextStates: report.cases.reduce((sum, record) => sum + record.productTextStates.length, 0),
+      productTextCards: report.cases.reduce((sum, record) => sum + record.productTextStates.reduce((cards, state) => cards + state.cards, 0), 0),
+      secondaryStates: report.cases.reduce((sum, record) => sum + record.secondaryStates.length, 0),
       completeJourneys: report.cases.filter(record => record.completeJourney).length, legalNewTabs: report.cases.filter(record => record.legal).length,
       screenshots: fs.readdirSync(out).filter(file => file.endsWith('.png')).length}
-    if (report.completed.entryViewports !== report.planned.entryViewports || report.completed.categoryCallbacks !== report.planned.categoryCallbacks || report.completed.vitrineCallbacks !== report.planned.vitrineCallbacks || report.completed.completeJourneys !== report.planned.completeJourneys) failure({incompleteCoverage: {planned: report.planned, completed: report.completed}})
+    for (const [name, expected] of Object.entries(report.planned)) if (report.completed[name] !== expected) failure({incompleteCoverage: {name, expected, actual: report.completed[name]}})
     report.status = report.failures.length ? 'failed' : 'passed'; persist()
   }
   console.log(JSON.stringify({status: report.status, planned: report.planned, completed: report.completed, failures: report.failures.length, output: out}))
