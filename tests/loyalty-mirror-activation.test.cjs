@@ -57,7 +57,7 @@ async function setup(t) {
 }
 const rejectsCode = (promise, code) => assert.rejects(promise, error=>error.code===code)
 
-test('fully verified LOCAL fixtures permit only the fake transport and preserve the ledger', async t=>{
+test('verified LOCAL fixtures delegate to the configured fake and preserve the ledger', async t=>{
   const f=await setup(t), before=dump(f.backend)
   assert.deepEqual(await assessMirrorActivation(f.store, scope, descriptor), {status:'local-fixture-only',code:'local_fixture_only'})
   assert.equal((await f.mirror.deliver('a')).status,'delivered')

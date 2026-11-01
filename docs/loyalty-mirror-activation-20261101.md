@@ -32,7 +32,7 @@ La frontera mínima es un puerto confiable del servidor que entregue hechos veri
 | Binding verificado de sujeto, contacto y location | Evitar que el progreso de un cliente termine en el contacto o tenant de otro. |
 | Contacto observado y consistente con ese binding/location | Una referencia opaca guardada no demuestra la pertenencia actual del contacto. |
 | Capacidades del destino | Requerir evidencia explícita de la condición por versión e idempotencia necesarias. |
-| Modo de ejecución explícito | Permitir exclusivamente la delegación al receptor FAKE en modo de fixture local. |
+| Modo de ejecución explícito | Permitir el modo de fixture local con transporte inyectado por código confiable; las pruebas usan el receptor SQL FAKE. |
 
 Las comprobaciones deben repetirse **en cada envío**, no quedar aprobadas por una configuración antigua o por una captura previa. Un valor de capacidad `unknown` o `unsupported` bloquea la entrega. Los IDs y las pruebas de autorización usados en fixtures sólo describen sujetos, contactos y locations ficticios.
 
