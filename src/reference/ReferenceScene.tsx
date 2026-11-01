@@ -133,8 +133,6 @@ export function ReferenceScene(props: Props) {
         <div className="rebuilt-bagel-trays">
           {bagels.map(item => <figure className="rebuilt-bagel-tray" key={item.id}>
             <span className="rebuilt-bagel-pile">
-              <BagelPhoto id={item.id} className="rebuilt-pile-back" />
-              <BagelPhoto id={item.id} className="rebuilt-pile-side" />
               <BagelPhoto id={item.id} className="rebuilt-pile-front" />
             </span>
             <figcaption>{item.name}</figcaption>

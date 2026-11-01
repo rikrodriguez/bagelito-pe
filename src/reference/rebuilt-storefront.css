@@ -156,3 +156,20 @@
   .rebuilt-case-header>span{font-size:12px}.rebuilt-schmear-tray figcaption{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){.rebuilt-store .rebuilt-category{transition:none}.rebuilt-store .rebuilt-category:hover{transform:none}}
+
+/* One sharp product per flavour; reflections belong to the shared glass, not food. */
+.rebuilt-bagel-pile{display:grid;place-items:center;height:112px}
+.rebuilt-bagel-pile>.rebuilt-pile-front{position:static;width:112px;height:112px;transform:none;filter:none;margin:0 auto}
+.rebuilt-case-glass{border-top:2px solid #b6c2c6;border-left:1px solid #c4ced0;border-right:1px solid #c4ced0;border-bottom:1px solid #c4ced0;background:linear-gradient(115deg,transparent 0 46%,#ffffff0c 48% 52%,transparent 54%);box-shadow:none}
+@media(min-width:801px){
+ .rebuilt-brand{width:min(680px,68%);margin-bottom:8px}
+ .rebuilt-brand>p{font-size:25px}
+ .rebuilt-hero{margin-top:10px;margin-bottom:18px}
+ .rebuilt-hero h1{font-size:clamp(32px,3.6vw,48px)}
+ .rebuilt-category-visual{height:145px}
+ .rebuilt-store .rebuilt-category{min-height:238px;padding-bottom:18px}
+ .rebuilt-pack-photo{height:165px}
+ .rebuilt-schmear-visual>.rebuilt-schmear-photo{width:190px}
+ .rebuilt-combo-visual>.rebuilt-bagel-photo{width:145px;height:145px}
+ .rebuilt-counter{padding-top:26px}
+}
