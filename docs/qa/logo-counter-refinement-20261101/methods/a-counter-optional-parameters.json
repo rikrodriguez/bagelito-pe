@@ -1,0 +1,33 @@
+{
+  "scope": "Optionalmanuallychosenparametriccounterapproximation,notautotracedpath. No producteditmade.",
+  "pass1Transform": "rotate(-8 228 116)",
+  "targetTriangleCSS": [
+    [
+      645,
+      129
+    ],
+    [
+      637,
+      157
+    ],
+    [
+      660,
+      154
+    ]
+  ],
+  "nativeSVGPoints": [
+    [
+      229.45,
+      103.47
+    ],
+    [
+      214.9,
+      136.22
+    ],
+    [
+      243.45,
+      136.5
+    ]
+  ],
+  "caution": "Trianglehas~308CSSpxarea,lessref432bluecounterarea. Referencecounterrounded/trapezoidal; bboxagreementwouldnotproveshapeagreement. AppendingevenoddtriangletoexistingFredokaAoverlappingcontourswouldbeincorrect;usemaskorproperownfontunion. Aweightshouldnotdecreasebecausebaselinepass1blueinkisalready11%belowref."
+}

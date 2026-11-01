@@ -1,0 +1,442 @@
+{
+  "codeSHA": "2e03fd0ae5ee2b8264a37de9fb84088506975439",
+  "scope": "Focused native left/right case callbacks only, fresh navigation before each action. Not a purchase journey.",
+  "cases": [
+    {
+      "width": 320,
+      "height": 700,
+      "touch": true,
+      "callbacks": [
+        {
+          "selector": ".rebuilt-bagel-display .rebuilt-case-link",
+          "expectedScene": "pack-size",
+          "observedScene": "pack-size",
+          "method": "native touchscreen at actual label-span center",
+          "labelFontCSSPx": 15,
+          "bounds": {
+            "x": 10,
+            "y": 547.203125,
+            "width": 300,
+            "height": 44
+          },
+          "hit": {
+            "hittable": true,
+            "topHit": "rebuilt-case-label"
+          },
+          "pass": true,
+          "capture": {
+            "file": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/pass2-2e03fd0/label-taps/320-pack-size.png",
+            "sha256": "a75a12674ec0b0147ef345d0206e5888160a938a611a63d1e946244127010f09"
+          }
+        },
+        {
+          "selector": ".rebuilt-schmear-display .rebuilt-case-link",
+          "expectedScene": "schmear-size",
+          "observedScene": "schmear-size",
+          "method": "native touchscreen at actual label-span center",
+          "labelFontCSSPx": 15,
+          "bounds": {
+            "x": 10,
+            "y": 462.171875,
+            "width": 300,
+            "height": 44
+          },
+          "hit": {
+            "hittable": true,
+            "topHit": "rebuilt-case-label"
+          },
+          "pass": true,
+          "capture": {
+            "file": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/pass2-2e03fd0/label-taps/320-schmear-size.png",
+            "sha256": "a4384298761e64c61586b225e8c8a717bd57b2f399e9b9f5414068a64c21ffa4"
+          }
+        }
+      ],
+      "safetyFailures": [],
+      "traffic": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/ReferenceStorefront-CTsvgWWF.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-combo.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-room-mobile.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/routes-BoYE7juA.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/ReferenceStorefront-ByXSflV0.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter-desktop.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/index-CVlKgjj8.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/bagel-plain.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/bagel-everything.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/ReferenceStorefront-CTsvgWWF.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-combo.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/index-CVlKgjj8.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter-desktop.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/routes-BoYE7juA.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/ReferenceStorefront-ByXSflV0.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-room-mobile.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3254/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          }
+        ],
+        "legalRedirects": [],
+        "blocked": [],
+        "errors": [],
+        "expectedClosingErrors": [],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64907)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64983",
+            "documentId": "1793552066423.1:2qsuuoah8jf",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3254/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65028)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65097",
+            "documentId": "1793552066423.1:2qsuuoah8jf",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3254/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64907)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64983",
+            "documentId": "1793552067512.7:6j1w1wuv6m",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3254/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65028)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65097",
+            "documentId": "1793552067512.7:6j1w1wuv6m",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3254/",
+            "pageId": 1
+          }
+        ],
+        "documents": [
+          {
+            "kind": "document-init",
+            "documentId": "1793552066337.4:1y77wep2b4h",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793552066423.1:2qsuuoah8jf",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3254/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793552067512.7:6j1w1wuv6m",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3254/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793552068374.7:1sfr0s22iue",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          }
+        ],
+        "pages": [
+          {
+            "id": 1,
+            "url": "about:blank",
+            "closed": true
+          }
+        ],
+        "pageErrors": [],
+        "consoleErrors": [],
+        "assets": [
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-combo.webp",
+            "contentType": "image/webp",
+            "sha256": "8bf111ef1cd6b37642c0a472dabe95e01636925e575d08f5aed4df37b9a6a763"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-room-mobile.webp",
+            "contentType": "image/webp",
+            "sha256": "12a0629770075556bd27a86a6f6489a9f598599173c9336fcfd472be00a63dfc"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter-desktop.webp",
+            "contentType": "image/webp",
+            "sha256": "3a19a37ebbedc735599e719e6b3b9feb80358937fcf288758e2a68483372642f"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter.webp",
+            "contentType": "image/webp",
+            "sha256": "490bbcf7545bf3d2deb3bbbc8768358765b710010145101ce4325ef176496074"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/bagel-plain.webp",
+            "contentType": "image/webp",
+            "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/bagel-everything.webp",
+            "contentType": "image/webp",
+            "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-combo.webp",
+            "contentType": "image/webp",
+            "sha256": "8bf111ef1cd6b37642c0a472dabe95e01636925e575d08f5aed4df37b9a6a763"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter-desktop.webp",
+            "contentType": "image/webp",
+            "sha256": "3a19a37ebbedc735599e719e6b3b9feb80358937fcf288758e2a68483372642f"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-room-mobile.webp",
+            "contentType": "image/webp",
+            "sha256": "12a0629770075556bd27a86a6f6489a9f598599173c9336fcfd472be00a63dfc"
+          },
+          {
+            "url": "http://127.0.0.1:3254/images/rebuilt-aligned-counter.webp",
+            "contentType": "image/webp",
+            "sha256": "490bbcf7545bf3d2deb3bbbc8768358765b710010145101ce4325ef176496074"
+          }
+        ],
+        "callbackErrors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793552066423.1:2qsuuoah8jf",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64907)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65028)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65097",
+              "url": "http://127.0.0.1:3254/"
+            },
+            {
+              "documentId": "1793552067512.7:6j1w1wuv6m",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64907)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65028)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65097",
+              "url": "http://127.0.0.1:3254/"
+            }
+          ],
+          "errors": [],
+          "documentCount": 2
+        }
+      },
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793552066423.1:2qsuuoah8jf",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64907)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65028)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65097",
+            "url": "http://127.0.0.1:3254/"
+          },
+          {
+            "documentId": "1793552067512.7:6j1w1wuv6m",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64907)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65028)\n    at http://127.0.0.1:3254/assets/index-CVlKgjj8.js:10:65097",
+            "url": "http://127.0.0.1:3254/"
+          }
+        ],
+        "errors": [],
+        "documentCount": 2
+      }
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-11-01T16:54:28.450Z"
+}

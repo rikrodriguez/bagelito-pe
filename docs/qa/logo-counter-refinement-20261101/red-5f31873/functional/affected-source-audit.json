@@ -1,0 +1,28 @@
+{
+  "base": "2199afb6b51a3321259f512242bd47268ac3300c",
+  "codeSHA": "5f318730e928fd3e6d05dcdb7b34dbfc13247c59",
+  "runtimeChangedFiles": [
+    "public/images/rebuilt-aligned-counter-desktop.webp",
+    "scripts/qa-rebuilt-storefront.cjs",
+    "src/reference/ReferenceScene.tsx",
+    "src/reference/reference-aligned.css"
+  ],
+  "identicalOnClickExpressions": 8,
+  "protectedFiles": {
+    "src/playable/GuidedCommerce.tsx": "88222b14ff0688dc22363dade8d85a764684283ad0eb886741dc905157e5879a",
+    "src/reference/ReferenceStorefront.tsx": "b42a8a2af362b0f4b41e3577d262d8e509319a77161065a4cfe8faaa5bc6c84b",
+    "src/domain/lib/approved-shop-contract.ts": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+    "src/domain/data/verified-menu-2026-10-21.json": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080",
+    "src/server/reference-review-guard.server.ts": "1016d6e467145286c73de2c8a69cda129298a1d5fd9b72b90f4eba7388d8a3e9",
+    "package.json": "f1434a5884a0f9eba13c024cf4277f3adf512ec6164d828315f02d5251fd1866",
+    "vercel.json": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11",
+    "vite.config.ts": "af546f3228201a21f813d8ab51aa14cf3f9b4edb238dfca1b89f4a06936cc1c6",
+    "scripts/qa-rebuilt-safety.cjs": "040ddde2b18e8adcafada2abd805b115ce85c1258db0dd285f87453b69d1af2e",
+    "scripts/qa-rebuilt-geometry.cjs": "fce30a9582e785d28b096d2c821e1df8455a4c876218bbc7a6ca0bc5213c9687",
+    "scripts/qa-rebuilt-composition.cjs": "816e7acbc96aebeee6061af843a7d9f627174a6831637b2ab98a8cb53ee56bf2",
+    "scripts/qa-reference-review-steps.cjs": "c5ece83ed7a0959c8fddc381141ee8d0032c9f9de770321a81f8d14abfc7efd3",
+    "scripts/qa-reference-text-geometry.cjs": "47afa5fb7c75b66bd7386b427a17e5456159a6b34d29e7feb135485692d5f383",
+    "scripts/qa-reference-secondary-readability.cjs": "9bef826ce0a5526084aeb277f6cea0d8da305442fab3aef3e4c6b818699458c4"
+  },
+  "scope": "Read-only source audit; all six QA helpers and protected commercial source are unchanged. Driver changes encode the explicit new own-art windows, not relaxed minima."
+}

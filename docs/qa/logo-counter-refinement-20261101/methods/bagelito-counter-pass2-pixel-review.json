@@ -1,0 +1,153 @@
+{
+  "applicationSHA": "2e03fd0ae5ee2b8264a37de9fb84088506975439",
+  "screenshot": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/pass2-2e03fd0/1536-entry.png",
+  "sha256": "c916da079b7d22b1aeeb98e2763b80964d0af5bfdfeaf1bc9b06b49b0af505d5",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "before2199SHA256": "8a0bfcb7c84de7f286914093c0e9a04036a49dce8d928696a21fb365d2f8124f",
+  "method": "Direct pixel inspection of all three equal-size images plus cyan rail/jamb count profiles and median adjacent-row RGB steel-edge profiles. These chosen planar landmarks are not whole-subject silhouettes and no numerical fidelity score is assigned.",
+  "landmarks": [
+    {
+      "name": "left-front-column",
+      "reference": 106,
+      "before2199": 126,
+      "pass2": 106,
+      "beforeError": 20,
+      "pass2Error": 0
+    },
+    {
+      "name": "bagel-inner-right-jamb",
+      "reference": 885,
+      "before2199": 920,
+      "pass2": 885,
+      "beforeError": 35,
+      "pass2Error": 0
+    },
+    {
+      "name": "cream-left-jamb",
+      "reference": 907,
+      "before2199": 941,
+      "pass2": 907,
+      "beforeError": 34,
+      "pass2Error": 0
+    },
+    {
+      "name": "bagel-middle-steel-top",
+      "reference": 729,
+      "before2199": 737,
+      "pass2": 729,
+      "beforeError": 8,
+      "pass2Error": 0
+    },
+    {
+      "name": "bagel-middle-steel-bottom",
+      "reference": 744,
+      "before2199": 753,
+      "pass2": 745,
+      "beforeError": 9,
+      "pass2Error": 1
+    },
+    {
+      "name": "bagel-lower-green-rail",
+      "reference": 870,
+      "before2199": 892,
+      "pass2": 875,
+      "beforeError": 22,
+      "pass2Error": 5
+    },
+    {
+      "name": "cream-lower-front-cyan-rail",
+      "reference": 641,
+      "before2199": 632,
+      "pass2": 636,
+      "beforeError": -9,
+      "pass2Error": -5
+    },
+    {
+      "name": "cream-middle-steel-top",
+      "reference": 773,
+      "before2199": 775,
+      "pass2": 774,
+      "beforeError": 2,
+      "pass2Error": 1
+    },
+    {
+      "name": "cream-middle-steel-bottom",
+      "reference": 780,
+      "before2199": 781,
+      "pass2": 781,
+      "beforeError": 1,
+      "pass2Error": 1
+    },
+    {
+      "name": "cream-inner-base-lower-edge",
+      "reference": 904,
+      "before2199": 913,
+      "pass2": 902,
+      "beforeError": 9,
+      "pass2Error": -2
+    }
+  ],
+  "otherActualObservations": {
+    "rightCreamColumn": 1515,
+    "bagelTopCyanRows": [
+      590,
+      595,
+      602,
+      604
+    ],
+    "referenceBagelTopCyanCluster": [
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609
+    ],
+    "bagelInnerBaseSameSourcePlaneRange": [
+      897,
+      898
+    ],
+    "referenceBagelInnerBaseRange": [
+      889,
+      890
+    ],
+    "bagelDecorativeFootEndsApprox": 918,
+    "creamDecorativeFootEndsApprox": 923,
+    "referenceFootApprox": {
+      "bagel": [
+        890,
+        900
+      ],
+      "cream": [
+        904,
+        907
+      ]
+    },
+    "rearBagelGlassTopApprox": 575,
+    "referenceRearBagelGlassTopApprox": 591
+  },
+  "pixelReview": {
+    "improvements": [
+      "Both left-front and paired center jamb positions now align to selected reference pixels.",
+      "Two-shelf middle rails and lower green rail are substantially closer than2199.",
+      "Independent case heights and stepped cream front are more coherent than a single global image scale.",
+      "All8bagel concepts and5schmear pans remain visible; all13native blue labels are legible and sit on their blank plaques.",
+      "No large transparent gap or visibly duplicated four-bar seam at the overlap; the physical paired jamb remains visible as in reference."
+    ],
+    "remaining": [
+      "Bagel upper/rear glass is still about10\u201316px high compared with reference and peeks behind category bottoms; this is not an exact y600 match.",
+      "Full lower steel plinth/shadow reaches~918/923, below the reference case base, despite improved selected inner-base edges. Never claim those inner-base measurements represent the entire alpha silhouette.",
+      "Food textures, pan masses, five-versus-six reference content and some label/font treatment remain independently reconstructed; no recipe/stock or pixel-perfect claim."
+    ],
+    "cropping": "The desktop bagel image is clipped at its own source1107; allbagelfood/plaques end before that cut. Cream SVG starts atsource1080 and overlaps the jamb; all5creamfood/plaques visible. Rightmost small stage clipping is outer metal/shadow only, with no essential food or label visibly cut. This statement is visual inspection, not a proof every image pixel is uncropped."
+  },
+  "labelCountVisuallyChecked": 13,
+  "appEdits": false,
+  "newArtOrGeneration": false,
+  "supportingRawProfiles": "/workspace/bagelito-counter-pass2-pixel-profiles.json"
+}

@@ -1,0 +1,496 @@
+{
+  "codeSHA": "5f318730e928fd3e6d05dcdb7b34dbfc13247c59",
+  "status": "failed",
+  "exitCode": 1,
+  "scope": "Stopped after failed entry1536. Combo320 and legal tab were not executed. No assertion or source changes, no retry.",
+  "completed": {
+    "entryViewports": 1,
+    "categoryCallbacks": 3,
+    "vitrineCallbacks": 2,
+    "keyboardEntries": 1,
+    "decodedEntryPhotos": 5,
+    "mobileSVGWindows": 0,
+    "desktopSVGWindows": 1,
+    "decodedMobileSVGTextures": 0,
+    "referenceAnchorViewports": 1,
+    "productTextStates": 0,
+    "productTextCards": 0,
+    "secondaryStates": 0,
+    "completeJourneys": 0,
+    "legalNewTabs": 0,
+    "screenshots": 30
+  },
+  "failures": [
+    {
+      "at": "2026-11-01T16:59:39.382Z",
+      "case": "1536-entry",
+      "referenceAnchor": {
+        "selector": ".rebuilt-brand",
+        "field": "x",
+        "expected": 460,
+        "actual": 396.984375
+      }
+    },
+    {
+      "at": "2026-11-01T16:59:39.392Z",
+      "case": "1536-entry",
+      "referenceAnchor": {
+        "selector": ".rebuilt-hero",
+        "field": "x",
+        "expected": 493,
+        "actual": 430
+      }
+    },
+    {
+      "at": "2026-11-01T16:59:39.401Z",
+      "case": "1536-entry",
+      "referenceAnchor": {
+        "selector": ".rebuilt-categories",
+        "field": "x",
+        "expected": 395,
+        "actual": 331.984375
+      }
+    },
+    {
+      "at": "2026-11-01T16:59:39.410Z",
+      "case": "1536-entry",
+      "referenceAnchor": {
+        "selector": ".rebuilt-counter",
+        "field": "x",
+        "expected": 90,
+        "actual": 27
+      }
+    },
+    {
+      "at": "2026-11-01T16:59:39.419Z",
+      "case": "1536-entry",
+      "referenceAnchor": {
+        "selector": ".rebuilt-progress",
+        "field": "x",
+        "expected": 465,
+        "actual": 401.984375
+      }
+    },
+    {
+      "at": "2026-11-01T16:59:40.376Z",
+      "case": "1536-entry",
+      "stage": "entry-gallery-loaded",
+      "geometry": {
+        "kind": "horizontal-overflow",
+        "element": {
+          "tag": "SECTION",
+          "id": null,
+          "className": "reference-presentation rebuilt-store",
+          "label": "Vitrina Bagelito"
+        },
+        "tag": "SECTION",
+        "id": null,
+        "className": "reference-presentation rebuilt-store",
+        "label": "Vitrina Bagelito",
+        "clientWidth": 1536,
+        "scrollWidth": 1601,
+        "excess": 65,
+        "overflowX": "hidden",
+        "clippedContent": {
+          "text": [],
+          "targets": [
+            {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "rebuilt-menu",
+              "label": "Abrir men\u00fa"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": "2026-11-01T16:59:40.386Z",
+      "case": "1536-entry",
+      "stage": "entry-gallery-loaded",
+      "geometry": {
+        "kind": "target-below-44",
+        "element": {
+          "tag": "BUTTON",
+          "id": null,
+          "className": "rebuilt-menu",
+          "label": "Abrir men\u00fa"
+        },
+        "rect": {
+          "x": -43.015625,
+          "y": 17.984375,
+          "right": 16.984375,
+          "bottom": 77.984375,
+          "width": 60,
+          "height": 60
+        },
+        "hardClip": {
+          "x": 0,
+          "y": 17.984375,
+          "right": 16.984375,
+          "bottom": 77.984375,
+          "width": 16.984375,
+          "height": 60
+        },
+        "effectiveWidth": 16.984375,
+        "effectiveHeight": 60,
+        "compositeLabel": false
+      }
+    }
+  ],
+  "reportSHA256": "0607939de97845850f091214c862da0d419ca63ddc7797732a43bb369380a173",
+  "screenshots": 30,
+  "verifiedPNGHashes": 30,
+  "missingOrMismatch": [],
+  "sourcesUnchangedThroughTerminal": true,
+  "frozenSourceFiles": 44,
+  "safety": {
+    "knownFrameworkReads": 1,
+    "capabilityErrors": 0,
+    "blockedRequests": 0,
+    "networkErrors": 0,
+    "pageErrors": 0,
+    "consoleErrors": 0
+  },
+  "referenceAnchors": {
+    "toleranceCSSPx": 1,
+    "anchors": [
+      {
+        "selector": ".rebuilt-store",
+        "target": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 1024
+        },
+        "actual": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 1024
+        }
+      },
+      {
+        "selector": ".rebuilt-brand",
+        "target": {
+          "x": 460,
+          "y": 45,
+          "width": 780,
+          "height": 243.75
+        },
+        "actual": {
+          "x": 396.984375,
+          "y": 44.984375,
+          "width": 780,
+          "height": 243.75
+        }
+      },
+      {
+        "selector": ".rebuilt-hero",
+        "target": {
+          "x": 493,
+          "y": 270,
+          "width": 706.56,
+          "height": 66
+        },
+        "actual": {
+          "x": 430,
+          "y": 270,
+          "width": 706.546875,
+          "height": 66
+        }
+      },
+      {
+        "selector": ".rebuilt-categories",
+        "target": {
+          "x": 395,
+          "y": 350,
+          "width": 835,
+          "height": 234
+        },
+        "actual": {
+          "x": 331.984375,
+          "y": 350,
+          "width": 835,
+          "height": 234
+        }
+      },
+      {
+        "selector": ".rebuilt-counter",
+        "target": {
+          "x": 90,
+          "y": 600,
+          "width": 1440,
+          "height": 300
+        },
+        "actual": {
+          "x": 27,
+          "y": 600,
+          "width": 1440,
+          "height": 300
+        }
+      },
+      {
+        "selector": ".rebuilt-progress",
+        "target": {
+          "x": 465,
+          "y": 916,
+          "width": 605,
+          "height": 79
+        },
+        "actual": {
+          "x": 401.984375,
+          "y": 915.984375,
+          "width": 604.984375,
+          "height": 78.984375
+        }
+      }
+    ],
+    "headlineFont": 60,
+    "wordmarkLocalGeometry": {
+      "x": 56.459434509277344,
+      "y": -22.10917091369629,
+      "width": 849.7603759765625,
+      "height": 290.00518798828125
+    },
+    "geometryScope": "Nominal DOM anchors from the1536x1024 reference spec. SVG geometry excludes exact painted ink/antialias; counter alpha and source-window band are reported separately. No fidelity score.",
+    "failures": [
+      {
+        "selector": ".rebuilt-brand",
+        "field": "x",
+        "expected": 460,
+        "actual": 396.984375
+      },
+      {
+        "selector": ".rebuilt-hero",
+        "field": "x",
+        "expected": 493,
+        "actual": 430
+      },
+      {
+        "selector": ".rebuilt-categories",
+        "field": "x",
+        "expected": 395,
+        "actual": 331.984375
+      },
+      {
+        "selector": ".rebuilt-counter",
+        "field": "x",
+        "expected": 90,
+        "actual": 27
+      },
+      {
+        "selector": ".rebuilt-progress",
+        "field": "x",
+        "expected": 465,
+        "actual": 401.984375
+      }
+    ],
+    "pass": false
+  },
+  "counterArtAudit": {
+    "method": "Off-DOM alpha readback. Full asset and each explicit own-art source window are sampled separately at alpha>=1/16; these are measurements, not fidelity thresholds.",
+    "desktop": {
+      "source": "/images/rebuilt-aligned-counter-desktop.webp",
+      "fullImageBox": {
+        "x": -0.390625,
+        "y": 429,
+        "width": 1538.203125,
+        "height": 592.421875
+      },
+      "clipPath": "inset(0px 45.198% 0px 0px)",
+      "naturalWidth": 2020,
+      "naturalHeight": 778,
+      "fullAssetAlphaBounds": [
+        {
+          "threshold": 1,
+          "bounds": {
+            "x": 20,
+            "y": 23,
+            "width": 1982,
+            "height": 672
+          }
+        },
+        {
+          "threshold": 16,
+          "bounds": {
+            "x": 24,
+            "y": 189,
+            "width": 1973,
+            "height": 458
+          }
+        }
+      ],
+      "windows": [
+        {
+          "role": "desktop-bagels",
+          "sourceWindow": {
+            "x": 0,
+            "y": 0,
+            "width": 1107,
+            "height": 778
+          },
+          "visible": true,
+          "matrix": {
+            "a": 0.7614866955445545,
+            "b": 0,
+            "c": 0,
+            "d": 0.761467705655527,
+            "e": -0.390625,
+            "f": 429
+          },
+          "alphaBounds": [
+            {
+              "threshold": 1,
+              "bounds": {
+                "x": 20,
+                "y": 23,
+                "width": 1087,
+                "height": 627
+              }
+            },
+            {
+              "threshold": 16,
+              "bounds": {
+                "x": 24,
+                "y": 189,
+                "width": 1083,
+                "height": 458
+              }
+            }
+          ],
+          "renderedSourceWindow": {
+            "x": -0.390625,
+            "y": 429,
+            "width": 842.9657719678219,
+            "height": 592.421875
+          },
+          "renderedAlphaBounds": [
+            {
+              "threshold": 1,
+              "bounds": {
+                "x": 14.83910891089109,
+                "y": 446.51375723007715,
+                "width": 827.7360380569307,
+                "height": 477.44025144601545
+              }
+            },
+            {
+              "threshold": 16,
+              "bounds": {
+                "x": 17.885055693069308,
+                "y": 572.9173963688946,
+                "width": 824.6900912747526,
+                "height": 348.7522091902314
+              }
+            }
+          ]
+        },
+        {
+          "role": "desktop-schmears",
+          "sourceWindow": {
+            "x": 1080,
+            "y": 0,
+            "width": 940,
+            "height": 778
+          },
+          "visible": true,
+          "viewport": {
+            "x": 824.90625,
+            "y": 466.15625,
+            "width": 664.546875,
+            "height": 550.015625
+          },
+          "matrix": {
+            "a": 0.7069609575835476,
+            "b": 0,
+            "c": 0,
+            "d": 0.7069609575835476,
+            "e": 61.3902032455012,
+            "f": 466.15625
+          },
+          "alphaBounds": [
+            {
+              "threshold": 1,
+              "bounds": {
+                "x": 1080,
+                "y": 72,
+                "width": 922,
+                "height": 623
+              }
+            },
+            {
+              "threshold": 16,
+              "bounds": {
+                "x": 1080,
+                "y": 189,
+                "width": 917,
+                "height": 458
+              }
+            }
+          ],
+          "renderedSourceWindow": {
+            "x": 824.9080374357326,
+            "y": 466.15625,
+            "width": 664.5433001285347,
+            "height": 550.015625
+          },
+          "renderedAlphaBounds": [
+            {
+              "threshold": 1,
+              "bounds": {
+                "x": 824.9080374357326,
+                "y": 517.0574389460154,
+                "width": 651.8180028920309,
+                "height": 440.43667657455023
+              }
+            },
+            {
+              "threshold": 16,
+              "bounds": {
+                "x": 824.9080374357326,
+                "y": 599.7718709832905,
+                "width": 648.2831981041132,
+                "height": 323.7881185732649
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mobile": {
+      "source": "/images/rebuilt-aligned-counter.webp",
+      "decoded": false,
+      "windows": [
+        {
+          "role": "mobile-bagels",
+          "sourceWindow": {
+            "x": 0,
+            "y": 169,
+            "width": 1165,
+            "height": 493
+          },
+          "visible": false,
+          "viewport": null,
+          "matrix": null,
+          "renderedSourceWindow": null
+        },
+        {
+          "role": "mobile-schmears",
+          "sourceWindow": {
+            "x": 1165,
+            "y": 169,
+            "width": 855,
+            "height": 493
+          },
+          "visible": false,
+          "viewport": null,
+          "matrix": null,
+          "renderedSourceWindow": null
+        }
+      ]
+    },
+    "decodedMobileSVGTextures": [],
+    "scope": "Desktop bagel clip x0..1107 and recomposed schmear viewport x1080..2020 deliberately differ from both the full desktop asset and the earlier mobile source. Native DOM anchors alone do not certify visual fidelity."
+  }
+}

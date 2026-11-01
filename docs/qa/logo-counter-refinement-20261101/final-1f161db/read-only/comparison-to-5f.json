@@ -1,0 +1,81 @@
+{
+  "newCodeSHA": "1f161dba29d8920bced2ebd647e1e24d5c06d7d2",
+  "oldCodeSHA": "5f318730e928fd3e6d05dcdb7b34dbfc13247c59",
+  "scope": "Exact PNG byte and decodedRGBA comparison of initial captures; no gallery scroll regression is exercised by this comparison.",
+  "files": [
+    {
+      "filename": "1536-entry.png",
+      "newSHA256": "7a2ea4d8a00f609fa9c8b411277f2f9b692a9d911f2b6b15e652779acdb35b6e",
+      "old5fSHA256": "98477829e9e24478be7fd13412cb00edac793d45201a6786e924ef5c5b1a692d",
+      "PNGBytesExactlySame": false,
+      "decodedRGBAExactlySame": false,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "changedPixels": 10,
+      "changedPixelBoundsInclusive": [
+        642,
+        351,
+        696,
+        351
+      ],
+      "maximumChannelDifference": 8
+    },
+    {
+      "filename": "1536-entry-full.png",
+      "newSHA256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "old5fSHA256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "PNGBytesExactlySame": true,
+      "decodedRGBAExactlySame": true,
+      "dimensions": [
+        1536,
+        1097
+      ]
+    },
+    {
+      "filename": "390-entry.png",
+      "newSHA256": "f02445c73df939f5bf2aa5ece99a4ccbd17080b3cf8c6ce177d9063281f465da",
+      "old5fSHA256": "f02445c73df939f5bf2aa5ece99a4ccbd17080b3cf8c6ce177d9063281f465da",
+      "PNGBytesExactlySame": true,
+      "decodedRGBAExactlySame": true,
+      "dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "filename": "390-entry-full.png",
+      "newSHA256": "933bcee62c0852c18a95d9a590ae7c76d66ae191dc2da571e72c265343a43d8d",
+      "old5fSHA256": "933bcee62c0852c18a95d9a590ae7c76d66ae191dc2da571e72c265343a43d8d",
+      "PNGBytesExactlySame": true,
+      "decodedRGBAExactlySame": true,
+      "dimensions": [
+        390,
+        1121
+      ]
+    },
+    {
+      "filename": "320-entry.png",
+      "newSHA256": "1ee629314f45248ce13017dc54604a31cf715f894042bf0d6686850af026c50c",
+      "old5fSHA256": "1ee629314f45248ce13017dc54604a31cf715f894042bf0d6686850af026c50c",
+      "PNGBytesExactlySame": true,
+      "decodedRGBAExactlySame": true,
+      "dimensions": [
+        320,
+        700
+      ]
+    },
+    {
+      "filename": "320-entry-full.png",
+      "newSHA256": "91ef317b4a96ba9c97deca11786715a37e71b745c7541228642cbb413f3b3440",
+      "old5fSHA256": "91ef317b4a96ba9c97deca11786715a37e71b745c7541228642cbb413f3b3440",
+      "PNGBytesExactlySame": true,
+      "decodedRGBAExactlySame": true,
+      "dimensions": [
+        320,
+        1026
+      ]
+    }
+  ]
+}

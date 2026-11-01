@@ -1,0 +1,32 @@
+{
+  "scope": "Isolated nativeBactualChromiumDPR1 onsolidanalysisbackground, not application capture; no font referenced by this SVG path.",
+  "blueArea": 4509,
+  "blueBBox": [
+    508,
+    129,
+    606,
+    232
+  ],
+  "holeCount": 2,
+  "holes": [
+    {
+      "area": 924,
+      "bbox": [
+        527,
+        145,
+        573,
+        180
+      ]
+    },
+    {
+      "area": 1108,
+      "bbox": [
+        541,
+        175,
+        590,
+        213
+      ]
+    }
+  ],
+  "pngSHA256": "dc6bcff714c4e193d73a6724662c36565e0e8cefd2a49ec2d7c44e66cdffde43"
+}

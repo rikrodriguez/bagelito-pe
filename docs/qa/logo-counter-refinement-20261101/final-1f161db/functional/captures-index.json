@@ -1,0 +1,423 @@
+{
+  "codeSHA": "1f161dba29d8920bced2ebd647e1e24d5c06d7d2",
+  "archive": "captures.tar.gz",
+  "uniqueStoredPNG": 51,
+  "format": "POSIX tar.gz with ordinary hardlinks for byte-identical repeated PNGs. Every original capture name extracts to the exact bytes.",
+  "captures": [
+    {
+      "path": "entry/1536-entry-01-first-pixels.png",
+      "sha256": "7a2ea4d8a00f609fa9c8b411277f2f9b692a9d911f2b6b15e652779acdb35b6e",
+      "bytes": 2048869
+    },
+    {
+      "path": "entry/1536-entry-01-first-pixels-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-02-keyboard-enter-schmears.png",
+      "sha256": "7bd442ca54ce1c6702b62cdf7ee02e251c7e56826626dbdb411a94c3bf3eb1aa",
+      "bytes": 62816
+    },
+    {
+      "path": "entry/1536-entry-02-keyboard-enter-schmears-full.png",
+      "sha256": "3357fe7fedb4017eb389e2806de082bd89145eb63f2bd0a2b5289fdd3bbefaf4",
+      "bytes": 63970
+    },
+    {
+      "path": "entry/1536-entry-03-scene-entrance.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-03-scene-entrance-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-04-empty-cart.png",
+      "sha256": "24f8c0a01780e383f1ed09b247f48b195a963d6b03f2bbc6a5653cade10c73de",
+      "bytes": 1978590
+    },
+    {
+      "path": "entry/1536-entry-04-empty-cart-full.png",
+      "sha256": "c024fb792e0df39d6a93367fc71c44118cf75d1b3920ecede980e9e89569540d",
+      "bytes": 1952649
+    },
+    {
+      "path": "entry/1536-entry-05-scene-pack-size.png",
+      "sha256": "c6df393c4fa5576972c1cfbb1d235418014cd9d7d75e1de4165f26784e1499bd",
+      "bytes": 97204
+    },
+    {
+      "path": "entry/1536-entry-05-scene-pack-size-full.png",
+      "sha256": "78b604308295f6f4ee15704e1bdf98f9b175645697c23d249ae63bea87619c5d",
+      "bytes": 96668
+    },
+    {
+      "path": "entry/1536-entry-06-scene-entrance.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-06-scene-entrance-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-07-scene-combos.png",
+      "sha256": "fe2c8e2ded5a1823e36fb8512a7b98fc79dfc622650e7b1c7c27c943b8f27ebe",
+      "bytes": 103787
+    },
+    {
+      "path": "entry/1536-entry-07-scene-combos-full.png",
+      "sha256": "4724d84224acfd37c4283e87fed4881d0cdf7e917906d0bbe87dc43387250b13",
+      "bytes": 104956
+    },
+    {
+      "path": "entry/1536-entry-08-scene-entrance.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-08-scene-entrance-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-09-scene-schmear-size.png",
+      "sha256": "c15d4837eb1ef502fc9fd480b482181ad78e581d83ab5d104ae712f2d6e6f0f4",
+      "bytes": 63660
+    },
+    {
+      "path": "entry/1536-entry-09-scene-schmear-size-full.png",
+      "sha256": "3357fe7fedb4017eb389e2806de082bd89145eb63f2bd0a2b5289fdd3bbefaf4",
+      "bytes": 63970
+    },
+    {
+      "path": "entry/1536-entry-10-scene-entrance.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-10-scene-entrance-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-11-scene-pack-size.png",
+      "sha256": "e01b0847d6651a7c04aba9b5c36aec64363798f3ce79b94df3d7135bc53d3d45",
+      "bytes": 91866
+    },
+    {
+      "path": "entry/1536-entry-11-scene-pack-size-full.png",
+      "sha256": "fa6f44a0f8bbd2d07c0f0c8c1e25dadb7182d431c158a2d87906e557320a452f",
+      "bytes": 92084
+    },
+    {
+      "path": "entry/1536-entry-12-scene-entrance.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-12-scene-entrance-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-13-scene-schmear-size.png",
+      "sha256": "9f67ea24168cdbb363b613213a3be15bc462542803e696ae77dadcf77ab2cbd6",
+      "bytes": 63705
+    },
+    {
+      "path": "entry/1536-entry-13-scene-schmear-size-full.png",
+      "sha256": "b01f795ca0f008a84d63203d079b0465e0184be1af62bcedc22652444560aaa0",
+      "bytes": 63993
+    },
+    {
+      "path": "entry/1536-entry-14-scene-entrance.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-14-scene-entrance-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "entry/1536-entry-15-entry-gallery-loaded.png",
+      "sha256": "52c2c4774bb45a77cbd34e7cbf1de0ee20328c1b44895b04ae3a620f7a83857a",
+      "bytes": 2048871
+    },
+    {
+      "path": "entry/1536-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "afa1ec2787c5a601c46c1ccb2ade37ed78b4de96bd2899cbec4f2f22c7d0287f",
+      "bytes": 2055254
+    },
+    {
+      "path": "combo-320/320-combo-01-first-pixels.png",
+      "sha256": "1ee629314f45248ce13017dc54604a31cf715f894042bf0d6686850af026c50c",
+      "bytes": 286385
+    },
+    {
+      "path": "combo-320/320-combo-01-first-pixels-full.png",
+      "sha256": "91ef317b4a96ba9c97deca11786715a37e71b745c7541228642cbb413f3b3440",
+      "bytes": 347581
+    },
+    {
+      "path": "combo-320/320-combo-02-scene-combos.png",
+      "sha256": "9cd0da400159279b70f2ad50ea8ef65b84139f6ad9847ed3950f50554c7cc72b",
+      "bytes": 72386
+    },
+    {
+      "path": "combo-320/320-combo-02-scene-combos-full.png",
+      "sha256": "1e8319a9865e10446ab3d5f63286805483424ee3fb26d4a439f1cbbf3bd36f21",
+      "bytes": 82405
+    },
+    {
+      "path": "combo-320/320-combo-03-scene-bagels.png",
+      "sha256": "d5891e61985f441ddf7c2ae4f882c9fd609b89935e88b6c1811a13307df33255",
+      "bytes": 76360
+    },
+    {
+      "path": "combo-320/320-combo-03-scene-bagels-full.png",
+      "sha256": "29a6a0c00bcf52dfb45c4d3a1ba1fc404058a620c62e0fab1abb3a7e914c0c63",
+      "bytes": 137328
+    },
+    {
+      "path": "combo-320/320-combo-04-combo-bagels-selected.png",
+      "sha256": "791299305831e59f6b9a2c99ef7ddd56c814f3c5812d4351ca162e370af899c5",
+      "bytes": 66947
+    },
+    {
+      "path": "combo-320/320-combo-04-combo-bagels-selected-full.png",
+      "sha256": "45ed17b98ebc134ff4825517b33d98ea10567650b7d704cc6929f535bf124484",
+      "bytes": 143334
+    },
+    {
+      "path": "combo-320/320-combo-05-scene-schmears.png",
+      "sha256": "d9d9822355dd945979d878ff435c1e18b045670ffdc98d38140e93fca723cdb2",
+      "bytes": 58984
+    },
+    {
+      "path": "combo-320/320-combo-05-scene-schmears-full.png",
+      "sha256": "2dc41abd096b202c2846c435bd6cb5102ccbadc5b6a999d0777e88be3d616b65",
+      "bytes": 98641
+    },
+    {
+      "path": "combo-320/320-combo-06-combo-schmear-selected.png",
+      "sha256": "6997b5afb4e6ed7cf689d4528fe90d5446ce51e81244dbf83777aa8162ce8a04",
+      "bytes": 60185
+    },
+    {
+      "path": "combo-320/320-combo-06-combo-schmear-selected-full.png",
+      "sha256": "12c00597053c02c627a72460c0c8b40d20f5b56549710c547eb44a1dfbd6b14f",
+      "bytes": 106405
+    },
+    {
+      "path": "combo-320/320-combo-07-scene-cashier.png",
+      "sha256": "e67d0bb0d76dc720e334fe512ee44f453f4b6920b3129ceccf7a6e580412730b",
+      "bytes": 54953
+    },
+    {
+      "path": "combo-320/320-combo-07-scene-cashier-full.png",
+      "sha256": "30525dc6a81237b3c036b1d3d40dd86d6b06836110ad6d45cccf8725bf660e4a",
+      "bytes": 63200
+    },
+    {
+      "path": "combo-320/320-combo-08-summary.png",
+      "sha256": "bb5712f6fb57589b157c4ac6afbd47a35058cc76f74b0f69fab6d623af087398",
+      "bytes": 54911
+    },
+    {
+      "path": "combo-320/320-combo-08-summary-full.png",
+      "sha256": "c544268d5b3c491754822d5893644fe2c3d954c58e78d6f74b9fc70e6afca569",
+      "bytes": 58666
+    },
+    {
+      "path": "combo-320/320-combo-09-scene-pay.png",
+      "sha256": "a534a260ee6ae4b70be86e906b08d9a534dd7ac4bdab8338f647eee4071a7ac1",
+      "bytes": 27732
+    },
+    {
+      "path": "combo-320/320-combo-09-scene-pay-full.png",
+      "sha256": "43e9d06bd29bff3c9efdd65dfc520a6901fcc8dd45dc4ead54d9a5c870c4fcd5",
+      "bytes": 90864
+    },
+    {
+      "path": "combo-320/320-combo-10-review-unfilled.png",
+      "sha256": "a534a260ee6ae4b70be86e906b08d9a534dd7ac4bdab8338f647eee4071a7ac1",
+      "bytes": 27732
+    },
+    {
+      "path": "combo-320/320-combo-10-review-unfilled-full.png",
+      "sha256": "43e9d06bd29bff3c9efdd65dfc520a6901fcc8dd45dc4ead54d9a5c870c4fcd5",
+      "bytes": 90864
+    },
+    {
+      "path": "combo-320/320-combo-11-review-consented.png",
+      "sha256": "f1db6b5c7e3fe31a0e737feec678e34dbcf0f13d1199d90ebfeeedc039f9cc21",
+      "bytes": 43279
+    },
+    {
+      "path": "combo-320/320-combo-11-review-consented-full.png",
+      "sha256": "7d7901c4dc490762a8a178708dff551dc10737c930ac2098034ea4e696948d90",
+      "bytes": 105929
+    },
+    {
+      "path": "combo-320/320-combo-12-scene-cashier.png",
+      "sha256": "7a05a26cfad2373d550f2307b803c0fe180eb1a89ba41dc8e004f6f58ca3faa2",
+      "bytes": 55016
+    },
+    {
+      "path": "combo-320/320-combo-12-scene-cashier-full.png",
+      "sha256": "671e0338ca4a788fe3611fe5f95b07b872d761b3c054097a889d6f2466346615",
+      "bytes": 63271
+    },
+    {
+      "path": "combo-320/320-combo-13-cart-with-selection.png",
+      "sha256": "9b0793e47e927521270ed6bc4c1a4708ba3a9690b9b234d0a364d3c66b246057",
+      "bytes": 83993
+    },
+    {
+      "path": "combo-320/320-combo-13-cart-with-selection-full.png",
+      "sha256": "05534a9577ec2e482cd1543ec13b9850ef4e854800fc835ae781d6bf0695a324",
+      "bytes": 80551
+    },
+    {
+      "path": "combo-320/320-combo-14-scene-bagels.png",
+      "sha256": "e5e9f625258252cc4222c606929c857cf4c6b6f90fb0aff84a91174b85c97f7f",
+      "bytes": 68400
+    },
+    {
+      "path": "combo-320/320-combo-14-scene-bagels-full.png",
+      "sha256": "dd5d0faf5a9ec50cd48b471a314fa325a8bc7a9d289cbf54330b5f319916781d",
+      "bytes": 145305
+    },
+    {
+      "path": "combo-320/320-combo-15-scene-schmears.png",
+      "sha256": "ef0e440be638caf06825fca435ce91c066282c53050941fd96388a5c3d65f7cb",
+      "bytes": 57165
+    },
+    {
+      "path": "combo-320/320-combo-15-scene-schmears-full.png",
+      "sha256": "4f85995b63648155e5ea1575f953036c3075858980ad66ce26f98420fef1104c",
+      "bytes": 104523
+    },
+    {
+      "path": "combo-320/320-combo-16-scene-cashier.png",
+      "sha256": "e67d0bb0d76dc720e334fe512ee44f453f4b6920b3129ceccf7a6e580412730b",
+      "bytes": 54953
+    },
+    {
+      "path": "combo-320/320-combo-16-scene-cashier-full.png",
+      "sha256": "30525dc6a81237b3c036b1d3d40dd86d6b06836110ad6d45cccf8725bf660e4a",
+      "bytes": 63200
+    },
+    {
+      "path": "combo-320/320-combo-17-scene-combos.png",
+      "sha256": "e77b44ed122337975b2c30b4c3e8bd67781cd4c5e7777905a097713fb7436f72",
+      "bytes": 70707
+    },
+    {
+      "path": "combo-320/320-combo-17-scene-combos-full.png",
+      "sha256": "f3b2cb3c5015268056245adc72146fe458f256ed51376203c7b050c8c2dccc50",
+      "bytes": 82375
+    },
+    {
+      "path": "combo-320/320-combo-18-scene-bagels.png",
+      "sha256": "97b2339111a986ac33795aad7a1dc76aa1afd3311b8f00e597187e3b657b5e7b",
+      "bytes": 66975
+    },
+    {
+      "path": "combo-320/320-combo-18-scene-bagels-full.png",
+      "sha256": "5452e8af19bb7b94484ac862145da18f0b1923451e4061b3a20a2ca0888bc396",
+      "bytes": 144883
+    },
+    {
+      "path": "combo-320/320-combo-19-scene-schmears.png",
+      "sha256": "ef0e440be638caf06825fca435ce91c066282c53050941fd96388a5c3d65f7cb",
+      "bytes": 57165
+    },
+    {
+      "path": "combo-320/320-combo-19-scene-schmears-full.png",
+      "sha256": "4f85995b63648155e5ea1575f953036c3075858980ad66ce26f98420fef1104c",
+      "bytes": 104523
+    },
+    {
+      "path": "combo-320/320-combo-20-scene-cashier.png",
+      "sha256": "e67d0bb0d76dc720e334fe512ee44f453f4b6920b3129ceccf7a6e580412730b",
+      "bytes": 54953
+    },
+    {
+      "path": "combo-320/320-combo-20-scene-cashier-full.png",
+      "sha256": "30525dc6a81237b3c036b1d3d40dd86d6b06836110ad6d45cccf8725bf660e4a",
+      "bytes": 63200
+    },
+    {
+      "path": "combo-320/320-combo-21-scene-bagels.png",
+      "sha256": "97b2339111a986ac33795aad7a1dc76aa1afd3311b8f00e597187e3b657b5e7b",
+      "bytes": 66975
+    },
+    {
+      "path": "combo-320/320-combo-21-scene-bagels-full.png",
+      "sha256": "dd5d0faf5a9ec50cd48b471a314fa325a8bc7a9d289cbf54330b5f319916781d",
+      "bytes": 145305
+    },
+    {
+      "path": "combo-320/320-combo-22-scene-schmears.png",
+      "sha256": "ef0e440be638caf06825fca435ce91c066282c53050941fd96388a5c3d65f7cb",
+      "bytes": 57165
+    },
+    {
+      "path": "combo-320/320-combo-22-scene-schmears-full.png",
+      "sha256": "4f85995b63648155e5ea1575f953036c3075858980ad66ce26f98420fef1104c",
+      "bytes": 104523
+    },
+    {
+      "path": "combo-320/320-combo-23-scene-cashier.png",
+      "sha256": "e67d0bb0d76dc720e334fe512ee44f453f4b6920b3129ceccf7a6e580412730b",
+      "bytes": 54953
+    },
+    {
+      "path": "combo-320/320-combo-23-scene-cashier-full.png",
+      "sha256": "30525dc6a81237b3c036b1d3d40dd86d6b06836110ad6d45cccf8725bf660e4a",
+      "bytes": 63200
+    },
+    {
+      "path": "combo-320/320-combo-24-scene-selector.png",
+      "sha256": "514eec113c94788aaf46d12685466b3c09830800967020620def1857f8d168ae",
+      "bytes": 286428
+    },
+    {
+      "path": "combo-320/320-combo-24-scene-selector-full.png",
+      "sha256": "57646d765750be225c89f8e2ae70d0fcc190138afea09421d16cdca6e4cc4f35",
+      "bytes": 347629
+    },
+    {
+      "path": "combo-320/320-combo-25-scene-entrance.png",
+      "sha256": "1ee629314f45248ce13017dc54604a31cf715f894042bf0d6686850af026c50c",
+      "bytes": 286385
+    },
+    {
+      "path": "combo-320/320-combo-25-scene-entrance-full.png",
+      "sha256": "91ef317b4a96ba9c97deca11786715a37e71b745c7541228642cbb413f3b3440",
+      "bytes": 347581
+    },
+    {
+      "path": "combo-320/320-combo-26-returned-entry.png",
+      "sha256": "1ee629314f45248ce13017dc54604a31cf715f894042bf0d6686850af026c50c",
+      "bytes": 286385
+    },
+    {
+      "path": "combo-320/320-combo-26-returned-entry-full.png",
+      "sha256": "91ef317b4a96ba9c97deca11786715a37e71b745c7541228642cbb413f3b3440",
+      "bytes": 347581
+    },
+    {
+      "path": "combo-320/320-combo-legal.png",
+      "sha256": "eb77393852da202cc37c709100ba594f700d03e1aeec5f917f0c9bb6e2d2bb9a",
+      "bytes": 276877
+    }
+  ]
+}
