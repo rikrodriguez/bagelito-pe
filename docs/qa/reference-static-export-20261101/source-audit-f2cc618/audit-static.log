@@ -1,0 +1,1 @@
+{"passed":true,"cspPages":3,"http":[{"path":"/","status":200,"redirects":0},{"path":"/legal","status":200,"redirects":1},{"path":"/playable","status":200,"redirects":1},{"path":"/api/batch","status":404,"redirects":0}],"failures":[]}

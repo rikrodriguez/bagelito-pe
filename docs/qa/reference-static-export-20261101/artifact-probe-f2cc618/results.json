@@ -1,0 +1,54 @@
+{
+  "applicationSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "exporterSHA": "f2cc618ecfeaa52807cd8a1b3ee77121c972f94a",
+  "archiveSHA256": "7eb870e0630ee3b5fbd904370d554ae55bc8978cd8919b9c44f8c55a2896864d",
+  "source": "ZIP extracted and82manifest hashes verified",
+  "server": "Python standard http.server only",
+  "base": "http://127.0.0.1:3213/",
+  "createdAt": "2026-11-01T00:55:00.651Z",
+  "requests": [
+    {
+      "route": "/",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 5949,
+      "sha256": "28719b5fa314b413c78a33e7f9498b255a9f2606a13f9ad1eaf7cb6b76ff8036"
+    },
+    {
+      "route": "/legal/",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 6097,
+      "sha256": "d892cfba01b83feae3d4f3d71de8accc5dbc101126b44be70cde904c1964491a"
+    },
+    {
+      "route": "/playable/",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 5977,
+      "sha256": "2a8676ca883f33c97f5790addfc6f9e944b35212377302c9c02b7b702bdb8b51"
+    },
+    {
+      "route": "/images/store-reference-approved.webp",
+      "status": 200,
+      "type": "image/webp",
+      "bytes": 328894,
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+    },
+    {
+      "route": "/assets/index-aRb2m3Gb.js",
+      "status": 200,
+      "type": "text/javascript",
+      "bytes": 341955,
+      "sha256": "516b8e18daf86acca55cea8365f0a2b723e39c58525b2784da01b810fae37833"
+    },
+    {
+      "route": "/api/batch",
+      "status": 404,
+      "type": "text/html;charset=utf-8",
+      "bytes": 335,
+      "sha256": "860b53ed6ea6a0cf602fae632cfcd28dbcf637f85a8bee28d2ee9c6cc9081669"
+    }
+  ],
+  "status": "PASS"
+}

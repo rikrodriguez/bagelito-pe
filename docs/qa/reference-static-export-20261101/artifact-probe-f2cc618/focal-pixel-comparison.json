@@ -1,0 +1,357 @@
+{
+  "created_at": "2026-11-01T00:55:04.116740+00:00",
+  "baseline_root": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce",
+  "new_root": "/tmp/bagelito-static-focal-390-f2cc618",
+  "pillow_version": "12.3.0",
+  "comparison": "Decoded 8-bit RGB; a pixel differs if any RGB channel differs. Alpha is ignored; ICC transforms are not applied.",
+  "bbox_coordinates": "left, top, right-exclusive, bottom-exclusive; null means no changed pixels or dimensions differ",
+  "scope": "Offline comparison of these PNGs only; no browser run, Safari claim, or image output.",
+  "matching": "same relative path first, otherwise unique new basename; extra new PNGs are listed but not compared",
+  "pairs": [
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-cashier-full.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-cashier-full.png",
+      "baseline_sha256": "f965dadc259b5279b8615e2fc676eee0354febf6f03d753cdec1dce890c73e74",
+      "new_sha256": "f965dadc259b5279b8615e2fc676eee0354febf6f03d753cdec1dce890c73e74",
+      "dimensions": {
+        "baseline": [
+          390,
+          844
+        ],
+        "new": [
+          390,
+          844
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 329160,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-cashier-full.png",
+      "new_relative": "390-cashier-full.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-cashier.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-cashier.png",
+      "baseline_sha256": "542f0f7dfa2912a5571a6394f79ba460923b0ae57bf8c9956ca1ed9b43d057e3",
+      "new_sha256": "542f0f7dfa2912a5571a6394f79ba460923b0ae57bf8c9956ca1ed9b43d057e3",
+      "dimensions": {
+        "baseline": [
+          366,
+          253
+        ],
+        "new": [
+          366,
+          253
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 92598,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-cashier.png",
+      "new_relative": "390-cashier.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-exact-storefront.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-exact-storefront.png",
+      "baseline_sha256": "43742d590671bb920667ea22b5ab6563dd595b3d217bc04672f83acfdf4e2f90",
+      "new_sha256": "43742d590671bb920667ea22b5ab6563dd595b3d217bc04672f83acfdf4e2f90",
+      "dimensions": {
+        "baseline": [
+          390,
+          844
+        ],
+        "new": [
+          390,
+          844
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 329160,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-exact-storefront.png",
+      "new_relative": "390-exact-storefront.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-loyalty-full.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-loyalty-full.png",
+      "baseline_sha256": "f0de9f408587b73cbe9cf0d34db7aa8f2f0984b0c5e7135057ad03291e5d5706",
+      "new_sha256": "75306cfbd0044b4288ba161afc48662ba068fd332d61df00d24254ab307d4267",
+      "dimensions": {
+        "baseline": [
+          390,
+          1286
+        ],
+        "new": [
+          390,
+          1286
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "pixels-differ",
+      "pixel_count": 501540,
+      "mismatched_pixels": 11,
+      "max_delta": 2,
+      "bbox": [
+        387,
+        1146,
+        390,
+        1154
+      ],
+      "baseline_relative": "390-loyalty-full.png",
+      "new_relative": "390-loyalty-full.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-loyalty.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-loyalty.png",
+      "baseline_sha256": "848b3cef92a9d992eedb56f56afc78eb8e751e4d6b4af033aab6b73287c90c8f",
+      "new_sha256": "848b3cef92a9d992eedb56f56afc78eb8e751e4d6b4af033aab6b73287c90c8f",
+      "dimensions": {
+        "baseline": [
+          390,
+          252
+        ],
+        "new": [
+          390,
+          252
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 98280,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-loyalty.png",
+      "new_relative": "390-loyalty.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-pay-review-full.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-pay-review-full.png",
+      "baseline_sha256": "67b466ae334da32bdbf957ef6f8c30b8ce4254369229549a6d1a677779dda655",
+      "new_sha256": "67b466ae334da32bdbf957ef6f8c30b8ce4254369229549a6d1a677779dda655",
+      "dimensions": {
+        "baseline": [
+          390,
+          1286
+        ],
+        "new": [
+          390,
+          1286
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 501540,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-pay-review-full.png",
+      "new_relative": "390-pay-review-full.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-pay-review.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-pay-review.png",
+      "baseline_sha256": "9724d9e43656c27081f1665436d685ee85e893d66393322708c99bac13e4adf3",
+      "new_sha256": "6e612acc7f3507ac8546d8afbc8b970cac4c6438840b2599f4a50e48d2576506",
+      "dimensions": {
+        "baseline": [
+          366,
+          503
+        ],
+        "new": [
+          366,
+          503
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "pixels-differ",
+      "pixel_count": 184098,
+      "mismatched_pixels": 5,
+      "max_delta": 1,
+      "bbox": [
+        187,
+        120,
+        190,
+        156
+      ],
+      "baseline_relative": "390-pay-review.png",
+      "new_relative": "390-pay-review.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-upsell-deselected-full.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-upsell-deselected-full.png",
+      "baseline_sha256": "a5c389082bbd5e9be68819517be5f0d7c65581766012460dcace78a8d8c072d2",
+      "new_sha256": "8171196b2a4bce9dd4719d46f6671b6751bb51800c8763a629066cd443166f9c",
+      "dimensions": {
+        "baseline": [
+          390,
+          1329
+        ],
+        "new": [
+          390,
+          1329
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "pixels-differ",
+      "pixel_count": 518310,
+      "mismatched_pixels": 28576,
+      "max_delta": 3,
+      "bbox": [
+        28,
+        475,
+        189,
+        653
+      ],
+      "baseline_relative": "390-upsell-deselected-full.png",
+      "new_relative": "390-upsell-deselected-full.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-upsell-deselected.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-upsell-deselected.png",
+      "baseline_sha256": "0afa918676b85f1102d27ec6c12192dd91fd5a59fd977954c074c2a3333ab505",
+      "new_sha256": "0afa918676b85f1102d27ec6c12192dd91fd5a59fd977954c074c2a3333ab505",
+      "dimensions": {
+        "baseline": [
+          366,
+          659
+        ],
+        "new": [
+          366,
+          659
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 241194,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-upsell-deselected.png",
+      "new_relative": "390-upsell-deselected.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-upsell-selected-full.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-upsell-selected-full.png",
+      "baseline_sha256": "99b67643b94f759b402121181c6d5829436efcead964dfb55ded01d6cde1333f",
+      "new_sha256": "c3a83ea9b5dbe01ca49c1f2a6a0097b7b9721c93c54e505fbeee21a870cb0718",
+      "dimensions": {
+        "baseline": [
+          390,
+          1329
+        ],
+        "new": [
+          390,
+          1329
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "pixels-differ",
+      "pixel_count": 518310,
+      "mismatched_pixels": 27913,
+      "max_delta": 2,
+      "bbox": [
+        29,
+        476,
+        188,
+        652
+      ],
+      "baseline_relative": "390-upsell-selected-full.png",
+      "new_relative": "390-upsell-selected-full.png"
+    },
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/e2e-layout-6f765ce/390-upsell-selected.png",
+      "new": "/tmp/bagelito-static-focal-390-f2cc618/390-upsell-selected.png",
+      "baseline_sha256": "e9ea05eb59d9a1b507f327357f3521fd5970924410e52f2a7617de662d11fe8a",
+      "new_sha256": "e9ea05eb59d9a1b507f327357f3521fd5970924410e52f2a7617de662d11fe8a",
+      "dimensions": {
+        "baseline": [
+          366,
+          659
+        ],
+        "new": [
+          366,
+          659
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 241194,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "390-upsell-selected.png",
+      "new_relative": "390-upsell-selected.png"
+    }
+  ],
+  "missing_new": [],
+  "ambiguous_new": [],
+  "unmatched_new": [
+    "390-legal-newtab.png"
+  ],
+  "errors": [],
+  "summary": {
+    "compared": 11,
+    "identical": 7,
+    "pixel_mismatches": 4,
+    "dimension_mismatches": 0,
+    "missing": 0,
+    "ambiguous": 0,
+    "new_extras_not_compared": 1,
+    "errors": 0
+  },
+  "status": "failed"
+}

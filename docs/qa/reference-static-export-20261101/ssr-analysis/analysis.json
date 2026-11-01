@@ -1,0 +1,180 @@
+{
+  "kind": "read-only-static-export-feasibility-source-and-SSR-inspection",
+  "createdAt": "2026-11-01T00:51:42.222195+00:00",
+  "applicationCodeSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "observedServer": "http://127.0.0.1:3210",
+  "requests": "Only GET /, /legal, /playable; no browser, build, API, provider, or app mutation",
+  "pages": [
+    {
+      "url": "/",
+      "file": "/tmp/bagelito-export-ssr-index.html",
+      "bytes": 5494,
+      "sha256": "3439d8c423b84a0ae41a25f76c84f89ebc02b99b0c5b168ea5f5665f88ca7196",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "href": "/assets/index-B-tAIt2X.css",
+          "data-precedence": "default"
+        },
+        {
+          "rel": "stylesheet",
+          "href": "/assets/ReferenceStorefront-CF3L9wuz.css",
+          "data-precedence": "default"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/index-aRb2m3Gb.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/routes-BSbH2qWw.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/ReferenceStorefront-BMQQ7NiK.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/legal-version-BguVS3S4.js",
+          "fetchpriority": "low"
+        }
+      ],
+      "scriptAttrs": [
+        {
+          "data-tsr-stream-part": ""
+        },
+        {
+          "type": "module",
+          "async": "",
+          "src": "/assets/index-aRb2m3Gb.js"
+        },
+        {}
+      ],
+      "bootstrapBytes": 968,
+      "bootstrapSHA256": "2e04ad6843a5ebf4ea67a6ae4b72dde3ac05d86d8743ac94b880df4850fb3e7d",
+      "matchIDs": [
+        "__root__#",
+        "##"
+      ],
+      "containsLoaderData": false,
+      "containsSerializedServerFn": false
+    },
+    {
+      "url": "/legal",
+      "file": "/tmp/bagelito-export-ssr-legal.html",
+      "bytes": 5642,
+      "sha256": "656cd47d1ac09c150774d2073c14254bfe2ed99d41019046eb9ddf2df19ac553",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "href": "/assets/index-B-tAIt2X.css",
+          "data-precedence": "default"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/index-aRb2m3Gb.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/legal-a6igGOl0.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/legal-version-BguVS3S4.js",
+          "fetchpriority": "low"
+        }
+      ],
+      "scriptAttrs": [
+        {
+          "data-tsr-stream-part": ""
+        },
+        {
+          "type": "module",
+          "async": "",
+          "src": "/assets/index-aRb2m3Gb.js"
+        },
+        {}
+      ],
+      "bootstrapBytes": 884,
+      "bootstrapSHA256": "e73a1f117ba8cc83f7819a46bc5013cd8acb4c50bd2801892804c5fb0357d248",
+      "matchIDs": [
+        "__root__#",
+        "#legal#legal"
+      ],
+      "containsLoaderData": false,
+      "containsSerializedServerFn": false
+    },
+    {
+      "url": "/playable",
+      "file": "/tmp/bagelito-export-ssr-playable.html",
+      "bytes": 5522,
+      "sha256": "686846d84b92e6daa553e937cfdf84bf8c543ddee28ef13a75ff56e8bd752212",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "href": "/assets/index-B-tAIt2X.css",
+          "data-precedence": "default"
+        },
+        {
+          "rel": "stylesheet",
+          "href": "/assets/ReferenceStorefront-CF3L9wuz.css",
+          "data-precedence": "default"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/index-aRb2m3Gb.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/playable-BSbH2qWw.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/ReferenceStorefront-BMQQ7NiK.js",
+          "fetchpriority": "low"
+        },
+        {
+          "rel": "modulepreload",
+          "href": "/assets/legal-version-BguVS3S4.js",
+          "fetchpriority": "low"
+        }
+      ],
+      "scriptAttrs": [
+        {
+          "data-tsr-stream-part": ""
+        },
+        {
+          "type": "module",
+          "async": "",
+          "src": "/assets/index-aRb2m3Gb.js"
+        },
+        {}
+      ],
+      "bootstrapBytes": 994,
+      "bootstrapSHA256": "adcd76dfc73984b210e7d2730dbfb635b0f145b45eaa2b9fefe56a5de7b82883",
+      "matchIDs": [
+        "__root__#",
+        "#playable#playable"
+      ],
+      "containsLoaderData": false,
+      "containsSerializedServerFn": false
+    }
+  ],
+  "conclusion": "Static review-only hydration appears viable from source and frozen SSR payloads; browser export validation remains required",
+  "constraints": [
+    "Preserve the full React/TSR inline bootstrap and comments",
+    "Use all public/client assets from the same immutable build",
+    "Serve HTTP(S) with JS/CSS MIME types and correct document mappings",
+    "Current asset and navigation URLs require origin root or complete rebasing",
+    "No Nitro API guard/backend is included in static export",
+    "Review-only/reference guards must remain enabled in the wrapper",
+    "No generic production checkout or provider support is implied"
+  ]
+}

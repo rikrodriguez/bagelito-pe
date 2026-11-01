@@ -1,0 +1,467 @@
+{
+  "format": "static-html-assets",
+  "applicationSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "exporterSHA": "f2cc618ecfeaa52807cd8a1b3ee77121c972f94a",
+  "sourceOrigin": "http://127.0.0.1:3210",
+  "capturedAt": "2026-11-01T00:51:43.103Z",
+  "sourceImageSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "serverFilesIncluded": false,
+  "backend": false,
+  "telemetry": false,
+  "reviewOnly": true,
+  "mount": "origin root; HTTP/HTTPS with directory index support, not file:// or a subpath",
+  "knownFrameworkRead": "one sessionStorage cache lookup per document, no writes",
+  "routes": [
+    {
+      "route": "/",
+      "file": "index.html",
+      "status": 200,
+      "sourceHTMLSHA256": "c91f3808c51a244505881af020c927941589ca05d861a4ff98fe95a86cdad867",
+      "exportedHTMLSHA256": "28719b5fa314b413c78a33e7f9498b255a9f2606a13f9ad1eaf7cb6b76ff8036",
+      "inlineScriptHashes": [
+        "'sha256-QJTpRI81plt7yTQeU3EGs58EADkjYXvZTC4gI567k5w='",
+        "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='"
+      ],
+      "csp": "default-src 'none'; script-src 'self' 'sha256-QJTpRI81plt7yTQeU3EGs58EADkjYXvZTC4gI567k5w=' 'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'",
+      "changes": "Only CSP and referrer meta inserted; original markup, hydration state and script references retained"
+    },
+    {
+      "route": "/legal",
+      "file": "legal/index.html",
+      "status": 200,
+      "sourceHTMLSHA256": "ac40962d07b235d05681268826ddcc2d180763e30995f4d7a6e76491c9c1b6f9",
+      "exportedHTMLSHA256": "d892cfba01b83feae3d4f3d71de8accc5dbc101126b44be70cde904c1964491a",
+      "inlineScriptHashes": [
+        "'sha256-FliHEkSUFL+TfX700hdqh5iCWxDhBRQX9+13cicAqnc='",
+        "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='"
+      ],
+      "csp": "default-src 'none'; script-src 'self' 'sha256-FliHEkSUFL+TfX700hdqh5iCWxDhBRQX9+13cicAqnc=' 'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'",
+      "changes": "Only CSP and referrer meta inserted; original markup, hydration state and script references retained"
+    },
+    {
+      "route": "/playable",
+      "file": "playable/index.html",
+      "status": 200,
+      "sourceHTMLSHA256": "f98601cb8e3975381a24db8dde77e1ae6644ae52fa2f3b31b8511baf59a63aca",
+      "exportedHTMLSHA256": "2a8676ca883f33c97f5790addfc6f9e944b35212377302c9c02b7b702bdb8b51",
+      "inlineScriptHashes": [
+        "'sha256-fYAh5UnIMUM+DVrm+oqwRj+ywIfT0vg4XFA+3xT9K1U='",
+        "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='"
+      ],
+      "csp": "default-src 'none'; script-src 'self' 'sha256-fYAh5UnIMUM+DVrm+oqwRj+ywIfT0vg4XFA+3xT9K1U=' 'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'none'",
+      "changes": "Only CSP and referrer meta inserted; original markup, hydration state and script references retained"
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/ReferenceStorefront-BMQQ7NiK.js",
+      "bytes": 60058,
+      "sha256": "2b0bf37bd3ec7e121ca626f28662cb72d1d8cdb849273777cbe1ef57aca61fc6"
+    },
+    {
+      "path": "assets/ReferenceStorefront-CF3L9wuz.css",
+      "bytes": 99472,
+      "sha256": "0b8a757f212e5fe36080bca2bfdd3bb3a77c276385969b963849bc1d84eea5f0"
+    },
+    {
+      "path": "assets/index-B-tAIt2X.css",
+      "bytes": 1610,
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c"
+    },
+    {
+      "path": "assets/index-aRb2m3Gb.js",
+      "bytes": 341955,
+      "sha256": "516b8e18daf86acca55cea8365f0a2b723e39c58525b2784da01b810fae37833"
+    },
+    {
+      "path": "assets/legal-a6igGOl0.js",
+      "bytes": 4593,
+      "sha256": "a8e2543942c315b568721fe303dfcea671d2af11255f89535bd0304f84a51207"
+    },
+    {
+      "path": "assets/legal-version-BguVS3S4.js",
+      "bytes": 34,
+      "sha256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865"
+    },
+    {
+      "path": "assets/playable-BSbH2qWw.js",
+      "bytes": 162,
+      "sha256": "1242b226367d8cb5533059f1eda4d4e846f6bf8429fa97201b34428cdafd4280"
+    },
+    {
+      "path": "assets/routes-BSbH2qWw.js",
+      "bytes": 162,
+      "sha256": "1242b226367d8cb5533059f1eda4d4e846f6bf8429fa97201b34428cdafd4280"
+    },
+    {
+      "path": "bagel-vitrina.webp",
+      "bytes": 1506,
+      "sha256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7"
+    },
+    {
+      "path": "bagelito-counter.webp",
+      "bytes": 1506,
+      "sha256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8"
+    },
+    {
+      "path": "images/bagel-blueberry.webp",
+      "bytes": 66558,
+      "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2"
+    },
+    {
+      "path": "images/bagel-cheddar.webp",
+      "bytes": 67072,
+      "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300"
+    },
+    {
+      "path": "images/bagel-cinnamon-raisin.webp",
+      "bytes": 68246,
+      "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1"
+    },
+    {
+      "path": "images/bagel-classic-onion.webp",
+      "bytes": 70254,
+      "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b"
+    },
+    {
+      "path": "images/bagel-everything.webp",
+      "bytes": 79448,
+      "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+    },
+    {
+      "path": "images/bagel-jalapeno-cheddar.webp",
+      "bytes": 67592,
+      "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875"
+    },
+    {
+      "path": "images/bagel-plain.webp",
+      "bytes": 61902,
+      "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+    },
+    {
+      "path": "images/bagel-sesame.webp",
+      "bytes": 119564,
+      "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0"
+    },
+    {
+      "path": "images/bagel-vitrina-photo.webp",
+      "bytes": 86354,
+      "sha256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643"
+    },
+    {
+      "path": "images/bagelito-logo.svg",
+      "bytes": 454,
+      "sha256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e"
+    },
+    {
+      "path": "images/bagelito-wordmark.svg",
+      "bytes": 511,
+      "sha256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9"
+    },
+    {
+      "path": "images/guided-storyboard-atlas-2.webp",
+      "bytes": 400064,
+      "sha256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489"
+    },
+    {
+      "path": "images/guided-storyboard-atlas.webp",
+      "bytes": 428764,
+      "sha256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154"
+    },
+    {
+      "path": "images/pack-6-mixed.webp",
+      "bytes": 77428,
+      "sha256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65"
+    },
+    {
+      "path": "images/schmear-vitrina-photo.webp",
+      "bytes": 40960,
+      "sha256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f"
+    },
+    {
+      "path": "images/store-reference-approved.webp",
+      "bytes": 328894,
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+    },
+    {
+      "path": "index.html",
+      "bytes": 5949,
+      "sha256": "28719b5fa314b413c78a33e7f9498b255a9f2606a13f9ad1eaf7cb6b76ff8036"
+    },
+    {
+      "path": "legal/index.html",
+      "bytes": 6097,
+      "sha256": "d892cfba01b83feae3d4f3d71de8accc5dbc101126b44be70cde904c1964491a"
+    },
+    {
+      "path": "master-scenes/bag-handoff.webp",
+      "bytes": 104850,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46"
+    },
+    {
+      "path": "master-scenes/bagels-vitrina.webp",
+      "bytes": 187962,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f"
+    },
+    {
+      "path": "master-scenes/cashier.webp",
+      "bytes": 91394,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7"
+    },
+    {
+      "path": "master-scenes/combos.webp",
+      "bytes": 90090,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417"
+    },
+    {
+      "path": "master-scenes/cross-sell.webp",
+      "bytes": 85010,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb"
+    },
+    {
+      "path": "master-scenes/entrance.webp",
+      "bytes": 192244,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b"
+    },
+    {
+      "path": "master-scenes/goodbye.webp",
+      "bytes": 129102,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2"
+    },
+    {
+      "path": "master-scenes/inside.webp",
+      "bytes": 159248,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027"
+    },
+    {
+      "path": "master-scenes/packs.webp",
+      "bytes": 93290,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa"
+    },
+    {
+      "path": "master-scenes/pay.webp",
+      "bytes": 94450,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb"
+    },
+    {
+      "path": "master-scenes/receipt.webp",
+      "bytes": 89990,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129"
+    },
+    {
+      "path": "master-scenes/schmears-vitrina.webp",
+      "bytes": 156536,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8"
+    },
+    {
+      "path": "master-scenes/schmears.webp",
+      "bytes": 115572,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6"
+    },
+    {
+      "path": "master-scenes/selector.webp",
+      "bytes": 181186,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb"
+    },
+    {
+      "path": "master-scenes/wallet.webp",
+      "bytes": 84618,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89"
+    },
+    {
+      "path": "master-scenes-clean/bag-handoff.webp",
+      "bytes": 107354,
+      "sha256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee"
+    },
+    {
+      "path": "master-scenes-clean/bagels-vitrina.webp",
+      "bytes": 187332,
+      "sha256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc"
+    },
+    {
+      "path": "master-scenes-clean/cashier.webp",
+      "bytes": 88186,
+      "sha256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051"
+    },
+    {
+      "path": "master-scenes-clean/combos.webp",
+      "bytes": 97112,
+      "sha256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633"
+    },
+    {
+      "path": "master-scenes-clean/cross-sell.webp",
+      "bytes": 89694,
+      "sha256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7"
+    },
+    {
+      "path": "master-scenes-clean/entrance.webp",
+      "bytes": 202930,
+      "sha256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33"
+    },
+    {
+      "path": "master-scenes-clean/goodbye.webp",
+      "bytes": 139542,
+      "sha256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f"
+    },
+    {
+      "path": "master-scenes-clean/inside.webp",
+      "bytes": 176378,
+      "sha256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0"
+    },
+    {
+      "path": "master-scenes-clean/packs.webp",
+      "bytes": 100762,
+      "sha256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb"
+    },
+    {
+      "path": "master-scenes-clean/pay.webp",
+      "bytes": 99894,
+      "sha256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c"
+    },
+    {
+      "path": "master-scenes-clean/receipt.webp",
+      "bytes": 93480,
+      "sha256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339"
+    },
+    {
+      "path": "master-scenes-clean/schmears-vitrina.webp",
+      "bytes": 92160,
+      "sha256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f"
+    },
+    {
+      "path": "master-scenes-clean/schmears.webp",
+      "bytes": 127882,
+      "sha256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6"
+    },
+    {
+      "path": "master-scenes-clean/selector.webp",
+      "bytes": 208154,
+      "sha256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b"
+    },
+    {
+      "path": "master-scenes-clean/wallet.webp",
+      "bytes": 80562,
+      "sha256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3"
+    },
+    {
+      "path": "models/bagel-everything-1024.glb",
+      "bytes": 1506,
+      "sha256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d"
+    },
+    {
+      "path": "models/bagel-everything-512.glb",
+      "bytes": 1506,
+      "sha256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3"
+    },
+    {
+      "path": "playable/index.html",
+      "bytes": 5977,
+      "sha256": "2a8676ca883f33c97f5790addfc6f9e944b35212377302c9c02b7b702bdb8b51"
+    },
+    {
+      "path": "reference/storyboard-main.webp",
+      "bytes": 233510,
+      "sha256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b"
+    },
+    {
+      "path": "reference/storyboard-master.webp",
+      "bytes": 273818,
+      "sha256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39"
+    },
+    {
+      "path": "reference/storyboard-schmears.webp",
+      "bytes": 249142,
+      "sha256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809"
+    },
+    {
+      "path": "scenes/bag-handoff.webp",
+      "bytes": 104850,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46"
+    },
+    {
+      "path": "scenes/bagels-vitrina.webp",
+      "bytes": 187962,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f"
+    },
+    {
+      "path": "scenes/cashier.webp",
+      "bytes": 91394,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7"
+    },
+    {
+      "path": "scenes/combos.webp",
+      "bytes": 90090,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417"
+    },
+    {
+      "path": "scenes/cross-sell.webp",
+      "bytes": 85010,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb"
+    },
+    {
+      "path": "scenes/entrance.webp",
+      "bytes": 192244,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b"
+    },
+    {
+      "path": "scenes/goodbye.webp",
+      "bytes": 129102,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2"
+    },
+    {
+      "path": "scenes/inside.webp",
+      "bytes": 159248,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027"
+    },
+    {
+      "path": "scenes/packs.webp",
+      "bytes": 93290,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa"
+    },
+    {
+      "path": "scenes/pay.webp",
+      "bytes": 94450,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb"
+    },
+    {
+      "path": "scenes/receipt.webp",
+      "bytes": 89990,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129"
+    },
+    {
+      "path": "scenes/schmears-vitrina.webp",
+      "bytes": 156536,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8"
+    },
+    {
+      "path": "scenes/schmears.webp",
+      "bytes": 115572,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6"
+    },
+    {
+      "path": "scenes/selector.webp",
+      "bytes": 181186,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb"
+    },
+    {
+      "path": "scenes/wallet.webp",
+      "bytes": 84618,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89"
+    },
+    {
+      "path": "schmear-vitrina.webp",
+      "bytes": 1506,
+      "sha256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a"
+    },
+    {
+      "path": "store-category-flow.webp",
+      "bytes": 8700,
+      "sha256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b"
+    },
+    {
+      "path": "store-entry-door.webp",
+      "bytes": 10834,
+      "sha256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a"
+    }
+  ]
+}
