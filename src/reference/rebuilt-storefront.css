@@ -26,12 +26,12 @@
 .rebuilt-brand{position:relative;align-self:center;width:min(760px,70%);margin:-12px auto 12px;text-align:center}
 .rebuilt-wordmark{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 3px 0 #003277)}
 .rebuilt-wordmark text{font-family:Fredoka,"Trebuchet MS",Arial,sans-serif;font-size:150px;font-weight:700;fill:var(--rebuilt-blue);stroke:var(--rebuilt-coral);stroke-width:11px;letter-spacing:-8px}
-.rebuilt-brand>p{margin:-4px 0 0;font-size:clamp(18px,2.1vw,29px);font-weight:900;letter-spacing:-.025em}
-.rebuilt-wall-copy{position:absolute;top:210px;z-index:0;margin:0;font-size:clamp(19px,2.3vw,30px);line-height:1.03;font-weight:900;font-style:italic;letter-spacing:-.045em}
+.rebuilt-brand>p{margin:-4px 0 0;font-size:clamp(18px,2.1vw,29px);font-weight:700;letter-spacing:-.025em}
+.rebuilt-wall-copy{position:absolute;top:210px;z-index:0;margin:0;font-size:clamp(19px,2.3vw,30px);line-height:1.03;font-weight:700;font-style:italic;letter-spacing:-.045em}
 .rebuilt-wall-copy-left{left:4.1%;transform:rotate(-8deg)}.rebuilt-wall-copy-right{right:4.3%;transform:rotate(8deg)}
 .rebuilt-wall-copy-right>span{display:block;text-align:center;margin-top:7px;font-size:42px;font-style:normal;font-weight:400}
 .rebuilt-hero{position:relative;align-self:center;z-index:1;width:min(970px,80%);margin:16px auto 22px;text-align:center}
-.rebuilt-hero h1{font-family:Fredoka,"Trebuchet MS",sans-serif;margin:0;font-size:clamp(32px,4vw,55px);line-height:1.08;letter-spacing:-.055em;font-weight:900;color:var(--rebuilt-blue)}
+.rebuilt-hero h1{font-family:Fredoka,"Trebuchet MS",sans-serif;margin:0;font-size:clamp(32px,4vw,55px);line-height:1.08;letter-spacing:-.055em;font-weight:700;color:var(--rebuilt-blue)}
 .rebuilt-hero p{margin:10px 0 0;font-size:16px;line-height:1.5;color:#4e5e67}
 .rebuilt-categories{position:relative;z-index:3;display:grid;grid-template-columns:1fr 1.04fr 1fr;gap:17px;width:min(940px,82%);margin:0 auto -14px;padding:0}
 .rebuilt-store .rebuilt-category{position:relative;inset:auto;display:flex;flex-direction:column;min-width:0;width:100%;height:auto;min-height:260px;padding:0 22px 22px;border:1px solid #fff9;border-radius:27px;overflow:hidden;text-align:left;color:var(--rebuilt-blue);cursor:pointer;box-shadow:0 9px 22px #3d2b211a;transition:transform .2s ease,box-shadow .2s ease;background:#fff1e2}
@@ -40,7 +40,7 @@
 .rebuilt-category.reference-category.rebuilt-category-combos{background:#dceefa}.rebuilt-category.reference-category.rebuilt-category-schmears{background:#f9dfde}
 .rebuilt-category-visual{position:relative;display:block;width:100%;height:170px;flex-shrink:0;margin:0 0 5px}
 .rebuilt-category-copy{position:relative;z-index:2;display:flex;flex-direction:column;gap:5px;padding-right:30px;min-width:0;width:100%}
-.rebuilt-category-copy>strong{font-family:Fredoka,"Trebuchet MS",sans-serif;display:block;font-size:31px;line-height:1.04;font-weight:900;letter-spacing:-.05em}
+.rebuilt-category-copy>strong{font-family:Fredoka,"Trebuchet MS",sans-serif;display:block;font-size:31px;line-height:1.04;font-weight:700;letter-spacing:-.05em}
 .rebuilt-category-copy>small>span{display:block}
 .rebuilt-category-copy>small{display:block;font-size:15px;line-height:1.4;font-weight:500;letter-spacing:-.025em}
 .rebuilt-arrow{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#fff9;font-size:26px;line-height:1;font-weight:500}
@@ -103,7 +103,7 @@
   .rebuilt-display{padding:0}.rebuilt-case-header>span{display:none}.rebuilt-bagel-trays{gap:5px}.rebuilt-bagel-pile{height:77px}.rebuilt-bagel-pile>.rebuilt-bagel-photo{width:92px;height:92px}
   .rebuilt-bagel-tray figcaption{font-size:14px}.rebuilt-schmear-trays{gap:5px}.rebuilt-schmear-tray>.rebuilt-schmear-photo{height:77px}.rebuilt-schmear-tray figcaption{font-size:13px}
 }
-@media(max-width:650px){
+@media(max-width:640px){
   .reference-presentation.rebuilt-store{padding:14px 14px 20px;background-size:42px 42px,42px 42px,100% 100%;box-shadow:inset 0 0 35px #6b503915}
   .rebuilt-topbar{min-height:44px;gap:12px}.rebuilt-menu{width:44px;min-height:44px}.rebuilt-cart{min-height:44px;padding:9px 13px;font-size:14px;gap:7px}
   .rebuilt-brand{width:100%;margin:7px auto 0}.rebuilt-brand>p{font-size:18px;margin:0}
@@ -172,4 +172,86 @@
  .rebuilt-schmear-visual>.rebuilt-schmear-photo{width:190px}
  .rebuilt-combo-visual>.rebuilt-bagel-photo{width:145px;height:145px}
  .rebuilt-counter{padding-top:26px}
+}
+
+/* Full-width wall, with fluid content rather than a narrow screenshot-shaped frame. */
+.reference-presentation.rebuilt-store{
+ box-sizing:border-box;max-width:none;
+ padding-inline:clamp(14px,2.25vw,40px);
+}
+.rebuilt-store[data-compact="false"]{min-height:100dvh}
+.rebuilt-store[data-compact="true"]{min-height:0}
+.rebuilt-categories,.rebuilt-counter{width:100%;max-width:1670px}
+.rebuilt-hero{width:100%;max-width:1200px}
+/* Food keeps its intrinsic proportions and stays inside each visual's bounds. */
+.rebuilt-pack-photo{inset:0;width:100%;height:100%;padding:0;object-fit:contain}
+.rebuilt-pack-visual{margin:0;width:100%}
+.rebuilt-combo-visual>.rebuilt-bagel-photo{top:0;width:48%;max-width:240px;height:100%;transform:none;filter:none;object-fit:contain}
+.rebuilt-combo-visual>.rebuilt-combo-one{left:0;right:auto}
+.rebuilt-combo-visual>.rebuilt-combo-two{right:0;left:auto}
+.rebuilt-combo-schmear{bottom:0;width:clamp(68px,8vw,155px)}
+.rebuilt-schmear-visual>.rebuilt-schmear-photo{left:0;top:0;width:100%;height:100%;max-width:100%;transform:none}
+.rebuilt-store .rebuilt-schmear-tray>.rebuilt-schmear-photo,
+.rebuilt-store .rebuilt-schmear-tray .rebuilt-schmear-photo>img{filter:none;transform:none}
+@media(min-width:1051px){
+ .rebuilt-categories{gap:clamp(17px,1.5vw,28px)}
+ .rebuilt-category-visual{height:clamp(160px,13vw,235px)}
+ .rebuilt-store .rebuilt-category{min-height:0;padding:0 clamp(20px,1.7vw,32px) 22px}
+ .rebuilt-category-copy>strong{font-size:clamp(31px,2.25vw,42px)}
+ .rebuilt-category-copy>small{font-size:clamp(15px,1.05vw,18px);line-height:1.4}
+ .rebuilt-counter{gap:clamp(24px,2vw,38px);padding-inline:clamp(22px,2vw,38px)}
+ .rebuilt-bagel-pile{height:clamp(120px,10vw,180px)}
+ .rebuilt-bagel-pile>.rebuilt-pile-front{width:clamp(112px,9.5vw,175px);height:auto}
+ .rebuilt-schmear-tray>.rebuilt-schmear-photo{height:clamp(102px,8vw,155px)}
+}
+@media(min-width:641px) and (max-width:1050px){
+ .rebuilt-brand{width:min(690px,76%);margin:0 auto 6px}
+ .rebuilt-brand>p{font-size:clamp(20px,2.45vw,25px)}
+ .rebuilt-hero{margin:14px auto 18px}
+ .rebuilt-hero h1{font-size:clamp(32px,4.2vw,43px)}
+ .rebuilt-hero p{font-size:15px;line-height:1.4}
+ .rebuilt-categories{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto;gap:clamp(12px,1.6vw,18px);margin:0 auto 18px}
+ .rebuilt-store .rebuilt-category{grid-column:auto;grid-row:auto;min-height:0;padding:0 17px 19px}
+ .rebuilt-category-visual{height:clamp(135px,18vw,184px);margin:0 0 6px}
+ .rebuilt-category-copy{gap:7px;padding-right:0}
+ .rebuilt-category-copy>strong{font-size:clamp(26px,3.15vw,32px)}
+ .rebuilt-category-copy>small{font-size:15px;line-height:1.4}
+ .rebuilt-category-intro{display:block}
+ .rebuilt-category>.rebuilt-arrow{right:12px;bottom:16px;width:29px;height:29px;font-size:23px}
+ .rebuilt-category-packs .rebuilt-category-copy>small{padding-right:25px}
+ .rebuilt-category-combos .rebuilt-category-copy>small{padding-right:25px}
+ .rebuilt-category-schmears .rebuilt-category-copy>small{padding-right:25px}
+ .rebuilt-counter{display:grid;grid-template-columns:minmax(0,1fr);gap:25px;max-width:none;padding:25px 18px 22px}
+ .rebuilt-case-header>span{display:block;font-size:13px}
+ .rebuilt-bagel-trays{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+ .rebuilt-bagel-pile{height:auto;aspect-ratio:1.05;min-height:0}
+ .rebuilt-bagel-pile>.rebuilt-pile-front{width:90%;max-width:180px;height:auto}
+ .rebuilt-schmear-trays{gap:15px 12px}
+ .rebuilt-schmear-tray>.rebuilt-schmear-photo{height:clamp(112px,16vw,155px)}
+ .rebuilt-bagel-tray figcaption{font-size:14px}
+ .rebuilt-schmear-tray figcaption{font-size:13px;line-height:1.35}
+ .rebuilt-store[data-compact="false"] .rebuilt-progress{order:1;width:min(640px,100%);margin:0 auto 18px}
+ .rebuilt-store[data-compact="false"] .rebuilt-counter{order:2}
+ .rebuilt-store[data-compact="true"] .rebuilt-brand{width:220px;margin:-54px auto 0}
+}
+@media(max-width:640px){
+ .rebuilt-pendant{width:61px}
+ .rebuilt-category-visual.rebuilt-pack-visual{margin:0;width:100%}
+ .rebuilt-pack-photo{inset:0;width:100%;height:100%}
+ .rebuilt-schmear-visual>.rebuilt-schmear-photo{inset:0;width:100%;height:100%}
+ .rebuilt-combo-visual>.rebuilt-combo-one{left:0;right:auto}
+ .rebuilt-combo-visual>.rebuilt-combo-two{right:0;left:auto}
+}
+@media(min-width:641px) and (max-height:520px){
+ .rebuilt-brand{width:clamp(300px,47vw,470px);margin:0 auto 3px}
+ .rebuilt-brand>p{font-size:20px}
+ .rebuilt-hero{margin:10px auto 14px}
+ .rebuilt-hero h1{font-size:clamp(30px,3.6vw,38px)}
+ .rebuilt-hero p{display:none}
+ .rebuilt-pendant{transform:scale(.78);transform-origin:top center}
+ .rebuilt-category-visual{height:clamp(112px,14vw,145px)}
+ .rebuilt-store .rebuilt-category{padding-bottom:16px}
+ .rebuilt-category-copy>strong{font-size:26px}
+ .rebuilt-category-copy>small{font-size:14px;line-height:1.4}
+ .rebuilt-store[data-compact="true"] .rebuilt-brand{width:220px;margin:-54px auto 0}
 }

@@ -20,19 +20,36 @@ assert.ok(base.protocol === 'http:' && ['127.0.0.1', 'localhost', '[::1]'].inclu
 assert.ok(/^[a-f0-9]{40}$/.test(process.env.QA_CODE_SHA || ''), 'QA_CODE_SHA must declare the complete application commit')
 const out = path.resolve(process.env.QA_OUTPUT_DIR || process.env.QA_OUTPUT || path.join(repo, 'qa-artifacts', 'rebuilt-storefront'))
 const resultFile = path.join(out, 'rebuilt-results.json')
-const sizes = [{width: 390, height: 844}, {width: 320, height: 700}, {width: 1280, height: 800}]
+const sizes = [
+  {width: 390, height: 844, touch: true},
+  {width: 320, height: 700, touch: true},
+  {width: 1280, height: 800, touch: false},
+  {width: 768, height: 1024, touch: true},
+  {width: 1024, height: 768, touch: true},
+  {width: 844, height: 390, touch: true},
+  {width: 1920, height: 1080, touch: false},
+]
 const widths = process.env.QA_WIDTHS?.split(',').map(Number)
 const viewports = widths ? sizes.filter(size => widths.includes(size.width)) : sizes
-assert.ok(viewports.length && (!widths || widths.length === viewports.length), 'QA_WIDTHS must be drawn from 320,390,1280')
+assert.ok(viewports.length && (!widths || widths.length === viewports.length), 'QA_WIDTHS must be drawn from 320,390,768,844,1024,1280,1920')
 const allScenarios = ['entry', 'pack-decline', 'pack-original', 'pack-flavoured', 'combo', 'schmear']
 const scenarios = process.env.QA_SCENARIOS ? process.env.QA_SCENARIOS.split(',') : allScenarios
 assert.ok(scenarios.length && new Set(scenarios).size === scenarios.length && scenarios.every(value => allScenarios.includes(value)), 'Unknown or duplicate QA scenario')
+// The extended tablet/landscape scope is entry plus the complete decline path.
+// Keep the five original journeys at 320/390/1280 rather than multiplying them
+// into an unrequested full matrix across every additional viewport.
+const originalWidths = new Set([320, 390, 1280])
+const extendedJourneyWidths = new Set([768, 1024, 844])
+const scheduledCases = viewports.flatMap(viewport => scenarios
+  .filter(scenario => scenario === 'entry' || originalWidths.has(viewport.width) || scenario === 'pack-decline' && extendedJourneyWidths.has(viewport.width))
+  .map(scenario => ({viewport, scenario})))
+assert.ok(scheduledCases.length, 'Requested scenarios do not intersect the scoped viewport matrix')
 const root = '.guided-commerce[data-reference-mode="true"][data-review-only="true"]'
 const sourceFiles = [
   'src/routes/index.tsx',
   'src/reference/ReferenceScene.tsx', 'src/reference/ReferenceStorefront.tsx', 'src/reference/reference-storefront.css',
   'src/playable/GuidedCommerce.tsx', 'src/playable/guided-commerce.css', 'src/domain/lib/approved-shop-contract.ts',
-  'src/domain/data/verified-menu-2026-10-21.json',
+  'src/domain/data/verified-menu-2026-10-21.json', 'public/fonts/fredoka-variable.ttf', 'public/fonts/OFL-Fredoka.txt',
 ]
 function sources() {
   const files = new Set(sourceFiles)
@@ -56,14 +73,16 @@ const report = {
     repositorySHA: execFileSync('git', ['rev-parse', 'HEAD'], {cwd: repo, encoding: 'utf8'}).trim(),
     driverSHA256: hash(fs.readFileSync(__filename)), sourceHashes,
     helperHashes: helpers(),
-    viewports, scenarios,
+    viewports, scenarios, scheduledCases,
+    contextPolicy: 'hasTouch and isMobile equal explicit viewport.touch; native touch taps for every touch viewport, mouse clicks at desktop1280/1920.',
     scope: 'Rebuilt DOM storefront and unchanged commercial review-only handlers. No approved-reference photo/crops, vitrina-photo or storyboard art may be requested. Chromium emulation only; no Safari/device/install/deploy claim.',
   },
   criteria: {minimumTargetCSSPx: 44, minimumCopyCSSPx: 12, minimumHeadingCSSPx: 16, documentOverflowToleranceCSSPx: 1,
+    rebuiltSceneFullBleedToleranceCSSPx: 1,
     applicationStorageReads: 0, storageWrites: 0, apiFetchXHR: 0, knownFrameworkReadKey: 'tsr-scroll-restoration-v1_3', maximumKnownReadsPerDocument: 1},
   planned: {entryViewports: scenarios.includes('entry') ? viewports.length : 0, categoryCallbacks: scenarios.includes('entry') ? viewports.length * 3 : 0,
     vitrineCallbacks: scenarios.includes('entry') ? viewports.length * 2 : 0,
-    completeJourneys: scenarios.filter(value => value !== 'entry').length * viewports.length},
+    completeJourneys: scheduledCases.filter(value => value.scenario !== 'entry').length},
   status: 'prepared', cases: [], failures: [], events: [],
 }
 function persist() { fs.mkdirSync(out, {recursive: true}); fs.writeFileSync(resultFile, JSON.stringify(report, null, 2)) }
@@ -128,7 +147,8 @@ async function chooseSchmear(page, {grams = 180, flavor = 'Classic Strawberry'} 
 async function runCase(browser, viewport, scenario) {
   const record = {id: `${viewport.width}-${scenario}`, viewport, scenario, pass: true, captures: [], actions: [], callbacks: [], vitrineCallbacks: [], coverage: []}
   report.cases.push(record); persist()
-  const context = await browser.newContext({viewport, deviceScaleFactor: 1, hasTouch: viewport.width < 600, isMobile: viewport.width < 600, serviceWorkers: 'block'})
+  const context = await browser.newContext({viewport: {width: viewport.width, height: viewport.height}, deviceScaleFactor: 1,
+    hasTouch: viewport.touch, isMobile: viewport.touch, serviceWorkers: 'block'})
   let safety, page, lastScene, shotIndex = 0
   try {
     safety = await installSafety(context, base, detail => failure({safety: detail}, record))
@@ -145,6 +165,11 @@ async function runCase(browser, viewport, scenario) {
       const shot = {name, scene, file, full, sha256: hash(fs.readFileSync(path.join(out, file))), fullSHA256: hash(fs.readFileSync(path.join(out, full)))}
       record.captures.push(shot); event('captured', {case: record.id, name, scene, file, sha256: shot.sha256})
       if (inspect) {
+        shot.fullBleed = await page.locator('.rebuilt-store').evaluate(element => {
+          const r = element.getBoundingClientRect()
+          return {x: r.x, right: r.right, width: r.width, innerWidth, layoutViewportWidth: document.documentElement.clientWidth, scrollX}
+        })
+        if (Math.abs(shot.fullBleed.width - shot.fullBleed.innerWidth) > 1 || Math.abs(shot.fullBleed.x) > 1 || Math.abs(shot.fullBleed.right - shot.fullBleed.innerWidth) > 1) failure({stage: name, rebuiltSceneNotFullBleed: shot.fullBleed}, record)
         shot.geometry = await page.evaluate(inspectRebuiltGeometry)
         for (const issue of shot.geometry.failures) failure({stage: name, geometry: issue}, record)
         shot.secondary = await page.evaluate(inspectSecondaryReadability)
@@ -173,8 +198,8 @@ async function runCase(browser, viewport, scenario) {
       })
       if (target.width < 43.99 || target.height < 43.99 || target.effectiveWidth < 43.99 || target.effectiveHeight < 43.99) failure({actionTarget44: target}, record)
       assert.ok(target.hit, 'Native action center must hit the intended control: ' + target.name)
-      target.input = viewport.width < 600 ? 'touch' : 'mouse'
-      if (viewport.width < 600) await locator.tap()
+      target.input = viewport.touch ? 'touch' : 'mouse'
+      if (viewport.touch) await locator.tap()
       else await locator.click()
       record.actions.push(target)
       if (newTab) return
@@ -283,7 +308,7 @@ async function runCase(browser, viewport, scenario) {
     await page.getByLabel('Dirección de delivery', {exact: true}).fill('Dirección sintética de prueba, número 123, edificio largo')
     await page.getByLabel('Referencia', {exact: true}).fill('Solo revisión local, sin enviar ni reservar')
     await page.getByLabel('Notas', {exact: true}).fill('Datos sintéticos. No cobrar ni crear un pedido.')
-    if (viewport.width < 600) await page.locator(steps.selectors.terms).tap()
+    if (viewport.touch) await page.locator(steps.selectors.terms).tap()
     else await page.locator(steps.selectors.terms).check()
     assert.equal(await page.locator(steps.selectors.terms).isChecked(), true)
     assert.equal(await disabledPay.isDisabled(), true, 'Consent cannot enable payment in review-only mode')
@@ -356,7 +381,7 @@ async function main() {
   const mismatches = []
   for (const [file, actual] of Object.entries(sourceHashes)) {
     let declared
-    try {declared = hash(execFileSync('git', ['show', process.env.QA_CODE_SHA + ':' + file], {cwd: repo, stdio: ['ignore', 'pipe', 'pipe']}))}
+    try {declared = hash(execFileSync('git', ['show', process.env.QA_CODE_SHA + ':' + file], {cwd: repo, stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 32 * 1024 * 1024}))}
     catch {declared = null}
     if (declared !== actual) mismatches.push({file, actual, declared})
   }
@@ -368,7 +393,7 @@ async function main() {
   const {chromium} = require('playwright')
   const browser = await chromium.launch({headless: true, executablePath: process.env.QA_CHROMIUM_EXECUTABLE_PATH || '/usr/bin/chromium', args: ['--no-sandbox', '--disable-gpu']})
   report.metadata.browserVersion = browser.version(); report.status = 'running'; persist()
-  try {for (const viewport of viewports) for (const scenario of scenarios) await runCase(browser, viewport, scenario)}
+  try {for (const {viewport, scenario} of scheduledCases) await runCase(browser, viewport, scenario)}
   finally {
     await browser.close()
     report.metadata.finishedAt = new Date().toISOString()
@@ -389,4 +414,4 @@ async function main() {
 }
 if (require.main === module) main().catch(error => {failure({fatal: String(error.stack || error)}); report.status = 'failed'; persist(); console.error(error); process.exitCode = 1})
 
-module.exports = {assertCleanSecondary}
+module.exports = {assertCleanSecondary, planned: report.planned, scheduledCases}

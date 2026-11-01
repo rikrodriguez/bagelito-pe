@@ -41,12 +41,13 @@ const logoLetters = [
 
 function BagelPhoto({id, className = ''}: {id: string; className?: string}) {
   return <img className={'rebuilt-bagel-photo ' + className} src={`/images/bagel-${id}.webp`}
-    alt="" width={900} height={900} draggable={false} />
+    alt="" width={id === 'sesame' ? 1000 : 900} height={id === 'sesame' ? 1000 : 900} loading={className.includes('pile') ? 'lazy' : 'eager'} decoding="async" draggable={false} />
 }
 
 function SchmearPhoto({className = '', variant = 'neutral'}: {className?: string; variant?: 'neutral' | 'strawberry'}) {
+  const art = variant === 'strawberry' ? 'rebuilt-schmear-bowl' : 'rebuilt-schmear-neutral'
   return <span className={'rebuilt-schmear-photo ' + className} data-art-medium="independent-product-concept">
-    <img src={variant === 'strawberry' ? '/images/rebuilt-schmear-bowl.webp' : '/images/rebuilt-schmear-neutral.webp'} alt="" width={1536} height={1024} draggable={false} />
+    <img src={`/images/${art}-480.webp`} srcSet={`/images/${art}-480.webp 480w, /images/${art}-800.webp 800w, /images/${art}.webp 1536w`} sizes="(max-width:800px) 160px, 220px" alt="" width={1536} height={1024} decoding="async" draggable={false} />
   </span>
 }
 
@@ -103,7 +104,7 @@ export function ReferenceScene(props: Props) {
       <button type="button" className="rebuilt-category reference-category rebuilt-category-packs"
         aria-label="Packs" data-reference-category="packs" onClick={() => props.onCategory('packs')}>
         <span className="rebuilt-category-visual rebuilt-pack-visual" aria-hidden="true">
-          <img className="rebuilt-pack-photo" src="/images/rebuilt-pack-bagels.webp" alt="" width={1312} height={1199} draggable={false} />
+          <img className="rebuilt-pack-photo" src="/images/rebuilt-pack-bagels-480.webp" srcSet="/images/rebuilt-pack-bagels-480.webp 480w, /images/rebuilt-pack-bagels-800.webp 800w, /images/rebuilt-pack-bagels.webp 1312w" sizes="(max-width:800px) 180px, 300px" fetchPriority="high" alt="" width={1312} height={1199} draggable={false} />
         </span>
         <span className="rebuilt-category-copy"><strong>Packs</strong><small>Grandes o minis.<br />Para compartir.</small></span>
         <Arrow />

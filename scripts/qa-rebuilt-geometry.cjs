@@ -26,9 +26,9 @@ function inspectRebuiltGeometry(options = {}) {
     }
     return false
   }
-  function geometry(e, includeSelf = false) {
-    const rect = box(e); let effective = { ...rect }, hard = { ...rect }, canClip = true
-    let maxWidth = rect.width, maxHeight = rect.height
+  function geometry(e, includeSelf = false, textBounds = null) {
+    const rect = box(e), seed = textBounds || rect; let effective = { ...seed }, hard = { ...seed }, canClip = true
+    let maxWidth = seed.width, maxHeight = seed.height
     const scrollports = []
     for (let p = includeSelf ? e : e.parentElement; p; p = p.parentElement) {
       const s = style(p)
@@ -71,14 +71,38 @@ function inspectRebuiltGeometry(options = {}) {
     }
   }
   for (const asset of forbiddenAssets) failures.push({ ...asset, assetKind: asset.kind, kind: 'forbidden-reference-art' })
-  const horizontalOverflow = [], nativeInternalOverflow = []
+  function clippedHorizontalContent(e) {
+    const s = style(e), masked = /^(hidden|clip)$/.test(s.overflowX)
+    if (!masked) return { text: [], targets: [] }
+    const r = box(e), left = r.x + e.clientLeft, right = left + e.clientWidth, texts = [], clippedTargets = []
+    const nodes = document.createTreeWalker(e, NodeFilter.SHOW_TEXT)
+    let node
+    while ((node = nodes.nextNode())) {
+      const parent = node.parentElement, text = node.textContent?.replace(/\s+/g, ' ').trim()
+      if (!text || !parent || parent.closest('script,style,noscript,template,option') || !visible(parent) || screenReaderOnly(parent)) continue
+      const range = document.createRange(); range.selectNodeContents(node)
+      if ([...range.getClientRects()].some(g => g.width > 0 && g.height > 0 && (g.x < left - .5 || g.right > right + .5))) texts.push(text.slice(0, 160))
+    }
+    for (const target of e.querySelectorAll('button,a[href],input:not([type="hidden"]),select,textarea,[role="button"],[role="link"]')) {
+      if (!visible(target) || screenReaderOnly(target)) continue
+      const t = box(target)
+      if (t.width > 0 && t.height > 0 && (t.x < left - .5 || t.right > right + .5)) clippedTargets.push(describe(target))
+    }
+    return { text: texts, targets: clippedTargets }
+  }
+  const horizontalOverflow = [], nativeInternalOverflow = [], decorativeOverflow = []
   for (const e of all) {
     if (!visible(e) || screenReaderOnly(e) || !(e.clientWidth > 0) || !Number.isFinite(e.scrollWidth)) continue
     const excess = e.scrollWidth - e.clientWidth
     if (excess > 1) {
       const entry = { ...describe(e), clientWidth: e.clientWidth, scrollWidth: e.scrollWidth, excess, overflowX: style(e).overflowX }
       if (e.matches('input,textarea')) nativeInternalOverflow.push(entry)
-      else { horizontalOverflow.push(entry); fail('horizontal-overflow', e, entry) }
+      else {
+        const realClip = clippedHorizontalContent(e), root = e === document.body || e === document.documentElement
+        const pans = /^(auto|scroll)$/.test(style(e).overflowX)
+        if (root || pans || realClip.text.length || realClip.targets.length) { horizontalOverflow.push({ ...entry, clippedContent: realClip }); fail('horizontal-overflow', e, { ...entry, clippedContent: realClip }) }
+        else decorativeOverflow.push({ ...entry, reason: 'Non-pannable painted spill; no text or interactive descendant clipped by this mask' })
+      }
     }
   }
   const documentOverflow = Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0) - innerWidth
@@ -112,7 +136,7 @@ function inspectRebuiltGeometry(options = {}) {
 
   const titleSelector = 'h1,h2,h3,h4,h5,h6,[role="heading"],.category-title,.reference-category strong,.reference-category b' + (options.titleSelectors ? ',' + options.titleSelectors : '')
   const productSelector = '.mobile-bagel-card,.mobile-schmear-card,.product-card,[data-product-card],.mobile-bagel-sign,.mobile-schmear-label,.product-name,.product-title,[data-product-name]'
-  const groupSelector = '.mobile-bagel-card,.mobile-schmear-card,.product-card,[data-product-card],.reference-category,.category-card,[data-category-card]'
+  const groupSelector = '.mobile-bagel-card,.mobile-schmear-card,.product-card,[data-product-card],.reference-category,.category-card,[data-category-card],.pack-format-grid>button,.guided-pack-mix>button,.pack-choice-grid>button,.guided-size-cards>button,.approved-combo-overlay>button,.guided-cashier-action,.guided-payment-sheet'
   const semanticSelector = '.reference-schmear-price,.product-price,[data-product-price],.mobile-bagel-sign,.mobile-schmear-label,.product-name,.product-title,[data-product-name],.product-note,.product-description,[data-product-note],small,p,h1,h2,h3,h4,h5,h6,strong,b'
   const texts = [], groups = new Map(), backBlocks = new Map(), headingBlocks = new Map(), walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   let textNode
@@ -124,7 +148,10 @@ function inspectRebuiltGeometry(options = {}) {
     if (!glyphs.length) continue
     const s = style(e), productText = Boolean(e.closest(productSelector)), title = !productText && Boolean(e.closest(titleSelector)), minimum = title ? 16 : 12
     const { fontSize, scale, effectiveFontSize } = fontMetrics(e)
-    const g = geometry(e, true), outside = glyphs.filter(r => r.x < g.hardClip.x - .5 || r.right > g.hardClip.right + .5 || r.y < g.hardClip.y - .5 || r.bottom > g.hardClip.bottom + .5)
+    // A line box is not a clipping mask. Fonts can paint ascenders/descenders
+    // beyond it when overflow is visible; only actual overflow masks clip glyphs.
+    const glyphBounds = finish({ x: Math.min(...glyphs.map(r => r.x)), y: Math.min(...glyphs.map(r => r.y)), right: Math.max(...glyphs.map(r => r.right)), bottom: Math.max(...glyphs.map(r => r.bottom)) })
+    const g = geometry(e, true, glyphBounds), outside = glyphs.filter(r => r.x < g.hardClip.x - .5 || r.right > g.hardClip.right + .5 || r.y < g.hardClip.y - .5 || r.bottom > g.hardClip.bottom + .5)
     const ellipsisApplied = s.textOverflow === 'ellipsis' && (e.scrollWidth > e.clientWidth + 1 || outside.length > 0)
     const entry = { text: text.slice(0, 240), element: describe(e), title, fontSize, effectiveFontSize, minimum, glyphs, hardClip: g.hardClip, scrollports: g.scrollports, clippedGlyphs: outside, ellipsisApplied }
     texts.push(entry)
@@ -155,7 +182,7 @@ function inspectRebuiltGeometry(options = {}) {
     for (const a of first.glyphs) for (const b of second.glyphs) { const r = intersect(a, b); if (r.width > .5 && r.height > .5) collisions.push(r) }
     if (collisions.length) { const overlap = { back: first, heading: second, intersections: collisions }; headerOverlaps.push(overlap); fail('back-heading-text-overlap', back, overlap) }
   }
-  return { thresholds, viewport, documentOverflow, horizontalOverflow, nativeInternalOverflow, targets, texts, overlaps, headerOverlaps, forbiddenAssets, failures, passed: failures.length === 0, scope: 'Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets.' }
+  return { thresholds, viewport, documentOverflow, horizontalOverflow, nativeInternalOverflow, decorativeOverflow, targets, texts, overlaps, headerOverlaps, forbiddenAssets, failures, passed: failures.length === 0, scope: 'Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets.' }
 }
 
 module.exports = { inspectRebuiltGeometry }
