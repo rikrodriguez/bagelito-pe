@@ -35,10 +35,10 @@ const schmears = [
 ]
 const steps = ['Entrada', 'Categoría', 'Selecciona', 'Revisa', 'Pago']
 const logoLetters = [
-  {letter:'B', x:100, y:230, rotate:-17}, {letter:'A', x:211, y:186, rotate:-12},
-  {letter:'G', x:326, y:154, rotate:-7}, {letter:'E', x:441, y:141, rotate:-2},
-  {letter:'L', x:544, y:143, rotate:4}, {letter:'I', x:635, y:158, rotate:9},
-  {letter:'T', x:731, y:187, rotate:14}, {letter:'O', x:849, y:231, rotate:20},
+  {letter:'B', x:118, y:221, rotate:-24, width:109, size:168}, {letter:'A', x:228, y:176, rotate:-8, width:93, size:158},
+  {letter:'G', x:337, y:151, rotate:-7, width:99, size:164}, {letter:'E', x:442, y:142, rotate:-2, width:94, size:167},
+  {letter:'L', x:545, y:149, rotate:4, width:102, size:171}, {letter:'I', x:626, y:158, rotate:9, width:100, size:167},
+  {letter:'T', x:703, y:173, rotate:14, width:100, size:164}, {letter:'O', x:816, y:213, rotate:18, width:105, size:164},
 ]
 const placardCenters: Record<string, [number, number]> = {
   plain:[216,361],everything:[481,361],sesame:[747,361],'classic-onion':[1014,361],
@@ -79,9 +79,10 @@ function StepIcon({index}: {index: number}) {
 function Wordmark() {
   return <div className="rebuilt-brand">
     <svg className="rebuilt-wordmark" viewBox="0 0 960 300" role="img" aria-label="Bagelito">
-      <defs><path id="bagelito-tagline-curve" d="M210 240 Q480 155 770 240" /></defs>
+      <defs><path id="bagelito-tagline-curve" d="M170 250 Q440 145 730 250" /></defs>
       <g textAnchor="middle" paintOrder="stroke fill" strokeLinejoin="round" strokeLinecap="round">
         {logoLetters.map(item => <text key={item.letter} x={item.x} y={item.y}
+          style={{'--letter-width': item.width, fontSize: item.size} as CSSProperties}
           transform={`rotate(${item.rotate} ${item.x} ${item.y - 60})`}>{item.letter}</text>)}
       </g>
       <text className="rebuilt-tagline" textAnchor="middle"><textPath href="#bagelito-tagline-curve" startOffset="50%">Classic Gringo Bagels</textPath></text>

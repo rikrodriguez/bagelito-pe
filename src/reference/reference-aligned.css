@@ -1,7 +1,9 @@
 /* Reference stage anchors: coordinates refer to the approved 1536 x 1024 view.
    Only the entry scene uses this composition. Checkout keeps its native flow. */
-.rebuilt-wordmark text { font-size:176px; font-variation-settings:"wdth" 100,"wght" 700; }
-.rebuilt-wordmark .rebuilt-tagline { font-size:44px; font-weight:600; letter-spacing:0; stroke:none; }
+.rebuilt-wordmark text { font-size:168px; font-variation-settings:"wdth" var(--letter-width,100),"wght" 600; font-weight:600; fill:#023a9b; stroke:#f18b85; }
+.rebuilt-wordmark .rebuilt-tagline { font-family:Arial,sans-serif; font-size:40px; font-weight:700; font-variation-settings:normal; letter-spacing:0; fill:#023a9b; stroke:none; }
+.rebuilt-wordmark { filter:none; }
+.rebuilt-wordmark>g { filter:drop-shadow(0 2px 0 #003277) drop-shadow(0 3px 3px #4b39252a); }
 .rebuilt-store[data-compact="true"] .rebuilt-tagline { display:none; }
 .rebuilt-store[data-compact="true"] .rebuilt-wall-menu,
 .rebuilt-store[data-compact="true"] .rebuilt-shirt-mark { display:none; }
@@ -34,7 +36,6 @@
   .rebuilt-store[data-compact="false"] .rebuilt-menu { width:3.90625cqw; height:3.90625cqw; min-width:44px; min-height:44px; }
   .rebuilt-store[data-compact="false"] .rebuilt-cart { min-height:44px; padding:.8cqw 1.2cqw; font-size:clamp(14px,1.05cqw,20px); }
   .rebuilt-store[data-compact="false"] .rebuilt-brand { position:absolute; left:29.9479167%; top:4.39453125%; width:50.78125%; margin:0; }
-  .rebuilt-store[data-compact="false"] .rebuilt-wordmark { filter:drop-shadow(0 2px 0 #003277) drop-shadow(0 3px 3px #4b39252a); }
   .rebuilt-store[data-compact="false"] .rebuilt-hero { position:absolute; left:32.096354%; top:26.3671875%; width:46%; margin:0; text-align:left; }
   .rebuilt-store[data-compact="false"] .rebuilt-hero h1 { font-size:3.90625cqw; line-height:1.1; font-weight:600; letter-spacing:-.025em; text-shadow:0 2px 4px #211a1466; }
   .rebuilt-store[data-compact="false"] .rebuilt-categories { position:absolute; left:25.716146%; top:34.1796875%; width:54.361979%; height:22.8515625%; margin:0; grid-template-columns:1fr 1.05fr 1fr; gap:.9114583cqw; }
