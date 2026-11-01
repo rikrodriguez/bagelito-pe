@@ -1,0 +1,21 @@
+{"at":"2026-11-01T00:39:46.398Z","type":"exact-image-captured","width":390,"file":"390-exact-storefront.png"}
+{"at":"2026-11-01T00:39:46.613Z","type":"zoom-captured","width":390,"name":"reference-zoom-expanded","file":"390-reference-zoom-expanded.png"}
+{"at":"2026-11-01T00:39:47.167Z","type":"zoom-captured","width":390,"name":"reference-zoom-toward-right-edge","file":"390-reference-zoom-toward-right-edge.png"}
+{"at":"2026-11-01T00:39:47.706Z","type":"zoom-captured","width":390,"name":"reference-zoom-toward-left-edge","file":"390-reference-zoom-toward-left-edge.png"}
+{"at":"2026-11-01T00:39:47.846Z","type":"zoom-captured","width":390,"name":"reference-zoom-restored","file":"390-reference-zoom-restored.png"}
+{"at":"2026-11-01T00:39:47.928Z","type":"category-callback","width":390,"name":"Packs","scene":"pack-size"}
+{"at":"2026-11-01T00:39:48.098Z","type":"category-callback","width":390,"name":"Combos","scene":"combos"}
+{"at":"2026-11-01T00:39:48.249Z","type":"category-callback","width":390,"name":"Schmears","scene":"schmear-size"}
+{"at":"2026-11-01T00:39:48.268Z","type":"capabilities-drained","width":390,"knownFrameworkReads":3,"forbidden":0}
+{"at":"2026-11-01T00:39:48.582Z","type":"exact-image-captured","width":320,"file":"320-exact-storefront.png"}
+{"at":"2026-11-01T00:39:48.779Z","type":"zoom-captured","width":320,"name":"reference-zoom-expanded","file":"320-reference-zoom-expanded.png"}
+{"at":"2026-11-01T00:39:49.326Z","type":"zoom-captured","width":320,"name":"reference-zoom-toward-right-edge","file":"320-reference-zoom-toward-right-edge.png"}
+{"at":"2026-11-01T00:39:49.885Z","type":"zoom-captured","width":320,"name":"reference-zoom-toward-left-edge","file":"320-reference-zoom-toward-left-edge.png"}
+{"at":"2026-11-01T00:39:59.948Z","type":"case-failed","width":320,"message":"TimeoutError: page.waitForFunction: Timeout 10000ms exceeded."}
+{"at":"2026-11-01T00:40:00.049Z","type":"capabilities-drained","width":320,"knownFrameworkReads":1,"forbidden":0}
+{"at":"2026-11-01T00:40:00.615Z","type":"exact-image-captured","width":1280,"file":"1280-exact-storefront.png"}
+{"at":"2026-11-01T00:40:00.745Z","type":"category-callback","width":1280,"name":"Packs","scene":"pack-size"}
+{"at":"2026-11-01T00:40:00.882Z","type":"category-callback","width":1280,"name":"Combos","scene":"combos"}
+{"at":"2026-11-01T00:40:01.023Z","type":"category-callback","width":1280,"name":"Schmears","scene":"schmear-size"}
+{"at":"2026-11-01T00:40:01.039Z","type":"capabilities-drained","width":1280,"knownFrameworkReads":3,"forbidden":0}
+3 image cases; 1 failures

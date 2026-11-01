@@ -1,0 +1,140 @@
+{
+  "applicationSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "pullRequest": "https://github.com/rikrodriguez/bagelito-pe/pull/45",
+  "draft": true,
+  "applicationBranch": "feat/reference-image-storefront-20261101",
+  "existingPRHeadBranch": "feat/guided-store-visual-alignment-20261031",
+  "preserved3DBranch": "archive/pr45-guided-3d-20261101",
+  "preserved3DSHA": "6513faf82420bea0fb1952185615fa5ab1493301",
+  "reference": {
+    "path": "public/images/store-reference-approved.webp",
+    "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "naturalSize": [
+      1536,
+      1024
+    ],
+    "unchanged": true,
+    "jpegByteIdentityClaimed": false
+  },
+  "stages": {
+    "build": {
+      "status": "PASS",
+      "typescript": true,
+      "structural": [
+        11,
+        11
+      ],
+      "manual": [
+        4,
+        4
+      ],
+      "legacyMovement": [
+        14,
+        14
+      ],
+      "evidence": "build-6f765ce/README.md"
+    },
+    "node": {
+      "status": "PASS",
+      "passed": 58,
+      "failed": 0,
+      "skipped": 0,
+      "guardTestsIncluded": 6,
+      "evidence": "build-6f765ce/node-tests.log"
+    },
+    "reviewJourney": {
+      "status": "PASS",
+      "completeCases": 5,
+      "layoutFocus": 1,
+      "pathsCompleted390": [
+        "packs",
+        "combos",
+        "schmears"
+      ],
+      "additionalViewports": [
+        320,
+        1280
+      ],
+      "cartEditProgressMenuConsent": true,
+      "evidence": "e2e-final-6f765ce/README.md",
+      "layoutEvidence": "e2e-layout-6f765ce/README.md",
+      "notHistoricalGuided32": true
+    },
+    "landing": {
+      "status": "PASS",
+      "viewports": [
+        320,
+        390,
+        1280
+      ],
+      "categoryCallbacks": 9,
+      "minEffectiveTarget": 44,
+      "canvasCount": 0,
+      "evidence": "zoom-final-6f765ce/README.md"
+    },
+    "zoom": {
+      "status": "PASS",
+      "nativeMobileViewports": [
+        320,
+        390
+      ],
+      "desktopZoom": "not applicable",
+      "stableScrollFramesBeforeTap": 8,
+      "original320TimeoutPreserved": true,
+      "diagnostic": "zoom-diagnostic-320-6f765ce/README.md",
+      "firstEpoch": "zoom-first-6f765ce/README.md"
+    },
+    "browserSafety": {
+      "apiRequests": 0,
+      "providerRequests": 0,
+      "fetchXHR": 0,
+      "postRequests": 0,
+      "storageWrites": 0,
+      "businessDraftReads": 0,
+      "knownFrameworkRead": "one sessionStorage.getItem(tsr-scroll-restoration-v1_3) per document; stacks retained",
+      "zeroStorageReadsClaimed": false
+    },
+    "previewArtifact": {
+      "status": "PASS",
+      "path": "docs/previews/reference-storefront-20261101/bagelito-reference-review-6f765ce.zip",
+      "bytes": 8964021,
+      "sha256": "a8429039f9b911094b76dfb794692c6d1f07750ded8dddf16d3607ebf86c9f48",
+      "verifiedInternalHashes": 113,
+      "rootAndAssets": 200,
+      "apiGuard": 503,
+      "entryForcesLoopbackAndReviewFlag": true,
+      "browserE2E": "same immutable app build on3209; artifact separately verified via hashes and local GETs"
+    }
+  },
+  "commercialScope": {
+    "noBeverages": true,
+    "noSandwiches": true,
+    "upsell": "optional120g schmear: Original12PEN/flavoured16PEN from verified catalog, decline supported",
+    "loyaltyRule": "each10verified orders gives2bagels+1schmear free",
+    "internalTracking": "pending implementation and verification",
+    "redemption": "pending",
+    "wallet": "not offered",
+    "GHL": "evaluation only; no new dependency",
+    "payment": "disabled; no reservation/order/payment or fake confirmation"
+  },
+  "historicalFailuresPreserved": [
+    "strict no-framework-read criterion4f5e568",
+    "Distrito exact accessible-label driver timeoutfe4c3ec",
+    "legacy CSS overlap and clipped checkoutfe4c3ec; fixed in6f765ce",
+    "zoom320 tap during remaining inertia; same app passed with stable-scroll wait",
+    "Node invocation missing mandatory QA_HDR_FIXTURE_PATH; unchanged assertions passed with approved offline fixture"
+  ],
+  "notExecutedOrCertified": [
+    "Safari",
+    "physical mobile devices",
+    "real payments",
+    "real order creation",
+    "loyalty tracking or redemption",
+    "remote CI",
+    "deployment"
+  ],
+  "guardScope": "flag false tested only in stub downstream fixture; no financial handler was opened to validate it",
+  "autodeploy": false,
+  "deployed": false,
+  "merged": false
+}
