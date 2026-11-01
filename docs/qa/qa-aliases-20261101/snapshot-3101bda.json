@@ -1,0 +1,16 @@
+{
+  "declaredCode": "3101bda61114618353644ccbbc6dbd073c3bc5d2",
+  "runtimeUIBase": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "runtimeAppUnchanged": true,
+  "snapshot": "/tmp/bagelito-qa-alias-3101bda",
+  "files": {
+    "package.json": "f1434a5884a0f9eba13c024cf4277f3adf512ec6164d828315f02d5251fd1866",
+    "src/playable/GuidedCommerce.tsx": "88222b14ff0688dc22363dade8d85a764684283ad0eb886741dc905157e5879a",
+    "src/reference/ReferenceScene.tsx": "8d35200e7121348145f695b50b2a0af66035347c7b70b8eba86cded3923b7a87",
+    "src/reference/ReferenceStorefront.tsx": "b42a8a2af362b0f4b41e3577d262d8e509319a77161065a4cfe8faaa5bc6c84b",
+    "src/reference/rebuilt-flow.css": "b56006dbbc4041a85ea00f0e167a99e3ce336c60be05a3da073d9d4ce10ea8be",
+    "src/reference/rebuilt-storefront.css": "6d7296d8723e2e94cb95b57a194cd67d9ed508c55a994312d3c3632026c709e8",
+    "scripts/qa-rebuilt-storefront.cjs": "b5ebd89aac846c0e58db65447d25f26a577aa67b0757dce6565ead64dad42694",
+    "scripts/qa-rebuilt-composition.cjs": "816e7acbc96aebeee6061af843a7d9f627174a6831637b2ab98a8cb53ee56bf2"
+  }
+}

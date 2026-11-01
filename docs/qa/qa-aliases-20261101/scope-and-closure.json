@@ -1,0 +1,27 @@
+{
+  "codeQA": "3101bda61114618353644ccbbc6dbd073c3bc5d2",
+  "runtimeBase": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "beforePR47": "2a824c5b29bb85a41b616d20286ed29295e80ed7",
+  "PR46": "1cf48c666bcc377e1cd8a068906d27e2494203cf",
+  "integrationReference": "70fc2a1d4aaf12a217b1bdc8655fe98e7a9fb9e6",
+  "appSrcPublicTestsUnchanged": true,
+  "dependencyAndPackageMetadataUnchanged": true,
+  "unchangedAssertionHelpers": [
+    "qa-rebuilt-geometry.cjs",
+    "qa-rebuilt-safety.cjs",
+    "qa-reference-text-geometry.cjs",
+    "qa-reference-secondary-readability.cjs",
+    "qa-reference-review-steps.cjs"
+  ],
+  "thresholds": {
+    "targets": 44,
+    "bodyFont": 12,
+    "headingFont": 16
+  },
+  "oldLegacyDriversPreserved": true,
+  "lockGenerated": false,
+  "newPackagesInstalled": false,
+  "ownedServerStopped": true,
+  "port": 3240,
+  "browserJobsActive": false
+}

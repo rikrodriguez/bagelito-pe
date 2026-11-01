@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "artifactProvenance": null,
+    "noZoomAuditSHA256": "36d5fe1a24d31fa045701666e8a2c2e61c9972dada91aaba928598ea81f9d4f9",
+    "startedAt": "2026-11-01T07:46:05.513Z",
+    "base": "http://127.0.0.1:3237/",
+    "declaredCodeSHA": "2a824c5b29bb85a41b616d20286ed29295e80ed7",
+    "repositorySHA": "2a824c5b29bb85a41b616d20286ed29295e80ed7",
+    "driverSHA256": "ec39b4ae0874fc0e24794a20dabbf58a648bd8515c803c7d2aa56a44d32601c3",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "mobileContract": "Explicit user change: no zoom/pan, DOMtitles16/context12, exact-source cropped art without painted-card duplication",
+    "scope": "Explicit changed mobile contract: exact-source crops and native readable cards, no zoom or horizontal pan; desktop preserves complete image. Review-only callbacks and noAPI/fetch/XHR/writes; one exact-key framework read per document recorded.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T07:46:26.692Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "status": "failed",
+  "cases": [],
+  "failures": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "message": "page.waitForResponse: Timeout 20000ms exceeded while waiting for event \"response\"\n    at main (/workspace/bagelito-rebuilt-storefront/scripts/qa-reference-direct-entry.cjs:85:29)"
+    }
+  ],
+  "network": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3237/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-BfidDE5Q.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/assets/index-D-KoXC6_.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/assets/routes-v6PhBbRo.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-B_F1lXjJ.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/fonts/fredoka-variable.ttf",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "status": 200
+          }
+        ],
+        "imageBodies": [],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "documentId": 1793519166508.5,
+            "url": "http://127.0.0.1:3237/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "documentId": 1793519166508.5,
+            "url": "http://127.0.0.1:3237/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793519166508.5",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+              "url": "http://127.0.0.1:3237/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T07:46:26.509Z",
+      "type": "case-failed",
+      "width": 390,
+      "message": "TimeoutError: page.waitForResponse: Timeout 20000ms exceeded while waiting for event \"response\""
+    },
+    {
+      "at": "2026-11-01T07:46:26.592Z",
+      "type": "capabilities-drained",
+      "width": 390,
+      "knownFrameworkReads": 1,
+      "forbidden": 0
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "decision": "No lockfile generated; equivalence to tested dependency graph cannot be demonstrated by current evidence.",
+  "currentManagerFields": {
+    "packageManager": null,
+    "engines": null,
+    "volta": null
+  },
+  "historicalLocks": [
+    {
+      "commit": "cbd45f8f5f014c7337a7c4b71f406e94af63a11c",
+      "path": "package-lock.json",
+      "bytes": 7550,
+      "sha256": "a674bf9967f8219bee049e9baec5a8d5ed998a668388bf724f54f9f441269e35",
+      "error": "invalid JSON"
+    },
+    {
+      "commit": "d7ee1a37ddd9e4cc0a393eacd8a801399ca432ae",
+      "path": "package-lock.json",
+      "bytes": 44598,
+      "sha256": "5c102bbb38aa01b9b74a52e293a32954b4a724ea14bf05558078c2af228b7de9",
+      "error": "invalid UTF-8"
+    },
+    {
+      "commit": "65477664758189e38e14a2d4673766da83f7625b",
+      "path": "package-lock.json",
+      "bytes": 53855,
+      "sha256": "b2c004e8069736d1cde21fe07777370ee7530a9ebcb0aa372973167e541af262",
+      "error": "invalid UTF-8"
+    },
+    {
+      "commit": "f19f8b02310ad7b02d64b902059046ef67b9ec2e",
+      "path": "package-lock.json",
+      "bytes": 202100,
+      "sha256": "a76798b9e8a12d78936c3d5354d8f34c4bd1dd63b64feab5e8861a793f23a2c4",
+      "validUTF8AndJSON": true,
+      "name": "bagelito-pe",
+      "lockfileVersion": 3,
+      "packageEntries": 378
+    },
+    {
+      "commit": "56fba5fe9b6fdb6d0e8efd94fa97a3aeefc8dc8e",
+      "path": "package-lock.json",
+      "bytes": 202100,
+      "sha256": "a76798b9e8a12d78936c3d5354d8f34c4bd1dd63b64feab5e8861a793f23a2c4",
+      "validUTF8AndJSON": true,
+      "name": "bagelito-pe",
+      "lockfileVersion": 3,
+      "packageEntries": 378
+    }
+  ],
+  "hiddenInstalledLock": {
+    "path": "node_modules/.package-lock.json",
+    "sha256": "b996826bf9cfb0952b151aceb1513d728e0ac5985aa59be942a29404d3631bf7",
+    "lockfileVersion": 3,
+    "packageEntries": 197,
+    "hasRootPackage": false,
+    "scope": "Observed installed dependency metadata; not a portable root lockfile."
+  },
+  "observedVersions": {
+    "@supabase/supabase-js": {
+      "declared": "^2.106.2",
+      "installed": "2.118.0"
+    },
+    "typescript": {
+      "declared": "^5.8.3",
+      "installed": "5.9.3"
+    },
+    "@types/node": {
+      "declared": "^24.10.1",
+      "installed": "24.19.2"
+    }
+  },
+  "currentWorkflowAndDockerPaths": [],
+  "noInstallOrRegistryQuery": true,
+  "noCredentialFileRead": true
+}

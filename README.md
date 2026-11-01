@@ -120,3 +120,34 @@ Never expose the service-role key to the client. Culqi credentials are not part 
 The authenticated HighLevel session is visible, but the available browser-control connector cannot perform the required GHL UI actions in this chat. No AI Studio-generated Bagelito repository was found in the connected GitHub account as of this verification.
 
 The existing Vercel Git deployment check is also being rejected by the Free-plan daily deployment quota; this is separate from the successful Vercel Sandbox build evidence above.
+
+## QA actual de la vitrina reconstruida
+
+Los aliases `qa:reference:*` ahora comprueban la UI DOM reconstruida de PR47. Los comandos históricos `scripts/qa-reference-{card-text,secondary-text,direct-entry}.cjs` conservan el contrato anterior basado en imagen y quedan como evidencia histórica; no son el criterio de aceptación de la UI actual.
+
+| Alias | Cobertura por defecto |
+| --- | --- |
+| `npm run qa:reference:text` |18 estados de schmears/90 tarjetas en320/390/1280; cinco sabores seleccionados y estado sin seleccionar, precios120 g y toggles. |
+| `npm run qa:reference:secondary` |36 estados en320/390/1280: formato/mini/grande, bagels, extras, resumen, textos largos/consentimiento, Combo y tamaños/sabores de schmear. |
+| `npm run qa:reference:entry` |7 viewports320/390/768/1024/844horizontal/1280/1920: tecladoTab/Enter,21callbacks de categoría,14 de vitrina y126 fotos decodificadas. |
+
+Requiere un build aislado con las guardas de revisión activas, dependencias y Playwright ya disponibles. No instala paquetes. Ejemplo para el código QA `3101bda61114618353644ccbbc6dbd073c3bc5d2` (runtime de UI sin cambios respecto de79e):
+
+```sh
+npm run build
+BAGELITO_REFERENCE_REVIEW_ONLY=true BAGELITO_MERCHANT_REVIEW_ONLY=true NITRO_HOST=127.0.0.1 NITRO_PORT=3240 node .output/server/index.mjs
+```
+
+En otra terminal, configure `NODE_PATH` si Playwright está instalado fuera del proyecto; en este executor es `/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules`. Luego:
+
+```sh
+export BASE_URL=http://127.0.0.1:3240
+export QA_CODE_SHA=3101bda61114618353644ccbbc6dbd073c3bc5d2
+QA_OUTPUT_DIR=/tmp/repro-alias/text npm run qa:reference:text
+QA_OUTPUT_DIR=/tmp/repro-alias/secondary npm run qa:reference:secondary
+QA_OUTPUT_DIR=/tmp/repro-alias/entry npm run qa:reference:entry
+```
+
+Los outputs deben ser nuevos. `QA_WIDTHS` permite una comprobación focalizada explícita y `QA_EXACT_WIDTH` conserva el filtro antiguo de un ancho; si ambos están definidos deben coincidir. El informe registra el alcance real. Los perfiles rechazan overrides de escenario, URL no loopback, SHA ausente y resultados ya existentes. No use `--preflight` como prueba de navegador: sólo prepara y verifica procedencia.
+
+La auditoría del gestor no autoriza añadir un lockfile: el repositorio actual no fija gestor/Node ni contiene un lock válido del grafo TanStack probado. Los `npm ci` históricos del README corresponden al commit/proyecto allí indicado, no a una instalación limpia reproducible del árbol actual. Consulte [la auditoría y el plan de lockfile](docs/qa-aliases-and-lock-audit-20261101.md).

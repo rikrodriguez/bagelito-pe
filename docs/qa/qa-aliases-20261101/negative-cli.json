@@ -1,0 +1,20 @@
+[
+  {
+    "case": "scenario-override",
+    "exitCode": 1,
+    "expectedFailure": "Profiles have fixed coverage",
+    "browserExecuted": false
+  },
+  {
+    "case": "conflicting-widths",
+    "exitCode": 1,
+    "expectedFailure": "must agree",
+    "browserExecuted": false
+  },
+  {
+    "case": "non-loopback",
+    "exitCode": 1,
+    "expectedFailure": "Loopback HTTP origin required",
+    "browserExecuted": false
+  }
+]
