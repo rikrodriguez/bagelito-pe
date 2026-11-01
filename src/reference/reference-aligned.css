@@ -1,7 +1,9 @@
 /* Reference stage anchors: coordinates refer to the approved 1536 x 1024 view.
    Only the entry scene uses this composition. Checkout keeps its native flow. */
-.rebuilt-wordmark text { font-size:168px; font-variation-settings:"wdth" var(--letter-width,100),"wght" 600; font-weight:600; fill:#023a9b; stroke:#f18b85; }
-.rebuilt-wordmark .rebuilt-tagline { font-family:Arial,sans-serif; font-size:40px; font-weight:700; font-variation-settings:normal; letter-spacing:0; fill:#023a9b; stroke:none; }
+.rebuilt-wordmark text { font-size:168px; font-variation-settings:"wdth" var(--letter-width,100),"wght" var(--letter-weight,600); font-weight:600; fill:#023a9b; stroke:#f18b85; }
+.rebuilt-wordmark .rebuilt-tagline { font-family:Arial,sans-serif; font-size:39px; font-weight:700; font-variation-settings:normal; letter-spacing:0; fill:#023a9b; stroke:none; }
+.rebuilt-wordmark .rebuilt-initial-b { fill:#023a9b; stroke:#f18b85; stroke-width:11px; }
+.rebuilt-wordmark .rebuilt-a-counter-edge { fill:none; stroke:#f18b85; stroke-width:11px; }
 .rebuilt-wordmark { filter:none; }
 .rebuilt-wordmark>g { filter:drop-shadow(0 2px 0 #003277) drop-shadow(0 3px 3px #4b39252a); }
 .rebuilt-store[data-compact="true"] .rebuilt-tagline { display:none; }
@@ -11,7 +13,8 @@
 .rebuilt-room-shade { display:none; }
 .rebuilt-combo-photo { display:block; width:100%; height:100%; object-fit:contain; }
 .rebuilt-counter { container-type:inline-size; }
-.rebuilt-counter-photo { display:block; position:absolute; left:0; top:-9.5cqw; width:100%; height:auto; pointer-events:none; }
+.rebuilt-counter-photo { display:block; position:absolute; left:-1.9031036168%; top:-11.8752986858cqw; width:106.8195394808%; height:auto; clip-path:inset(0 45.198019802% 0 0); pointer-events:none; }
+.rebuilt-desktop-case-art { display:block; position:absolute; left:55.4105297158%; top:-9.2954780362cqw; width:46.149870801%; height:auto; aspect-ratio:940/778; pointer-events:none; }
 .rebuilt-mobile-case-art { display:none; }
 .rebuilt-counter:before { display:none; }
 .rebuilt-counter .rebuilt-display { position:absolute; inset:0; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; overflow:visible; pointer-events:none; }
@@ -23,8 +26,8 @@
 .rebuilt-counter .rebuilt-schmear-tray:nth-of-type(5) { width:20%; }
 .rebuilt-counter .rebuilt-product-placard figcaption { display:block; min-height:0; padding:0 2px; background:none; border:0; border-radius:0; box-shadow:none; color:#004aad; text-align:center; font-family:Fredoka,Arial,sans-serif; font-size:clamp(12px,1.25cqw,20px); font-variation-settings:"wdth" 75,"wght" 700; font-weight:700; text-transform:uppercase; line-height:1.05; letter-spacing:-.025em; }
 .rebuilt-counter .rebuilt-case-link { position:absolute; z-index:5; top:0; bottom:0; margin:0; padding:0; min-height:44px; background:transparent; border:0; border-radius:2px; box-shadow:none; pointer-events:auto; }
-.rebuilt-bagel-display .rebuilt-case-link { left:0; width:57.5%; }
-.rebuilt-schmear-display .rebuilt-case-link { right:0; width:42.5%; }
+.rebuilt-bagel-display .rebuilt-case-link { left:0; width:55.2083333333%; }
+.rebuilt-schmear-display .rebuilt-case-link { right:0; width:44.7916666667%; }
 .rebuilt-counter .rebuilt-case-link>.rebuilt-arrow { position:absolute; right:6px; top:6px; width:44px; height:44px; color:#004aad; background:#fffdf5ed; box-shadow:0 2px 7px #1c353522; }
 .rebuilt-counter .rebuilt-case-link:hover { outline:2px solid #004aad88; outline-offset:0; }
 
@@ -62,7 +65,7 @@
   .rebuilt-wall-menu,.rebuilt-shirt-mark { display:none; }
   .rebuilt-store[data-compact="false"] .rebuilt-wordmark { margin:0 auto; }
   .rebuilt-counter { position:relative; display:flex; flex-direction:column; gap:18px; width:100%; padding:0; margin:0; border:0; background:none; box-shadow:none; }
-  .rebuilt-counter-photo { display:none; }
+  .rebuilt-counter-photo,.rebuilt-desktop-case-art { display:none; }
   .rebuilt-counter .rebuilt-display { position:relative; inset:auto; width:100%; }
   .rebuilt-counter .rebuilt-bagel-display { aspect-ratio:1165/493; }
   .rebuilt-counter .rebuilt-schmear-display { aspect-ratio:855/493; }

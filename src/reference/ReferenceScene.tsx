@@ -34,22 +34,41 @@ const schmears = [
   {id: 'strawberry', name: 'Classic Strawberry'},
 ]
 const steps = ['Entrada', 'Categoría', 'Selecciona', 'Revisa', 'Pago']
+// Font-derived native vector B with two counters; no image tracing or raster logo.
+const logoInitialBPath = 'M82.49336747153498 220.3078438940554Q78.0401503455094 220.3078438940554 75.95060142038088 218.82476008896936Q73.86105249525237 217.3416762838833 73.30014426333193 214.84610440899516Q72.73923603141151 212.35053253410703 72.73923603141151 209.4350739836744V120.09556819191555Q72.73923603141151 117.26567250244365 73.33658706134486 114.88576765406172Q73.93393809127822 112.5058628056798 76.03338882369992 111.02277900059374Q78.13283955612162 109.5396951955077 82.65181592852154 109.5396951955077H134.27866153713904Q143.60572191009663 109.5396951955077 150.86520841250098 113.70413401824429Q158.12469491490532 117.86857284098087 162.32284332364006 124.904099786878Q166.5209917323748 131.93962673277514 166.44484630854384 140.38810401280287Q166.5209917323748 144.52355294753377 165.4029474642025 148.32827055295Q164.2849031960302 152.1329881583662 162.27255842875775 155.27977696953548Q160.2602136614853 158.42656578070478 157.5751756894399 160.68369300094875Q161.38500668875497 163.27674280271597 164.21204346032746 167.40942833542897Q167.03908023189996 171.54211386814194 168.591612064191 176.49807273694574Q170.144143896482 181.45403160574958 170.1272744482613 186.75078066164923Q169.98553669694962 193.9189930208495 167.33698927208036 200.04422417118406Q164.68844184721107 206.1694553215186 159.95325012553815 210.6975246370526Q155.2180584038652 215.22559395258656 149.0359713727668 217.76671892332098Q142.8538843416684 220.3078438940554 135.86314610700475 220.3078438940554ZM92.69748975274842 200.71401815284773H134.55591214134833Q138.79913196936593 200.71401815284773 142.4003107371339 199.11528467595477Q146.00148950490188 197.5165511990618 148.15814071193898 193.98158243710876Q150.31479191897608 190.4466136751557 150.31479191897608 184.71079341600128Q150.31479191897608 180.37883273343962 149.12343633156445 177.67096005764068Q147.93208074415284 174.96308738184172 145.93089726247382 173.47209330219584Q143.92971378079477 171.98109922254997 141.56048878662205 171.36632129200598Q139.19126379244935 170.75154336146198 136.86709622765545 170.62953770248834Q134.54292866286158 170.50753204351471 132.63628248802024 170.50753204351471H119.436533296653H92.69748975274842ZM92.69748975274842 156.24717091472337H132.8201050151721Q134.72706860746138 153.43306106497255 137.10549484439696 153.27461260798597Q139.48392108133254 153.1161641509994 141.68937696802948 152.15438514093677Q143.89483285472645 151.19260613087417 145.3381138269209 148.87451596507418Q146.7813947991154 146.55642579927422 146.7813947991154 142.23714238164746Q146.7813947991154 135.3858616458189 142.94871184122724 132.29613408928006Q139.11602888333906 129.20640653274123 130.48696131943697 129.20640653274123H92.69748975274842Z'
 const logoLetters = [
-  {letter:'B', x:118, y:221, rotate:-24, width:109, size:168}, {letter:'A', x:228, y:176, rotate:-8, width:93, size:158},
-  {letter:'G', x:337, y:151, rotate:-7, width:99, size:164}, {letter:'E', x:442, y:142, rotate:-2, width:94, size:167},
-  {letter:'L', x:545, y:149, rotate:4, width:102, size:171}, {letter:'I', x:626, y:158, rotate:9, width:100, size:167},
-  {letter:'T', x:703, y:173, rotate:14, width:100, size:164}, {letter:'O', x:816, y:213, rotate:18, width:105, size:164},
+  {letter:'A', x:231, y:182, rotate:-8, width:94, size:160, weight:650},
+  {letter:'G', x:337.6, y:152.5, rotate:-7, width:100, size:166, weight:600},
+  {letter:'E', x:441.3, y:144.5, rotate:-2, width:97, size:169, weight:600},
+  {letter:'L', x:545.8, y:149, rotate:4, width:102, size:171, weight:640},
+  {letter:'I', x:626.7, y:159.2, rotate:9, width:100, size:169, weight:650},
+  {letter:'T', x:704.2, y:174.8, rotate:14, width:100, size:164, weight:700},
+  {letter:'O', x:816.7, y:215.5, rotate:18, width:101, size:164, weight:600},
 ]
 const placardCenters: Record<string, [number, number]> = {
   plain:[216,361],everything:[481,361],sesame:[747,361],'classic-onion':[1014,361],
   'jalapeno-cheddar':[192,567],cheddar:[480,567],'cinnamon-raisin':[746,567],blueberry:[1021,567],
   original:[1328,414],aji:[1575,414],herbs:[1842,414],honey:[1373,585],strawberry:[1748,585],
 }
+// Independent uniform case fits to the same front-plane reference landmarks.
+// The mobile art and its source coordinates stay unchanged.
+const desktopPlacardCenters: Record<string, [number, number]> = {
+  plain:[207,372.5],everything:[453.5,372],sesame:[702,372],'classic-onion':[956,373.5],
+  'jalapeno-cheddar':[188,556.5],cheddar:[439,557],'cinnamon-raisin':[696.5,556.5],blueberry:[956.5,557],
+  original:[1248.5,413],aji:[1513,413.5],herbs:[1795,413.5],honey:[1314.5,560.5],strawberry:[1742.5,560.5],
+}
+const desktopCases = {
+  bagel:{scale:779/1023, x:62.59530791788856, y:428.9956989247312},
+  schmear:{scale:608/860, x:124.3767441860465, y:466.1451162790698},
+}
 function placardStyle(id: string, kind: 'bagel' | 'schmear'): CSSProperties {
-  const [x,y] = placardCenters[id]
-  return {'--label-x': `${x / 2020 * 100}%`, '--label-y': `${y / 2020 * 100 - 9.5}cqw`,
-    '--mobile-label-x': `${(kind === 'bagel' ? x / 1165 : (x - 1165) / 855) * 100}%`,
-    '--mobile-label-y': `${(y - 169) / 493 * 100}%`} as CSSProperties
+  const [x,y] = desktopPlacardCenters[id]
+  const [mobileX,mobileY] = placardCenters[id]
+  const layout = desktopCases[kind]
+  return {'--label-x': `${(layout.x + x * layout.scale - 90) / 1440 * 100}%`,
+    '--label-y': `${(layout.y + y * layout.scale - 600) / 1440 * 100}cqw`,
+    '--mobile-label-x': `${(kind === 'bagel' ? mobileX / 1165 : (mobileX - 1165) / 855) * 100}%`,
+    '--mobile-label-y': `${(mobileY - 169) / 493 * 100}%`} as CSSProperties
 }
 
 function SchmearPhoto({className = '', variant = 'neutral'}: {className?: string; variant?: 'neutral' | 'strawberry'}) {
@@ -79,11 +98,21 @@ function StepIcon({index}: {index: number}) {
 function Wordmark() {
   return <div className="rebuilt-brand">
     <svg className="rebuilt-wordmark" viewBox="0 0 960 300" role="img" aria-label="Bagelito">
-      <defs><path id="bagelito-tagline-curve" d="M170 250 Q440 145 730 250" /></defs>
+      <defs>
+        <path id="bagelito-tagline-curve" d="M170 251.2 Q440 146.2 730 251.2" />
+        <mask id="bagelito-a-counter" maskUnits="userSpaceOnUse" x="0" y="0" width="960" height="300">
+          <rect width="960" height="300" fill="white" />
+          <path d="M230.316 103.106 215.769 135.861 244.314 136.145Z" fill="black" />
+        </mask>
+      </defs>
       <g textAnchor="middle" paintOrder="stroke fill" strokeLinejoin="round" strokeLinecap="round">
-        {logoLetters.map(item => <text key={item.letter} x={item.x} y={item.y}
-          style={{'--letter-width': item.width, fontSize: item.size} as CSSProperties}
-          transform={`rotate(${item.rotate} ${item.x} ${item.y - 60})`}>{item.letter}</text>)}
+        <path className="rebuilt-initial-b" d={logoInitialBPath} fillRule="evenodd" transform="rotate(-24 116.2876 158.8216)" />
+        {logoLetters.map(item => <g key={item.letter} transform={`rotate(${item.rotate} ${item.x} ${item.y - 60})`}
+          mask={item.letter === 'A' ? 'url(#bagelito-a-counter)' : undefined}>
+          <text x={item.x} y={item.y}
+            style={{'--letter-width': item.width, '--letter-weight': item.weight, fontSize: item.size} as CSSProperties}>{item.letter}</text>
+          {item.letter === 'A' && <path className="rebuilt-a-counter-edge" d="M230.316 103.106 215.769 135.861 244.314 136.145Z" />}
+        </g>)}
       </g>
       <text className="rebuilt-tagline" textAnchor="middle"><textPath href="#bagelito-tagline-curve" startOffset="50%">Classic Gringo Bagels</textPath></text>
     </svg>
@@ -158,7 +187,10 @@ export function ReferenceScene(props: Props) {
     </div>
 
     <div className="rebuilt-counter" aria-label="Nuestros bagels y schmears">
-      <img className="rebuilt-counter-photo" src="/images/rebuilt-aligned-counter.webp" width={2020} height={778} alt="" decoding="async" data-art-medium="reference-guided-product-concept" />
+      <img className="rebuilt-counter-photo" src="/images/rebuilt-aligned-counter-desktop.webp" width={2020} height={778} alt="" decoding="async" data-art-medium="reference-guided-product-concept" />
+      <svg className="rebuilt-desktop-case-art" viewBox="1080 0 940 778" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <image href="/images/rebuilt-aligned-counter-desktop.webp" width={2020} height={778} />
+      </svg>
       <section className="rebuilt-display rebuilt-bagel-display" aria-label="Vitrina de bagels">
         <button type="button" className="rebuilt-case-link" onClick={() => props.onCategory('packs')}><span className="rebuilt-case-label">Elige tus bagels</span><Arrow /></button>
         <svg className="rebuilt-mobile-case-art" viewBox="0 169 1165 493" aria-hidden="true"><image href="/images/rebuilt-aligned-counter.webp" width={2020} height={778} /></svg>
