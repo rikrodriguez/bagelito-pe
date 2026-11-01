@@ -860,7 +860,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         <span className="approved-combo-art">
           <img src="/images/bagel-everything.webp" alt="" />
           <img src="/images/bagel-sesame.webp" alt="" />
-          {referenceMode ? <img className="rebuilt-combo-schmear" src="/images/rebuilt-schmear-bowl.png" alt="" /> : <i className="approved-schmear" />}
+          {referenceMode ? <img className="rebuilt-combo-schmear" src="/images/rebuilt-schmear-neutral.webp" alt="" /> : <i className="approved-schmear" />}
         </span>
         <span className="approved-combo-copy">
           <small>COMBO BAGELITO</small>
@@ -956,7 +956,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             return <article key={item.id} className="mobile-schmear-card" data-selected={count > 0}>
               <button type="button" onClick={() => addSchmear(item.id)} aria-label={'Agregar ' + item.name}>
                 {referenceMode
-                  ? <img className="mobile-schmear-pot rebuilt-flow-schmear" data-flavour={item.id} src="/images/rebuilt-schmear-bowl.png" alt="" />
+                  ? <img className="mobile-schmear-pot rebuilt-flow-schmear" data-flavour={item.id} src={item.id === 'classic-strawberry' ? '/images/rebuilt-schmear-bowl.webp' : '/images/rebuilt-schmear-neutral.webp'} alt="" />
                   : <span className="mobile-schmear-pot" style={{backgroundImage: 'url("' + sceneImage + '")', backgroundPosition: (index * 25) + '% center'}} />}
                 <span className="mobile-schmear-label">{item.name}</span>
                 {item.note && <small>{item.note}</small>}

@@ -44,9 +44,9 @@ function BagelPhoto({id, className = ''}: {id: string; className?: string}) {
     alt="" width={900} height={900} draggable={false} />
 }
 
-function SchmearPhoto({className = ''}: {className?: string}) {
+function SchmearPhoto({className = '', variant = 'neutral'}: {className?: string; variant?: 'neutral' | 'strawberry'}) {
   return <span className={'rebuilt-schmear-photo ' + className} data-art-medium="independent-product-concept">
-    <img src="/images/rebuilt-schmear-bowl.png" alt="" width={1024} height={1024} draggable={false} />
+    <img src={variant === 'strawberry' ? '/images/rebuilt-schmear-bowl.webp' : '/images/rebuilt-schmear-neutral.webp'} alt="" width={1536} height={1024} draggable={false} />
   </span>
 }
 
@@ -103,10 +103,7 @@ export function ReferenceScene(props: Props) {
       <button type="button" className="rebuilt-category reference-category rebuilt-category-packs"
         aria-label="Packs" data-reference-category="packs" onClick={() => props.onCategory('packs')}>
         <span className="rebuilt-category-visual rebuilt-pack-visual" aria-hidden="true">
-          <span className="rebuilt-pack-box">
-            {['everything','plain','sesame','classic-onion','cheddar','blueberry'].map(id => <BagelPhoto key={id} id={id} />)}
-            <span className="rebuilt-pack-front">BAGELITO</span>
-          </span>
+          <img className="rebuilt-pack-photo" src="/images/rebuilt-pack-bagels.webp" alt="" width={1312} height={1199} draggable={false} />
         </span>
         <span className="rebuilt-category-copy"><strong>Packs</strong><small>Grandes o minis.<br />Para compartir.</small></span>
         <Arrow />
@@ -123,8 +120,8 @@ export function ReferenceScene(props: Props) {
       </button>
       <button type="button" className="rebuilt-category reference-category rebuilt-category-schmears"
         aria-label="Schmears" data-reference-category="schmears" onClick={() => props.onCategory('schmears')}>
-        <span className="rebuilt-category-visual rebuilt-schmear-visual" aria-hidden="true"><SchmearPhoto /></span>
-        <span className="rebuilt-category-copy"><strong>Schmears</strong><small>El toque que faltaba.<br />120, 180 o 240 g.</small></span>
+        <span className="rebuilt-category-visual rebuilt-schmear-visual" aria-hidden="true"><SchmearPhoto variant="strawberry" /></span>
+        <span className="rebuilt-category-copy"><strong>Schmears</strong><small><span className="rebuilt-category-intro">El toque que faltaba.</span><span>120, 180 o 240 g.</span></small></span>
         <Arrow />
       </button>
     </div>
@@ -150,7 +147,7 @@ export function ReferenceScene(props: Props) {
         <div className="rebuilt-case-glass" aria-hidden="true" />
         <div className="rebuilt-schmear-trays">
           {schmears.map(item => <figure key={item.id} className={`rebuilt-schmear-tray rebuilt-flavour-${item.id}`}>
-            <SchmearPhoto />
+            <SchmearPhoto variant={item.id === 'strawberry' ? 'strawberry' : 'neutral'} />
             <figcaption>{item.name}</figcaption>
           </figure>)}
         </div>

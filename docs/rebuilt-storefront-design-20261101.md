@@ -55,3 +55,11 @@ El responsable incorporará SHA exacto, comandos, resultados y capturas del cód
 | Build/tipos y evidencia final recuperable | Pendiente; no se trasladan resultados de otras ramas. |
 
 Los materiales, reflejos y profundidad serán aproximaciones de DOM/CSS y fotografías individuales. No se afirma fotorealismo final ni coincidencia píxel a píxel; cualquier distancia visual restante debe mostrarse en capturas, no ocultarse detrás de un build verde.
+
+## Assets de la reconstrucción
+
+Se añadieron tres conceptos gastronómicos independientes mediante image_gen nativo, sin usar el mockup como entrada: caja de seis bagels, bowl neutro y bowl de fresa. Son imágenes referenciales sintéticas; no fotografías verificadas de cada SKU. La base neutra evita representar fresas en otros sabores. Los bagels individuales continúan siendo los ocho assets del catálogo existente.
+
+Fredoka se sirve localmente con licencia OFL desde el repositorio oficial google/fonts (`ofl/fredoka`); no se añadió dependencia de paquetes ni CDN en la página. La tipografía reconstruye el registro redondeado azul/coral sin rasterizar el texto.
+
+Las tres imágenes PNG originales de generación se preservan. Sus copias WebP se codificaron sin pérdida, sin redimensionar ni cambiar contenido; se comprobó igualdad exacta de píxeles RGBA decodificados. El registro de tamaños y hashes acompaña la evidencia.

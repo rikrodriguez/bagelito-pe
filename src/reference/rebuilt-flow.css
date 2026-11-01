@@ -46,10 +46,10 @@
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .rebuilt-flow-schmear{
   display:block;width:130px;height:94px;max-width:100%;object-fit:contain;border-radius:0;background:none;align-self:center;filter:drop-shadow(0 8px 8px #87603d12);
 }
-.reference-storefront .rebuilt-flow-schmear[data-flavour="whipped-original"]{filter:grayscale(1) brightness(1.22)!important}
-.reference-storefront .rebuilt-flow-schmear[data-flavour="aji-amarillo"]{filter:hue-rotate(43deg) saturate(.7) brightness(1.1)!important}
-.reference-storefront .rebuilt-flow-schmear[data-flavour="herb-roasted-garlic"]{filter:hue-rotate(80deg) saturate(.25) brightness(1.15)!important}
-.reference-storefront .rebuilt-flow-schmear[data-flavour="honey-cinnamon"]{filter:hue-rotate(30deg) saturate(.45) brightness(1.05)!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="whipped-original"]{filter:none!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="aji-amarillo"]{filter:sepia(.2) saturate(1.2)!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="herb-roasted-garlic"]{filter:sepia(.12) hue-rotate(40deg)!important}
+.reference-storefront .rebuilt-flow-schmear[data-flavour="honey-cinnamon"]{filter:sepia(.3) saturate(.6)!important}
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-label{font-size:16px!important;line-height:1.25}
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy b{font-family:Fredoka,sans-serif;font-weight:600;line-height:1.1;font-size:clamp(26px,4vw,40px)}
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay>button{box-shadow:none;background:#e7f2fc!important;border-color:#c7d7e6!important}
@@ -57,7 +57,7 @@
   position:absolute;left:52px;top:70px;width:140px;height:95px;object-fit:contain;transform:none;
 }
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-primary-next{
-  min-height:54px;padding:9px 12px 9px 24px;font-size:16px;background:#034caf;box-shadow:0 6px 0 #003582;
+  min-height:54px;padding:9px 12px 9px 24px;font-size:16px;background:#034caf;box-shadow:0 6px 20px #034caf24;
 }
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines{max-height:none;overflow:visible;gap:12px;padding-bottom:20px}
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-lines>span{font-size:15px;line-height:1.4}
