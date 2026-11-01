@@ -50,7 +50,7 @@ La operación de acreditación valida el pedido releído, detecta un crédito pr
 
 El canje comprueba el contexto autorizado, el propietario del derecho y los canjes previos en la misma transacción. La clave idempotente no debe permitir cambiar el derecho asociado en un reintento. El servicio registra un canje local; no asigna tamaños, sabores, stock, envío ni una línea gratuita a un pedido comercial.
 
-Si una nueva lectura contradice la evidencia o el propietario de un pedido ya acreditado, el resultado requiere revisión. No se reasigna silenciosamente el crédito, no se acredita otra vez y no se implementa una reversión, devolución o expiración automática. La decisión comercial y financiera sobre esos casos permanece pendiente.
+Si una nueva lectura deja de confirmar pago verificado, marca revisión o cambia el propietario de un pedido ya acreditado, el resultado requiere revisión. Otra verificación válida del mismo pedido y propietario puede renovar su identificador sin sumar un crédito; el ledger conserva el identificador original para auditoría. No se reasigna silenciosamente el crédito, no se acredita otra vez y no se implementa una reversión, devolución o expiración automática. La decisión comercial y financiera sobre esos casos permanece pendiente.
 
 ## Qué demuestra SQLite y qué queda por demostrar
 
@@ -74,17 +74,32 @@ GHL podrá reflejar en el futuro progreso ya confirmado por el backend. No será
 
 La UI continúa mostrando el estado pendiente de [`ReferenceStorefront.tsx`](../src/reference/ReferenceStorefront.tsx). Los consumidores de revisión y el cierre de API de [`reference-review-guard.server.ts`](../src/server/reference-review-guard.server.ts) permanecen sin cambios. Los fixtures no se convierten en pedidos ni recompensas reales y esta arquitectura no activa rutas.
 
-## Validación por completar
+## Validación terminada y reproducción
 
-Esta sección debe completarse con el commit exacto, comandos, resultados y rutas de evidencia al terminar la implementación. La revisión documental no acredita pruebas de runtime, concurrencia o integración.
+Código probado: **`3e9bd663a9775b1789bdbfc9becf40da84075bc5`**. Los commits posteriores de esta entrega sólo añaden o cierran documentación/evidencia, salvo que se identifique expresamente otro código probado. Node `v24.19.0`, SQLite nativo `3.53.3`, sin instalar dependencias nuevas. La suite usa archivos temporales y sujetos/pedidos ficticios; no llama al proveedor, Supabase ni GHL.
 
-| Comprobación | Estado en esta redacción |
+| Comprobación | Resultado real |
 | --- | --- |
-| Tipos y comportamiento del núcleo | Por completar por el responsable de implementación. |
-| Diez pedidos únicos pagados; 9→10 y 19→20 | Por completar con fixtures y resultados reales. |
-| Reintentos, doble autoridad, cambios de evidencia/propietario | Por completar con fixtures y resultados reales. |
-| Autorización, lectura/canje ajeno y doble canje | Por completar con fixtures y resultados reales. |
-| Rollback y concurrencia SQLite entre conexiones/procesos | Por completar con evidencia del adaptador local. |
-| Ausencia de consumidores/rutas nuevas y UI preservada | Por completar sobre el diff final. |
-| PostgreSQL/Supabase real, RLS y RPC vigentes | No ejecutado ni certificado por esta entrega local. |
-| Proveedor de pagos, GHL, producción y cumplimiento del regalo | No ejecutado ni activado. |
+| Base Node antes de implementar | 58/58 PASS. |
+| RED del scaffold sin implementar | Exit1: 36 fallos de 40, cuatro rechazos genéricos ya pasaban. Diagnóstico anterior sin commit; no se atribuye a un SHA final. |
+| Núcleo y SQLite local | 44/44 PASS: diez/veinte pedidos, impagos, evidencia incompleta, rechazo de claims browser/GHL, propietarios, canjes y claves repetidas, revisión, rollback, reapertura y respuesta perdida tras commit. |
+| Concurrencia real en workers/conexiones independientes | 5/5 PASS. Cuatro escritores:80 intentos→20 créditos/dos derechos; frontera9→10; canjes con claves distintas/iguales y competidor no autorizado. La barrera libera las conexiones ya abiertas; no es una prueba PostgreSQL. |
+| Suite Node completa del candidato | **107/107 PASS**, cero fallos/skips; exit0. Incluye las49 pruebas nuevas y58 existentes, no son107 pruebas nuevas. |
+| Build, TypeScript y checks del comando build | **PASS**, exit0. Incluye estructural11/11, consulta manual4/4 y movimiento heredado14/14; estos últimos no certifican fidelidad ni agregan una nueva QA3D. |
+| Frontera sin activación | 132 archivos base de `src`, `public`, SQL, configuración y workflows conservan sus bytes; cero consumidores runtime del núcleo; `git.deploymentEnabled:false`. |
+| Preview existente | ZIP sin modificar, SHA256 `262b55db494a615299ad9123ac2b82a69b79950f318281d8b5652abe45de5ed6`. No se exportó ni publicó otro preview. |
+| PostgreSQL/Supabase real, RLS y RPC vigentes | **NO EJECUTADO** ni certificado. |
+| Proveedor de pagos, GHL, producción y cumplimiento del regalo | **NO EJECUTADO/NO ACTIVADO**. |
+| Capturas y navegación visual | No se repitieron: la UI conserva sus bytes respecto a9a94e4c. No se reasigna QA visual histórica a este núcleo. |
+
+Comandos reproducibles desde la rama de esta entrega, con Node24 y las dependencias ya instaladas:
+
+```sh
+node --test tests/loyalty-ledger.test.cjs tests/loyalty-concurrency.test.cjs
+QA_HDR_FIXTURE_PATH=/ruta/local/lebombo_1k.hdr node --test --test-reporter=tap tests/*.test.cjs
+npm run build
+```
+
+El primer comando de49 pruebas no requiere HDR ni servicios. La suite completa conserva la dependencia del fixture HDR del runner heredado, cuyo hash aprobado es `a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb`; no hay que sustituirlo por un asset distinto para obtener verde. SQLite vive sólo en archivos temporales que limpian las pruebas.
+
+[Evidencia JSON](qa/loyalty-local-20261101/summary.json), [suite completa](qa/loyalty-local-20261101/node-full-3e9bd66.log), [build](qa/loyalty-local-20261101/build-3e9bd66.log), [RED previo](qa/loyalty-local-20261101/red-scaffold-uncommitted.log) y [manifiesto SHA256](qa/loyalty-local-20261101/manifest.json). La revisión independiente readonly no sustituye las pruebas ni los gates de producción.

@@ -1,0 +1,71 @@
+{
+  "codeCommit": "3e9bd663a9775b1789bdbfc9becf40da84075bc5",
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "src/server/loyalty/loyalty.server.ts",
+      "bytes": 9378,
+      "sha256": "afdc197e0f0000f828163c0bd82a79e359bbe58dec394476f431b4f1644f4654"
+    },
+    {
+      "path": "tests/loyalty-ledger.test.cjs",
+      "bytes": 15171,
+      "sha256": "87031bd79bd3d124328dfa4f9829a53613028f769485ef7eecd38b15dd442a78"
+    },
+    {
+      "path": "tests/loyalty-concurrency.test.cjs",
+      "bytes": 10491,
+      "sha256": "ded08139e8edbf1029d5a6b982f4f85ba47e89ca0071f6e09c14904df1f997f3"
+    },
+    {
+      "path": "tests/support/load-loyalty.cjs",
+      "bytes": 582,
+      "sha256": "3c767db4077f5bfabd791c2f2f78227e773df231631d8fcfb3bd1f69b876d74c"
+    },
+    {
+      "path": "tests/support/loyalty-sqlite-store.cjs",
+      "bytes": 8730,
+      "sha256": "35ad5c6ae5b71cc3658b640b788f2d129b8f8689a6f38069eb2f9f953c94703c"
+    },
+    {
+      "path": "tests/support/loyalty-worker.cjs",
+      "bytes": 1812,
+      "sha256": "7c4587857d568206f0fb58c77291d26ed9e76efad992b7c39f9e85fd659557ae"
+    },
+    {
+      "path": "docs/loyalty-local-architecture-20261101.md",
+      "bytes": 14174,
+      "sha256": "4de9c69d7d0105fd947d6a5e48b91c607ce0524365d6066480ae88f4ca8111f6"
+    },
+    {
+      "path": "docs/qa/loyalty-local-20261101/baseline-node58.log",
+      "bytes": 5534,
+      "sha256": "21a0cd2eb72d293c900e0f9bf1b466f8caae360635eeab5d5752f40ee7714a85"
+    },
+    {
+      "path": "docs/qa/loyalty-local-20261101/build-3e9bd66.log",
+      "bytes": 23632,
+      "sha256": "6c31d69320b9ab4ba139f2150c6dd84809c33b15e249a630d7e3c4453454c1d1"
+    },
+    {
+      "path": "docs/qa/loyalty-local-20261101/node-full-3e9bd66.log",
+      "bytes": 23577,
+      "sha256": "9e38e515f863a70c28bd036cecce897ae763f211dc7f9d9cacc3b75791279b7f"
+    },
+    {
+      "path": "docs/qa/loyalty-local-20261101/red-scaffold-uncommitted.log",
+      "bytes": 42472,
+      "sha256": "12d6736829311f5293b6cb7887f44e5c5969a1419a4cc1d84d9ef62b581178db"
+    },
+    {
+      "path": "docs/qa/loyalty-local-20261101/summary.json",
+      "bytes": 1016,
+      "sha256": "2fe2aff14f7ec243f13a13af11ea341fa5cd26ec4e1ab19c0c7e6de1fa441b66"
+    },
+    {
+      "path": "docs/qa/loyalty-local-20261101/independent-review.txt",
+      "bytes": 839,
+      "sha256": "6310958b439eba16d29ec701ef230f5a6f300692199c8d6c9cb4529fefe31c2a"
+    }
+  ]
+}

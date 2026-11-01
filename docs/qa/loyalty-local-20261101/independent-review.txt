@@ -1,0 +1,11 @@
+Readonly independent review: 2026-11-01
+Base: 9a94e4cfc5a043726f643d3a9c546f096007bd94
+Code: 3e9bd663a9775b1789bdbfc9becf40da84075bc5
+Scope: seven added files (core, tests/helpers, architecture draft).
+Critical: none. Important: none.
+Minor: close pending validation table and link final evidence; completed by implementer in the subsequent documentation-only commit.
+Inspected final logs: Node107/107 PASS, build completed, diff check clean.
+No new runtime consumers, routes, dependencies or UI/public changes.
+Verdict: suitable for isolated local/test DRAFT; no merge/live approval.
+Not certified: PostgreSQL/RLS/RPC, production identity/payment, fulfillment, visual browser comparison. No tests repeated by reviewer.
+Reviewer made no mutations or remote queries. This is a recorded review outcome, not a production release certificate.
