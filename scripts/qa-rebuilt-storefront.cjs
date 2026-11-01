@@ -11,6 +11,7 @@ const steps = require('./qa-reference-review-steps.cjs')
 const {inspectProductText} = require('./qa-reference-text-geometry.cjs')
 const {inspectSecondaryReadability} = require('./qa-reference-secondary-readability.cjs')
 const {inspectRebuiltGeometry} = require('./qa-rebuilt-geometry.cjs')
+const {inspectComboComposition} = require('./qa-rebuilt-composition.cjs')
 const {installSafety} = require('./qa-rebuilt-safety.cjs')
 
 const hash = value => createHash('sha256').update(value).digest('hex')
@@ -65,7 +66,7 @@ function sources() {
   return Object.fromEntries([...files].sort().map(file => [file, hash(fs.readFileSync(path.join(repo, file)))]))
 }
 const sourceHashes = sources()
-const helperFiles = ['qa-rebuilt-geometry.cjs', 'qa-rebuilt-safety.cjs', 'qa-reference-review-steps.cjs', 'qa-reference-text-geometry.cjs', 'qa-reference-secondary-readability.cjs']
+const helperFiles = ['qa-rebuilt-geometry.cjs', 'qa-rebuilt-composition.cjs', 'qa-rebuilt-safety.cjs', 'qa-reference-review-steps.cjs', 'qa-reference-text-geometry.cjs', 'qa-reference-secondary-readability.cjs']
 const helpers = () => Object.fromEntries(helperFiles.map(file => [file, hash(fs.readFileSync(path.join(__dirname, file)))]))
 const report = {
   metadata: {
@@ -172,6 +173,15 @@ async function runCase(browser, viewport, scenario) {
         if (Math.abs(shot.fullBleed.width - shot.fullBleed.innerWidth) > 1 || Math.abs(shot.fullBleed.x) > 1 || Math.abs(shot.fullBleed.right - shot.fullBleed.innerWidth) > 1) failure({stage: name, rebuiltSceneNotFullBleed: shot.fullBleed}, record)
         shot.geometry = await page.evaluate(inspectRebuiltGeometry)
         for (const issue of shot.geometry.failures) failure({stage: name, geometry: issue}, record)
+        if (scene === 'combos') {
+          shot.comboComposition = await page.evaluate(inspectComboComposition)
+          shot.comboComposition.declaredCodeSHA = report.metadata.declaredCodeSHA
+          shot.comboComposition.helperSHA256 = report.metadata.helperHashes['qa-rebuilt-composition.cjs']
+          for (const card of shot.comboComposition.cards) for (const image of card.images || []) {
+            image.sourceSHA256 = safety.traffic.assets.find(asset => asset.url === image.source)?.sha256 || null
+          }
+          for (const issue of shot.comboComposition.failures) failure({stage: name, comboComposition: issue}, record)
+        }
         shot.secondary = await page.evaluate(inspectSecondaryReadability)
         for (const issue of assertCleanSecondary(shot.secondary)) failure({stage: name, secondary: issue}, record)
         if (scene === 'schmears' || scene === 'bagels') {

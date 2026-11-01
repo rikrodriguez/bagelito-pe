@@ -113,3 +113,34 @@
 }
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-pack-mix button[aria-pressed="true"] small{color:#f5f9ff!important}
 .reference-storefront .reference-loyalty>small{font-size:12px;line-height:1.5}
+
+/* Product art has its own grid area, so it cannot cover the combo's copy. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay>button{
+ display:grid!important;grid-template-columns:minmax(0,240px) minmax(0,1fr) 44px;gap:20px;
+ align-items:center;padding:20px!important;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art{
+ position:relative;width:min(240px,100%);height:170px;min-width:0;justify-self:center;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art>img{
+ width:104px;height:104px;object-fit:contain;transform:none;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art>img:first-child{left:12px;top:0}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art>img:nth-child(2){left:auto;right:12px;top:0}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art>.rebuilt-combo-schmear{
+ left:50%;right:auto;top:72px;width:130px;height:88px;transform:translateX(-50%);
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy{gap:8px}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-arrow{width:44px;height:44px;justify-self:end}
+@media(max-width:600px){
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay>button{grid-template-columns:minmax(0,1fr) 44px;gap:16px}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-art{grid-column:1/-1;grid-row:1}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy{grid-column:1;grid-row:2}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-arrow{grid-column:2;grid-row:2}
+}
+@media(min-width:801px){
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header>span,
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-count strong{font-size:14px!important;line-height:1.5}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-copy>small{display:block;margin-bottom:8px}
+ .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-copy>b{display:block;line-height:1.3}
+}
