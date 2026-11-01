@@ -1,0 +1,79 @@
+{
+  "baselineCommit": "14558ef2480c4adda26a788ffd2b326ce74ff84a",
+  "applicationCommit": "dacea773ddea6179f714cb2a0b08e8067d2eb470",
+  "applicationTree": "6b6ec64fb931ddd7058fd76a05486c1da9dacf29",
+  "nodeTests": {
+    "passed": 66,
+    "failed": 0,
+    "skipped": 0
+  },
+  "build": "passed including TypeScript and inherited static/manual/movement checks",
+  "driverPreflight": "passed, not browser coverage",
+  "nativeScroll": [
+    {
+      "viewport": [
+        500,
+        714
+      ],
+      "before": {
+        "bodyOverflowY": "hidden",
+        "scrollHeight": 1246,
+        "wheelBefore": 0,
+        "wheelAfter": 0,
+        "EndAfter": 0
+      },
+      "after": {
+        "bodyOverflowY": "auto",
+        "layoutClientWidth": 485,
+        "scrollHeight": 1226,
+        "wheelBefore": 0,
+        "wheelAfter": 512,
+        "ControlHomeAfter": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "viewport": [
+        1180,
+        757
+      ],
+      "after": {
+        "bodyOverflowY": "auto",
+        "layoutClientWidth": 1165,
+        "scrollHeight": 850,
+        "wheelBefore": 0,
+        "wheelAfter": 93,
+        "horizontalOverflow": 0,
+        "decodedHTMLImages": 5,
+        "canvas": 0
+      }
+    }
+  ],
+  "reviewJourney": {
+    "viewport": [
+      500,
+      714
+    ],
+    "bagels": [
+      "Everything",
+      "Sesame"
+    ],
+    "schmear": "Ají Amarillo",
+    "schmearGrams": 120,
+    "cartCount": 3,
+    "cashierSummaryMatches": true,
+    "consentChecked": true,
+    "paymentDisabled": true,
+    "customerDetailsEntered": false,
+    "submitted": false,
+    "loyaltyCopy": "10 verified orders → 2 bagels + 1 schmear; tracking/redemption not activated",
+    "canvas": 0,
+    "iframes": 0,
+    "horizontalOverflow": 0
+  },
+  "fullResponsiveMatrix": "not executed in this environment",
+  "fullGeometryAudit": "not credited; read-only cloud scope lacks WeakMap constructor",
+  "touchOrPhysicalDeviceCoverage": false,
+  "previewFinalStatus": "stopped, same as initial status",
+  "productionChanged": false
+}
