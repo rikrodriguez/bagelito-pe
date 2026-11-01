@@ -147,7 +147,7 @@ async function shell(page) {
   assert.equal(await page.locator(root).count(), 1)
   assert.equal(await page.locator(root).getAttribute('data-qa'), 'false')
   assert.equal(await page.locator(root).getAttribute('data-direct-catalog'), 'true')
-  assert.equal(await page.locator('canvas,iframe,.guided-scene-backdrop,.guided-scene-image,.qa-only-pay,.culqi-browser-checkout,.wallet-screen-live,.live-receipt-sheet').count(), 0)
+  assert.equal(await page.locator('canvas,iframe,.guided-scene-backdrop,.guided-scene-image,.qa-only-pay,.culqi-browser-checkout,.culqi-browser-status,.culqi-start-button,#culqi-checkout-container,.wallet-screen-live,.wallet-actions,.wallet-primary,.wallet-secondary,.live-receipt-sheet').count(), 0)
   assert.equal(await page.locator('.reference-image,[data-reference-crop],button[aria-label="Ampliar imagen"]').count(), 0)
   assert.equal(await page.getByRole('button', {name: 'Ir a Pago', exact: true}).isDisabled(), true, 'Progress cannot bypass the review-only payment gate')
 }
@@ -273,6 +273,7 @@ async function runCase(browser, viewport, scenario) {
     }
     async function reviewCheckout() {
       assert.equal(steps.normalize(await page.locator('.guided-cashier-copy > p').textContent()), steps.text.summaryReview)
+      assert.equal(await page.locator('.guided-launch-contact,a[href^="https://wa.me/"]').count(), 0)
       await act(page.getByRole('button', {name: /^Revisar entrega y consentimiento/})); await scene('pay')
       await shell(page)
       assert.equal(steps.normalize(await page.locator('.guided-payment-copy > span').textContent()), steps.text.deliveryReview)
