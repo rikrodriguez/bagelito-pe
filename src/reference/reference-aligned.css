@@ -3,7 +3,7 @@
 .rebuilt-wordmark text { font-size:168px; font-variation-settings:"wdth" var(--letter-width,100),"wght" var(--letter-weight,600); font-weight:600; fill:#023a9b; stroke:#f18b85; }
 .rebuilt-wordmark .rebuilt-tagline { font-family:Arial,sans-serif; font-size:39px; font-weight:700; font-variation-settings:normal; letter-spacing:0; fill:#023a9b; stroke:none; }
 .rebuilt-wordmark .rebuilt-initial-b { fill:#023a9b; stroke:#f18b85; stroke-width:11px; }
-.rebuilt-wordmark .rebuilt-a-counter-edge { fill:none; stroke:#f18b85; stroke-width:11px; }
+.rebuilt-wordmark .rebuilt-a-counter-edge { fill:none; stroke:#f18b85; stroke-width:3.5px; }
 .rebuilt-wordmark { filter:none; }
 .rebuilt-wordmark>g { filter:drop-shadow(0 2px 0 #003277) drop-shadow(0 3px 3px #4b39252a); }
 .rebuilt-store[data-compact="true"] .rebuilt-tagline { display:none; }

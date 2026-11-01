@@ -48,8 +48,9 @@ assert.ok(viewports.length && (!widths || widths.length === viewports.length), '
 const journeyScenarios = ['pack-decline', 'pack-original', 'pack-flavoured', 'combo', 'schmear']
 const defaultScenarios = ['entry', ...journeyScenarios]
 const allScenarios = [...defaultScenarios, 'product-text', 'secondary']
-// Three category images, one responsive room and one shared counter texture.
-// Two SVG windows reuse the NEW counter texture on mobile; they are not HTML img.
+// Three category images, one responsive room and one desktop counter texture.
+// Two mobile SVG windows retain their earlier own-art texture. A third SVG
+// recomposes the desktop schmear window; none of these SVG images is HTML img.
 const entryPhotoCount = 5
 const scenarios = profile ? [profile === 'text' ? 'product-text' : profile] : process.env.QA_SCENARIOS ? process.env.QA_SCENARIOS.split(',') : defaultScenarios
 assert.ok(scenarios.length && new Set(scenarios).size === scenarios.length && scenarios.every(value => allScenarios.includes(value)), 'Unknown or duplicate QA scenario')
@@ -105,6 +106,8 @@ const report = {
     keyboardEntries: scheduledCases.filter(value => value.scenario === 'entry').length,
     decodedEntryPhotos: scheduledCases.filter(value => value.scenario === 'entry').length * entryPhotoCount,
     mobileSVGWindows: scheduledCases.filter(value => value.scenario === 'entry' && value.viewport.width <= 1050).length * 2,
+    desktopSVGWindows: scheduledCases.filter(value => value.scenario === 'entry' && value.viewport.width > 1050).length,
+    decodedMobileSVGTextures: scheduledCases.filter(value => value.scenario === 'entry' && value.viewport.width <= 1050).length,
     referenceAnchorViewports: scheduledCases.filter(value => value.scenario === 'entry' && value.viewport.width === 1536).length,
     productTextStates: scheduledCases.filter(value => value.scenario === 'product-text').length * 6,
     productTextCards: scheduledCases.filter(value => value.scenario === 'product-text').length * 30,
@@ -353,12 +356,12 @@ async function runCase(browser, viewport, scenario) {
         await menuReset()
       }
       const photos = page.locator('.rebuilt-store img')
-      assert.equal(await photos.count(), entryPhotoCount, 'Entry must include three category images, one responsive room and one shared counter texture')
+      assert.equal(await photos.count(), entryPhotoCount, 'Entry must include three category images, one responsive room and one desktop counter texture')
       assert.equal(await page.locator('.rebuilt-categories img').count(), 3, 'Keep one real image per category')
       const portraitRoom = viewport.width <= 1050
       const artRoles = [
         {selector: '.rebuilt-room-photo', pathname: portraitRoom ? '/images/rebuilt-aligned-room-mobile.webp' : '/images/rebuilt-aligned-room.webp', width: portraitRoom ? 1024 : 1536, height: portraitRoom ? 1536 : 1024, medium: 'reference-guided-architectural-concept', visible: true, proportionalBox: true},
-        {selector: '.rebuilt-counter-photo', pathname: '/images/rebuilt-aligned-counter.webp', width: 2020, height: 778, medium: 'reference-guided-product-concept', visible: !portraitRoom, proportionalBox: true},
+        {selector: '.rebuilt-counter-photo', pathname: '/images/rebuilt-aligned-counter-desktop.webp', width: 2020, height: 778, medium: 'reference-guided-product-concept', visible: !portraitRoom, proportionalBox: true},
         {selector: '.rebuilt-combo-photo', pathname: '/images/rebuilt-aligned-combo.webp', width: 1683, height: 935, medium: 'reference-guided-product-concept', visible: true, proportionalBox: false},
       ]
       for (const role of artRoles) assert.equal(await page.locator(role.selector).count(), 1, 'One explicit image required for ' + role.selector)
@@ -367,12 +370,13 @@ async function runCase(browser, viewport, scenario) {
         {role: 'category-packs', selector: '.rebuilt-categories .rebuilt-pack-photo', paths: ['/images/rebuilt-pack-bagels-480.webp', '/images/rebuilt-pack-bagels-800.webp', '/images/rebuilt-pack-bagels.webp']},
         {role: 'category-combos', selector: '.rebuilt-categories .rebuilt-combo-photo', paths: [artRoles[2].pathname]},
         {role: 'category-schmears', selector: '.rebuilt-categories .rebuilt-schmear-visual img', paths: ['/images/rebuilt-schmear-bowl-480.webp', '/images/rebuilt-schmear-bowl-800.webp', '/images/rebuilt-schmear-bowl.webp']},
-        {role: 'shared-counter', selector: '.rebuilt-counter-photo', paths: [artRoles[1].pathname]},
+        {role: 'desktop-counter', selector: '.rebuilt-counter-photo', paths: [artRoles[1].pathname]},
       ]
       record.decodedEntryImages = []
       for (const photo of await photos.all()) {
-        // The shared HTML counter is hidden on mobile; its visible SVG windows
-        // reuse these same bytes. Decode it without changing CSS or scrolling it.
+        // The desktop HTML texture remains hidden on mobile. Decode without
+        // changing CSS/scrolling it; the distinct visible mobile texture is
+        // decoded explicitly below, not falsely credited to this HTML image.
         if (await photo.isVisible()) await photo.scrollIntoViewIfNeeded()
         await photo.evaluate(async image => {await image.decode(); if (!image.complete || !image.naturalWidth) throw new Error('Visible product did not decode: ' + image.currentSrc)})
       }
@@ -394,66 +398,136 @@ async function runCase(browser, viewport, scenario) {
           }
           return {source: element.currentSrc, pathname: new URL(element.currentSrc).pathname, medium: element.dataset.artMedium,
             naturalWidth: element.naturalWidth, naturalHeight: element.naturalHeight, renderedWidth: rect.width, renderedHeight: rect.height,
-            visible, objectFit: style.objectFit, objectPosition: style.objectPosition, devicePixelRatio,
+            visible, objectFit: style.objectFit, objectPosition: style.objectPosition, clipPath: style.clipPath, devicePixelRatio,
             sourcePixelsPerRenderedCSSPixel: visible ? {x: element.naturalWidth / rect.width, y: element.naturalHeight / rect.height} : null}
         })
         assert.equal(image.pathname, role.pathname, 'Responsive scene must select the appropriate reference-guided asset')
         assert.equal(image.medium, role.medium, 'Preserve explicit conceptual-art provenance')
         assert.equal(image.naturalWidth, role.width); assert.equal(image.naturalHeight, role.height)
-        assert.equal(image.visible, role.visible, 'Only the shared counter HTML image may be hidden, and only on mobile')
+        assert.equal(image.visible, role.visible, 'Only the desktop counter HTML image may be hidden, and only on mobile')
         assert.ok(['fill', 'contain', 'scale-down'].includes(image.objectFit), 'No cover/none cropping of the HTML scene images')
         if (image.visible && (role.proportionalBox || image.objectFit === 'fill')) {
           assert.ok(Math.abs(image.renderedWidth - image.renderedHeight * image.naturalWidth / image.naturalHeight) <= .5,
             'Room/counter or fill-mode images must preserve the intrinsic aspect ratio')
         }
         if (image.visible && !role.proportionalBox) assert.equal(image.objectFit, 'contain', 'The combo must letterbox proportionally within its allocated art region')
+        if (role.selector === '.rebuilt-counter-photo') {
+          const inset = image.clipPath.match(/^inset\(([^()]*)\)$/)
+          assert.ok(inset && !/round/.test(inset[1]), 'Desktop bagel art must use its explicit rectangular inset window')
+          const values = inset[1].trim().split(/\s+/)
+          assert.ok(values.length >= 1 && values.length <= 4, 'Unsupported desktop counter inset')
+          const edges = values.length === 1 ? [values[0], values[0], values[0], values[0]] : values.length === 2 ? [values[0], values[1], values[0], values[1]] : values.length === 3 ? [values[0], values[1], values[2], values[1]] : values
+          for (const index of [0, 2, 3]) assert.ok(/^0(?:\.0+)?(?:px|%)?$/.test(edges[index]), 'Only the right edge may clip the desktop bagel image')
+          assert.ok(/^\d+(?:\.\d+)?%$/.test(edges[1]), 'Desktop right inset must retain an explicit percentage')
+          image.clipRightPercent = parseFloat(edges[1])
+          image.sourceWindowWidth = image.naturalWidth * (1 - image.clipRightPercent / 100)
+          assert.ok(Math.abs(image.sourceWindowWidth - 1107) <= .01, 'Desktop bagel window must retain source x0..1107 without stretching')
+        }
         record.entryArt.push({selector: role.selector, ...image})
       }
-      record.mobileCaseWindows = await page.locator('.rebuilt-mobile-case-art').evaluateAll(elements => elements.map(svg => {
-        const rect = svg.getBoundingClientRect(), box = svg.viewBox.baseVal, image = svg.querySelector('image')
-        const aspect = value => ({align: value.align, meetOrSlice: value.meetOrSlice})
-        return {viewBox: [box.x, box.y, box.width, box.height], visible: rect.width > 0 && rect.height > 0 && getComputedStyle(svg).display !== 'none',
-          renderedWidth: rect.width, renderedHeight: rect.height, preserveAspectRatio: aspect(svg.preserveAspectRatio.baseVal),
-          imageCount: svg.querySelectorAll('image').length, source: image?.href.baseVal || null,
-          imageWidth: image?.width.baseVal.value, imageHeight: image?.height.baseVal.value,
-          imagePreserveAspectRatio: image ? aspect(image.preserveAspectRatio.baseVal) : null}
-      }))
-      assert.equal(record.mobileCaseWindows.length, 2, 'Keep exactly two mobile SVG windows over the new counter texture')
-      assert.equal(await page.locator('.rebuilt-store svg image').count(), 2, 'No additional SVG image sources')
-      for (const [index, window] of record.mobileCaseWindows.entries()) {
-        assert.deepEqual(window.viewBox, index ? [1165, 169, 855, 493] : [0, 169, 1165, 493])
-        assert.equal(window.imageCount, 1); assert.equal(window.source, '/images/rebuilt-aligned-counter.webp')
-        assert.equal(window.imageWidth, 2020); assert.equal(window.imageHeight, 778)
-        assert.equal(window.visible, portraitRoom, 'SVG windows must be visible only at the mobile/tablet breakpoint')
-        for (const aspect of [window.preserveAspectRatio, window.imagePreserveAspectRatio]) {
-          assert.notEqual(aspect.align, 1, 'SVG preserveAspectRatio=none would distort the new food art')
-          assert.equal(aspect.meetOrSlice, 1, 'SVG windows must meet, not slice/cover, their intentional source window')
+      const svgRoles = [
+        {key: 'mobileCaseWindows', selector: '.rebuilt-mobile-case-art', source: '/images/rebuilt-aligned-counter.webp', visible: portraitRoom, boxes: [[0, 169, 1165, 493], [1165, 169, 855, 493]]},
+        {key: 'desktopCaseWindows', selector: '.rebuilt-desktop-case-art', source: '/images/rebuilt-aligned-counter-desktop.webp', visible: !portraitRoom, boxes: [[1080, 0, 940, 778]]},
+      ]
+      assert.equal(await page.locator('.rebuilt-store svg image').count(), 3, 'Exactly two mobile windows and one desktop schmear window are required')
+      for (const role of svgRoles) {
+        record[role.key] = await page.locator(role.selector).evaluateAll(elements => elements.map(svg => {
+          const rect = svg.getBoundingClientRect(), box = svg.viewBox.baseVal, image = svg.querySelector('image')
+          const aspect = value => ({align: value.align, meetOrSlice: value.meetOrSlice})
+          const matrix = image?.getScreenCTM()
+          return {viewBox: [box.x, box.y, box.width, box.height], visible: rect.width > 0 && rect.height > 0 && getComputedStyle(svg).display !== 'none',
+            renderedWidth: rect.width, renderedHeight: rect.height, preserveAspectRatio: aspect(svg.preserveAspectRatio.baseVal), clipPath: getComputedStyle(svg).clipPath,
+            imageCount: svg.querySelectorAll('image').length, source: image?.href.baseVal || null,
+            imageWidth: image?.width.baseVal.value, imageHeight: image?.height.baseVal.value,
+            imagePreserveAspectRatio: image ? aspect(image.preserveAspectRatio.baseVal) : null,
+            imageScreenMatrix: matrix ? {a: matrix.a, b: matrix.b, c: matrix.c, d: matrix.d, e: matrix.e, f: matrix.f} : null}
+        }))
+        assert.equal(record[role.key].length, role.boxes.length, 'Exact SVG window count for ' + role.selector)
+        for (const [index, window] of record[role.key].entries()) {
+          assert.deepEqual(window.viewBox, role.boxes[index])
+          assert.equal(window.imageCount, 1); assert.equal(window.source, role.source)
+          assert.equal(window.imageWidth, 2020); assert.equal(window.imageHeight, 778)
+          assert.equal(window.visible, role.visible, 'SVG window visibility must follow its exact desktop/mobile role')
+          assert.equal(window.clipPath, 'none', 'SVG cropping is defined only by its explicit viewBox')
+          for (const aspect of [window.preserveAspectRatio, window.imagePreserveAspectRatio]) {
+            assert.notEqual(aspect.align, 1, 'SVG preserveAspectRatio=none would distort food art')
+            assert.equal(aspect.meetOrSlice, 1, 'SVG windows must meet, not slice/cover, their explicit source window')
+          }
+          if (window.visible) {
+            assert.ok(Math.abs(window.renderedWidth - window.renderedHeight * window.viewBox[2] / window.viewBox[3]) <= .5,
+              'Each visible SVG viewport must preserve its explicit source-window aspect ratio')
+            assert.ok(window.imageScreenMatrix, 'Visible SVG art needs a real image transform')
+            const m = window.imageScreenMatrix, sx = Math.hypot(m.a, m.b), sy = Math.hypot(m.c, m.d)
+            assert.ok(sx > 0 && sy > 0 && Math.abs(sx / sy - 1) < .00001, 'SVG source pixels must scale uniformly')
+          }
         }
-        if (window.visible) assert.ok(Math.abs(window.renderedWidth - window.renderedHeight * window.viewBox[2] / window.viewBox[3]) <= .5,
-          'Mobile SVG viewport must preserve its explicit source-window aspect ratio')
       }
       await page.evaluate(() => window.scrollTo({top: 0, behavior: 'instant'}))
-      // Read pixels into an unattached QA canvas. No DOM/asset/loading changes,
-      // writes or new requests. These alpha bounds are NOT a fidelity assertion.
-      record.counterArtAudit = await page.locator('.rebuilt-counter-photo').evaluate(image => {
-        const canvas = document.createElement('canvas'); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight
-        const context = canvas.getContext('2d', {willReadFrequently: true}); context.drawImage(image, 0, 0)
-        const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data
-        const bounds = [1, 16].map(threshold => ({threshold, x: canvas.width, y: canvas.height, right: -1, bottom: -1}))
-        for (let y = 0; y < canvas.height; y++) for (let x = 0; x < canvas.width; x++) {
-          const alpha = pixels[(y * canvas.width + x) * 4 + 3]
-          for (const box of bounds) if (alpha >= box.threshold) {box.x = Math.min(box.x, x); box.y = Math.min(box.y, y); box.right = Math.max(box.right, x + 1); box.bottom = Math.max(box.bottom, y + 1)}
+      record.counterArtAudit = await page.evaluate(async portrait => {
+        const desktopImage = document.querySelector('.rebuilt-counter-photo')
+        const desktopSource = '/images/rebuilt-aligned-counter-desktop.webp', mobileSource = '/images/rebuilt-aligned-counter.webp'
+        // The distinct mobile source is decoded explicitly in an unattached Image.
+        // It is an exact same-origin own-art URL already used by the visible SVGs;
+        // no app DOM/CSS/loading attributes, storage or commercial calls change.
+        let mobileImage = null
+        const decodedMobileSVGTextures = []
+        if (portrait) {
+          mobileImage = new Image(); mobileImage.decoding = 'async'; mobileImage.src = mobileSource
+          await mobileImage.decode()
+          if (!mobileImage.complete || mobileImage.naturalWidth !== 2020 || mobileImage.naturalHeight !== 778) throw new Error('Distinct mobile SVG texture did not decode at2020x778')
+          decodedMobileSVGTextures.push({source: mobileSource, naturalWidth: mobileImage.naturalWidth, naturalHeight: mobileImage.naturalHeight, method: 'Explicit off-DOM decode; not counted as an HTML entry image'})
         }
-        const rect = image.getBoundingClientRect(), visible = rect.width > 0 && rect.height > 0, scale = visible ? rect.width / image.naturalWidth : null
-        return {method: 'Off-DOM readback of the already-decoded NEW counter asset; alpha>=1 and alpha>=16 are separate measurements, not acceptance thresholds.',
-          naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight,
-          alphaBounds: bounds.map(box => ({...box, width: box.right - box.x, height: box.bottom - box.y})),
-          renderedImageBox: visible ? {x: rect.x, y: rect.y, width: rect.width, height: rect.height} : null,
-          nominalSourceWindow: {x: 0, y: 169, width: 2020, height: 493},
-          renderedNominalWindow: visible ? {x: rect.x, y: rect.y + 169 * scale, width: rect.width, height: 493 * scale} : null,
-          sourceSplit: {bagels: 1165 / 2020, schmears: 855 / 2020},
-          scope: 'Nominal DOM anchor, full alpha bounds, stronger alpha band and source-window split differ. Container matching does not certify visual fidelity.'}
-      })
+        function boundsOf(image, windows) {
+          const canvas = document.createElement('canvas'); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight
+          const context = canvas.getContext('2d', {willReadFrequently: true}); context.drawImage(image, 0, 0)
+          function sample(window) {
+            const pixels = context.getImageData(window.x, window.y, window.width, window.height).data
+            return [1, 16].map(threshold => {
+              let x = window.width, y = window.height, right = -1, bottom = -1
+              for (let row = 0; row < window.height; row++) for (let column = 0; column < window.width; column++) {
+                if (pixels[(row * window.width + column) * 4 + 3] >= threshold) {x = Math.min(x, column); y = Math.min(y, row); right = Math.max(right, column + 1); bottom = Math.max(bottom, row + 1)}
+              }
+              return {threshold, bounds: right < 0 ? null : {x: x + window.x, y: y + window.y, width: right - x, height: bottom - y}}
+            })
+          }
+          return {naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight,
+            fullAssetAlphaBounds: sample({x: 0, y: 0, width: canvas.width, height: canvas.height}),
+            windows: windows.map(window => ({...window, alphaBounds: sample(window.sourceWindow)}))}
+        }
+        const rectOf = element => {const r = element.getBoundingClientRect(); return {x: r.x, y: r.y, width: r.width, height: r.height}}
+        function mapped(box, matrix) {
+          if (!box || !matrix) return null
+          const points = [[box.x, box.y], [box.x + box.width, box.y], [box.x, box.y + box.height], [box.x + box.width, box.y + box.height]].map(([x, y]) => ({x: matrix.a * x + matrix.c * y + matrix.e, y: matrix.b * x + matrix.d * y + matrix.f}))
+          const xs = points.map(p => p.x), ys = points.map(p => p.y)
+          return {x: Math.min(...xs), y: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys)}
+        }
+        function svgWindow(svg, role) {
+          const b = svg.viewBox.baseVal, image = svg.querySelector('image'), r = rectOf(svg), visible = r.width > 0 && r.height > 0
+          const m = visible ? image.getScreenCTM() : null
+          return {role, sourceWindow: {x: b.x, y: b.y, width: b.width, height: b.height}, visible, viewport: visible ? r : null,
+            matrix: m ? {a: m.a, b: m.b, c: m.c, d: m.d, e: m.e, f: m.f} : null}
+        }
+        const r = rectOf(desktopImage), desktopVisible = r.width > 0 && r.height > 0
+        const desktopMatrix = desktopVisible ? {a: r.width / 2020, b: 0, c: 0, d: r.height / 778, e: r.x, f: r.y} : null
+        const desktopWindows = [
+          {role: 'desktop-bagels', sourceWindow: {x: 0, y: 0, width: 1107, height: 778}, visible: desktopVisible, matrix: desktopMatrix},
+          svgWindow(document.querySelector('.rebuilt-desktop-case-art'), 'desktop-schmears'),
+        ]
+        const desktop = {source: desktopSource, fullImageBox: desktopVisible ? r : null, clipPath: getComputedStyle(desktopImage).clipPath, ...boundsOf(desktopImage, desktopWindows)}
+        const mobileWindows = [...document.querySelectorAll('.rebuilt-mobile-case-art')].map((svg, index) => svgWindow(svg, index ? 'mobile-schmears' : 'mobile-bagels'))
+        const mobile = mobileImage ? {source: mobileSource, ...boundsOf(mobileImage, mobileWindows)} : {source: mobileSource, decoded: false, windows: mobileWindows}
+        for (const asset of [desktop, mobile]) for (const window of asset.windows) {
+          window.renderedSourceWindow = window.visible ? mapped(window.sourceWindow, window.matrix) : null
+          if (window.alphaBounds) window.renderedAlphaBounds = window.alphaBounds.map(item => ({threshold: item.threshold, bounds: window.visible ? mapped(item.bounds, window.matrix) : null}))
+        }
+        return {method: 'Off-DOM alpha readback. Full asset and each explicit own-art source window are sampled separately at alpha>=1/16; these are measurements, not fidelity thresholds.',
+          desktop, mobile, decodedMobileSVGTextures,
+          scope: 'Desktop bagel clip x0..1107 and recomposed schmear viewport x1080..2020 deliberately differ from both the full desktop asset and the earlier mobile source. Native DOM anchors alone do not certify visual fidelity.'}
+      }, portraitRoom)
+      assert.equal(record.counterArtAudit.decodedMobileSVGTextures.length, portraitRoom ? 1 : 0, 'Credit the distinct mobile SVG texture only after its own decode')
+      for (const asset of [record.counterArtAudit.desktop, record.counterArtAudit.mobile]) for (const window of asset.windows) {
+        if (window.visible) assert.ok(window.alphaBounds?.find(item => item.threshold === 1)?.bounds, 'A visible native window must contain actual nontransparent own-art pixels')
+      }
       if (viewport.width === 1536) {
         record.referenceAnchors = await page.evaluate(() => {
           const expected = [
@@ -480,7 +554,7 @@ async function runCase(browser, viewport, scenario) {
         for (const issue of record.referenceAnchors.failures) failure({referenceAnchor: issue}, record)
       }
       record.decodedPhotos = await photos.count(); await capture('entry-gallery-loaded')
-      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-five-html-images', 'reference-guided-art-provenance', 'two-mobile-svg-source-windows', 'proportional-image-rendering', 'recorded-source-pixel-density', 'counter-alpha-separate-from-anchor', 'empty-cart', 'menu', 'reset')
+      record.coverage.push('native-tab-three-category-focus', 'native-enter-category', 'three-category-callbacks', 'two-vitrine-callbacks', 'verified-vitrine-flavor-labels', 'decoded-five-html-images', 'reference-guided-art-provenance', 'two-mobile-svg-source-windows', 'one-desktop-svg-source-window', 'explicit-desktop-bagel-clip', 'distinct-mobile-texture-decode', 'proportional-image-rendering', 'recorded-source-pixel-density', 'counter-alpha-separate-from-anchor', 'empty-cart', 'menu', 'reset')
       return
     }
     if (scenario === 'product-text') {
@@ -685,6 +759,8 @@ async function main() {
       keyboardEntries: report.cases.filter(record => record.keyboardEntry).length,
       decodedEntryPhotos: report.cases.reduce((sum, record) => sum + (record.decodedPhotos || 0), 0),
       mobileSVGWindows: report.cases.reduce((sum, record) => sum + (record.mobileCaseWindows || []).filter(window => window.visible).length, 0),
+      desktopSVGWindows: report.cases.reduce((sum, record) => sum + (record.desktopCaseWindows || []).filter(window => window.visible).length, 0),
+      decodedMobileSVGTextures: report.cases.reduce((sum, record) => sum + (record.counterArtAudit?.decodedMobileSVGTextures || []).length, 0),
       referenceAnchorViewports: report.cases.filter(record => record.referenceAnchors).length,
       productTextStates: report.cases.reduce((sum, record) => sum + record.productTextStates.length, 0),
       productTextCards: report.cases.reduce((sum, record) => sum + record.productTextStates.reduce((cards, state) => cards + state.cards, 0), 0),
