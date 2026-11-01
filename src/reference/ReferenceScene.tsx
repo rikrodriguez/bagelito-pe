@@ -75,9 +75,9 @@ export function ReferenceScene(props: Props) {
   return <section className="reference-presentation rebuilt-store" aria-label="Vitrina Bagelito"
     data-rebuilt-scene="live-components" data-compact={compact ? 'true' : 'false'}>
     <div className="rebuilt-architecture" aria-hidden="true">
-      <div className="rebuilt-pendant rebuilt-pendant-left"><i /><span /></div>
-      <div className="rebuilt-pendant rebuilt-pendant-right"><i /><span /></div>
-      <span className="rebuilt-wall-shadow" />
+      <img className="rebuilt-room-photo" src="/images/rebuilt-boutique-room.png" width={1536} height={1024}
+        alt="" fetchPriority="high" decoding="async" data-art-medium="independent-architectural-concept" />
+      <span className="rebuilt-room-shade" />
     </div>
     <header className="rebuilt-topbar">
       <button type="button" className="rebuilt-menu" aria-label={props.menuOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -132,10 +132,9 @@ export function ReferenceScene(props: Props) {
         <header className="rebuilt-case-header"><h2>Bagels</h2><span>Encuentra tu favorito</span></header>
         <div className="rebuilt-case-glass" aria-hidden="true" />
         <div className="rebuilt-bagel-trays">
+          <img className="rebuilt-bagel-case-photo" src="/images/rebuilt-bagel-trays.png" alt="" width={1536} height={1024}
+            decoding="async" data-art-medium="independent-product-concept" />
           {bagels.map(item => <figure className="rebuilt-bagel-tray" key={item.id}>
-            <span className="rebuilt-bagel-pile">
-              <BagelPhoto id={item.id} className="rebuilt-pile-front" />
-            </span>
             <figcaption>{item.name}</figcaption>
           </figure>)}
         </div>
