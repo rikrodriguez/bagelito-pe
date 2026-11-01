@@ -1,0 +1,6 @@
+{"at":"2026-11-01T01:26:09.776Z","type":"nozoom-captured","width":390,"file":"390-nozoom-presentation.png","failures":12}
+{"at":"2026-11-01T01:26:09.890Z","type":"category-callback","width":390,"name":"Packs","scene":"pack-size"}
+{"at":"2026-11-01T01:26:10.071Z","type":"category-callback","width":390,"name":"Combos","scene":"combos"}
+{"at":"2026-11-01T01:26:10.248Z","type":"category-callback","width":390,"name":"Schmears","scene":"schmear-size"}
+{"at":"2026-11-01T01:26:10.263Z","type":"capabilities-drained","width":390,"knownFrameworkReads":3,"forbidden":0}
+1 image cases; 12 failures

@@ -1,0 +1,26 @@
+{
+  "artifactKind": "immutable compiled Node candidate from dirty CSS worktree, not a committed served app SHA",
+  "baseGitSHA": "d43cc5f77df6ccea7161ecb190d91631108f9d02",
+  "dirtySourceFile": "src/reference/reference-storefront.css",
+  "sourceCSSSHA256DeclaredAtBuild": "a14adc23bcb96d4874943d4e773ed623ec66bca6daf35528fe459433b64de134",
+  "worktree": "/workspace/bagelito-card-layout-fix",
+  "compiledSnapshot": "/tmp/bagelito-card-layout-candidate-v1-3214",
+  "baseURL": "http://127.0.0.1:3214/",
+  "rawReportDeclaredCodeSHA": null,
+  "runnerRepositorySHA": "49e0f347491af4976d7271aeba7d63a37ed4ba4b",
+  "driverSHA256": "a0fa901a6dc1a83429365b17173119cc77d875112c6e821c877631241787afe3",
+  "auditHelperSHA256": "47afa5fb7c75b66bd7386b427a17e5456159a6b34d29e7feb135485692d5f383",
+  "servedCSSAssetFiles": [
+    {
+      "path": "/assets/index-B-tAIt2X.css",
+      "artifactFile": "/tmp/bagelito-card-layout-candidate-v1-3214/public/assets/index-B-tAIt2X.css",
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c"
+    },
+    {
+      "path": "/assets/ReferenceStorefront-Bw3Slcqe.css",
+      "artifactFile": "/tmp/bagelito-card-layout-candidate-v1-3214/public/assets/ReferenceStorefront-Bw3Slcqe.css",
+      "sha256": "12b2205107e6a4ab400c5a086907205b9d29e860561339f227160862cc2c9102"
+    }
+  ],
+  "rawReportSHA256": "452ca4dfd0d07a8b31df50bcb60aad35d213abb5eb2c8a72a6669b3e92bb6bcd"
+}

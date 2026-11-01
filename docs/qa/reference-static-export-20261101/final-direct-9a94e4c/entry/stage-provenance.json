@@ -1,0 +1,7 @@
+{
+  "applicationSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "exporterSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+  "baseURL": "http://127.0.0.1:3216/",
+  "provenance": "QA_EXPORT_SHA was set for this run; entry driver does not serialize this variable. Raw report remains unchanged. Frozen export identity is supplied by the parent and shared final static origin; HTML/assets and source bytes were validated separately.",
+  "rawReportSHA256": "4279565d838b3880d389527436ac5120f9512bdf1a47da61a4c2e4a607d60e21"
+}

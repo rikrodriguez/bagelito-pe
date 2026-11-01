@@ -1,0 +1,244 @@
+{
+  "applicationSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "exporterSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+  "baseURL": "http://127.0.0.1:3216/",
+  "sourceReferenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "sourceSceneSHA256": "723ca7bad1c9cbf466fb0c8ef60145f79c9df727d29d2a9a3fc92928c8be9d93",
+  "sourceCSSSHA256": "10877671b42927f6ad1bbb855ee7b769ffa9fddb41b4419739832d2986d0f160",
+  "status": "passed",
+  "stages": [
+    {
+      "name": "entry",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 320,
+          "height": 700
+        },
+        {
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 9,
+      "legalNewTabs": 0,
+      "pngs": 6,
+      "knownFrameworkReads": 9,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "ec39b4ae0874fc0e24794a20dabbf58a648bd8515c803c7d2aa56a44d32601c3",
+      "reportSHA256": "4279565d838b3880d389527436ac5120f9512bdf1a47da61a4c2e4a607d60e21"
+    },
+    {
+      "name": "card-text18",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 320,
+          "height": 700
+        },
+        {
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "textStates": 18,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 0,
+      "pngs": 42,
+      "knownFrameworkReads": 3,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "289e030b29b7241321a7d65726e4c72f3a8133a814cc04793cd29d7e097950df",
+      "reportSHA256": "1b7a789ac71af5e314d5e45e4ca6eea64715144bbc367edcf4af49a2faa55ece"
+    },
+    {
+      "name": "secondary36",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 320,
+          "height": 700
+        },
+        {
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "textStates": 36,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 0,
+      "pngs": 78,
+      "knownFrameworkReads": 3,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "304573d7088fd82a2dc767be9871cf71bbcbdf277c291564c971ae12b838482f",
+      "reportSHA256": "803ca2feec50758f094db776fc9e7f7bd8d3e72f4e5e0d905b0713bae6fda363"
+    },
+    {
+      "name": "e2e/pack-decline-390",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 1,
+      "pngs": 15,
+      "knownFrameworkReads": 2,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+      "reportSHA256": "a45c957c0a33700acd1c0c1808f226fd51b0401a8ae4484e1b696e6ab96a225b"
+    },
+    {
+      "name": "e2e/combo-390",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 1,
+      "pngs": 11,
+      "knownFrameworkReads": 2,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+      "reportSHA256": "d3312a875c7264b8da2a39946c740e4ced0dd42ea8e38adf985895404c2370fe"
+    },
+    {
+      "name": "e2e/schmear-390",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 1,
+      "pngs": 11,
+      "knownFrameworkReads": 2,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+      "reportSHA256": "0df74cd6b1812ecaa9882fe77a9bf04055cc26c3d5869c6a7f1d82c460880721"
+    },
+    {
+      "name": "e2e/pack-original-390",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 1,
+      "pngs": 17,
+      "knownFrameworkReads": 2,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+      "reportSHA256": "854eb2e4e62adc144b675ddc55e9a8ba31f23717ca60cb6864a65bfd55825832"
+    },
+    {
+      "name": "e2e/pack-flavoured-320",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 320,
+          "height": 700
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 1,
+      "pngs": 17,
+      "knownFrameworkReads": 2,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+      "reportSHA256": "e08bd9fc41f77346270eb827ad8efc9f5bd9c9aa20a16c08bce961963db5c195"
+    },
+    {
+      "name": "e2e/pack-decline-1280",
+      "status": "passed",
+      "failures": 0,
+      "viewports": [
+        {
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "textStates": 0,
+      "categoryCallbacks": 0,
+      "legalNewTabs": 1,
+      "pngs": 15,
+      "knownFrameworkReads": 2,
+      "maximumFrameworkReadsPerDocument": 1,
+      "blockedRequests": 0,
+      "networkErrors": 0,
+      "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+      "reportSHA256": "b79d0bd86391d8fe4a4e7725277acc021c3cec7e6ae68666c96e6640f755b6ef"
+    }
+  ],
+  "knownFrameworkReads": 27,
+  "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+  "maximumFrameworkReadsPerDocument": 1,
+  "forbiddenCapabilityEvents": 0,
+  "blockedRequests": 0,
+  "networkErrors": 0,
+  "legalNewTabs": 6,
+  "scope": "Final frozen plain-file export. Chromium only. Explicit no-zoom mobile contract; no 3D, legacy zoom, Safari/install, hosting, API/provider/POST/DB or application storage writes.",
+  "desktopRGBComparison": {
+    "status": "passed",
+    "scope": "1280x800 entry only, versus original 6f image storefront screenshot; unmodified PNG bytes and all RGB pixels identical. No full-state RGB parity claim.",
+    "compared": 1,
+    "mismatchedPixels": 0,
+    "maximumChannelDifference": 0,
+    "pngSHA256": "6c25aa2f9908003c7cc28cfc1acfe74a2dda40d63bd8b66967110cad70c36c8d"
+  },
+  "textStates": 54,
+  "categoryCallbacks": 9,
+  "completeE2EJourneys": 6,
+  "pngs": 212
+}

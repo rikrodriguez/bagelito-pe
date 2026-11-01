@@ -1,0 +1,140 @@
+{
+  "status": "PASS within documented QA scope; no application changes during final static QA",
+  "applicationSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "exporterSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+  "PR45": "https://github.com/rikrodriguez/bagelito-pe/pull/45",
+  "PR45Head": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "draft": true,
+  "artifact": {
+    "path": "docs/previews/reference-static-export-20261101/bagelito-reference-static-direct-9a94e4c.zip",
+    "bytes": 8513042,
+    "sha256": "262b55db494a615299ad9123ac2b82a69b79950f318281d8b5652abe45de5ed6",
+    "files": 83,
+    "verifiedFileHashes": 82,
+    "backendRequired": false,
+    "staticHTTPOriginRootRequired": true
+  },
+  "terminalQA": {
+    "browserRuns": 9,
+    "failedRuns": 0,
+    "entryViewports": [
+      320,
+      390,
+      1280
+    ],
+    "categoryCallbacks": 9,
+    "cardTextStates": 18,
+    "measuredSchmearCards": 90,
+    "secondaryStates": 36,
+    "completeJourneys": 6,
+    "realLegalTabs": 6,
+    "legalSections": 8,
+    "legalOpenerNull": true,
+    "screenshots": 212,
+    "browserHashEntries": 243,
+    "sourceReports": [
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/card-text18/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/e2e/combo-390/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/e2e/pack-decline-1280/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/e2e/pack-decline-390/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/e2e/pack-flavoured-320/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/e2e/pack-original-390/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/e2e/schmear-390/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/entry/exact-image-results.json",
+      "docs/qa/reference-static-export-20261101/final-direct-9a94e4c/secondary36/exact-image-results.json"
+    ]
+  },
+  "safety": {
+    "browserAPIRequests": 0,
+    "fetchXHR": 0,
+    "posts": 0,
+    "storageWrites": 0,
+    "businessDraftReads": 0,
+    "egress": 0,
+    "CSPViolations": 0,
+    "hydrationErrors": 0,
+    "knownTanStackReads": 27,
+    "maxKnownReadPerDocument": 1,
+    "key": "tsr-scroll-restoration-v1_3",
+    "zeroStorageReadsClaimed": false
+  },
+  "visualContract": {
+    "mobile": "exact-source hero/vitrine crops plus native16px title/12px context cards, no enlarge button or horizontal pan",
+    "desktop": "complete approved image; entry byte/RGB identical to6f",
+    "desktopEntryRGBDifferences": 0,
+    "WebPSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "JPEGByteIdentityClaimed": false,
+    "textAudits": "no glyph overlap/clipping/overflow; measured commerce text>=12px; effective44px targets",
+    "legacyZoomSupersededByExplicitUserInstruction": true,
+    "oldGuided32OrQA3DReassigned": false
+  },
+  "sourceAudit": {
+    "protectedFilesUnchanged": 125,
+    "publicAssetsIdenticalToBuild": 79,
+    "htmlCSPAndSSRReconstructionPass": 3,
+    "inlineHashesPerHTML": 2,
+    "HTMLChanges": "CSP and referrer metadata only",
+    "APIProbeStatus": 404,
+    "cookies": 0
+  },
+  "zipExtractionProbe": {
+    "status": "PASS",
+    "fileHashes": 82,
+    "actualHTTPGETs": 13,
+    "entryJSImageAndHTML": 200,
+    "API": 404,
+    "correctMIME": true,
+    "cookieCount": 0,
+    "origin": "http://127.0.0.1:3217/"
+  },
+  "buildAndNode": {
+    "build": "PASS",
+    "typescript": "PASS",
+    "structural": [
+      11,
+      11
+    ],
+    "manual": [
+      4,
+      4
+    ],
+    "legacyMovement": [
+      14,
+      14
+    ],
+    "nodePassed": 58,
+    "nodeFailed": 0,
+    "nodeSkipped": 0
+  },
+  "commercial": {
+    "catalogAndHandlersChanged": false,
+    "beveragesAndSandwiches": false,
+    "upsell": "optional120g Original12PEN/flavoured16PEN from catalog; decline supported",
+    "loyalty": "10orders=>2bagels+1schmear; tracking/redemption pending",
+    "backendGHL": "approved architecture: backend source of truth, GHL future progress mirror; integration/credentials/tracking not activated",
+    "wallet": false,
+    "realPaymentsOrdersOrConfirmation": false
+  },
+  "historicalFailuresPreserved": {
+    "originalCardTextFindings": 336,
+    "originalSecondaryFindings": 239,
+    "oldMobileNoZoomContractFailures": 24,
+    "intermediateRemainingFindings": 7,
+    "finalRemainingFindings": 0
+  },
+  "notExecutedOrCertified": [
+    "Safari",
+    "physical iPhone",
+    "remote CI",
+    "real payments",
+    "orders",
+    "loyalty tracking/redemption",
+    "hosting deployment"
+  ],
+  "previewSiteUpdatedByThisWorker": false,
+  "audienceOrPermissionsChanged": false,
+  "autodeploy": false,
+  "productionChanged": false,
+  "newPRCreated": false,
+  "provenanceNote": "Raw entry driver does not serialize exporterSHA; sidecar and immutable static manifest bind it. Raw JSON not altered. Candidate snapshots retain null codeSHA/source hash provenance; final results identify9a94e4c."
+}

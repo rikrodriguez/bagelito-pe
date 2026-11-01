@@ -1,0 +1,275 @@
+{
+  "auditedAt": "2026-11-01T01:45:38.465Z",
+  "kind": "read-only-source-CSP-and-static-loopback-GET-audit",
+  "browserExecuted": false,
+  "buildExecuted": false,
+  "applicationSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "exporterSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+  "exportPath": "/tmp/bagelito-reference-static-direct-9a94e4c",
+  "manifestSHA256": "23a6272dfe624aab7d5a0b87f2b49e3668d02e125875596810e727edde84cca6",
+  "csp": [
+    {
+      "route": "/",
+      "file": "index.html",
+      "passed": true,
+      "inlineScripts": [
+        {
+          "bytes": 968,
+          "hash": "'sha256-pwEnjAZHNXMS1BsE8BJ2dmm0/YqLDUx1y4AQyp19D9w='",
+          "hasCRLF": false
+        },
+        {
+          "bytes": 56,
+          "hash": "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='",
+          "hasCRLF": false
+        }
+      ],
+      "externalScripts": [
+        "/assets/index-CNG4SY2A.js"
+      ],
+      "directives": {
+        "default-src": [
+          "'none'"
+        ],
+        "script-src": [
+          "'self'",
+          "'sha256-pwEnjAZHNXMS1BsE8BJ2dmm0/YqLDUx1y4AQyp19D9w='",
+          "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='"
+        ],
+        "script-src-attr": [
+          "'none'"
+        ],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'"
+        ],
+        "img-src": [
+          "'self'",
+          "data:"
+        ],
+        "font-src": [
+          "'self'"
+        ],
+        "connect-src": [
+          "'none'"
+        ],
+        "form-action": [
+          "'none'"
+        ],
+        "frame-src": [
+          "'none'"
+        ],
+        "object-src": [
+          "'none'"
+        ],
+        "worker-src": [
+          "'none'"
+        ],
+        "base-uri": [
+          "'none'"
+        ]
+      },
+      "originalSSRReconstructionMatches": true,
+      "noindex": true,
+      "reviewOnly": true,
+      "canvasTag": false
+    },
+    {
+      "route": "/legal",
+      "file": "legal/index.html",
+      "passed": true,
+      "inlineScripts": [
+        {
+          "bytes": 884,
+          "hash": "'sha256-Qzu9kpWnokyTiiC97XVUmQYgBi64YhQUXx6CuKIJltQ='",
+          "hasCRLF": false
+        },
+        {
+          "bytes": 56,
+          "hash": "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='",
+          "hasCRLF": false
+        }
+      ],
+      "externalScripts": [
+        "/assets/index-CNG4SY2A.js"
+      ],
+      "directives": {
+        "default-src": [
+          "'none'"
+        ],
+        "script-src": [
+          "'self'",
+          "'sha256-Qzu9kpWnokyTiiC97XVUmQYgBi64YhQUXx6CuKIJltQ='",
+          "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='"
+        ],
+        "script-src-attr": [
+          "'none'"
+        ],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'"
+        ],
+        "img-src": [
+          "'self'",
+          "data:"
+        ],
+        "font-src": [
+          "'self'"
+        ],
+        "connect-src": [
+          "'none'"
+        ],
+        "form-action": [
+          "'none'"
+        ],
+        "frame-src": [
+          "'none'"
+        ],
+        "object-src": [
+          "'none'"
+        ],
+        "worker-src": [
+          "'none'"
+        ],
+        "base-uri": [
+          "'none'"
+        ]
+      },
+      "originalSSRReconstructionMatches": true,
+      "noindex": true,
+      "reviewOnly": null,
+      "canvasTag": false
+    },
+    {
+      "route": "/playable",
+      "file": "playable/index.html",
+      "passed": true,
+      "inlineScripts": [
+        {
+          "bytes": 994,
+          "hash": "'sha256-z4Pad4YOfmCX1JSsW7WcjRTbPYXc+NDFMbzaCvVSvRU='",
+          "hasCRLF": false
+        },
+        {
+          "bytes": 56,
+          "hash": "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='",
+          "hasCRLF": false
+        }
+      ],
+      "externalScripts": [
+        "/assets/index-CNG4SY2A.js"
+      ],
+      "directives": {
+        "default-src": [
+          "'none'"
+        ],
+        "script-src": [
+          "'self'",
+          "'sha256-z4Pad4YOfmCX1JSsW7WcjRTbPYXc+NDFMbzaCvVSvRU='",
+          "'sha256-REkTQ3mZNdOnZ0xWxlKdqBEAWdIVpJdIT6tm57gvq8Y='"
+        ],
+        "script-src-attr": [
+          "'none'"
+        ],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'"
+        ],
+        "img-src": [
+          "'self'",
+          "data:"
+        ],
+        "font-src": [
+          "'self'"
+        ],
+        "connect-src": [
+          "'none'"
+        ],
+        "form-action": [
+          "'none'"
+        ],
+        "frame-src": [
+          "'none'"
+        ],
+        "object-src": [
+          "'none'"
+        ],
+        "worker-src": [
+          "'none'"
+        ],
+        "base-uri": [
+          "'none'"
+        ]
+      },
+      "originalSSRReconstructionMatches": true,
+      "noindex": true,
+      "reviewOnly": true,
+      "canvasTag": false
+    }
+  ],
+  "http": [
+    {
+      "requestedPath": "/",
+      "finalURL": "http://127.0.0.1:3216/",
+      "method": "GET",
+      "status": 200,
+      "redirects": [],
+      "bytes": 8082,
+      "sha256": "fcf6bd71b86151db5baf1567b1162595f8a92d1b4f8c2a752403caa6aa148b94",
+      "contentType": "text/html",
+      "setCookie": false,
+      "matchesExportedHTML": true
+    },
+    {
+      "requestedPath": "/legal",
+      "finalURL": "http://127.0.0.1:3216/legal/",
+      "method": "GET",
+      "status": 200,
+      "redirects": [
+        {
+          "url": "http://127.0.0.1:3216/legal",
+          "status": 301,
+          "location": "http://127.0.0.1:3216/legal/"
+        }
+      ],
+      "bytes": 6097,
+      "sha256": "83d9df3880600fa157ecc9f9d43eb1034f398709fb6bbfbd73b0925ec60304d9",
+      "contentType": "text/html",
+      "setCookie": false,
+      "matchesExportedHTML": true
+    },
+    {
+      "requestedPath": "/playable",
+      "finalURL": "http://127.0.0.1:3216/playable/",
+      "method": "GET",
+      "status": 200,
+      "redirects": [
+        {
+          "url": "http://127.0.0.1:3216/playable",
+          "status": 301,
+          "location": "http://127.0.0.1:3216/playable/"
+        }
+      ],
+      "bytes": 8110,
+      "sha256": "e9876d98581ca0aa2d33dbc02d25010c1b1a04dd40e3c4f716a354469feb8c34",
+      "contentType": "text/html",
+      "setCookie": false,
+      "matchesExportedHTML": true
+    },
+    {
+      "requestedPath": "/api/batch",
+      "finalURL": "http://127.0.0.1:3216/api/batch",
+      "method": "GET",
+      "status": 404,
+      "redirects": [],
+      "bytes": 335,
+      "sha256": "860b53ed6ea6a0cf602fae632cfcd28dbcf637f85a8bee28d2ee9c6cc9081669",
+      "contentType": "text/html;charset=utf-8",
+      "setCookie": false,
+      "staticMissingAPIRoute": true
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-11-01T01:45:38.539Z",
+  "passed": true
+}

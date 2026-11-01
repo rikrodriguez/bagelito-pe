@@ -1,0 +1,23 @@
+{
+  "artifactKind": "immutable compiled Node snapshot from dirty CSS worktree; no served commit claimed",
+  "baseGitSHA": "bb482eece1126cfd51949e1cc5bfa28cee8332b0",
+  "sourceSceneSHA256": "723ca7bad1c9cbf466fb0c8ef60145f79c9df727d29d2a9a3fc92928c8be9d93",
+  "sourceCSSSHA256": "10877671b42927f6ad1bbb855ee7b769ffa9fddb41b4419739832d2986d0f160",
+  "compiledSnapshot": "/tmp/bagelito-reference-direct-candidate-v3-3218",
+  "baseURL": "http://127.0.0.1:3218/",
+  "declaredAppCodeSHA": null,
+  "runnerRepositorySHA": "bb482eece1126cfd51949e1cc5bfa28cee8332b0",
+  "servedCSS": [
+    {
+      "path": "/assets/index-B-tAIt2X.css",
+      "artifactFile": "/tmp/bagelito-reference-direct-candidate-v3-3218/public/assets/index-B-tAIt2X.css",
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c"
+    },
+    {
+      "path": "/assets/ReferenceStorefront-Df1qW8ej.css",
+      "artifactFile": "/tmp/bagelito-reference-direct-candidate-v3-3218/public/assets/ReferenceStorefront-Df1qW8ej.css",
+      "sha256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429"
+    }
+  ],
+  "rawReportSHA256": "2798f5597e95f0d4d48acfe1c6fb52676989bc625ba58d3b6346823b399799a0"
+}

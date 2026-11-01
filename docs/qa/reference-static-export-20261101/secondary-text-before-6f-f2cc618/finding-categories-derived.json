@@ -1,0 +1,1446 @@
+{
+  "note": "Derived labels only; original raw report unchanged. Control HTML type overwrote the original target44 label in the secondary driver, so minimum44 identifies that category here. No assertions/counts changed.",
+  "counts": {
+    "font": 166,
+    "text-overlap": 21,
+    "target44": 16,
+    "pseudo-heading-overlap": 3,
+    "clipping": 33
+  },
+  "findings": [
+    {
+      "width": 390,
+      "state": "pack-format",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "pack-format",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 390,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": "email"
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 390,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 390,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "combo-heading",
+      "category": "pseudo-heading-overlap",
+      "rawType": "pseudo-heading-overlap"
+    },
+    {
+      "width": 390,
+      "state": "combo-selected-schmear",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "combo-selected-schmear",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "combo-selected-schmear",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "standalone-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "standalone-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 390,
+      "state": "standalone-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "pack-format",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "pack-format",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "optional-schmears",
+      "category": "text-overlap",
+      "rawType": "text-overlap"
+    },
+    {
+      "width": 320,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": "email"
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 320,
+      "state": "checkout-longtexts",
+      "category": "target44",
+      "rawType": null
+    },
+    {
+      "width": 320,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "combo-heading",
+      "category": "pseudo-heading-overlap",
+      "rawType": "pseudo-heading-overlap"
+    },
+    {
+      "width": 320,
+      "state": "combo-selected-schmear",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "combo-selected-schmear",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "combo-selected-schmear",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "standalone-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "standalone-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 320,
+      "state": "standalone-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "pack-format",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "pack-format",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "mini-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "large-quantity",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-unselected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "bagels-selected",
+      "category": "target44",
+      "rawType": "button"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "optional-schmears",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "cashier",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "checkout-longtexts",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "combo-heading",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "combo-heading",
+      "category": "pseudo-heading-overlap",
+      "rawType": "pseudo-heading-overlap"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "target44",
+      "rawType": "target44"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "combo-selected-schmear",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-sizes",
+      "category": "font",
+      "rawType": "font"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    },
+    {
+      "width": 1280,
+      "state": "standalone-selected",
+      "category": "clipping",
+      "rawType": "clipping"
+    }
+  ]
+}

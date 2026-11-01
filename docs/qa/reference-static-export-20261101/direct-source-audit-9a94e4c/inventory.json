@@ -1,0 +1,2096 @@
+{
+  "audit": "read-only static export inventory",
+  "checkedAt": "2026-11-01T01:45:57.610Z",
+  "status": "PASS",
+  "scope": {
+    "exportDir": "/tmp/bagelito-reference-static-direct-9a94e4c",
+    "buildPublicDir": "/tmp/bagelito-reference-direct-candidate-v3-3218/public",
+    "network": false,
+    "browser": false,
+    "build": false,
+    "sourceEdits": false,
+    "contentInspection": "File sizes and hashes, public inventory and manifest. Forbidden credential/environment filenames would be reported without opening their content."
+  },
+  "identity": {
+    "expectedApplicationSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+    "manifestApplicationSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+    "expectedExporterSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+    "manifestExporterSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+    "manifestSHA256": "23a6272dfe624aab7d5a0b87f2b49e3668d02e125875596810e727edde84cca6"
+  },
+  "counts": {
+    "manifestFiles": 82,
+    "exportRegularFiles": 83,
+    "manifestHashAndSizePass": 82,
+    "copiedPublicFiles": 79,
+    "copiedPublicHashAndSizePass": 79,
+    "buildPublicFiles": 79,
+    "htmlRoutes": 3,
+    "javascriptFiles": 6,
+    "cssFiles": 2,
+    "symlinks": 0,
+    "specialFiles": 0,
+    "forbiddenPaths": 0
+  },
+  "extensions": {
+    ".js": 6,
+    ".css": 2,
+    ".webp": 67,
+    ".svg": 2,
+    ".html": 3,
+    ".glb": 2,
+    ".json": 1
+  },
+  "sourceImage": {
+    "path": "images/store-reference-approved.webp",
+    "expectedSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "manifestSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "exportSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "buildSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "repositorySHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "allMatch": true
+  },
+  "findings": {
+    "failures": [],
+    "extraFiles": [],
+    "duplicateManifestEntries": [],
+    "missingBuildFiles": [],
+    "suspiciousFiles": [],
+    "suspiciousDirectories": [],
+    "symlinks": [],
+    "specialFiles": []
+  },
+  "manifestChecks": [
+    {
+      "path": "assets/ReferenceStorefront-C6RzzMpG.js",
+      "expectedBytes": 60256,
+      "actualBytes": 60256,
+      "expectedSHA256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a",
+      "actualSHA256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/ReferenceStorefront-Df1qW8ej.css",
+      "expectedBytes": 109531,
+      "actualBytes": 109531,
+      "expectedSHA256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429",
+      "actualSHA256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/index-B-tAIt2X.css",
+      "expectedBytes": 1610,
+      "actualBytes": 1610,
+      "expectedSHA256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "actualSHA256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/index-CNG4SY2A.js",
+      "expectedBytes": 341955,
+      "actualBytes": 341955,
+      "expectedSHA256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da",
+      "actualSHA256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/legal-D95vHKPV.js",
+      "expectedBytes": 4593,
+      "actualBytes": 4593,
+      "expectedSHA256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40",
+      "actualSHA256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/legal-version-BguVS3S4.js",
+      "expectedBytes": 34,
+      "actualBytes": 34,
+      "expectedSHA256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "actualSHA256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/playable-CvS7UQpn.js",
+      "expectedBytes": 162,
+      "actualBytes": 162,
+      "expectedSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "actualSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/routes-CvS7UQpn.js",
+      "expectedBytes": 162,
+      "actualBytes": 162,
+      "expectedSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "actualSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "bagel-vitrina.webp",
+      "expectedBytes": 1506,
+      "actualBytes": 1506,
+      "expectedSHA256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7",
+      "actualSHA256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "bagelito-counter.webp",
+      "expectedBytes": 1506,
+      "actualBytes": 1506,
+      "expectedSHA256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8",
+      "actualSHA256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-blueberry.webp",
+      "expectedBytes": 66558,
+      "actualBytes": 66558,
+      "expectedSHA256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2",
+      "actualSHA256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-cheddar.webp",
+      "expectedBytes": 67072,
+      "actualBytes": 67072,
+      "expectedSHA256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300",
+      "actualSHA256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-cinnamon-raisin.webp",
+      "expectedBytes": 68246,
+      "actualBytes": 68246,
+      "expectedSHA256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1",
+      "actualSHA256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-classic-onion.webp",
+      "expectedBytes": 70254,
+      "actualBytes": 70254,
+      "expectedSHA256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b",
+      "actualSHA256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-everything.webp",
+      "expectedBytes": 79448,
+      "actualBytes": 79448,
+      "expectedSHA256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba",
+      "actualSHA256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-jalapeno-cheddar.webp",
+      "expectedBytes": 67592,
+      "actualBytes": 67592,
+      "expectedSHA256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875",
+      "actualSHA256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-plain.webp",
+      "expectedBytes": 61902,
+      "actualBytes": 61902,
+      "expectedSHA256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3",
+      "actualSHA256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-sesame.webp",
+      "expectedBytes": 119564,
+      "actualBytes": 119564,
+      "expectedSHA256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0",
+      "actualSHA256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-vitrina-photo.webp",
+      "expectedBytes": 86354,
+      "actualBytes": 86354,
+      "expectedSHA256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643",
+      "actualSHA256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagelito-logo.svg",
+      "expectedBytes": 454,
+      "actualBytes": 454,
+      "expectedSHA256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e",
+      "actualSHA256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagelito-wordmark.svg",
+      "expectedBytes": 511,
+      "actualBytes": 511,
+      "expectedSHA256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9",
+      "actualSHA256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/guided-storyboard-atlas-2.webp",
+      "expectedBytes": 400064,
+      "actualBytes": 400064,
+      "expectedSHA256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489",
+      "actualSHA256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/guided-storyboard-atlas.webp",
+      "expectedBytes": 428764,
+      "actualBytes": 428764,
+      "expectedSHA256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154",
+      "actualSHA256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/pack-6-mixed.webp",
+      "expectedBytes": 77428,
+      "actualBytes": 77428,
+      "expectedSHA256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65",
+      "actualSHA256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/schmear-vitrina-photo.webp",
+      "expectedBytes": 40960,
+      "actualBytes": 40960,
+      "expectedSHA256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f",
+      "actualSHA256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/store-reference-approved.webp",
+      "expectedBytes": 328894,
+      "actualBytes": 328894,
+      "expectedSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "actualSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "index.html",
+      "expectedBytes": 8082,
+      "actualBytes": 8082,
+      "expectedSHA256": "fcf6bd71b86151db5baf1567b1162595f8a92d1b4f8c2a752403caa6aa148b94",
+      "actualSHA256": "fcf6bd71b86151db5baf1567b1162595f8a92d1b4f8c2a752403caa6aa148b94",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "legal/index.html",
+      "expectedBytes": 6097,
+      "actualBytes": 6097,
+      "expectedSHA256": "83d9df3880600fa157ecc9f9d43eb1034f398709fb6bbfbd73b0925ec60304d9",
+      "actualSHA256": "83d9df3880600fa157ecc9f9d43eb1034f398709fb6bbfbd73b0925ec60304d9",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/bag-handoff.webp",
+      "expectedBytes": 104850,
+      "actualBytes": 104850,
+      "expectedSHA256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "actualSHA256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/bagels-vitrina.webp",
+      "expectedBytes": 187962,
+      "actualBytes": 187962,
+      "expectedSHA256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "actualSHA256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/cashier.webp",
+      "expectedBytes": 91394,
+      "actualBytes": 91394,
+      "expectedSHA256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "actualSHA256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/combos.webp",
+      "expectedBytes": 90090,
+      "actualBytes": 90090,
+      "expectedSHA256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "actualSHA256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/cross-sell.webp",
+      "expectedBytes": 85010,
+      "actualBytes": 85010,
+      "expectedSHA256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "actualSHA256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/entrance.webp",
+      "expectedBytes": 192244,
+      "actualBytes": 192244,
+      "expectedSHA256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "actualSHA256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/goodbye.webp",
+      "expectedBytes": 129102,
+      "actualBytes": 129102,
+      "expectedSHA256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "actualSHA256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/inside.webp",
+      "expectedBytes": 159248,
+      "actualBytes": 159248,
+      "expectedSHA256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "actualSHA256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/packs.webp",
+      "expectedBytes": 93290,
+      "actualBytes": 93290,
+      "expectedSHA256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "actualSHA256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/pay.webp",
+      "expectedBytes": 94450,
+      "actualBytes": 94450,
+      "expectedSHA256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "actualSHA256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/receipt.webp",
+      "expectedBytes": 89990,
+      "actualBytes": 89990,
+      "expectedSHA256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "actualSHA256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/schmears-vitrina.webp",
+      "expectedBytes": 156536,
+      "actualBytes": 156536,
+      "expectedSHA256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "actualSHA256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/schmears.webp",
+      "expectedBytes": 115572,
+      "actualBytes": 115572,
+      "expectedSHA256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "actualSHA256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/selector.webp",
+      "expectedBytes": 181186,
+      "actualBytes": 181186,
+      "expectedSHA256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "actualSHA256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/wallet.webp",
+      "expectedBytes": 84618,
+      "actualBytes": 84618,
+      "expectedSHA256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "actualSHA256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/bag-handoff.webp",
+      "expectedBytes": 107354,
+      "actualBytes": 107354,
+      "expectedSHA256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee",
+      "actualSHA256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/bagels-vitrina.webp",
+      "expectedBytes": 187332,
+      "actualBytes": 187332,
+      "expectedSHA256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc",
+      "actualSHA256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/cashier.webp",
+      "expectedBytes": 88186,
+      "actualBytes": 88186,
+      "expectedSHA256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051",
+      "actualSHA256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/combos.webp",
+      "expectedBytes": 97112,
+      "actualBytes": 97112,
+      "expectedSHA256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633",
+      "actualSHA256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/cross-sell.webp",
+      "expectedBytes": 89694,
+      "actualBytes": 89694,
+      "expectedSHA256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7",
+      "actualSHA256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/entrance.webp",
+      "expectedBytes": 202930,
+      "actualBytes": 202930,
+      "expectedSHA256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33",
+      "actualSHA256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/goodbye.webp",
+      "expectedBytes": 139542,
+      "actualBytes": 139542,
+      "expectedSHA256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f",
+      "actualSHA256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/inside.webp",
+      "expectedBytes": 176378,
+      "actualBytes": 176378,
+      "expectedSHA256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0",
+      "actualSHA256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/packs.webp",
+      "expectedBytes": 100762,
+      "actualBytes": 100762,
+      "expectedSHA256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb",
+      "actualSHA256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/pay.webp",
+      "expectedBytes": 99894,
+      "actualBytes": 99894,
+      "expectedSHA256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c",
+      "actualSHA256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/receipt.webp",
+      "expectedBytes": 93480,
+      "actualBytes": 93480,
+      "expectedSHA256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339",
+      "actualSHA256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/schmears-vitrina.webp",
+      "expectedBytes": 92160,
+      "actualBytes": 92160,
+      "expectedSHA256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f",
+      "actualSHA256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/schmears.webp",
+      "expectedBytes": 127882,
+      "actualBytes": 127882,
+      "expectedSHA256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6",
+      "actualSHA256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/selector.webp",
+      "expectedBytes": 208154,
+      "actualBytes": 208154,
+      "expectedSHA256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b",
+      "actualSHA256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/wallet.webp",
+      "expectedBytes": 80562,
+      "actualBytes": 80562,
+      "expectedSHA256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3",
+      "actualSHA256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "models/bagel-everything-1024.glb",
+      "expectedBytes": 1506,
+      "actualBytes": 1506,
+      "expectedSHA256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d",
+      "actualSHA256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "models/bagel-everything-512.glb",
+      "expectedBytes": 1506,
+      "actualBytes": 1506,
+      "expectedSHA256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3",
+      "actualSHA256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "playable/index.html",
+      "expectedBytes": 8110,
+      "actualBytes": 8110,
+      "expectedSHA256": "e9876d98581ca0aa2d33dbc02d25010c1b1a04dd40e3c4f716a354469feb8c34",
+      "actualSHA256": "e9876d98581ca0aa2d33dbc02d25010c1b1a04dd40e3c4f716a354469feb8c34",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "reference/storyboard-main.webp",
+      "expectedBytes": 233510,
+      "actualBytes": 233510,
+      "expectedSHA256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b",
+      "actualSHA256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "reference/storyboard-master.webp",
+      "expectedBytes": 273818,
+      "actualBytes": 273818,
+      "expectedSHA256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39",
+      "actualSHA256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "reference/storyboard-schmears.webp",
+      "expectedBytes": 249142,
+      "actualBytes": 249142,
+      "expectedSHA256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809",
+      "actualSHA256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/bag-handoff.webp",
+      "expectedBytes": 104850,
+      "actualBytes": 104850,
+      "expectedSHA256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "actualSHA256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/bagels-vitrina.webp",
+      "expectedBytes": 187962,
+      "actualBytes": 187962,
+      "expectedSHA256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "actualSHA256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/cashier.webp",
+      "expectedBytes": 91394,
+      "actualBytes": 91394,
+      "expectedSHA256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "actualSHA256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/combos.webp",
+      "expectedBytes": 90090,
+      "actualBytes": 90090,
+      "expectedSHA256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "actualSHA256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/cross-sell.webp",
+      "expectedBytes": 85010,
+      "actualBytes": 85010,
+      "expectedSHA256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "actualSHA256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/entrance.webp",
+      "expectedBytes": 192244,
+      "actualBytes": 192244,
+      "expectedSHA256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "actualSHA256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/goodbye.webp",
+      "expectedBytes": 129102,
+      "actualBytes": 129102,
+      "expectedSHA256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "actualSHA256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/inside.webp",
+      "expectedBytes": 159248,
+      "actualBytes": 159248,
+      "expectedSHA256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "actualSHA256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/packs.webp",
+      "expectedBytes": 93290,
+      "actualBytes": 93290,
+      "expectedSHA256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "actualSHA256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/pay.webp",
+      "expectedBytes": 94450,
+      "actualBytes": 94450,
+      "expectedSHA256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "actualSHA256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/receipt.webp",
+      "expectedBytes": 89990,
+      "actualBytes": 89990,
+      "expectedSHA256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "actualSHA256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/schmears-vitrina.webp",
+      "expectedBytes": 156536,
+      "actualBytes": 156536,
+      "expectedSHA256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "actualSHA256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/schmears.webp",
+      "expectedBytes": 115572,
+      "actualBytes": 115572,
+      "expectedSHA256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "actualSHA256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/selector.webp",
+      "expectedBytes": 181186,
+      "actualBytes": 181186,
+      "expectedSHA256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "actualSHA256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/wallet.webp",
+      "expectedBytes": 84618,
+      "actualBytes": 84618,
+      "expectedSHA256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "actualSHA256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "schmear-vitrina.webp",
+      "expectedBytes": 1506,
+      "actualBytes": 1506,
+      "expectedSHA256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a",
+      "actualSHA256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "store-category-flow.webp",
+      "expectedBytes": 8700,
+      "actualBytes": 8700,
+      "expectedSHA256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b",
+      "actualSHA256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "store-entry-door.webp",
+      "expectedBytes": 10834,
+      "actualBytes": 10834,
+      "expectedSHA256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a",
+      "actualSHA256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a",
+      "sizeMatches": true,
+      "hashMatches": true
+    }
+  ],
+  "copiedPublicChecks": [
+    {
+      "path": "assets/ReferenceStorefront-C6RzzMpG.js",
+      "bytes": 60256,
+      "sha256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a",
+      "buildBytes": 60256,
+      "buildSHA256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/ReferenceStorefront-Df1qW8ej.css",
+      "bytes": 109531,
+      "sha256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429",
+      "buildBytes": 109531,
+      "buildSHA256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/index-B-tAIt2X.css",
+      "bytes": 1610,
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "buildBytes": 1610,
+      "buildSHA256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/index-CNG4SY2A.js",
+      "bytes": 341955,
+      "sha256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da",
+      "buildBytes": 341955,
+      "buildSHA256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/legal-D95vHKPV.js",
+      "bytes": 4593,
+      "sha256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40",
+      "buildBytes": 4593,
+      "buildSHA256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/legal-version-BguVS3S4.js",
+      "bytes": 34,
+      "sha256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "buildBytes": 34,
+      "buildSHA256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/playable-CvS7UQpn.js",
+      "bytes": 162,
+      "sha256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "buildBytes": 162,
+      "buildSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/routes-CvS7UQpn.js",
+      "bytes": 162,
+      "sha256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "buildBytes": 162,
+      "buildSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "bagel-vitrina.webp",
+      "bytes": 1506,
+      "sha256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7",
+      "buildBytes": 1506,
+      "buildSHA256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "bagelito-counter.webp",
+      "bytes": 1506,
+      "sha256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8",
+      "buildBytes": 1506,
+      "buildSHA256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-blueberry.webp",
+      "bytes": 66558,
+      "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2",
+      "buildBytes": 66558,
+      "buildSHA256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-cheddar.webp",
+      "bytes": 67072,
+      "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300",
+      "buildBytes": 67072,
+      "buildSHA256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-cinnamon-raisin.webp",
+      "bytes": 68246,
+      "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1",
+      "buildBytes": 68246,
+      "buildSHA256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-classic-onion.webp",
+      "bytes": 70254,
+      "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b",
+      "buildBytes": 70254,
+      "buildSHA256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-everything.webp",
+      "bytes": 79448,
+      "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba",
+      "buildBytes": 79448,
+      "buildSHA256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-jalapeno-cheddar.webp",
+      "bytes": 67592,
+      "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875",
+      "buildBytes": 67592,
+      "buildSHA256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-plain.webp",
+      "bytes": 61902,
+      "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3",
+      "buildBytes": 61902,
+      "buildSHA256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-sesame.webp",
+      "bytes": 119564,
+      "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0",
+      "buildBytes": 119564,
+      "buildSHA256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagel-vitrina-photo.webp",
+      "bytes": 86354,
+      "sha256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643",
+      "buildBytes": 86354,
+      "buildSHA256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagelito-logo.svg",
+      "bytes": 454,
+      "sha256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e",
+      "buildBytes": 454,
+      "buildSHA256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/bagelito-wordmark.svg",
+      "bytes": 511,
+      "sha256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9",
+      "buildBytes": 511,
+      "buildSHA256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/guided-storyboard-atlas-2.webp",
+      "bytes": 400064,
+      "sha256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489",
+      "buildBytes": 400064,
+      "buildSHA256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/guided-storyboard-atlas.webp",
+      "bytes": 428764,
+      "sha256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154",
+      "buildBytes": 428764,
+      "buildSHA256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/pack-6-mixed.webp",
+      "bytes": 77428,
+      "sha256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65",
+      "buildBytes": 77428,
+      "buildSHA256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/schmear-vitrina-photo.webp",
+      "bytes": 40960,
+      "sha256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f",
+      "buildBytes": 40960,
+      "buildSHA256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "images/store-reference-approved.webp",
+      "bytes": 328894,
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "buildBytes": 328894,
+      "buildSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/bag-handoff.webp",
+      "bytes": 104850,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "buildBytes": 104850,
+      "buildSHA256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/bagels-vitrina.webp",
+      "bytes": 187962,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "buildBytes": 187962,
+      "buildSHA256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/cashier.webp",
+      "bytes": 91394,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "buildBytes": 91394,
+      "buildSHA256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/combos.webp",
+      "bytes": 90090,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "buildBytes": 90090,
+      "buildSHA256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/cross-sell.webp",
+      "bytes": 85010,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "buildBytes": 85010,
+      "buildSHA256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/entrance.webp",
+      "bytes": 192244,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "buildBytes": 192244,
+      "buildSHA256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/goodbye.webp",
+      "bytes": 129102,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "buildBytes": 129102,
+      "buildSHA256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/inside.webp",
+      "bytes": 159248,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "buildBytes": 159248,
+      "buildSHA256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/packs.webp",
+      "bytes": 93290,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "buildBytes": 93290,
+      "buildSHA256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/pay.webp",
+      "bytes": 94450,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "buildBytes": 94450,
+      "buildSHA256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/receipt.webp",
+      "bytes": 89990,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "buildBytes": 89990,
+      "buildSHA256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/schmears-vitrina.webp",
+      "bytes": 156536,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "buildBytes": 156536,
+      "buildSHA256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/schmears.webp",
+      "bytes": 115572,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "buildBytes": 115572,
+      "buildSHA256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/selector.webp",
+      "bytes": 181186,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "buildBytes": 181186,
+      "buildSHA256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes/wallet.webp",
+      "bytes": 84618,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "buildBytes": 84618,
+      "buildSHA256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/bag-handoff.webp",
+      "bytes": 107354,
+      "sha256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee",
+      "buildBytes": 107354,
+      "buildSHA256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/bagels-vitrina.webp",
+      "bytes": 187332,
+      "sha256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc",
+      "buildBytes": 187332,
+      "buildSHA256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/cashier.webp",
+      "bytes": 88186,
+      "sha256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051",
+      "buildBytes": 88186,
+      "buildSHA256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/combos.webp",
+      "bytes": 97112,
+      "sha256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633",
+      "buildBytes": 97112,
+      "buildSHA256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/cross-sell.webp",
+      "bytes": 89694,
+      "sha256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7",
+      "buildBytes": 89694,
+      "buildSHA256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/entrance.webp",
+      "bytes": 202930,
+      "sha256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33",
+      "buildBytes": 202930,
+      "buildSHA256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/goodbye.webp",
+      "bytes": 139542,
+      "sha256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f",
+      "buildBytes": 139542,
+      "buildSHA256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/inside.webp",
+      "bytes": 176378,
+      "sha256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0",
+      "buildBytes": 176378,
+      "buildSHA256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/packs.webp",
+      "bytes": 100762,
+      "sha256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb",
+      "buildBytes": 100762,
+      "buildSHA256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/pay.webp",
+      "bytes": 99894,
+      "sha256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c",
+      "buildBytes": 99894,
+      "buildSHA256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/receipt.webp",
+      "bytes": 93480,
+      "sha256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339",
+      "buildBytes": 93480,
+      "buildSHA256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/schmears-vitrina.webp",
+      "bytes": 92160,
+      "sha256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f",
+      "buildBytes": 92160,
+      "buildSHA256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/schmears.webp",
+      "bytes": 127882,
+      "sha256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6",
+      "buildBytes": 127882,
+      "buildSHA256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/selector.webp",
+      "bytes": 208154,
+      "sha256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b",
+      "buildBytes": 208154,
+      "buildSHA256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "master-scenes-clean/wallet.webp",
+      "bytes": 80562,
+      "sha256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3",
+      "buildBytes": 80562,
+      "buildSHA256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "models/bagel-everything-1024.glb",
+      "bytes": 1506,
+      "sha256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d",
+      "buildBytes": 1506,
+      "buildSHA256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "models/bagel-everything-512.glb",
+      "bytes": 1506,
+      "sha256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3",
+      "buildBytes": 1506,
+      "buildSHA256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "reference/storyboard-main.webp",
+      "bytes": 233510,
+      "sha256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b",
+      "buildBytes": 233510,
+      "buildSHA256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "reference/storyboard-master.webp",
+      "bytes": 273818,
+      "sha256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39",
+      "buildBytes": 273818,
+      "buildSHA256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "reference/storyboard-schmears.webp",
+      "bytes": 249142,
+      "sha256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809",
+      "buildBytes": 249142,
+      "buildSHA256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/bag-handoff.webp",
+      "bytes": 104850,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "buildBytes": 104850,
+      "buildSHA256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/bagels-vitrina.webp",
+      "bytes": 187962,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "buildBytes": 187962,
+      "buildSHA256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/cashier.webp",
+      "bytes": 91394,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "buildBytes": 91394,
+      "buildSHA256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/combos.webp",
+      "bytes": 90090,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "buildBytes": 90090,
+      "buildSHA256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/cross-sell.webp",
+      "bytes": 85010,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "buildBytes": 85010,
+      "buildSHA256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/entrance.webp",
+      "bytes": 192244,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "buildBytes": 192244,
+      "buildSHA256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/goodbye.webp",
+      "bytes": 129102,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "buildBytes": 129102,
+      "buildSHA256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/inside.webp",
+      "bytes": 159248,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "buildBytes": 159248,
+      "buildSHA256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/packs.webp",
+      "bytes": 93290,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "buildBytes": 93290,
+      "buildSHA256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/pay.webp",
+      "bytes": 94450,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "buildBytes": 94450,
+      "buildSHA256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/receipt.webp",
+      "bytes": 89990,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "buildBytes": 89990,
+      "buildSHA256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/schmears-vitrina.webp",
+      "bytes": 156536,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "buildBytes": 156536,
+      "buildSHA256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/schmears.webp",
+      "bytes": 115572,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "buildBytes": 115572,
+      "buildSHA256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/selector.webp",
+      "bytes": 181186,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "buildBytes": 181186,
+      "buildSHA256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "scenes/wallet.webp",
+      "bytes": 84618,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "buildBytes": 84618,
+      "buildSHA256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "schmear-vitrina.webp",
+      "bytes": 1506,
+      "sha256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a",
+      "buildBytes": 1506,
+      "buildSHA256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "store-category-flow.webp",
+      "bytes": 8700,
+      "sha256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b",
+      "buildBytes": 8700,
+      "buildSHA256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "store-entry-door.webp",
+      "bytes": 10834,
+      "sha256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a",
+      "buildBytes": 10834,
+      "buildSHA256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a",
+      "sizeMatches": true,
+      "hashMatches": true
+    }
+  ],
+  "jsCssChecks": [
+    {
+      "path": "assets/ReferenceStorefront-C6RzzMpG.js",
+      "bytes": 60256,
+      "sha256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a",
+      "buildBytes": 60256,
+      "buildSHA256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/ReferenceStorefront-Df1qW8ej.css",
+      "bytes": 109531,
+      "sha256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429",
+      "buildBytes": 109531,
+      "buildSHA256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/index-B-tAIt2X.css",
+      "bytes": 1610,
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "buildBytes": 1610,
+      "buildSHA256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/index-CNG4SY2A.js",
+      "bytes": 341955,
+      "sha256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da",
+      "buildBytes": 341955,
+      "buildSHA256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/legal-D95vHKPV.js",
+      "bytes": 4593,
+      "sha256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40",
+      "buildBytes": 4593,
+      "buildSHA256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/legal-version-BguVS3S4.js",
+      "bytes": 34,
+      "sha256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "buildBytes": 34,
+      "buildSHA256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/playable-CvS7UQpn.js",
+      "bytes": 162,
+      "sha256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "buildBytes": 162,
+      "buildSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "sizeMatches": true,
+      "hashMatches": true
+    },
+    {
+      "path": "assets/routes-CvS7UQpn.js",
+      "bytes": 162,
+      "sha256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "buildBytes": 162,
+      "buildSHA256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b",
+      "sizeMatches": true,
+      "hashMatches": true
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/ReferenceStorefront-C6RzzMpG.js",
+      "bytes": 60256,
+      "forbiddenPath": false,
+      "sha256": "c56299c0b8d7ebbe3b2ab0828751d18478eb5266a23c6dee4c7a81931394272a"
+    },
+    {
+      "path": "assets/ReferenceStorefront-Df1qW8ej.css",
+      "bytes": 109531,
+      "forbiddenPath": false,
+      "sha256": "7862226e4e7367fcc58bdcd72b0ea210c70a90b8616915206559d16f78264429"
+    },
+    {
+      "path": "assets/index-B-tAIt2X.css",
+      "bytes": 1610,
+      "forbiddenPath": false,
+      "sha256": "86bde6f204306b2e2def6898071146bd4aefafd6a04e5e6b9f586edea30c793c"
+    },
+    {
+      "path": "assets/index-CNG4SY2A.js",
+      "bytes": 341955,
+      "forbiddenPath": false,
+      "sha256": "da4aeab4e277b31b38a9883f34a13f0d6de80d10f1196d9dc48a4b9be9dd88da"
+    },
+    {
+      "path": "assets/legal-D95vHKPV.js",
+      "bytes": 4593,
+      "forbiddenPath": false,
+      "sha256": "83badb8ca746e081b6f04ef08dc5b1a5881d7fb939de46c1bdf16a52448eac40"
+    },
+    {
+      "path": "assets/legal-version-BguVS3S4.js",
+      "bytes": 34,
+      "forbiddenPath": false,
+      "sha256": "f2abb99e3c3c71748417440d00a597fc5e970fcaadacbc52d84ab32b9c19d865"
+    },
+    {
+      "path": "assets/playable-CvS7UQpn.js",
+      "bytes": 162,
+      "forbiddenPath": false,
+      "sha256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b"
+    },
+    {
+      "path": "assets/routes-CvS7UQpn.js",
+      "bytes": 162,
+      "forbiddenPath": false,
+      "sha256": "154b5c9f6a2c35a5ed27499f0aa469dcf87ab42348002291bc237ad124725a1b"
+    },
+    {
+      "path": "bagel-vitrina.webp",
+      "bytes": 1506,
+      "forbiddenPath": false,
+      "sha256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7"
+    },
+    {
+      "path": "bagelito-counter.webp",
+      "bytes": 1506,
+      "forbiddenPath": false,
+      "sha256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8"
+    },
+    {
+      "path": "images/bagel-blueberry.webp",
+      "bytes": 66558,
+      "forbiddenPath": false,
+      "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2"
+    },
+    {
+      "path": "images/bagel-cheddar.webp",
+      "bytes": 67072,
+      "forbiddenPath": false,
+      "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300"
+    },
+    {
+      "path": "images/bagel-cinnamon-raisin.webp",
+      "bytes": 68246,
+      "forbiddenPath": false,
+      "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1"
+    },
+    {
+      "path": "images/bagel-classic-onion.webp",
+      "bytes": 70254,
+      "forbiddenPath": false,
+      "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b"
+    },
+    {
+      "path": "images/bagel-everything.webp",
+      "bytes": 79448,
+      "forbiddenPath": false,
+      "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+    },
+    {
+      "path": "images/bagel-jalapeno-cheddar.webp",
+      "bytes": 67592,
+      "forbiddenPath": false,
+      "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875"
+    },
+    {
+      "path": "images/bagel-plain.webp",
+      "bytes": 61902,
+      "forbiddenPath": false,
+      "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+    },
+    {
+      "path": "images/bagel-sesame.webp",
+      "bytes": 119564,
+      "forbiddenPath": false,
+      "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0"
+    },
+    {
+      "path": "images/bagel-vitrina-photo.webp",
+      "bytes": 86354,
+      "forbiddenPath": false,
+      "sha256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643"
+    },
+    {
+      "path": "images/bagelito-logo.svg",
+      "bytes": 454,
+      "forbiddenPath": false,
+      "sha256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e"
+    },
+    {
+      "path": "images/bagelito-wordmark.svg",
+      "bytes": 511,
+      "forbiddenPath": false,
+      "sha256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9"
+    },
+    {
+      "path": "images/guided-storyboard-atlas-2.webp",
+      "bytes": 400064,
+      "forbiddenPath": false,
+      "sha256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489"
+    },
+    {
+      "path": "images/guided-storyboard-atlas.webp",
+      "bytes": 428764,
+      "forbiddenPath": false,
+      "sha256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154"
+    },
+    {
+      "path": "images/pack-6-mixed.webp",
+      "bytes": 77428,
+      "forbiddenPath": false,
+      "sha256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65"
+    },
+    {
+      "path": "images/schmear-vitrina-photo.webp",
+      "bytes": 40960,
+      "forbiddenPath": false,
+      "sha256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f"
+    },
+    {
+      "path": "images/store-reference-approved.webp",
+      "bytes": 328894,
+      "forbiddenPath": false,
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+    },
+    {
+      "path": "index.html",
+      "bytes": 8082,
+      "forbiddenPath": false,
+      "sha256": "fcf6bd71b86151db5baf1567b1162595f8a92d1b4f8c2a752403caa6aa148b94"
+    },
+    {
+      "path": "legal/index.html",
+      "bytes": 6097,
+      "forbiddenPath": false,
+      "sha256": "83d9df3880600fa157ecc9f9d43eb1034f398709fb6bbfbd73b0925ec60304d9"
+    },
+    {
+      "path": "master-scenes/bag-handoff.webp",
+      "bytes": 104850,
+      "forbiddenPath": false,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46"
+    },
+    {
+      "path": "master-scenes/bagels-vitrina.webp",
+      "bytes": 187962,
+      "forbiddenPath": false,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f"
+    },
+    {
+      "path": "master-scenes/cashier.webp",
+      "bytes": 91394,
+      "forbiddenPath": false,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7"
+    },
+    {
+      "path": "master-scenes/combos.webp",
+      "bytes": 90090,
+      "forbiddenPath": false,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417"
+    },
+    {
+      "path": "master-scenes/cross-sell.webp",
+      "bytes": 85010,
+      "forbiddenPath": false,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb"
+    },
+    {
+      "path": "master-scenes/entrance.webp",
+      "bytes": 192244,
+      "forbiddenPath": false,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b"
+    },
+    {
+      "path": "master-scenes/goodbye.webp",
+      "bytes": 129102,
+      "forbiddenPath": false,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2"
+    },
+    {
+      "path": "master-scenes/inside.webp",
+      "bytes": 159248,
+      "forbiddenPath": false,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027"
+    },
+    {
+      "path": "master-scenes/packs.webp",
+      "bytes": 93290,
+      "forbiddenPath": false,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa"
+    },
+    {
+      "path": "master-scenes/pay.webp",
+      "bytes": 94450,
+      "forbiddenPath": false,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb"
+    },
+    {
+      "path": "master-scenes/receipt.webp",
+      "bytes": 89990,
+      "forbiddenPath": false,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129"
+    },
+    {
+      "path": "master-scenes/schmears-vitrina.webp",
+      "bytes": 156536,
+      "forbiddenPath": false,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8"
+    },
+    {
+      "path": "master-scenes/schmears.webp",
+      "bytes": 115572,
+      "forbiddenPath": false,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6"
+    },
+    {
+      "path": "master-scenes/selector.webp",
+      "bytes": 181186,
+      "forbiddenPath": false,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb"
+    },
+    {
+      "path": "master-scenes/wallet.webp",
+      "bytes": 84618,
+      "forbiddenPath": false,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89"
+    },
+    {
+      "path": "master-scenes-clean/bag-handoff.webp",
+      "bytes": 107354,
+      "forbiddenPath": false,
+      "sha256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee"
+    },
+    {
+      "path": "master-scenes-clean/bagels-vitrina.webp",
+      "bytes": 187332,
+      "forbiddenPath": false,
+      "sha256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc"
+    },
+    {
+      "path": "master-scenes-clean/cashier.webp",
+      "bytes": 88186,
+      "forbiddenPath": false,
+      "sha256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051"
+    },
+    {
+      "path": "master-scenes-clean/combos.webp",
+      "bytes": 97112,
+      "forbiddenPath": false,
+      "sha256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633"
+    },
+    {
+      "path": "master-scenes-clean/cross-sell.webp",
+      "bytes": 89694,
+      "forbiddenPath": false,
+      "sha256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7"
+    },
+    {
+      "path": "master-scenes-clean/entrance.webp",
+      "bytes": 202930,
+      "forbiddenPath": false,
+      "sha256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33"
+    },
+    {
+      "path": "master-scenes-clean/goodbye.webp",
+      "bytes": 139542,
+      "forbiddenPath": false,
+      "sha256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f"
+    },
+    {
+      "path": "master-scenes-clean/inside.webp",
+      "bytes": 176378,
+      "forbiddenPath": false,
+      "sha256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0"
+    },
+    {
+      "path": "master-scenes-clean/packs.webp",
+      "bytes": 100762,
+      "forbiddenPath": false,
+      "sha256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb"
+    },
+    {
+      "path": "master-scenes-clean/pay.webp",
+      "bytes": 99894,
+      "forbiddenPath": false,
+      "sha256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c"
+    },
+    {
+      "path": "master-scenes-clean/receipt.webp",
+      "bytes": 93480,
+      "forbiddenPath": false,
+      "sha256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339"
+    },
+    {
+      "path": "master-scenes-clean/schmears-vitrina.webp",
+      "bytes": 92160,
+      "forbiddenPath": false,
+      "sha256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f"
+    },
+    {
+      "path": "master-scenes-clean/schmears.webp",
+      "bytes": 127882,
+      "forbiddenPath": false,
+      "sha256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6"
+    },
+    {
+      "path": "master-scenes-clean/selector.webp",
+      "bytes": 208154,
+      "forbiddenPath": false,
+      "sha256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b"
+    },
+    {
+      "path": "master-scenes-clean/wallet.webp",
+      "bytes": 80562,
+      "forbiddenPath": false,
+      "sha256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3"
+    },
+    {
+      "path": "models/bagel-everything-1024.glb",
+      "bytes": 1506,
+      "forbiddenPath": false,
+      "sha256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d"
+    },
+    {
+      "path": "models/bagel-everything-512.glb",
+      "bytes": 1506,
+      "forbiddenPath": false,
+      "sha256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3"
+    },
+    {
+      "path": "playable/index.html",
+      "bytes": 8110,
+      "forbiddenPath": false,
+      "sha256": "e9876d98581ca0aa2d33dbc02d25010c1b1a04dd40e3c4f716a354469feb8c34"
+    },
+    {
+      "path": "reference/storyboard-main.webp",
+      "bytes": 233510,
+      "forbiddenPath": false,
+      "sha256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b"
+    },
+    {
+      "path": "reference/storyboard-master.webp",
+      "bytes": 273818,
+      "forbiddenPath": false,
+      "sha256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39"
+    },
+    {
+      "path": "reference/storyboard-schmears.webp",
+      "bytes": 249142,
+      "forbiddenPath": false,
+      "sha256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809"
+    },
+    {
+      "path": "scenes/bag-handoff.webp",
+      "bytes": 104850,
+      "forbiddenPath": false,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46"
+    },
+    {
+      "path": "scenes/bagels-vitrina.webp",
+      "bytes": 187962,
+      "forbiddenPath": false,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f"
+    },
+    {
+      "path": "scenes/cashier.webp",
+      "bytes": 91394,
+      "forbiddenPath": false,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7"
+    },
+    {
+      "path": "scenes/combos.webp",
+      "bytes": 90090,
+      "forbiddenPath": false,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417"
+    },
+    {
+      "path": "scenes/cross-sell.webp",
+      "bytes": 85010,
+      "forbiddenPath": false,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb"
+    },
+    {
+      "path": "scenes/entrance.webp",
+      "bytes": 192244,
+      "forbiddenPath": false,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b"
+    },
+    {
+      "path": "scenes/goodbye.webp",
+      "bytes": 129102,
+      "forbiddenPath": false,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2"
+    },
+    {
+      "path": "scenes/inside.webp",
+      "bytes": 159248,
+      "forbiddenPath": false,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027"
+    },
+    {
+      "path": "scenes/packs.webp",
+      "bytes": 93290,
+      "forbiddenPath": false,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa"
+    },
+    {
+      "path": "scenes/pay.webp",
+      "bytes": 94450,
+      "forbiddenPath": false,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb"
+    },
+    {
+      "path": "scenes/receipt.webp",
+      "bytes": 89990,
+      "forbiddenPath": false,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129"
+    },
+    {
+      "path": "scenes/schmears-vitrina.webp",
+      "bytes": 156536,
+      "forbiddenPath": false,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8"
+    },
+    {
+      "path": "scenes/schmears.webp",
+      "bytes": 115572,
+      "forbiddenPath": false,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6"
+    },
+    {
+      "path": "scenes/selector.webp",
+      "bytes": 181186,
+      "forbiddenPath": false,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb"
+    },
+    {
+      "path": "scenes/wallet.webp",
+      "bytes": 84618,
+      "forbiddenPath": false,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89"
+    },
+    {
+      "path": "schmear-vitrina.webp",
+      "bytes": 1506,
+      "forbiddenPath": false,
+      "sha256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a"
+    },
+    {
+      "path": "static-export-manifest.json",
+      "bytes": 16855,
+      "forbiddenPath": false,
+      "sha256": "23a6272dfe624aab7d5a0b87f2b49e3668d02e125875596810e727edde84cca6"
+    },
+    {
+      "path": "store-category-flow.webp",
+      "bytes": 8700,
+      "forbiddenPath": false,
+      "sha256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b"
+    },
+    {
+      "path": "store-entry-door.webp",
+      "bytes": 10834,
+      "forbiddenPath": false,
+      "sha256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a"
+    }
+  ],
+  "limits": [
+    "No browser behavior, CSP enforcement or HTTP routes were exercised by this audit.",
+    "Hashes demonstrate identity with the supplied public build, not the provenance of that build against application source.",
+    "Client bundles may retain dormant payment/provider/API strings; this inventory does not claim their absence.",
+    "CSP and HTTP review is performed separately."
+  ]
+}

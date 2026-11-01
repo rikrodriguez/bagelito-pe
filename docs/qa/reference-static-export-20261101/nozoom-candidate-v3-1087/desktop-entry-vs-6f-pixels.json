@@ -1,0 +1,55 @@
+{
+  "created_at": "2026-11-01T01:41:06.125601+00:00",
+  "baseline_root": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/zoom-final-6f765ce/1280-exact-storefront.png",
+  "new_root": "/tmp/bagelito-nozoom-candidate-v3-1087/1280-nozoom-presentation.png",
+  "pillow_version": "12.3.0",
+  "comparison": "Decoded 8-bit RGB; a pixel differs if any RGB channel differs. Alpha is ignored; ICC transforms are not applied.",
+  "bbox_coordinates": "left, top, right-exclusive, bottom-exclusive; null means no changed pixels or dimensions differ",
+  "scope": "Offline comparison of these PNGs only; no browser run, Safari claim, or image output.",
+  "matching": "same relative path first, otherwise unique new basename; extra new PNGs are listed but not compared",
+  "pairs": [
+    {
+      "baseline": "/workspace/bagelito-pe/docs/qa/reference-image-storefront-20261101/zoom-final-6f765ce/1280-exact-storefront.png",
+      "new": "/tmp/bagelito-nozoom-candidate-v3-1087/1280-nozoom-presentation.png",
+      "baseline_sha256": "6c25aa2f9908003c7cc28cfc1acfe74a2dda40d63bd8b66967110cad70c36c8d",
+      "new_sha256": "6c25aa2f9908003c7cc28cfc1acfe74a2dda40d63bd8b66967110cad70c36c8d",
+      "dimensions": {
+        "baseline": [
+          1280,
+          800
+        ],
+        "new": [
+          1280,
+          800
+        ]
+      },
+      "original_modes": {
+        "baseline": "RGB",
+        "new": "RGB"
+      },
+      "dimensions_equal": true,
+      "status": "identical",
+      "pixel_count": 1024000,
+      "mismatched_pixels": 0,
+      "max_delta": 0,
+      "bbox": null,
+      "baseline_relative": "1280-exact-storefront.png",
+      "new_relative": "1280-nozoom-presentation.png"
+    }
+  ],
+  "missing_new": [],
+  "ambiguous_new": [],
+  "unmatched_new": [],
+  "errors": [],
+  "summary": {
+    "compared": 1,
+    "identical": 1,
+    "pixel_mismatches": 0,
+    "dimension_mismatches": 0,
+    "missing": 0,
+    "ambiguous": 0,
+    "new_extras_not_compared": 0,
+    "errors": 0
+  },
+  "status": "passed"
+}

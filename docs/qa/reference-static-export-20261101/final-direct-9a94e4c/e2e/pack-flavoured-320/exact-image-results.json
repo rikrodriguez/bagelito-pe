@@ -1,0 +1,1536 @@
+{
+  "metadata": {
+    "staticExportSHA": "281b85d6bf80eb9f564af987a1fd21b8fbcd1318",
+    "originalNodeBase": "http://127.0.0.1:3210/",
+    "startedAt": "2026-11-01T01:50:25.327Z",
+    "base": "http://127.0.0.1:3216/",
+    "declaredCodeSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+    "repositorySHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+    "driverSHA256": "fe39ca9d86045f0f3a9287c79df075357fdaaafc247b3d260d739dafd66499c1",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 320,
+        "height": 700
+      }
+    ],
+    "scope": "Explicit no-zoom native mobile cards and desktop complete image and accessible category hotspots; existing commercial review-only flow smoke. No3D, fetch/XHR/API/provider requests, application storage reads or writes. One exact-key TanStack initialization read per document is recorded, not claimed absent.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T01:50:33.524Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "scenario": "pack-flavoured",
+  "helperSHA256": "c5ece83ed7a0959c8fddc381141ee8d0032c9f9de770321a81f8d14abfc7efd3",
+  "status": "passed",
+  "cases": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "file": "320-nozoom-presentation.png",
+      "sha256": "dcbb5b72393bd08289ea22dd24195d1c4d1c310ee44f66a8217e7106dbd18cbe",
+      "full": "320-nozoom-presentation-full.png",
+      "fullSHA256": "dcbb5b72393bd08289ea22dd24195d1c4d1c310ee44f66a8217e7106dbd18cbe",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "mobile": true,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 12,
+              "y": 205.515625,
+              "right": 105.328125,
+              "bottom": 334.625,
+              "width": 93.328125,
+              "height": 129.109375
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 36.953125,
+                    "y": 264.015625,
+                    "right": 80.375,
+                    "bottom": 286.015625,
+                    "width": 43.421875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 12,
+                  "y": 205.515625,
+                  "right": 105.328125,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              },
+              {
+                "text": "Grandes o minis",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 29.71875,
+                    "y": 289.015625,
+                    "right": 87.609375,
+                    "bottom": 306.015625,
+                    "width": 57.890625,
+                    "height": 17
+                  },
+                  {
+                    "x": 43.375,
+                    "y": 305.8125,
+                    "right": 73.953125,
+                    "bottom": 322.8125,
+                    "width": 30.578125,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 12,
+                  "y": 205.515625,
+                  "right": 105.328125,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 396,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 396,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 13,
+                  "y": 206.515625,
+                  "right": 104.328125,
+                  "bottom": 257.015625,
+                  "width": 91.328125,
+                  "height": 50.5
+                }
+              }
+            ],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 113.328125,
+              "y": 205.515625,
+              "right": 206.65625,
+              "bottom": 334.625,
+              "width": 93.328125,
+              "height": 129.109375
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 129.53125,
+                    "y": 264.015625,
+                    "right": 190.453125,
+                    "bottom": 286.015625,
+                    "width": 60.921875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 113.328125,
+                  "y": 205.515625,
+                  "right": 206.65625,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              },
+              {
+                "text": "2 bagels + 1 schmear",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 126.453125,
+                    "y": 289.015625,
+                    "right": 193.515625,
+                    "bottom": 306.015625,
+                    "width": 67.0625,
+                    "height": 17
+                  },
+                  {
+                    "x": 135.6875,
+                    "y": 305.8125,
+                    "right": 184.296875,
+                    "bottom": 322.8125,
+                    "width": 48.609375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 113.328125,
+                  "y": 205.515625,
+                  "right": 206.65625,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 674,
+                  "y": 349.99999999999994,
+                  "width": 277,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 674,
+                  "y": 350,
+                  "width": 277,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 114.328125,
+                  "y": 206.515625,
+                  "right": 205.65625,
+                  "bottom": 257.015625,
+                  "width": 91.328125,
+                  "height": 50.5
+                }
+              }
+            ],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 214.65625,
+              "y": 205.515625,
+              "right": 308,
+              "bottom": 334.625,
+              "width": 93.34375,
+              "height": 129.109375
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 224.4375,
+                    "y": 264.03125,
+                    "right": 298.203125,
+                    "bottom": 286.03125,
+                    "width": 73.765625,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 214.65625,
+                  "y": 205.515625,
+                  "right": 308,
+                  "bottom": 334.625,
+                  "width": 93.34375,
+                  "height": 129.109375
+                }
+              },
+              {
+                "text": "120, 180 o 240 g",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 220.515625,
+                    "y": 289.03125,
+                    "right": 302.140625,
+                    "bottom": 306.03125,
+                    "width": 81.625,
+                    "height": 17
+                  },
+                  {
+                    "x": 257.625,
+                    "y": 305.828125,
+                    "right": 265.015625,
+                    "bottom": 322.828125,
+                    "width": 7.390625,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 214.65625,
+                  "y": 205.515625,
+                  "right": 308,
+                  "bottom": 334.625,
+                  "width": 93.34375,
+                  "height": 129.109375
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 966,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 966,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 215.65625,
+                  "y": 206.515625,
+                  "right": 307,
+                  "bottom": 257.03125,
+                  "width": 91.34375,
+                  "height": 50.515625
+                }
+              }
+            ],
+            "centerHit": true
+          }
+        ],
+        "arts": [
+          {
+            "viewBox": {
+              "x": 400,
+              "y": 0,
+              "width": 840,
+              "height": 340
+            },
+            "rawViewBox": {
+              "x": 400,
+              "y": 0,
+              "width": 840,
+              "height": 340
+            },
+            "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+            "imageVisible": true,
+            "href": "/images/store-reference-approved.webp",
+            "exactAsset": true,
+            "rect": {
+              "x": 0,
+              "y": 66,
+              "right": 320,
+              "bottom": 195.515625,
+              "width": 320,
+              "height": 129.515625
+            }
+          },
+          {
+            "viewBox": {
+              "x": 94.99999999999999,
+              "y": 599.9999999999999,
+              "width": 1434.9999999999998,
+              "height": 310
+            },
+            "rawViewBox": {
+              "x": 95,
+              "y": 600,
+              "width": 1435,
+              "height": 310
+            },
+            "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+            "imageVisible": true,
+            "href": "/images/store-reference-approved.webp",
+            "exactAsset": true,
+            "rect": {
+              "x": 0,
+              "y": 344.625,
+              "right": 320,
+              "bottom": 413.75,
+              "width": 320,
+              "height": 69.125
+            }
+          }
+        ],
+        "images": [],
+        "canvasCount": 0,
+        "failures": [],
+        "pass": true,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "flow": [
+        {
+          "name": "upsell-selected",
+          "file": "320-upsell-selected.png",
+          "sha256": "514012639627f33d8b79498d8bba654e0214fbdd8b5d16ffa048a0086fb0956b",
+          "full": "320-upsell-selected-full.png",
+          "fullSHA256": "3f6159b1da8d71dfe5f29f325450434f92fb4a3c58976d566fd179bf61f7128c",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -338.25,
+                "right": 100,
+                "bottom": -294.25,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": {
+              "rect": {
+                "x": 12,
+                "y": 458.859375,
+                "right": 308,
+                "bottom": 545.859375,
+                "width": 296,
+                "height": 87
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-primary-next": {
+              "rect": {
+                "x": 96,
+                "y": 557.859375,
+                "right": 224,
+                "bottom": 605.859375,
+                "width": 128,
+                "height": 48
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "98",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "upsell-deselected",
+          "file": "320-upsell-deselected.png",
+          "sha256": "767c30add204c03df6fff5d0e0eb90b5e9ced89acf1b49f8171d09e74a00ab21",
+          "full": "320-upsell-deselected-full.png",
+          "fullSHA256": "20671dc1d971118bf74ef1f36510cd0a57f77bd74e799ce1cf7b612564738d0f",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -55.25,
+                "right": 100,
+                "bottom": -11.25,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": {
+              "rect": {
+                "x": 12,
+                "y": 739.859375,
+                "right": 308,
+                "bottom": 826.859375,
+                "width": 296,
+                "height": 87
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-primary-next": {
+              "rect": {
+                "x": 53.953125,
+                "y": 838.859375,
+                "right": 266.046875,
+                "bottom": 886.859375,
+                "width": 212.09375,
+                "height": 48
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "98",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "upsell-accepted",
+          "file": "320-upsell-accepted.png",
+          "sha256": "14f14743df9b563981f2168fbe81fea436b05c103ea88d6cce44ac5bfc17696b",
+          "full": "320-upsell-accepted-full.png",
+          "fullSHA256": "79a710be858fc8d9a0b00d5844d698ef0fbd5c018b56dcb23476b0ae43937e9b",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -68.25,
+                "right": 100,
+                "bottom": -24.25,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": {
+              "rect": {
+                "x": 12,
+                "y": 728.859375,
+                "right": 308,
+                "bottom": 815.859375,
+                "width": 296,
+                "height": 87
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-primary-next": {
+              "rect": {
+                "x": 96,
+                "y": 827.859375,
+                "right": 224,
+                "bottom": 875.859375,
+                "width": 128,
+                "height": 48
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "98",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "cashier",
+          "file": "320-cashier.png",
+          "sha256": "01693784e8436a7fb3ed347edb353612fcc693745a6f149a08de1081b2bb1c18",
+          "full": "320-cashier-full.png",
+          "fullSHA256": "049dc6eb1585ba53567d9e0b52ce7ac86c66041d3d812ef667348141fa7ff149",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": 159.75,
+                "right": 100,
+                "bottom": 203.75,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": {
+              "rect": {
+                "x": 12,
+                "y": 215.75,
+                "right": 308,
+                "bottom": 569.25,
+                "width": 296,
+                "height": 353.5
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "95",
+              "display": "flex",
+              "overflow": "visible"
+            },
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        },
+        {
+          "name": "pay-review",
+          "file": "320-pay-review.png",
+          "sha256": "206e19f3b91902c5711586325070cacf8b22c2db33ef90aa626587dfbc1d0fc8",
+          "full": "320-pay-review-full.png",
+          "fullSHA256": "b915c05dd8be20be32a975835bf01eadeb6528d8cf2ca3b4a44fe0bfa22e6eb3",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": 261.75,
+                "right": 100,
+                "bottom": 305.75,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": {
+              "rect": {
+                "x": 12,
+                "y": 321.75,
+                "right": 308,
+                "bottom": 1243.59375,
+                "width": 296,
+                "height": 921.84375
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "96",
+              "display": "block",
+              "overflow": "visible"
+            },
+            ".guided-payment-sheet": {
+              "rect": {
+                "x": 12,
+                "y": 321.75,
+                "right": 308,
+                "bottom": 1243.59375,
+                "width": 296,
+                "height": 921.84375
+              },
+              "position": "static",
+              "top": "auto",
+              "left": "auto",
+              "right": "auto",
+              "bottom": "auto",
+              "zIndex": "auto",
+              "display": "block",
+              "overflow": "visible"
+            }
+          }
+        },
+        {
+          "name": "loyalty",
+          "file": "320-loyalty.png",
+          "sha256": "16f9622fbfd39e64b8cc6aab8a57f5ec08e49b4cfb08f2a819483dcc60e62b25",
+          "full": "320-loyalty-full.png",
+          "fullSHA256": "b915c05dd8be20be32a975835bf01eadeb6528d8cf2ca3b4a44fe0bfa22e6eb3",
+          "layout": {
+            ".guided-journey-back": {
+              "rect": {
+                "x": 12,
+                "y": -721.25,
+                "right": 100,
+                "bottom": -677.25,
+                "width": 88,
+                "height": 44
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "105",
+              "display": "inline-flex",
+              "overflow": "visible"
+            },
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": {
+              "rect": {
+                "x": 12,
+                "y": -661.25,
+                "right": 308,
+                "bottom": 260.59375,
+                "width": 296,
+                "height": 921.84375
+              },
+              "position": "relative",
+              "top": "0px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "zIndex": "96",
+              "display": "block",
+              "overflow": "visible"
+            },
+            ".guided-payment-sheet": {
+              "rect": {
+                "x": 12,
+                "y": -661.25,
+                "right": 308,
+                "bottom": 260.59375,
+                "width": 296,
+                "height": 921.84375
+              },
+              "position": "static",
+              "top": "auto",
+              "left": "auto",
+              "right": "auto",
+              "bottom": "auto",
+              "zIndex": "auto",
+              "display": "block",
+              "overflow": "visible"
+            }
+          }
+        },
+        {
+          "name": "edit-back-progress-menu",
+          "pass": true
+        },
+        {
+          "name": "returned-entry",
+          "file": "320-returned-entry.png",
+          "sha256": "bd18552003ba13269390a75ad0f7771b94f93ddf956d3d6476c45d6bff29b0cb",
+          "full": "320-returned-entry-full.png",
+          "fullSHA256": "a00e66098b6185104189b32ac7360311dd151a4199163b09ab244776e77e94df",
+          "layout": {
+            ".guided-journey-back": null,
+            ".bagel-live-summary": null,
+            ".guided-order-counter": null,
+            ".guided-primary-next": null,
+            ".guided-cashier-action": null,
+            ".guided-payment-gate": null,
+            ".guided-payment-sheet": null
+          }
+        }
+      ],
+      "legal": {
+        "url": "http://127.0.0.1:3216/legal/",
+        "title": "Políticas de compra y delivery | Bagelito.pe",
+        "file": "320-legal-newtab.png",
+        "sha256": "eb77393852da202cc37c709100ba594f700d03e1aeec5f917f0c9bb6e2d2bb9a",
+        "heading": [
+          "Políticas de compra y delivery"
+        ],
+        "sections": [
+          "1. Confirmación del pedido",
+          "2. Productos y disponibilidad",
+          "3. Pagos",
+          "4. Delivery",
+          "5. Recepción",
+          "6. Cancelaciones y reembolsos",
+          "7. Privacidad",
+          "8. Contacto"
+        ],
+        "bodyText": "← Volver a Bagelito\nVERSIÓN 2026-10-28\nPolíticas de compra y delivery\n\nEstas condiciones describen cómo Bagelito.pe recibe, cobra, produce y entrega pedidos realizados mediante batches programados en Lima.\n\n1. Confirmación del pedido\n\nUn pedido queda confirmado únicamente cuando Bagelito recibe una confirmación válida del proveedor de pagos y el pedido figura como pagado en nuestros sistemas. Seleccionar productos o iniciar un checkout no separa stock por sí solo.\n\nEl checkout online solo se habilita cuando existe un batch abierto, capacidad disponible y una fecha de delivery confirmada.\n\n2. Productos y disponibilidad\n\nBagelito produce alimentos artesanales en batches. Sabores, presentaciones y disponibilidad pueden variar según producción e ingredientes. El precio y la composición que rigen cada compra son los que el servidor valida y muestra antes del pago.\n\nSi una configuración no tiene una regla comercial aprobada para cobro automático, el checkout se bloqueará en lugar de estimar un precio.\n\n3. Pagos\n\nLos medios de pago disponibles se muestran dentro del checkout seguro de Culqi. Los datos de tarjeta se ingresan directamente en el entorno de Culqi y no se almacenan en los servidores de Bagelito.\n\nSi el resultado de un pago es incierto o requiere reconciliación, el cliente no debe volver a pagar hasta que el estado sea verificado. Bagelito podrá contactar al cliente para resolver el caso.\n\n4. Delivery\n\nEl costo de delivery se calcula durante el checkout según el distrito seleccionado y se suma al total antes de generar la reserva. El pedido se entrega en la fecha del batch confirmada al momento de la compra.\n\nEl cliente debe proporcionar nombre, WhatsApp, email, distrito, dirección completa y cualquier referencia necesaria. Cambios posteriores a la confirmación dependen de disponibilidad de ruta.\n\n5. Recepción\n\nEl cliente debe estar disponible durante la ventana coordinada. Si la entrega no puede completarse por dirección incorrecta, acceso restringido o ausencia del receptor, una reentrega dependerá de disponibilidad y puede generar un costo adicional.\n\n6. Cancelaciones y reembolsos\n\nAntes de la confirmación de pago, una reserva puede abandonarse sin generar una compra. Después de la confirmación, las solicitudes de cancelación se revisan según el estado de producción del batch.\n\nSi Bagelito no puede producir o entregar un pedido confirmado por una causa atribuible a la operación, se coordinará la devolución correspondiente o una alternativa aceptada por el cliente. Los pagos duplicados se revisan y corrigen.\n\n7. Privacidad\n\nBagelito utiliza los datos de contacto, pedido y delivery para procesar la compra, coordinar producción, atender consultas, prevenir fraude y realizar la entrega. Los datos no se venden a terceros.\n\nProveedores necesarios para la operación —como hosting, base de datos, pagos y delivery— pueden procesar la información únicamente para prestar esos servicios.\n\n8. Contacto\n\nPara consultas relacionadas con pedidos, pagos, delivery o privacidad, puedes escribir a contacto@bagelito.pe.\n\nBagelito.pe · Lima, Perú\nVolver al inicio",
+        "openerIsNull": true,
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497829895.7,
+            "url": "http://127.0.0.1:3216/legal/"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497829895.7,
+            "url": "http://127.0.0.1:3216/legal/"
+          }
+        ]
+      },
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793497826148.1",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+            "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+            "url": "http://127.0.0.1:3216/?qa=1"
+          }
+        ],
+        "errors": []
+      }
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3216/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-cinnamon-raisin.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-classic-onion.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-blueberry.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-jalapeno-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/images/bagel-cheddar.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/master-scenes-clean/schmears-vitrina.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/legal",
+            "status": 301
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/legal-D95vHKPV.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3216/assets/index-CNG4SY2A.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3216/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497826148.1,
+            "url": "http://127.0.0.1:3216/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497826148.1,
+            "url": "http://127.0.0.1:3216/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497829895.7,
+            "url": "http://127.0.0.1:3216/legal/"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497829895.7,
+            "url": "http://127.0.0.1:3216/legal/"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "legalRedirects": [
+          {
+            "url": "http://127.0.0.1:3216/legal",
+            "status": 301,
+            "location": "/legal/",
+            "destination": "http://127.0.0.1:3216/legal/"
+          }
+        ],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793497826148.1",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3216/?qa=1"
+            },
+            {
+              "documentId": "1793497829895.7",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3216/legal/"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T01:50:26.462Z",
+      "type": "nozoom-captured",
+      "width": 320,
+      "file": "320-nozoom-presentation.png",
+      "failures": 0
+    },
+    {
+      "at": "2026-11-01T01:50:28.392Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "upsell-selected",
+      "file": "320-upsell-selected.png",
+      "sha256": "514012639627f33d8b79498d8bba654e0214fbdd8b5d16ffa048a0086fb0956b",
+      "full": "320-upsell-selected-full.png",
+      "fullSHA256": "3f6159b1da8d71dfe5f29f325450434f92fb4a3c58976d566fd179bf61f7128c",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -338.25,
+            "right": 100,
+            "bottom": -294.25,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": {
+          "rect": {
+            "x": 12,
+            "y": 458.859375,
+            "right": 308,
+            "bottom": 545.859375,
+            "width": 296,
+            "height": 87
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-primary-next": {
+          "rect": {
+            "x": 96,
+            "y": 557.859375,
+            "right": 224,
+            "bottom": 605.859375,
+            "width": 128,
+            "height": 48
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "98",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:28.603Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "upsell-deselected",
+      "file": "320-upsell-deselected.png",
+      "sha256": "767c30add204c03df6fff5d0e0eb90b5e9ced89acf1b49f8171d09e74a00ab21",
+      "full": "320-upsell-deselected-full.png",
+      "fullSHA256": "20671dc1d971118bf74ef1f36510cd0a57f77bd74e799ce1cf7b612564738d0f",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -55.25,
+            "right": 100,
+            "bottom": -11.25,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": {
+          "rect": {
+            "x": 12,
+            "y": 739.859375,
+            "right": 308,
+            "bottom": 826.859375,
+            "width": 296,
+            "height": 87
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-primary-next": {
+          "rect": {
+            "x": 53.953125,
+            "y": 838.859375,
+            "right": 266.046875,
+            "bottom": 886.859375,
+            "width": 212.09375,
+            "height": 48
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "98",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:28.822Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "upsell-accepted",
+      "file": "320-upsell-accepted.png",
+      "sha256": "14f14743df9b563981f2168fbe81fea436b05c103ea88d6cce44ac5bfc17696b",
+      "full": "320-upsell-accepted-full.png",
+      "fullSHA256": "79a710be858fc8d9a0b00d5844d698ef0fbd5c018b56dcb23476b0ae43937e9b",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -68.25,
+            "right": 100,
+            "bottom": -24.25,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": {
+          "rect": {
+            "x": 12,
+            "y": 728.859375,
+            "right": 308,
+            "bottom": 815.859375,
+            "width": 296,
+            "height": 87
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-primary-next": {
+          "rect": {
+            "x": 96,
+            "y": 827.859375,
+            "right": 224,
+            "bottom": 875.859375,
+            "width": 128,
+            "height": 48
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "98",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:29.355Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "cashier",
+      "file": "320-cashier.png",
+      "sha256": "01693784e8436a7fb3ed347edb353612fcc693745a6f149a08de1081b2bb1c18",
+      "full": "320-cashier-full.png",
+      "fullSHA256": "049dc6eb1585ba53567d9e0b52ce7ac86c66041d3d812ef667348141fa7ff149",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": 159.75,
+            "right": 100,
+            "bottom": 203.75,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": {
+          "rect": {
+            "x": 12,
+            "y": 215.75,
+            "right": 308,
+            "bottom": 569.25,
+            "width": 296,
+            "height": 353.5
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "95",
+          "display": "flex",
+          "overflow": "visible"
+        },
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:29.675Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "pay-review",
+      "file": "320-pay-review.png",
+      "sha256": "206e19f3b91902c5711586325070cacf8b22c2db33ef90aa626587dfbc1d0fc8",
+      "full": "320-pay-review-full.png",
+      "fullSHA256": "b915c05dd8be20be32a975835bf01eadeb6528d8cf2ca3b4a44fe0bfa22e6eb3",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": 261.75,
+            "right": 100,
+            "bottom": 305.75,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": {
+          "rect": {
+            "x": 12,
+            "y": 321.75,
+            "right": 308,
+            "bottom": 1243.59375,
+            "width": 296,
+            "height": 921.84375
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "96",
+          "display": "block",
+          "overflow": "visible"
+        },
+        ".guided-payment-sheet": {
+          "rect": {
+            "x": 12,
+            "y": 321.75,
+            "right": 308,
+            "bottom": 1243.59375,
+            "width": 296,
+            "height": 921.84375
+          },
+          "position": "static",
+          "top": "auto",
+          "left": "auto",
+          "right": "auto",
+          "bottom": "auto",
+          "zIndex": "auto",
+          "display": "block",
+          "overflow": "visible"
+        }
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:29.840Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "loyalty",
+      "file": "320-loyalty.png",
+      "sha256": "16f9622fbfd39e64b8cc6aab8a57f5ec08e49b4cfb08f2a819483dcc60e62b25",
+      "full": "320-loyalty-full.png",
+      "fullSHA256": "b915c05dd8be20be32a975835bf01eadeb6528d8cf2ca3b4a44fe0bfa22e6eb3",
+      "layout": {
+        ".guided-journey-back": {
+          "rect": {
+            "x": 12,
+            "y": -721.25,
+            "right": 100,
+            "bottom": -677.25,
+            "width": 88,
+            "height": 44
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "105",
+          "display": "inline-flex",
+          "overflow": "visible"
+        },
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": {
+          "rect": {
+            "x": 12,
+            "y": -661.25,
+            "right": 308,
+            "bottom": 260.59375,
+            "width": 296,
+            "height": 921.84375
+          },
+          "position": "relative",
+          "top": "0px",
+          "left": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "zIndex": "96",
+          "display": "block",
+          "overflow": "visible"
+        },
+        ".guided-payment-sheet": {
+          "rect": {
+            "x": 12,
+            "y": -661.25,
+            "right": 308,
+            "bottom": 260.59375,
+            "width": 296,
+            "height": 921.84375
+          },
+          "position": "static",
+          "top": "auto",
+          "left": "auto",
+          "right": "auto",
+          "bottom": "auto",
+          "zIndex": "auto",
+          "display": "block",
+          "overflow": "visible"
+        }
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:30.615Z",
+      "type": "legal-newtab-captured",
+      "width": 320,
+      "url": "http://127.0.0.1:3216/legal/",
+      "title": "Políticas de compra y delivery | Bagelito.pe",
+      "file": "320-legal-newtab.png",
+      "sha256": "eb77393852da202cc37c709100ba594f700d03e1aeec5f917f0c9bb6e2d2bb9a",
+      "heading": [
+        "Políticas de compra y delivery"
+      ],
+      "sections": [
+        "1. Confirmación del pedido",
+        "2. Productos y disponibilidad",
+        "3. Pagos",
+        "4. Delivery",
+        "5. Recepción",
+        "6. Cancelaciones y reembolsos",
+        "7. Privacidad",
+        "8. Contacto"
+      ],
+      "bodyText": "← Volver a Bagelito\nVERSIÓN 2026-10-28\nPolíticas de compra y delivery\n\nEstas condiciones describen cómo Bagelito.pe recibe, cobra, produce y entrega pedidos realizados mediante batches programados en Lima.\n\n1. Confirmación del pedido\n\nUn pedido queda confirmado únicamente cuando Bagelito recibe una confirmación válida del proveedor de pagos y el pedido figura como pagado en nuestros sistemas. Seleccionar productos o iniciar un checkout no separa stock por sí solo.\n\nEl checkout online solo se habilita cuando existe un batch abierto, capacidad disponible y una fecha de delivery confirmada.\n\n2. Productos y disponibilidad\n\nBagelito produce alimentos artesanales en batches. Sabores, presentaciones y disponibilidad pueden variar según producción e ingredientes. El precio y la composición que rigen cada compra son los que el servidor valida y muestra antes del pago.\n\nSi una configuración no tiene una regla comercial aprobada para cobro automático, el checkout se bloqueará en lugar de estimar un precio.\n\n3. Pagos\n\nLos medios de pago disponibles se muestran dentro del checkout seguro de Culqi. Los datos de tarjeta se ingresan directamente en el entorno de Culqi y no se almacenan en los servidores de Bagelito.\n\nSi el resultado de un pago es incierto o requiere reconciliación, el cliente no debe volver a pagar hasta que el estado sea verificado. Bagelito podrá contactar al cliente para resolver el caso.\n\n4. Delivery\n\nEl costo de delivery se calcula durante el checkout según el distrito seleccionado y se suma al total antes de generar la reserva. El pedido se entrega en la fecha del batch confirmada al momento de la compra.\n\nEl cliente debe proporcionar nombre, WhatsApp, email, distrito, dirección completa y cualquier referencia necesaria. Cambios posteriores a la confirmación dependen de disponibilidad de ruta.\n\n5. Recepción\n\nEl cliente debe estar disponible durante la ventana coordinada. Si la entrega no puede completarse por dirección incorrecta, acceso restringido o ausencia del receptor, una reentrega dependerá de disponibilidad y puede generar un costo adicional.\n\n6. Cancelaciones y reembolsos\n\nAntes de la confirmación de pago, una reserva puede abandonarse sin generar una compra. Después de la confirmación, las solicitudes de cancelación se revisan según el estado de producción del batch.\n\nSi Bagelito no puede producir o entregar un pedido confirmado por una causa atribuible a la operación, se coordinará la devolución correspondiente o una alternativa aceptada por el cliente. Los pagos duplicados se revisan y corrigen.\n\n7. Privacidad\n\nBagelito utiliza los datos de contacto, pedido y delivery para procesar la compra, coordinar producción, atender consultas, prevenir fraude y realizar la entrega. Los datos no se venden a terceros.\n\nProveedores necesarios para la operación —como hosting, base de datos, pagos y delivery— pueden procesar la información únicamente para prestar esos servicios.\n\n8. Contacto\n\nPara consultas relacionadas con pedidos, pagos, delivery o privacidad, puedes escribir a contacto@bagelito.pe.\n\nBagelito.pe · Lima, Perú\nVolver al inicio",
+      "openerIsNull": true,
+      "capabilities": [
+        {
+          "kind": "storage-access",
+          "name": "sessionStorage",
+          "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:64983",
+          "documentId": 1793497829895.7,
+          "url": "http://127.0.0.1:3216/legal/"
+        },
+        {
+          "kind": "storage-method",
+          "name": "getItem",
+          "key": "tsr-scroll-restoration-v1_3",
+          "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3216/assets/index-CNG4SY2A.js:10:65097",
+          "documentId": 1793497829895.7,
+          "url": "http://127.0.0.1:3216/legal/"
+        }
+      ]
+    },
+    {
+      "at": "2026-11-01T01:50:33.443Z",
+      "type": "flow-captured",
+      "width": 320,
+      "name": "returned-entry",
+      "file": "320-returned-entry.png",
+      "sha256": "bd18552003ba13269390a75ad0f7771b94f93ddf956d3d6476c45d6bff29b0cb",
+      "full": "320-returned-entry-full.png",
+      "fullSHA256": "a00e66098b6185104189b32ac7360311dd151a4199163b09ab244776e77e94df",
+      "layout": {
+        ".guided-journey-back": null,
+        ".bagel-live-summary": null,
+        ".guided-order-counter": null,
+        ".guided-primary-next": null,
+        ".guided-cashier-action": null,
+        ".guided-payment-gate": null,
+        ".guided-payment-sheet": null
+      }
+    },
+    {
+      "at": "2026-11-01T01:50:33.463Z",
+      "type": "capabilities-drained",
+      "width": 320,
+      "knownFrameworkReads": 2,
+      "forbidden": 0
+    }
+  ]
+}

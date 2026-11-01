@@ -1,0 +1,116 @@
+{
+  "kind": "compiled CSS property signature audit; declaration order is normalized; not browser computed-style verification",
+  "sourceCSSSha256": "10877671b42927f6ad1bbb855ee7b769ffa9fddb41b4419739832d2986d0f160",
+  "passed": true,
+  "checks": [
+    {
+      "selectorSuffix": ".reference-category-copy strong",
+      "requiredProperties": {
+        "font-size": "16px",
+        "line-height": "1.25",
+        "font-weight": "900"
+      },
+      "passed": true,
+      "matchingRules": [
+        {
+          "file": "assets/ReferenceStorefront-Df1qW8ej.css",
+          "selector": ".reference-category-copy strong",
+          "properties": {
+            "letter-spacing": "-.03em",
+            "font-size": "16px",
+            "font-weight": "900",
+            "line-height": "1.25"
+          }
+        }
+      ]
+    },
+    {
+      "selectorSuffix": ".reference-category-copy small",
+      "requiredProperties": {
+        "font-size": "12px",
+        "line-height": "1.4",
+        "color": "#3f5873"
+      },
+      "passed": true,
+      "matchingRules": [
+        {
+          "file": "assets/ReferenceStorefront-Df1qW8ej.css",
+          "selector": ".reference-category-copy small",
+          "properties": {
+            "color": "#3f5873",
+            "font-size": "12px",
+            "line-height": "1.4"
+          }
+        }
+      ]
+    },
+    {
+      "selectorSuffix": ".guided-cashier-lines b",
+      "requiredProperties": {
+        "font-size": "13px",
+        "line-height": "1.5"
+      },
+      "passed": true,
+      "matchingRules": [
+        {
+          "file": "assets/ReferenceStorefront-Df1qW8ej.css",
+          "selector": ".reference-storefront .guided-commerce.reference-mode[data-reference-mode=true] .guided-cashier-lines b",
+          "properties": {
+            "font-size": "13px",
+            "line-height": "1.5"
+          }
+        }
+      ]
+    },
+    {
+      "selectorSuffix": ".mobile-bagel-sign",
+      "requiredProperties": {
+        "display": "block!important",
+        "font-size": "14px",
+        "line-height": "1.3",
+        "width": "100%",
+        "white-space": "normal",
+        "overflow-wrap": "break-word"
+      },
+      "passed": true,
+      "matchingRules": [
+        {
+          "file": "assets/ReferenceStorefront-Df1qW8ej.css",
+          "selector": ".reference-storefront .guided-commerce.reference-mode[data-reference-mode=true] .mobile-bagel-sign",
+          "properties": {
+            "text-align": "center",
+            "white-space": "normal",
+            "overflow-wrap": "break-word",
+            "width": "100%",
+            "min-width": "0",
+            "max-width": "100%",
+            "padding": "4px 6px",
+            "font-size": "14px",
+            "line-height": "1.3",
+            "display": "block!important"
+          }
+        }
+      ]
+    },
+    {
+      "selectorSuffix": ".mobile-bagel-card>button>img",
+      "requiredProperties": {
+        "width": "72px!important",
+        "height": "72px!important",
+        "object-fit": "contain!important"
+      },
+      "passed": true,
+      "matchingRules": [
+        {
+          "file": "assets/ReferenceStorefront-Df1qW8ej.css",
+          "selector": ".reference-storefront .guided-commerce.reference-mode[data-reference-mode=true] .mobile-bagel-card>button>img",
+          "properties": {
+            "object-fit": "contain!important",
+            "width": "72px!important",
+            "height": "72px!important"
+          }
+        }
+      ]
+    }
+  ]
+}

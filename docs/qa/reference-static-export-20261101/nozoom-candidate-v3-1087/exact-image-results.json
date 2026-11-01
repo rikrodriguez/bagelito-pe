@@ -1,0 +1,2134 @@
+{
+  "metadata": {
+    "artifactProvenance": "{\"baseGitSHA\":\"bb482eece1126cfd51949e1cc5bfa28cee8332b0\",\"state\":\"DIRTY CSS candidate immutable snapshot\",\"sceneSHA256\":\"723ca7bad1c9cbf466fb0c8ef60145f79c9df727d29d2a9a3fc92928c8be9d93\",\"cssSHA256\":\"10877671b42927f6ad1bbb855ee7b769ffa9fddb41b4419739832d2986d0f160\",\"artifact\":\"/tmp/bagelito-reference-direct-candidate-v3-3218\"}",
+    "noZoomAuditSHA256": "36d5fe1a24d31fa045701666e8a2c2e61c9972dada91aaba928598ea81f9d4f9",
+    "startedAt": "2026-11-01T01:40:37.058Z",
+    "base": "http://127.0.0.1:3218/",
+    "declaredCodeSHA": null,
+    "repositorySHA": "bb482eece1126cfd51949e1cc5bfa28cee8332b0",
+    "driverSHA256": "8bc9c97d852b642c6e2f29e66b3db66f16c00ecd7ea9752a539c102ecd9e184b",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 320,
+        "height": 700
+      },
+      {
+        "width": 1280,
+        "height": 800
+      }
+    ],
+    "mobileContract": "Explicit user change: no zoom/pan, DOMtitles16/context12, exact-source cropped art without painted-card duplication",
+    "scope": "Explicit changed mobile contract: exact-source crops and native readable cards, no zoom or horizontal pan; desktop preserves complete image. Review-only callbacks and noAPI/fetch/XHR/writes; one exact-key framework read per document recorded.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T01:40:40.805Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "status": "passed",
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-nozoom-presentation.png",
+      "sha256": "24c1a3dbf9bba6cdf7035852d870617e4aed412eb3227b7f0494719df3fbfe4c",
+      "full": "390-nozoom-presentation-full.png",
+      "fullSHA256": "24c1a3dbf9bba6cdf7035852d870617e4aed412eb3227b7f0494719df3fbfe4c",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mobile": true,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 12,
+              "y": 233.84375,
+              "right": 128.65625,
+              "bottom": 375.84375,
+              "width": 116.65625,
+              "height": 142
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 48.609375,
+                    "y": 305.25,
+                    "right": 92.03125,
+                    "bottom": 327.25,
+                    "width": 43.421875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 12,
+                  "y": 233.84375,
+                  "right": 128.65625,
+                  "bottom": 375.84375,
+                  "width": 116.65625,
+                  "height": 142
+                }
+              },
+              {
+                "text": "Grandes o minis",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 24.53125,
+                    "y": 330.25,
+                    "right": 116.109375,
+                    "bottom": 347.25,
+                    "width": 91.578125,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 12,
+                  "y": 233.84375,
+                  "right": 128.65625,
+                  "bottom": 375.84375,
+                  "width": 116.65625,
+                  "height": 142
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 396.00000000000006,
+                  "y": 350,
+                  "width": 263.99999999999994,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 396,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 13,
+                  "y": 234.84375,
+                  "right": 127.65625,
+                  "bottom": 298.25,
+                  "width": 114.65625,
+                  "height": 63.40625
+                }
+              }
+            ],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 136.65625,
+              "y": 233.84375,
+              "right": 253.328125,
+              "bottom": 375.84375,
+              "width": 116.671875,
+              "height": 142
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 164.53125,
+                    "y": 305.25,
+                    "right": 225.453125,
+                    "bottom": 327.25,
+                    "width": 60.921875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 136.65625,
+                  "y": 233.84375,
+                  "right": 253.328125,
+                  "bottom": 375.84375,
+                  "width": 116.671875,
+                  "height": 142
+                }
+              },
+              {
+                "text": "2 bagels + 1 schmear",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 161.453125,
+                    "y": 330.25,
+                    "right": 228.515625,
+                    "bottom": 347.25,
+                    "width": 67.0625,
+                    "height": 17
+                  },
+                  {
+                    "x": 170.6875,
+                    "y": 347.046875,
+                    "right": 219.296875,
+                    "bottom": 364.046875,
+                    "width": 48.609375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 136.65625,
+                  "y": 233.84375,
+                  "right": 253.328125,
+                  "bottom": 375.84375,
+                  "width": 116.671875,
+                  "height": 142
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 674,
+                  "y": 350,
+                  "width": 277,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 674,
+                  "y": 350,
+                  "width": 277,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 137.65625,
+                  "y": 234.84375,
+                  "right": 252.328125,
+                  "bottom": 298.25,
+                  "width": 114.671875,
+                  "height": 63.40625
+                }
+              }
+            ],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 261.328125,
+              "y": 233.84375,
+              "right": 377.984375,
+              "bottom": 375.84375,
+              "width": 116.65625,
+              "height": 142
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 282.765625,
+                    "y": 305.25,
+                    "right": 356.53125,
+                    "bottom": 327.25,
+                    "width": 73.765625,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 261.328125,
+                  "y": 233.84375,
+                  "right": 377.984375,
+                  "bottom": 375.84375,
+                  "width": 116.65625,
+                  "height": 142
+                }
+              },
+              {
+                "text": "120, 180 o 240 g",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 273.59375,
+                    "y": 330.25,
+                    "right": 365.71875,
+                    "bottom": 347.25,
+                    "width": 92.125,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 261.328125,
+                  "y": 233.84375,
+                  "right": 377.984375,
+                  "bottom": 375.84375,
+                  "width": 116.65625,
+                  "height": 142
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 966,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 966,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 262.328125,
+                  "y": 234.84375,
+                  "right": 376.984375,
+                  "bottom": 298.25,
+                  "width": 114.65625,
+                  "height": 63.40625
+                }
+              }
+            ],
+            "centerHit": true
+          }
+        ],
+        "arts": [
+          {
+            "viewBox": {
+              "x": 399.99999999999994,
+              "y": 0,
+              "width": 840,
+              "height": 340
+            },
+            "rawViewBox": {
+              "x": 400,
+              "y": 0,
+              "width": 840,
+              "height": 340
+            },
+            "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+            "imageVisible": true,
+            "href": "/images/store-reference-approved.webp",
+            "exactAsset": true,
+            "rect": {
+              "x": 0,
+              "y": 66,
+              "right": 389.984375,
+              "bottom": 223.84375,
+              "width": 389.984375,
+              "height": 157.84375
+            }
+          },
+          {
+            "viewBox": {
+              "x": 95,
+              "y": 600,
+              "width": 1435,
+              "height": 310
+            },
+            "rawViewBox": {
+              "x": 95,
+              "y": 600,
+              "width": 1435,
+              "height": 310
+            },
+            "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+            "imageVisible": true,
+            "href": "/images/store-reference-approved.webp",
+            "exactAsset": true,
+            "rect": {
+              "x": 0,
+              "y": 385.84375,
+              "right": 389.984375,
+              "bottom": 470.078125,
+              "width": 389.984375,
+              "height": 84.234375
+            }
+          }
+        ],
+        "images": [],
+        "canvasCount": 0,
+        "failures": [],
+        "pass": true,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497238009.2,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497238009.2,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497238009.2",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497238492.8,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497238492.8,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497238492.8",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497238655,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497238655,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497238655",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "file": "320-nozoom-presentation.png",
+      "sha256": "dcbb5b72393bd08289ea22dd24195d1c4d1c310ee44f66a8217e7106dbd18cbe",
+      "full": "320-nozoom-presentation-full.png",
+      "fullSHA256": "dcbb5b72393bd08289ea22dd24195d1c4d1c310ee44f66a8217e7106dbd18cbe",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "mobile": true,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 12,
+              "y": 205.515625,
+              "right": 105.328125,
+              "bottom": 334.625,
+              "width": 93.328125,
+              "height": 129.109375
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 36.953125,
+                    "y": 264.015625,
+                    "right": 80.375,
+                    "bottom": 286.015625,
+                    "width": 43.421875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 12,
+                  "y": 205.515625,
+                  "right": 105.328125,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              },
+              {
+                "text": "Grandes o minis",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 29.71875,
+                    "y": 289.015625,
+                    "right": 87.609375,
+                    "bottom": 306.015625,
+                    "width": 57.890625,
+                    "height": 17
+                  },
+                  {
+                    "x": 43.375,
+                    "y": 305.8125,
+                    "right": 73.953125,
+                    "bottom": 322.8125,
+                    "width": 30.578125,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 12,
+                  "y": 205.515625,
+                  "right": 105.328125,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 396,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 396,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 13,
+                  "y": 206.515625,
+                  "right": 104.328125,
+                  "bottom": 257.015625,
+                  "width": 91.328125,
+                  "height": 50.5
+                }
+              }
+            ],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 113.328125,
+              "y": 205.515625,
+              "right": 206.65625,
+              "bottom": 334.625,
+              "width": 93.328125,
+              "height": 129.109375
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 129.53125,
+                    "y": 264.015625,
+                    "right": 190.453125,
+                    "bottom": 286.015625,
+                    "width": 60.921875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 113.328125,
+                  "y": 205.515625,
+                  "right": 206.65625,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              },
+              {
+                "text": "2 bagels + 1 schmear",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 126.453125,
+                    "y": 289.015625,
+                    "right": 193.515625,
+                    "bottom": 306.015625,
+                    "width": 67.0625,
+                    "height": 17
+                  },
+                  {
+                    "x": 135.6875,
+                    "y": 305.8125,
+                    "right": 184.296875,
+                    "bottom": 322.8125,
+                    "width": 48.609375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 113.328125,
+                  "y": 205.515625,
+                  "right": 206.65625,
+                  "bottom": 334.625,
+                  "width": 93.328125,
+                  "height": 129.109375
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 674,
+                  "y": 349.99999999999994,
+                  "width": 277,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 674,
+                  "y": 350,
+                  "width": 277,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 114.328125,
+                  "y": 206.515625,
+                  "right": 205.65625,
+                  "bottom": 257.015625,
+                  "width": 91.328125,
+                  "height": 50.5
+                }
+              }
+            ],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 214.65625,
+              "y": 205.515625,
+              "right": 308,
+              "bottom": 334.625,
+              "width": 93.34375,
+              "height": 129.109375
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 224.4375,
+                    "y": 264.03125,
+                    "right": 298.203125,
+                    "bottom": 286.03125,
+                    "width": 73.765625,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 214.65625,
+                  "y": 205.515625,
+                  "right": 308,
+                  "bottom": 334.625,
+                  "width": 93.34375,
+                  "height": 129.109375
+                }
+              },
+              {
+                "text": "120, 180 o 240 g",
+                "fontSize": 12,
+                "color": "rgb(63, 88, 115)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 220.515625,
+                    "y": 289.03125,
+                    "right": 302.140625,
+                    "bottom": 306.03125,
+                    "width": 81.625,
+                    "height": 17
+                  },
+                  {
+                    "x": 257.625,
+                    "y": 305.828125,
+                    "right": 265.015625,
+                    "bottom": 322.828125,
+                    "width": 7.390625,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 214.65625,
+                  "y": 205.515625,
+                  "right": 308,
+                  "bottom": 334.625,
+                  "width": 93.34375,
+                  "height": 129.109375
+                }
+              }
+            ],
+            "photos": [
+              {
+                "viewBox": {
+                  "x": 966,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "rawViewBox": {
+                  "x": 966,
+                  "y": 350,
+                  "width": 264,
+                  "height": 146
+                },
+                "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+                "imageVisible": true,
+                "href": "/images/store-reference-approved.webp",
+                "exactAsset": true,
+                "rect": {
+                  "x": 215.65625,
+                  "y": 206.515625,
+                  "right": 307,
+                  "bottom": 257.03125,
+                  "width": 91.34375,
+                  "height": 50.515625
+                }
+              }
+            ],
+            "centerHit": true
+          }
+        ],
+        "arts": [
+          {
+            "viewBox": {
+              "x": 400,
+              "y": 0,
+              "width": 840,
+              "height": 340
+            },
+            "rawViewBox": {
+              "x": 400,
+              "y": 0,
+              "width": 840,
+              "height": 340
+            },
+            "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+            "imageVisible": true,
+            "href": "/images/store-reference-approved.webp",
+            "exactAsset": true,
+            "rect": {
+              "x": 0,
+              "y": 66,
+              "right": 320,
+              "bottom": 195.515625,
+              "width": 320,
+              "height": 129.515625
+            }
+          },
+          {
+            "viewBox": {
+              "x": 94.99999999999999,
+              "y": 599.9999999999999,
+              "width": 1434.9999999999998,
+              "height": 310
+            },
+            "rawViewBox": {
+              "x": 95,
+              "y": 600,
+              "width": 1435,
+              "height": 310
+            },
+            "sourceMapping": "image geometry plus SVG/image screen matrices to original1536x1024 pixels",
+            "imageVisible": true,
+            "href": "/images/store-reference-approved.webp",
+            "exactAsset": true,
+            "rect": {
+              "x": 0,
+              "y": 344.625,
+              "right": 320,
+              "bottom": 413.75,
+              "width": 320,
+              "height": 69.125
+            }
+          }
+        ],
+        "images": [],
+        "canvasCount": 0,
+        "failures": [],
+        "pass": true,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497238908.5,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497238908.5,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497238908.5",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497239272.5,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497239272.5,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497239272.5",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497239435.4,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497239435.4,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497239435.4",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "file": "1280-nozoom-presentation.png",
+      "sha256": "6c25aa2f9908003c7cc28cfc1acfe74a2dda40d63bd8b66967110cad70c36c8d",
+      "full": "1280-nozoom-presentation-full.png",
+      "fullSHA256": "8bf487b407616aef398e7824a181fd96ed91da012cd3b1ac9ee91d434e69ae23",
+      "metrics": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "mobile": false,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 349.375,
+              "y": 273.4375,
+              "right": 555.625,
+              "bottom": 456.25,
+              "width": 206.25,
+              "height": 182.8125
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 16,
+                "color": "rgba(0, 0, 0, 0)",
+                "visible": false,
+                "rects": [
+                  {
+                    "x": 451.5,
+                    "y": 363.84375,
+                    "right": 497.3125,
+                    "bottom": 385.84375,
+                    "width": 45.8125,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 451.5,
+                  "y": 363.84375,
+                  "right": 452.5,
+                  "bottom": 364.84375,
+                  "width": 206.25,
+                  "height": 182.8125
+                }
+              },
+              {
+                "text": "Grandes o minis",
+                "fontSize": 13.3333,
+                "color": "rgba(0, 0, 0, 0)",
+                "visible": false,
+                "rects": [
+                  {
+                    "x": 497.3125,
+                    "y": 366.84375,
+                    "right": 599.03125,
+                    "bottom": 384.84375,
+                    "width": 101.71875,
+                    "height": 18
+                  }
+                ],
+                "clip": {
+                  "x": 451.5,
+                  "y": 363.84375,
+                  "right": 452.5,
+                  "bottom": 364.84375,
+                  "width": 206.25,
+                  "height": 182.8125
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 566.5625,
+              "y": 273.4375,
+              "right": 782.96875,
+              "bottom": 456.25,
+              "width": 216.40625,
+              "height": 182.8125
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 16,
+                "color": "rgba(0, 0, 0, 0)",
+                "visible": false,
+                "rects": [
+                  {
+                    "x": 673.765625,
+                    "y": 363.84375,
+                    "right": 737.5625,
+                    "bottom": 385.84375,
+                    "width": 63.796875,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 673.765625,
+                  "y": 363.84375,
+                  "right": 674.765625,
+                  "bottom": 364.84375,
+                  "width": 216.40625,
+                  "height": 182.8125
+                }
+              },
+              {
+                "text": "2 bagels + 1 schmear",
+                "fontSize": 13.3333,
+                "color": "rgba(0, 0, 0, 0)",
+                "visible": false,
+                "rects": [
+                  {
+                    "x": 737.5625,
+                    "y": 366.84375,
+                    "right": 869.484375,
+                    "bottom": 384.84375,
+                    "width": 131.921875,
+                    "height": 18
+                  }
+                ],
+                "clip": {
+                  "x": 673.765625,
+                  "y": 363.84375,
+                  "right": 674.765625,
+                  "bottom": 364.84375,
+                  "width": 216.40625,
+                  "height": 182.8125
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 794.6875,
+              "y": 273.4375,
+              "right": 1000.9375,
+              "bottom": 456.25,
+              "width": 206.25,
+              "height": 182.8125
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 16,
+                "color": "rgba(0, 0, 0, 0)",
+                "visible": false,
+                "rects": [
+                  {
+                    "x": 896.8125,
+                    "y": 363.84375,
+                    "right": 974.421875,
+                    "bottom": 385.84375,
+                    "width": 77.609375,
+                    "height": 22
+                  }
+                ],
+                "clip": {
+                  "x": 896.8125,
+                  "y": 363.84375,
+                  "right": 897.8125,
+                  "bottom": 364.84375,
+                  "width": 206.25,
+                  "height": 182.8125
+                }
+              },
+              {
+                "text": "120, 180 o 240 g",
+                "fontSize": 13.3333,
+                "color": "rgba(0, 0, 0, 0)",
+                "visible": false,
+                "rects": [
+                  {
+                    "x": 974.421875,
+                    "y": 366.84375,
+                    "right": 1076.734375,
+                    "bottom": 384.84375,
+                    "width": 102.3125,
+                    "height": 18
+                  }
+                ],
+                "clip": {
+                  "x": 896.8125,
+                  "y": 363.84375,
+                  "right": 897.8125,
+                  "bottom": 364.84375,
+                  "width": 206.25,
+                  "height": 182.8125
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          }
+        ],
+        "arts": [],
+        "images": [
+          {
+            "source": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "rect": {
+              "x": 40,
+              "y": 0,
+              "right": 1240,
+              "bottom": 800,
+              "width": 1200,
+              "height": 800
+            },
+            "naturalWidth": 1536,
+            "naturalHeight": 1024,
+            "objectFit": "contain",
+            "filter": "none"
+          }
+        ],
+        "canvasCount": 0,
+        "failures": [],
+        "pass": true,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "mouse",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497239708,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497239708,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497239708",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "mouse",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497240456.2,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497240456.2,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497240456.2",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "mouse",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "documentId": 1793497240591.2,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "documentId": 1793497240591.2,
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793497240591.2",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+                "url": "http://127.0.0.1:3218/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497238009.2,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497238009.2,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497238492.8,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497238492.8,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497238655,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497238655,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793497238009.2",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "documentId": "1793497238492.8",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "documentId": "1793497238655",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497238908.5,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497238908.5,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497239272.5,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497239272.5,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497239435.4,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497239435.4,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793497238908.5",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "documentId": "1793497239272.5",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "documentId": "1793497239435.4",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-Df1qW8ej.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/routes-CvS7UQpn.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/ReferenceStorefront-C6RzzMpG.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3218/assets/index-CNG4SY2A.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3218/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497239708,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497239708,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497240456.2,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497240456.2,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+            "documentId": 1793497240591.2,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+            "documentId": 1793497240591.2,
+            "url": "http://127.0.0.1:3218/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793497239708",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "documentId": "1793497240456.2",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            },
+            {
+              "documentId": "1793497240591.2",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64907)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65028)\n    at http://127.0.0.1:3218/assets/index-CNG4SY2A.js:10:65097",
+              "url": "http://127.0.0.1:3218/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T01:40:38.380Z",
+      "type": "nozoom-captured",
+      "width": 390,
+      "file": "390-nozoom-presentation.png",
+      "failures": 0
+    },
+    {
+      "at": "2026-11-01T01:40:38.489Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T01:40:38.647Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T01:40:38.804Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T01:40:38.822Z",
+      "type": "capabilities-drained",
+      "width": 390,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    },
+    {
+      "at": "2026-11-01T01:40:39.186Z",
+      "type": "nozoom-captured",
+      "width": 320,
+      "file": "320-nozoom-presentation.png",
+      "failures": 0
+    },
+    {
+      "at": "2026-11-01T01:40:39.269Z",
+      "type": "category-callback",
+      "width": 320,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T01:40:39.432Z",
+      "type": "category-callback",
+      "width": 320,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T01:40:39.604Z",
+      "type": "category-callback",
+      "width": 320,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T01:40:39.618Z",
+      "type": "capabilities-drained",
+      "width": 320,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    },
+    {
+      "at": "2026-11-01T01:40:40.389Z",
+      "type": "nozoom-captured",
+      "width": 1280,
+      "file": "1280-nozoom-presentation.png",
+      "failures": 0
+    },
+    {
+      "at": "2026-11-01T01:40:40.453Z",
+      "type": "category-callback",
+      "width": 1280,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T01:40:40.587Z",
+      "type": "category-callback",
+      "width": 1280,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T01:40:40.723Z",
+      "type": "category-callback",
+      "width": 1280,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T01:40:40.743Z",
+      "type": "capabilities-drained",
+      "width": 1280,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    }
+  ]
+}

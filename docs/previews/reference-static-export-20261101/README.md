@@ -1,19 +1,13 @@
-# Tienda de referencia — archivos estáticos
+# Tienda de referencia: ZIP estático verificado
 
-[Descargar ZIP estático](bagelito-reference-static-f2cc618.zip) —8.511.068 bytes,83archivos. La raíz del ZIP contiene `index.html`, `assets/`, imágenes y las páginas `legal/index.html` y `playable/index.html`. No incluye un servidor ni requiere Node para verlo una vez alojado.
+[Descargar versión sin ampliar](bagelito-reference-static-direct-9a94e4c.zip),8.513.042bytes/83archivos. App `9a94e4cfc5a043726f643d3a9c546f096007bd94`. SHA256 `262b55db494a615299ad9123ac2b82a69b79950f318281d8b5652abe45de5ed6`.
 
-SHA256 del ZIP: `7eb870e0630ee3b5fbd904370d554ae55bc8978cd8919b9c44f8c55a2896864d`.
+El ZIP contiene `index.html`, assets/imágenes, `legal/index.html`, `playable/index.html` y su manifiesto. No requiere Node una vez servido por un host estático. En móvil hay tarjetas nativas legibles, recortes del WebP exacto y ningún paso para ampliar la imagen. Escritorio mantiene la entrada completa.
 
-Aplicación original: `6f765cee68f4c4d2f013a1082b497a73b5191bd7`; exporter: `f2cc618ecfeaa52807cd8a1b3ee77121c972f94a`. [Manifiesto de la exportación](static-export-manifest.json) con82hashes de archivos y el antes/después de los3HTML. El asset aprobado y los bundlesJS/CSS siguen byte idénticos al build Node original.
+QA terminal: entrada3viewports/9callbacks,54estados visuales,seis recorridos y seis pestañas legales PASS. Los82hashes del ZIP descomprimido y los GETs HTTP pasan; CSP bloquea conexiones/envíos. Pago desactivado, sin pedidos ni tracking/canje real de fidelidad. Una lectura interna TanStack por documento se registra; no se afirma cerolecturas.
 
-Descomprimir en la raíz de un origen HTTP/HTTPS con MIMEJS/CSS correctos e índices de directorio. Las rutas usan URLs absolutas: no abrir por `file://` ni alojar bajo un subdirectorio sin ajustar el montaje. Para revisar localmente:
+[Reporte, capturas, manifiestos y comandos reproducibles](../../reference-direct-entry-20261101.md). Montar en la raíz HTTP/HTTPS, con MIME e índices de directorio correctos. No usar file:// ni subdirectorio sin adaptar URLs; conservar bootstrap/hashesCSP.
 
-```sh
-python -m http.server 4174 --bind 127.0.0.1 --directory /ruta/al/zip-descomprimido
-```
+Esta publicación es un artefacto GitHub, no un sitio alojado. El padre actualizará el mismo preview privado con la misma audiencia. Safari/iPhone físico no certificado. Ningún cambio de producción, privacidad o permisos.
 
-Abrir `http://127.0.0.1:4174/`. El padre decidirá un alojamiento privado accesible desde iPhone; este trabajo no crea un sitio ni cambia permisos o privacidad. El ZIP no es, por sí solo, un enlace web alojado.
-
-Es la misma selección de catálogo, cantidades, upsells, resumen, entrega/consentimiento y fidelidad pendiente del flujo original. Conserva el pago desactivado. No tiene endpointsserver/DB/pagos; `/api/batch` es404 en el servidor de archivos. CSPbloquea conexiones, formularios yframes; permite los scripts propios y hashes exactos del bootstrap. No ofrecer Wallet ni integraciónGHL, no inventar saldo o pedido confirmado.
-
-[Reporte, comandos reproducibles y límites](../../reference-static-export-20261101.md). No se transfiere un PASS de Chromium a Safari/iPhone físico. El acceso privado y las cabeceras del futuro hosting pertenecen a una etapa posterior.
+El [ZIP anterior con ampliación](bagelito-reference-static-f2cc618.zip) se conserva únicamente como histórico; su reporte original está en el commit49e0f347. No corresponde al contrato móvil posterior.
