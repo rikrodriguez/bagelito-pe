@@ -4,8 +4,7 @@
 .rebuilt-wordmark .rebuilt-tagline { font-size:44px; font-weight:600; letter-spacing:0; stroke:none; }
 .rebuilt-store[data-compact="true"] .rebuilt-tagline { display:none; }
 .rebuilt-store[data-compact="true"] .rebuilt-wall-menu,
-.rebuilt-store[data-compact="true"] .rebuilt-shirt-mark,
-.rebuilt-store[data-compact="true"] .rebuilt-tote-mark { display:none; }
+.rebuilt-store[data-compact="true"] .rebuilt-shirt-mark { display:none; }
 .rebuilt-architecture>picture { filter:none; }
 .rebuilt-room-shade { display:none; }
 .rebuilt-combo-photo { display:block; width:100%; height:100%; object-fit:contain; }
@@ -56,12 +55,10 @@
   .rebuilt-wall-menu>span { font-size:clamp(13px,1.03cqw,20px); line-height:1.35; letter-spacing:-.03em; white-space:nowrap; }
   .rebuilt-shirt-mark { position:absolute; top:47.4%; color:#004aad; font-family:Fredoka,Arial,sans-serif; font-variation-settings:"wdth" 75,"wght" 700; font-size:clamp(12px,.9cqw,20px); text-transform:uppercase; letter-spacing:-.04em; transform:rotate(-3deg); }
   .rebuilt-shirt-mark-left { left:20.6%; }.rebuilt-shirt-mark-right { left:85.4%; transform:rotate(3deg); }
-  .rebuilt-tote-mark { position:absolute; top:44%; right:2.3%; color:#004aad; text-align:center; font-family:Fredoka,Arial,sans-serif; font-variation-settings:"wdth" 75,"wght" 700; font-size:1.4cqw; line-height:.98; text-transform:uppercase; transform:rotate(7deg); }
-  .rebuilt-tote-mark>span { display:block; margin-top:.4cqw; }
 }
 
 @media(max-width:1050px) {
-  .rebuilt-wall-menu,.rebuilt-shirt-mark,.rebuilt-tote-mark { display:none; }
+  .rebuilt-wall-menu,.rebuilt-shirt-mark { display:none; }
   .rebuilt-store[data-compact="false"] .rebuilt-wordmark { margin:0 auto; }
   .rebuilt-counter { position:relative; display:flex; flex-direction:column; gap:18px; width:100%; padding:0; margin:0; border:0; background:none; box-shadow:none; }
   .rebuilt-counter-photo { display:none; }

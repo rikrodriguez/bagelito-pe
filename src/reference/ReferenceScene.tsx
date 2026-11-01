@@ -124,7 +124,6 @@ export function ReferenceScene(props: Props) {
     </aside>
     <span className="rebuilt-shirt-mark rebuilt-shirt-mark-left" aria-hidden="true">Bagelito</span>
     <span className="rebuilt-shirt-mark rebuilt-shirt-mark-right" aria-hidden="true">Bagelito</span>
-    <span className="rebuilt-tote-mark" aria-hidden="true">Good<br />bagels<br />good<br />days<span>☺</span></span>
     <p className="rebuilt-wall-copy rebuilt-wall-copy-right" aria-hidden="true">Hechos para<br />bagel lovers.<span>♡</span></p>
 
     <div className="rebuilt-hero">
