@@ -1,0 +1,130 @@
+{
+  "applicationSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "exporterSHA": "f2cc618ecfeaa52807cd8a1b3ee77121c972f94a",
+  "originalPR45SHA": "d43cc5f77df6ccea7161ecb190d91631108f9d02",
+  "branch": "preview/reference-static-export-20261101",
+  "applicationCodeUnchanged": true,
+  "artifact": {
+    "path": "docs/previews/reference-static-export-20261101/bagelito-reference-static-f2cc618.zip",
+    "bytes": 8511068,
+    "sha256": "7eb870e0630ee3b5fbd904370d554ae55bc8978cd8919b9c44f8c55a2896864d",
+    "files": 83,
+    "verifiedInternalHashes": 82,
+    "serverFiles": 0,
+    "npmInstallRequiredAtRuntime": false
+  },
+  "stages": {
+    "sourceAudit": {
+      "status": "PASS",
+      "samePublicAssets": 79,
+      "sameJS": 6,
+      "sameCSS": 2,
+      "htmlChangedOnlyByCSPAndReferrerMeta": 3,
+      "inlineHashesValid": true,
+      "sourceImageSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+    },
+    "servedArtifact": {
+      "status": "PASS",
+      "server": "Python standard http.server",
+      "rootHTML": 200,
+      "legalAndPlayable": "301 to directory then200",
+      "apiProbe": 404,
+      "cookies": 0,
+      "noSSRRuntime": true
+    },
+    "browserJourney": {
+      "status": "PASS",
+      "regressionCases": 6,
+      "threePathsCompleted390": true,
+      "additionalViewports": [
+        320,
+        1280
+      ],
+      "upsells": "catalog120g Original12PEN/flavoured16PEN, accept/decline",
+      "consentAndEditing": true,
+      "paymentDisabled": true,
+      "loyaltyPending": true
+    },
+    "zoomAndLanding": {
+      "status": "PASS",
+      "viewports": [
+        320,
+        390,
+        1280
+      ],
+      "callbacks": 9,
+      "mobileNativeZoomPanRevert": [
+        320,
+        390
+      ]
+    },
+    "legal": {
+      "status": "PASS",
+      "realNewTab": true,
+      "sections": 8,
+      "openerNull": true,
+      "staticDirectoryRedirect": true
+    },
+    "observedDOMParity": {
+      "status": "PASS",
+      "pairedPhases": 5,
+      "legalTextEqual": true,
+      "allPossibleStatesCertified": false
+    },
+    "strictRGBParity": {
+      "status": "FAIL",
+      "paired": 83,
+      "identical": 67,
+      "different": 16,
+      "dimensionDifferences": 0,
+      "identicalLandingCaptures": 9,
+      "landingPairs": 9,
+      "maxNonPanDelta": 32,
+      "maxPanDelta": 255,
+      "pan320PositionDiffers": true,
+      "thresholdChanged": false,
+      "masksOrResizing": false
+    },
+    "browserSafety": {
+      "status": "PASS",
+      "egress": 0,
+      "apiCalls": 0,
+      "fetchXHR": 0,
+      "posts": 0,
+      "storageWrites": 0,
+      "hydrationErrors": 0,
+      "CSPViolations": 0,
+      "knownRead": "one TanStack sessionStorage.getItem(tsr-scroll-restoration-v1_3) per document, recorded",
+      "zeroReadsClaimed": false
+    }
+  },
+  "notExecuted": [
+    "hosting",
+    "Safari",
+    "physical iPhone",
+    "real payments",
+    "orders",
+    "loyalty tracking/redemption",
+    "remote CI"
+  ],
+  "hostingRequirements": [
+    "serve at origin root via HTTP/HTTPS",
+    "correct JS/CSS MIME",
+    "directory indexes or clean static route mapping",
+    "retain inline bootstrap bytes/CSP hashes",
+    "host privacy/access control handled by parent"
+  ],
+  "newSiteCreated": false,
+  "privacyOrPermissionsChanged": false,
+  "autodeploy": false,
+  "productionChanged": false,
+  "PR45Changed": false,
+  "newPRCreated": false,
+  "notes": [
+    "Static file export, not an alternate mockup: original client bundles and catalog unchanged",
+    "Shared client bundle retains dormant API/SDK strings; no server endpoints included",
+    "Loyalty10orders=>2bagels+1schmear is presentation only; internal tracking/canje pending",
+    "No Wallet offer or new GHL dependency",
+    "Strict RGB FAIL retained separately from functional/DOM PASS"
+  ]
+}

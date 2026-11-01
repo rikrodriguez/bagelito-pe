@@ -7,6 +7,8 @@ La tienda usa la misma imagen, HTML, componentes, catálogo y bundle cliente que
 - Exporter: `f2cc618ecfeaa52807cd8a1b3ee77121c972f94a`, en rama `preview/reference-static-export-20261101`.
 - Imagen aprobada intacta: SHA256 `0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9`,1536×1024. No se afirma identidad de bytes con el JPEG del hilo padre.
 
+[Descargar el ZIP e instrucciones](previews/reference-static-export-20261101/README.md). SHA256 `7eb870e0630ee3b5fbd904370d554ae55bc8978cd8919b9c44f8c55a2896864d`,8.511.068bytes.
+
 ## Qué contiene y qué cambia
 
 Se copia exclusivamente el directorio público del build ya verificado y se capturan tres respuestas HTML del servidor local de revisión. La única transformación del HTML inserta una política CSP y una política de referrer; conserva marcado, comentarios React, estado de hidratación, scripts y URLs originales. Los hashes de origen/exportación y de cada asset quedan en `static-export-manifest.json`.
@@ -51,6 +53,8 @@ El exporter exige origen loopback, imagen aprobada y árbol de aplicación igual
 
 ## Validación
 
+[Informe de navegador con capturas/JSON/drivers](qa/reference-static-export-20261101/browser-qa-f2cc618/README.md). [Resumen JSON](qa/reference-static-export-20261101/final-summary.json) y [manifiesto global](qa/reference-static-export-20261101/manifest.json).
+
 | Etapa | Resultado y alcance |
 | --- | --- |
 | Archivos/CSP | PASS:83archivos,82hashes;79assets públicos incluidos6JS+2CSS byte idénticos. Los3HTML sólo agregan CSP+referrer, con hashes inline exactos. [Auditoría](qa/reference-static-export-20261101/source-audit-f2cc618/README.md). |
@@ -58,8 +62,8 @@ El exporter exige origen loopback, imagen aprobada y árbol de aplicación igual
 | Hidratación y legal | PASS focal390: selección real, entrega/consentimiento, pago desactivado, términos en pestaña nueva; `/legal` redirige al directorio `/legal/` y mantiene su contenido real. Sin errores de hidratación/CSP. |
 | Recorrido estático | PASS: cinco casos completos adicionales al foco, con Packs/Combos/Schmears390, upsells12/16 en390/320 y declinar pack en1280; mismos asserts que Node y edición/carrito/progreso/menú. |
 | Entrada y zoom | PASS:320/390/1280, nueve callbacks de categoría, zoom/pan/retorno320/390. Misma espera de scroll estable del driverNode. |
-| Comparación visual | Entrada390 idéntica píxel por píxel. En el foco,7/11PNG RGB idénticos;4 difieren hasta1–3/255 sin cambiar dimensiones. Se conserva FAIL del criterio estricto de igualdad total, sin máscaras ni cambio de umbral. |
-| Comparación DOM | Par Node/estático autorizado en ejecución; no se infiere igualdad de todos los datos sólo de capturas. |
+| Comparación RGB estricta | FAIL conservado:67/83pares idénticos;16 difieren, sin diferencias de dimensiones. Las nueve capturas de entrada son idénticas píxel por píxel. En estadosUI sin pan, delta máximo32/255; un pan320 termina en otra posición y llega a255/255. No se enmascaran píxeles ni se cambia el criterio de igualdad. El foco inicial por separado conserva7/11iguales y deltas1–3/255. |
+| Comparación DOM | PASS de un par focal serial Node→estático: cinco estados observados con cantidades, precios opcionales, resumen, campos, consentimiento, pago desactivado y fidelidad iguales; texto legal y ocho secciones iguales. No certifica todos los estados posibles. |
 | Seguridad de navegador | CeroAPI/fetch/XHR/POST/egress/escrituras. Una lectura interna TanStack por documento registrada; no se afirma cero lecturas. No hay endpoints de comercio. |
 | Hosting/iPhone físico | No ejecutado. No se creó sitio ni se cambió privacidad, permisos, producción o autodeploy. |
 

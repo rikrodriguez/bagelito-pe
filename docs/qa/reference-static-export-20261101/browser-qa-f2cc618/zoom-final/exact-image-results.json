@@ -1,0 +1,2990 @@
+{
+  "metadata": {
+    "staticExportSHA": "f2cc618ecfeaa52807cd8a1b3ee77121c972f94a",
+    "originalNodeBase": "http://127.0.0.1:3210/",
+    "startedAt": "2026-11-01T00:55:33.150Z",
+    "base": "http://127.0.0.1:3212/",
+    "declaredCodeSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+    "repositorySHA": "f2cc618ecfeaa52807cd8a1b3ee77121c972f94a",
+    "driverSHA256": "6f4faf4c434b415e4e3ff0e2b38418015e80f6e61c431a3f82dd5378dcfb9c27",
+    "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 320,
+        "height": 700
+      },
+      {
+        "width": 1280,
+        "height": 800
+      }
+    ],
+    "scope": "Exact approved image bytes, uncropped image and accessible category hotspots; existing commercial review-only flow smoke. No3D, fetch/XHR/API/provider requests, application storage reads or writes. One exact-key TanStack initialization read per document is recorded, not claimed absent.",
+    "browserVersion": "151.0.7922.173",
+    "zoomHelperSHA256": "ed816123104be912d3e2a8c13daaed020ac22df31aa57a92f38211401c7c7697",
+    "finishedAt": "2026-11-01T00:55:39.491Z"
+  },
+  "criteria": {
+    "knownFrameworkReadKey": "tsr-scroll-restoration-v1_3",
+    "maxInitializationReadsPerDocument": 1,
+    "applicationStorageReads": 0,
+    "storageWrites": 0,
+    "apiFetchXHR": 0
+  },
+  "status": "passed",
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-exact-storefront.png",
+      "sha256": "43742d590671bb920667ea22b5ab6563dd595b3d217bc04672f83acfdf4e2f90",
+      "metrics": {
+        "source": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+        "complete": true,
+        "naturalWidth": 1536,
+        "naturalHeight": 1024,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "painted": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 260
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "right": 390,
+          "bottom": 260
+        },
+        "entireImageVisible": true,
+        "ancestorIssues": [],
+        "objectFit": "contain",
+        "objectPosition": "50% 50%",
+        "filter": "none",
+        "opacity": "1",
+        "canvasCount": 0,
+        "overflowX": 0,
+        "buttons": [
+          {
+            "name": "Packs",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 100.546875,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Combos",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 171.125,
+              "y": 88.859375,
+              "width": 70.328125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Schmears",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 245.265625,
+              "y": 88.859375,
+              "width": 67.03125,
+              "height": 59.40625
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          }
+        ]
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "zoomShots": [
+        {
+          "name": "reference-zoom-expanded",
+          "file": "390-reference-zoom-expanded.png",
+          "sha256": "e4cc862cee7cc4eb38cff60b3c6494a601ea7c71312e0b3ffa3d52ee61b5923e"
+        },
+        {
+          "name": "reference-zoom-toward-right-edge",
+          "file": "390-reference-zoom-toward-right-edge.png",
+          "sha256": "de6983f8067c2143e1839a0ab9321c12a19a0fd5829d9303681e1d7cc821f6e1"
+        },
+        {
+          "name": "reference-zoom-toward-left-edge",
+          "file": "390-reference-zoom-toward-left-edge.png",
+          "sha256": "0055ea2da95641a9ac6dde3902a0551563c935838128f143fef777c0b0cbdd4a"
+        },
+        {
+          "name": "reference-zoom-restored",
+          "file": "390-reference-zoom-restored.png",
+          "sha256": "c9a616f31e54897c70414a6269f8eb4a9e1511303cfaa67de31d77a2309c3d2b"
+        }
+      ],
+      "zoom": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "expandedRequiresAllThreeTogether": false,
+        "panMethod": "CDP Input.dispatchTouchEvent",
+        "before": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": false,
+          "scrollLeft": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 260,
+            "width": 390,
+            "height": 260
+          },
+          "art": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 260,
+            "width": 390,
+            "height": 260
+          },
+          "image": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 260,
+            "width": 390,
+            "height": 260
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": 100.546875,
+                "y": 88.859375,
+                "right": 167.578125,
+                "bottom": 148.265625,
+                "width": 67.03125,
+                "height": 59.40625
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 171.125,
+                "y": 88.859375,
+                "right": 241.453125,
+                "bottom": 148.265625,
+                "width": 70.328125,
+                "height": 59.40625
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 245.265625,
+                "y": 88.859375,
+                "right": 312.296875,
+                "bottom": 148.265625,
+                "width": 67.03125,
+                "height": 59.40625
+              },
+              "inside": true,
+              "hittable": true
+            }
+          ]
+        },
+        "pans": [
+          {
+            "direction": "toward-right-edge",
+            "start": {
+              "x": 326,
+              "y": 336
+            },
+            "end": {
+              "x": 64,
+              "y": 336
+            },
+            "before": 186,
+            "after": 330,
+            "delta": 144,
+            "categories": [
+              {
+                "name": "Packs",
+                "category": "packs",
+                "rect": {
+                  "x": -144.375,
+                  "y": 164.0625,
+                  "right": -20.625,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": false
+              },
+              {
+                "name": "Combos",
+                "category": "combos",
+                "rect": {
+                  "x": -14.0625,
+                  "y": 164.0625,
+                  "right": 115.78125,
+                  "bottom": 273.75,
+                  "width": 129.84375,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": true
+              },
+              {
+                "name": "Schmears",
+                "category": "schmears",
+                "rect": {
+                  "x": 122.8125,
+                  "y": 164.0625,
+                  "right": 246.5625,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": true,
+                "hittable": true
+              }
+            ]
+          },
+          {
+            "direction": "toward-left-edge",
+            "start": {
+              "x": 64,
+              "y": 336
+            },
+            "end": {
+              "x": 326,
+              "y": 336
+            },
+            "before": 330,
+            "after": 0,
+            "delta": -330,
+            "categories": [
+              {
+                "name": "Packs",
+                "category": "packs",
+                "rect": {
+                  "x": 185.625,
+                  "y": 164.0625,
+                  "right": 309.375,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": true,
+                "hittable": true
+              },
+              {
+                "name": "Combos",
+                "category": "combos",
+                "rect": {
+                  "x": 315.9375,
+                  "y": 164.0625,
+                  "right": 445.78125,
+                  "bottom": 273.75,
+                  "width": 129.84375,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": true
+              },
+              {
+                "name": "Schmears",
+                "category": "schmears",
+                "rect": {
+                  "x": 452.8125,
+                  "y": 164.0625,
+                  "right": 576.5625,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": false
+              }
+            ]
+          }
+        ],
+        "expanded": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": true,
+          "scrollLeft": 186,
+          "scrollWidth": 720,
+          "clientWidth": 390,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 480,
+            "width": 390,
+            "height": 480
+          },
+          "art": {
+            "x": -186,
+            "y": 0,
+            "right": 534,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "image": {
+            "x": -186,
+            "y": 0,
+            "right": 534,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": -0.375,
+                "y": 164.0625,
+                "right": 123.375,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 129.9375,
+                "y": 164.0625,
+                "right": 259.78125,
+                "bottom": 273.75,
+                "width": 129.84375,
+                "height": 109.6875
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 266.8125,
+                "y": 164.0625,
+                "right": 390.5625,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": true
+            }
+          ]
+        },
+        "beforeCollapse": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": true,
+          "scrollLeft": 0,
+          "scrollWidth": 720,
+          "clientWidth": 390,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 480,
+            "width": 390,
+            "height": 480
+          },
+          "art": {
+            "x": 0,
+            "y": 0,
+            "right": 720,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "image": {
+            "x": 0,
+            "y": 0,
+            "right": 720,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": 185.625,
+                "y": 164.0625,
+                "right": 309.375,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 315.9375,
+                "y": 164.0625,
+                "right": 445.78125,
+                "bottom": 273.75,
+                "width": 129.84375,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 452.8125,
+                "y": 164.0625,
+                "right": 576.5625,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": false
+            }
+          ]
+        },
+        "scrollSettle": [
+          {
+            "time": 1545.6,
+            "left": 0
+          },
+          {
+            "time": 1562.2,
+            "left": 0
+          },
+          {
+            "time": 1578.9,
+            "left": 0
+          },
+          {
+            "time": 1595.6,
+            "left": 0
+          },
+          {
+            "time": 1612.2,
+            "left": 0
+          },
+          {
+            "time": 1628.9,
+            "left": 0
+          },
+          {
+            "time": 1645.5,
+            "left": 0
+          },
+          {
+            "time": 1662.2,
+            "left": 0
+          },
+          {
+            "time": 1678.9,
+            "left": 0
+          }
+        ],
+        "preTapEvents": [
+          {
+            "time": 331.69999999925494,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 194.99000549316406,
+            "y": 290,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 331.8999999985099,
+            "type": "pointerup",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 194.99000549316406,
+            "y": 290,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 333.09999999962747,
+            "type": "click",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 195,
+            "y": 290,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 480.59999999962747,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 326,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 186
+          },
+          {
+            "time": 1029.2999999988824,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 64,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 330
+          }
+        ],
+        "afterTap": {
+          "expanded": false,
+          "pressed": "false",
+          "events": [
+            {
+              "time": 331.69999999925494,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 194.99000549316406,
+              "y": 290,
+              "label": "Ampliar imagen para leer",
+              "scrollLeft": 0
+            },
+            {
+              "time": 331.8999999985099,
+              "type": "pointerup",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 194.99000549316406,
+              "y": 290,
+              "label": "Ampliar imagen para leer",
+              "scrollLeft": 0
+            },
+            {
+              "time": 333.09999999962747,
+              "type": "click",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 195,
+              "y": 290,
+              "label": "Ampliar imagen para leer",
+              "scrollLeft": 0
+            },
+            {
+              "time": 480.59999999962747,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 326,
+              "y": 336,
+              "label": null,
+              "scrollLeft": 186
+            },
+            {
+              "time": 1029.2999999988824,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 64,
+              "y": 336,
+              "label": null,
+              "scrollLeft": 330
+            },
+            {
+              "time": 1729.8999999985099,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 194.99000549316406,
+              "y": 510,
+              "label": "Ver imagen completa",
+              "scrollLeft": 0
+            },
+            {
+              "time": 1730.0999999996275,
+              "type": "pointerup",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 194.99000549316406,
+              "y": 510,
+              "label": "Ver imagen completa",
+              "scrollLeft": 0
+            },
+            {
+              "time": 1730.8999999985099,
+              "type": "click",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 195,
+              "y": 510,
+              "label": "Ver imagen completa",
+              "scrollLeft": 0
+            }
+          ]
+        },
+        "restored": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": false,
+          "scrollLeft": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 260,
+            "width": 390,
+            "height": 260
+          },
+          "art": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 260,
+            "width": 390,
+            "height": 260
+          },
+          "image": {
+            "x": 0,
+            "y": 0,
+            "right": 390,
+            "bottom": 260,
+            "width": 390,
+            "height": 260
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": 100.546875,
+                "y": 88.859375,
+                "right": 167.578125,
+                "bottom": 148.265625,
+                "width": 67.03125,
+                "height": 59.40625
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 171.125,
+                "y": 88.859375,
+                "right": 241.453125,
+                "bottom": 148.265625,
+                "width": 70.328125,
+                "height": 59.40625
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 245.265625,
+                "y": 88.859375,
+                "right": 312.296875,
+                "bottom": 148.265625,
+                "width": 67.03125,
+                "height": 59.40625
+              },
+              "inside": true,
+              "hittable": true
+            }
+          ]
+        },
+        "nativeEvents": [
+          {
+            "time": 331.69999999925494,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 194.99000549316406,
+            "y": 290,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 331.8999999985099,
+            "type": "pointerup",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 194.99000549316406,
+            "y": 290,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 333.09999999962747,
+            "type": "click",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 195,
+            "y": 290,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 480.59999999962747,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 326,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 186
+          },
+          {
+            "time": 1029.2999999988824,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 64,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 330
+          },
+          {
+            "time": 1729.8999999985099,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 194.99000549316406,
+            "y": 510,
+            "label": "Ver imagen completa",
+            "scrollLeft": 0
+          },
+          {
+            "time": 1730.0999999996275,
+            "type": "pointerup",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 194.99000549316406,
+            "y": 510,
+            "label": "Ver imagen completa",
+            "scrollLeft": 0
+          },
+          {
+            "time": 1730.8999999985099,
+            "type": "click",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 195,
+            "y": 510,
+            "label": "Ver imagen completa",
+            "scrollLeft": 0
+          }
+        ]
+      },
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494533953.4,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494533953.4,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494533953.4",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494535859.6,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494535859.6,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494535859.6",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494536010.1,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494536010.1,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494536010.1",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "file": "320-exact-storefront.png",
+      "sha256": "f561f8b067eae6c80790a5c026f6e1ae562172bb5d900ec6a128fb952407b2a9",
+      "metrics": {
+        "source": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+        "complete": true,
+        "naturalWidth": 1536,
+        "naturalHeight": 1024,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 213.328125
+        },
+        "painted": {
+          "x": 0.00390625,
+          "y": 0,
+          "width": 319.9921875,
+          "height": 213.328125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 213
+        },
+        "entireImageVisible": true,
+        "ancestorIssues": [],
+        "objectFit": "contain",
+        "objectPosition": "50% 50%",
+        "filter": "none",
+        "opacity": "1",
+        "canvasCount": 0,
+        "overflowX": 0,
+        "buttons": [
+          {
+            "name": "Packs",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 82.5,
+              "y": 72.90625,
+              "width": 55,
+              "height": 48.734375
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Combos",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 140.40625,
+              "y": 72.90625,
+              "width": 57.703125,
+              "height": 48.734375
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Schmears",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 201.25,
+              "y": 72.90625,
+              "width": 55,
+              "height": 48.734375
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          }
+        ]
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "zoomShots": [
+        {
+          "name": "reference-zoom-expanded",
+          "file": "320-reference-zoom-expanded.png",
+          "sha256": "25dee6145692cd71204b42c1297bc30dfe84f736369f5b64773ccf646ae92367"
+        },
+        {
+          "name": "reference-zoom-toward-right-edge",
+          "file": "320-reference-zoom-toward-right-edge.png",
+          "sha256": "85bcf9d40a0fa5584897620963c88229f2290840568e40e12597fdd6ebe93186"
+        },
+        {
+          "name": "reference-zoom-toward-left-edge",
+          "file": "320-reference-zoom-toward-left-edge.png",
+          "sha256": "a6334b6fcac871eff59a148684df67d9a410c37bd11efb9992c4c0f10e5edb5d"
+        },
+        {
+          "name": "reference-zoom-restored",
+          "file": "320-reference-zoom-restored.png",
+          "sha256": "6fc1bf86b90593cb1981f85b47c09eda37221818ff2a86d6f3fbda8738b3430f"
+        }
+      ],
+      "zoom": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "expandedRequiresAllThreeTogether": false,
+        "panMethod": "CDP Input.dispatchTouchEvent",
+        "before": {
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": false,
+          "scrollLeft": 0,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 213.328125,
+            "width": 320,
+            "height": 213.328125
+          },
+          "art": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 213.328125,
+            "width": 320,
+            "height": 213.328125
+          },
+          "image": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 213.328125,
+            "width": 320,
+            "height": 213.328125
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": 82.5,
+                "y": 72.90625,
+                "right": 137.5,
+                "bottom": 121.640625,
+                "width": 55,
+                "height": 48.734375
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 140.40625,
+                "y": 72.90625,
+                "right": 198.109375,
+                "bottom": 121.640625,
+                "width": 57.703125,
+                "height": 48.734375
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 201.25,
+                "y": 72.90625,
+                "right": 256.25,
+                "bottom": 121.640625,
+                "width": 55,
+                "height": 48.734375
+              },
+              "inside": true,
+              "hittable": true
+            }
+          ]
+        },
+        "pans": [
+          {
+            "direction": "toward-right-edge",
+            "start": {
+              "x": 256,
+              "y": 336
+            },
+            "end": {
+              "x": 64,
+              "y": 336
+            },
+            "before": 221,
+            "after": 400,
+            "delta": 179,
+            "categories": [
+              {
+                "name": "Packs",
+                "category": "packs",
+                "rect": {
+                  "x": -214.375,
+                  "y": 164.0625,
+                  "right": -90.625,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": false
+              },
+              {
+                "name": "Combos",
+                "category": "combos",
+                "rect": {
+                  "x": -84.0625,
+                  "y": 164.0625,
+                  "right": 45.78125,
+                  "bottom": 273.75,
+                  "width": 129.84375,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": false
+              },
+              {
+                "name": "Schmears",
+                "category": "schmears",
+                "rect": {
+                  "x": 52.8125,
+                  "y": 164.0625,
+                  "right": 176.5625,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": true,
+                "hittable": true
+              }
+            ]
+          },
+          {
+            "direction": "toward-left-edge",
+            "start": {
+              "x": 64,
+              "y": 336
+            },
+            "end": {
+              "x": 256,
+              "y": 336
+            },
+            "before": 400,
+            "after": 223,
+            "delta": -177,
+            "categories": [
+              {
+                "name": "Packs",
+                "category": "packs",
+                "rect": {
+                  "x": -37.375,
+                  "y": 164.0625,
+                  "right": 86.375,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": true
+              },
+              {
+                "name": "Combos",
+                "category": "combos",
+                "rect": {
+                  "x": 92.9375,
+                  "y": 164.0625,
+                  "right": 222.78125,
+                  "bottom": 273.75,
+                  "width": 129.84375,
+                  "height": 109.6875
+                },
+                "inside": true,
+                "hittable": true
+              },
+              {
+                "name": "Schmears",
+                "category": "schmears",
+                "rect": {
+                  "x": 229.8125,
+                  "y": 164.0625,
+                  "right": 353.5625,
+                  "bottom": 273.75,
+                  "width": 123.75,
+                  "height": 109.6875
+                },
+                "inside": false,
+                "hittable": true
+              }
+            ]
+          }
+        ],
+        "expanded": {
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": true,
+          "scrollLeft": 221,
+          "scrollWidth": 720,
+          "clientWidth": 320,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 480,
+            "width": 320,
+            "height": 480
+          },
+          "art": {
+            "x": -221,
+            "y": 0,
+            "right": 499,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "image": {
+            "x": -221,
+            "y": 0,
+            "right": 499,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": -35.375,
+                "y": 164.0625,
+                "right": 88.375,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 94.9375,
+                "y": 164.0625,
+                "right": 224.78125,
+                "bottom": 273.75,
+                "width": 129.84375,
+                "height": 109.6875
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 231.8125,
+                "y": 164.0625,
+                "right": 355.5625,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": true
+            }
+          ]
+        },
+        "beforeCollapse": {
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": true,
+          "scrollLeft": 223,
+          "scrollWidth": 720,
+          "clientWidth": 320,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 480,
+            "width": 320,
+            "height": 480
+          },
+          "art": {
+            "x": -223,
+            "y": 0,
+            "right": 497,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "image": {
+            "x": -223,
+            "y": 0,
+            "right": 497,
+            "bottom": 480,
+            "width": 720,
+            "height": 480
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": -37.375,
+                "y": 164.0625,
+                "right": 86.375,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 92.9375,
+                "y": 164.0625,
+                "right": 222.78125,
+                "bottom": 273.75,
+                "width": 129.84375,
+                "height": 109.6875
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 229.8125,
+                "y": 164.0625,
+                "right": 353.5625,
+                "bottom": 273.75,
+                "width": 123.75,
+                "height": 109.6875
+              },
+              "inside": false,
+              "hittable": true
+            }
+          ]
+        },
+        "scrollSettle": [
+          {
+            "time": 1503.4,
+            "left": 223
+          },
+          {
+            "time": 1520,
+            "left": 223
+          },
+          {
+            "time": 1536.7,
+            "left": 223
+          },
+          {
+            "time": 1553.3,
+            "left": 223
+          },
+          {
+            "time": 1570,
+            "left": 223
+          },
+          {
+            "time": 1586.7,
+            "left": 223
+          },
+          {
+            "time": 1603.4,
+            "left": 223
+          },
+          {
+            "time": 1620.1,
+            "left": 223
+          },
+          {
+            "time": 1636.7,
+            "left": 223
+          }
+        ],
+        "preTapEvents": [
+          {
+            "time": 288.5,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 159.99000549316406,
+            "y": 243.32000732421875,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 288.80000000074506,
+            "type": "pointerup",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 159.99000549316406,
+            "y": 243.32000732421875,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 290,
+            "type": "click",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 160,
+            "y": 243,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 405,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 256,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 221
+          },
+          {
+            "time": 946.9000000003725,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 64,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 400
+          }
+        ],
+        "afterTap": {
+          "expanded": false,
+          "pressed": "false",
+          "events": [
+            {
+              "time": 288.5,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 159.99000549316406,
+              "y": 243.32000732421875,
+              "label": "Ampliar imagen para leer",
+              "scrollLeft": 0
+            },
+            {
+              "time": 288.80000000074506,
+              "type": "pointerup",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 159.99000549316406,
+              "y": 243.32000732421875,
+              "label": "Ampliar imagen para leer",
+              "scrollLeft": 0
+            },
+            {
+              "time": 290,
+              "type": "click",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 160,
+              "y": 243,
+              "label": "Ampliar imagen para leer",
+              "scrollLeft": 0
+            },
+            {
+              "time": 405,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 256,
+              "y": 336,
+              "label": null,
+              "scrollLeft": 221
+            },
+            {
+              "time": 946.9000000003725,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 64,
+              "y": 336,
+              "label": null,
+              "scrollLeft": 400
+            },
+            {
+              "time": 1687.5999999996275,
+              "type": "pointerdown",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 159.99000549316406,
+              "y": 510,
+              "label": "Ver imagen completa",
+              "scrollLeft": 223
+            },
+            {
+              "time": 1687.9000000003725,
+              "type": "pointerup",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 159.99000549316406,
+              "y": 510,
+              "label": "Ver imagen completa",
+              "scrollLeft": 223
+            },
+            {
+              "time": 1689.199999999255,
+              "type": "click",
+              "trusted": true,
+              "pointerType": "touch",
+              "x": 160,
+              "y": 510,
+              "label": "Ver imagen completa",
+              "scrollLeft": 223
+            }
+          ]
+        },
+        "restored": {
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "touchPoints": 1,
+          "scene": "selector",
+          "expanded": false,
+          "scrollLeft": 0,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "scrollBox": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 213.328125,
+            "width": 320,
+            "height": 213.328125
+          },
+          "art": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 213.328125,
+            "width": 320,
+            "height": 213.328125
+          },
+          "image": {
+            "x": 0,
+            "y": 0,
+            "right": 320,
+            "bottom": 213.328125,
+            "width": 320,
+            "height": 213.328125
+          },
+          "naturalWidth": 1536,
+          "naturalHeight": 1024,
+          "objectFit": "contain",
+          "filter": "none",
+          "documentOverflow": 0,
+          "windowScrollX": 0,
+          "categories": [
+            {
+              "name": "Packs",
+              "category": "packs",
+              "rect": {
+                "x": 82.5,
+                "y": 72.90625,
+                "right": 137.5,
+                "bottom": 121.640625,
+                "width": 55,
+                "height": 48.734375
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Combos",
+              "category": "combos",
+              "rect": {
+                "x": 140.40625,
+                "y": 72.90625,
+                "right": 198.109375,
+                "bottom": 121.640625,
+                "width": 57.703125,
+                "height": 48.734375
+              },
+              "inside": true,
+              "hittable": true
+            },
+            {
+              "name": "Schmears",
+              "category": "schmears",
+              "rect": {
+                "x": 201.25,
+                "y": 72.90625,
+                "right": 256.25,
+                "bottom": 121.640625,
+                "width": 55,
+                "height": 48.734375
+              },
+              "inside": true,
+              "hittable": true
+            }
+          ]
+        },
+        "nativeEvents": [
+          {
+            "time": 288.5,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 159.99000549316406,
+            "y": 243.32000732421875,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 288.80000000074506,
+            "type": "pointerup",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 159.99000549316406,
+            "y": 243.32000732421875,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 290,
+            "type": "click",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 160,
+            "y": 243,
+            "label": "Ampliar imagen para leer",
+            "scrollLeft": 0
+          },
+          {
+            "time": 405,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 256,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 221
+          },
+          {
+            "time": 946.9000000003725,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 64,
+            "y": 336,
+            "label": null,
+            "scrollLeft": 400
+          },
+          {
+            "time": 1687.5999999996275,
+            "type": "pointerdown",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 159.99000549316406,
+            "y": 510,
+            "label": "Ver imagen completa",
+            "scrollLeft": 223
+          },
+          {
+            "time": 1687.9000000003725,
+            "type": "pointerup",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 159.99000549316406,
+            "y": 510,
+            "label": "Ver imagen completa",
+            "scrollLeft": 223
+          },
+          {
+            "time": 1689.199999999255,
+            "type": "click",
+            "trusted": true,
+            "pointerType": "touch",
+            "x": 160,
+            "y": 510,
+            "label": "Ver imagen completa",
+            "scrollLeft": 223
+          }
+        ]
+      },
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494536295.4,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494536295.4,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494536295.4",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494538163.8,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494538163.8,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494538163.8",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "touch",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494538326.9,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494538326.9,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494538326.9",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "file": "1280-exact-storefront.png",
+      "sha256": "6c25aa2f9908003c7cc28cfc1acfe74a2dda40d63bd8b66967110cad70c36c8d",
+      "metrics": {
+        "source": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+        "complete": true,
+        "naturalWidth": 1536,
+        "naturalHeight": 1024,
+        "rect": {
+          "x": 40,
+          "y": 0,
+          "width": 1200,
+          "height": 800
+        },
+        "painted": {
+          "x": 40,
+          "y": 0,
+          "width": 1200,
+          "height": 800
+        },
+        "clip": {
+          "x": 40,
+          "y": 0,
+          "right": 1240,
+          "bottom": 800
+        },
+        "entireImageVisible": true,
+        "ancestorIssues": [],
+        "objectFit": "contain",
+        "objectPosition": "50% 50%",
+        "filter": "none",
+        "opacity": "1",
+        "canvasCount": 0,
+        "overflowX": 0,
+        "buttons": [
+          {
+            "name": "Packs",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 349.375,
+              "y": 273.4375,
+              "width": 206.25,
+              "height": 182.8125
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Combos",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 566.5625,
+              "y": 273.4375,
+              "width": 216.40625,
+              "height": 182.8125
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          },
+          {
+            "name": "Schmears",
+            "tag": "BUTTON",
+            "role": null,
+            "disabled": false,
+            "rect": {
+              "x": 794.6875,
+              "y": 273.4375,
+              "width": 206.25,
+              "height": 182.8125
+            },
+            "inside": true,
+            "size44": true,
+            "hittable": true,
+            "centerMatchesPaintedCard": true
+          }
+        ]
+      },
+      "pass": true,
+      "focus": [
+        {
+          "name": "Packs",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Combos",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        },
+        {
+          "name": "Schmears",
+          "outline": "solid",
+          "width": "3px",
+          "shadow": "none"
+        }
+      ],
+      "zoomShots": [],
+      "zoom": {
+        "skipped": true,
+        "reason": "Native zoom/pan acceptance targets sub720px mobile viewports",
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "callbacks": [
+        {
+          "name": "Packs",
+          "scene": "pack-size",
+          "nativeInput": "mouse",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494538587.3,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494538587.3,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494538587.3",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Combos",
+          "scene": "combos",
+          "nativeInput": "mouse",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494539132.1,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494539132.1,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494539132.1",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "name": "Schmears",
+          "scene": "schmear-size",
+          "nativeInput": "mouse",
+          "capabilities": [
+            {
+              "kind": "storage-access",
+              "name": "sessionStorage",
+              "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "documentId": 1793494539263.8,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "kind": "storage-method",
+              "name": "getItem",
+              "key": "tsr-scroll-restoration-v1_3",
+              "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "documentId": 1793494539263.8,
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "capabilityAudit": {
+            "knownFrameworkReads": [
+              {
+                "documentId": "1793494539263.8",
+                "key": "tsr-scroll-restoration-v1_3",
+                "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+                "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+                "url": "http://127.0.0.1:3212/?qa=1"
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "network": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494533953.4,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494533953.4,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494535859.6,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494535859.6,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494536010.1,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494536010.1,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793494533953.4",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "documentId": "1793494535859.6",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "documentId": "1793494536010.1",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494536295.4,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494536295.4,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494538163.8,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494538163.8,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494538326.9,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494538326.9,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793494536295.4",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "documentId": "1793494538163.8",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "documentId": "1793494538326.9",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "traffic": {
+        "reads": [
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-plain.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-everything.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/bagel-sesame.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/?qa=1",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-B-tAIt2X.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-CF3L9wuz.css",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/index-aRb2m3Gb.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/legal-version-BguVS3S4.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/ReferenceStorefront-BMQQ7NiK.js",
+            "status": 200
+          },
+          {
+            "url": "http://127.0.0.1:3212/assets/routes-BSbH2qWw.js",
+            "status": 200
+          }
+        ],
+        "imageBodies": [
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          },
+          {
+            "url": "http://127.0.0.1:3212/images/store-reference-approved.webp",
+            "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+          }
+        ],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494538587.3,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494538587.3,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494539132.1,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494539132.1,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+            "documentId": 1793494539263.8,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          },
+          {
+            "kind": "storage-method",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+            "documentId": 1793494539263.8,
+            "url": "http://127.0.0.1:3212/?qa=1"
+          }
+        ],
+        "blocked": [],
+        "errors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793494538587.3",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "documentId": "1793494539132.1",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            },
+            {
+              "documentId": "1793494539263.8",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:7:258)\n    at $e (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64907)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:64983",
+              "readStack": "Error\n    at Storage.<computed> [as getItem] (<anonymous>:8:217)\n    at nt (http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65028)\n    at http://127.0.0.1:3212/assets/index-aRb2m3Gb.js:10:65097",
+              "url": "http://127.0.0.1:3212/?qa=1"
+            }
+          ],
+          "errors": []
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-01T00:55:34.215Z",
+      "type": "exact-image-captured",
+      "width": 390,
+      "file": "390-exact-storefront.png"
+    },
+    {
+      "at": "2026-11-01T00:55:34.415Z",
+      "type": "zoom-captured",
+      "width": 390,
+      "name": "reference-zoom-expanded",
+      "file": "390-reference-zoom-expanded.png"
+    },
+    {
+      "at": "2026-11-01T00:55:34.979Z",
+      "type": "zoom-captured",
+      "width": 390,
+      "name": "reference-zoom-toward-right-edge",
+      "file": "390-reference-zoom-toward-right-edge.png"
+    },
+    {
+      "at": "2026-11-01T00:55:35.496Z",
+      "type": "zoom-captured",
+      "width": 390,
+      "name": "reference-zoom-toward-left-edge",
+      "file": "390-reference-zoom-toward-left-edge.png"
+    },
+    {
+      "at": "2026-11-01T00:55:35.775Z",
+      "type": "zoom-captured",
+      "width": 390,
+      "name": "reference-zoom-restored",
+      "file": "390-reference-zoom-restored.png"
+    },
+    {
+      "at": "2026-11-01T00:55:35.856Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T00:55:36.006Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T00:55:36.162Z",
+      "type": "category-callback",
+      "width": 390,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T00:55:36.185Z",
+      "type": "capabilities-drained",
+      "width": 390,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    },
+    {
+      "at": "2026-11-01T00:55:36.520Z",
+      "type": "exact-image-captured",
+      "width": 320,
+      "file": "320-exact-storefront.png"
+    },
+    {
+      "at": "2026-11-01T00:55:36.691Z",
+      "type": "zoom-captured",
+      "width": 320,
+      "name": "reference-zoom-expanded",
+      "file": "320-reference-zoom-expanded.png"
+    },
+    {
+      "at": "2026-11-01T00:55:37.239Z",
+      "type": "zoom-captured",
+      "width": 320,
+      "name": "reference-zoom-toward-right-edge",
+      "file": "320-reference-zoom-toward-right-edge.png"
+    },
+    {
+      "at": "2026-11-01T00:55:37.783Z",
+      "type": "zoom-captured",
+      "width": 320,
+      "name": "reference-zoom-toward-left-edge",
+      "file": "320-reference-zoom-toward-left-edge.png"
+    },
+    {
+      "at": "2026-11-01T00:55:38.083Z",
+      "type": "zoom-captured",
+      "width": 320,
+      "name": "reference-zoom-restored",
+      "file": "320-reference-zoom-restored.png"
+    },
+    {
+      "at": "2026-11-01T00:55:38.159Z",
+      "type": "category-callback",
+      "width": 320,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T00:55:38.323Z",
+      "type": "category-callback",
+      "width": 320,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T00:55:38.460Z",
+      "type": "category-callback",
+      "width": 320,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T00:55:38.474Z",
+      "type": "capabilities-drained",
+      "width": 320,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    },
+    {
+      "at": "2026-11-01T00:55:39.011Z",
+      "type": "exact-image-captured",
+      "width": 1280,
+      "file": "1280-exact-storefront.png"
+    },
+    {
+      "at": "2026-11-01T00:55:39.129Z",
+      "type": "category-callback",
+      "width": 1280,
+      "name": "Packs",
+      "scene": "pack-size"
+    },
+    {
+      "at": "2026-11-01T00:55:39.261Z",
+      "type": "category-callback",
+      "width": 1280,
+      "name": "Combos",
+      "scene": "combos"
+    },
+    {
+      "at": "2026-11-01T00:55:39.402Z",
+      "type": "category-callback",
+      "width": 1280,
+      "name": "Schmears",
+      "scene": "schmear-size"
+    },
+    {
+      "at": "2026-11-01T00:55:39.418Z",
+      "type": "capabilities-drained",
+      "width": 1280,
+      "knownFrameworkReads": 3,
+      "forbidden": 0
+    }
+  ]
+}

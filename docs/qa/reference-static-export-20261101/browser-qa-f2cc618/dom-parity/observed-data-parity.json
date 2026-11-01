@@ -1,0 +1,379 @@
+{
+  "status": "passed",
+  "scope": "Observed DOM snapshots, not a replacement for strict RGB comparison",
+  "applicationSHA": "6f765cee68f4c4d2f013a1082b497a73b5191bd7",
+  "exportSHA": "f2cc618ecfeaa52807cd8a1b3ee77121c972f94a",
+  "originalOrigin": "http://127.0.0.1:3210/",
+  "staticOrigin": "http://127.0.0.1:3212/",
+  "phasesEqual": true,
+  "phasesCount": 5,
+  "legalEqual": true,
+  "nodePhases": [
+    {
+      "phase": "upsell-selected",
+      "data": {
+        "scene": "schmears",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 7 productos",
+        "bagelCounter": null,
+        "schmearCounter": "✓",
+        "summary": [],
+        "optionalPrices": [
+          "120 g · S/12",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16"
+        ],
+        "fields": [],
+        "consent": null,
+        "paymentDisabled": null,
+        "paymentStatus": null,
+        "loyaltyHeading": null,
+        "loyaltyPending": null
+      }
+    },
+    {
+      "phase": "upsell-deselected",
+      "data": {
+        "scene": "schmears",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": "0/1",
+        "summary": [],
+        "optionalPrices": [
+          "120 g · S/12",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16"
+        ],
+        "fields": [],
+        "consent": null,
+        "paymentDisabled": null,
+        "paymentStatus": null,
+        "loyaltyHeading": null,
+        "loyaltyPending": null
+      }
+    },
+    {
+      "phase": "cashier",
+      "data": {
+        "scene": "cashier",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": null,
+        "summary": [
+          {
+            "quantity": "6 ×",
+            "name": "Plain"
+          }
+        ],
+        "optionalPrices": [],
+        "fields": [],
+        "consent": null,
+        "paymentDisabled": null,
+        "paymentStatus": null,
+        "loyaltyHeading": null,
+        "loyaltyPending": null
+      }
+    },
+    {
+      "phase": "pay-review",
+      "data": {
+        "scene": "pay",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": null,
+        "summary": [],
+        "optionalPrices": [],
+        "fields": [
+          {
+            "label": "Nombre",
+            "value": "QA Local"
+          },
+          {
+            "label": "Email",
+            "value": "qa@example.test"
+          },
+          {
+            "label": "WhatsApp",
+            "value": "999999999"
+          },
+          {
+            "label": "Distrito",
+            "value": "Lince"
+          },
+          {
+            "label": "Dirección de delivery",
+            "value": "Dirección QA local 123"
+          },
+          {
+            "label": "Referencia",
+            "value": "Prueba local"
+          },
+          {
+            "label": "Notas",
+            "value": "No enviar ni crear pedido"
+          }
+        ],
+        "consent": true,
+        "paymentDisabled": true,
+        "paymentStatus": "Modo revisión: no se envían datos, no se crea una reserva y no se realiza ningún cobro.",
+        "loyaltyHeading": "Cada 10 pedidos, 2 bagels + 1 schmear gratis.",
+        "loyaltyPending": "El programa usará pedidos verificados y seguimiento interno. El registro y el canje están pendientes de implementación; esta revisión no genera pedidos ni recompensas."
+      }
+    },
+    {
+      "phase": "loyalty",
+      "data": {
+        "scene": "pay",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": null,
+        "summary": [],
+        "optionalPrices": [],
+        "fields": [
+          {
+            "label": "Nombre",
+            "value": "QA Local"
+          },
+          {
+            "label": "Email",
+            "value": "qa@example.test"
+          },
+          {
+            "label": "WhatsApp",
+            "value": "999999999"
+          },
+          {
+            "label": "Distrito",
+            "value": "Lince"
+          },
+          {
+            "label": "Dirección de delivery",
+            "value": "Dirección QA local 123"
+          },
+          {
+            "label": "Referencia",
+            "value": "Prueba local"
+          },
+          {
+            "label": "Notas",
+            "value": "No enviar ni crear pedido"
+          }
+        ],
+        "consent": true,
+        "paymentDisabled": true,
+        "paymentStatus": "Modo revisión: no se envían datos, no se crea una reserva y no se realiza ningún cobro.",
+        "loyaltyHeading": "Cada 10 pedidos, 2 bagels + 1 schmear gratis.",
+        "loyaltyPending": "El programa usará pedidos verificados y seguimiento interno. El registro y el canje están pendientes de implementación; esta revisión no genera pedidos ni recompensas."
+      }
+    }
+  ],
+  "staticPhases": [
+    {
+      "phase": "upsell-selected",
+      "data": {
+        "scene": "schmears",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 7 productos",
+        "bagelCounter": null,
+        "schmearCounter": "✓",
+        "summary": [],
+        "optionalPrices": [
+          "120 g · S/12",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16"
+        ],
+        "fields": [],
+        "consent": null,
+        "paymentDisabled": null,
+        "paymentStatus": null,
+        "loyaltyHeading": null,
+        "loyaltyPending": null
+      }
+    },
+    {
+      "phase": "upsell-deselected",
+      "data": {
+        "scene": "schmears",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": "0/1",
+        "summary": [],
+        "optionalPrices": [
+          "120 g · S/12",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16",
+          "120 g · S/16"
+        ],
+        "fields": [],
+        "consent": null,
+        "paymentDisabled": null,
+        "paymentStatus": null,
+        "loyaltyHeading": null,
+        "loyaltyPending": null
+      }
+    },
+    {
+      "phase": "cashier",
+      "data": {
+        "scene": "cashier",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": null,
+        "summary": [
+          {
+            "quantity": "6 ×",
+            "name": "Plain"
+          }
+        ],
+        "optionalPrices": [],
+        "fields": [],
+        "consent": null,
+        "paymentDisabled": null,
+        "paymentStatus": null,
+        "loyaltyHeading": null,
+        "loyaltyPending": null
+      }
+    },
+    {
+      "phase": "pay-review",
+      "data": {
+        "scene": "pay",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": null,
+        "summary": [],
+        "optionalPrices": [],
+        "fields": [
+          {
+            "label": "Nombre",
+            "value": "QA Local"
+          },
+          {
+            "label": "Email",
+            "value": "qa@example.test"
+          },
+          {
+            "label": "WhatsApp",
+            "value": "999999999"
+          },
+          {
+            "label": "Distrito",
+            "value": "Lince"
+          },
+          {
+            "label": "Dirección de delivery",
+            "value": "Dirección QA local 123"
+          },
+          {
+            "label": "Referencia",
+            "value": "Prueba local"
+          },
+          {
+            "label": "Notas",
+            "value": "No enviar ni crear pedido"
+          }
+        ],
+        "consent": true,
+        "paymentDisabled": true,
+        "paymentStatus": "Modo revisión: no se envían datos, no se crea una reserva y no se realiza ningún cobro.",
+        "loyaltyHeading": "Cada 10 pedidos, 2 bagels + 1 schmear gratis.",
+        "loyaltyPending": "El programa usará pedidos verificados y seguimiento interno. El registro y el canje están pendientes de implementación; esta revisión no genera pedidos ni recompensas."
+      }
+    },
+    {
+      "phase": "loyalty",
+      "data": {
+        "scene": "pay",
+        "reviewOnly": "true",
+        "cart": "Ver tu pedido: 6 productos",
+        "bagelCounter": null,
+        "schmearCounter": null,
+        "summary": [],
+        "optionalPrices": [],
+        "fields": [
+          {
+            "label": "Nombre",
+            "value": "QA Local"
+          },
+          {
+            "label": "Email",
+            "value": "qa@example.test"
+          },
+          {
+            "label": "WhatsApp",
+            "value": "999999999"
+          },
+          {
+            "label": "Distrito",
+            "value": "Lince"
+          },
+          {
+            "label": "Dirección de delivery",
+            "value": "Dirección QA local 123"
+          },
+          {
+            "label": "Referencia",
+            "value": "Prueba local"
+          },
+          {
+            "label": "Notas",
+            "value": "No enviar ni crear pedido"
+          }
+        ],
+        "consent": true,
+        "paymentDisabled": true,
+        "paymentStatus": "Modo revisión: no se envían datos, no se crea una reserva y no se realiza ningún cobro.",
+        "loyaltyHeading": "Cada 10 pedidos, 2 bagels + 1 schmear gratis.",
+        "loyaltyPending": "El programa usará pedidos verificados y seguimiento interno. El registro y el canje están pendientes de implementación; esta revisión no genera pedidos ni recompensas."
+      }
+    }
+  ],
+  "nodeLegal": {
+    "heading": [
+      "Políticas de compra y delivery"
+    ],
+    "sections": [
+      "1. Confirmación del pedido",
+      "2. Productos y disponibilidad",
+      "3. Pagos",
+      "4. Delivery",
+      "5. Recepción",
+      "6. Cancelaciones y reembolsos",
+      "7. Privacidad",
+      "8. Contacto"
+    ],
+    "bodyText": "← Volver a Bagelito\nVERSIÓN 2026-10-28\nPolíticas de compra y delivery\n\nEstas condiciones describen cómo Bagelito.pe recibe, cobra, produce y entrega pedidos realizados mediante batches programados en Lima.\n\n1. Confirmación del pedido\n\nUn pedido queda confirmado únicamente cuando Bagelito recibe una confirmación válida del proveedor de pagos y el pedido figura como pagado en nuestros sistemas. Seleccionar productos o iniciar un checkout no separa stock por sí solo.\n\nEl checkout online solo se habilita cuando existe un batch abierto, capacidad disponible y una fecha de delivery confirmada.\n\n2. Productos y disponibilidad\n\nBagelito produce alimentos artesanales en batches. Sabores, presentaciones y disponibilidad pueden variar según producción e ingredientes. El precio y la composición que rigen cada compra son los que el servidor valida y muestra antes del pago.\n\nSi una configuración no tiene una regla comercial aprobada para cobro automático, el checkout se bloqueará en lugar de estimar un precio.\n\n3. Pagos\n\nLos medios de pago disponibles se muestran dentro del checkout seguro de Culqi. Los datos de tarjeta se ingresan directamente en el entorno de Culqi y no se almacenan en los servidores de Bagelito.\n\nSi el resultado de un pago es incierto o requiere reconciliación, el cliente no debe volver a pagar hasta que el estado sea verificado. Bagelito podrá contactar al cliente para resolver el caso.\n\n4. Delivery\n\nEl costo de delivery se calcula durante el checkout según el distrito seleccionado y se suma al total antes de generar la reserva. El pedido se entrega en la fecha del batch confirmada al momento de la compra.\n\nEl cliente debe proporcionar nombre, WhatsApp, email, distrito, dirección completa y cualquier referencia necesaria. Cambios posteriores a la confirmación dependen de disponibilidad de ruta.\n\n5. Recepción\n\nEl cliente debe estar disponible durante la ventana coordinada. Si la entrega no puede completarse por dirección incorrecta, acceso restringido o ausencia del receptor, una reentrega dependerá de disponibilidad y puede generar un costo adicional.\n\n6. Cancelaciones y reembolsos\n\nAntes de la confirmación de pago, una reserva puede abandonarse sin generar una compra. Después de la confirmación, las solicitudes de cancelación se revisan según el estado de producción del batch.\n\nSi Bagelito no puede producir o entregar un pedido confirmado por una causa atribuible a la operación, se coordinará la devolución correspondiente o una alternativa aceptada por el cliente. Los pagos duplicados se revisan y corrigen.\n\n7. Privacidad\n\nBagelito utiliza los datos de contacto, pedido y delivery para procesar la compra, coordinar producción, atender consultas, prevenir fraude y realizar la entrega. Los datos no se venden a terceros.\n\nProveedores necesarios para la operación —como hosting, base de datos, pagos y delivery— pueden procesar la información únicamente para prestar esos servicios.\n\n8. Contacto\n\nPara consultas relacionadas con pedidos, pagos, delivery o privacidad, puedes escribir a contacto@bagelito.pe.\n\nBagelito.pe · Lima, Perú\nVolver al inicio",
+    "openerIsNull": true
+  },
+  "staticLegal": {
+    "heading": [
+      "Políticas de compra y delivery"
+    ],
+    "sections": [
+      "1. Confirmación del pedido",
+      "2. Productos y disponibilidad",
+      "3. Pagos",
+      "4. Delivery",
+      "5. Recepción",
+      "6. Cancelaciones y reembolsos",
+      "7. Privacidad",
+      "8. Contacto"
+    ],
+    "bodyText": "← Volver a Bagelito\nVERSIÓN 2026-10-28\nPolíticas de compra y delivery\n\nEstas condiciones describen cómo Bagelito.pe recibe, cobra, produce y entrega pedidos realizados mediante batches programados en Lima.\n\n1. Confirmación del pedido\n\nUn pedido queda confirmado únicamente cuando Bagelito recibe una confirmación válida del proveedor de pagos y el pedido figura como pagado en nuestros sistemas. Seleccionar productos o iniciar un checkout no separa stock por sí solo.\n\nEl checkout online solo se habilita cuando existe un batch abierto, capacidad disponible y una fecha de delivery confirmada.\n\n2. Productos y disponibilidad\n\nBagelito produce alimentos artesanales en batches. Sabores, presentaciones y disponibilidad pueden variar según producción e ingredientes. El precio y la composición que rigen cada compra son los que el servidor valida y muestra antes del pago.\n\nSi una configuración no tiene una regla comercial aprobada para cobro automático, el checkout se bloqueará en lugar de estimar un precio.\n\n3. Pagos\n\nLos medios de pago disponibles se muestran dentro del checkout seguro de Culqi. Los datos de tarjeta se ingresan directamente en el entorno de Culqi y no se almacenan en los servidores de Bagelito.\n\nSi el resultado de un pago es incierto o requiere reconciliación, el cliente no debe volver a pagar hasta que el estado sea verificado. Bagelito podrá contactar al cliente para resolver el caso.\n\n4. Delivery\n\nEl costo de delivery se calcula durante el checkout según el distrito seleccionado y se suma al total antes de generar la reserva. El pedido se entrega en la fecha del batch confirmada al momento de la compra.\n\nEl cliente debe proporcionar nombre, WhatsApp, email, distrito, dirección completa y cualquier referencia necesaria. Cambios posteriores a la confirmación dependen de disponibilidad de ruta.\n\n5. Recepción\n\nEl cliente debe estar disponible durante la ventana coordinada. Si la entrega no puede completarse por dirección incorrecta, acceso restringido o ausencia del receptor, una reentrega dependerá de disponibilidad y puede generar un costo adicional.\n\n6. Cancelaciones y reembolsos\n\nAntes de la confirmación de pago, una reserva puede abandonarse sin generar una compra. Después de la confirmación, las solicitudes de cancelación se revisan según el estado de producción del batch.\n\nSi Bagelito no puede producir o entregar un pedido confirmado por una causa atribuible a la operación, se coordinará la devolución correspondiente o una alternativa aceptada por el cliente. Los pagos duplicados se revisan y corrigen.\n\n7. Privacidad\n\nBagelito utiliza los datos de contacto, pedido y delivery para procesar la compra, coordinar producción, atender consultas, prevenir fraude y realizar la entrega. Los datos no se venden a terceros.\n\nProveedores necesarios para la operación —como hosting, base de datos, pagos y delivery— pueden procesar la información únicamente para prestar esos servicios.\n\n8. Contacto\n\nPara consultas relacionadas con pedidos, pagos, delivery o privacidad, puedes escribir a contacto@bagelito.pe.\n\nBagelito.pe · Lima, Perú\nVolver al inicio",
+    "openerIsNull": true
+  }
+}

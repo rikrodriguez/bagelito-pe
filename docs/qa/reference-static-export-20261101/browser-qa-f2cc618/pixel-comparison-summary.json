@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "criterion": "Exact decoded RGB equality, unchanged threshold0; no masks/resizes",
+  "compared": 83,
+  "identical": 67,
+  "different": 16,
+  "dimensionMismatches": 0,
+  "landingCompared": 9,
+  "landingIdentical": 9,
+  "maxDelta": 255,
+  "maxNonPanDelta": 32,
+  "reports": [
+    "docs/qa/reference-static-export-20261101/artifact-probe-f2cc618/focal-pixel-comparison.json",
+    "docs/qa/reference-static-export-20261101/browser-qa-f2cc618/comparisons/bagelito-static-pixel-combo-390.json",
+    "docs/qa/reference-static-export-20261101/browser-qa-f2cc618/comparisons/bagelito-static-pixel-pack-decline-1280.json",
+    "docs/qa/reference-static-export-20261101/browser-qa-f2cc618/comparisons/bagelito-static-pixel-pack-flavoured-320.json",
+    "docs/qa/reference-static-export-20261101/browser-qa-f2cc618/comparisons/bagelito-static-pixel-pack-original-390.json",
+    "docs/qa/reference-static-export-20261101/browser-qa-f2cc618/comparisons/bagelito-static-pixel-schmear-390.json",
+    "docs/qa/reference-static-export-20261101/browser-qa-f2cc618/comparisons/bagelito-static-pixel-zoom.json"
+  ]
+}
