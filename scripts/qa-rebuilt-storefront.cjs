@@ -380,6 +380,11 @@ async function runCase(browser, viewport, scenario) {
         if (await photo.isVisible()) await photo.scrollIntoViewIfNeeded()
         await photo.evaluate(async image => {await image.decode(); if (!image.complete || !image.naturalWidth) throw new Error('Visible product did not decode: ' + image.currentSrc)})
       }
+      record.entrySceneScroll = await page.locator('.rebuilt-store').evaluate(element => ({
+        scrollLeft: element.scrollLeft, scrollWidth: element.scrollWidth, clientWidth: element.clientWidth,
+        overflowX: getComputedStyle(element).overflowX,
+      }))
+      assert.equal(record.entrySceneScroll.scrollLeft, 0, 'Native image scrolling must not shift the storefront horizontally')
       for (const role of htmlPhotoRoles) {
         assert.equal(await page.locator(role.selector).count(), 1, 'One exact HTML image required for ' + role.role)
         const image = await page.locator(role.selector).evaluate(element => ({source: element.currentSrc, pathname: new URL(element.currentSrc).pathname,

@@ -32,7 +32,7 @@
 .rebuilt-counter .rebuilt-case-link:hover { outline:2px solid #004aad88; outline-offset:0; }
 
 @media(min-width:1051px) {
-  .reference-presentation.rebuilt-store[data-compact="false"] { display:block; container-type:inline-size; width:100%; min-height:0; aspect-ratio:3/2; padding:0; overflow:hidden; background:#ede9e1; }
+  .reference-presentation.rebuilt-store[data-compact="false"] { display:block; container-type:inline-size; width:100%; min-height:0; aspect-ratio:3/2; padding:0; overflow:clip; background:#ede9e1; }
   .rebuilt-store[data-compact="false"] .rebuilt-architecture { inset:0; }
   .rebuilt-store[data-compact="false"] .rebuilt-room-photo { width:100%; height:auto; }
   .rebuilt-store[data-compact="false"] .rebuilt-topbar { position:absolute; z-index:6; top:1.7578125%; left:1.3020833%; right:1.3020833%; min-height:0; height:5.859375%; }
