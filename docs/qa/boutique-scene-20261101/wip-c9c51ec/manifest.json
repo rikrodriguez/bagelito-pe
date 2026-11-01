@@ -1,0 +1,42 @@
+{
+  "codeSHA": "c9c51ec821a157b0e8c5a112e763f8850992c633",
+  "status": "WIP visual checkpoint; no purchase QA",
+  "files": {
+    "1280-entry-full.png": {
+      "bytes": 1879457,
+      "sha256": "d0e48c74e6c580a8cc37277536a54a4338a1261d8b47c527b790bfab949b22e2"
+    },
+    "1280-entry.png": {
+      "bytes": 946441,
+      "sha256": "2f6f3eda9d0a00c65b1b5eca2555e2271e0ad5bd040715b85705c6dcb726a308"
+    },
+    "320-entry-full.png": {
+      "bytes": 357588,
+      "sha256": "3e972471cdae930a5bf23516434a627b3a0414dac89db81875f88358709fd1b3"
+    },
+    "320-entry.png": {
+      "bytes": 249015,
+      "sha256": "70455f6ac83ececaeb7a2b718662d52eec84e3505197ab0e148ece11178c60d6"
+    },
+    "390-entry-full.png": {
+      "bytes": 495568,
+      "sha256": "c494ad8732fd6379c7d7706ae512852814b0da21fd36179e0a1147d9ac0627d6"
+    },
+    "390-entry.png": {
+      "bytes": 361965,
+      "sha256": "e1514732fa1d5d3944f35830f04915d7cc53bd2b16e25ea1f2e65daa34870278"
+    },
+    "768-entry-full.png": {
+      "bytes": 848075,
+      "sha256": "57a164afd4c6936f8737eba300a554de9388fd66a4222b8054959ce26608aa5d"
+    },
+    "768-entry.png": {
+      "bytes": 813086,
+      "sha256": "ee4a98eae109c1853ecdbc5636146a12781d7fc325065494c417246700558250"
+    },
+    "capture-results.json": {
+      "bytes": 379196,
+      "sha256": "c340fdd4e3a41161af8b1c8f9ada775c2b30e6eaa3e112e25d20362782958e52"
+    }
+  }
+}
