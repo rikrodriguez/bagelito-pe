@@ -1,0 +1,66 @@
+{
+  "codeCommit": "36e636cd12e5f6b65709dc774314793f5c20316d",
+  "baseCommit": "edc74dda059837070381bdb3b528f1852d0630eb",
+  "createdAt": "2026-11-01T03:06:56.518092+00:00",
+  "node": "v24.19.0",
+  "sqlite": "3.53.3",
+  "protectedExistingFiles": 151,
+  "changedProtectedFiles": [],
+  "loyaltyCoreAndMirrorUnchanged": true,
+  "runtimeConsumersOfActivation": [],
+  "deploymentEnabled": false,
+  "unchangedPreviewZipSha256": "262b55db494a615299ad9123ac2b82a69b79950f318281d8b5652abe45de5ed6",
+  "checks": {
+    "newTests": {
+      "guardPass": 30,
+      "blindWriteCounterexamplePass": 1,
+      "totalPass": 31
+    },
+    "nodeFull": {
+      "pass": 167,
+      "fail": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "node-full-36e636c.log",
+      "composition": "136 existing repeated + 31 new"
+    },
+    "build": {
+      "exitCode": 0,
+      "log": "build-36e636c.log"
+    },
+    "initialCandidate": {
+      "codeCommit": "08263575b6240e5448f7ad7b5787e3f3de18f158",
+      "nodePass": 167,
+      "buildExit": 0,
+      "differenceToFinal": "test title and documentation precision only"
+    },
+    "tdd": {
+      "guardScaffoldFailures": 30,
+      "exitCode": 1,
+      "source": "uncommitted diagnostic scaffold, not final code"
+    },
+    "review": {
+      "critical": 0,
+      "important": 0,
+      "minorTrustedCallbackBoundary": "resolved and verified in 36e636cd12e5f6b65709dc774314793f5c20316d"
+    },
+    "activation": {
+      "remoteAllowed": false,
+      "unknownConditionalWrite": "blocked",
+      "unsupportedConditionalWrite": "blocked",
+      "claimedVerifiedRemote": "blocked: real_adapter_absent",
+      "localTransportCallbackIsIoSandbox": false
+    },
+    "publicDocsVsAccountApi": {
+      "officialPublicDocsRead": true,
+      "accountApiCalls": 0,
+      "coordinatorReportIndependentlyRepeated": false
+    },
+    "productionGhlCasIdentityPostgresRlsCredentialsPaymentsDeploy": {
+      "status": "NOT EXECUTED / NOT INSTALLED"
+    },
+    "visualBrowser": {
+      "status": "not rerun; UI bytes unchanged"
+    }
+  }
+}

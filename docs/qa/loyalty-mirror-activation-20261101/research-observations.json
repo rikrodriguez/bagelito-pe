@@ -1,0 +1,43 @@
+{
+  "reviewedAt": "2026-11-01T03:06:56.518092+00:00",
+  "officialPublicSources": [
+    {
+      "url": "https://marketplace.gohighlevel.com/docs/ghl/contacts/update-contact/index.html",
+      "observed": {
+        "method": "PUT",
+        "path": "/contacts/:contactId",
+        "Version": "documented API version v3",
+        "customFields": "documented body field"
+      },
+      "notFoundInConsultedParameters": [
+        "If-Match",
+        "ETag",
+        "expected contact revision / atomic comparison-and-update"
+      ],
+      "limit": "No universal conclusion that GHL never supports conditional writes."
+    },
+    {
+      "url": "https://marketplace.gohighlevel.com/docs/ghl/contacts/upsert-contact/index.html",
+      "observed": "Email/phone dedup priority is location-configurable; separate matching contacts can lead to choosing the first priority match and ignoring the second.",
+      "inference": "An upsert match alone is not verified loyalty-subject identity."
+    }
+  ],
+  "coordinatorReport": {
+    "reportedAt": "2026-11-01T02:55:00Z",
+    "connectorLabel": "Gourmet",
+    "operation": "list_locations",
+    "query": "Bagelito",
+    "reportedResult": {
+      "items": []
+    },
+    "independentlyRepeated": false,
+    "limit": "Only this reported search/context; no global-absence or authorization inference. No customer records inspected."
+  },
+  "connectorIdempotencyKey": {
+    "source": "coordinator metadata report",
+    "limit": "Connector retry control does not establish remote CAS or exactly-once."
+  },
+  "implementationApiAccountCalls": 0,
+  "credentialsAdded": false,
+  "realGhlAdapterInstalled": false
+}

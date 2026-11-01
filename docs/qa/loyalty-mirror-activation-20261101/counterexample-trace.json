@@ -1,0 +1,47 @@
+{
+  "codeCommit": "36e636cd12e5f6b65709dc774314793f5c20316d",
+  "sourceLog": "node-full-36e636c.log",
+  "scope": "NOT GHL; local SQLite receivers and synthetic identifiers only; no HTTP",
+  "trace": [
+    {
+      "writer": "A",
+      "operation": "GET",
+      "seenRevision": null,
+      "incomingRevision": 1
+    },
+    {
+      "writer": "B",
+      "operation": "GET",
+      "seenRevision": null,
+      "incomingRevision": 2
+    },
+    {
+      "writer": "B",
+      "operation": "blind-PUT",
+      "storedRevision": 2,
+      "creditedOrders": 10
+    },
+    {
+      "writer": "A",
+      "operation": "blind-PUT",
+      "storedRevision": 1,
+      "creditedOrders": 9
+    }
+  ],
+  "blindFinal": {
+    "revision": 1,
+    "creditedOrders": 9,
+    "appliedDistinctMessageIds": 2
+  },
+  "conditionalLocalFakeFinal": {
+    "revision": 2,
+    "creditedOrders": 10,
+    "oldDeliveryStatus": "stale",
+    "applies": 1
+  },
+  "authoritativeBackend": {
+    "creditedOrders": 10,
+    "earnedRewards": 1,
+    "unchanged": true
+  }
+}

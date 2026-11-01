@@ -1,0 +1,106 @@
+{
+  "codeCommit": "263aea6cfa7bd74419f5270b7bac427b99c0c706",
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "src/server/loyalty/loyalty-mirror.server.ts",
+      "bytes": 7917,
+      "sha256": "e204d1042824218cf0d29807d2a29f27446ad538921b3352d73d3a0357af694b"
+    },
+    {
+      "path": "tests/loyalty-mirror.test.cjs",
+      "bytes": 19392,
+      "sha256": "fac553310f8b0b2d5fe7d31b84833963230fb8c6a80b01fb19e5b651ea5bb42d"
+    },
+    {
+      "path": "tests/support/load-loyalty-mirror.cjs",
+      "bytes": 730,
+      "sha256": "66d30b7215b6205b5215b2966b6a61a2068de7d9a940c7c9d537e66ad9241e48"
+    },
+    {
+      "path": "tests/support/loyalty-mirror-sqlite-store.cjs",
+      "bytes": 6220,
+      "sha256": "9be8f440c905650c49669c96aaf8ff86b5243ff4519d1c58249346d5f5f52783"
+    },
+    {
+      "path": "tests/support/fake-loyalty-mirror-transport.cjs",
+      "bytes": 7511,
+      "sha256": "0193d1d787e99f7c82abe367395f46ece7b166d065939753e85b24c342242da7"
+    },
+    {
+      "path": "docs/loyalty-mirror-local-20261101.md",
+      "bytes": 10747,
+      "sha256": "6d92603abe398342e392852a7811f3694694ce975d615935d1c65861cba8218a"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/build-263aea6.log",
+      "bytes": 19793,
+      "sha256": "4f4c93496618f2e9ede21c760ba084dc340bab8e177dfe27cbfc3d34463cb723"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/build-263aea6.log.gz",
+      "bytes": 3478,
+      "sha256": "7bda0b91acccaae030ae6f9d5f77d68e9cd2b09471c82a9b9dcfd9baee249445"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/build-8af7ad0.log",
+      "bytes": 19793,
+      "sha256": "ca2c88033b9e46c29507f9db336ed68981b406e3198720704e1d54a39ef388d7"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/build-8af7ad0.log.gz",
+      "bytes": 3475,
+      "sha256": "51e517a1bc7bcf57eadf80a901c5c9069f716753b5171c04ef183668e1a3d485"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/independent-review.txt",
+      "bytes": 964,
+      "sha256": "0caf0fc7e149709f29e227d2130886d52f756ef73916abf002a6e6289cbad772"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/node-full-263aea6.log",
+      "bytes": 30705,
+      "sha256": "21acb02dac7f1248957b4833140068b419948df566b722cbcf9152c575819f7d"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/node-full-263aea6.log.gz",
+      "bytes": 6040,
+      "sha256": "088ce7a6dd761ed7ace3e67224d111fd68b357d780384520c271187613696e97"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/node-full-8af7ad0.log",
+      "bytes": 30461,
+      "sha256": "c3d2c0cb2d0ca8ee13ce258fba264085bff5808dadd9b1f092af3af539002da4"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/node-full-8af7ad0.log.gz",
+      "bytes": 5969,
+      "sha256": "b01f0adb9e94660802d0f6992c286b432df01bc4418a744ec2d5e55f4a457a48"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/red-json-order-uncommitted.log",
+      "bytes": 967,
+      "sha256": "9ef506120e11f029a2203fa13e93ad683df67753cbeb35b160ad9b267c657a05"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/red-json-order-uncommitted.log.gz",
+      "bytes": 420,
+      "sha256": "cc46453f726247fd04da3974b6ec0d907d8179b5513cb52b77a3f51743a5062f"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/red-scaffold-uncommitted.log",
+      "bytes": 23251,
+      "sha256": "9f10ae1246b0cf2ca5a1afa1577edba0d791333f7addfd432400f7429149d921"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/red-scaffold-uncommitted.log.gz",
+      "bytes": 2217,
+      "sha256": "3018f1f1a6f41528ea14433b134cfe41f0f3a816123b10ff8428543a3acaf2d4"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-local-20261101/summary.json",
+      "bytes": 1641,
+      "sha256": "dc338fa854fa45796b13a4cae337160f258b1e7c12be4d72db0ca9f0a772e22f"
+    }
+  ]
+}

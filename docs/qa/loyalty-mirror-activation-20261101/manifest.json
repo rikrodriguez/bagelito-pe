@@ -1,0 +1,106 @@
+{
+  "codeCommit": "36e636cd12e5f6b65709dc774314793f5c20316d",
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "src/server/loyalty/loyalty-mirror-activation.server.ts",
+      "bytes": 7239,
+      "sha256": "30afbcfd85a0fe1ed2a362075ac01b2b76636a3b34fc0db0ba9f535ab6e138b5"
+    },
+    {
+      "path": "tests/loyalty-mirror-activation.test.cjs",
+      "bytes": 10787,
+      "sha256": "2918f995b36e053d8b8c512c6f43acebf63f05f1a5358f3041de6bd828c37009"
+    },
+    {
+      "path": "tests/loyalty-blind-write-counterexample.test.cjs",
+      "bytes": 11033,
+      "sha256": "52efc14bdd09b3b47385a6481783fc07b78361cba4ebd433815238366aa4d9e6"
+    },
+    {
+      "path": "tests/support/load-loyalty-mirror-activation.cjs",
+      "bytes": 599,
+      "sha256": "c716dff31a61be91511e7ab5fc5f9fd15c50a388a31616dea4fda363e41d5196"
+    },
+    {
+      "path": "tests/support/loyalty-mirror-activation-store.cjs",
+      "bytes": 4197,
+      "sha256": "b15e493ee70ec0eec08ba28f5e59fcd9c56b3ad78c04287a906d5144ab18fb1a"
+    },
+    {
+      "path": "docs/loyalty-mirror-activation-20261101.md",
+      "bytes": 11410,
+      "sha256": "fe09563e1d2ec345d847cf87338b4e8c2e3ab0f29cd5430be895476f0e1b3de1"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/build-0826357.log",
+      "bytes": 19795,
+      "sha256": "b5e863b3bc8f8958ff9a3e31d2a4211cb75a4647082a7032cdcc6bde2ff581f3"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/build-0826357.log.gz",
+      "bytes": 3477,
+      "sha256": "f27c62971ac89e8e9ccfa626c406fd1ca4b47fd462fed6adab3a06d4c5410c50"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/build-36e636c.log",
+      "bytes": 19794,
+      "sha256": "31e10bdb6ff4adc9033b25bc9579eab9133a926f7813ab4f99c6fe00b599f665"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/build-36e636c.log.gz",
+      "bytes": 3478,
+      "sha256": "a97346841e0492c09901fdc5856ce7ed77dc6cdb71cb07bbf6f18a7d8237dbf8"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/counterexample-trace.json",
+      "bytes": 1018,
+      "sha256": "ffee602215d1da48af25a8fe6b21b0b752fea94e135103b90fc63351083ac4d6"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/independent-review.txt",
+      "bytes": 1446,
+      "sha256": "783e2d5665d21b66599a647c529dde4c1206ec5fa182b56678c86542335c7ad5"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/node-full-0826357.log",
+      "bytes": 37606,
+      "sha256": "4b3f99fb048aad81fadee5a615590ff2b9fbf4e61c65a0564f357acc2c1b6ec9"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/node-full-0826357.log.gz",
+      "bytes": 7172,
+      "sha256": "14f5d6e6a455a5d80380b28748b53f53c63f4b9d4a94618c41ab3c7fcc1707bb"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/node-full-36e636c.log",
+      "bytes": 37619,
+      "sha256": "90c47a92324d5dafb4450025d3e4c76db129889c64ff5d6c5d7ce8a36dc4b1e2"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/node-full-36e636c.log.gz",
+      "bytes": 7178,
+      "sha256": "d1a6adafdd00cf1549f72fea7fac270276e542b2c90a099bbc8cfe97d6aa8370"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/red-guard-scaffold-uncommitted.log",
+      "bytes": 23629,
+      "sha256": "39ca18503d95d3a7953d15063caa75d2433e8496a62b491ee22616fd3ef3133e"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/red-guard-scaffold-uncommitted.log.gz",
+      "bytes": 1752,
+      "sha256": "26490d11ddde332c89a4311a1100bfb04042ee57da6e62a9bd56cffbbc581bc1"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/research-observations.json",
+      "bytes": 1638,
+      "sha256": "1b3595836ffb21eb4c69e61b0e07a9714ba84a8d25852be3b3efdcae1241a211"
+    },
+    {
+      "path": "docs/qa/loyalty-mirror-activation-20261101/summary.json",
+      "bytes": 2040,
+      "sha256": "84f787e9dffb431eb6e8a49da120e779126d276e940ef6379cab65d39f5db073"
+    }
+  ]
+}

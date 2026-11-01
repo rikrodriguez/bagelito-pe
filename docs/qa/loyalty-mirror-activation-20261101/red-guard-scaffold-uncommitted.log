@@ -1,0 +1,465 @@
+TAP version 13
+# Subtest: fully verified LOCAL fixtures permit only the fake transport and preserve the ledger
+not ok 1 - fully verified LOCAL fixtures permit only the fake transport and preserve the ledger
+  ---
+  duration_ms: 12.912486
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:60:1'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:62:26)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: blocks without delegate effects: tenant missing
+not ok 2 - blocks without delegate effects: tenant missing
+  ---
+  duration_ms: 6.522072
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: tenant evidence unverified
+not ok 3 - blocks without delegate effects: tenant evidence unverified
+  ---
+  duration_ms: 6.813769
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: tenant location belongs elsewhere
+not ok 4 - blocks without delegate effects: tenant location belongs elsewhere
+  ---
+  duration_ms: 5.786949
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: tenant response belongs elsewhere
+not ok 5 - blocks without delegate effects: tenant response belongs elsewhere
+  ---
+  duration_ms: 6.277234
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding missing
+not ok 6 - blocks without delegate effects: binding missing
+  ---
+  duration_ms: 5.861101
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding inferred by email only
+not ok 7 - blocks without delegate effects: binding inferred by email only
+  ---
+  duration_ms: 5.842232
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding revoked
+not ok 8 - blocks without delegate effects: binding revoked
+  ---
+  duration_ms: 5.970695
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding no evidence reference
+not ok 9 - blocks without delegate effects: binding no evidence reference
+  ---
+  duration_ms: 5.903975
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding another tenant
+not ok 10 - blocks without delegate effects: binding another tenant
+  ---
+  duration_ms: 5.642944
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding another subject
+not ok 11 - blocks without delegate effects: binding another subject
+  ---
+  duration_ms: 5.087641
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: binding another location
+not ok 12 - blocks without delegate effects: binding another location
+  ---
+  duration_ms: 5.152878
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: contact observation missing
+not ok 13 - blocks without delegate effects: contact observation missing
+  ---
+  duration_ms: 5.094832
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: contact observation unverified
+not ok 14 - blocks without delegate effects: contact observation unverified
+  ---
+  duration_ms: 4.891586
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: contact observation wrong contact
+not ok 15 - blocks without delegate effects: contact observation wrong contact
+  ---
+  duration_ms: 17.011915
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: contact observation wrong location
+not ok 16 - blocks without delegate effects: contact observation wrong location
+  ---
+  duration_ms: 4.820329
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: capability missing
+not ok 17 - blocks without delegate effects: capability missing
+  ---
+  duration_ms: 5.411667
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: conditional update unknown
+not ok 18 - blocks without delegate effects: conditional update unknown
+  ---
+  duration_ms: 5.871016
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: conditional update unsupported
+not ok 19 - blocks without delegate effects: conditional update unsupported
+  ---
+  duration_ms: 4.768642
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: capability different location
+not ok 20 - blocks without delegate effects: capability different location
+  ---
+  duration_ms: 4.660159
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: blocks without delegate effects: capability evidence unverified
+not ok 21 - blocks without delegate effects: capability evidence unverified
+  ---
+  duration_ms: 5.576023
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:93:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:96:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: REMOTE stays blocked with conditional capability unknown
+not ok 22 - REMOTE stays blocked with conditional capability unknown
+  ---
+  duration_ms: 5.063384
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:113:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: REMOTE stays blocked with conditional capability unsupported
+not ok 23 - REMOTE stays blocked with conditional capability unsupported
+  ---
+  duration_ms: 5.032639
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:113:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: REMOTE stays blocked with conditional capability verified
+not ok 24 - REMOTE stays blocked with conditional capability verified
+  ---
+  duration_ms: 5.195122
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:113:28)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: local-fixture capability evidence cannot certify remote conditional writes
+not ok 25 - local-fixture capability evidence cannot certify remote conditional writes
+  ---
+  duration_ms: 7.256633
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:121:1'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:124:26)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: API Version and a connector idempotency key do not establish CAS capability
+not ok 26 - API Version and a connector idempotency key do not establish CAS capability
+  ---
+  duration_ms: 6.380039
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:127:1'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:132:26)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: an empty tenant lookup never falls back to another configured tenant or location
+not ok 27 - an empty tenant lookup never falls back to another configured tenant or location
+  ---
+  duration_ms: 4.963665
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:136:1'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:140:26)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: facts are rechecked at each send; revocation after construction blocks delivery
+not ok 28 - facts are rechecked at each send; revocation after construction blocks delivery
+  ---
+  duration_ms: 4.855612
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:146:1'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assessMirrorActivation (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:16:11)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:148:23)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a valid binding cannot send another subject or contact envelope
+not ok 29 - a valid binding cannot send another subject or contact envelope
+  ---
+  duration_ms: 5.923615
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:157:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Activation guard not implemented
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:159:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: constructor snapshots target scope rather than following mutable configuration objects
+not ok 30 - constructor snapshots target scope rather than following mutable configuration objects
+  ---
+  duration_ms: 8.971
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:164:1'
+  failureType: 'testCodeFailure'
+  error: 'Activation guard not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.send (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror-activation.server.ts:19:44)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror-activation.test.cjs:169:29)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 0
+# fail 30
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 566.095678

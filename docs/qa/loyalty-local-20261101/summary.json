@@ -1,0 +1,40 @@
+{
+  "codeCommit": "3e9bd663a9775b1789bdbfc9becf40da84075bc5",
+  "baseCommit": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "createdAt": "2026-11-01T02:33:11.636824+00:00",
+  "preservedBaseFiles": 132,
+  "changedBaseFiles": [],
+  "runtimeConsumersOfLoyalty": [],
+  "deploymentEnabled": false,
+  "unchangedPreviewZipSha256": "262b55db494a615299ad9123ac2b82a69b79950f318281d8b5652abe45de5ed6",
+  "node": "v24.19.0",
+  "sqlite": "3.53.3",
+  "checks": {
+    "nodeFull": {
+      "exitCode": 0,
+      "pass": 107,
+      "fail": 0,
+      "skipped": 0,
+      "log": "node-full-3e9bd66.log"
+    },
+    "build": {
+      "exitCode": 0,
+      "log": "build-3e9bd66.log"
+    },
+    "newLoyaltyTests": {
+      "pass": 49,
+      "ledger": 44,
+      "independentWorkerRaces": 5
+    },
+    "baselineNode": {
+      "pass": 58,
+      "timing": "before implementation"
+    },
+    "productionPostgresRlsCulqiGhl": {
+      "status": "not executed"
+    },
+    "browserVisual": {
+      "status": "not rerun; UI bytes unchanged"
+    }
+  }
+}

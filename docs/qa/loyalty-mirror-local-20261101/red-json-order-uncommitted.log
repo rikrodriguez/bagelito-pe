@@ -1,0 +1,26 @@
+TAP version 13
+# Subtest: persisted JSON key order does not change the projection or block acknowledgement
+not ok 1 - persisted JSON key order does not change the projection or block acknowledgement
+  ---
+  duration_ms: 15.078393
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'projection_integrity_error'
+  code: 'projection_integrity_error'
+  name: 'MirrorError'
+  stack: |-
+    checkedEnvelope (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:43:15)
+    /workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:89:30
+    async /workspace/bagelito-loyalty-local/tests/support/loyalty-mirror-sqlite-store.cjs:139:25
+    async run (/workspace/bagelito-loyalty-local/tests/support/loyalty-sqlite-store.cjs:150:24)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 302.905839

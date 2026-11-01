@@ -1,0 +1,478 @@
+TAP version 13
+# Subtest: capture reads actual backend and delivers aggregates without payment or redemption identifiers
+not ok 1 - capture reads actual backend and delivers aggregates without payment or redemption identifiers
+  ---
+  duration_ms: 9.910133
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:43:32)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: duplicate and delayed event hints reread current state instead of applying deltas
+not ok 2 - duplicate and delayed event hints reread current state instead of applying deltas
+  ---
+  duration_ms: 1.937966
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:64:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: impayments and forged payment objects cannot be supplied as mirror progress
+not ok 3 - impayments and forged payment objects cannot be supplied as mirror progress
+  ---
+  duration_ms: 1.830815
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:82:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: mirror capture failure cannot roll back a committed credit and reconciliation discovers missing rows
+not ok 4 - mirror capture failure cannot roll back a committed credit and reconciliation discovers missing rows
+  ---
+  duration_ms: 6.06676
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /injected/. Input:
+
+    'Error: Local mirror not implemented'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Local mirror not implemented'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:93:33)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:93:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: lost transport response retries the same durable message after destination applied it
+not ok 5 - lost transport response retries the same durable message after destination applied it
+  ---
+  duration_ms: 4.961371
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:105:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a delayed old delivery cannot regress a newer destination revision
+not ok 6 - a delayed old delivery cannot regress a newer destination revision
+  ---
+  duration_ms: 4.51422
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:131:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: old acknowledgement cannot clear a newer pending snapshot
+not ok 7 - old acknowledgement cannot clear a newer pending snapshot
+  ---
+  duration_ms: 1.746038
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:154:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: old transport failure cannot replace metadata of a newer snapshot
+not ok 8 - old transport failure cannot replace metadata of a newer snapshot
+  ---
+  duration_ms: 1.786079
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:178:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"messageId":"wrong"}
+not ok 9 - receipt mismatch cannot acknowledge or modify loyalty: {"messageId":"wrong"}
+  ---
+  duration_ms: 4.106308
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:201:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"subjectId":"b"}
+not ok 10 - receipt mismatch cannot acknowledge or modify loyalty: {"subjectId":"b"}
+  ---
+  duration_ms: 4.203465
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:201:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"destinationRef":"fake-contact-b"}
+not ok 11 - receipt mismatch cannot acknowledge or modify loyalty: {"destinationRef":"fake-contact-b"}
+  ---
+  duration_ms: 4.081982
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:201:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"revision":99}
+not ok 12 - receipt mismatch cannot acknowledge or modify loyalty: {"revision":99}
+  ---
+  duration_ms: 3.750936
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:201:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"payloadHash":"0000000000000000000000000000000000000000000000000000000000000000"}
+not ok 13 - receipt mismatch cannot acknowledge or modify loyalty: {"payloadHash":"0000000000000000000000000000000000000000000000000000000000000000"}
+  ---
+  duration_ms: 4.008942
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:201:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"status":"unverified"}
+not ok 14 - receipt mismatch cannot acknowledge or modify loyalty: {"status":"unverified"}
+  ---
+  duration_ms: 3.945547
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:201:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: backend redemption succeeds while mirror is unavailable, then latest snapshot catches up
+not ok 15 - backend redemption succeeds while mirror is unavailable, then latest snapshot catches up
+  ---
+  duration_ms: 4.101551
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:221:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: review flag changes version even when credited/reward counts do not change
+not ok 16 - review flag changes version even when credited/reward counts do not change
+  ---
+  duration_ms: 4.190145
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:244:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: customers stay isolated even with equal revision numbers and concurrent deliveries
+not ok 17 - customers stay isolated even with equal revision numbers and concurrent deliveries
+  ---
+  duration_ms: 4.497856
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:267:31)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: destination binding mismatch keeps the right customer pending and never updates another
+not ok 18 - destination binding mismatch keeps the right customer pending and never updates another
+  ---
+  duration_ms: 4.354982
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:283:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: reconciliation includes authoritative subjects without an outbox and isolates unresolved bindings
+not ok 19 - reconciliation includes authoritative subjects without an outbox and isolates unresolved bindings
+  ---
+  duration_ms: 1.459029
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.reconcile (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:18:35)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:295:33)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: durable pending message and destination state survive reopening both files
+not ok 20 - durable pending message and destination state survive reopening both files
+  ---
+  duration_ms: 4.226618
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:306:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: ack persistence failure preserves pending and replay does not apply twice
+not ok 21 - ack persistence failure preserves pending and replay does not apply twice
+  ---
+  duration_ms: 1.896203
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:325:18)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: independent capture connections deduplicate snapshots under real SQL serialization
+not ok 22 - independent capture connections deduplicate snapshots under real SQL serialization
+  ---
+  duration_ms: 4.33409
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    /workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:343:97
+    Array.from (<anonymous>)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:343:43)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: capture holds authoritative read and revision in one transaction across a concurrent credit
+not ok 23 - capture holds authoritative read and revision in one transaction across a concurrent credit
+  ---
+  duration_ms: 4.383985
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: 'Local mirror not implemented'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.capture (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty-mirror.server.ts:16:43)
+    TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:365:26)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: ""
+not ok 24 - invalid internal subject is rejected before capture/delivery: ""
+  ---
+  duration_ms: 1.46699
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Local mirror not implemented
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:381:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: " "
+not ok 25 - invalid internal subject is rejected before capture/delivery: " "
+  ---
+  duration_ms: 1.56715
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Local mirror not implemented
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:381:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: null
+not ok 26 - invalid internal subject is rejected before capture/delivery: null
+  ---
+  duration_ms: 1.424747
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Local mirror not implemented
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:381:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: {}
+not ok 27 - invalid internal subject is rejected before capture/delivery: {}
+  ---
+  duration_ms: 1.382784
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Local mirror not implemented
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:381:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+not ok 28 - invalid internal subject is rejected before capture/delivery: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ---
+  duration_ms: 1.374441
+  type: 'test'
+  location: '/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:2:29'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+
+    Caught error:
+
+    Error: Local mirror not implemented
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-mirror.test.cjs:381:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 0
+# fail 28
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 400.31836

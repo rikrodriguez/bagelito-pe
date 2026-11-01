@@ -1,0 +1,719 @@
+✖ ten unique backend-confirmed paid orders earn exactly 2 bagels and 1 schmear (3.976274ms)
+✖ twenty orders earn two entitlements, and replay cannot create extra credits/rewards (1.084647ms)
+✖ does not credit payment state pending (1.841171ms)
+✖ does not credit payment state failed (1.305157ms)
+✖ does not credit payment state cancelled (1.285047ms)
+✖ does not credit payment state expired (1.431066ms)
+✖ does not credit payment state refunded (1.005619ms)
+✖ does not credit payment state review (0.961622ms)
+✖ rejects paid claims from null (1.197736ms)
+✖ rejects paid claims from browser (1.145037ms)
+✖ rejects paid claims from ghl (1.069044ms)
+✖ rejects paid claims from unverified-webhook (1.106409ms)
+✔ unresolved evidence or identity cannot accrue: {"verificationId":null} (2.305848ms)
+✔ unresolved evidence or identity cannot accrue: {"verificationId":""} (1.011247ms)
+✔ unresolved evidence or identity cannot accrue: {"subjectId":null} (1.424777ms)
+✔ unresolved evidence or identity cannot accrue: {"requiresReview":true} (2.371847ms)
+✖ missing order and structured browser payment claims cannot produce a credit (1.012698ms)
+✖ retries from both confirmation paths deduplicate by order, not verification/event id (0.903415ms)
+✖ read and redemption require trusted authentication; browser customer ids do not authorize (0.796895ms)
+✖ redemption consumes one entitlement once and same request safely replays (0.82659ms)
+✖ redemption idempotency keys are scoped to authenticated subjects (1.21394ms)
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"paymentState":"refunded"} (1.122333ms)
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"requiresReview":true} (0.842834ms)
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"verifiedSource":"ghl"} (1.028703ms)
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"subjectId":"customer-b"} (0.989584ms)
+✖ an acknowledged redemption can be replayed after evidence becomes unresolved without another consumption (1.191006ms)
+✖ invalid identifiers fail closed without writes: "" (0.93335ms)
+✖ invalid identifiers fail closed without writes: " " (0.860641ms)
+✖ invalid identifiers fail closed without writes: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" (0.979408ms)
+✖ invalid identifiers fail closed without writes: null (0.768743ms)
+✖ invalid identifiers fail closed without writes: 17 (0.745768ms)
+✖ invalid identifiers fail closed without writes: {} (1.072449ms)
+✖ credit/reward rollback is atomic on failure after_credit (1.247351ms)
+✖ credit/reward rollback is atomic on failure after_entitlement (0.825238ms)
+✖ credit/reward rollback is atomic on failure before_commit (1.016645ms)
+✖ commit followed by lost credit response survives reopen and safely replays (0.912739ms)
+✖ redemption retry after after_redemption cannot double consume (1.200941ms)
+✖ redemption retry after before_commit cannot double consume (0.823244ms)
+✖ redemption retry after after_commit cannot double consume (0.769765ms)
+✖ same-connection concurrent retries preserve the tenth-order boundary (1.023556ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 4
+ℹ fail 36
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 338.552894
+
+✖ failing tests:
+
+test at tests/loyalty-ledger.test.cjs:28:1
+✖ ten unique backend-confirmed paid orders earn exactly 2 bagels and 1 schmear (3.976274ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:30:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/loyalty-ledger.test.cjs:51:1
+✖ twenty orders earn two entitlements, and replay cannot create extra credits/rewards (1.084647ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:53:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/loyalty-ledger.test.cjs:63:3
+✖ does not credit payment state pending (1.841171ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:63:3
+✖ does not credit payment state failed (1.305157ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:63:3
+✖ does not credit payment state cancelled (1.285047ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:63:3
+✖ does not credit payment state expired (1.431066ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:63:3
+✖ does not credit payment state refunded (1.005619ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:63:3
+✖ does not credit payment state review (0.961622ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:65:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:70:3
+✖ rejects paid claims from null (1.197736ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:70:3
+✖ rejects paid claims from browser (1.145037ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:70:3
+✖ rejects paid claims from ghl (1.069044ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:70:3
+✖ rejects paid claims from unverified-webhook (1.106409ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:72:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:85:1
+✖ missing order and structured browser payment claims cannot produce a credit (1.012698ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:87:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:87:29)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:92:1
+✖ retries from both confirmation paths deduplicate by order, not verification/event id (0.903415ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:94:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:101:1
+✖ read and redemption require trusted authentication; browser customer ids do not authorize (0.796895ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:103:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:113:1
+✖ redemption consumes one entitlement once and same request safely replays (0.82659ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:115:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:130:1
+✖ redemption idempotency keys are scoped to authenticated subjects (1.21394ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:132:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:141:3
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"paymentState":"refunded"} (1.122333ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:143:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:141:3
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"requiresReview":true} (0.842834ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:143:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:141:3
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"verifiedSource":"ghl"} (1.028703ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:143:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:141:3
+✖ changed authoritative evidence holds redemption for review without inventing reversal: {"subjectId":"customer-b"} (0.989584ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:143:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:157:1
+✖ an acknowledged redemption can be replayed after evidence becomes unresolved without another consumption (1.191006ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:159:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:169:3
+✖ invalid identifiers fail closed without writes: "" (0.93335ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:169:3
+✖ invalid identifiers fail closed without writes: " " (0.860641ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:169:3
+✖ invalid identifiers fail closed without writes: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" (0.979408ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:169:3
+✖ invalid identifiers fail closed without writes: null (0.768743ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:169:3
+✖ invalid identifiers fail closed without writes: 17 (0.745768ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:169:3
+✖ invalid identifiers fail closed without writes: {} (1.072449ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Loyalty core not implemented
+      at async TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Loyalty core not implemented
+        at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+        at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:171:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/loyalty-ledger.test.cjs:180:3
+✖ credit/reward rollback is atomic on failure after_credit (1.247351ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:182:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:180:3
+✖ credit/reward rollback is atomic on failure after_entitlement (0.825238ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:182:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:180:3
+✖ credit/reward rollback is atomic on failure before_commit (1.016645ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:182:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:194:1
+✖ commit followed by lost credit response survives reopen and safely replays (0.912739ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:196:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:209:3
+✖ redemption retry after after_redemption cannot double consume (1.200941ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:211:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:209:3
+✖ redemption retry after before_commit cannot double consume (0.823244ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:211:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:209:3
+✖ redemption retry after after_commit cannot double consume (0.769765ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:211:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/loyalty-ledger.test.cjs:224:1
+✖ same-connection concurrent retries preserve the tenth-order boundary (1.023556ms)
+  Error: Loyalty core not implemented
+      at Object.creditPaidOrder (/workspace/bagelito-loyalty-local/src/server/loyalty/loyalty.server.ts:18:49)
+      at earn (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:22:50)
+      at TestContext.<anonymous> (/workspace/bagelito-loyalty-local/tests/loyalty-ledger.test.cjs:226:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
