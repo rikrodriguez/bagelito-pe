@@ -1,0 +1,57 @@
+{
+  "codeCommit": "263aea6cfa7bd74419f5270b7bac427b99c0c706",
+  "baseCommit": "96f1f5a23dd087ad4ebfcf36b73f8f01b46ac0af",
+  "createdAt": "2026-11-01T02:50:46.464154+00:00",
+  "node": "v24.19.0",
+  "sqlite": "3.53.3",
+  "protectedExistingFiles": 146,
+  "changedProtectedFiles": [],
+  "loyaltyCoreUnchanged": true,
+  "runtimeConsumersOfMirror": [],
+  "deploymentEnabled": false,
+  "unchangedPreviewZipSha256": "262b55db494a615299ad9123ac2b82a69b79950f318281d8b5652abe45de5ed6",
+  "checks": {
+    "newMirrorTests": {
+      "pass": 29,
+      "fail": 0
+    },
+    "nodeFull": {
+      "pass": 136,
+      "fail": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "node-full-263aea6.log",
+      "composition": "107 existing + 29 new"
+    },
+    "build": {
+      "exitCode": 0,
+      "log": "build-263aea6.log"
+    },
+    "previousCandidate": {
+      "codeCommit": "8af7ad0d0901d00f11bf886092c60697f26b3b5a",
+      "nodePass": 135,
+      "buildExit": 0,
+      "supersededBy": "263aea6cfa7bd74419f5270b7bac427b99c0c706"
+    },
+    "tdd": {
+      "scaffoldFailures": 28,
+      "jsonOrderRegressionFailures": 1,
+      "bothExitCode": 1,
+      "source": "uncommitted diagnostic scaffold/regression, not assigned final SHA"
+    },
+    "review": {
+      "critical": 0,
+      "important": 0,
+      "minorJsonOrder": "fixed and verified on 263aea6cfa7bd74419f5270b7bac427b99c0c706"
+    },
+    "ghlHttpCredentialsRealApiProductionRlsProvider": {
+      "status": "NOT EXECUTED / NOT INSTALLED"
+    },
+    "exactlyOnceDistributed": {
+      "status": "NOT CLAIMED"
+    },
+    "visualBrowser": {
+      "status": "not rerun; UI bytes unchanged"
+    }
+  }
+}

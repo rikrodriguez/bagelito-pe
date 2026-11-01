@@ -1,0 +1,10 @@
+Independent readonly review 2026-11-01
+Base: 96f1f5a23dd087ad4ebfcf36b73f8f01b46ac0af
+Initial review: 8af7ad0d0901d00f11bf886092c60697f26b3b5a
+Fixed code verified by inspection: 263aea6cfa7bd74419f5270b7bac427b99c0c706
+Critical: none. Important: none.
+Minor found and reproduced: JSON.stringify(rule) depended on object key order and rejected equivalent reordered JSON. Fixed by comparing rule values; persisted regression verified in final code.
+Verified design: authoritative source read and revision in same capture transaction; delivery outside transaction; full-tuple ACK/failure CAS; stable retries; authoritative-subject rescan.
+Outside this local scope, not certified: production identity helper, GHL conditional/version guarantees, scheduler, actual provider/DB/RLS/fulfillment.
+Verdict: suitable for local/test draft; no live activation or merge approval.
+Reviewer did not mutate files, index, HEAD, databases or network; did not repeat full test suite.
