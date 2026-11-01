@@ -1,0 +1,42 @@
+{
+  "status": "WIP — complete commerce browser QA pending",
+  "codeSHA": "b974ddcd7b8633c0a86e752facf7c58f183757b6",
+  "loadedEntryResult": "PASS 7/7; native scroll + 18 decoded photos per viewport; no app/DOM mutation",
+  "buildExitCode": 0,
+  "nodeTests": {
+    "passed": 58,
+    "failed": 0,
+    "skipped": 0
+  },
+  "captures": [
+    {
+      "file": "320-entry-loaded-full.png",
+      "sha256": "f73ff572a2e12fbdd0b7f47e9389bf211c98a3fce5475c9e4be15a5f054b6bd9"
+    },
+    {
+      "file": "390-entry-loaded-full.png",
+      "sha256": "759ff0677e09419b4edca6f828b08ecb861efd03b5375ae49fe4ebddb3ae7902"
+    },
+    {
+      "file": "768-entry-loaded-full.png",
+      "sha256": "8e27f77d41f4c8612bd82cbbca8af12590a441848c96ee24c0dd81014f2a35e8"
+    },
+    {
+      "file": "1024-entry-loaded-full.png",
+      "sha256": "3b8fe46c7a4c908c672d9b00dd170ed9864b641012055080adf6272e09bfc61a"
+    },
+    {
+      "file": "844-entry-loaded-full.png",
+      "sha256": "212b5372e3b5b16875959dbb6097450ae6ab7d6e2794a4512f4045c7f958575d"
+    },
+    {
+      "file": "1280-entry-loaded-full.png",
+      "sha256": "5c37d29de76243ad062e14730760cdbf1c2612e76c2275312f871f3d3c4bf0e9"
+    },
+    {
+      "file": "1920-entry-loaded-full.png",
+      "sha256": "a15963e6ede99cf6da795ff1d948c5dab90cda2222329a290e2ca156d459e117"
+    }
+  ],
+  "scope": "Actual Chromium emulation from immutable loopback snapshot3236, not physical Safari/device certification. DOM/CSS/vector reconstruction; no approved mockup/crops used as page art. No production/preview/payments modified."
+}
