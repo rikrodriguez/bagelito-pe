@@ -3,7 +3,6 @@
 .reference-presentation{position:relative;z-index:1;width:100%;max-width:min(1536px,150dvh);margin:0 auto}
 .reference-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin}
 .reference-art{position:relative;width:100%;aspect-ratio:3/2;margin:0 auto;isolation:isolate}
-.reference-scroll.is-expanded .reference-art{min-width:720px}
 .reference-image{display:block;width:100%;height:100%;object-fit:contain;filter:none;user-select:none}
 .reference-hotspot{position:absolute;z-index:3;display:block;margin:0;padding:0;border:0;border-radius:18px;background:transparent;color:transparent;min-width:44px;min-height:44px;cursor:pointer;box-shadow:none;pointer-events:auto}
 .reference-hotspot:focus-visible{outline:3px solid #004aad;outline-offset:-3px;background:rgba(255,255,255,.08)}
@@ -20,7 +19,6 @@
 .reference-progress-live i{font-style:normal;font-size:11px}
 .reference-progress-live button:focus-visible{outline:3px solid #fa967f;outline-offset:-3px}
 .reference-sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.reference-mobile-tools{display:none}
 .reference-review-note{max-width:900px;margin:14px auto;padding:10px 16px 24px;color:#5b6e85;font-size:12px;line-height:1.6;text-align:center}
 .reference-loyalty{max-width:700px;margin:20px auto;padding:20px;border:1px solid #c6d9ef;border-radius:20px;background:#eaf4ff;color:#004aad}
 .reference-loyalty small{font-size:10px;letter-spacing:.08em;font-weight:800}.reference-loyalty h2{font-size:22px}.reference-loyalty p{font-size:13px;line-height:1.5}
@@ -46,9 +44,6 @@
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid input,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid select{min-height:44px}
 .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check{min-height:44px}
 @media(max-width:800px){
-  .reference-mobile-tools{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:8px 12px;background:#fffaf4}
-  .reference-mobile-tools button{min-height:44px;padding:8px 16px;border:1px solid #b9cde5;border-radius:999px;background:#fff;color:#004aad;font-weight:700}
-  .reference-mobile-tools span{font-size:11px;color:#5b6e85}
   .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-grid,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card,.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{height:180px;min-height:180px}
   .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-stage>header{display:flex;grid-template-columns:none;grid-template-rows:none}
@@ -57,4 +52,161 @@
   .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:none}
   .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid{grid-template-columns:1fr}
   .reference-review-note{font-size:11px;margin-top:4px}
+}
+
+/* Reference cards use normal flow: a flavour note and its price are separate
+   rows, even when the legacy catalog stylesheet assigns both to one grid cell. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card{
+  flex-direction:column;height:auto;min-height:180px;overflow:visible;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+  flex:1 0 auto;gap:8px;width:100%;height:auto;min-height:180px;padding:12px;text-align:left;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-pot{
+  flex-shrink:0;width:72px;height:56px;align-self:flex-start;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-label{
+  display:block;max-width:100%;padding:0;font-size:14px;line-height:1.3;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>small{
+  position:static;display:block;align-self:stretch;max-width:100%;margin:0;
+  font-size:12px;line-height:1.4;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>.reference-schmear-price{
+  margin-top:auto;font-size:13px;font-weight:700;color:#365d82;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>b{
+  position:absolute;top:8px;right:8px;width:24px;height:24px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card .mobile-product-count{
+  position:static;display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:6px;gap:8px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card .mobile-product-count>button{
+  width:44px;height:44px;min-width:44px;min-height:44px;
+}
+
+/* Readable commerce copy and full touch targets in the reference journey. */
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-schmear-card>button>small{
+  color:#3f5873;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-sign{
+  font-size:14px;line-height:1.3;white-space:normal;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-bagel-card>button>small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-format-grid small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-pack-mix small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-size-cards span{
+  font-size:12px;line-height:1.4;color:#3f5873;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .pack-choice-grid span{
+  font-size:13px;line-height:1.4;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .mobile-product-count>button,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .panel-back{
+  min-width:44px;min-height:44px;width:44px;height:44px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay{
+  display:flex!important;flex-direction:column;gap:16px;align-items:stretch;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay::before{
+  position:static;display:block;font-size:24px;line-height:1.3;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-overlay>button{
+  width:100%;max-width:100%;gap:10px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy{
+  min-width:0;overflow-wrap:break-word;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy em,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .approved-combo-copy strong{
+  font-size:12px;line-height:1.4;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-copy>small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-copy span,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-cashier-copy p{
+  font-size:13px;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-copy>small,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .guided-payment-copy>span{
+  font-size:13px!important;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid label>span{
+  font-size:12px!important;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid input,
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid select{
+  min-height:44px!important;padding:10px 12px!important;font-size:16px!important;line-height:1.4;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check{
+  min-height:44px;font-size:13px!important;line-height:1.5;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check input{
+  flex:0 0 44px;width:44px;height:44px;margin:0;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-terms-check a{
+  display:inline-flex;align-items:center;min-height:44px;
+}
+.reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .reference-payment-review button{
+  min-height:44px;padding:8px 12px;font-size:16px;
+}
+@media(max-width:800px){
+  .reference-storefront .guided-commerce.reference-mode[data-reference-mode="true"] .checkout-customer-grid{
+    grid-template-columns:minmax(0,1fr)!important;gap:12px!important;
+  }
+}
+
+/* The desktop keeps the approved artwork. Mobile uses exact crops around live,
+   readable category cards, without an image-enlargement step. */
+.reference-top-controls{display:contents}
+.reference-menu>svg,.reference-mobile-hero,.reference-mobile-vitrine,.reference-category-art,.reference-step-mobile-label{display:none}
+.reference-cart:not(.is-dynamic)>*,.reference-progress-hotspots button>*{visibility:hidden}
+@media(max-width:800px){
+  .reference-scroll{overflow:visible}
+  .reference-art{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px;aspect-ratio:auto;padding:12px;background:#fffaf4}
+  .reference-image{display:none}
+  .reference-top-controls{display:flex;grid-column:1/-1;grid-row:1;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+  .reference-art .reference-menu,.reference-art .reference-cart{
+    position:static;inset:auto;transform:none;min-height:44px;background:#fff;color:#004aad;
+    display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #c6d9ef;
+  }
+  .reference-art .reference-menu{width:44px;height:44px}
+  .reference-menu>svg{display:block}
+  .reference-art .reference-cart{width:auto;height:44px;padding:8px 12px;font-size:14px;font-weight:800}
+  .reference-art .reference-cart>*{visibility:visible}
+  .reference-mobile-hero,.reference-mobile-vitrine{display:block;grid-column:1/-1;width:calc(100% + 24px);height:auto;margin-left:-12px;overflow:hidden}
+  .reference-mobile-hero{grid-row:2}
+  .reference-mobile-vitrine{grid-row:4}
+  .reference-art .reference-category{
+    position:static;inset:auto!important;transform:none;width:100%!important;height:auto!important;
+    grid-row:3;min-width:0;min-height:44px;display:flex;flex-direction:column;justify-content:flex-start;
+    overflow:hidden;border:1px solid #dfdfdf;border-radius:16px;color:#004aad;background:#fff0e3;
+  }
+  .reference-category[data-reference-category="combos"]{background:#dfF1ff}
+  .reference-category[data-reference-category="schmears"]{background:#ffe6e6}
+  .reference-category-art{display:block;width:100%;height:auto;aspect-ratio:264/146;overflow:hidden}
+  .reference-category-copy{
+    position:static;display:flex;flex-direction:column;gap:5px;width:100%;height:auto;margin:0;padding:8px 3px 10px;
+    overflow:visible;clip:auto;white-space:normal;text-align:center;
+  }
+  .reference-category-copy strong{font-size:16px;line-height:1.25;font-weight:900;letter-spacing:-.03em}
+  .reference-category-copy small{font-size:12px;line-height:1.4;color:#3f5873}
+  .reference-progress{
+    position:static;grid-column:1/-1;grid-row:5;transform:none;display:grid;grid-template-columns:repeat(5,minmax(44px,1fr));
+    width:100%;max-width:none;height:auto;min-height:54px;padding:3px;border-radius:20px;background:#fff;box-shadow:0 2px 8px #00275c18;
+  }
+  .reference-progress button{
+    position:static;inset:auto;transform:none;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;width:100%;height:auto;min-width:44px;min-height:48px;padding:5px 0;border:0;border-radius:16px;
+    background:transparent;color:#3f5873;font-size:12px;line-height:1.3;
+  }
+  .reference-progress button>*{visibility:visible}
+  .reference-progress i{font-size:12px;font-style:normal}
+  .reference-step-desktop-label{display:none}
+  .reference-step-mobile-label{display:block}
+  .reference-progress button[aria-current="step"]{background:#004aad;color:#fff}
+  .reference-progress button:disabled{color:#8190a2}
+  .reference-progress button:focus-visible{outline:3px solid #fa967f;outline-offset:-3px}
 }
