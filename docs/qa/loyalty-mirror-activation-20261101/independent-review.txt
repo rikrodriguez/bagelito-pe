@@ -1,0 +1,11 @@
+Independent readonly review: 2026-11-01
+Base: edc74dda059837070381bdb3b528f1852d0630eb
+Initial reviewed implementation: 08263575b6240e5448f7ad7b5787e3f3de18f158
+Final reviewed precision fix: 36e636cd12e5f6b65709dc774314793f5c20316d
+Critical: none. Important: none.
+Minor: local injected callback is trusted code, not an I/O sandbox or proof that an arbitrary MirrorTransport cannot use HTTP. Fixed table and test title in final commit; reviewer verified exactly those two lines and unchanged logic.
+Verified: tenant/binding/contact/location consistency; unknown/unsupported conditional write blocked; remote mode remains blocked even with asserted verified facts; per-send recheck; immutable scope and envelope recipient; no production consumers.
+Counterexample correctly models a local destination regressing 2 to 1, distinguishes request idempotency from conditional revision ordering, and does not certify GHL behavior.
+Independent in-memory checks: remote delegate not invoked, caller mutation during awaits cannot retarget scope/envelope, subsequent revocation blocks next send.
+Not certified: production identity, facts authenticity, GHL accounts/API conditional behavior, exactly-once distributed delivery, HTTP properties of arbitrary injected local callbacks.
+Reviewer did not mutate files/index/HEAD or call accounts and did not repeat full suite/build. Verdict: suitable for local-only draft; no remote activation or merge permission.

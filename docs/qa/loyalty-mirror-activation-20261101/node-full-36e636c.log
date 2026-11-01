@@ -1,0 +1,1013 @@
+TAP version 13
+# Subtest: NOT GHL: GET-before-blind-PUT regresses revision 2 to 1 despite idempotency; conditional local fake does not
+ok 1 - NOT GHL: GET-before-blind-PUT regresses revision 2 to 1 despite idempotency; conditional local fake does not
+  ---
+  duration_ms: 124.728992
+  type: 'test'
+  ...
+# {"scope":"NOT GHL; local SQLite receivers and synthetic identifiers only; no HTTP","trace":[{"writer":"A","operation":"GET","seenRevision":null,"incomingRevision":1},{"writer":"B","operation":"GET","seenRevision":null,"incomingRevision":2},{"writer":"B","operation":"blind-PUT","storedRevision":2,"creditedOrders":10},{"writer":"A","operation":"blind-PUT","storedRevision":1,"creditedOrders":9}],"blindFinal":{"revision":1,"creditedOrders":9,"appliedDistinctMessageIds":2},"conditionalLocalFakeFinal":{"revision":2,"creditedOrders":10,"oldDeliveryStatus":"stale","applies":1},"authoritativeBackend":{"creditedOrders":10,"earnedRewards":1,"unchanged":true}}
+# Subtest: four independent SQLite writers deduplicate 80 attempts into 20 credits and two rewards
+ok 2 - four independent SQLite writers deduplicate 80 attempts into 20 credits and two rewards
+  ---
+  duration_ms: 729.561459
+  type: 'test'
+  ...
+# Subtest: independent connections racing the same tenth order create exactly one boundary reward
+ok 3 - independent connections racing the same tenth order create exactly one boundary reward
+  ---
+  duration_ms: 674.385989
+  type: 'test'
+  ...
+# Subtest: two redemption requests for one reward have one winner and one already-consumed error
+ok 4 - two redemption requests for one reward have one winner and one already-consumed error
+  ---
+  duration_ms: 435.54008
+  type: 'test'
+  ...
+# Subtest: same redemption request racing on separate connections replays the same persisted redemption
+ok 5 - same redemption request racing on separate connections replays the same persisted redemption
+  ---
+  duration_ms: 370.300377
+  type: 'test'
+  ...
+# Subtest: wrong-customer competitor cannot consume a reward or poison the legitimate request
+ok 6 - wrong-customer competitor cannot consume a reward or poison the legitimate request
+  ---
+  duration_ms: 261.672302
+  type: 'test'
+  ...
+# Subtest: ten unique backend-confirmed paid orders earn exactly 2 bagels and 1 schmear
+ok 7 - ten unique backend-confirmed paid orders earn exactly 2 bagels and 1 schmear
+  ---
+  duration_ms: 11.929802
+  type: 'test'
+  ...
+# Subtest: twenty orders earn two entitlements, and replay cannot create extra credits/rewards
+ok 8 - twenty orders earn two entitlements, and replay cannot create extra credits/rewards
+  ---
+  duration_ms: 13.221209
+  type: 'test'
+  ...
+# Subtest: does not credit payment state pending
+ok 9 - does not credit payment state pending
+  ---
+  duration_ms: 2.857124
+  type: 'test'
+  ...
+# Subtest: does not credit payment state failed
+ok 10 - does not credit payment state failed
+  ---
+  duration_ms: 1.083745
+  type: 'test'
+  ...
+# Subtest: does not credit payment state cancelled
+ok 11 - does not credit payment state cancelled
+  ---
+  duration_ms: 1.238428
+  type: 'test'
+  ...
+# Subtest: does not credit payment state expired
+ok 12 - does not credit payment state expired
+  ---
+  duration_ms: 0.968212
+  type: 'test'
+  ...
+# Subtest: does not credit payment state refunded
+ok 13 - does not credit payment state refunded
+  ---
+  duration_ms: 0.877496
+  type: 'test'
+  ...
+# Subtest: does not credit payment state review
+ok 14 - does not credit payment state review
+  ---
+  duration_ms: 1.124736
+  type: 'test'
+  ...
+# Subtest: rejects paid claims from null
+ok 15 - rejects paid claims from null
+  ---
+  duration_ms: 1.721351
+  type: 'test'
+  ...
+# Subtest: rejects paid claims from browser
+ok 16 - rejects paid claims from browser
+  ---
+  duration_ms: 1.224346
+  type: 'test'
+  ...
+# Subtest: rejects paid claims from ghl
+ok 17 - rejects paid claims from ghl
+  ---
+  duration_ms: 0.968974
+  type: 'test'
+  ...
+# Subtest: rejects paid claims from unverified-webhook
+ok 18 - rejects paid claims from unverified-webhook
+  ---
+  duration_ms: 0.950396
+  type: 'test'
+  ...
+# Subtest: unresolved evidence or identity cannot accrue: {"verificationId":null}
+ok 19 - unresolved evidence or identity cannot accrue: {"verificationId":null}
+  ---
+  duration_ms: 0.871307
+  type: 'test'
+  ...
+# Subtest: unresolved evidence or identity cannot accrue: {"verificationId":""}
+ok 20 - unresolved evidence or identity cannot accrue: {"verificationId":""}
+  ---
+  duration_ms: 0.808102
+  type: 'test'
+  ...
+# Subtest: unresolved evidence or identity cannot accrue: {"subjectId":null}
+ok 21 - unresolved evidence or identity cannot accrue: {"subjectId":null}
+  ---
+  duration_ms: 0.810336
+  type: 'test'
+  ...
+# Subtest: unresolved evidence or identity cannot accrue: {"requiresReview":true}
+ok 22 - unresolved evidence or identity cannot accrue: {"requiresReview":true}
+  ---
+  duration_ms: 0.91365
+  type: 'test'
+  ...
+# Subtest: missing order and structured browser payment claims cannot produce a credit
+ok 23 - missing order and structured browser payment claims cannot produce a credit
+  ---
+  duration_ms: 1.178337
+  type: 'test'
+  ...
+# Subtest: retries from both confirmation paths deduplicate by order, not verification/event id
+ok 24 - retries from both confirmation paths deduplicate by order, not verification/event id
+  ---
+  duration_ms: 2.536283
+  type: 'test'
+  ...
+# Subtest: read and redemption require trusted authentication; browser customer ids do not authorize
+ok 25 - read and redemption require trusted authentication; browser customer ids do not authorize
+  ---
+  duration_ms: 4.944335
+  type: 'test'
+  ...
+# Subtest: redemption consumes one entitlement once and same request safely replays
+ok 26 - redemption consumes one entitlement once and same request safely replays
+  ---
+  duration_ms: 10.092366
+  type: 'test'
+  ...
+# Subtest: redemption idempotency keys are scoped to authenticated subjects
+ok 27 - redemption idempotency keys are scoped to authenticated subjects
+  ---
+  duration_ms: 11.431234
+  type: 'test'
+  ...
+# Subtest: changed authoritative evidence holds redemption for review without inventing reversal: {"paymentState":"refunded"}
+ok 28 - changed authoritative evidence holds redemption for review without inventing reversal: {"paymentState":"refunded"}
+  ---
+  duration_ms: 22.04387
+  type: 'test'
+  ...
+# Subtest: changed authoritative evidence holds redemption for review without inventing reversal: {"requiresReview":true}
+ok 29 - changed authoritative evidence holds redemption for review without inventing reversal: {"requiresReview":true}
+  ---
+  duration_ms: 12.392606
+  type: 'test'
+  ...
+# Subtest: changed authoritative evidence holds redemption for review without inventing reversal: {"verifiedSource":"ghl"}
+ok 30 - changed authoritative evidence holds redemption for review without inventing reversal: {"verifiedSource":"ghl"}
+  ---
+  duration_ms: 4.198517
+  type: 'test'
+  ...
+# Subtest: changed authoritative evidence holds redemption for review without inventing reversal: {"subjectId":"customer-b"}
+ok 31 - changed authoritative evidence holds redemption for review without inventing reversal: {"subjectId":"customer-b"}
+  ---
+  duration_ms: 11.514469
+  type: 'test'
+  ...
+# Subtest: an acknowledged redemption can be replayed after evidence becomes unresolved without another consumption
+ok 32 - an acknowledged redemption can be replayed after evidence becomes unresolved without another consumption
+  ---
+  duration_ms: 4.838777
+  type: 'test'
+  ...
+# Subtest: invalid identifiers fail closed without writes: ""
+ok 33 - invalid identifiers fail closed without writes: ""
+  ---
+  duration_ms: 0.92008
+  type: 'test'
+  ...
+# Subtest: invalid identifiers fail closed without writes: " "
+ok 34 - invalid identifiers fail closed without writes: " "
+  ---
+  duration_ms: 0.805468
+  type: 'test'
+  ...
+# Subtest: invalid identifiers fail closed without writes: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ok 35 - invalid identifiers fail closed without writes: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ---
+  duration_ms: 0.981693
+  type: 'test'
+  ...
+# Subtest: invalid identifiers fail closed without writes: null
+ok 36 - invalid identifiers fail closed without writes: null
+  ---
+  duration_ms: 0.794952
+  type: 'test'
+  ...
+# Subtest: invalid identifiers fail closed without writes: 17
+ok 37 - invalid identifiers fail closed without writes: 17
+  ---
+  duration_ms: 0.786749
+  type: 'test'
+  ...
+# Subtest: invalid identifiers fail closed without writes: {}
+ok 38 - invalid identifiers fail closed without writes: {}
+  ---
+  duration_ms: 0.772479
+  type: 'test'
+  ...
+# Subtest: credit/reward rollback is atomic on failure after_credit
+ok 39 - credit/reward rollback is atomic on failure after_credit
+  ---
+  duration_ms: 6.471105
+  type: 'test'
+  ...
+# Subtest: credit/reward rollback is atomic on failure after_entitlement
+ok 40 - credit/reward rollback is atomic on failure after_entitlement
+  ---
+  duration_ms: 4.863614
+  type: 'test'
+  ...
+# Subtest: credit/reward rollback is atomic on failure before_commit
+ok 41 - credit/reward rollback is atomic on failure before_commit
+  ---
+  duration_ms: 7.498716
+  type: 'test'
+  ...
+# Subtest: commit followed by lost credit response survives reopen and safely replays
+ok 42 - commit followed by lost credit response survives reopen and safely replays
+  ---
+  duration_ms: 4.337665
+  type: 'test'
+  ...
+# Subtest: redemption retry after after_redemption cannot double consume
+ok 43 - redemption retry after after_redemption cannot double consume
+  ---
+  duration_ms: 8.463975
+  type: 'test'
+  ...
+# Subtest: redemption retry after before_commit cannot double consume
+ok 44 - redemption retry after before_commit cannot double consume
+  ---
+  duration_ms: 4.899317
+  type: 'test'
+  ...
+# Subtest: redemption retry after after_commit cannot double consume
+ok 45 - redemption retry after after_commit cannot double consume
+  ---
+  duration_ms: 5.66089
+  type: 'test'
+  ...
+# Subtest: same-connection concurrent retries preserve the tenth-order boundary
+ok 46 - same-connection concurrent retries preserve the tenth-order boundary
+  ---
+  duration_ms: 6.484075
+  type: 'test'
+  ...
+# Subtest: redemption snapshots validated input before asynchronous transaction scheduling
+ok 47 - redemption snapshots validated input before asynchronous transaction scheduling
+  ---
+  duration_ms: 21.152518
+  type: 'test'
+  ...
+# Subtest: unresolved earlier evidence blocks new credit without deleting earned history
+ok 48 - unresolved earlier evidence blocks new credit without deleting earned history
+  ---
+  duration_ms: 4.38705
+  type: 'test'
+  ...
+# Subtest: database constraints independently reject duplicate credits, cycles, requests and cross-owner consumption
+ok 49 - database constraints independently reject duplicate credits, cycles, requests and cross-owner consumption
+  ---
+  duration_ms: 8.96162
+  type: 'test'
+  ...
+# Subtest: corrupt reward data fails closed rather than silently granting a different reward
+ok 50 - corrupt reward data fails closed rather than silently granting a different reward
+  ---
+  duration_ms: 4.422353
+  type: 'test'
+  ...
+# Subtest: verified LOCAL fixtures delegate to the configured fake and preserve the ledger
+ok 51 - verified LOCAL fixtures delegate to the configured fake and preserve the ledger
+  ---
+  duration_ms: 30.768685
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: tenant missing
+ok 52 - blocks without delegate effects: tenant missing
+  ---
+  duration_ms: 7.628231
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: tenant evidence unverified
+ok 53 - blocks without delegate effects: tenant evidence unverified
+  ---
+  duration_ms: 12.309301
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: tenant location belongs elsewhere
+ok 54 - blocks without delegate effects: tenant location belongs elsewhere
+  ---
+  duration_ms: 7.510994
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: tenant response belongs elsewhere
+ok 55 - blocks without delegate effects: tenant response belongs elsewhere
+  ---
+  duration_ms: 7.661961
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding missing
+ok 56 - blocks without delegate effects: binding missing
+  ---
+  duration_ms: 6.450195
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding inferred by email only
+ok 57 - blocks without delegate effects: binding inferred by email only
+  ---
+  duration_ms: 6.882491
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding revoked
+ok 58 - blocks without delegate effects: binding revoked
+  ---
+  duration_ms: 6.332688
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding no evidence reference
+ok 59 - blocks without delegate effects: binding no evidence reference
+  ---
+  duration_ms: 6.14772
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding another tenant
+ok 60 - blocks without delegate effects: binding another tenant
+  ---
+  duration_ms: 28.462026
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding another subject
+ok 61 - blocks without delegate effects: binding another subject
+  ---
+  duration_ms: 5.769102
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: binding another location
+ok 62 - blocks without delegate effects: binding another location
+  ---
+  duration_ms: 5.728992
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: contact observation missing
+ok 63 - blocks without delegate effects: contact observation missing
+  ---
+  duration_ms: 7.617114
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: contact observation unverified
+ok 64 - blocks without delegate effects: contact observation unverified
+  ---
+  duration_ms: 9.207549
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: contact observation wrong contact
+ok 65 - blocks without delegate effects: contact observation wrong contact
+  ---
+  duration_ms: 10.820329
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: contact observation wrong location
+ok 66 - blocks without delegate effects: contact observation wrong location
+  ---
+  duration_ms: 5.787741
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: capability missing
+ok 67 - blocks without delegate effects: capability missing
+  ---
+  duration_ms: 13.144473
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: conditional update unknown
+ok 68 - blocks without delegate effects: conditional update unknown
+  ---
+  duration_ms: 8.642452
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: conditional update unsupported
+ok 69 - blocks without delegate effects: conditional update unsupported
+  ---
+  duration_ms: 6.479677
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: capability different location
+ok 70 - blocks without delegate effects: capability different location
+  ---
+  duration_ms: 29.117368
+  type: 'test'
+  ...
+# Subtest: blocks without delegate effects: capability evidence unverified
+ok 71 - blocks without delegate effects: capability evidence unverified
+  ---
+  duration_ms: 16.854628
+  type: 'test'
+  ...
+# Subtest: REMOTE stays blocked with conditional capability unknown
+ok 72 - REMOTE stays blocked with conditional capability unknown
+  ---
+  duration_ms: 8.355821
+  type: 'test'
+  ...
+# Subtest: REMOTE stays blocked with conditional capability unsupported
+ok 73 - REMOTE stays blocked with conditional capability unsupported
+  ---
+  duration_ms: 11.996372
+  type: 'test'
+  ...
+# Subtest: REMOTE stays blocked with conditional capability verified
+ok 74 - REMOTE stays blocked with conditional capability verified
+  ---
+  duration_ms: 5.745436
+  type: 'test'
+  ...
+# Subtest: local-fixture capability evidence cannot certify remote conditional writes
+ok 75 - local-fixture capability evidence cannot certify remote conditional writes
+  ---
+  duration_ms: 6.995262
+  type: 'test'
+  ...
+# Subtest: API Version and a connector idempotency key do not establish CAS capability
+ok 76 - API Version and a connector idempotency key do not establish CAS capability
+  ---
+  duration_ms: 13.123752
+  type: 'test'
+  ...
+# Subtest: an empty tenant lookup never falls back to another configured tenant or location
+ok 77 - an empty tenant lookup never falls back to another configured tenant or location
+  ---
+  duration_ms: 6.627309
+  type: 'test'
+  ...
+# Subtest: facts are rechecked at each send; revocation after construction blocks delivery
+ok 78 - facts are rechecked at each send; revocation after construction blocks delivery
+  ---
+  duration_ms: 6.446027
+  type: 'test'
+  ...
+# Subtest: a valid binding cannot send another subject or contact envelope
+ok 79 - a valid binding cannot send another subject or contact envelope
+  ---
+  duration_ms: 23.474496
+  type: 'test'
+  ...
+# Subtest: constructor snapshots target scope rather than following mutable configuration objects
+ok 80 - constructor snapshots target scope rather than following mutable configuration objects
+  ---
+  duration_ms: 9.313988
+  type: 'test'
+  ...
+# Subtest: capture reads actual backend and delivers aggregates without payment or redemption identifiers
+ok 81 - capture reads actual backend and delivers aggregates without payment or redemption identifiers
+  ---
+  duration_ms: 13.83572
+  type: 'test'
+  ...
+# Subtest: duplicate and delayed event hints reread current state instead of applying deltas
+ok 82 - duplicate and delayed event hints reread current state instead of applying deltas
+  ---
+  duration_ms: 6.110726
+  type: 'test'
+  ...
+# Subtest: impayments and forged payment objects cannot be supplied as mirror progress
+ok 83 - impayments and forged payment objects cannot be supplied as mirror progress
+  ---
+  duration_ms: 2.418307
+  type: 'test'
+  ...
+# Subtest: mirror capture failure cannot roll back a committed credit and reconciliation discovers missing rows
+ok 84 - mirror capture failure cannot roll back a committed credit and reconciliation discovers missing rows
+  ---
+  duration_ms: 6.960959
+  type: 'test'
+  ...
+# Subtest: lost transport response retries the same durable message after destination applied it
+ok 85 - lost transport response retries the same durable message after destination applied it
+  ---
+  duration_ms: 5.863393
+  type: 'test'
+  ...
+# Subtest: a delayed old delivery cannot regress a newer destination revision
+ok 86 - a delayed old delivery cannot regress a newer destination revision
+  ---
+  duration_ms: 10.026697
+  type: 'test'
+  ...
+# Subtest: old acknowledgement cannot clear a newer pending snapshot
+ok 87 - old acknowledgement cannot clear a newer pending snapshot
+  ---
+  duration_ms: 7.656744
+  type: 'test'
+  ...
+# Subtest: old transport failure cannot replace metadata of a newer snapshot
+ok 88 - old transport failure cannot replace metadata of a newer snapshot
+  ---
+  duration_ms: 2.751597
+  type: 'test'
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"messageId":"wrong"}
+ok 89 - receipt mismatch cannot acknowledge or modify loyalty: {"messageId":"wrong"}
+  ---
+  duration_ms: 33.195504
+  type: 'test'
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"subjectId":"b"}
+ok 90 - receipt mismatch cannot acknowledge or modify loyalty: {"subjectId":"b"}
+  ---
+  duration_ms: 9.778405
+  type: 'test'
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"destinationRef":"fake-contact-b"}
+ok 91 - receipt mismatch cannot acknowledge or modify loyalty: {"destinationRef":"fake-contact-b"}
+  ---
+  duration_ms: 14.281549
+  type: 'test'
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"revision":99}
+ok 92 - receipt mismatch cannot acknowledge or modify loyalty: {"revision":99}
+  ---
+  duration_ms: 14.838464
+  type: 'test'
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"payloadHash":"0000000000000000000000000000000000000000000000000000000000000000"}
+ok 93 - receipt mismatch cannot acknowledge or modify loyalty: {"payloadHash":"0000000000000000000000000000000000000000000000000000000000000000"}
+  ---
+  duration_ms: 9.696091
+  type: 'test'
+  ...
+# Subtest: receipt mismatch cannot acknowledge or modify loyalty: {"status":"unverified"}
+ok 94 - receipt mismatch cannot acknowledge or modify loyalty: {"status":"unverified"}
+  ---
+  duration_ms: 9.503754
+  type: 'test'
+  ...
+# Subtest: backend redemption succeeds while mirror is unavailable, then latest snapshot catches up
+ok 95 - backend redemption succeeds while mirror is unavailable, then latest snapshot catches up
+  ---
+  duration_ms: 29.948635
+  type: 'test'
+  ...
+# Subtest: review flag changes version even when credited/reward counts do not change
+ok 96 - review flag changes version even when credited/reward counts do not change
+  ---
+  duration_ms: 17.193566
+  type: 'test'
+  ...
+# Subtest: customers stay isolated even with equal revision numbers and concurrent deliveries
+ok 97 - customers stay isolated even with equal revision numbers and concurrent deliveries
+  ---
+  duration_ms: 14.322259
+  type: 'test'
+  ...
+# Subtest: destination binding mismatch keeps the right customer pending and never updates another
+ok 98 - destination binding mismatch keeps the right customer pending and never updates another
+  ---
+  duration_ms: 9.293529
+  type: 'test'
+  ...
+# Subtest: reconciliation includes authoritative subjects without an outbox and isolates unresolved bindings
+ok 99 - reconciliation includes authoritative subjects without an outbox and isolates unresolved bindings
+  ---
+  duration_ms: 6.228671
+  type: 'test'
+  ...
+# Subtest: durable pending message and destination state survive reopening both files
+ok 100 - durable pending message and destination state survive reopening both files
+  ---
+  duration_ms: 9.693727
+  type: 'test'
+  ...
+# Subtest: ack persistence failure preserves pending and replay does not apply twice
+ok 101 - ack persistence failure preserves pending and replay does not apply twice
+  ---
+  duration_ms: 6.840499
+  type: 'test'
+  ...
+# Subtest: independent capture connections deduplicate snapshots under real SQL serialization
+ok 102 - independent capture connections deduplicate snapshots under real SQL serialization
+  ---
+  duration_ms: 48.572367
+  type: 'test'
+  ...
+# Subtest: capture holds authoritative read and revision in one transaction across a concurrent credit
+ok 103 - capture holds authoritative read and revision in one transaction across a concurrent credit
+  ---
+  duration_ms: 18.305984
+  type: 'test'
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: ""
+ok 104 - invalid internal subject is rejected before capture/delivery: ""
+  ---
+  duration_ms: 4.026519
+  type: 'test'
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: " "
+ok 105 - invalid internal subject is rejected before capture/delivery: " "
+  ---
+  duration_ms: 1.524226
+  type: 'test'
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: null
+ok 106 - invalid internal subject is rejected before capture/delivery: null
+  ---
+  duration_ms: 1.381562
+  type: 'test'
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: {}
+ok 107 - invalid internal subject is rejected before capture/delivery: {}
+  ---
+  duration_ms: 5.579327
+  type: 'test'
+  ...
+# Subtest: invalid internal subject is rejected before capture/delivery: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ok 108 - invalid internal subject is rejected before capture/delivery: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ---
+  duration_ms: 1.491697
+  type: 'test'
+  ...
+# Subtest: persisted JSON key order does not change the projection or block acknowledgement
+ok 109 - persisted JSON key order does not change the projection or block acknowledgement
+  ---
+  duration_ms: 16.486355
+  type: 'test'
+  ...
+# Subtest: a 480ms right hold survives keyup before the first rendered frame
+ok 110 - a 480ms right hold survives keyup before the first rendered frame
+  ---
+  duration_ms: 1.406289
+  type: 'test'
+  ...
+# Subtest: sampling frames during a hold does not double-count time when keyup arrives
+ok 111 - sampling frames during a hold does not double-count time when keyup arrives
+  ---
+  duration_ms: 0.327381
+  type: 'test'
+  ...
+# Subtest: repeat keydown events preserve one continuous hold rather than adding impulses
+ok 112 - repeat keydown events preserve one continuous hold rather than adding impulses
+  ---
+  duration_ms: 0.177576
+  type: 'test'
+  ...
+# Subtest: releasing one alias or pointer source leaves another held source active
+ok 113 - releasing one alias or pointer source leaves another held source active
+  ---
+  duration_ms: 0.228843
+  type: 'test'
+  ...
+# Subtest: diagonal movement has unit length and opposing directions cancel over each interval
+ok 114 - diagonal movement has unit length and opposing directions cancel over each interval
+  ---
+  duration_ms: 0.17319
+  type: 'test'
+  ...
+# Subtest: run transitions retain their own elapsed intervals and modifier aliases
+ok 115 - run transitions retain their own elapsed intervals and modifier aliases
+  ---
+  duration_ms: 0.189184
+  type: 'test'
+  ...
+# Subtest: reset discards held inputs and queued travel before a later fresh press
+ok 116 - reset discards held inputs and queued travel before a later fresh press
+  ---
+  duration_ms: 0.155904
+  type: 'test'
+  ...
+# Subtest: a long frame stalls at the configured travel budget rather than building an unbounded backlog
+ok 117 - a long frame stalls at the configured travel budget rather than building an unbounded backlog
+  ---
+  duration_ms: 0.179459
+  type: 'test'
+  ...
+# Subtest: the input clock is monotonic and rejects non-finite timestamps or invalid budgets
+ok 118 - the input clock is monotonic and rejects non-finite timestamps or invalid budgets
+  ---
+  duration_ms: 0.492399
+  type: 'test'
+  ...
+# Subtest: CameraController consumes a complete between-frame press once and publishes the resulting position
+ok 119 - CameraController consumes a complete between-frame press once and publishes the resulting position
+  ---
+  duration_ms: 29.558149
+  type: 'test'
+  ...
+# Subtest: collision integration approaches the display, slides sideways, and respects the room bounds
+ok 120 - collision integration approaches the display, slides sideways, and respects the room bounds
+  ---
+  duration_ms: 34.734172
+  type: 'test'
+  ...
+# Subtest: the guided controller discards queued and held free-roam movement
+ok 121 - the guided controller discards queued and held free-roam movement
+  ---
+  duration_ms: 10.977424
+  type: 'test'
+  ...
+# Subtest: the keyboard handler ignores editable targets and still releases a key after focus changes
+ok 122 - the keyboard handler ignores editable targets and still releases a key after focus changes
+  ---
+  duration_ms: 5.46755
+  type: 'test'
+  ...
+# Subtest: blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap
+ok 123 - blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap
+  ---
+  duration_ms: 23.527795
+  type: 'test'
+  ...
+# Subtest: a disposed response while the context is live remains a failure without an unhandled rejection
+ok 124 - a disposed response while the context is live remains a failure without an unhandled rejection
+  ---
+  duration_ms: 1.26013
+  type: 'test'
+  ...
+# Subtest: closing drains pending requests before context.close and records expected disposal separately
+ok 125 - closing drains pending requests before context.close and records expected disposal separately
+  ---
+  duration_ms: 0.36722
+  type: 'test'
+  ...
+# Subtest: new allowed GETs during closing are aborted without fetching online
+ok 126 - new allowed GETs during closing are aborted without fetching online
+  ---
+  duration_ms: 0.365559
+  type: 'test'
+  ...
+# Subtest: closing never permits an unrelated destination or write
+ok 127 - closing never permits an unrelated destination or write
+  ---
+  duration_ms: 0.291597
+  type: 'test'
+  ...
+# Subtest: HTTP500 completing during the closing drain is an immediate failure
+ok 128 - HTTP500 completing during the closing drain is an immediate failure
+  ---
+  duration_ms: 0.332669
+  type: 'test'
+  ...
+# Subtest: a timeout during closing remains a failure even when its text also mentions context closed
+ok 129 - a timeout during closing remains a failure even when its text also mentions context closed
+  ---
+  duration_ms: 0.893219
+  type: 'test'
+  ...
+# Subtest: a disposed response while the context is live is a real callback failure without a rejected handler
+ok 130 - a disposed response while the context is live is a real callback failure without a rejected handler
+  ---
+  duration_ms: 2.378026
+  type: 'test'
+  ...
+# Subtest: close drains deferred reads before disposing context, records expected disposal, and is idempotent
+ok 131 - close drains deferred reads before disposing context, records expected disposal, and is idempotent
+  ---
+  duration_ms: 2.066339
+  type: 'test'
+  ...
+# Subtest: new loopback or exact-fixture GETs during close are safely aborted without any online fetch
+ok 132 - new loopback or exact-fixture GETs during close are safely aborted without any online fetch
+  ---
+  duration_ms: 1.997236
+  type: 'test'
+  ...
+# Subtest: closing never permits an unrelated destination or a write
+ok 133 - closing never permits an unrelated destination or a write
+  ---
+  duration_ms: 1.397025
+  type: 'test'
+  ...
+# Subtest: a local HTTP500 finishing during the closing drain immediately fails the caller
+ok 134 - a local HTTP500 finishing during the closing drain immediately fails the caller
+  ---
+  duration_ms: 3.253298
+  type: 'test'
+  ...
+# Subtest: a timeout during close is a failure even if its message also mentions context closed
+ok 135 - a timeout during close is a failure even if its message also mentions context closed
+  ---
+  duration_ms: 1.231076
+  type: 'test'
+  ...
+# Subtest: zero-height BODY/root overflow does not clip fixed UI or complete card text
+ok 136 - zero-height BODY/root overflow does not clip fixed UI or complete card text
+  ---
+  duration_ms: 5.545257
+  type: 'test'
+  ...
+# Subtest: real article/scroll clipping preserves the distinction between raw44 and effective42
+ok 137 - real article/scroll clipping preserves the distinction between raw44 and effective42
+  ---
+  duration_ms: 2.719498
+  type: 'test'
+  ...
+# Subtest: an opaque pointer-inert overlay blocks the projected physical vitrina ROI
+ok 138 - an opaque pointer-inert overlay blocks the projected physical vitrina ROI
+  ---
+  duration_ms: 1.633199
+  type: 'test'
+  ...
+# Subtest: missing cashier or product anchors cannot manufacture a free positive ROI
+ok 139 - missing cashier or product anchors cannot manufacture a free positive ROI
+  ---
+  duration_ms: 1.261532
+  type: 'test'
+  ...
+# Subtest: zero-size, non-finite or offscreen anchor rectangles explicitly invalidate the group
+ok 140 - zero-size, non-finite or offscreen anchor rectangles explicitly invalidate the group
+  ---
+  duration_ms: 1.482763
+  type: 'test'
+  ...
+# Subtest: card glyphs with ellipsis or overlapping the remove control are reported honestly
+ok 141 - card glyphs with ellipsis or overlapping the remove control are reported honestly
+  ---
+  duration_ms: 0.438948
+  type: 'test'
+  ...
+# Subtest: requestAnimationFrame returns its original native ID
+ok 142 - requestAnimationFrame returns its original native ID
+  ---
+  duration_ms: 1.8871
+  type: 'test'
+  ...
+# Subtest: paused app callbacks stay queued while native pause fences complete
+ok 143 - paused app callbacks stay queued while native pause fences complete
+  ---
+  duration_ms: 0.790095
+  type: 'test'
+  ...
+# Subtest: cancelling a queued original ID prevents delivery after resume
+ok 144 - cancelling a queued original ID prevents delivery after resume
+  ---
+  duration_ms: 8.529753
+  type: 'test'
+  ...
+# Subtest: cancel(original ID) also cancels its reprogrammed native handle
+ok 145 - cancel(original ID) also cancels its reprogrammed native handle
+  ---
+  duration_ms: 0.762333
+  type: 'test'
+  ...
+# Subtest: resume supplies a fresh native timestamp without rebasing the real clock
+ok 146 - resume supplies a fresh native timestamp without rebasing the real clock
+  ---
+  duration_ms: 1.163375
+  type: 'test'
+  ...
+# Subtest: callbacks retain the native Window receiver
+ok 147 - callbacks retain the native Window receiver
+  ---
+  duration_ms: 0.643555
+  type: 'test'
+  ...
+# Subtest: invalid callbacks retain native synchronous validation
+ok 148 - invalid callbacks retain native synchronous validation
+  ---
+  duration_ms: 0.785818
+  type: 'test'
+  ...
+# Subtest: A healthy fresh journey resets only the in-tab product draft and keeps the reload
+ok 149 - A healthy fresh journey resets only the in-tab product draft and keeps the reload
+  ---
+  duration_ms: 9.966588
+  type: 'test'
+  ...
+# Subtest: A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup
+ok 150 - A 200 HTML document with an HTTP 500 JS chunk reports the server artifact failure before UI lookup
+  ---
+  duration_ms: 4.534481
+  type: 'test'
+  ...
+# Subtest: A failed document is reported as an HTTP setup failure
+ok 151 - A failed document is reported as an HTTP setup failure
+  ---
+  duration_ms: 2.557706
+  type: 'test'
+  ...
+# Subtest: A non-loopback target is refused before any browser launch
+ok 152 - A non-loopback target is refused before any browser launch
+  ---
+  duration_ms: 1.401482
+  type: 'test'
+  ...
+# Subtest: The original readiness and strafe logic remains intact apart from comments and result checkpoints
+ok 153 - The original readiness and strafe logic remains intact apart from comments and result checkpoints
+  ---
+  duration_ms: 1.799679
+  type: 'test'
+  ...
+# Subtest: Teardown drains an in-flight fulfill before disposing the context and records a marked cancellation
+ok 154 - Teardown drains an in-flight fulfill before disposing the context and records a marked cancellation
+  ---
+  duration_ms: 7.918855
+  type: 'test'
+  ...
+# Subtest: The same disposed fulfill error while the context is live remains a FAIL
+ok 155 - The same disposed fulfill error while the context is live remains a FAIL
+  ---
+  duration_ms: 2.736574
+  type: 'test'
+  ...
+# Subtest: An unrelated fulfill error during teardown remains a FAIL
+ok 156 - An unrelated fulfill error during teardown remains a FAIL
+  ---
+  duration_ms: 6.378616
+  type: 'test'
+  ...
+# Subtest: New allowed reads during closing are aborted without fetching or fulfilling
+ok 157 - New allowed reads during closing are aborted without fetching or fulfilling
+  ---
+  duration_ms: 3.075522
+  type: 'test'
+  ...
+# Subtest: A POST during closing is aborted and remains a forbidden request FAIL with no egress
+ok 158 - A POST during closing is aborted and remains a forbidden request FAIL with no egress
+  ---
+  duration_ms: 3.162773
+  type: 'test'
+  ...
+# Subtest: The outer finally writes an explicit result even if browser launch fails
+ok 159 - The outer finally writes an explicit result even if browser launch fails
+  ---
+  duration_ms: 12.88196
+  type: 'test'
+  ...
+# Subtest: A late old-document draft write cannot restore guided mode in the new journey
+ok 160 - A late old-document draft write cannot restore guided mode in the new journey
+  ---
+  duration_ms: 3.088873
+  type: 'test'
+  ...
+# Subtest: A later reload without the one-shot marker preserves the real product draft
+ok 161 - A later reload without the one-shot marker preserves the real product draft
+  ---
+  duration_ms: 2.349894
+  type: 'test'
+  ...
+# Subtest: review mode stops every HTTP method before downstream effects
+ok 162 - review mode stops every HTTP method before downstream effects
+  ---
+  duration_ms: 23.321417
+  type: 'test'
+  ...
+# Subtest: all existing API families and canonical API paths are covered
+ok 163 - all existing API families and canonical API paths are covered
+  ---
+  duration_ms: 3.025457
+  type: 'test'
+  ...
+# Subtest: landing, image assets, and unrelated prefixes remain available
+ok 164 - landing, image assets, and unrelated prefixes remain available
+  ---
+  duration_ms: 1.184196
+  type: 'test'
+  ...
+# Subtest: false or absent flag leaves downstream behavior unchanged
+ok 165 - false or absent flag leaves downstream behavior unchanged
+  ---
+  duration_ms: 1.779469
+  type: 'test'
+  ...
+# Subtest: flag is read at request time rather than frozen by the build/import
+ok 166 - flag is read at request time rather than frozen by the build/import
+  ---
+  duration_ms: 0.895243
+  type: 'test'
+  ...
+# Subtest: Nitro registers the guard as global middleware outside the financial routes
+ok 167 - Nitro registers the guard as global middleware outside the financial routes
+  ---
+  duration_ms: 0.796695
+  type: 'test'
+  ...
+1..167
+# tests 167
+# suites 0
+# pass 167
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2803.622212
