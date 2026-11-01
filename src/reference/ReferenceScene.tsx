@@ -95,7 +95,6 @@ export function ReferenceScene(props: Props) {
     </header>
 
     <Wordmark />
-    <p className="rebuilt-wall-copy rebuilt-wall-copy-left" aria-hidden="true">Fresh bagels.<br />Happier days.</p>
     <p className="rebuilt-wall-copy rebuilt-wall-copy-right" aria-hidden="true">Hechos para<br />bagel lovers.<span>♡</span></p>
 
     <div className="rebuilt-hero">
