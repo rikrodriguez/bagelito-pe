@@ -1,0 +1,30 @@
+{
+  "codeSHA": "c987b742e9266298ca26e1e29f46dabe15394573",
+  "status": "WIP visual checkpoint, not visual acceptance or completed purchase suite",
+  "viewport": [
+    1536,
+    1024
+  ],
+  "files": [
+    {
+      "path": "1536-entry.png",
+      "sha256": "6611a5dc49f89f94b0a5304a129af48077b5594839a8e19bf5a86877804f600f",
+      "bytes": 2134415
+    },
+    {
+      "path": "1536-entry-full.png",
+      "sha256": "daaf79531bc3670dd1812b7133fae17a945631fb23713f3e40f1ddf97a952d98",
+      "bytes": 2141886
+    },
+    {
+      "path": "390-entry.png",
+      "sha256": "aa80cc71d77cc7a44bff25e5a51590a21954d886798ca1ccbea0e45a6d8258c4",
+      "bytes": 485652
+    },
+    {
+      "path": "390-entry-full.png",
+      "sha256": "17d66164a1f0ebd21e6be59801fcfb52bf1ccb4bba99769e852ce634e03baa7c",
+      "bytes": 500198
+    }
+  ]
+}
