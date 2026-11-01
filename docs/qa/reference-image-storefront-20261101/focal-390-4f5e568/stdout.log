@@ -1,0 +1,3 @@
+{"at":"2026-11-01T00:23:37.378Z","type":"exact-image-captured","width":390,"file":"390-exact-storefront.png"}
+{"at":"2026-11-01T00:23:37.490Z","type":"case-failed","width":390,"message":"AssertionError [ERR_ASSERTION]: Reference review must not call fetch/XHR/storage: [{\"kind\":\"storage-access\",\"name\":\"sessionStorage\"},{\"kind\":\"storage-method\",\"name\":\"getItem\"},{\"kind\":\"storage-access\",\"name\":\"sessionStorage\"},{\"kind\":\"storage-method\",\"name\":\"getItem\"}]\n\n4 !== 0\n"}
+1 image cases; 1 failures

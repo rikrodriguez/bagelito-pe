@@ -1,0 +1,38 @@
+{
+  "status": "WIP visual implementation; not a full functional/safety acceptance",
+  "applicationSHA": "4f5e568799e19c6b178c35dbc01f860d31a5e40b",
+  "referenceFile": "public/images/store-reference-approved.webp",
+  "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "formatNote": "Existing approved WebP is visually the parent reference. Original JPEG bytes are not claimed identical.",
+  "observed": "Real screenshot: exact image, category targets44px, native Tab and noCanvas pass; Packs opens pack-size. Initial strict no-storage-read probe fails on two TanStack scroll-cache reads, no application draft or writes. Router persistence is being disabled; final acceptance remains pending.",
+  "files": {
+    "390-exact-storefront.png": {
+      "sha256": "8fd06db54a202973b7dbca010032a584b75d121cafc2bb99d13bddf0b33e3305",
+      "bytes": 220238
+    },
+    "390-failure.png": {
+      "sha256": "58799e4399affb28a3ccb6dd094ecb79b94e547727df8270c085a5e91f70ae0f",
+      "bytes": 225934
+    },
+    "driver-first-wip.cjs": {
+      "sha256": "ca25d15761a2ac50cbb5bcf58fb7825755cf73c37d2b7e041f8d178ee8a45586",
+      "bytes": 13299
+    },
+    "exact-image-results.json": {
+      "sha256": "b3c0925be3f5a6f5621e69bf67a9009c2598012e78ac0908cab38923c7703a6b",
+      "bytes": 6688
+    },
+    "trace-390-exact-storefront.png": {
+      "sha256": "8fd06db54a202973b7dbca010032a584b75d121cafc2bb99d13bddf0b33e3305",
+      "bytes": 220238
+    },
+    "trace-390-failure.png": {
+      "sha256": "7e80a5cbbd6b9eace475d24731f86d9ac8bfa897a4639ed528473ef2899678a3",
+      "bytes": 225469
+    },
+    "trace-exact-image-results.json": {
+      "sha256": "56557f49a0fe8cad336137fe432d68d91cabab2daa026d6433099dc9e8cc846f",
+      "bytes": 9081
+    }
+  }
+}

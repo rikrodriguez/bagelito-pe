@@ -726,7 +726,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       </button>
     </header>}
 
-    {canGoBack && <button type="button" className="guided-journey-back" onClick={goBack} aria-label="Volver al paso anterior" title="Volver al paso anterior">
+    {canGoBack && (!referenceMode || !['entrance', 'selector'].includes(scene)) && <button type="button" className="guided-journey-back" onClick={goBack} aria-label="Volver al paso anterior" title="Volver al paso anterior">
       <span aria-hidden="true">←</span><span>Volver</span>
     </button>}
 
