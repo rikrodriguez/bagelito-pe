@@ -1,0 +1,10 @@
+{"at":"2026-11-01T00:01:08.048Z","type":"physical-captured","width":320,"pass":false,"clearCreamCentres":3,"logoInsideCorners":2,"logoViewportFraction":0.44491689536582535}
+{"at":"2026-11-01T00:01:08.059Z","type":"context-closing","width":320,"pendingRoutes":0}
+{"at":"2026-11-01T00:01:08.094Z","type":"context-closed","width":320,"routeErrors":0,"closingRouteErrors":0}
+{"at":"2026-11-01T00:01:22.863Z","type":"physical-captured","width":390,"pass":false,"clearCreamCentres":3,"logoInsideCorners":2,"logoViewportFraction":0.4480111363712362}
+{"at":"2026-11-01T00:01:22.872Z","type":"context-closing","width":390,"pendingRoutes":0}
+{"at":"2026-11-01T00:01:22.901Z","type":"context-closed","width":390,"routeErrors":0,"closingRouteErrors":0}
+{"at":"2026-11-01T00:02:01.161Z","type":"physical-captured","width":1280,"pass":false,"clearCreamCentres":1,"logoInsideCorners":1,"logoViewportFraction":0.637929952308803}
+{"at":"2026-11-01T00:02:01.213Z","type":"context-closing","width":1280,"pendingRoutes":0}
+{"at":"2026-11-01T00:02:01.356Z","type":"context-closed","width":1280,"routeErrors":0,"closingRouteErrors":0}
+3 physical cases; 5 failures

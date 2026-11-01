@@ -1,0 +1,544 @@
+{
+  "kind": "CPU projection only; exact head/hair plus cashier proxies",
+  "raw": {
+    "p": [
+      7.1,
+      4.2,
+      8.4
+    ],
+    "look": [
+      2.2,
+      0.1,
+      -1.8
+    ],
+    "width": 5.3,
+    "fov": 84
+  },
+  "views": [
+    {
+      "viewport": {
+        "w": 320,
+        "h": 700
+      },
+      "camera": [
+        7.1,
+        4.2,
+        8.4
+      ],
+      "logo": {
+        "left": 39.76,
+        "right": 257.33,
+        "top": 121.58,
+        "bottom": 206.69
+      },
+      "bowls": {
+        "left": 126.88,
+        "right": 271.34,
+        "top": 305.74,
+        "bottom": 374.54
+      },
+      "labels": {
+        "left": 118.78,
+        "right": 274.6,
+        "top": 331.61,
+        "bottom": 392.4
+      },
+      "pos": {
+        "left": 117.02,
+        "right": 157.2,
+        "top": 377.66,
+        "bottom": 468.48
+      },
+      "bowlAreas": [
+        911.21,
+        1041.17,
+        1215.44,
+        956.05,
+        1107.93
+      ],
+      "bowlBlockedSamples": [
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "labelBlockedSamples": [
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            "sample": 0,
+            "occluder": "NPC-hair"
+          }
+        ]
+      ],
+      "perBowl": [
+        {
+          "index": 0,
+          "rect": {
+            "left": 126.88,
+            "right": 162.53,
+            "top": 305.74,
+            "bottom": 331.3
+          },
+          "area": 911.21,
+          "blockedSamples": []
+        },
+        {
+          "index": 1,
+          "rect": {
+            "left": 175.43,
+            "right": 213.54,
+            "top": 311.32,
+            "bottom": 338.64
+          },
+          "area": 1041.17,
+          "blockedSamples": []
+        },
+        {
+          "index": 2,
+          "rect": {
+            "left": 229.9,
+            "right": 271.34,
+            "top": 317.59,
+            "bottom": 346.92
+          },
+          "area": 1215.44,
+          "blockedSamples": []
+        },
+        {
+          "index": 3,
+          "rect": {
+            "left": 149.6,
+            "right": 185.34,
+            "top": 337.96,
+            "bottom": 364.71
+          },
+          "area": 956.05,
+          "blockedSamples": []
+        },
+        {
+          "index": 4,
+          "rect": {
+            "left": 201.96,
+            "right": 240.51,
+            "top": 345.8,
+            "bottom": 374.54
+          },
+          "area": 1107.93,
+          "blockedSamples": []
+        }
+      ],
+      "perLabel": [
+        {
+          "index": 0,
+          "rect": {
+            "left": 118.78,
+            "right": 162.74,
+            "top": 331.61,
+            "bottom": 347.84
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 1,
+          "rect": {
+            "left": 166.1,
+            "right": 215.27,
+            "top": 338.67,
+            "bottom": 356.23
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 2,
+          "rect": {
+            "left": 218.81,
+            "right": 274.6,
+            "top": 346.59,
+            "bottom": 365.7
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 3,
+          "rect": {
+            "left": 141.15,
+            "right": 186.19,
+            "top": 363.71,
+            "bottom": 381.44
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 4,
+          "rect": {
+            "left": 192.05,
+            "right": 242.93,
+            "top": 373.08,
+            "bottom": 392.4
+          },
+          "blockedSamples": [
+            {
+              "sample": 0,
+              "occluder": "NPC-hair"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "camera": [
+        7.1,
+        4.2,
+        8.4
+      ],
+      "logo": {
+        "left": 50.02,
+        "right": 312.35,
+        "top": 146.59,
+        "bottom": 249.21
+      },
+      "bowls": {
+        "left": 155.07,
+        "right": 329.24,
+        "top": 368.63,
+        "bottom": 451.59
+      },
+      "labels": {
+        "left": 145.3,
+        "right": 333.18,
+        "top": 399.83,
+        "bottom": 473.13
+      },
+      "pos": {
+        "left": 143.18,
+        "right": 191.63,
+        "top": 455.35,
+        "bottom": 564.86
+      },
+      "bowlAreas": [
+        1324.64,
+        1513.59,
+        1767.09,
+        1389.98,
+        1610.65
+      ],
+      "bowlBlockedSamples": [
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "labelBlockedSamples": [
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            "sample": 0,
+            "occluder": "NPC-hair"
+          }
+        ]
+      ],
+      "perBowl": [
+        {
+          "index": 0,
+          "rect": {
+            "left": 155.07,
+            "right": 198.05,
+            "top": 368.63,
+            "bottom": 399.45
+          },
+          "area": 1324.64,
+          "blockedSamples": []
+        },
+        {
+          "index": 1,
+          "rect": {
+            "left": 213.6,
+            "right": 259.55,
+            "top": 375.36,
+            "bottom": 408.3
+          },
+          "area": 1513.59,
+          "blockedSamples": []
+        },
+        {
+          "index": 2,
+          "rect": {
+            "left": 279.28,
+            "right": 329.24,
+            "top": 382.92,
+            "bottom": 418.29
+          },
+          "area": 1767.09,
+          "blockedSamples": []
+        },
+        {
+          "index": 3,
+          "rect": {
+            "left": 182.46,
+            "right": 225.56,
+            "top": 407.49,
+            "bottom": 439.74
+          },
+          "area": 1389.98,
+          "blockedSamples": []
+        },
+        {
+          "index": 4,
+          "rect": {
+            "left": 245.6,
+            "right": 292.07,
+            "top": 416.93,
+            "bottom": 451.59
+          },
+          "area": 1610.65,
+          "blockedSamples": []
+        }
+      ],
+      "perLabel": [
+        {
+          "index": 0,
+          "rect": {
+            "left": 145.3,
+            "right": 198.3,
+            "top": 399.83,
+            "bottom": 419.39
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 1,
+          "rect": {
+            "left": 202.36,
+            "right": 261.64,
+            "top": 408.34,
+            "bottom": 429.51
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 2,
+          "rect": {
+            "left": 265.9,
+            "right": 333.18,
+            "top": 417.88,
+            "bottom": 440.93
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 3,
+          "rect": {
+            "left": 172.28,
+            "right": 226.58,
+            "top": 438.54,
+            "bottom": 459.91
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 4,
+          "rect": {
+            "left": 233.64,
+            "right": 294.99,
+            "top": 449.83,
+            "bottom": 473.13
+          },
+          "blockedSamples": [
+            {
+              "sample": 0,
+              "occluder": "NPC-hair"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "w": 1280,
+        "h": 800
+      },
+      "camera": [
+        7.1,
+        4.2,
+        8.4
+      ],
+      "logo": {
+        "left": 407.29,
+        "right": 828.37,
+        "top": -42.07,
+        "bottom": 122.65
+      },
+      "bowls": {
+        "left": 575.9,
+        "right": 855.47,
+        "top": 314.33,
+        "bottom": 447.5
+      },
+      "labels": {
+        "left": 560.22,
+        "right": 861.8,
+        "top": 364.41,
+        "bottom": 482.06
+      },
+      "pos": {
+        "left": 556.82,
+        "right": 634.58,
+        "top": 453.54,
+        "bottom": 629.3
+      },
+      "bowlAreas": [
+        3413.43,
+        3899.69,
+        4551.58,
+        3580.76,
+        4151.3
+      ],
+      "bowlBlockedSamples": [
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "labelBlockedSamples": [
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            "sample": 0,
+            "occluder": "NPC-hair"
+          }
+        ]
+      ],
+      "perBowl": [
+        {
+          "index": 0,
+          "rect": {
+            "left": 575.9,
+            "right": 644.9,
+            "top": 314.33,
+            "bottom": 363.8
+          },
+          "area": 3413.43,
+          "blockedSamples": []
+        },
+        {
+          "index": 1,
+          "rect": {
+            "left": 669.85,
+            "right": 743.61,
+            "top": 325.14,
+            "bottom": 378.01
+          },
+          "area": 3899.69,
+          "blockedSamples": []
+        },
+        {
+          "index": 2,
+          "rect": {
+            "left": 775.28,
+            "right": 855.47,
+            "top": 337.28,
+            "bottom": 394.04
+          },
+          "area": 4551.58,
+          "blockedSamples": []
+        },
+        {
+          "index": 3,
+          "rect": {
+            "left": 619.87,
+            "right": 689.05,
+            "top": 376.71,
+            "bottom": 428.47
+          },
+          "area": 3580.76,
+          "blockedSamples": []
+        },
+        {
+          "index": 4,
+          "rect": {
+            "left": 721.21,
+            "right": 795.82,
+            "top": 391.86,
+            "bottom": 447.5
+          },
+          "area": 4151.3,
+          "blockedSamples": []
+        }
+      ],
+      "perLabel": [
+        {
+          "index": 0,
+          "rect": {
+            "left": 560.22,
+            "right": 645.3,
+            "top": 364.41,
+            "bottom": 395.81
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 1,
+          "rect": {
+            "left": 651.81,
+            "right": 746.96,
+            "top": 378.07,
+            "bottom": 412.05
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 2,
+          "rect": {
+            "left": 753.81,
+            "right": 861.8,
+            "top": 393.39,
+            "bottom": 430.38
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 3,
+          "rect": {
+            "left": 603.52,
+            "right": 690.68,
+            "top": 426.54,
+            "bottom": 460.85
+          },
+          "blockedSamples": []
+        },
+        {
+          "index": 4,
+          "rect": {
+            "left": 702.03,
+            "right": 800.49,
+            "top": 444.66,
+            "bottom": 482.06
+          },
+          "blockedSamples": [
+            {
+              "sample": 0,
+              "occluder": "NPC-hair"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

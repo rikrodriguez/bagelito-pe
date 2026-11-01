@@ -1,0 +1,2181 @@
+{
+  "kind": "CPU only; NPC head/hair included; body/proxy/sample visibility, not GPU certification",
+  "results": [
+    {
+      "raw": {
+        "name": "candidate4.2",
+        "p": [
+          7.1,
+          4.2,
+          8.4
+        ],
+        "look": [
+          2.2,
+          0.25,
+          -1.8
+        ],
+        "width": 5.3,
+        "fov": 82
+      },
+      "views": [
+        {
+          "viewport": {
+            "w": 320,
+            "h": 700
+          },
+          "camera": [
+            7.1,
+            4.2,
+            8.4
+          ],
+          "logo": {
+            "left": 36.23,
+            "right": 260.13,
+            "top": 119.73,
+            "bottom": 206.92
+          },
+          "bowls": {
+            "left": 125.73,
+            "right": 275.26,
+            "top": 308.94,
+            "bottom": 380.18
+          },
+          "labels": {
+            "left": 117.32,
+            "right": 278.73,
+            "top": 335.7,
+            "bottom": 398.72
+          },
+          "pos": {
+            "left": 115.44,
+            "right": 157.09,
+            "top": 383.42,
+            "bottom": 477.92
+          },
+          "bowlAreas": [
+            975,
+            1114.18,
+            1302.02,
+            1026.1,
+            1190.21
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 125.73,
+                "right": 162.62,
+                "top": 308.94,
+                "bottom": 335.37
+              },
+              "area": 975,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 175.97,
+                "right": 215.41,
+                "top": 314.72,
+                "bottom": 342.97
+              },
+              "area": 1114.18,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 232.36,
+                "right": 275.26,
+                "top": 321.2,
+                "bottom": 351.55
+              },
+              "area": 1302.02,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 149.22,
+                "right": 186.25,
+                "top": 342.27,
+                "bottom": 369.98
+              },
+              "area": 1026.1,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 203.48,
+                "right": 243.42,
+                "top": 350.38,
+                "bottom": 380.18
+              },
+              "area": 1190.21,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 117.32,
+                "right": 162.84,
+                "top": 335.7,
+                "bottom": 352.5
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 166.32,
+                "right": 217.24,
+                "top": 343,
+                "bottom": 361.19
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 220.93,
+                "right": 278.73,
+                "top": 351.2,
+                "bottom": 371.01
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 140.47,
+                "right": 187.15,
+                "top": 368.95,
+                "bottom": 387.34
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 193.23,
+                "right": 245.99,
+                "top": 378.66,
+                "bottom": 398.72
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 390,
+            "h": 844
+          },
+          "camera": [
+            7.1,
+            4.2,
+            8.4
+          ],
+          "logo": {
+            "left": 45.76,
+            "right": 315.73,
+            "top": 144.36,
+            "bottom": 249.48
+          },
+          "bowls": {
+            "left": 153.67,
+            "right": 333.97,
+            "top": 372.5,
+            "bottom": 458.39
+          },
+          "labels": {
+            "left": 143.54,
+            "right": 338.16,
+            "top": 404.76,
+            "bottom": 480.74
+          },
+          "pos": {
+            "left": 141.27,
+            "right": 191.49,
+            "top": 462.29,
+            "bottom": 576.23
+          },
+          "bowlAreas": [
+            1417.45,
+            1620.37,
+            1892.95,
+            1491.42,
+            1730.39
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 153.67,
+                "right": 198.16,
+                "top": 372.5,
+                "bottom": 404.36
+              },
+              "area": 1417.45,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 214.25,
+                "right": 261.81,
+                "top": 379.46,
+                "bottom": 413.53
+              },
+              "area": 1620.37,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 282.25,
+                "right": 333.97,
+                "top": 387.27,
+                "bottom": 423.87
+              },
+              "area": 1892.95,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 182.01,
+                "right": 226.65,
+                "top": 412.68,
+                "bottom": 446.09
+              },
+              "area": 1491.42,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 247.42,
+                "right": 295.58,
+                "top": 422.46,
+                "bottom": 458.39
+              },
+              "area": 1730.39,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 143.54,
+                "right": 198.42,
+                "top": 404.76,
+                "bottom": 425.01
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 202.62,
+                "right": 264.02,
+                "top": 413.56,
+                "bottom": 435.49
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 268.46,
+                "right": 338.16,
+                "top": 423.45,
+                "bottom": 447.33
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 171.45,
+                "right": 227.73,
+                "top": 444.85,
+                "bottom": 467.02
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 235.07,
+                "right": 298.67,
+                "top": 456.56,
+                "bottom": 480.74
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 1280,
+            "h": 800
+          },
+          "camera": [
+            7.1,
+            4.2,
+            8.4
+          ],
+          "logo": {
+            "left": 408.73,
+            "right": 827.09,
+            "top": -30.24,
+            "bottom": 132.66
+          },
+          "bowls": {
+            "left": 575.96,
+            "right": 855.36,
+            "top": 323.29,
+            "bottom": 456.39
+          },
+          "labels": {
+            "left": 560.26,
+            "right": 861.84,
+            "top": 373.28,
+            "bottom": 491.03
+          },
+          "pos": {
+            "left": 556.74,
+            "right": 634.56,
+            "top": 462.44,
+            "bottom": 639.01
+          },
+          "bowlAreas": [
+            3403.76,
+            3891.36,
+            4545.31,
+            3582.66,
+            4154.65
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 575.96,
+                "right": 644.89,
+                "top": 323.29,
+                "bottom": 372.67
+              },
+              "area": 3403.76,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 669.83,
+                "right": 743.53,
+                "top": 334.07,
+                "bottom": 386.87
+              },
+              "area": 3891.36,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 775.21,
+                "right": 855.36,
+                "top": 346.18,
+                "bottom": 402.89
+              },
+              "area": 4545.31,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 619.86,
+                "right": 689.05,
+                "top": 385.56,
+                "bottom": 437.34
+              },
+              "area": 3582.66,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 721.24,
+                "right": 795.87,
+                "top": 400.72,
+                "bottom": 456.39
+              },
+              "area": 4154.65,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 560.26,
+                "right": 645.3,
+                "top": 373.28,
+                "bottom": 404.66
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 651.81,
+                "right": 746.96,
+                "top": 386.92,
+                "bottom": 420.91
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 753.84,
+                "right": 861.84,
+                "top": 402.24,
+                "bottom": 439.25
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 603.51,
+                "right": 690.72,
+                "top": 435.41,
+                "bottom": 469.77
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 702.1,
+                "right": 800.66,
+                "top": 453.55,
+                "bottom": 491.03
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "raw": {
+        "name": "candidate4.1",
+        "p": [
+          7.1,
+          4.1,
+          8.4
+        ],
+        "look": [
+          2.2,
+          0.2,
+          -1.8
+        ],
+        "width": 5.3,
+        "fov": 82
+      },
+      "views": [
+        {
+          "viewport": {
+            "w": 320,
+            "h": 700
+          },
+          "camera": [
+            7.1,
+            4.1,
+            8.4
+          ],
+          "logo": {
+            "left": 36.27,
+            "right": 260.13,
+            "top": 118.73,
+            "bottom": 206.56
+          },
+          "bowls": {
+            "left": 125.61,
+            "right": 275.73,
+            "top": 306.21,
+            "bottom": 377.26
+          },
+          "labels": {
+            "left": 117.17,
+            "right": 279.25,
+            "top": 333.06,
+            "bottom": 395.86
+          },
+          "pos": {
+            "left": 115.17,
+            "right": 157.07,
+            "top": 378.54,
+            "bottom": 472.74
+          },
+          "bowlAreas": [
+            975.11,
+            1115.65,
+            1303.6,
+            1027.75,
+            1192.87
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 125.61,
+                "right": 162.63,
+                "top": 306.21,
+                "bottom": 332.55
+              },
+              "area": 975.11,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 176.02,
+                "right": 215.61,
+                "top": 311.74,
+                "bottom": 339.92
+              },
+              "area": 1115.65,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 232.65,
+                "right": 275.73,
+                "top": 317.97,
+                "bottom": 348.23
+              },
+              "area": 1303.6,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 149.18,
+                "right": 186.35,
+                "top": 339.64,
+                "bottom": 367.29
+              },
+              "area": 1027.75,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 203.65,
+                "right": 243.76,
+                "top": 347.52,
+                "bottom": 377.26
+              },
+              "area": 1192.87,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 117.17,
+                "right": 162.85,
+                "top": 333.06,
+                "bottom": 349.71
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 166.34,
+                "right": 217.47,
+                "top": 340.14,
+                "bottom": 358.17
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 221.18,
+                "right": 279.25,
+                "top": 348.1,
+                "bottom": 367.74
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 140.39,
+                "right": 187.26,
+                "top": 366.43,
+                "bottom": 384.7
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 193.37,
+                "right": 246.36,
+                "top": 375.93,
+                "bottom": 395.86
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 390,
+            "h": 844
+          },
+          "camera": [
+            7.1,
+            4.1,
+            8.4
+          ],
+          "logo": {
+            "left": 45.81,
+            "right": 315.72,
+            "top": 143.15,
+            "bottom": 249.05
+          },
+          "bowls": {
+            "left": 153.53,
+            "right": 334.53,
+            "top": 369.2,
+            "bottom": 454.87
+          },
+          "labels": {
+            "left": 143.36,
+            "right": 338.78,
+            "top": 401.57,
+            "bottom": 477.29
+          },
+          "pos": {
+            "left": 140.95,
+            "right": 191.46,
+            "top": 456.41,
+            "bottom": 569.99
+          },
+          "bowlAreas": [
+            1418.21,
+            1621.39,
+            1894.77,
+            1493.97,
+            1733.83
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 153.53,
+                "right": 198.17,
+                "top": 369.2,
+                "bottom": 400.97
+              },
+              "area": 1418.21,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 214.32,
+                "right": 262.05,
+                "top": 375.87,
+                "bottom": 409.84
+              },
+              "area": 1621.39,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 282.59,
+                "right": 334.53,
+                "top": 383.38,
+                "bottom": 419.86
+              },
+              "area": 1894.77,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 181.96,
+                "right": 226.77,
+                "top": 409.51,
+                "bottom": 442.85
+              },
+              "area": 1493.97,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 247.64,
+                "right": 295.99,
+                "top": 419.01,
+                "bottom": 454.87
+              },
+              "area": 1733.83,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 143.36,
+                "right": 198.43,
+                "top": 401.57,
+                "bottom": 421.65
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 202.65,
+                "right": 264.3,
+                "top": 410.11,
+                "bottom": 431.85
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 268.77,
+                "right": 338.78,
+                "top": 419.7,
+                "bottom": 443.38
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 171.36,
+                "right": 227.86,
+                "top": 441.8,
+                "bottom": 463.83
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 235.24,
+                "right": 299.13,
+                "top": 453.26,
+                "bottom": 477.29
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 1280,
+            "h": 800
+          },
+          "camera": [
+            7.1,
+            4.1,
+            8.4
+          ],
+          "logo": {
+            "left": 408.81,
+            "right": 827.08,
+            "top": -32.12,
+            "bottom": 131.99
+          },
+          "bowls": {
+            "left": 575.74,
+            "right": 856.23,
+            "top": 318.18,
+            "bottom": 450.94
+          },
+          "labels": {
+            "left": 559.98,
+            "right": 862.81,
+            "top": 368.34,
+            "bottom": 485.69
+          },
+          "pos": {
+            "left": 556.24,
+            "right": 634.52,
+            "top": 453.33,
+            "bottom": 629.34
+          },
+          "bowlAreas": [
+            3404.55,
+            3893.78,
+            4550.9,
+            3587.96,
+            4164.42
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 575.74,
+                "right": 644.91,
+                "top": 318.18,
+                "bottom": 367.4
+              },
+              "area": 3404.55,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 669.94,
+                "right": 743.91,
+                "top": 328.52,
+                "bottom": 381.16
+              },
+              "area": 3893.78,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 775.74,
+                "right": 856.23,
+                "top": 340.15,
+                "bottom": 396.69
+              },
+              "area": 4550.9,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 619.79,
+                "right": 689.23,
+                "top": 380.64,
+                "bottom": 432.31
+              },
+              "area": 3587.96,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 721.57,
+                "right": 796.51,
+                "top": 395.37,
+                "bottom": 450.94
+              },
+              "area": 4164.42,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 559.98,
+                "right": 645.32,
+                "top": 368.34,
+                "bottom": 399.46
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 651.86,
+                "right": 747.39,
+                "top": 381.57,
+                "bottom": 415.27
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 754.31,
+                "right": 862.81,
+                "top": 396.44,
+                "bottom": 433.14
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 603.37,
+                "right": 690.93,
+                "top": 430.69,
+                "bottom": 464.83
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 702.35,
+                "right": 801.37,
+                "top": 448.44,
+                "bottom": 485.69
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "raw": {
+        "name": "candidate4.0",
+        "p": [
+          7.1,
+          4,
+          8.4
+        ],
+        "look": [
+          2.2,
+          0.25,
+          -1.8
+        ],
+        "width": 5.3,
+        "fov": 82
+      },
+      "views": [
+        {
+          "viewport": {
+            "w": 320,
+            "h": 700
+          },
+          "camera": [
+            7.1,
+            4,
+            8.4
+          ],
+          "logo": {
+            "left": 36.82,
+            "right": 259.67,
+            "top": 121.98,
+            "bottom": 209.8
+          },
+          "bowls": {
+            "left": 125.51,
+            "right": 276.14,
+            "top": 306.69,
+            "bottom": 377.52
+          },
+          "labels": {
+            "left": 117.04,
+            "right": 279.78,
+            "top": 333.59,
+            "bottom": 396.2
+          },
+          "pos": {
+            "left": 114.87,
+            "right": 157.04,
+            "top": 376.8,
+            "bottom": 470.93
+          },
+          "bowlAreas": [
+            973.29,
+            1113.87,
+            1303.99,
+            1029.48,
+            1195.91
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 125.51,
+                "right": 162.63,
+                "top": 306.69,
+                "bottom": 332.91
+              },
+              "area": 973.29,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 176.07,
+                "right": 215.78,
+                "top": 311.98,
+                "bottom": 340.03
+              },
+              "area": 1113.87,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 232.89,
+                "right": 276.14,
+                "top": 317.92,
+                "bottom": 348.07
+              },
+              "area": 1303.99,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 149.14,
+                "right": 186.44,
+                "top": 340.18,
+                "bottom": 367.78
+              },
+              "area": 1029.48,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 203.84,
+                "right": 244.12,
+                "top": 347.83,
+                "bottom": 377.52
+              },
+              "area": 1195.91,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 117.04,
+                "right": 162.86,
+                "top": 333.59,
+                "bottom": 350.09
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 166.37,
+                "right": 217.7,
+                "top": 340.45,
+                "bottom": 358.32
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 221.44,
+                "right": 279.78,
+                "top": 348.15,
+                "bottom": 367.63
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 140.31,
+                "right": 187.38,
+                "top": 367.07,
+                "bottom": 385.24
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 193.53,
+                "right": 246.8,
+                "top": 376.37,
+                "bottom": 396.2
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 390,
+            "h": 844
+          },
+          "camera": [
+            7.1,
+            4,
+            8.4
+          ],
+          "logo": {
+            "left": 46.48,
+            "right": 315.17,
+            "top": 147.07,
+            "bottom": 252.96
+          },
+          "bowls": {
+            "left": 153.42,
+            "right": 335.03,
+            "top": 369.78,
+            "bottom": 455.18
+          },
+          "labels": {
+            "left": 143.2,
+            "right": 339.41,
+            "top": 402.22,
+            "bottom": 477.7
+          },
+          "pos": {
+            "left": 140.59,
+            "right": 191.43,
+            "top": 454.31,
+            "bottom": 567.8
+          },
+          "bowlAreas": [
+            1415.31,
+            1619.78,
+            1894.77,
+            1496.15,
+            1738.81
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 153.42,
+                "right": 198.18,
+                "top": 369.78,
+                "bottom": 401.4
+              },
+              "area": 1415.31,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 214.38,
+                "right": 262.26,
+                "top": 376.15,
+                "bottom": 409.98
+              },
+              "area": 1619.78,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 282.89,
+                "right": 335.03,
+                "top": 383.33,
+                "bottom": 419.67
+              },
+              "area": 1894.77,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 181.91,
+                "right": 226.88,
+                "top": 410.16,
+                "bottom": 443.43
+              },
+              "area": 1496.15,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 247.85,
+                "right": 296.42,
+                "top": 419.38,
+                "bottom": 455.18
+              },
+              "area": 1738.81,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 143.2,
+                "right": 198.45,
+                "top": 402.22,
+                "bottom": 422.11
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 202.68,
+                "right": 264.57,
+                "top": 410.48,
+                "bottom": 432.03
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 269.08,
+                "right": 339.41,
+                "top": 419.77,
+                "bottom": 443.25
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 171.26,
+                "right": 228.01,
+                "top": 442.59,
+                "bottom": 464.49
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 235.43,
+                "right": 299.65,
+                "top": 453.79,
+                "bottom": 477.7
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 1280,
+            "h": 800
+          },
+          "camera": [
+            7.1,
+            4,
+            8.4
+          ],
+          "logo": {
+            "left": 409.84,
+            "right": 826.22,
+            "top": -26.05,
+            "bottom": 138.05
+          },
+          "bowls": {
+            "left": 575.56,
+            "right": 857,
+            "top": 319.08,
+            "bottom": 451.42
+          },
+          "labels": {
+            "left": 559.73,
+            "right": 863.79,
+            "top": 369.34,
+            "bottom": 486.32
+          },
+          "pos": {
+            "left": 555.69,
+            "right": 634.47,
+            "top": 450.07,
+            "bottom": 625.95
+          },
+          "bowlAreas": [
+            3398.64,
+            3888.3,
+            4550.66,
+            3593.73,
+            4175.42
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 575.56,
+                "right": 644.92,
+                "top": 319.08,
+                "bottom": 368.08
+              },
+              "area": 3398.64,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 670.03,
+                "right": 744.22,
+                "top": 328.96,
+                "bottom": 381.37
+              },
+              "area": 3888.3,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 776.2,
+                "right": 857,
+                "top": 340.07,
+                "bottom": 396.39
+              },
+              "area": 4550.66,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 619.71,
+                "right": 689.41,
+                "top": 381.65,
+                "bottom": 433.21
+              },
+              "area": 3593.73,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 721.91,
+                "right": 797.17,
+                "top": 395.94,
+                "bottom": 451.42
+              },
+              "area": 4175.42,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 559.73,
+                "right": 645.34,
+                "top": 369.34,
+                "bottom": 400.18
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 651.9,
+                "right": 747.8,
+                "top": 382.15,
+                "bottom": 415.55
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 754.79,
+                "right": 863.79,
+                "top": 396.55,
+                "bottom": 432.93
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 603.22,
+                "right": 691.15,
+                "top": 431.9,
+                "bottom": 465.85
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 702.65,
+                "right": 802.18,
+                "top": 449.27,
+                "bottom": 486.32
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "raw": {
+        "name": "candidate4.2-left",
+        "p": [
+          7.1,
+          4.2,
+          8.4
+        ],
+        "look": [
+          2,
+          0.3,
+          -1.8
+        ],
+        "width": 5.3,
+        "fov": 82
+      },
+      "views": [
+        {
+          "viewport": {
+            "w": 320,
+            "h": 700
+          },
+          "camera": [
+            7.1,
+            4.2,
+            8.4
+          ],
+          "logo": {
+            "left": 44.24,
+            "right": 267.35,
+            "top": 122.76,
+            "bottom": 209.79
+          },
+          "bowls": {
+            "left": 131.92,
+            "right": 281.85,
+            "top": 311.48,
+            "bottom": 383.16
+          },
+          "labels": {
+            "left": 123.47,
+            "right": 285.26,
+            "top": 338.07,
+            "bottom": 401.93
+          },
+          "pos": {
+            "left": 121.31,
+            "right": 162.58,
+            "top": 385.77,
+            "bottom": 480.64
+          },
+          "bowlAreas": [
+            972.26,
+            1118.08,
+            1315.44,
+            1027.21,
+            1199.68
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 131.92,
+                "right": 168.79,
+                "top": 311.48,
+                "bottom": 337.85
+              },
+              "area": 972.26,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 182.1,
+                "right": 221.65,
+                "top": 317.44,
+                "bottom": 345.71
+              },
+              "area": 1118.08,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 238.65,
+                "right": 281.85,
+                "top": 324.16,
+                "bottom": 354.61
+              },
+              "area": 1315.44,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 155.21,
+                "right": 192.28,
+                "top": 344.88,
+                "bottom": 372.59
+              },
+              "area": 1027.21,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 209.51,
+                "right": 249.66,
+                "top": 353.28,
+                "bottom": 383.16
+              },
+              "area": 1199.68,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 123.47,
+                "right": 168.89,
+                "top": 338.07,
+                "bottom": 355.07
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 172.32,
+                "right": 223.39,
+                "top": 345.6,
+                "bottom": 364.07
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 227.04,
+                "right": 285.26,
+                "top": 354.09,
+                "bottom": 374.29
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 146.38,
+                "right": 193.06,
+                "top": 371.41,
+                "bottom": 390.1
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 199.11,
+                "right": 252.15,
+                "top": 381.46,
+                "bottom": 401.93
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 390,
+            "h": 844
+          },
+          "camera": [
+            7.1,
+            4.2,
+            8.4
+          ],
+          "logo": {
+            "left": 55.43,
+            "right": 324.44,
+            "top": 148.01,
+            "bottom": 252.95
+          },
+          "bowls": {
+            "left": 161.15,
+            "right": 341.91,
+            "top": 375.55,
+            "bottom": 461.98
+          },
+          "labels": {
+            "left": 150.95,
+            "right": 346.03,
+            "top": 407.61,
+            "bottom": 484.61
+          },
+          "pos": {
+            "left": 148.35,
+            "right": 198.11,
+            "top": 465.13,
+            "bottom": 579.51
+          },
+          "bowlAreas": [
+            1413.19,
+            1625.28,
+            1911.86,
+            1493.43,
+            1743.73
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 161.15,
+                "right": 205.59,
+                "top": 375.55,
+                "bottom": 407.35
+              },
+              "area": 1413.19,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 221.64,
+                "right": 269.33,
+                "top": 382.74,
+                "bottom": 416.82
+              },
+              "area": 1625.28,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 289.83,
+                "right": 341.91,
+                "top": 390.84,
+                "bottom": 427.55
+              },
+              "area": 1911.86,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 189.22,
+                "right": 233.92,
+                "top": 415.83,
+                "bottom": 449.24
+              },
+              "area": 1493.43,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 254.69,
+                "right": 303.1,
+                "top": 425.96,
+                "bottom": 461.98
+              },
+              "area": 1743.73,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 150.95,
+                "right": 205.71,
+                "top": 407.61,
+                "bottom": 428.11
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 209.85,
+                "right": 271.43,
+                "top": 416.69,
+                "bottom": 438.97
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 275.83,
+                "right": 346.03,
+                "top": 426.93,
+                "bottom": 451.28
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 178.58,
+                "right": 234.86,
+                "top": 447.81,
+                "bottom": 470.35
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 242.16,
+                "right": 306.1,
+                "top": 459.93,
+                "bottom": 484.61
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "viewport": {
+            "w": 1280,
+            "h": 800
+          },
+          "camera": [
+            7.1,
+            4.2,
+            8.4
+          ],
+          "logo": {
+            "left": 423.71,
+            "right": 840.58,
+            "top": -24.59,
+            "bottom": 138.03
+          },
+          "bowls": {
+            "left": 587.54,
+            "right": 867.66,
+            "top": 328.02,
+            "bottom": 461.96
+          },
+          "labels": {
+            "left": 571.74,
+            "right": 874.05,
+            "top": 377.7,
+            "bottom": 497.02
+          },
+          "pos": {
+            "left": 567.71,
+            "right": 644.82,
+            "top": 466.83,
+            "bottom": 644.09
+          },
+          "bowlAreas": [
+            3394.41,
+            3904.67,
+            4592.4,
+            3586.11,
+            4188.37
+          ],
+          "bowlBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "labelBlockedSamples": [
+            [],
+            [],
+            [],
+            [],
+            [
+              {
+                "sample": 0,
+                "occluder": "NPC-hair"
+              }
+            ]
+          ],
+          "perBowl": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 587.54,
+                "right": 656.42,
+                "top": 328.02,
+                "bottom": 377.3
+              },
+              "area": 3394.41,
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 681.28,
+                "right": 755.19,
+                "top": 339.15,
+                "bottom": 391.98
+              },
+              "area": 3904.67,
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 786.95,
+                "right": 867.66,
+                "top": 351.71,
+                "bottom": 408.61
+              },
+              "area": 4592.4,
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 631.04,
+                "right": 700.31,
+                "top": 390.44,
+                "bottom": 442.21
+              },
+              "area": 3586.11,
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 732.5,
+                "right": 807.52,
+                "top": 406.13,
+                "bottom": 461.96
+              },
+              "area": 4188.37,
+              "blockedSamples": []
+            }
+          ],
+          "perLabel": [
+            {
+              "index": 0,
+              "rect": {
+                "left": 571.74,
+                "right": 656.6,
+                "top": 377.7,
+                "bottom": 409.47
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 1,
+              "rect": {
+                "left": 663.02,
+                "right": 758.44,
+                "top": 391.78,
+                "bottom": 426.29
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 2,
+              "rect": {
+                "left": 765.26,
+                "right": 874.05,
+                "top": 407.64,
+                "bottom": 445.38
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 3,
+              "rect": {
+                "left": 614.56,
+                "right": 701.77,
+                "top": 440,
+                "bottom": 474.93
+              },
+              "blockedSamples": []
+            },
+            {
+              "index": 4,
+              "rect": {
+                "left": 713.08,
+                "right": 812.17,
+                "top": 458.77,
+                "bottom": 497.02
+              },
+              "blockedSamples": [
+                {
+                  "sample": 0,
+                  "occluder": "NPC-hair"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
