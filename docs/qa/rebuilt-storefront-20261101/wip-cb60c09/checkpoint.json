@@ -1,0 +1,23 @@
+{
+  "status": "WIP / not final visual approval",
+  "codeCommit": "cb60c090107753c2009de61d2cfe2bf9bb206215",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "capture": "390-entry-full.png",
+  "sha256": "b39b46e95b5293fb353da9e41eec7038f55adbcea32ba4b6d4abfe936d90c0f7",
+  "source": "actual Chromium screenshot of compiled local app at127.0.0.1:3231",
+  "httpStatus": 200,
+  "pageErrors": 0,
+  "blockedRequests": 0,
+  "documentOverflowPx": 0,
+  "originalReferenceRequested": false,
+  "functionalSuite": "NOT YET EXECUTED",
+  "knownVisualLimits": [
+    "Silver frames and bevels still visually heavy; refinement pending.",
+    "Schmear variants reuse conceptual strawberry art; neutral independent art pending.",
+    "Long category descriptions need spacing cleanup.",
+    "Not a claim of photorealistic final fidelity."
+  ]
+}
