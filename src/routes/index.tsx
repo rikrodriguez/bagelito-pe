@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PlayableStore } from '../playable/PlayableStore'
+import { ReferenceStorefront } from '../reference/ReferenceStorefront'
 
-function StoreEntry(){return <PlayableStore initialMode="explore"/>}
+function StoreEntry(){return <ReferenceStorefront/>}
 
 export const Route = createFileRoute('/')({ component: StoreEntry })

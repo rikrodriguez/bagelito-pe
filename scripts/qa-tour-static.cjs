@@ -98,7 +98,8 @@ check('Unfinished cart can resume without storing personal or payment data', () 
 
 check('Payment remains gated', () => {
   assert.match(guided, /checkoutQuote\?\.checkoutAllowed/)
-  assert.match(guided, /const canPayOnline = paymentConfig\?\.enabled === true/)
+  assert.match(guided, /const canPayOnline = !reviewOnly && paymentConfig\?\.enabled === true/)
+  assert.match(guided, /!reviewOnly && paymentConfig && checkoutQuote\?\.amountPen != null && <CulqiBrowserCheckout/)
   assert.match(guided, /manualOrderHref/)
   assert.match(guided, /Consultar mi pedido por WhatsApp/)
   assert.match(guided, /Sin pago ni reserva automática/)
