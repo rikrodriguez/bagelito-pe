@@ -22,6 +22,17 @@ export type ProductReservationInput = {
   }
 }
 type RpcClient = {rpc(name: string, args: Record<string, unknown>): PromiseLike<{data: unknown; error: unknown}>}
+async function productRpc(db: RpcClient, name: string, args: Record<string, unknown>, failure: string): Promise<unknown> {
+  try {
+    const result = await db.rpc(name, args)
+    if (!result || result.error !== null) throw new Error(failure)
+    return result.data
+  } catch {
+    // A lost response does not prove the write rolled back. Never retry or expose
+    // raw transport diagnostics; the same session must be reconciled separately.
+    throw new Error(failure)
+  }
+}
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 function clean(value: unknown, max: number, optional = false): string {
   if (optional && value === undefined) return ''
@@ -78,8 +89,8 @@ export function prepareGuidedProductReservation(input: ProductReservationInput) 
 /** No network/default DB client. Tests inject an isolated SQL RPC adapter. */
 export async function persistGuidedProductReservation(db: RpcClient, input: ProductReservationInput) {
   const prepared = prepareGuidedProductReservation(input)
-  const {data, error} = await db.rpc('create_guided_product_reservation', prepared.args)
-  if (error) throw new Error('Complete product reservation failed; do not initiate payment')
+  const data = await productRpc(db, 'create_guided_product_reservation', prepared.args,
+    'Complete product reservation could not be confirmed; do not initiate payment')
   const result = data as Record<string, unknown> | null
   if (!result || result.currency !== 'PEN' || result.amountMinor !== prepared.amountMinor
     || result.subtotalMinor !== prepared.subtotalMinor || result.deliveryFeeMinor !== prepared.deliveryFeeMinor
@@ -99,8 +110,8 @@ export async function persistGuidedProductReservation(db: RpcClient, input: Prod
 /** Read-only fulfillment/reconciliation detail; not a new reservation or payment. */
 export async function readGuidedProductReservation(db: RpcClient, orderId: string) {
   if (!uuid.test(orderId)) throw new Error('Invalid order identity')
-  const {data, error} = await db.rpc('read_guided_product_reservation', {p_order_id: orderId.toLowerCase()})
-  if (error) throw new Error('Could not read the complete product reservation')
+  const data = await productRpc(db, 'read_guided_product_reservation', {p_order_id: orderId.toLowerCase()},
+    'Could not read the complete product reservation')
   if (data === null) return null
   return parseGuidedProductSnapshot(data, orderId)
 }

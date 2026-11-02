@@ -99,3 +99,24 @@ test('read-only snapshot rejects malformed composition before any fulfillment pr
     await assert.rejects(api.readGuidedProductReservation({rpc:async()=>({data:value,error:null})},r.orderId),/inconsistent/)
   }
 })
+
+test('transport rejection after possible reservation commit does not leak details or retry automatically',async()=>{
+  let calls=0
+  await assert.rejects(api.persistGuidedProductReservation({rpc:async()=>{calls++;throw Error('private database endpoint and connection details')}},fixture()),
+    error=>/could not be confirmed.*do not initiate payment/i.test(error.message)&&!error.message.includes('private'))
+  assert.equal(calls,1)
+})
+test('snapshot transport rejection is not missing data and never leaks raw diagnostics',async()=>{
+  let calls=0
+  await assert.rejects(api.readGuidedProductReservation({rpc:async()=>{calls++;throw Error('private database endpoint and connection details')}},'33333333-3333-4333-8333-333333333333'),
+    error=>/Could not read the complete product reservation/.test(error.message)&&!error.message.includes('private'))
+  assert.equal(calls,1)
+})
+
+test('malformed RPC envelopes are not accepted as successful writes or absent snapshots',async()=>{
+  for(const result of [null,undefined,{}, {data:null}, {data:null,error:false}]){
+    const db={rpc:async()=>result}
+    await assert.rejects(api.persistGuidedProductReservation(db,fixture()),/could not be confirmed.*do not initiate payment/)
+    await assert.rejects(api.readGuidedProductReservation(db,'33333333-3333-4333-8333-333333333333'),/Could not read/)
+  }
+})
