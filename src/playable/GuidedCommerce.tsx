@@ -488,6 +488,8 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     if (value !== category) {
       resetSelections()
       setComboId(null)
+      setBagelMode(value === 'combos' ? 'combo' : 'pack')
+      if (value === 'packs' || value === 'combos') setSchmearSize(120)
     }
     setCategory(value)
     if (value === 'packs') setScene('pack-size')
