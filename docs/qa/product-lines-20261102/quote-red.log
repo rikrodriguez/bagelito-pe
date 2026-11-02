@@ -1,0 +1,106 @@
+✖ malformed optional schmear is never silently discarded from a pack (102.582412ms)
+✖ invalid bagel quantity is not coerced or filtered out (25.8611ms)
+✖ malformed combos are invalid, not a generic unpriced offer (23.649059ms)
+✖ capacity projection uses actual selected bagels for combo and standalone schmear (21.238157ms)
+✖ unpriced extra never presents a partial schmear price as the order total (28.006256ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 504.081014
+
+✖ failing tests:
+
+test at tests/guided-checkout-quote.test.cjs:36:1
+✖ malformed optional schmear is never silently discarded from a pack (102.582412ms)
+  AssertionError [ERR_ASSERTION]: []
+  
+  'ready' !== 'invalid'
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-checkout-quote.test.cjs:39:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'ready',
+    expected: 'invalid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/guided-checkout-quote.test.cjs:42:1
+✖ invalid bagel quantity is not coerced or filtered out (25.8611ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'ready' !== 'invalid'
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-checkout-quote.test.cjs:44:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ready',
+    expected: 'invalid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/guided-checkout-quote.test.cjs:47:1
+✖ malformed combos are invalid, not a generic unpriced offer (23.649059ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'review_required'
+  - 'invalid'
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-checkout-quote.test.cjs:49:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'review_required',
+    expected: 'invalid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/guided-checkout-quote.test.cjs:52:1
+✖ capacity projection uses actual selected bagels for combo and standalone schmear (21.238157ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   6
+  -   2
+    ]
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-checkout-quote.test.cjs:55:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 6 ],
+    expected: [ 2 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/guided-checkout-quote.test.cjs:58:1
+✖ unpriced extra never presents a partial schmear price as the order total (28.006256ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  12 !== null
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-checkout-quote.test.cjs:60:58)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 12,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
