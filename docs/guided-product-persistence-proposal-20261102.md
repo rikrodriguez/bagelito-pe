@@ -47,3 +47,13 @@ Locking and security-definer design references: [PostgreSQL17 locking](https://w
 3. Resolve current combo composition/prices, extra offers, premium/mini rules and actual pot availability. Confirmed pot prices alone do not establish stock.
 4. Integrate the new reservation and snapshot reader into reviewed server routes, receipt and fulfillment/admin views while preserving payment-config, origin/rate-limit/legal guards. Keep legacy/v2 contract separation. The policy remains closed until separately authorized.
 5. Perform isolated Culqi sandbox checkout/3DS/webhook/failure/refund tests, then obtain separate production activation approval. No credential, deployment or charge was performed for this proposal.
+
+## Read-only packing layer (subsequent draft)
+
+`readGuidedPackingPreview` composes the injected snapshot reader with a strict V1 parser and a pure commercial packing preview. It retains every supported bagel/pot flavor, quantity, grams and historical stored amount, while stripping unknown fields. A paid observation **never** sets `fulfillmentAuthorized`: the value remains `false` for every payment state. This is neither a fiscal receipt nor permission to prepare/deliver goods. There is still no public/admin route integration, PII lookup or outgoing notification.
+
+The parser now rejects numeric-string grams, absent pots, unknown/mismatched SKUs, duplicate bagels, invalid pack totals, unsupported multi-line compositions and malformed metadata. Proposed SQL reader hardening also cross-checks bagel rows, `pack_units` and the versioned pack slug against the stored commercial detail, without repricing.
+
+**Validation boundary for this later draft:** Node tests and full application build pass; the revised SQL and six new synthetic coordinator/reader scenarios are **not runtime-verified**. The PGlite process was killed by SIGKILL before per-case results, including a single-engine diagnostic and a resource-coordinated final attempt. Native concurrency remains separately blocked. Do not reuse the previous 28-case SQL pass as evidence for these new changes. See `docs/qa/packing-preview-20261102/README.md` for exact results.
+
+[Recovered combo/extra sources](combo-extra-source-reconciliation-20261102.md) support the published bundles, but the current two-plus-one UI and conditional upsell still require explicit reconciliation. No offer or price changed in this layer.

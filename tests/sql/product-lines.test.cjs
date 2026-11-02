@@ -1,7 +1,7 @@
 const test = require('node:test'), assert = require('node:assert/strict')
 const fs = require('node:fs'), path = require('node:path')
 const f = require('./fixture.cjs')
-let db, originalCore
+let db, originalCore, initialPolicy
 const coreDefinitions = async () => (await db.query(`select proname,pg_get_functiondef(oid) def from pg_proc where pronamespace='public'::regnamespace
   and proname in ('create_culqi_reservation_order','claim_culqi_charge','prepare_culqi_token_session','finish_culqi_charge','apply_culqi_payment_event','confirm_culqi_charge_result') order by proname`)).rows
 const counts = async () => (await db.query(`select (select count(*)::int from orders) orders,(select count(*)::int from order_items) items,
@@ -13,22 +13,21 @@ const id = n => `11111111-1111-4111-8111-${String(n).padStart(12, '0')}`
 const create = input => f.api.persistGuidedProductReservation(f.rpc(db), input ?? f.input())
 const rejectRaw = async (value, pattern) => { const before = await counts(); await assert.rejects(f.call(db, value), pattern); assert.deepEqual(await counts(), before) }
 
-test.before(async () => {db = await f.createFixture(); originalCore = await coreDefinitions(); await db.exec(f.migration())})
+test.before(async () => {db = await f.createFixture(); originalCore = await coreDefinitions(); await db.exec(f.migration()); initialPolicy=(await db.query('select enabled from guided_product_reservation_policy')).rows})
 test.after(async () => {if (db) await db.close()})
 test.beforeEach(async () => f.reset(db))
 
 test('policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged', async () => {
-  const fresh = await f.createFixture()
-  try {
-    await fresh.exec(f.migration())
-    assert.deepEqual((await fresh.query('select enabled from guided_product_reservation_policy')).rows, [{enabled: false}])
-    await assert.rejects(f.call(fresh, args()), /disabled/)
-    for (const role of ['anon','authenticated','service_role']) {
-      await fresh.exec(`set role ${role}`)
-      await assert.rejects(fresh.query('update public.guided_product_reservation_policy set enabled=true'), /permission denied/)
-      await fresh.exec('reset role')
-    }
-  } finally {await fresh.close()}
+  // Observe default immediately after migration, before beforeEach enables the fixture.
+  // Reuse the one engine rather than starting a second WASM database concurrently.
+  assert.deepEqual(initialPolicy, [{enabled: false}])
+  await db.exec('update guided_product_reservation_policy set enabled=false')
+  await assert.rejects(f.call(db, args()), /disabled/)
+  for (const role of ['anon','authenticated','service_role']) {
+    await db.exec(`set role ${role}`)
+    try {await assert.rejects(db.query('update public.guided_product_reservation_policy set enabled=true'), /permission denied/)}
+    finally {await db.exec('reset role')}
+  }
   assert.deepEqual(await coreDefinitions(), originalCore)
 })
 test('pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once', async () => {
@@ -185,12 +184,19 @@ test('new adapter is not imported by any current public API route', () => {
 })
 
 test('missing financial prerequisite fails migration without creating product objects', async () => {
-  const fresh=await f.createFixture()
+  // This case needs an unmigrated database. Never keep two engines alive.
+  const previous=db;db=undefined;await previous.close()
+  let fresh
   try {
+    fresh=await f.createFixture()
     await fresh.exec('drop function public.claim_culqi_charge(uuid,text,text,boolean)')
     await assert.rejects(fresh.exec(f.migration()),/financial core/);await fresh.exec('rollback')
-    assert.equal((await fresh.query("select to_regclass('public.order_guided_product_snapshots') present")).rows[0].present,null)
-  } finally {await fresh.close()}
+    assert.deepEqual((await fresh.query("select to_regclass('public.order_guided_product_snapshots') snapshot,to_regclass('public.guided_product_reservation_policy') policy,to_regprocedure('public.read_guided_product_reservation(uuid)') reader")).rows[0],{snapshot:null,policy:null,reader:null})
+  } finally {
+    if(fresh)await fresh.close()
+    db=await f.createFixture();await db.exec(f.migration())
+  }
+  assert.deepEqual(await coreDefinitions(),originalCore)
 })
 test('unknown or altered function definition is not silently replaced on migration replay', async () => {
   const signature='public.create_guided_product_reservation(text,uuid,uuid,jsonb,jsonb,integer,text,timestamptz)'
@@ -226,4 +232,96 @@ test('snapshot reader returns no record for unknown order and rejects inconsiste
   assert.equal((await db.query('select public.read_guided_product_reservation($1::uuid) result',[id(99)])).rows[0].result,null)
   const result=await create();await db.exec('update orders set payment_amount_minor=1')
   await assert.rejects(db.query('select public.read_guided_product_reservation($1::uuid)',[result.orderId]),/snapshot is inconsistent/)
+})
+
+// Actual application coordinator + isolated financial SQL. Provider observations
+// are fabricated in-process callbacks; no Culqi SDK/client/credential/network.
+const {coordinateCulqiCharge}=f.loadTs(path.join(f.root,'src/server/charge-coordinator.server.ts'))
+const financialClient=()=>({calls:[],async rpc(name,args){
+  this.calls.push(name)
+  const signature={
+    prepare_culqi_token_session:[['p_order_id','uuid']],
+    claim_culqi_charge:[['p_order_id','uuid'],['p_source_id','text'],['p_device_id','text'],['p_has_3ds','boolean']],
+    finish_culqi_charge:[['p_order_id','uuid'],['p_attempt_id','uuid'],['p_state','text'],['p_charge_id','text'],['p_method','text'],['p_payload','jsonb']],
+    confirm_culqi_charge_result:[['p_order_id','uuid'],['p_checkout_session_id','uuid'],['p_charge_attempt_id','uuid'],['p_observed_at','timestamptz'],['p_provenance','text'],['p_mode','text'],['p_observation','jsonb']],
+    read_guided_product_reservation:[['p_order_id','uuid']],
+  }[name]
+  assert.ok(signature,'Only explicit fixture RPCs may execute')
+  try{return{data:(await db.query(`select public.${name}(${signature.map(([,type],i)=>`$${i+1}::${type}`).join(',')}) result`,signature.map(([key,type])=>type==='jsonb'?JSON.stringify(args[key]):args[key]))).rows[0].result,error:null}}
+  catch(error){return{data:null,error:{message:error.message}}}
+}})
+const fakeCharge=(order,patch={})=>({object:'charge',id:'chr_test_fixture_12345678',amount:order.amountMinor,currency_code:'PEN',
+  metadata:{bagelito_order_code:order.orderCode},source:{id:'tkn_test_fixture_12345678'},capture:true,current_amount:order.amountMinor,
+  amount_refunded:0,dispute:false,...patch})
+function coordinatorInput(client,order,callback){return{db:client,orderId:order.orderId,orderCode:order.orderCode,checkoutSessionId:order.checkoutSessionId,
+  amountMinor:order.amountMinor,mode:'test',sourceId:'tkn_test_fixture_12345678',deviceId:'fixture-device',has3DS:false,
+  createCharge:callback,fetchCharge:async()=>{throw Error('Unexpected provider lookup in isolated fixture')}}}
+async function prepareSyntheticToken(client,order){const r=await client.rpc('prepare_culqi_token_session',{p_order_id:order.orderId});assert.equal(r.error,null);assert.equal(r.data.amount,order.amountMinor)}
+
+test('complete product reservation runs through real coordinator and SQL using only synthetic charge evidence',async()=>{
+  for(const orderSelection of [f.pack(),f.pot({schmears:{'aji-amarillo':1},schmearSize:240})]){
+    await f.reset(db)
+    const order=await create(f.input(orderSelection)),client=financialClient();let providerCalls=0
+    await db.exec('set role service_role')
+    try{
+      await prepareSyntheticToken(client,order)
+      const input=coordinatorInput(client,order,async()=>{providerCalls++;return{requires3DS:false,charge:fakeCharge(order)}})
+      const paid=await coordinateCulqiCharge(input)
+      assert.equal(paid.paymentStatus,'paid');assert.equal(providerCalls,1)
+      const before=client.calls.length,preview=await f.api.readGuidedPackingPreview(client,order.orderId)
+      assert.deepEqual(client.calls.slice(before),['read_guided_product_reservation'])
+      assert.equal(preview.amountMinor,order.amountMinor);assert.equal(preview.paymentStatus,'paid');assert.equal(preview.fulfillmentAuthorized,false)
+      assert.equal(preview.packing.schmearPots,1);assert.equal(preview.packing.bagelUnits,orderSelection.category==='packs'?6:0)
+      const retried=await coordinateCulqiCharge(input);assert.equal(retried.paymentStatus,'paid');assert.equal(providerCalls,1)
+    }finally{await db.exec('reset role')}
+    assert.equal((await counts()).orders,1);assert.equal((await counts()).snapshots,1);assert.equal((await counts()).attempts,1)
+    assert.equal((await db.query('select count(*)::int n from culqi_charge_confirmation_receipts')).rows[0].n,1)
+  }
+})
+test('synthetic lower charge amount cannot mark full pack and schmear paid or lose products',async()=>{
+  const order=await create(),client=financialClient();let providerCalls=0
+  await prepareSyntheticToken(client,order)
+  const input=coordinatorInput(client,order,async()=>{providerCalls++;return{requires3DS:false,charge:fakeCharge(order,{amount:5800,current_amount:5800})}})
+  assert.equal((await coordinateCulqiCharge(input)).paymentStatus,'reconciliation_required')
+  assert.equal((await coordinateCulqiCharge(input)).paymentStatus,'reconciliation_required');assert.equal(providerCalls,1)
+  const preview=await f.api.readGuidedPackingPreview(client,order.orderId)
+  assert.equal(preview.paymentStatus,'pending');assert.equal(preview.amountMinor,7000);assert.equal(preview.packing.schmearPots,1);assert.equal(preview.fulfillmentAuthorized,false)
+})
+test('synthetic provider failure preserves complete snapshot and prevents automatic second attempt',async()=>{
+  const order=await create(f.input(f.pot({schmearSize:180}))),client=financialClient();let providerCalls=0
+  await prepareSyntheticToken(client,order)
+  const input=coordinatorInput(client,order,async()=>{providerCalls++;throw Error('Synthetic provider timeout')})
+  assert.equal((await coordinateCulqiCharge(input)).paymentStatus,'reconciliation_required')
+  assert.equal((await coordinateCulqiCharge(input)).paymentStatus,'reconciliation_required');assert.equal(providerCalls,1)
+  const preview=await f.api.readGuidedPackingPreview(client,order.orderId)
+  assert.equal(preview.packing.schmearGrams,180);assert.equal(preview.amountMinor,2600);assert.equal(preview.fulfillmentAuthorized,false)
+})
+test('synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot',async()=>{
+  const order=await create(),client=financialClient();let providerCalls=0
+  await prepareSyntheticToken(client,order)
+  const first=coordinatorInput(client,order,async()=>{providerCalls++;return{requires3DS:true}})
+  assert.equal((await coordinateCulqiCharge(first)).paymentStatus,'requires_3ds')
+  assert.equal((await f.api.readGuidedPackingPreview(client,order.orderId)).paymentStatus,'pending')
+  const continuation={...coordinatorInput(client,order,async()=>{providerCalls++;return{requires3DS:false,charge:fakeCharge(order)}}),has3DS:true}
+  assert.equal((await coordinateCulqiCharge(continuation)).paymentStatus,'paid');assert.equal(providerCalls,2)
+  const preview=await f.api.readGuidedPackingPreview(client,order.orderId)
+  assert.equal(preview.packing.bagelUnits,6);assert.equal(preview.packing.schmearGrams,120);assert.equal(preview.amountMinor,7000);assert.equal(preview.fulfillmentAuthorized,false)
+  assert.equal((await counts()).attempts,1)
+})
+test('isolated packing reader fails on corrupted physical composition instead of inventing a missing pot',async()=>{
+  const order=await create();await db.exec(`update order_guided_product_snapshots set lines=jsonb_set(lines,'{1,schmears}','[]'::jsonb)`)
+  await assert.rejects(f.api.readGuidedPackingPreview(financialClient(),order.orderId),/inconsistent/)
+  assert.equal((await counts()).orders,1);assert.equal((await counts()).attempts,0)
+})
+
+test('read-only packing projection rejects missing changed or invented physical bagels and mismatched header',async()=>{
+  for(const mutation of ['delete from order_items','update order_items set quantity=5',"update order_items set flavor_slug='sesame'",
+    'update orders set pack_units=5',"update orders set pack_slug='guided-v1:12-single'"]){
+    await f.reset(db);const order=await create();await db.exec(mutation)
+    await assert.rejects(f.api.readGuidedPackingPreview(financialClient(),order.orderId),/Could not read/)
+    assert.equal((await counts()).orders,1);assert.equal((await counts()).attempts,0)
+  }
+  await f.reset(db);const pot=await create(f.input(f.pot()))
+  await db.query("insert into order_items(order_id,flavor_slug,flavor_name,quantity)values($1,'plain','Plain',6)",[pot.orderId])
+  await assert.rejects(f.api.readGuidedPackingPreview(financialClient(),pot.orderId),/Could not read/)
 })

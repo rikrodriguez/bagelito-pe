@@ -61,4 +61,4 @@ async function reset(db) {
     insert into public.batches(id,name,status,delivery_date,capacity_packs,capacity_bagels)
     values('${batchId}','Synthetic batch','orders_open',clock_timestamp()+interval '1 day',100,1000);`)
 }
-module.exports = {createFixture, migration, api, input, pack, pot, call, rpc, reset, batchId, root}
+module.exports = {loadTs, createFixture, migration, api, input, pack, pot, call, rpc, reset, batchId, root}

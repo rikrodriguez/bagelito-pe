@@ -78,7 +78,7 @@ test('read-only adapter rejects invalid identity before RPC and returns null for
   assert.equal(await api.readGuidedProductReservation(db,'33333333-3333-4333-8333-333333333333'),null);assert.equal(calls,1)
 })
 test('snapshot read validates version and stored monetary consistency without current catalog repricing',async()=>{
-  const r={...response(fixture()),schemaVersion:1,termsVersion:'2026-10-28',paymentStatus:'paid'}
+  const r={...response(fixture()),schemaVersion:1,termsVersion:'2026-10-28',paymentStatus:'paid',createdAt:'2026-11-02T10:00:00Z'}
   for(const change of [{schemaVersion:2},{subtotalMinor:1},{deliveryFeeMinor:-1},{amountMinor:1},{currency:'USD'},
     {lines:[{...r.lines[0],publishedAmountPen:'12'}]},{lines:[{...r.lines[0],bagels:null}]}]){
     await assert.rejects(api.readGuidedProductReservation({rpc:async()=>({data:{...r,...change},error:null})},r.orderId),/inconsistent/)
@@ -88,4 +88,14 @@ test('snapshot read validates version and stored monetary consistency without cu
 })
 test('snapshot read errors are not treated as missing products or leaked diagnostics',async()=>{
   await assert.rejects(api.readGuidedProductReservation({rpc:async()=>({data:null,error:{message:'private fixture'}})},'33333333-3333-4333-8333-333333333333'),error=>/Could not read/.test(error.message)&&!error.message.includes('private'))
+})
+
+test('read-only snapshot rejects malformed composition before any fulfillment projection',async()=>{
+  const r={...response(fixture()),schemaVersion:1,termsVersion:'2026-10-28',paymentStatus:'paid',createdAt:'2026-11-02T10:00:00Z'}
+  for(const mutate of [s=>s.lines[0].schmears[0].grams='120',s=>s.lines[0].schmears[0].flavorId='unknown',
+    s=>s.lines[0].schmears=[],s=>s.lines[0].id='aji-amarillo',s=>s.lines[0].bagels=[{flavorId:'plain',quantity:6}],
+    s=>s.orderCode='<script>',s=>s.createdAt='not-a-date',s=>s.paymentStatus='approved',s=>s.termsVersion=null]){
+    const value=JSON.parse(JSON.stringify(r));mutate(value)
+    await assert.rejects(api.readGuidedProductReservation({rpc:async()=>({data:value,error:null})},r.orderId),/inconsistent/)
+  }
 })

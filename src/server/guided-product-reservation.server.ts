@@ -7,6 +7,7 @@
 import { planGuidedOrder, type GuidedQuoteRequest } from '../domain/lib/guided-order-quote'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 import { getDeliveryFee, isSupportedDistrict } from './delivery-pricing.server'
+import { parseGuidedProductSnapshot, buildGuidedPackingPreview } from '../domain/lib/guided-product-snapshot'
 
 export type ProductReservationInput = {
   order: GuidedQuoteRequest
@@ -101,22 +102,11 @@ export async function readGuidedProductReservation(db: RpcClient, orderId: strin
   const {data, error} = await db.rpc('read_guided_product_reservation', {p_order_id: orderId.toLowerCase()})
   if (error) throw new Error('Could not read the complete product reservation')
   if (data === null) return null
-  const result = data as Record<string, unknown>
-  if (!result || result.orderId !== orderId.toLowerCase() || result.schemaVersion !== 1 || result.currency !== 'PEN'
-    || !Number.isSafeInteger(result.subtotalMinor) || Number(result.subtotalMinor) <= 0
-    || !Number.isSafeInteger(result.deliveryFeeMinor) || Number(result.deliveryFeeMinor) < 0
-    || result.amountMinor !== Number(result.subtotalMinor) + Number(result.deliveryFeeMinor)
-    || !Array.isArray(result.lines) || result.lines.length < 1 || result.lines.length > 2
-    || !result.lines.every(line => line && typeof line === 'object' && ['pack','schmear'].includes(line.kind)
-      && line.quantity === 1 && typeof line.publishedAmountPen === 'number'
-      && Number.isSafeInteger(line.publishedAmountPen * 100) && line.publishedAmountPen > 0
-      && typeof line.id === 'string' && Array.isArray(line.bagels) && Array.isArray(line.schmears)
-      && line.bagels.every((item: Record<string, unknown>) => item && typeof item.flavorId === 'string'
-        && Number.isSafeInteger(item.quantity) && Number(item.quantity) > 0)
-      && line.schmears.every((item: Record<string, unknown>) => item && typeof item.flavorId === 'string'
-        && item.quantity === 1 && [120,180,240].includes(Number(item.grams))))
-    || result.lines.reduce((total, line) => total + line.publishedAmountPen * 100, 0) !== result.subtotalMinor) {
-    throw new Error('Persisted commercial snapshot is inconsistent')
-  }
-  return result
+  return parseGuidedProductSnapshot(data, orderId)
+}
+
+/** Trusted injected reader only; no public route, customer lookup or outbound message. */
+export async function readGuidedPackingPreview(db: RpcClient, orderId: string) {
+  const snapshot = await readGuidedProductReservation(db, orderId)
+  return snapshot === null ? null : buildGuidedPackingPreview(snapshot)
 }

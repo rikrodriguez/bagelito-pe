@@ -291,12 +291,24 @@ GRANT EXECUTE ON FUNCTION public.create_guided_product_reservation(text,uuid,uui
 CREATE OR REPLACE FUNCTION public.read_guided_product_reservation(p_order_id uuid)
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,public,pg_temp AS $$
 DECLARE o public.orders%rowtype; s public.order_guided_product_snapshots%rowtype;
+  expected_bagels jsonb; expected_units integer; expected_slug text;
 BEGIN
   SELECT * INTO o FROM public.orders WHERE id=p_order_id;
   IF NOT FOUND THEN RETURN NULL; END IF;
   SELECT * INTO s FROM public.order_guided_product_snapshots WHERE order_id=p_order_id;
   IF NOT FOUND THEN RETURN NULL; END IF;
+  SELECT coalesce(jsonb_agg(item.value ORDER BY item.value->>'flavorId'),'[]'::jsonb),
+    coalesce(sum((item.value->>'quantity')::integer),0)::integer
+    INTO expected_bagels,expected_units
+    FROM jsonb_array_elements(s.lines) line
+    CROSS JOIN LATERAL jsonb_array_elements(line.value->'bagels') item;
+  expected_slug:=CASE WHEN s.lines->0->>'kind'='pack'
+    THEN 'guided-v1:'||regexp_replace(s.lines->0->>'id','^grande-','')
+    ELSE 'guided-v1:schmear-'||(s.lines->0->'schmears'->0->>'grams') END;
   IF o.pack_slug NOT LIKE 'guided-v1:%' OR o.payment_currency IS DISTINCT FROM 'PEN'
+    OR o.pack_slug IS DISTINCT FROM expected_slug OR o.pack_units IS DISTINCT FROM expected_units
+    OR (SELECT coalesce(jsonb_agg(jsonb_build_object('flavorId',flavor_slug,'quantity',quantity) ORDER BY flavor_slug),'[]'::jsonb)
+      FROM public.order_items WHERE order_id=o.id) IS DISTINCT FROM expected_bagels
     OR o.payment_amount_minor IS DISTINCT FROM s.subtotal_minor+s.delivery_fee_minor
     OR o.total_amount IS DISTINCT FROM (s.subtotal_minor+s.delivery_fee_minor)::numeric/100
     OR (SELECT sum((value->>'publishedAmountPen')::numeric*100) FROM jsonb_array_elements(s.lines))
