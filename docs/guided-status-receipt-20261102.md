@@ -33,3 +33,13 @@ Real payment sandbox/3DS/webhook acceptance, native PostgreSQL concurrency, prod
 ## Completed independent verification
 
 The unchanged candidate subsequently passed full TypeScript, the complete build and 36 SQL cases in the independent environment. Exact dependencies were reconstructed from 197 official npm tarballs with matching SHA-512; the blocked Library transfer was not retried. The original executor also passed 255 Node tests and ten actual Chrome/ReactDOM simulations. [Current evidence and remaining boundaries](qa/status-receipt-20261102/README.md). These checks do not activate the gate, create an order or certify a live purchase.
+
+## Later limiter hardening (same day)
+
+The previously unbounded rate-limiter stage now has its own shared 2 s budget for
+requester/contact RPCs, with best-effort abort, no automatic retry, elapsed-time
+recheck and strict boolean/envelope validation. The status service's separate 5 s
+budget is unchanged; no atomic transaction or total network/proxy deadline is
+implied. Proxy-derived requester trust remains an integration review item. See the
+[new focused and aggregate evidence](qa/api-rate-limit-20261102/README.md); earlier
+SQL/browser verification is not relabeled as testing this later limiter change.

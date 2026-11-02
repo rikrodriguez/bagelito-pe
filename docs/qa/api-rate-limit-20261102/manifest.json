@@ -1,0 +1,149 @@
+{
+  "files": [
+    {
+      "path": "docs/ghl-starter-readiness-20261102.md",
+      "bytes": 4073,
+      "sha256": "5f4dcfbe9f7208a7ecca530b6a77780aec8a3ae99c433eb7b5647275ef769e59"
+    },
+    {
+      "path": "docs/guided-status-receipt-20261102.md",
+      "bytes": 6572,
+      "sha256": "ac65b496bf2265c66db450d06e7d12a927a37d149537ccda00b988c11f713f76"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/README.md",
+      "bytes": 6167,
+      "sha256": "b7ecc9418f778a7c2f9c2b6e51887a970b1e238e1fdb9c34096875a7babdce0d"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-before-monotonic.log",
+      "bytes": 20377,
+      "sha256": "2cf15f5805c0832f75031c5b778a468c49ed72c551fb71070f709c5af992a91a"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-before-monotonic.log.gz",
+      "bytes": 3532,
+      "sha256": "4b0dfe2ec6d10092eaebadd190ae55621638df20fdeeffdf85623eb5bd25b6af"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-constrained-sigkill.log",
+      "bytes": 17534,
+      "sha256": "f75276d23d67387c1eb5a66395fa49006287895c50b511a363b1079d7c80191c"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-constrained-sigkill.log.gz",
+      "bytes": 2332,
+      "sha256": "aaa605b8a0552cc83410d33d7a65729a7054525f5dbab506d12781fc52e2f239"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-initial-sigkill.log",
+      "bytes": 3131,
+      "sha256": "4a525204e46e408412d5eb1c5b0cba0b2ac7337c60c8b619256cc1057cbd126c"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-initial-sigkill.log.gz",
+      "bytes": 1093,
+      "sha256": "0f0b6bc6f622d00f753fb337cc75f4f12aa1e594ce1c3102a53f6b3ddc664015"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build-memory-before.txt",
+      "bytes": 207,
+      "sha256": "7588acce48a233c34ddc6199a1b3be9a5958b42c821a42a095fd745647582f20"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build.log",
+      "bytes": 20377,
+      "sha256": "085c2d7cd1c6897d04343f63f1ba292f6b4a4f2e094b0feb0a37358960bc181f"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/build.log.gz",
+      "bytes": 3529,
+      "sha256": "f0af2d6fb4f5befb6ec9a685989a72e6be1582ce3afe49f43bb81d15e464ef25"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/green.log",
+      "bytes": 2927,
+      "sha256": "edcb59c01afb213b965ef8188af73667c8a75f25dcdc16a099c2d613aec53109"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/green.log.gz",
+      "bytes": 943,
+      "sha256": "c9aed24bc52e2598ee758593f0c1b0a7273fe3151f6fcc7d7b962b0e4aae427d"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-280-intermediate.log",
+      "bytes": 26370,
+      "sha256": "f549a1556372f2c13628bd4c95b4724b4503a30de3f00e5c0249dc578e8b9d2d"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-280-intermediate.log.gz",
+      "bytes": 9464,
+      "sha256": "60c2b20bd460e3d04ad4a491053dae6dbf103b1ad80389707e3651b3bfa7dde2"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-284-before-monotonic.log",
+      "bytes": 26756,
+      "sha256": "b8ad045cd12cabb52a331ecfc1a39fa2c9f26d1c9c0f9b7b31ad030703d1deb8"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-284-before-monotonic.log.gz",
+      "bytes": 9581,
+      "sha256": "619e2ce4f3237ad634a071873ddf61158537e127cb662b8a0dd62a84d153ef02"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-full.log",
+      "bytes": 26841,
+      "sha256": "608824151a3be132bd4fd8a5922a1ddd4e403108263fcb6d22f06c1e5ff4df8a"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-full.log.gz",
+      "bytes": 9623,
+      "sha256": "f6fc7c70d02256f90e2e9917c76e56d3e4600378d0109833d38b3d752724a039"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-missing-fixture.log",
+      "bytes": 27230,
+      "sha256": "355a0b964965a377de1764d651a050b870cc528baffa44beab69da8bfaea22dd"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/node-missing-fixture.log.gz",
+      "bytes": 9393,
+      "sha256": "5e5993b351063cd5fd0d53a8c128697f56a05d0c4c1beb7151e6930988e38ef1"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/red.log",
+      "bytes": 17519,
+      "sha256": "ff0e195eab8d1da48c3c7527acc9984ba702ff5918a4abf5442174dbab43ab07"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/red.log.gz",
+      "bytes": 1646,
+      "sha256": "ffb4fcae9c66a1f9123e02a9e706890441ecaf1134c447a025e378be71d676ec"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/results.json",
+      "bytes": 17791,
+      "sha256": "0d1a3869ca6e5a81b0c99f850fa63c582b004515281c862f0a94369b8cc64756"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/typecheck.log",
+      "bytes": 169,
+      "sha256": "566e5186a2d9911354cdb3331bef436b8af10fd9ff8ce0cb35f04bf53d7c9424"
+    },
+    {
+      "path": "docs/qa/api-rate-limit-20261102/typecheck.log.gz",
+      "bytes": 154,
+      "sha256": "ca2d9a4c114d3d6d17703a20eff2990a1d5bf333733ffbf9915fa85487d4f508"
+    },
+    {
+      "path": "src/server/public-api-security.server.ts",
+      "bytes": 4304,
+      "sha256": "4300ae8f767615d70b1e40ca4fbcb61e15d7170c2513e58fc94264ea3fb517e6"
+    },
+    {
+      "path": "tests/public-api-security-deadline.test.cjs",
+      "bytes": 11119,
+      "sha256": "4f88db56fcfc5313a1c6cb1567d1573ee445b5e2f4883fb959b074befcffec7c"
+    }
+  ]
+}
