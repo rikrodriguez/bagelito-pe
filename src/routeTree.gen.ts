@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as PlayableRouteImport } from './routes/playable'
+import { Route as SandboxCheckoutRouteImport } from './routes/sandbox-checkout'
 import { Route as ApiBatchRouteImport } from './routes/api/batch'
 import { Route as ApiCatalogRouteImport } from './routes/api/catalog'
 import { Route as ApiCheckoutQuoteRouteImport } from './routes/api/checkout/quote'
@@ -35,6 +36,11 @@ const LegalRoute = LegalRouteImport.update({
 const PlayableRoute = PlayableRouteImport.update({
   id: '/playable',
   path: '/playable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SandboxCheckoutRoute = SandboxCheckoutRouteImport.update({
+  id: '/sandbox-checkout',
+  path: '/sandbox-checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiBatchRoute = ApiBatchRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/legal': typeof LegalRoute
   '/playable': typeof PlayableRoute
+  '/sandbox-checkout': typeof SandboxCheckoutRoute
   '/api/batch': typeof ApiBatchRoute
   '/api/catalog': typeof ApiCatalogRoute
   '/api/checkout/quote': typeof ApiCheckoutQuoteRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/legal': typeof LegalRoute
   '/playable': typeof PlayableRoute
+  '/sandbox-checkout': typeof SandboxCheckoutRoute
   '/api/batch': typeof ApiBatchRoute
   '/api/catalog': typeof ApiCatalogRoute
   '/api/checkout/quote': typeof ApiCheckoutQuoteRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/legal': typeof LegalRoute
   '/playable': typeof PlayableRoute
+  '/sandbox-checkout': typeof SandboxCheckoutRoute
   '/api/batch': typeof ApiBatchRoute
   '/api/catalog': typeof ApiCatalogRoute
   '/api/checkout/quote': typeof ApiCheckoutQuoteRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/legal'
     | '/playable'
+    | '/sandbox-checkout'
     | '/api/batch'
     | '/api/catalog'
     | '/api/checkout/quote'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/legal'
     | '/playable'
+    | '/sandbox-checkout'
     | '/api/batch'
     | '/api/catalog'
     | '/api/checkout/quote'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/legal'
     | '/playable'
+    | '/sandbox-checkout'
     | '/api/batch'
     | '/api/catalog'
     | '/api/checkout/quote'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LegalRoute: typeof LegalRoute
   PlayableRoute: typeof PlayableRoute
+  SandboxCheckoutRoute: typeof SandboxCheckoutRoute
   ApiBatchRoute: typeof ApiBatchRoute
   ApiCatalogRoute: typeof ApiCatalogRoute
   ApiCheckoutQuoteRoute: typeof ApiCheckoutQuoteRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/playable'
       fullPath: '/playable'
       preLoaderRoute: typeof PlayableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sandbox-checkout': {
+      id: '/sandbox-checkout'
+      path: '/sandbox-checkout'
+      fullPath: '/sandbox-checkout'
+      preLoaderRoute: typeof SandboxCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/batch': {
@@ -279,6 +299,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LegalRoute: LegalRoute,
   PlayableRoute: PlayableRoute,
+  SandboxCheckoutRoute: SandboxCheckoutRoute,
   ApiBatchRoute: ApiBatchRoute,
   ApiCatalogRoute: ApiCatalogRoute,
   ApiCheckoutQuoteRoute: ApiCheckoutQuoteRoute,

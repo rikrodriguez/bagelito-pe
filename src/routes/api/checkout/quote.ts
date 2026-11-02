@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { quoteGuidedOrder } from '../../../server/checkout-quote.server'
 import { readBoundedJsonObject } from '../../../server/http-json.server'
 import { enforcePublicApiSecurity, PublicApiError } from '../../../server/public-api-security.server'
+import { isGuidedProductCheckoutRequestAllowed } from '../../../server/payment-config.server'
 
 export const Route = createFileRoute('/api/checkout/quote')({
   server: {
@@ -10,7 +11,7 @@ export const Route = createFileRoute('/api/checkout/quote')({
         try {
           await enforcePublicApiSecurity({ request, scope: 'quotes' })
           const payload = await readBoundedJsonObject(request, 8 * 1024)
-          const quote = await quoteGuidedOrder(payload)
+          const quote = await quoteGuidedOrder(payload, isGuidedProductCheckoutRequestAllowed(request))
           return Response.json(quote, {
             status: quote.status === 'invalid' ? 400 : quote.status === 'unavailable' ? 503 : 200,
             headers: { 'Cache-Control': 'no-store, max-age=0' },

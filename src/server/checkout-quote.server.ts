@@ -1,4 +1,4 @@
-import { planGuidedOrder, type GuidedQuoteRequest, type GuidedOrderLine } from '../domain/lib/guided-order-quote'
+import { planGuidedOrder, hasPersistableGuidedProducts, type GuidedQuoteRequest, type GuidedOrderLine } from '../domain/lib/guided-order-quote'
 import { getBatchReadOnly } from './batch.server'
 
 export type { GuidedQuoteRequest } from '../domain/lib/guided-order-quote'
@@ -12,9 +12,15 @@ export type GuidedQuoteResponse = {
   priceSourceDate: string
 }
 
-export async function quoteGuidedOrder(input: GuidedQuoteRequest): Promise<GuidedQuoteResponse> {
-  const {legacyPack: _legacyPack, bagelUnits, ...plan} = planGuidedOrder(input)
+export async function quoteGuidedOrder(input: GuidedQuoteRequest, completeProductLane = false): Promise<GuidedQuoteResponse> {
+  const canonical = planGuidedOrder(input)
+  const {legacyPack: _legacyPack, bagelUnits, ...plan} = canonical
   if (plan.status === 'invalid') return {...plan, batchAccepting: false}
+  // The route derives this capability from the private sandbox request gate,
+  // never from JSON. SQL still rechecks price/capacity/policy before reserving.
+  if (completeProductLane && hasPersistableGuidedProducts(canonical)) {
+    plan.status = 'ready'; plan.checkoutAllowed = true; plan.reasons = []
+  }
   // Actual selected bagels: a standalone pot is not a fictional six-bagel pack.
   // This is a read-only projection, not schmear-stock or transactional approval.
   const batch = await getBatchReadOnly(bagelUnits)

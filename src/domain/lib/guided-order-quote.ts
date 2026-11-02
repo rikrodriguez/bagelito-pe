@@ -43,6 +43,18 @@ export type GuidedOrderPlan = {
   legacyPack: { slug: string; quantity: number; mix: PackMix; bagels: BagelSelection[] } | null
 }
 
+/** Capability of the additive product RPC, not payment or stock approval.
+ * Price discovery stays in planGuidedOrder; no fallback price is introduced.
+ */
+export function hasPersistableGuidedProducts(plan: GuidedOrderPlan) {
+  if (plan.status === 'invalid' || plan.amountPen === null || !Number.isSafeInteger(plan.amountPen * 100)
+    || plan.amountPen <= 0 || plan.lines.length < 1 || plan.lines.length > 2) return false
+  return plan.lines.every((line, index) => line.publishedAmountPen !== null && line.publishedAmountPen > 0
+    && Number.isSafeInteger(line.publishedAmountPen * 100)
+    && (line.kind === 'pack' ? index === 0 && /^grande-(6|12)-(single|mixed)$/.test(line.id)
+      : line.kind === 'schmear' && (index === 0 ? plan.lines.length === 1 : plan.lines[0].kind === 'pack')))
+}
+
 const menu = getVerifiedDisplayMenu()
 const bagelIds = new Set(menu.bagels.map(item => item.id))
 const schmearIds = new Set(menu.schmears.map(item => item.id))
