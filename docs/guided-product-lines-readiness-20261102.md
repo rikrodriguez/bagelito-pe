@@ -17,12 +17,14 @@
 
 Repository source: [`verified-menu-2026-10-21.json`](../src/domain/data/verified-menu-2026-10-21.json), menu dated October 14, inspection recorded October 21. The original menu's current availability was **not** re-certified on November 2. Its quoted values are reference evidence, not current inventory or authorization to charge.
 
+**Price clarification resolved later on November 2:** Ricardo supplied an image of `bagelito.pe`'s published menu carousel, slide 4/6. Direct visual inspection confirms every existing schmear price: 120 g S/12 original / S/16 flavored; 180 g S/18 / S/23; 240 g S/22 / S/29. SHA-256: `db730c30cd00acae2f5af50b0684f1ef5f3e4e63068cf02e8c6b33d7489f58f4`. The image is not republished here. This current user-supplied evidence resolves the editable Canva conflict **without changing any price**. Confirmation metadata is recorded separately in the JSON; it does not re-certify the entire menu or stock. The S/48 and S/90 packs visible above are a separate Halloween promotion and were not imported as ordinary pack prices.
+
 | Product | Existing dated evidence | Current treatment |
 |---|---|---|
 | Large packs | Single 6/12: S/50 / S/100; mixed 6/12: S/60 / S/115 | Existing non-premium path preserved; payment gates remain separate |
-| Schmear 120 g | Original S/12; flavored S/16 | Also corroborated in original Canva page 4; review-only product line |
-| Schmear 180 g | Snapshot S/18 / S/23 | **Conflict:** original editable Canva page 4 says S/12 / S/16. Do not overwrite from a possibly draft template; reconcile before activation |
-| Schmear 240 g | Snapshot S/22 / S/29 | Not corroborated by Canva text read in this audit; remains dated reference only |
+| Schmear 120 g | Original S/12; flavored S/16 | Confirmed by current user-supplied published-menu image; review-only product line |
+| Schmear 180 g | Snapshot S/18 / S/23 | **Resolved:** current user-supplied published-menu image confirms S/18 / S/23; conflicting editable Canva text is not used |
+| Schmear 240 g | Snapshot S/22 / S/29 | Confirmed by current user-supplied published-menu image; review-only product line |
 | Historical combos | 6 mixed + one 120 g pot S/74; 12 mixed + two pots S/140; 6 mixed + three pots S/99 | Canva page 3 corroborates; **not** prices for the current 2+1 journey |
 | Current two-bagel + one-pot combo | No confirmed selling price found | Exact composition retained; amount null; never ready |
 | Two/eight-bagel extras | No approved price/promotion found for these journeys | Explicit unpriced line; never ready; no inference from S/10 unit reference or “6+2 gratis” QA copy |
@@ -39,7 +41,7 @@ Therefore do not encode a pot as a bagel, charge an unpersisted add-on, put prod
 
 Before these products can sell end-to-end:
 
-1. Reconcile the dated catalog against the current commercial source: exact available products, 180 g price conflict, combo composition/price, premium inclusion, optional extra offer and upgrade scope.
+1. Reconcile the dated catalog against the current commercial source: exact available products, combo composition/price, premium inclusion, optional extra offer and upgrade scope.
 2. Add a separately reviewed forward-compatible product-line persistence adapter/RPC, with explicit product kind, bagel format, schmear grams/counts, immutable server-priced amounts and full canonical replay matching. Keep stock/capacity, legal evidence and reservation creation atomic; do not weaken the existing financial core.
 3. Test zero-bagel standalone orders, mixed lines, every supported price, retries/concurrency, same-total substitutions, refunds/reconciliation and fulfillment receipts against an isolated database. Confirm actual installed schema before any rollout.
 4. Only with explicit authorization configure isolated sandbox credentials and perform Culqi HTTP/3DS/webhook tests. Production activation remains a separate authorization and acceptance gate.

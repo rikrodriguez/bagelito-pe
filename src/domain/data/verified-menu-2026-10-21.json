@@ -222,5 +222,11 @@
     "Live website states monthly batch and closed orders; current Instagram states weekly Friday production. Do not import website monthly rule as confirmed commercial truth.",
     "Website lists10 flavors including Rainbow/Custom Colors and Snickerdoodle; current IG regular menu has8 plus custom-color service, seasonal launches separately.",
     "Current website has no schmear/combos; Instagram October14 has full published products above."
-  ]
+  ],
+  "schmear_price_confirmation": {
+    "verified_on": "2026-11-02",
+    "source": "User-supplied screenshot of bagelito.pe Instagram menu carousel, slide 4/6",
+    "source_sha256": "db730c30cd00acae2f5af50b0684f1ef5f3e4e63068cf02e8c6b33d7489f58f4",
+    "scope": "Schmear pot prices only: 120 g 12/16 PEN, 180 g 18/23 PEN, 240 g 22/29 PEN (original/flavoured). Supersedes the conflicting editable Canva text for these prices. The separate Halloween pack promotion visible above the menu is not normal pack pricing. No stock, combo price, upgrade rule or payment activation is inferred."
+  }
 }

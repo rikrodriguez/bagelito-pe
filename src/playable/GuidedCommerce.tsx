@@ -1,4 +1,5 @@
 import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { planGuidedOrder } from '../domain/lib/guided-order-quote'
 import { ReferenceScene } from '../reference/ReferenceScene'
 import { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
@@ -86,13 +87,13 @@ const GUIDED_DRAFT_KEY = 'bagelito.guided.product-draft.v1'
 const GUIDED_DRAFT_TTL_MS = 24 * 60 * 60 * 1000
 
 function readSafeSelections(raw: unknown, allowedIds: readonly string[]) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}
+  if (raw === undefined) return {}
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('invalid-product-draft')
   const next: Record<string,number> = {}
   for (const [id,value] of Object.entries(raw)) {
-    if (allowedIds.includes(id) && typeof value === 'number'
-      && Number.isInteger(value) && value > 0 && value <= 24) {
-      next[id] = value
-    }
+    if (!allowedIds.includes(id) || typeof value !== 'number'
+      || !Number.isInteger(value) || value < 0 || value > 24) throw new Error('invalid-product-draft')
+    if (value > 0) next[id] = value
   }
   return next
 }
@@ -153,6 +154,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
   const [draftLoaded, setDraftLoaded] = useState(false)
+  const [draftRecoveryMessage, setDraftRecoveryMessage] = useState('')
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const qaMode = !referenceMode && !reviewOnly && qaRequested && paymentConfig?.visualQaAllowed === true
   const directCatalog = liveWorld || referenceMode
@@ -172,11 +174,20 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         const raw = window.sessionStorage.getItem(GUIDED_DRAFT_KEY)
         if (raw) {
           const draft = JSON.parse(raw) as Record<string,unknown>
+          if (!draft || typeof draft !== 'object' || Array.isArray(draft)) throw new Error('invalid-product-draft')
           const age = Date.now() - Number(draft.updatedAt)
-          if (!Number.isFinite(age) || age < 0 || age > GUIDED_DRAFT_TTL_MS
-            || !['packs','combos','schmears'].includes(String(draft.category))) {
+          if (!Number.isFinite(age) || age < 0
+            || typeof draft.category !== 'string' || !['packs','combos','schmears'].includes(draft.category)) throw new Error('invalid-product-draft')
+          if (age > GUIDED_DRAFT_TTL_MS) {
             window.sessionStorage.removeItem(GUIDED_DRAFT_KEY)
           } else {
+            if (typeof draft.format !== 'string' || !['mini','grande'].includes(draft.format)
+              || typeof draft.packMix !== 'string' || !['single','mixed'].includes(draft.packMix)
+              || typeof draft.packQty !== 'number' || !Number.isInteger(draft.packQty)
+              || !(draft.format === 'mini' ? [6,12,24] : [6,12]).includes(draft.packQty)
+              || typeof draft.schmearSize !== 'number' || ![120,180,240].includes(draft.schmearSize)) {
+              throw new Error('invalid-product-draft')
+            }
             const restoredCategory = draft.category as Category
             const safeBagels = readSafeSelections(draft.bagels, menu.bagels.map(item => item.id))
             const safeSchmears = readSafeSelections(draft.schmears, menu.schmears.map(item => item.id))
@@ -190,30 +201,42 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             const requestedScene: Scene = allowedScenes.includes(restoredScene)
               ? restoredScene as Scene
               : restoredCategory === 'schmears' ? 'schmear-size' : 'pack-size'
-            const requiredBagels = restoredCategory === 'combos' ? 2 : safeQty
+            const safeMode = draft.bagelMode === undefined ? (restoredCategory === 'combos' ? 'combo' : 'pack') : draft.bagelMode
             const bagelTotal = Object.values(safeBagels).reduce((sum,n)=>sum+n,0)
             const schmearTotal = Object.values(safeSchmears).reduce((sum,n)=>sum+n,0)
-            const complete = restoredCategory === 'schmears'
-              ? schmearTotal === 1
-              : restoredCategory === 'packs'
-                ? bagelTotal === requiredBagels
-                : bagelTotal === 2 && schmearTotal === 1
+            const modeValid = typeof safeMode === 'string' && (restoredCategory === 'packs' ? safeMode === 'pack'
+              : restoredCategory === 'combos' ? safeMode === 'combo'
+                : ['pack','upsell8','downsell2'].includes(safeMode))
+            const target = restoredCategory === 'packs' ? safeQty : restoredCategory === 'combos' ? 2
+              : safeMode === 'upsell8' ? 8 : safeMode === 'downsell2' ? 2 : 0
+            if (!modeValid || bagelTotal > target || schmearTotal > 1
+              || (safeMix === 'single' && restoredCategory === 'packs' && Object.keys(safeBagels).length > 1)
+              || (restoredCategory !== 'schmears' && safeSize !== 120)) throw new Error('invalid-product-draft')
+            const restoredPlan = planGuidedOrder({category: restoredCategory, packFormat: safeFormat,
+              packQty: safeQty, packMix: safeMix, bagels: safeBagels, schmears: safeSchmears,
+              schmearSize: safeSize, bagelMode: safeMode,
+              comboId: restoredCategory === 'combos' ? 'two-bagel-schmear' : undefined})
+            const complete = restoredPlan.status !== 'invalid'
             setCategory(restoredCategory)
             setPackFormat(safeFormat)
             setPackQty(safeQty)
             setPackMix(safeMix)
             setComboId(restoredCategory === 'combos' ? 'two-bagel-schmear' : null)
             setSchmearSize(safeSize)
-            setBagelMode(restoredCategory === 'combos' ? 'combo' : 'pack')
+            setBagelMode(safeMode as BagelMode)
             setBagelCounts(safeBagels)
             setSchmearCounts(safeSchmears)
             setScene(requestedScene === 'cashier' && !complete
-              ? restoredCategory === 'schmears' ? 'schmears' : 'bagels'
+              ? bagelTotal < target ? 'bagels' : 'schmears'
               : requestedScene)
           }
         }
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof SyntaxError || (error instanceof Error && error.message === 'invalid-product-draft')) {
+        setDraftRecoveryMessage('No pudimos recuperar tu selección completa. Revisa y vuelve a elegir tus productos; no se creó ningún pedido.')
+        try { window.sessionStorage.removeItem(GUIDED_DRAFT_KEY) } catch {}
+      }
       // No storage access or malformed draft must never block shopping.
     }
     setDraftLoaded(true)
@@ -234,13 +257,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         packQty,
         packMix,
         schmearSize,
+        bagelMode,
         bagels: bagelCounts,
         schmears: schmearCounts,
       }))
     } catch {
       // Safari private mode or a blocked storage quota is non-fatal.
     }
-  }, [draftLoaded,category,scene,packFormat,packQty,packMix,schmearSize,bagelCounts,schmearCounts,paidOrderCode,reviewOnly])
+  }, [draftLoaded,category,scene,packFormat,packQty,packMix,schmearSize,bagelMode,bagelCounts,schmearCounts,paidOrderCode,reviewOnly])
 
   // Navigation and order drawer stay in their own layer while walking.
   // Close both when the customer moves to a new scene.
@@ -712,6 +736,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   }
 
   return <div ref={referenceMode ? referenceRoot : undefined} className={'guided-commerce' + (referenceMode ? ' reference-mode' : '')} data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined} data-direct-catalog={directCatalog ? 'true' : undefined} data-reference-mode={referenceMode ? 'true' : undefined} data-review-only={reviewOnly ? 'true' : undefined}>
+    {!reviewOnly && draftRecoveryMessage && <p role="status" className="guided-draft-recovery" style={{position: 'fixed', top: 70, left: 12, right: 12, zIndex: 150, padding: 12, background: '#fff', color: '#004aad', border: '2px solid #004aad', borderRadius: 12}}>{draftRecoveryMessage} <button type="button" onClick={() => setDraftRecoveryMessage('')} aria-label="Cerrar aviso de recuperación">Cerrar</button></p>}
     {referenceMode && <ReferenceScene
       onCategory={(value) => {
         if (value === 'packs') setSchmearSize(120)

@@ -27,3 +27,7 @@ git diff --check
 No browser or responsive visual QA was rerun for this patch. It changes no CSS/assets/layout; the frontend change is a two-line state reset when switching category. Native browser/visual evidence from earlier commits must not be described as execution of this exact patch.
 
 See [commercial evidence and persistence boundary](../../guided-product-lines-readiness-20261102.md). The 180 g source conflict, unpriced current combo/extras, product-line transaction adapter, and real Culqi E2E remain unresolved. Reference-only mode remains active. Local tests are not GitHub CI or production acceptance.
+
+## Subsequent source clarification
+
+After this checkpoint, Ricardo supplied the published schmear menu image. It confirms all six original/flavored size prices already in the JSON, resolving the 180 g Canva conflict without price changes. See the updated commercial evidence document above. Product persistence and other unpriced offers remain blocked.
