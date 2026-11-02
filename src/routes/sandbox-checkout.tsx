@@ -7,8 +7,10 @@ import '../reference/rebuilt-flow.css'
 
 // Return only availability; server credentials/configuration never enter props.
 const readSandboxAvailability = createServerFn({ method: 'GET' }).handler(async () => {
-  const { getRequest } = await import('@tanstack/react-start/server')
+  const { getRequest, setResponseHeader } = await import('@tanstack/react-start/server')
   const { isGuidedProductCheckoutPageAllowed } = await import('../server/payment-config.server')
+  setResponseHeader('Cache-Control', 'private, no-store, max-age=0')
+  setResponseHeader('CDN-Cache-Control', 'no-store')
   return { enabled: isGuidedProductCheckoutPageAllowed(getRequest()) }
 })
 
