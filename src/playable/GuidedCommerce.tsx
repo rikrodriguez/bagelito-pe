@@ -108,7 +108,7 @@ const SCHMEAR_SPOTS = [
   { left: '77%', top: '20%', width: '17%', height: '61%' },
 ] as const
 
-export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, exitLabel = 'Explorar tienda 3D' }: {
+export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, sandboxMode = false, exitLabel = 'Explorar tienda 3D' }: {
   onExit: () => void
   customerName?: string | null
   initialCategory?: Category | null
@@ -116,6 +116,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   liveWorld?: boolean
   referenceMode?: boolean
   reviewOnly?: boolean
+  sandboxMode?: boolean
   exitLabel?: string
   onSceneChange?: (scene: string) => void
 }) {
@@ -664,7 +665,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
   const canPayOnline = !reviewOnly && paymentConfig?.enabled === true && checkoutQuote?.checkoutAllowed === true
 
-  const manualOrderHref = !reviewOnly && category && canReviewAtCashier
+  const manualOrderHref = !reviewOnly && !sandboxMode && category && canReviewAtCashier
     ? createManualOrderWhatsAppHref({
         category,
         format: packFormat,
@@ -1060,6 +1061,8 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         </div>
         {reviewOnly
           ? <p>Revisa tu selección, los datos de entrega y el consentimiento. Esta vista no envía pedidos ni realiza pagos.</p>
+          : sandboxMode
+          ? <p>Prueba sandbox con datos autorizados. No es una venta ni confirma una entrega.</p>
           : paymentConfig?.enabled !== true
           ? <p>Tu selección está lista para consultar. Bagelito confirmará el precio y la fecha de entrega por WhatsApp.</p>
           : !quoteLoading && checkoutQuote?.reasons?.length
@@ -1071,9 +1074,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         disabled={quoteLoading && !qaMode}
         onClick={() => { if (reviewOnly || canPayOnline || qaMode) setScene('pay') }}
       >
-        {reviewOnly ? 'Revisar entrega y consentimiento' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
+        {reviewOnly ? 'Revisar entrega y consentimiento' : sandboxMode ? 'Continuar prueba sandbox' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
       </button>}
-      {!reviewOnly && <div className="guided-launch-contact">
+      {!reviewOnly && !sandboxMode && <div className="guided-launch-contact">
         {manualOrderHref && <a
           className={canPayOnline ? 'is-secondary' : 'is-primary'}
           href={manualOrderHref}
@@ -1092,7 +1095,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     {scene === 'pay' && <div className="guided-payment-gate">
       <div className="guided-payment-sheet">
         <div className="guided-payment-copy">
-          <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : 'PAGO SEGURO'}</small>
+          <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : sandboxMode ? 'PRUEBA SANDBOX' : 'PAGO SEGURO'}</small>
           <b>Completa tu delivery</b>
           <span>{reviewOnly
             ? 'Puedes revisar tus datos y el consentimiento. El pago no está activo en esta vista.'
@@ -1126,6 +1129,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
 
         {!reviewOnly && paymentConfig && checkoutQuote?.amountPen != null && <CulqiBrowserCheckout
           config={paymentConfig}
+          sandboxMode={sandboxMode}
           customer={checkoutCustomer}
           subtotalPen={checkoutQuote.amountPen}
           order={{

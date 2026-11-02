@@ -11,6 +11,9 @@ the unchanged `ReferenceStorefront` with `reviewOnly` explicitly set.
 1. A server-only GET function returns a single availability boolean for the
    sandbox entry. Disabled entry renders a closed notice, without mounting the
    commerce journey or Culqi. The page is noindex and private/no-store.
+   The entry explicitly opts into sandbox presentation: cashier and Culqi buttons
+   identify a test, and commercial WhatsApp links/contact blocks are neither
+   constructed nor rendered. Other entries retain their default presentation.
 2. The quote route derives complete-product capability from the private request
    gate, never browser JSON. It recognizes regular large packs of 6/12, optional
    120 g pot, and standalone 120/180/240 g pots using existing canonical prices.

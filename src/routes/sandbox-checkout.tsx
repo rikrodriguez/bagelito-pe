@@ -46,7 +46,7 @@ function SandboxJourney() {
     <aside role="note" style={{ padding: '1rem', background: '#fff3cd', color: '#382b00', position: 'relative', zIndex: 30 }}>
       <strong>Entorno de pruebas Culqi.</strong> No es una venta ni autoriza entrega. Usa sólo datos de prueba autorizados; nunca una tarjeta real.
     </aside>
-    <GuidedCommerce referenceMode skipEntrance
+    <GuidedCommerce referenceMode skipEntrance sandboxMode
       exitLabel="Volver a la vitrina" onExit={() => window.location.assign('/sandbox-checkout')}
       onSceneChange={setScene} />
   </div>

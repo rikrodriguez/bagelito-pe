@@ -196,10 +196,11 @@ export function CulqiBrowserCheckout(props: {
   customer: CheckoutCustomer
   order: GuidedOrderPayload
   subtotalPen: number
+  sandboxMode?: boolean
   onPaid: (result: { orderCode: string; amountPen: number; receipt: PaidOrderReceipt }) => void
   onReview: (message: string) => void
 }) {
-  const { config, customer, order, subtotalPen, onPaid, onReview } = props
+  const { config, customer, order, subtotalPen, onPaid, onReview, sandboxMode = false } = props
   const [status, setStatus] = useState<'idle'|'loading'|'ready'|'charging'|'3ds'|'confirming'|'review'|'error'|'expired'>('idle')
   const [message, setMessage] = useState('')
   const checkoutRef = useRef<CheckoutInstance | null>(null)
@@ -724,24 +725,25 @@ export function CulqiBrowserCheckout(props: {
 
   if (!config.enabled) {
     return <div className="culqi-browser-status is-locked">
-      <b>Checkout Culqi bloqueado</b>
+      <b>{sandboxMode ? 'Prueba sandbox bloqueada' : 'Checkout Culqi bloqueado'}</b>
       <span>Subtotal actual: S/ {subtotalPen}. Se habilitará solo cuando cliente, webhook, datos legales y batch estén listos.</span>
     </div>
   }
 
   return <div className="culqi-browser-checkout">
     <button type="button" className="culqi-start-button" disabled={!customerReady || status === 'loading' || status === 'charging' || status === '3ds' || status === 'confirming' || status === 'review'} onClick={() => void startCheckout()}>
+      {sandboxMode && 'Prueba sandbox · '}
       {status === 'loading' ? 'Preparando…'
         : status === 'expired' ? 'Reserva vencida'
           : status === 'charging' ? 'Procesando…'
           : status === '3ds' ? 'Autenticando banco…'
             : status === 'confirming' ? 'Confirmando pago…'
               : status === 'review' ? 'Pago en revisión'
-                : 'Pagar con Culqi'}
+                : sandboxMode ? 'Iniciar prueba con Culqi' : 'Pagar con Culqi'}
     </button>
-    {!customerReady && <p className="culqi-browser-message">Completa tus datos y acepta los términos para habilitar el pago.</p>}
+    {!customerReady && <p className="culqi-browser-message">{sandboxMode ? 'Completa los datos de prueba autorizados y acepta los términos para habilitar la prueba sandbox.' : 'Completa tus datos y acepta los términos para habilitar el pago.'}</p>}
     {message && <p className="culqi-browser-message">{message}</p>}
-    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>Consultar estado del pago</button>}
+    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>{sandboxMode ? 'Consultar estado de la prueba sandbox' : 'Consultar estado del pago'}</button>}
     <div id="culqi-checkout-container" className="culqi-browser-container" />
   </div>
 }
