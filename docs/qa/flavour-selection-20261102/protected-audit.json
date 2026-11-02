@@ -1,0 +1,701 @@
+{
+  "base": "59fb43102f950a9ed1437134f598b1fa53e1a75e",
+  "code_sha": "7ba7a5b98c3a25907583a1b72cf04befd23ef9d0",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "f1434a5884a0f9eba13c024cf4277f3adf512ec6164d828315f02d5251fd1866",
+      "unchanged": true
+    },
+    {
+      "path": "public/bagel-vitrina.webp",
+      "sha256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7",
+      "unchanged": true
+    },
+    {
+      "path": "public/bagelito-counter.webp",
+      "sha256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8",
+      "unchanged": true
+    },
+    {
+      "path": "public/fonts/OFL-Fredoka.txt",
+      "sha256": "9bbd4f5f107895d5a213579b73821fadd05105241cf4360e86050199fcfd6034",
+      "unchanged": true
+    },
+    {
+      "path": "public/fonts/fredoka-variable.ttf",
+      "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-blueberry.webp",
+      "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-cheddar.webp",
+      "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-cinnamon-raisin.webp",
+      "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-classic-onion.webp",
+      "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-everything.webp",
+      "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-jalapeno-cheddar.webp",
+      "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-plain.webp",
+      "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-sesame.webp",
+      "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagel-vitrina-photo.webp",
+      "sha256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagelito-logo.svg",
+      "sha256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/bagelito-wordmark.svg",
+      "sha256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/guided-storyboard-atlas-2.webp",
+      "sha256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/guided-storyboard-atlas.webp",
+      "sha256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/pack-6-mixed.webp",
+      "sha256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-aligned-combo.webp",
+      "sha256": "8bf111ef1cd6b37642c0a472dabe95e01636925e575d08f5aed4df37b9a6a763",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-aligned-counter-desktop.webp",
+      "sha256": "3a19a37ebbedc735599e719e6b3b9feb80358937fcf288758e2a68483372642f",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-aligned-counter.webp",
+      "sha256": "490bbcf7545bf3d2deb3bbbc8768358765b710010145101ce4325ef176496074",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-aligned-room-mobile.webp",
+      "sha256": "12a0629770075556bd27a86a6f6489a9f598599173c9336fcfd472be00a63dfc",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-aligned-room.webp",
+      "sha256": "626cde972ada339f31a461aa39080b874b07cfd9b15b5627ad84ca5fe7369c3e",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-bagel-trays.png",
+      "sha256": "353b90295a62c889cdd95d5394767e7606aa96062f357c4ac9eac4fdd28c623c",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-bagel-trays.webp",
+      "sha256": "372bad047d09ff053251cd17cf6285d95fb4388145f4391ce1f03709cf6c9de0",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-boutique-room-mobile.webp",
+      "sha256": "f29328f2d01f5f901b87624f54ad56a1ad9d6694834b4559a0a9259ab7b83406",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-boutique-room.png",
+      "sha256": "abab505bb2494be6a1ff76c5b0bb066bdd4669033f30269ee015f4ead6c89537",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-boutique-room.webp",
+      "sha256": "31739bc6cee98eccaf4c4084b6f3e1fbd44dd6635c1ca22094943bfbd995e98b",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-bagels-480.webp",
+      "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-bagels-800.webp",
+      "sha256": "e7d89f977b8b59b3c85372150b2b6ec2d888cfc7d90e712d978f4429b274775f",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-bagels.png",
+      "sha256": "6056128e44bdddecbb983f505f5058c42fde48688b279aaf20a362f1d1082bcb",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-bagels.webp",
+      "sha256": "be486e003c9bcf461fa5a922de927a3c7766d28b3d5825f905a0ecad8d2860e4",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-open-tray-480.webp",
+      "sha256": "9cbc888da5235149f2acf1dc9aec1642002ac8c0d594eff35f397e35be6d9091",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-open-tray-800.webp",
+      "sha256": "e87f24b13673addc46bbff3e6004d9a5e852b3bf83c7f5b4f73970498bea9630",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-open-tray.webp",
+      "sha256": "1c7e0a10bdbffaa8276d6f65e62b7462b09505d466aad772b70800191ef69fd5",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-bowl-480.webp",
+      "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-bowl-800.webp",
+      "sha256": "ad8b3bf0ca2093ef95354b8fe896ac5dc8bc250bf8a4427db8b16bd5f069a9fc",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-bowl.png",
+      "sha256": "d1d1f83351a6ca376370edb524c04de3d57c7297fc43cdd96f7d704893d6c7ca",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-bowl.webp",
+      "sha256": "015224aaaf2f307fc1bc1e79b5a0ca83d4211fa5c32acc694e4125bd4e0354f6",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-neutral-480.webp",
+      "sha256": "f4dd4afe1f06ea3c74aac6313332ba6f57f4323be13b87a8c168f6ef1bac7efd",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-neutral-800.webp",
+      "sha256": "d41644ab33e4bc2d916e8cd7bf2d928afbc3b509bd70b9d561c4e982ebe21cf5",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-neutral.png",
+      "sha256": "aacbaf4fa131d5c2e49f7d8c38e0e35194b435df1cf0701166ce09e192a822ee",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-neutral.webp",
+      "sha256": "812cc3572623348d54274ffc3cfb64e9c6ce213f6acd438bd190f5bf8156384e",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/rebuilt-schmear-trays.webp",
+      "sha256": "2e36cb529874f5b03e975f5a6ba7528f4f908115b334045a4497d1d9d0d6106e",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/schmear-vitrina-photo.webp",
+      "sha256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f",
+      "unchanged": true
+    },
+    {
+      "path": "public/images/store-reference-approved.webp",
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/bag-handoff.webp",
+      "sha256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/bagels-vitrina.webp",
+      "sha256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/cashier.webp",
+      "sha256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/combos.webp",
+      "sha256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/cross-sell.webp",
+      "sha256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/entrance.webp",
+      "sha256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/goodbye.webp",
+      "sha256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/inside.webp",
+      "sha256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/packs.webp",
+      "sha256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/pay.webp",
+      "sha256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/receipt.webp",
+      "sha256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/schmears-vitrina.webp",
+      "sha256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/schmears.webp",
+      "sha256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/selector.webp",
+      "sha256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes-clean/wallet.webp",
+      "sha256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/bag-handoff.webp",
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/bagels-vitrina.webp",
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/cashier.webp",
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/combos.webp",
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/cross-sell.webp",
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/entrance.webp",
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/goodbye.webp",
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/inside.webp",
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/packs.webp",
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/pay.webp",
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/receipt.webp",
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/schmears-vitrina.webp",
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/schmears.webp",
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/selector.webp",
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "unchanged": true
+    },
+    {
+      "path": "public/master-scenes/wallet.webp",
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "unchanged": true
+    },
+    {
+      "path": "public/models/bagel-everything-1024.glb",
+      "sha256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d",
+      "unchanged": true
+    },
+    {
+      "path": "public/models/bagel-everything-512.glb",
+      "sha256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3",
+      "unchanged": true
+    },
+    {
+      "path": "public/reference/storyboard-main.webp",
+      "sha256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b",
+      "unchanged": true
+    },
+    {
+      "path": "public/reference/storyboard-master.webp",
+      "sha256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39",
+      "unchanged": true
+    },
+    {
+      "path": "public/reference/storyboard-schmears.webp",
+      "sha256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/bag-handoff.webp",
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/bagels-vitrina.webp",
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/cashier.webp",
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/combos.webp",
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/cross-sell.webp",
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/entrance.webp",
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/goodbye.webp",
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/inside.webp",
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/packs.webp",
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/pay.webp",
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/receipt.webp",
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/schmears-vitrina.webp",
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/schmears.webp",
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/selector.webp",
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb",
+      "unchanged": true
+    },
+    {
+      "path": "public/scenes/wallet.webp",
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89",
+      "unchanged": true
+    },
+    {
+      "path": "public/schmear-vitrina.webp",
+      "sha256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a",
+      "unchanged": true
+    },
+    {
+      "path": "public/store-category-flow.webp",
+      "sha256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b",
+      "unchanged": true
+    },
+    {
+      "path": "public/store-entry-door.webp",
+      "sha256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/data/delivery-districts.ts",
+      "sha256": "0788568ab80080dc7b06dbac823a983e09f24aafe5a9938c93c213102affc51f",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/data/flavors.ts",
+      "sha256": "66858a14c658e0629d920a55db0d6e49955aa86199eb5c493ee313bd406c02d1",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/data/packs.ts",
+      "sha256": "d878f89207114f02bc317e06f74ae4a67f7bf23525128d9604a7f31039bca79d",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/data/verified-menu-2026-10-21.json",
+      "sha256": "3c46de5ccdd34228941513d72c4b48e9a167bca92008ace2c4a77cefadadc0c2",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/approved-shop-contract.ts",
+      "sha256": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/batch-availability.ts",
+      "sha256": "781cc38601dbe97ea3b232725ce42d309c9823c24a0b626b6eee090685c253aa",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/batch-read.ts",
+      "sha256": "96c68a4a1eb6fb5dc626721f8b3bac855a5822a1f2174014c211311360d8444c",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/batch-types.ts",
+      "sha256": "323be2fbe4af20595f6fdbecf3e3d670d7e0b2aadadcdb9f74810162d525e1a6",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/catalog.ts",
+      "sha256": "214d3415c174c459b28bd0ac7585d2d07da44909521f140dd71097bd0c092bcc",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/delivery-pricing.ts",
+      "sha256": "8a74561b843a5b8d1f8ab86ea4d46d451ea77aef67aedb781d4b3a562e49fdd1",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/guided-order-quote.ts",
+      "sha256": "673d0f3673898e5d85639bb6b258426a10be9c19d4489db53519c7dff80cecef",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/legal-version.ts",
+      "sha256": "207c158db72c81550aabe55dcd6ec153eb3b51b39fd75eb3169974cca2d7f4a9",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/manual-order.ts",
+      "sha256": "48c10a9678d205fe98c065481630d0e0465b6496431be668a8a08bdb400b4bf4",
+      "unchanged": true
+    },
+    {
+      "path": "src/domain/lib/public-batch-display.ts",
+      "sha256": "132f2393e08c9ce581e06aff2f99a6aed5014a723cd195951e7065b0da2cb6ae",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/CinematicCommerce.tsx",
+      "sha256": "2724480ff0d54bb82d5271b0238fa6c3a17c5650da80061591c55006ea29b22b",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/CulqiBrowserCheckout.tsx",
+      "sha256": "5ada3d9f7362c570a3e87841c0c5a61ebcc5a1858752f2bfc85f6dd547f0cc84",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/GuidedCommerce.tsx",
+      "sha256": "6967cf0f8611654b8d9e5867964d1442058a78d728fd2395e2227143930ac7a2",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/GuidedEntry.tsx",
+      "sha256": "568783f3f59273477dc9ee7b38c143f21a876b1315b0f59df64a08bc06393a5a",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/PlayableStore.tsx",
+      "sha256": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/StoreArchitectureVisual.tsx",
+      "sha256": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/cinematic.css",
+      "sha256": "c8f94263fbd28b60552f99b38c1298442ed350f7c1dd8fc4b770e7c1624be283",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/guided-commerce.css",
+      "sha256": "577a46b314f2e8fb37b7a6e57f7d71fb9ef338703ebef5c7fc8e213456164666",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/movement-input.ts",
+      "sha256": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+      "unchanged": true
+    },
+    {
+      "path": "src/playable/playable.css",
+      "sha256": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+      "unchanged": true
+    },
+    {
+      "path": "src/reference/ReferenceScene.tsx",
+      "sha256": "a4dc57dfdc0e32ad115427f7612a2bacb5c1460a70aa1969ecbcf9749045b03e",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/batch.server.ts",
+      "sha256": "c0815c63a6065a2883d0c55e1b8a2540aebd7c0c569cf44935c4b503ea8ea483",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/charge-coordinator.server.ts",
+      "sha256": "18dc48b1d6156de35e8c3b0d9871c5fe84fd7d7c17b484de92fd836e1a58a5de",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/checkout-quote.server.ts",
+      "sha256": "a637cbadb16bc5771f7f2ed2465d63878d8947151b8f12653e98216126325e6f",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/checkout-session.server.ts",
+      "sha256": "1b8347db28905362afb2dc8d3cc8d55f94b55681fb12cc8d88cccd0723234205",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/culqi-charge-evidence.server.ts",
+      "sha256": "4f50be81475f55b067b910c682d2e84eaf5b4ee297a8679de433b29b49150719",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/culqi-event-evidence.server.ts",
+      "sha256": "1b281db88d9673b4199a3bc3850236088b313360c759ef2b167f47ea71ca3864",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/culqi.server.ts",
+      "sha256": "d7b690d9d44c6455cd1e8095b9f230ead64bd9ad5bb3df8a7ff4c7dafb7bfb33",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/delivery-pricing.server.ts",
+      "sha256": "d08b42672a17e1e33e74a81cc229d22d2d773e7c54ef78cb7ebc0fd887c7cee7",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/http-json.server.ts",
+      "sha256": "d04e904d158d75993eb2d3786deabcf373de7881041300c3752dc2d6e7017698",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/payment-config.server.ts",
+      "sha256": "a360033544ce02673324a6b3165421f14ad13f5cff48c0a9cec5c941931f32c4",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/public-api-security.server.ts",
+      "sha256": "4f3d54667a6fd8a87840311cc185a4cc598f04dcdf29a7480365e5f529e036d2",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/reference-review-guard.server.ts",
+      "sha256": "1016d6e467145286c73de2c8a69cda129298a1d5fd9b72b90f4eba7388d8a3e9",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/supabase-admin.server.ts",
+      "sha256": "e5e341d4261e7813e7dc7c93844d006d5976468637b89e31fcf2c9e30a6deec6",
+      "unchanged": true
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11",
+      "unchanged": true
+    }
+  ]
+}
