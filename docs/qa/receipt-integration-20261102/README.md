@@ -4,7 +4,7 @@ Application commit `d0997a54b2c37efdebb9468b4c5395605d0d3fc5` (local equivalent 
 
 **Review-only remains unchanged. No new public route, real database/migration, credentials, Culqi SDK/provider request, charge, price change or deployment.**
 
-## Local results
+## Original local results
 
 | Stage | Result / boundary |
 |---|---|
@@ -15,7 +15,37 @@ Application commit `d0997a54b2c37efdebb9468b4c5395605d0d3fc5` (local equivalent 
 | SQL additions | **Pending independent execution at initial publication**: two new cases added,36 total; not executed again in original SIGKILL environment |
 | Native concurrency / real processor / browser screenshots | **Not performed** |
 
-The earlier SQL34 pass applies to the preceding application, not the two newly added bridge cases. A subsequent independent SQL report, when available, must state its exact commit and36-case result separately.
+The earlier 34-case SQL pass applies to the preceding application, not the two newly added bridge cases. The local results above retain their initial-publication boundary. The following independent SQL execution subsequently verified all 36 cases on the exact receipt-integration version; the counts are kept separate from the earlier SQL run and 228 local tests.
+
+## Independent in-memory SQL results
+
+**36/36 PASS, exit 0, zero failures/cancelled/skipped/todo**, executed sequentially in the separate existing Bagelito environment on 2026-11-02. No application, SQL, fixture, test semantics or dependency changed for this run. Documentation evidence was added afterward.
+
+| Identity | Exact value |
+|---|---|
+| Tested remote/evidence HEAD | `cdcaded9bb348405b34e6e44726230e2bb6f7cd2` |
+| Tested HEAD tree | `bd2ef4c2d2df8871b2bb6f82f0495b811ec3bcf3` |
+| Application commit | `d0997a54b2c37efdebb9468b4c5395605d0d3fc5` |
+| Application tree | `2432b5752e23001eebd4be85254d8da3f07f822a` |
+
+Node `v24.19.0`, npm `11.9.0`, pinned PGlite `0.5.12`, existing TypeScript `5.9.3`. The previously verified installations were reused; no package resolution/install or credential configuration was performed. Exact command and working directory: [sql-independent-command.txt](sql-independent-command.txt).
+
+```sh
+NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules \
+NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' \
+node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 \
+  --test-reporter=tap tests/sql/product-lines.test.cjs
+```
+
+[TAP output](sql-independent.tap) preserves all 36 individual results. [Structured evidence](sql-independent-results.json) includes exact identities, pre-execution tracked file SHA-256 values, the seven verified financial fixture SHA-256/Git blob identities, command, versions, timestamps, exit code, per-case results and resource counters. The original raw output remains unchanged in the executor. Published TAP normalizes only checkout-path prefixes and trailing whitespace; raw/published hashes are recorded. The fixture source manifest identifies PR23 commit `085f3df93f9d6a2b0f92cbe8ebe8bfef475eefca`; that commit itself was not locally available, so no direct source-tree comparison is claimed.
+
+New cases 35–36 connect the actual synthetic reservation/financial coordinator to the private injected receipt reader. A pack of six sesame bagels plus a 120 g pot and a standalone 240 g pot produce complete detail with `isFiscalReceipt=false` and `fulfillmentAuthorized=false`. The reader makes one read RPC and leaves reservation/payment row counts unchanged. Pending actual detail, mismatched order code and absent snapshot are rejected without another reservation or payment attempt. These are plain contract outputs, not browser-rendered pixels or actual provider callbacks.
+
+The run completed in 6.553 s with no SIGKILL; maximum child RSS was 1021700 KiB under the 16 GiB cgroup limit. OOM/max/kill counters stayed zero. This current result does not establish the cause of the previous executor's SIGKILL, which remains unknown.
+
+The fixture supplies `new PGlite()` with no URL, data directory, credential or socket. Current legal/proposed guided SQL is loaded only into owned in-memory engines. SQL migrations, financial core, fixture and lockfile are unchanged from the independently verified preceding version. The TypeScript VM rejects external runtime imports; the coordinator's real-provider type import is erased, charge observations are fabricated callbacks, and `fetchCharge` throws. No provider client, real database, credential read, native PostgreSQL/Docker/socket attempt or workaround was used.
+
+The private reader remains unregistered and requires prior caller authorization/trusted payment state; the status endpoint still does not expose product snapshots. Source stays review-only/default-disabled, non-fiscal and without dispatch permission. No prices, policy, workflows, application/test code, environment credentials, deployment or merge changed. **Native concurrency/lock-race and real processor sandbox/3DS/webhook/refund acceptance remain untested.** No readiness or fulfillment authorization follows from these 36 serialized simulations.
 
 ## Regression evidence
 
