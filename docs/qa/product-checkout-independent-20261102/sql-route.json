@@ -1,0 +1,15 @@
+{
+  "label": "sql-route",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/sql/product-checkout-route.test.cjs"
+  ],
+  "started_utc": "2026-11-02T21:32:41.312900+00:00",
+  "elapsed_seconds": 2.995,
+  "returncode": 0,
+  "environment": "minimal explicit allowlist; no inherited credentials",
+  "node_options": "--max-old-space-size=512 --max-semi-space-size=4",
+  "max_child_rss_kib": 1117772
+}

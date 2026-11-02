@@ -1,0 +1,54 @@
+import base64, concurrent.futures, hashlib, io, json, os, pathlib, tarfile, urllib.request
+
+root = pathlib.Path('/workspace/bagelito-validation')
+manifest_file = root/'docs/qa/status-receipt-20261102/public-npm-manifest.json'
+manifest = json.loads(manifest_file.read_bytes())
+lock = json.loads((root/'tests/sql/package-lock.json').read_bytes())
+pglite = lock['packages']['node_modules/@electric-sql/pglite']
+packages = manifest['packages'] + [dict(path='tests/sql/node_modules/@electric-sql/pglite', version=pglite['version'], url=pglite['resolved'], integrity=pglite['integrity'])]
+out = root/'docs/qa/product-checkout-independent-20261102'
+out.mkdir(parents=True, exist_ok=True)
+
+def install(p):
+    assert p['url'].startswith('https://registry.npmjs.org/')
+    dest = root/p['path']
+    assert dest.is_relative_to(root) and 'node_modules' in dest.parts and '..' not in dest.parts
+    with urllib.request.urlopen(p['url'], timeout=60) as response:
+        data = response.read()
+    digest = base64.b64encode(hashlib.sha512(data).digest()).decode()
+    assert p['integrity'] == 'sha512-' + digest, p['path']
+    with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as archive:
+        members = archive.getmembers()
+        files = [m for m in members if m.isfile()]
+        assert files and all(m.isfile() or m.isdir() for m in members)
+        prefixes = {pathlib.PurePosixPath(m.name).parts[0] for m in members}
+        assert len(prefixes) == 1
+        for m in members:
+            parts = pathlib.PurePosixPath(m.name).parts
+            assert not m.name.startswith('/') and '..' not in parts
+        package_meta = next(m for m in files if pathlib.PurePosixPath(m.name).parts[1:] == ('package.json',))
+        meta = json.load(archive.extractfile(package_meta))
+        assert meta['version'] == p['version'], p['path']
+        assert meta['name'] == p['path'].split('node_modules/')[-1], p['path']
+        for m in files:
+            target = dest.joinpath(*pathlib.PurePosixPath(m.name).parts[1:])
+            assert target.is_relative_to(dest)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(archive.extractfile(m).read())
+            target.chmod(0o755 if m.mode & 0o111 else 0o644)
+    return dict(path=p['path'], version=p['version'], sha256=hashlib.sha256(data).hexdigest(), bytes=len(data), sha512_verified=True)
+
+results = []
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+    for item in pool.map(install, packages):
+        results.append(item)
+        print('verified', item['path'], item['version'], flush=True)
+for link in manifest['symlinks']:
+    path = root/link['path']
+    target = (path.parent/link['target']).resolve()
+    assert target.is_relative_to(root/'node_modules') and target.exists()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.symlink_to(link['target'])
+report = dict(manifest_sha256=hashlib.sha256(manifest_file.read_bytes()).hexdigest(), package_count=len(results), lifecycle_scripts=False, version_resolution=False, packages=results)
+(out/'dependency-verification.json').write_text(json.dumps(report,indent=2)+'\n')
+print('RESTORED', len(results), 'verified pinned tarballs; no resolution or lifecycle scripts')

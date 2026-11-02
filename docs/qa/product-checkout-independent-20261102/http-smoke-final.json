@@ -1,0 +1,14 @@
+{
+  "label": "http-smoke-final",
+  "command": [
+    "python",
+    "/workspace/smoke-bagelito.py",
+    "7211bd99c0c0bc59169d4591b1e173200730556cfe42401d8795845b7b959a78"
+  ],
+  "started_utc": "2026-11-02T21:37:12.626731+00:00",
+  "elapsed_seconds": 1.294,
+  "returncode": 0,
+  "environment": "minimal explicit allowlist; no inherited credentials",
+  "node_options": "--max-old-space-size=512 --max-semi-space-size=4",
+  "max_child_rss_kib": 50972
+}

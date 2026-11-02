@@ -1,0 +1,71 @@
+{
+  "source_commit": "0e3f5be2778f3892661d4260fecc37f740604ce5",
+  "source_tree": "a307026f6d08daebf61015ce368766713c74a91e",
+  "candidate": "acd85794f8dd9b09072fc00e17c03b24d91b5213",
+  "candidate_tree": "b7f4512c8438b84462f0b61d05925fcb34f44467",
+  "candidate_parent": "f4283fd20c1dfdd4918ce1b0b50fadb2ee578138",
+  "protected_from_candidate": [
+    {
+      "path": "src/routes/index.tsx",
+      "identical": true,
+      "git_object": "a98c6fe287548f77604234620506932d5952a238"
+    },
+    {
+      "path": "src/routes/playable.tsx",
+      "identical": true,
+      "git_object": "abf8ad36d0c4a5da2a5d2e8959b3072991b1138b"
+    },
+    {
+      "path": "src/reference",
+      "identical": true,
+      "git_object": "936e2fc06c178249d2872f40b8261b92082b5bc4"
+    },
+    {
+      "path": "supabase",
+      "identical": true,
+      "git_object": "12f4eec7c93caa5f2386b450fddced56028f1b3f"
+    },
+    {
+      "path": "src/domain/data",
+      "identical": true,
+      "git_object": "76b11cac496e7f99c41e96836673b9ffc74a19a9"
+    },
+    {
+      "path": "src/server/culqi.server.ts",
+      "identical": true,
+      "git_object": "00b7e3c4ed23d5bbea820cd93da35c55b1e51fc9"
+    },
+    {
+      "path": "src/server/charge-coordinator.server.ts",
+      "identical": true,
+      "git_object": "da2b53d86b02c39e9022fa0c8690e1ca033e4162"
+    },
+    {
+      "path": "src/routes/api/payments/culqi/status.ts",
+      "identical": true,
+      "git_object": "f2d791eec61f2f894fd6ccf309fd123e574078c9"
+    },
+    {
+      "path": "vercel.json",
+      "identical": true,
+      "git_object": "af83218d819403fd350c2f06cc11cee8eb62762b"
+    },
+    {
+      "path": ".env.example",
+      "identical": true,
+      "git_object": "8ad1f22dc0ce4a5b5ea08a8ebdfc013bb971fca7"
+    }
+  ],
+  "autodeploy": {
+    "deploymentEnabled": false
+  },
+  "changed_from_candidate": [
+    "docs/guided-product-checkout-integration-20261102.md",
+    "src/playable/CulqiBrowserCheckout.tsx",
+    "src/playable/GuidedCommerce.tsx",
+    "src/routes/sandbox-checkout.tsx",
+    "src/server/guided-product-reservation.server.ts",
+    "tests/guided-sandbox-contact.test.cjs",
+    "tests/sandbox-entry-availability.test.cjs"
+  ]
+}

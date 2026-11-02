@@ -1,0 +1,5 @@
+Command: ["npm", "run", "typecheck"]
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 typecheck
+> tsc --noEmit
+

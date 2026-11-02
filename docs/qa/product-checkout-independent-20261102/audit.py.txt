@@ -1,0 +1,29 @@
+import hashlib,json,pathlib,subprocess
+root=pathlib.Path('/workspace/bagelito-validation');out=root/'docs/qa/product-checkout-independent-20261102'
+def git(*args):return subprocess.check_output(['git',*args],cwd=root,text=True).strip()
+source=git('rev-parse','HEAD'); tree=git('rev-parse','HEAD^{tree}')
+base='acd85794f8dd9b09072fc00e17c03b24d91b5213'; prior='f4283fd20c1dfdd4918ce1b0b50fadb2ee578138'
+protected=['src/routes/index.tsx','src/routes/playable.tsx','src/reference','supabase','src/domain/data','src/server/culqi.server.ts','src/server/charge-coordinator.server.ts','src/routes/api/payments/culqi/status.ts','vercel.json','.env.example']
+scope={'source_commit':source,'source_tree':tree,'candidate':base,'candidate_tree':git('rev-parse',base+'^{tree}'),'candidate_parent':git('rev-parse',base+'^'),'protected_from_candidate':[],'autodeploy':json.loads(git('show','HEAD:vercel.json'))['git'],'changed_from_candidate':git('diff','--name-only',base,'HEAD').splitlines()}
+for p in protected:
+    delta=git('diff','--name-only',base,'HEAD','--',p)
+    assert not delta,p
+    scope['protected_from_candidate'].append({'path':p,'identical':True,'git_object':git('rev-parse','HEAD:'+p)})
+assert not git('diff','--name-only',prior,'HEAD','--','src/routes/index.tsx','src/routes/playable.tsx','src/reference','supabase','src/domain/data','src/server/culqi.server.ts','src/server/charge-coordinator.server.ts','src/routes/api/payments/culqi/status.ts','vercel.json')
+assert scope['autodeploy']['deploymentEnabled'] is False
+assert not list(root.glob('.env')) and not list(root.glob('.env.local'))
+(out/'scope-audit.json').write_text(json.dumps(scope,indent=2)+'\n')
+terms=['SUPABASE_URL','SUPABASE_SERVICE_ROLE_KEY','CULQI_SECRET_KEY','getPrivatePaymentConfig','buildPaymentConfig','isGuidedProductCheckoutPageAllowed','BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED','create_guided_product_reservation','enforcePublicApiSecurity','setResponseHeader','../server/payment-config.server']
+client=list((root/'.output/public').rglob('*.js'))+list((root/'.output/public').rglob('*.map'))
+audit={'source_commit':source,'source_tree':tree,'files_scanned':len(client),'markers':{t:[str(p.relative_to(root)) for p in client if t in p.read_text()] for t in terms},'actual_secret_values_read':False,'build_environment':'explicit allowlist without credentials','generated_server_fn_id':'7211bd99c0c0bc59169d4591b1e173200730556cfe42401d8795845b7b959a78'}
+assert all(not paths for paths in audit['markers'].values())
+audit['client_stub_files']=[str(p.relative_to(root)) for p in client if audit['generated_server_fn_id'] in p.read_text()]
+audit['server_implementation_files']=[str(p.relative_to(root)) for p in (root/'.output/server/_ssr').rglob('sandbox-checkout-*.mjs') if 'setResponseHeader' in p.read_text()]
+assert audit['client_stub_files'] and audit['server_implementation_files']
+(out/'bundle-audit-final.json').write_text(json.dumps(audit,indent=2)+'\n')
+files=list((root/'.output/public').rglob('*.js'))+list((root/'.output/public').rglob('*.css'))+list((root/'.output/server').rglob('*.mjs'))
+manifest={'source_commit':source,'source_tree':tree,'files':[{'path':str(p.relative_to(root)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(files)]}
+(out/'built-output-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+for src,name in [('/workspace/dependency-restore.py','restore-dependencies.py.txt'),('/workspace/run-bagelito-check.py','run-check.py.txt'),('/workspace/smoke-bagelito.py','smoke.py.txt'),('/workspace/bagelito-audit.py','audit.py.txt')]:
+ (out/name).write_bytes(pathlib.Path(src).read_bytes())
+print(json.dumps({'source':source,'tree':tree,'protected':len(protected),'client_files':len(client),'output_files':len(files),'autodeploy':scope['autodeploy']},indent=2))

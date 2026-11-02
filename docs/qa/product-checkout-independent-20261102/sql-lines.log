@@ -1,0 +1,45 @@
+Command: ["node", "--test", "--test-concurrency=1", "tests/sql/product-lines.test.cjs"]
+✔ policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged (1677.663191ms)
+✔ pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once (40.570247ms)
+✔ all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels (49.511154ms)
+✔ all four ordinary pack prices and pack-plus-pot prices match existing contract (29.096106ms)
+✔ all district delivery fees are recomputed in SQL rather than trusted from caller (59.134095ms)
+✔ exact replay returns original identity/expiry with no second order, line or history (19.720275ms)
+✔ canonical bagel row order does not change the replay identity (17.701633ms)
+✔ same-price schmear substitution and same-total bagel substitution are rejected (19.43041ms)
+✔ changed customer, delivery, terms or missing snapshot never reuse an existing session (36.076969ms)
+✔ tampered persisted bagel rows, total and snapshot fail replay without repair or second charge (23.027472ms)
+✔ expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake (137.449895ms)
+✔ zero-bagel standalone consumes one order slot, not bagel capacity (15.98153ms)
+✔ bagel capacity and closed/future/missing-delivery batches remain fail closed (95.643906ms)
+✔ new expired or overly long holds cannot reserve capacity (17.414014ms)
+✔ fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically (27.091509ms)
+✔ unpriced combos and extras cannot be given an invented selling price at either boundary (14.379363ms)
+✔ legal trigger mismatch rolls back the entire transaction including bagels/history (14.217389ms)
+✔ failure after order/item insert rolls back all partial records (15.299495ms)
+✔ anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes (17.996479ms)
+✔ new migration replay preserves enabled policy, snapshot data and financial core definitions (30.909809ms)
+✔ unrecognized relation collision and schema drift fail before replacing own objects (33.287462ms)
+✔ existing financial token preparation sees the complete total and does not claim a provider payment (21.634047ms)
+✔ public routes never directly invoke the product adapter or product-write RPC (11.397111ms)
+✔ missing financial prerequisite fails migration without creating product objects (2457.706551ms)
+✔ unknown or altered function definition is not silently replaced on migration replay (38.120586ms)
+✔ persisted snapshot substitution is detected, never repaired or used as a new price (25.9008ms)
+✔ service-only snapshot reader works after payment and closed intake without another reservation (21.769981ms)
+✔ snapshot reader returns no record for unknown order and rejects inconsistent stored money (14.699835ms)
+✔ complete product reservation runs through real coordinator and SQL using only synthetic charge evidence (69.282253ms)
+✔ synthetic lower charge amount cannot mark full pack and schmear paid or lose products (21.573245ms)
+✔ synthetic provider failure preserves complete snapshot and prevents automatic second attempt (20.37853ms)
+✔ synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot (26.036894ms)
+✔ isolated packing reader fails on corrupted physical composition instead of inventing a missing pot (17.177288ms)
+✔ read-only packing projection rejects missing changed or invented physical bagels and mismatched header (110.893857ms)
+✔ complete stored reservation flows into private non-fiscal UI detail after synthetic confirmation (58.598034ms)
+✔ private receipt bridge rejects unconfirmed or contradictory persisted order without another reservation (21.977352ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5804.450255

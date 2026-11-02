@@ -1,0 +1,14 @@
+{
+  "label": "typecheck",
+  "command": [
+    "npm",
+    "run",
+    "typecheck"
+  ],
+  "started_utc": "2026-11-02T21:33:10.021016+00:00",
+  "elapsed_seconds": 5.495,
+  "returncode": 0,
+  "environment": "minimal explicit allowlist; no inherited credentials",
+  "node_options": "--max-old-space-size=512 --max-semi-space-size=4",
+  "max_child_rss_kib": 497920
+}

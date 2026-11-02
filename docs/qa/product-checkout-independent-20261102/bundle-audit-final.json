@@ -1,0 +1,27 @@
+{
+  "source_commit": "0e3f5be2778f3892661d4260fecc37f740604ce5",
+  "source_tree": "a307026f6d08daebf61015ce368766713c74a91e",
+  "files_scanned": 8,
+  "markers": {
+    "SUPABASE_URL": [],
+    "SUPABASE_SERVICE_ROLE_KEY": [],
+    "CULQI_SECRET_KEY": [],
+    "getPrivatePaymentConfig": [],
+    "buildPaymentConfig": [],
+    "isGuidedProductCheckoutPageAllowed": [],
+    "BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED": [],
+    "create_guided_product_reservation": [],
+    "enforcePublicApiSecurity": [],
+    "setResponseHeader": [],
+    "../server/payment-config.server": []
+  },
+  "actual_secret_values_read": false,
+  "build_environment": "explicit allowlist without credentials",
+  "generated_server_fn_id": "7211bd99c0c0bc59169d4591b1e173200730556cfe42401d8795845b7b959a78",
+  "client_stub_files": [
+    ".output/public/assets/index-D8eScNBD.js"
+  ],
+  "server_implementation_files": [
+    ".output/server/_ssr/sandbox-checkout-Qne9Qv52.mjs"
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "base_url": "http://127.0.0.1:43455",
+  "credential_env_inherited": false,
+  "server_env_keys": [
+    "BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED",
+    "BAGELITO_MERCHANT_REVIEW_ONLY",
+    "BAGELITO_REFERENCE_REVIEW_ONLY",
+    "CIRCLE_NODE_TOTAL",
+    "CULQI_ENABLED",
+    "CULQI_MODE",
+    "CULQI_TANSTACK_BRIDGE_READY",
+    "CULQI_TANSTACK_CLIENT_READY",
+    "CULQI_TANSTACK_WEBHOOK_READY",
+    "HOST",
+    "LANG",
+    "NITRO_HOST",
+    "NITRO_PORT",
+    "NODE_OPTIONS",
+    "PATH",
+    "PAYMENT_PROVIDER",
+    "PORT",
+    "PUBLIC_SITE_URL",
+    "RAYON_NUM_THREADS",
+    "UV_THREADPOOL_SIZE",
+    "VERCEL_ENV"
+  ],
+  "checks": [
+    "closed entry 200, noindex, private/no-store/CDN no-store; no journey, contact or Culqi DOM/script mounted",
+    "10 API requests stopped by review guard before downstream effects"
+  ],
+  "pid": 2102,
+  "server_fn": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-tss-serialized": "true",
+      "date": "Mon, 02 Nov 2026 21:35:49 GMT",
+      "connection": "keep-alive",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked"
+    },
+    "body": "{\"t\":10,\"i\":0,\"p\":{\"k\":[\"result\"],\"v\":[{\"t\":10,\"i\":1,\"p\":{\"k\":[\"enabled\"],\"v\":[{\"t\":2,\"s\":3}]},\"o\":0}]},\"o\":0}"
+  },
+  "server_returncode": 0,
+  "server_stopped": true,
+  "passed": false,
+  "error": "",
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/sandbox-checkout",
+      "status": 200,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "text/html; charset=utf-8",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "02b216fd76fe5b7867b8d5a331e9b699bb5d7ccf2c6c6ce89a0ad683916ee765",
+      "body_bytes": 2601
+    },
+    {
+      "method": "POST",
+      "path": "/api/checkout/quote",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/checkout/session",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/payments/culqi/order",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/payments/culqi/charge",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/payments/culqi/status",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "GET",
+      "path": "/api/catalog",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "GET",
+      "path": "/api/batch",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "GET",
+      "path": "/api/payments/culqi/config",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "GET",
+      "path": "/%61pi/checkout/session",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "GET",
+      "path": "/API/checkout/quote",
+      "status": 503,
+      "headers": {
+        "cache-control": "private, no-store, max-age=0",
+        "cdn-cache-control": "no-store",
+        "content-type": "application/json",
+        "x-content-type-options": "nosniff",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "311dce2e60e83f379ae536e43f57f2bc427d6424ffd32632634eb82f0596ced2",
+      "body_bytes": 80
+    },
+    {
+      "method": "GET",
+      "path": "/_serverFn/7211bd99c0c0bc59169d4591b1e173200730556cfe42401d8795845b7b959a78",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-tss-serialized": "true",
+        "Date": "Mon, 02 Nov 2026 21:35:49 GMT",
+        "Connection": "keep-alive",
+        "Keep-Alive": "timeout=5",
+        "Transfer-Encoding": "chunked"
+      },
+      "body_sha256": "a56f3db1f5553248fca512703b984741946736f828295561608745432ae68e6e",
+      "body_bytes": 110
+    }
+  ]
+}

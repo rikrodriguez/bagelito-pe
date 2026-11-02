@@ -1,0 +1,18 @@
+{
+  "label": "node-affected-final",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/guided-product-checkout-session.test.cjs",
+    "tests/guided-product-payment-gate.test.cjs",
+    "tests/guided-sandbox-contact.test.cjs",
+    "tests/sandbox-entry-availability.test.cjs"
+  ],
+  "started_utc": "2026-11-02T21:36:26.685872+00:00",
+  "elapsed_seconds": 3.74,
+  "returncode": 0,
+  "environment": "minimal explicit allowlist; no inherited credentials",
+  "node_options": "--max-old-space-size=512 --max-semi-space-size=4",
+  "max_child_rss_kib": 209672
+}

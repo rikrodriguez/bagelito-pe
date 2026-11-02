@@ -1,0 +1,89 @@
+import hashlib, http.client, json, os, pathlib, re, socket, subprocess, time
+root=pathlib.Path('/workspace/bagelito-validation')
+out=root/'docs/qa/product-checkout-independent-20261102'
+with socket.socket() as sock:
+    sock.bind(('127.0.0.1',0)); port=sock.getsockname()[1]
+base=f'http://127.0.0.1:{port}'
+env={'PATH':os.environ['PATH'],'LANG':'C.UTF-8','NODE_OPTIONS':'--max-old-space-size=512 --max-semi-space-size=4',
+     'CIRCLE_NODE_TOTAL':'1','RAYON_NUM_THREADS':'1','UV_THREADPOOL_SIZE':'1',
+     'NITRO_HOST':'127.0.0.1','HOST':'127.0.0.1','NITRO_PORT':str(port),'PORT':str(port),
+     'PAYMENT_PROVIDER':'manual','CULQI_MODE':'disabled','CULQI_ENABLED':'false',
+     'CULQI_TANSTACK_BRIDGE_READY':'false','CULQI_TANSTACK_WEBHOOK_READY':'false','CULQI_TANSTACK_CLIENT_READY':'false',
+     'BAGELITO_REFERENCE_REVIEW_ONLY':'true','BAGELITO_MERCHANT_REVIEW_ONLY':'true',
+     'BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED':'false','VERCEL_ENV':'preview','PUBLIC_SITE_URL':base}
+guard=out/'smoke-no-outbound.mjs.txt'
+guard.write_text('''import http from 'node:http'; import https from 'node:https'; import net from 'node:net'; import {syncBuiltinESMExports} from 'node:module';
+let attempts=0;
+function block(){attempts++;console.error('SMOKE_BLOCKED_OUTBOUND');throw Error('All application outbound clients are disabled for this smoke');}
+globalThis.fetch=block;http.request=block;http.get=block;https.request=block;https.get=block;net.Socket.prototype.connect=block;syncBuiltinESMExports();
+process.on('exit',()=>console.log('SMOKE_OUTBOUND_ATTEMPTS='+attempts));
+''')
+active_guard=pathlib.Path('/workspace/smoke-no-outbound.mjs'); active_guard.write_bytes(guard.read_bytes())
+requests=[]
+def request(method,path,payload=None):
+    connection=http.client.HTTPConnection('127.0.0.1',port,timeout=5)
+    connection.request(method,path,body=json.dumps(payload) if payload is not None else None,
+        headers={'Origin':base,'Sec-Fetch-Site':'same-origin','Content-Type':'application/json'})
+    response=connection.getresponse(); body=response.read(); headers=dict(response.getheaders()); connection.close()
+    requests.append({'method':method,'path':path,'status':response.status,'headers':headers,'body_sha256':hashlib.sha256(body).hexdigest(),'body_bytes':len(body)})
+    return response.status,{k.lower():v for k,v in headers.items()},body.decode('utf8')
+report={'base_url':base,'credential_env_inherited':False,'server_env_keys':sorted(env),'checks':[]}
+try:
+  with (out/'smoke-server.log').open('w') as log:
+    child=subprocess.Popen(['node','--import',str(active_guard),'.output/server/index.mjs'],cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT)
+    report['pid']=child.pid
+    try:
+      deadline=time.monotonic()+30
+      while True:
+        if child.poll() is not None: raise RuntimeError('server exited before listen')
+        try:
+          status,headers,body=request('GET','/sandbox-checkout'); break
+        except (OSError, http.client.HTTPException):
+          if time.monotonic()>deadline: raise
+          time.sleep(.1)
+      (out/'smoke-closed-page.html.txt').write_text(body)
+      assert status==200
+      assert 'Checkout sandbox no habilitado' in body
+      assert 'private' in headers.get('cache-control','') and 'no-store' in headers['cache-control']
+      assert headers.get('cdn-cache-control')=='no-store'
+      assert re.search(r'name="robots" content="[^"]*noindex',body)
+      assert 'data-sandbox-checkout' not in body and 'id="culqi-checkout-container"' not in body
+      assert 'wa.me' not in body and 'guided-launch-contact' not in body
+      assert not re.search(r'<script[^>]+src="https?://',body)
+      report['checks'].append('closed entry 200, noindex, private/no-store/CDN no-store; no journey, contact or Culqi DOM/script mounted')
+      for path in ['/api/checkout/quote','/api/checkout/session','/api/payments/culqi/order','/api/payments/culqi/charge','/api/payments/culqi/status']:
+        status,headers,body=request('POST',path,{})
+        assert status==503 and json.loads(body).get('reviewOnly') is True
+        assert 'no-store' in headers.get('cache-control','') and headers.get('cdn-cache-control')=='no-store'
+      for path in ['/api/catalog','/api/batch','/api/payments/culqi/config','/%61pi/checkout/session','/API/checkout/quote']:
+        status,headers,body=request('GET',path)
+        assert status==503 and json.loads(body).get('reviewOnly') is True
+      report['checks'].append('10 API requests stopped by review guard before downstream effects')
+      # The actual generated server function id is provided as a script argument.
+      import sys
+      if len(sys.argv)>1:
+        status,headers,body=request('GET','/_serverFn/'+sys.argv[1])
+        report['server_fn']={'status':status,'headers':headers,'body':body}
+        decoded=subprocess.run(['node','-e',"const{fromCrossJSON}=require('seroval');let data='';process.stdin.on('data',x=>data+=x);process.stdin.on('end',()=>process.stdout.write(JSON.stringify(fromCrossJSON(JSON.parse(data),{}))))"],
+            input=body,text=True,capture_output=True,cwd=root,env=env,check=True)
+        value=json.loads(decoded.stdout)
+        report['server_fn']['decoded']=value
+        assert status==200 and value=={'result':{'enabled':False}}
+        assert 'private' in headers.get('cache-control','') and 'no-store' in headers['cache-control']
+        assert headers.get('cdn-cache-control')=='no-store'
+        report['checks'].append('actual generated GET server function returns only enabled=false with private/no-store/CDN no-store')
+      report['passed']=True
+    finally:
+      child.terminate()
+      try: child.wait(timeout=5)
+      except subprocess.TimeoutExpired: child.kill(); child.wait(timeout=5)
+      report['server_returncode']=child.returncode
+      report['server_stopped']=child.poll() is not None
+  assert 'SMOKE_BLOCKED_OUTBOUND' not in (out/'smoke-server.log').read_text()
+  report['application_outbound_attempts']=0
+except BaseException as error:
+  report['passed']=False; report['error']=str(error); raise
+finally:
+  report['requests']=requests
+  (out/'smoke.json').write_text(json.dumps(report,indent=2)+'\n')
+  print(json.dumps({k:v for k,v in report.items() if k not in ['requests','server_fn']},indent=2))
