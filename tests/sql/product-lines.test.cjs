@@ -325,3 +325,33 @@ test('read-only packing projection rejects missing changed or invented physical 
   await db.query("insert into order_items(order_id,flavor_slug,flavor_name,quantity)values($1,'plain','Plain',6)",[pot.orderId])
   await assert.rejects(f.api.readGuidedPackingPreview(financialClient(),pot.orderId),/Could not read/)
 })
+
+const paidReceiptBridge=f.loadTs(path.join(f.root,'src/server/guided-paid-receipt.server.ts'))
+test('complete stored reservation flows into private non-fiscal UI detail after synthetic confirmation',async()=>{
+  for(const orderSelection of [f.pack({bagels:{sesame:6}}),f.pot({schmears:{'aji-amarillo':1},schmearSize:240})]){
+    await f.reset(db);const order=await create(f.input(orderSelection)),client=financialClient()
+    await prepareSyntheticToken(client,order)
+    const paid=await coordinateCulqiCharge(coordinatorInput(client,order,async()=>({requires3DS:false,charge:fakeCharge(order)})))
+    assert.equal(paid.paymentStatus,'paid')
+    const before=await counts(),callCount=client.calls.length
+    const detail=await paidReceiptBridge.readGuidedPaidOrderReceipt(client,{orderId:order.orderId,orderCode:order.orderCode,amountMinor:order.amountMinor,
+      paymentStatus:'paid',orderStatus:'payment_confirmed',reconciliationRequired:false})
+    assert.deepEqual(client.calls.slice(callCount),['read_guided_product_reservation'])
+    assert.equal(detail.detailsAvailable,true);assert.equal(detail.amountMinor,order.amountMinor)
+    assert.equal(detail.fulfillmentAuthorized,false);assert.equal(detail.isFiscalReceipt,false)
+    assert.equal(detail.items.filter(x=>x.kind==='bagel').reduce((n,x)=>n+x.quantity,0),orderSelection.category==='packs'?6:0)
+    assert.equal(detail.items.find(x=>x.kind==='schmear').grams,orderSelection.category==='packs'?120:240)
+    assert.deepEqual(await counts(),before)
+  }
+})
+test('private receipt bridge rejects unconfirmed or contradictory persisted order without another reservation',async()=>{
+  const order=await create(),client=financialClient(),context={orderId:order.orderId,orderCode:order.orderCode,amountMinor:order.amountMinor,
+    paymentStatus:'paid',orderStatus:'payment_confirmed',reconciliationRequired:false},before=await counts()
+  // Caller observation alone is insufficient when the actual snapshot is pending.
+  await assert.rejects(paidReceiptBridge.readGuidedPaidOrderReceipt(client,context),/No se pudo verificar/)
+  await db.exec("update orders set payment_status='paid',status='payment_confirmed'")
+  await assert.rejects(paidReceiptBridge.readGuidedPaidOrderReceipt(client,{...context,orderCode:'BAG-OTHER'}),/No se pudo verificar/)
+  await db.exec('delete from order_guided_product_snapshots')
+  await assert.rejects(paidReceiptBridge.readGuidedPaidOrderReceipt(client,context),/No se pudo verificar/)
+  assert.equal((await counts()).orders,before.orders);assert.equal((await counts()).attempts,before.attempts)
+})

@@ -6,6 +6,8 @@ import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
 import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
+import type { PaidOrderReceipt } from '../domain/lib/paid-order-receipt'
+import { PaidOrderReceiptDetails } from './PaidOrderReceiptDetails'
 import {
   CulqiBrowserCheckout,
   type CheckoutCustomer,
@@ -137,7 +139,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
   const [paidOrderCode, setPaidOrderCode] = useState<string | null>(null)
-  const [paidAmountPen, setPaidAmountPen] = useState<number | null>(null)
+  const [paidReceipt, setPaidReceipt] = useState<PaidOrderReceipt | null>(null)
   const [paymentReviewMessage, setPaymentReviewMessage] = useState('')
   const [checkoutCustomer, setCheckoutCustomer] = useState<CheckoutCustomer>({
     customerName: customerName ?? '',
@@ -706,7 +708,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     receiptPulledRef.current = false
     setWalletSaved(false)
     setPaidOrderCode(null)
-    setPaidAmountPen(null)
+    setPaidReceipt(null)
     setCheckoutQuote(null)
     setScene('entrance')
   }
@@ -1138,9 +1140,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             bagelMode,
           }}
           onReview={setPaymentReviewMessage}
-          onPaid={({ orderCode, amountPen }) => {
+          onPaid={({ orderCode, receipt }) => {
             setPaidOrderCode(orderCode)
-            setPaidAmountPen(amountPen)
+            setPaidReceipt(receipt)
             setPaymentReviewMessage('')
             setScene('receipt')
           }}
@@ -1161,17 +1163,18 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <div className={'live-receipt-sheet' + (receiptPulled ? ' pulled' : '')}>
         <div className="live-receipt-brand">
           <small>{qaMode ? 'PREVIEW VISUAL · SIN COBRO' : 'BAGELITO'}</small>
-          <b>{paidOrderCode ?? (qaMode ? 'QA PREVIEW' : 'PEDIDO CONFIRMADO')}</b>
+          <b>{paidOrderCode ?? (qaMode ? 'QA PREVIEW' : 'DETALLE NO DISPONIBLE')}</b>
         </div>
-        <div className="live-receipt-lines">
-          {selectedBagelSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
-          {selectedSchmearSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
-        </div>
-        <div className="live-receipt-total">
-          <span>TOTAL</span>
-          <strong>{paidAmountPen != null ? 'S/ ' + paidAmountPen.toFixed(2) : qaMode ? 'Validado al pagar' : 'Confirmado'}</strong>
-        </div>
-        <p>{qaMode ? 'Este recibo es solo una vista de QA.' : 'Gracias por tu compra.'}</p>
+        {qaMode ? <>
+          <div className="live-receipt-lines">
+            {selectedBagelSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+            {selectedSchmearSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+          </div>
+          <div className="live-receipt-total"><span>TOTAL</span><strong>Validado al pagar</strong></div>
+          <p>Este recibo es solo una vista de QA.</p>
+        </> : paidReceipt
+          ? <PaidOrderReceiptDetails receipt={paidReceipt} />
+          : <p role="status">No hay un detalle de pago verificado. No se reconstruye desde el carrito.</p>}
       </div>
       <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
         role="button"
@@ -1248,7 +1251,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
 
     {!reviewOnly && scene === 'returning' && <div className="guided-returning-action">
       <div><small>CLIENTE RECURRENTE</small><h2>Ya conoces el camino.</h2><p>El local sigue vivo alrededor de ti mientras vuelves a pedir.</p></div>
-      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); receiptPulledRef.current = false; setWalletSaved(false); setPaidOrderCode(null); setPaidAmountPen(null) }}>Volver al tótem <b>→</b></button>
+      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); receiptPulledRef.current = false; setWalletSaved(false); setPaidOrderCode(null); setPaidReceipt(null) }}>Volver al tótem <b>→</b></button>
     </div>}
   </div>
 }
