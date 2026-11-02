@@ -1,0 +1,53 @@
+✖ create: deadline remains active while response body stalls and aborts it (5.988486ms)
+✔ create: successful body preserves result and clears timer (1.297313ms)
+✔ create: malformed JSON rejects and clears timer (1.120797ms)
+✖ lookup: deadline remains active while response body stalls and aborts it (1.896986ms)
+✔ lookup: successful body preserves result and clears timer (0.818152ms)
+✔ lookup: malformed JSON rejects and clears timer (0.751391ms)
+✔ create: redirects are rejected before reading the body (0.844902ms)
+✔ lookup: redirects are rejected before reading the body (0.658011ms)
+✔ create: existing 3DS REVIEW semantics are preserved (1.17532ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 7
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 342.520245
+
+✖ failing tests:
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-provider-deadline.test.cjs:33:3
+✖ create: deadline remains active while response body stalls and aborts it (5.988486ms)
+  AssertionError [ERR_ASSERTION]: body parsing must remain inside the deadline
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-provider-deadline.test.cjs:38:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-provider-deadline.test.cjs:33:3
+✖ lookup: deadline remains active while response body stalls and aborts it (1.896986ms)
+  AssertionError [ERR_ASSERTION]: body parsing must remain inside the deadline
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-provider-deadline.test.cjs:38:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
