@@ -178,7 +178,7 @@ test('existing financial token preparation sees the complete total and does not 
   const row=(await db.query('select payment_status,payment_charge_state,payment_charge_id from orders')).rows[0]
   assert.deepEqual(row,{payment_status:'pending',payment_charge_state:'idle',payment_charge_id:null})
 })
-test('new adapter is not imported by any current public API route', () => {
+test('public routes never directly invoke the product adapter or product-write RPC', () => {
   function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)])}
   for(const file of walk(path.join(f.root,'src/routes')))assert.doesNotMatch(fs.readFileSync(file,'utf8'),/guided-product-reservation|create_guided_product_reservation/)
 })

@@ -97,7 +97,7 @@ test('injected reader rejects snapshot for a different order and cannot fall bac
   assert.equal(calls,1)
 })
 
-test('product persistence and packing remain unexposed by public routes with intake default disabled in SQL source',()=>{
+test('routes never directly call product RPCs or packing preview; write intake remains disabled in SQL source',()=>{
   function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)])}
   for(const file of walk(path.join(__dirname,'../src/routes'))){
     assert.doesNotMatch(fs.readFileSync(file,'utf8'),/guided-product-reservation|guided-product-snapshot|readGuidedPackingPreview|read_guided_product_reservation|create_guided_product_reservation/)

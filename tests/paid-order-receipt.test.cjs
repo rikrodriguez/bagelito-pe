@@ -108,8 +108,9 @@ test('real guided receipt consumes immutable evidence; cart summaries remain in 
  const real=block.slice(block.indexOf('</> : paidReceipt'))
  assert.match(real,/<PaidOrderReceiptDetails receipt=\{paidReceipt\}/);assert.doesNotMatch(real,/selectedBagelSummary|selectedSchmearSummary|paidAmountPen/)
 })
-test('private receipt bridge is not imported by any route or browser module',()=>{
+test('receipt bridge stays server-side; public routes use the separately gated status service',()=>{
  function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)])}
+ assert.match(fs.readFileSync(path.join(root,'src/routes/api/payments/culqi/status.ts'),'utf8'),/readBoundPaymentStatus\(supabase, reference, isGuidedReceiptRequestAllowed\(request\)\)/)
  for(const file of [...walk(path.join(root,'src/routes')),...walk(path.join(root,'src/playable'))]){
   assert.doesNotMatch(fs.readFileSync(file,'utf8'),/guided-paid-receipt\.server|readGuidedPaidOrderReceipt/)
  }

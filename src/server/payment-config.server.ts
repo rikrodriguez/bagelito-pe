@@ -146,3 +146,17 @@ export function isPaymentStatusRequestAllowed(request: Request) {
     && cfg.bridgeReady
     && requestMatchesConfiguredOrigin(request)
 }
+
+/** Draft receipt disclosure gate. Not an intake/payment switch. Never live or
+ * production; future cutover requires a separate reviewed change. Browser-only
+ * same-origin disclosure, in addition to the order capability checked by status.
+ */
+export function isGuidedReceiptRequestAllowed(request: Request) {
+  const cfg = buildPaymentConfig()
+  return process.env.BAGELITO_GUIDED_RECEIPT_ENABLED === 'true'
+    && process.env.VERCEL_ENV !== 'production'
+    && cfg.mode === 'sandbox' && cfg.configured && cfg.bridgeReady
+    && requestMatchesConfiguredOrigin(request)
+    && request.headers.get('origin') === new URL(request.url).origin
+    && (!request.headers.has('sec-fetch-site') || request.headers.get('sec-fetch-site') === 'same-origin')
+}

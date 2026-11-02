@@ -1,6 +1,7 @@
 /**
- * Proposed product-line persistence adapter. Intentionally NOT called by any
- * public route. Requires an explicitly injected DB; never reads credentials.
+ * Proposed product-line persistence adapter. Writes remain unregistered. Reads
+ * may be used by the separately gated status service after capability validation.
+ * Requires an explicitly injected DB; never reads credentials.
  * The additive SQL RPC is independently disabled by its owner-only policy.
  * Future routes must retain payment/origin/rate-limit guards; this is not an HTTP handler.
  */

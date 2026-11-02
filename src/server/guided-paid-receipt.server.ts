@@ -1,4 +1,5 @@
-/** Proposed private bridge; no public route, DB default, credentials or provider. */
+/** Injected server bridge; only the separately gated status service may disclose
+ * its minimized result after capability checks. No DB default/credentials/provider. */
 import { readGuidedProductReservation } from './guided-product-reservation.server'
 import { confirmPaidOrderReceipt } from '../domain/lib/paid-order-receipt'
 
