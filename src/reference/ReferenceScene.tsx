@@ -78,8 +78,10 @@ function SchmearPhoto({className = '', variant = 'neutral'}: {className?: string
   </span>
 }
 
-function Arrow() {
-  return <span className="rebuilt-arrow" aria-hidden="true">→</span>
+function Arrow({chevron = false}: {chevron?: boolean}) {
+  return <span className="rebuilt-arrow" aria-hidden="true">{chevron
+    ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 5 7 7-7 7" /></svg>
+    : '→'}</span>
 }
 
 function StepIcon({index}: {index: number}) {
@@ -165,10 +167,10 @@ export function ReferenceScene(props: Props) {
       <button type="button" className="rebuilt-category reference-category rebuilt-category-packs"
         aria-label="Packs" data-reference-category="packs" onClick={() => props.onCategory('packs')}>
         <span className="rebuilt-category-visual rebuilt-pack-visual" aria-hidden="true">
-          <img className="rebuilt-pack-photo" src="/images/rebuilt-pack-bagels-480.webp" srcSet="/images/rebuilt-pack-bagels-480.webp 480w, /images/rebuilt-pack-bagels-800.webp 800w, /images/rebuilt-pack-bagels.webp 1312w" sizes="(max-width:800px) 180px, 300px" fetchPriority="high" alt="" width={1312} height={1199} draggable={false} />
+          <img className="rebuilt-pack-photo" src="/images/rebuilt-pack-open-tray-480.webp" srcSet="/images/rebuilt-pack-open-tray-480.webp 480w, /images/rebuilt-pack-open-tray-800.webp 800w, /images/rebuilt-pack-open-tray.webp 1536w" sizes="(max-width:800px) 180px, 300px" fetchPriority="high" alt="" width={1536} height={1024} data-art-medium="reference-guided-product-concept" draggable={false} />
         </span>
         <span className="rebuilt-category-copy"><strong>Packs</strong><small>Grandes o minis.<br />Para compartir.</small></span>
-        <Arrow />
+        <Arrow chevron />
       </button>
       <button type="button" className="rebuilt-category reference-category rebuilt-category-combos"
         aria-label="Combos" data-reference-category="combos" onClick={() => props.onCategory('combos')}>
@@ -176,13 +178,13 @@ export function ReferenceScene(props: Props) {
           <img className="rebuilt-combo-photo" src="/images/rebuilt-aligned-combo.webp" width={1683} height={935} alt="" decoding="async" data-art-medium="reference-guided-product-concept" />
         </span>
         <span className="rebuilt-category-copy"><strong>Combos</strong><small>Bagels + schmears</small></span>
-        <Arrow />
+        <Arrow chevron />
       </button>
       <button type="button" className="rebuilt-category reference-category rebuilt-category-schmears"
         aria-label="Schmears" data-reference-category="schmears" onClick={() => props.onCategory('schmears')}>
         <span className="rebuilt-category-visual rebuilt-schmear-visual" aria-hidden="true"><SchmearPhoto variant="strawberry" /></span>
         <span className="rebuilt-category-copy"><strong>Schmears</strong><small><span className="rebuilt-category-intro">El toque que faltaba.</span><span>120, 180 o 240 g.</span></small></span>
-        <Arrow />
+        <Arrow chevron />
       </button>
     </div>
 
@@ -215,7 +217,9 @@ export function ReferenceScene(props: Props) {
       {steps.map((label, index) => <button type="button" key={label} aria-label={`Ir a ${label}`}
         disabled={!props.accessibleSteps[index]} aria-current={props.progressIndex === index ? 'step' : undefined}
         onClick={() => props.onStep(index)}>
-        <i aria-hidden="true"><StepIcon index={index} /></i><span>{label === 'Selecciona' ? 'Elige' : label}</span>
+        <i aria-hidden="true"><StepIcon index={index} /></i>{label === 'Selecciona'
+          ? <><span className="rebuilt-step-label-wide">Selecciona</span><span className="rebuilt-step-label-short">Elige</span></>
+          : <span>{label}</span>}
       </button>)}
     </nav>
   </section>

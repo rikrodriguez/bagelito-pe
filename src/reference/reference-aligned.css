@@ -103,3 +103,12 @@
  .rebuilt-counter .rebuilt-schmear-tray{width:28%}
  .rebuilt-counter .rebuilt-product-placard figcaption{font-size:16px;text-transform:none;font-variation-settings:"wdth" 75,"wght" 500;font-weight:500}
 }
+
+/* Match the reference's category chevrons and full desktop step name without
+   shrinking the compact/mobile labels or changing any click target. */
+.rebuilt-category>.rebuilt-arrow>svg { width:70%; height:70%; display:block; }
+.rebuilt-progress>button>.rebuilt-step-label-wide { display:none; }
+@media(min-width:1051px) {
+  .rebuilt-store[data-compact="false"] .rebuilt-progress>button>.rebuilt-step-label-wide { display:block; }
+  .rebuilt-store[data-compact="false"] .rebuilt-progress>button>.rebuilt-step-label-short { display:none; }
+}

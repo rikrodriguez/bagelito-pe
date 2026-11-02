@@ -370,7 +370,7 @@ async function runCase(browser, viewport, scenario) {
       for (const role of artRoles) assert.equal(await page.locator(role.selector).count(), 1, 'One explicit image required for ' + role.selector)
       const htmlPhotoRoles = [
         {role: 'room', selector: '.rebuilt-room-photo', paths: [artRoles[0].pathname]},
-        {role: 'category-packs', selector: '.rebuilt-categories .rebuilt-pack-photo', paths: ['/images/rebuilt-pack-bagels-480.webp', '/images/rebuilt-pack-bagels-800.webp', '/images/rebuilt-pack-bagels.webp']},
+        {role: 'category-packs', selector: '.rebuilt-categories .rebuilt-pack-photo', paths: ['/images/rebuilt-pack-open-tray-480.webp', '/images/rebuilt-pack-open-tray-800.webp', '/images/rebuilt-pack-open-tray.webp']},
         {role: 'category-combos', selector: '.rebuilt-categories .rebuilt-combo-photo', paths: [artRoles[2].pathname]},
         {role: 'category-schmears', selector: '.rebuilt-categories .rebuilt-schmear-visual img', paths: ['/images/rebuilt-schmear-bowl-480.webp', '/images/rebuilt-schmear-bowl-800.webp', '/images/rebuilt-schmear-bowl.webp']},
         {role: 'desktop-counter', selector: '.rebuilt-counter-photo', paths: [artRoles[1].pathname]},
