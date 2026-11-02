@@ -1,0 +1,46 @@
+✖ 408 deadline returns even when underlying body cancellation never settles (8.855369ms)
+✖ oversize stream rejects promptly even when underlying cancellation never settles (3.079268ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 359.667744
+
+✖ failing tests:
+
+test at tests/http-json-deadline.test.cjs:28:1
+✖ 408 deadline returns even when underlying body cancellation never settles (8.855369ms)
+  AssertionError [ERR_ASSERTION]: cleanup cannot extend the request deadline
+  
+  undefined !== 408
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/http-json-deadline.test.cjs:33:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 408,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/http-json-deadline.test.cjs:37:1
+✖ oversize stream rejects promptly even when underlying cancellation never settles (3.079268ms)
+  AssertionError [ERR_ASSERTION]: oversize rejection must not await cleanup
+  
+  undefined !== 413
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/http-json-deadline.test.cjs:43:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 413,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
