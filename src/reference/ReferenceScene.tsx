@@ -190,7 +190,7 @@ export function ReferenceScene(props: Props) {
 
     <div className="rebuilt-counter" aria-label="Nuestros bagels y schmears">
       <img className="rebuilt-counter-photo" src="/images/rebuilt-aligned-counter-desktop.webp" width={2020} height={778} alt="" decoding="async" data-art-medium="reference-guided-product-concept" />
-      <svg className="rebuilt-desktop-case-art" viewBox="1080 0 940 778" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <svg className="rebuilt-desktop-case-art" viewBox="1080 0 940 624" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
         <image href="/images/rebuilt-aligned-counter-desktop.webp" width={2020} height={778} />
       </svg>
       <section className="rebuilt-display rebuilt-bagel-display" aria-label="Vitrina de bagels">

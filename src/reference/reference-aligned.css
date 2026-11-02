@@ -13,8 +13,11 @@
 .rebuilt-room-shade { display:none; }
 .rebuilt-combo-photo { display:block; width:100%; height:100%; object-fit:contain; }
 .rebuilt-counter { container-type:inline-size; }
-.rebuilt-counter-photo { display:block; position:absolute; left:-1.9031036168%; top:-11.8752986858cqw; width:106.8195394808%; height:auto; clip-path:inset(0 45.198019802% 0 0); pointer-events:none; }
-.rebuilt-desktop-case-art { display:block; position:absolute; left:55.4105297158%; top:-9.2954780362cqw; width:46.149870801%; height:auto; aspect-ratio:940/778; pointer-events:none; }
+/* Desktop own-art windows stop after the steel base: source y618 (bagels)
+   and y624 (schmears). Food, placards and uniform scales are unchanged; the
+   redundant decorative plinth no longer extends over the room counter. */
+.rebuilt-counter-photo { display:block; position:absolute; left:-1.9031036168%; top:-11.8752986858cqw; width:106.8195394808%; height:auto; clip-path:inset(0 45.198019802% 20.5655526992% 0); pointer-events:none; }
+.rebuilt-desktop-case-art { display:block; position:absolute; left:55.4105297158%; top:-9.2954780362cqw; width:46.149870801%; height:auto; aspect-ratio:940/624; pointer-events:none; }
 .rebuilt-mobile-case-art { display:none; }
 .rebuilt-counter:before { display:none; }
 .rebuilt-counter .rebuilt-display { position:absolute; inset:0; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; overflow:visible; pointer-events:none; }

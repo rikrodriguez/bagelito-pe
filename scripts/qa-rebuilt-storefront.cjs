@@ -425,8 +425,12 @@ async function runCase(browser, viewport, scenario) {
           const values = inset[1].trim().split(/\s+/)
           assert.ok(values.length >= 1 && values.length <= 4, 'Unsupported desktop counter inset')
           const edges = values.length === 1 ? [values[0], values[0], values[0], values[0]] : values.length === 2 ? [values[0], values[1], values[0], values[1]] : values.length === 3 ? [values[0], values[1], values[2], values[1]] : values
-          for (const index of [0, 2, 3]) assert.ok(/^0(?:\.0+)?(?:px|%)?$/.test(edges[index]), 'Only the right edge may clip the desktop bagel image')
+          for (const index of [0, 3]) assert.ok(/^0(?:\.0+)?(?:px|%)?$/.test(edges[index]), 'Only the right and bottom edges may clip the desktop bagel image')
           assert.ok(/^\d+(?:\.\d+)?%$/.test(edges[1]), 'Desktop right inset must retain an explicit percentage')
+          assert.ok(/^\d+(?:\.\d+)?%$/.test(edges[2]), 'Desktop bottom inset must retain an explicit percentage')
+          image.clipBottomPercent = parseFloat(edges[2])
+          image.sourceWindowHeight = image.naturalHeight * (1 - image.clipBottomPercent / 100)
+          assert.ok(Math.abs(image.sourceWindowHeight - 618) <= .01, 'Desktop bagel window must end at source y618, below all food and placards')
           image.clipRightPercent = parseFloat(edges[1])
           image.sourceWindowWidth = image.naturalWidth * (1 - image.clipRightPercent / 100)
           assert.ok(Math.abs(image.sourceWindowWidth - 1107) <= .01, 'Desktop bagel window must retain source x0..1107 without stretching')
@@ -435,7 +439,7 @@ async function runCase(browser, viewport, scenario) {
       }
       const svgRoles = [
         {key: 'mobileCaseWindows', selector: '.rebuilt-mobile-case-art', source: '/images/rebuilt-aligned-counter.webp', visible: portraitRoom, boxes: [[0, 169, 1165, 493], [1165, 169, 855, 493]]},
-        {key: 'desktopCaseWindows', selector: '.rebuilt-desktop-case-art', source: '/images/rebuilt-aligned-counter-desktop.webp', visible: !portraitRoom, boxes: [[1080, 0, 940, 778]]},
+        {key: 'desktopCaseWindows', selector: '.rebuilt-desktop-case-art', source: '/images/rebuilt-aligned-counter-desktop.webp', visible: !portraitRoom, boxes: [[1080, 0, 940, 624]]},
       ]
       assert.equal(await page.locator('.rebuilt-store svg image').count(), 3, 'Exactly two mobile windows and one desktop schmear window are required')
       for (const role of svgRoles) {
@@ -518,7 +522,7 @@ async function runCase(browser, viewport, scenario) {
         const r = rectOf(desktopImage), desktopVisible = r.width > 0 && r.height > 0
         const desktopMatrix = desktopVisible ? {a: r.width / 2020, b: 0, c: 0, d: r.height / 778, e: r.x, f: r.y} : null
         const desktopWindows = [
-          {role: 'desktop-bagels', sourceWindow: {x: 0, y: 0, width: 1107, height: 778}, visible: desktopVisible, matrix: desktopMatrix},
+          {role: 'desktop-bagels', sourceWindow: {x: 0, y: 0, width: 1107, height: 618}, visible: desktopVisible, matrix: desktopMatrix},
           svgWindow(document.querySelector('.rebuilt-desktop-case-art'), 'desktop-schmears'),
         ]
         const desktop = {source: desktopSource, fullImageBox: desktopVisible ? r : null, clipPath: getComputedStyle(desktopImage).clipPath, ...boundsOf(desktopImage, desktopWindows)}
@@ -530,7 +534,7 @@ async function runCase(browser, viewport, scenario) {
         }
         return {method: 'Off-DOM alpha readback. Full asset and each explicit own-art source window are sampled separately at alpha>=1/16; these are measurements, not fidelity thresholds.',
           desktop, mobile, decodedMobileSVGTextures,
-          scope: 'Desktop bagel clip x0..1107 and recomposed schmear viewport x1080..2020 deliberately differ from both the full desktop asset and the earlier mobile source. Native DOM anchors alone do not certify visual fidelity.'}
+          scope: 'Desktop bagel clip x0..1107/y0..618 and recomposed schmear viewport x1080..2020/y0..624 deliberately differ from both the full desktop asset and the earlier mobile source. Native DOM anchors alone do not certify visual fidelity.'}
       }, portraitRoom)
       assert.equal(record.counterArtAudit.decodedMobileSVGTextures.length, portraitRoom ? 1 : 0, 'Credit the distinct mobile SVG texture only after its own decode')
       for (const asset of [record.counterArtAudit.desktop, record.counterArtAudit.mobile]) for (const window of asset.windows) {
