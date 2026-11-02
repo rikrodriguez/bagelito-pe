@@ -87,7 +87,7 @@ payment after an unconfirmed reservation. Preserve the same session for recovery
   explicitly stopped. Exact-candidate verification must use a single owned
   execution context or the isolated coding environment.
 
-Final independent verification/evidence must be recorded before moving PR47.
+Final verification is recorded in [independent SQL/build/HTTP evidence](qa/product-checkout-independent-20261102/README.md) and [the complete 319-case Node run](qa/product-checkout-final-20261102/README.md). The partial runs above remain historical, not reclassified.
 The candidate is implementation for review, not a launched store or completed
 Culqi/3DS/Yape/webhook acceptance. Real isolated credentials/schema verification,
 stock, outstanding commercial prices and explicit release approval remain open.
