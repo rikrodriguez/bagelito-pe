@@ -2,6 +2,8 @@
 
 **Draft code, review-only storefront. No new public route, live database/migration, SDK/provider request, credentials, charges, price changes or deployment.**
 
+> Historical report for application `d0997a54`. The subsequent default-closed sandbox status integration is documented in [Gated status receipt](guided-status-receipt-20261102.md); the older endpoint boundary below describes the earlier version.
+
 ## Concrete defects corrected
 
 The previous receipt used the editable current cart after `onPaid(orderCode, amount)`. Recovering an older payment could therefore display a different selection under that older order code. Pending reservation/status/device callbacks could also continue after leaving the payment view or changing the order/customer.

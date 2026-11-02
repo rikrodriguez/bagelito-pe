@@ -1,0 +1,38 @@
+{
+  "application_commit": "84425e3a09ab9a8f27d63af219d50b4d34e789ca",
+  "application_tree": "8459ffc1fc3ae8d844daa9d0e3deaaf20fc1273e",
+  "local_equivalent": "9050a330e955fd552bf1c16494aad4b83ecc2368",
+  "node": {
+    "tests": 255,
+    "pass": 255,
+    "fail": 0,
+    "skipped": 0,
+    "exit_code": 0
+  },
+  "browser": {
+    "cases": 10,
+    "pass": 10,
+    "scope": "Actual Chrome and ReactDOM, all fetches and SDK mocked; static private fixture, not public server or processor"
+  },
+  "baseline_first_26_cases": {
+    "tests": 26,
+    "pass": 9,
+    "fail": 17,
+    "application": "e85c984d079b3f5f4bb62a76affbba4a00764d68"
+  },
+  "local_typecheck": "SIGKILL, no diagnostic; not retried under same conditions",
+  "private_dependency_archive": {
+    "sha256": "53a412807f4a7148c1e76f1371a465c2b0a933eeb453d27c35277d8a604cbdd2",
+    "bytes": 75297088,
+    "packages": 197,
+    "symlinks": 22,
+    "outside_symlinks": 0,
+    "env_or_npmrc_files": 0
+  },
+  "preview_final": "stopped",
+  "security_review": "Independent source review found no blocking issue in closed sandbox scope. Identified per-operation accumulation; fixed with shared 5 s DB budget and post-await expiry check. Rate-limit timeout/proxy trust and atomic cross-read consistency remain explicit limitations.",
+  "scoped_service_typecheck": {
+    "exit_code": 0,
+    "scope": "service/config/contracts only, no route/global augmentation"
+  }
+}

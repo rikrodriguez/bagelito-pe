@@ -1,0 +1,289 @@
+✔ receipt disclosure defaults closed; only exact true enables the server gate (351.428189ms)
+✖ authorized sandbox paid status exposes minimal complete receipt and actual client consumes it (34.247095ms)
+✔ disclosure cannot be enabled on live or production even with explicit flag and coherent configuration (99.987386ms)
+✖ same-origin recovery remains available with intake closed or merchant review, without enabling charges (38.857196ms)
+✔ cross-origin or unconfigured requests stop before security DB and product access (187.26203ms)
+✔ missing Origin and cross-site fetch metadata never disclose products but preserve basic recovery (97.97452ms)
+✔ rate limit rejection stops before order query or snapshot and keeps no-store (33.943805ms)
+✖ invalid bounded JSON or non-string capability rejects before security and DB (119.749223ms)
+✔ matching only code or only UUID returns the same 404 without status RPC or detail (77.982655ms)
+✖ payload orderId amount payment state and products cannot override the authorized database context (40.230754ms)
+✔ legacy paid order never needs the proposed snapshot migration (40.105856ms)
+✔ non-v4 legacy capability never unlocks product details (28.312434ms)
+✔ unconfirmed reconciliating or cancelled state never fetches commercial detail (176.489031ms)
+✖ malformed status or amount fails closed without reader and without diagnostic leakage (73.959545ms)
+✖ guided money and currency must match before the snapshot read (22.639419ms)
+✖ missing corrupt wrong-order wrong-money or unpaid guided snapshot never degrades to a paid receipt (19.364016ms)
+✖ transport rejections and malformed envelopes return a generic error without automatic retry (38.763244ms)
+✖ later refund cancellation or reconciliation prevents returning a stale paid product receipt (26.124177ms)
+✖ changed amount identity capability or storage header during snapshot read fails closed (31.241354ms)
+✖ snapshot and response extensions cannot disclose contacts tokens or arbitrary item names (26.456849ms)
+✖ client rejects corrupt minimized receipts and ambiguous dual representations (25.30265ms)
+✖ valid two-decimal legacy money survives integer-cent conversion without binary floating rejection (49.289198ms)
+✖ query filters are insufficient alone: returned contradictory row identity is independently rejected (31.66371ms)
+✖ all fifteen minimal pot projections and four pack shapes validate without repricing historical money (23.071559ms)
+✖ snapshot transport ignoring abort still times out generically, retains no retry, and stops later work (23.900058ms)
+✖ sequential observations share a global 5 s budget rather than restarting it for every DB operation (25.084011ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 9
+ℹ fail 17
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2057.825438
+
+✖ failing tests:
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:63:1
+✖ authorized sandbox paid status exposes minimal complete receipt and actual client consumes it (34.247095ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:64:74)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:79:1
+✖ same-origin recovery remains available with intake closed or merchant review, without enabling charges (38.857196ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:80:183)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:94:1
+✖ invalid bounded JSON or non-string capability rejects before security and DB (119.749223ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok([400,413].includes(r.status))
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:96:55)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:104:1
+✖ payload orderId amount payment state and products cannot override the authorized database context (40.230754ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'amountMinor')
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:106:64)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:121:1
+✖ malformed status or amount fails closed without reader and without diagnostic leakage (73.959545ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:125:55)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:128:1
+✖ guided money and currency must match before the snapshot read (22.639419ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:129:154)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:131:1
+✖ missing corrupt wrong-order wrong-money or unpaid guided snapshot never degrades to a paid receipt (19.364016ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:134:64)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:137:1
+✖ transport rejections and malformed envelopes return a generic error without automatic retry (38.763244ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:140:55)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:144:1
+✖ later refund cancellation or reconciliation prevents returning a stale paid product receipt (26.124177ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:146:73)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:149:1
+✖ changed amount identity capability or storage header during snapshot read fails closed (31.241354ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok([404,500].includes(r.status))
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:152:97)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:155:1
+✖ snapshot and response extensions cannot disclose contacts tokens or arbitrary item names (26.456849ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'items')
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:158:55)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:161:1
+✖ client rejects corrupt minimized receipts and ambiguous dual representations (25.30265ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:168:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /No se pudo verificar/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:174:1
+✖ valid two-decimal legacy money survives integer-cent conversion without binary floating rejection (49.289198ms)
+  Error: No se pudo verificar el detalle del pago. No vuelvas a pagar hasta revisar el pedido.
+      at invalid (evalmachine.<anonymous>:10:31)
+      at parsePaymentStatusObservation (evalmachine.<anonymous>:24:16)
+      at Object.confirmPaidOrderReceipt (evalmachine.<anonymous>:31:20)
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:176:50)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:179:1
+✖ query filters are insufficient alone: returned contradictory row identity is independently rejected (31.66371ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  1 !== 0
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:181:136)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:184:1
+✖ all fifteen minimal pot projections and four pack shapes validate without repricing historical money (23.071559ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'name')
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:189:94)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:197:1
+✖ snapshot transport ignoring abort still times out generically, retains no retry, and stops later work (23.900058ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:199:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../..<baseline>/tests/payment-status-receipt.test.cjs:202:1
+✖ sequential observations share a global 5 s budget rather than restarting it for every DB operation (25.084011ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 500
+
+      at TestContext.<anonymous> (<baseline>/tests/payment-status-receipt.test.cjs:203:68)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -29,3 +29,7 @@ The predecessor produced 9 passes / 17 failures against the first 26 endpoint re
 Original local TypeScript attempt was SIGKILLed without a TypeScript diagnostic. It was not retried under unchanged conditions; independent cloud typecheck/build verification is required before claiming those checks passed for this version. The preceding SQL36 and browser8 results apply to the earlier application and are not evidence for this new endpoint version. Current logs and exact-version independent results will be recorded under `docs/qa/status-receipt-20261102/`.
 
 Real payment sandbox/3DS/webhook acceptance, native PostgreSQL concurrency, production credentials, public activation, fiscal issuance and fulfillment authorization remain outside the verified boundary.
+
+## Completed independent verification
+
+The unchanged candidate subsequently passed full TypeScript, the complete build and 36 SQL cases in the independent environment. Exact dependencies were reconstructed from 197 official npm tarballs with matching SHA-512; the blocked Library transfer was not retried. The original executor also passed 255 Node tests and ten actual Chrome/ReactDOM simulations. [Current evidence and remaining boundaries](qa/status-receipt-20261102/README.md). These checks do not activate the gate, create an order or certify a live purchase.

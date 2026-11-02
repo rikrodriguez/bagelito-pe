@@ -1,0 +1,14 @@
+{
+  "extends": "../bagelito-pr47-continuation/tsconfig.json",
+  "files": [
+    "../bagelito-pr47-continuation/src/server/payment-status.server.ts",
+    "../bagelito-pr47-continuation/src/domain/lib/paid-order-receipt.ts",
+    "../bagelito-pr47-continuation/src/server/payment-config.server.ts"
+  ],
+  "include": [],
+  "compilerOptions": {
+    "typeRoots": [
+      "../bagelito-pr47-continuation/node_modules/@types"
+    ]
+  }
+}
