@@ -127,3 +127,9 @@ test('legal acceptance remains required before security, inventory or persistenc
     assert.equal(effects.security, 0); assert.equal(effects.clients, 0)
   }
 })
+
+
+test('legacy session post-RPC reread rejects a v2 contract even with identical bagels and amount', async () => {
+  const {create} = setup({persistedOverride: {pack_slug: 'guided-v1:6-single'}})
+  await assert.rejects(create(request(), input()), error => error.status === 409)
+})

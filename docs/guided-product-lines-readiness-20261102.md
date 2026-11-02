@@ -47,3 +47,7 @@ Before these products can sell end-to-end:
 4. Only with explicit authorization configure isolated sandbox credentials and perform Culqi HTTP/3DS/webhook tests. Production activation remains a separate authorization and acceptance gate.
 
 The current frontend is still `reviewOnly`; no existing financial flag, secret, environment, live database or deployed site was changed.
+
+## Subsequent isolated persistence implementation
+
+The [additive persistence proposal](guided-product-persistence-proposal-20261102.md) now implements supported pack/pot snapshots and a closed-by-default SQL RPC, tested only in isolated fixtures. It is **not installed or connected to these current public routes**; their review-only/product gates remain unchanged. Unpriced combos/extras are still rejected.

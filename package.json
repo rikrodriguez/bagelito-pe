@@ -17,7 +17,9 @@
     "qa:contact-shadows": "node scripts/qa-contact-shadow-bake.cjs",
     "qa:reference:text": "node scripts/qa-rebuilt-storefront.cjs --profile=text",
     "qa:reference:secondary": "node scripts/qa-rebuilt-storefront.cjs --profile=secondary",
-    "qa:reference:entry": "node scripts/qa-rebuilt-storefront.cjs --profile=entry"
+    "qa:reference:entry": "node scripts/qa-rebuilt-storefront.cjs --profile=entry",
+    "qa:product-lines": "node --test --test-concurrency=1 tests/sql/product-lines.test.cjs",
+    "qa:product-lines:postgres": "node tests/sql/run-native.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
