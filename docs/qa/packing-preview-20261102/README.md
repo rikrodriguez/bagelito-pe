@@ -4,6 +4,8 @@ Application commit `5067c70ad6290eab7ab67a6b7969d37ce5e0853d` (local equivalent 
 
 **Draft only. Not a ready-to-sell checkout. No live database, migration, credentials, provider transaction, outgoing customer message or deployment.**
 
+**Subsequent evidence:** a separate existing Bagelito coding environment completed the revised SQL suite at34/34 after a one-line test-only VM comparison correction. [Independent report](../sql-independent-20261102/README.md) preserves original and corrected runs for both application versions. The results below remain the historical record of this executor; they are not overwritten or relabeled as passed.
+
 ## Results
 
 | Stage | Result |
