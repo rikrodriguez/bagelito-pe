@@ -115,3 +115,14 @@
   .rebuilt-store[data-compact="false"] .rebuilt-progress>button>.rebuilt-step-label-wide { display:block; }
   .rebuilt-store[data-compact="false"] .rebuilt-progress>button>.rebuilt-step-label-short { display:none; }
 }
+
+/* Native browser zoom can leave less than 300 CSS px. Reflow, do not shrink
+   lettering or silently clip the third category behind the scene's mask. */
+@media(max-width:300px) {
+  .rebuilt-store[data-compact="false"] .rebuilt-categories { grid-template-columns:minmax(0,1fr); }
+  .rebuilt-store[data-compact="false"] .rebuilt-category { display:grid; grid-template-columns:88px minmax(0,1fr); gap:8px; align-items:center; padding:10px; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-visual { height:88px; margin:0; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-copy { min-width:0; overflow-wrap:anywhere; }
+  .rebuilt-progress { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .rebuilt-store[data-compact="true"] .rebuilt-brand { margin:4px auto; }
+}

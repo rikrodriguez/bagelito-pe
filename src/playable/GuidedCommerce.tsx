@@ -1,5 +1,6 @@
 import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { ReferenceScene } from '../reference/ReferenceScene'
+import { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
 import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'
@@ -158,6 +159,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const receiptDrag = useRef({ startY: 0, offset: 0 })
   const receiptPulledRef = useRef(false)
   const sceneChangeCallback = useRef(onSceneChange)
+  const referenceRoot = useRef<HTMLDivElement>(null)
+  const MenuPanel = referenceMode ? 'section' : 'nav'
+  const CartPanel = referenceMode ? 'section' : 'aside'
 
   // Only product IDs and quantities are saved for a short-lived in-tab draft.
   // Never store contact details, 3DS tokens, payment data or confirmation state.
@@ -257,6 +261,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     window.addEventListener('keydown', dismissOnEscape)
     return () => window.removeEventListener('keydown', dismissOnEscape)
   }, [menuOpen, cartOpen])
+
+  useEffect(() => {
+    if (!referenceMode || (!menuOpen && !cartOpen)) return
+    const root = referenceRoot.current
+    const panel = root?.querySelector<HTMLElement>(menuOpen ? '.guided-store-menu-panel' : '.guided-store-cart-panel')
+    const trigger = root?.querySelector<HTMLElement>(menuOpen ? '.rebuilt-menu' : '.rebuilt-cart') ?? null
+    if (root && panel) return containReferenceDrawerFocus(root, panel, trigger)
+  }, [referenceMode, menuOpen, cartOpen])
 
   useEffect(() => {
     if (customerName) {
@@ -697,7 +709,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     if (index === 3 && canReviewAtCashier) setScene('cashier')
   }
 
-  return <div className={'guided-commerce' + (referenceMode ? ' reference-mode' : '')} data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined} data-direct-catalog={directCatalog ? 'true' : undefined} data-reference-mode={referenceMode ? 'true' : undefined} data-review-only={reviewOnly ? 'true' : undefined}>
+  return <div ref={referenceMode ? referenceRoot : undefined} className={'guided-commerce' + (referenceMode ? ' reference-mode' : '')} data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined} data-direct-catalog={directCatalog ? 'true' : undefined} data-reference-mode={referenceMode ? 'true' : undefined} data-review-only={reviewOnly ? 'true' : undefined}>
     {referenceMode && <ReferenceScene
       onCategory={(value) => {
         if (value === 'packs') setSchmearSize(120)
@@ -747,16 +759,17 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <span aria-hidden="true">←</span><span>Volver</span>
     </button>}
 
-    {(menuOpen || cartOpen) && <button type="button" className="guided-overlay-dismiss" aria-label="Cerrar panel abierto" onClick={() => { setMenuOpen(false); setCartOpen(false) }} />}
+    {(menuOpen || cartOpen) && <button type="button" className="guided-overlay-dismiss" tabIndex={referenceMode ? -1 : undefined} aria-label="Cerrar panel abierto" onClick={() => { setMenuOpen(false); setCartOpen(false) }} />}
 
-    {menuOpen && <nav className="guided-store-menu-panel" aria-label="Menú Bagelito">
+    {menuOpen && <MenuPanel className="guided-store-menu-panel" aria-label="Menú Bagelito" role={referenceMode ? 'dialog' : undefined} aria-modal={referenceMode || undefined} tabIndex={referenceMode ? -1 : undefined}>
       <strong>Bagelito</strong>
       <button type="button" onClick={goToEntrance}>Inicio</button>
-      <button type="button" onClick={() => setScene('selector')}>Packs · Combos · Schmears</button>
+      <button type="button" onClick={() => { if (referenceMode) setMenuOpen(false); setScene('selector') }}>Packs · Combos · Schmears</button>
       <button type="button" onClick={onExit}>{exitLabel}</button>
-    </nav>}
+      {referenceMode && <button type="button" onClick={() => setMenuOpen(false)}>Cerrar menú</button>}
+    </MenuPanel>}
 
-    {cartOpen && <aside className="guided-store-cart-panel" aria-label="Resumen de tu pedido">
+    {cartOpen && <CartPanel className="guided-store-cart-panel" aria-label="Resumen de tu pedido" role={referenceMode ? 'dialog' : undefined} aria-modal={referenceMode || undefined} tabIndex={referenceMode ? -1 : undefined}>
       <strong>Tu pedido</strong>
       {visibleCartCount === 0 && <p>Aún no has elegido productos.</p>}
       {selectedBagelSummary.map((item) => <div key={'bagel-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
@@ -767,7 +780,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         setScene(category === 'schmears' ? 'schmears' : 'bagels')
       }}>Editar sabores</button>}
       <button type="button" onClick={() => setCartOpen(false)}>Cerrar resumen</button>
-    </aside>}
+    </CartPanel>}
 
     {!referenceMode && showProgress && <nav className="guided-progress-master" aria-label="Pasos de compra">
       {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => {

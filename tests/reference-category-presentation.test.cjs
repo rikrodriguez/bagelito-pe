@@ -77,3 +77,12 @@ test('shorter desktop windows preserve image scale and clear the lowest native p
   assert.ok(Math.abs(bagel.y + bagel.end * bagel.scale - 899.5939393939394) < .001)
   assert.ok(Math.abs(schmear.y + schmear.end * schmear.scale - 907.2986046511628) < .001)
 })
+
+test('very narrow native-zoom layouts reflow categories and progress without smaller text', () => {
+  const css = fs.readFileSync(path.join(__dirname, '../src/reference/reference-aligned.css'), 'utf8')
+  const zoom = css.slice(css.indexOf('@media(max-width:300px)'))
+  assert.match(zoom, /\.rebuilt-categories \{ grid-template-columns:minmax\(0,1fr\); \}/)
+  assert.match(zoom, /grid-template-columns:88px minmax\(0,1fr\)/)
+  assert.match(zoom, /\.rebuilt-progress \{ grid-template-columns:repeat\(3,minmax\(0,1fr\)\); \}/)
+  assert.doesNotMatch(zoom, /font-size|transform:scale|zoom:|overflow:hidden|overflow:clip/)
+})
