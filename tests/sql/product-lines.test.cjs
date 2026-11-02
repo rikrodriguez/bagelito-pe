@@ -221,7 +221,7 @@ test('service-only snapshot reader works after payment and closed intake without
   await db.exec('set role service_role')
   let snapshot
   try {snapshot=await f.api.readGuidedProductReservation(client,created.orderId)} finally {await db.exec('reset role')}
-  assert.equal(snapshot.paymentStatus,'paid');assert.equal(snapshot.amountMinor,7000);assert.deepEqual(snapshot.lines,clone(created.lines))
+  assert.equal(snapshot.paymentStatus,'paid');assert.equal(snapshot.amountMinor,7000);assert.deepEqual(clone(snapshot.lines),clone(created.lines))
   assert.deepEqual(await counts(),before)
   for(const role of ['anon','authenticated']) {
     await db.exec('set role '+role)

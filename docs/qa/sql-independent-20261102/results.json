@@ -1,0 +1,908 @@
+{
+  "identities": {
+    "original_head": "f6f96bb60951f5e1ba170ea1c5c9fdc74894335a",
+    "original_head_tree": "4444a473d50246c0eab80dbf4fea20fe15e8f7e4",
+    "original_application_commit": "5067c70ad6290eab7ab67a6b7969d37ce5e0853d",
+    "original_application_tree": "08d971acd9506228d002fd66fd6eb54e29bdd4d1",
+    "latest_expected_remote_head": "67acdf2e70f03141e019f2bc53915751a257995e",
+    "latest_expected_head_tree": "0b17c4c23d29879bf1a2209f84988b604e9056e1",
+    "latest_application_commit": "13e0cc398c2fcb701854a62dd7c4317765fddf06",
+    "latest_application_tree": "38b91416ffa33a744f1b5068953425698a491d8a",
+    "latest_tested_code_tree_before_evidence_docs": "de525e00c34672243ff276fdea5d33d2e64720db",
+    "fixed_test_sha256": "4d4a614bc98a1d102b258a4e42609d8ed48729575219422df438ad38c3cd50a2",
+    "one_line_patch_sha256": "78ab694c7976de0a0187fe542aa7d51dbb1b9751e6fe2ad64b793e9dba0fb7c7",
+    "sql_fixture_legal_guided_migration_and_lock": "unchanged between original and latest application trees; tracked hashes verified before runs",
+    "financial_fixture_manifest_ref": "085f3df93f9d6a2b0f92cbe8ebe8bfef475eefca",
+    "financial_fixtures": [
+      {
+        "path": "setup-bagelito-reservations.sql",
+        "git_blob_sha": "2ba168813cc019cd267a701b67467780f6a9a962",
+        "sha256": "932e735514b6a6741aad079f75c6f7456c41fe9e563732d6dd55425a04a11c67",
+        "verified_sha256": "932e735514b6a6741aad079f75c6f7456c41fe9e563732d6dd55425a04a11c67",
+        "verified_git_blob_sha": "2ba168813cc019cd267a701b67467780f6a9a962"
+      },
+      {
+        "path": "add-public-api-hardening.sql",
+        "git_blob_sha": "377aae75155a69161b5eac7a6002857698902133",
+        "sha256": "02d4f55c5ebe034d48506c7e845cc2e713838e84ba893d39aa9ac8dba8d4ac54",
+        "verified_sha256": "02d4f55c5ebe034d48506c7e845cc2e713838e84ba893d39aa9ac8dba8d4ac54",
+        "verified_git_blob_sha": "377aae75155a69161b5eac7a6002857698902133"
+      },
+      {
+        "path": "add-payment-provider.sql",
+        "git_blob_sha": "2abdd93d3d01fb3b45c94b5c30319c57c7c38cd3",
+        "sha256": "e8d6237640012810fdb050c9f8750148db63c548d5ed88b3390eb7acff18a88c",
+        "verified_sha256": "e8d6237640012810fdb050c9f8750148db63c548d5ed88b3390eb7acff18a88c",
+        "verified_git_blob_sha": "2abdd93d3d01fb3b45c94b5c30319c57c7c38cd3"
+      },
+      {
+        "path": "add-checkout-safety.sql",
+        "git_blob_sha": "2d6b7cf5485b517cf60e6448768a135eebdb2c53",
+        "sha256": "f5fc23551be00ac1eb869e8997e33df9ea7dadc34821cbcc87ed1fbfba1e2292",
+        "verified_sha256": "f5fc23551be00ac1eb869e8997e33df9ea7dadc34821cbcc87ed1fbfba1e2292",
+        "verified_git_blob_sha": "2d6b7cf5485b517cf60e6448768a135eebdb2c53"
+      },
+      {
+        "path": "add-culqi-session-expiry.sql",
+        "git_blob_sha": "f817bdd6405185301e017c69438029377337ccb5",
+        "sha256": "40e87814e92edc5f5e199202ee827692fafab99140fb3cd266c265486e378dee",
+        "verified_sha256": "40e87814e92edc5f5e199202ee827692fafab99140fb3cd266c265486e378dee",
+        "verified_git_blob_sha": "f817bdd6405185301e017c69438029377337ccb5"
+      },
+      {
+        "path": "add-culqi-checkout-replay-guard.sql",
+        "git_blob_sha": "fec130df39d78338d44dbb313a2e3b5a9b802404",
+        "sha256": "19417fad8061e3533b2b2100281e49e2d1c85bef38c2335677d5a8d2222097b2",
+        "verified_sha256": "19417fad8061e3533b2b2100281e49e2d1c85bef38c2335677d5a8d2222097b2",
+        "verified_git_blob_sha": "fec130df39d78338d44dbb313a2e3b5a9b802404"
+      },
+      {
+        "path": "add-culqi-charge-confirmation.sql",
+        "git_blob_sha": "72ee7e71cd4e913b79e80884f83e14b75c553a13",
+        "sha256": "f89d6ea4838a60d316de238c867f5b97cbd8a56f8aa62259dcce44e5abd3c11f",
+        "verified_sha256": "f89d6ea4838a60d316de238c867f5b97cbd8a56f8aa62259dcce44e5abd3c11f",
+        "verified_git_blob_sha": "72ee7e71cd4e913b79e80884f83e14b75c553a13"
+      }
+    ],
+    "versions": {
+      "node": "v24.19.0",
+      "npm": "11.9.0",
+      "pglite": "0.5.12",
+      "typescript": "5.9.3"
+    }
+  },
+  "runs": [
+    {
+      "run": "original-f6f96bb",
+      "base_commit": "f6f96bb60951f5e1ba170ea1c5c9fdc74894335a",
+      "local_assertion_fix_applied": false,
+      "raw_tap_sha256": "72a2252af4ba70caf789aa2f8198fd79339ac51bd1ff445b531cbec69defa0ce",
+      "published_tap_sha256": "db6f959b3e0050890dc2ad3c5703edd0be57bf9ce2cfc7a1423745525a49bba7",
+      "cwd": "/workspace/bagelito-sql-f6f96bb",
+      "command": "NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs",
+      "started_at": "2026-11-02T14:21:56.464658+00:00",
+      "resource_before": {
+        "memory.max": "17179869184",
+        "memory.current": "947552256",
+        "memory.peak": "1020682240",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "finished_at": "2026-11-02T14:22:03.391135+00:00",
+      "elapsed_seconds": 6.92622509200001,
+      "exit_code": 1,
+      "signal": null,
+      "resource_after": {
+        "memory.max": "17179869184",
+        "memory.current": "951959552",
+        "memory.peak": "1978736640",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "child_process_max_rss_kib": 1016804,
+      "tap_summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 33,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "case_results": [
+        {
+          "status": "ok",
+          "case": 1,
+          "name": "policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged"
+        },
+        {
+          "status": "ok",
+          "case": 2,
+          "name": "pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once"
+        },
+        {
+          "status": "ok",
+          "case": 3,
+          "name": "all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels"
+        },
+        {
+          "status": "ok",
+          "case": 4,
+          "name": "all four ordinary pack prices and pack-plus-pot prices match existing contract"
+        },
+        {
+          "status": "ok",
+          "case": 5,
+          "name": "all district delivery fees are recomputed in SQL rather than trusted from caller"
+        },
+        {
+          "status": "ok",
+          "case": 6,
+          "name": "exact replay returns original identity/expiry with no second order, line or history"
+        },
+        {
+          "status": "ok",
+          "case": 7,
+          "name": "canonical bagel row order does not change the replay identity"
+        },
+        {
+          "status": "ok",
+          "case": 8,
+          "name": "same-price schmear substitution and same-total bagel substitution are rejected"
+        },
+        {
+          "status": "ok",
+          "case": 9,
+          "name": "changed customer, delivery, terms or missing snapshot never reuse an existing session"
+        },
+        {
+          "status": "ok",
+          "case": 10,
+          "name": "tampered persisted bagel rows, total and snapshot fail replay without repair or second charge"
+        },
+        {
+          "status": "ok",
+          "case": 11,
+          "name": "expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake"
+        },
+        {
+          "status": "ok",
+          "case": 12,
+          "name": "zero-bagel standalone consumes one order slot, not bagel capacity"
+        },
+        {
+          "status": "ok",
+          "case": 13,
+          "name": "bagel capacity and closed/future/missing-delivery batches remain fail closed"
+        },
+        {
+          "status": "ok",
+          "case": 14,
+          "name": "new expired or overly long holds cannot reserve capacity"
+        },
+        {
+          "status": "ok",
+          "case": 15,
+          "name": "fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically"
+        },
+        {
+          "status": "ok",
+          "case": 16,
+          "name": "unpriced combos and extras cannot be given an invented selling price at either boundary"
+        },
+        {
+          "status": "ok",
+          "case": 17,
+          "name": "legal trigger mismatch rolls back the entire transaction including bagels/history"
+        },
+        {
+          "status": "ok",
+          "case": 18,
+          "name": "failure after order/item insert rolls back all partial records"
+        },
+        {
+          "status": "ok",
+          "case": 19,
+          "name": "anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes"
+        },
+        {
+          "status": "ok",
+          "case": 20,
+          "name": "new migration replay preserves enabled policy, snapshot data and financial core definitions"
+        },
+        {
+          "status": "ok",
+          "case": 21,
+          "name": "unrecognized relation collision and schema drift fail before replacing own objects"
+        },
+        {
+          "status": "ok",
+          "case": 22,
+          "name": "existing financial token preparation sees the complete total and does not claim a provider payment"
+        },
+        {
+          "status": "ok",
+          "case": 23,
+          "name": "new adapter is not imported by any current public API route"
+        },
+        {
+          "status": "ok",
+          "case": 24,
+          "name": "missing financial prerequisite fails migration without creating product objects"
+        },
+        {
+          "status": "ok",
+          "case": 25,
+          "name": "unknown or altered function definition is not silently replaced on migration replay"
+        },
+        {
+          "status": "ok",
+          "case": 26,
+          "name": "persisted snapshot substitution is detected, never repaired or used as a new price"
+        },
+        {
+          "status": "not ok",
+          "case": 27,
+          "name": "service-only snapshot reader works after payment and closed intake without another reservation"
+        },
+        {
+          "status": "ok",
+          "case": 28,
+          "name": "snapshot reader returns no record for unknown order and rejects inconsistent stored money"
+        },
+        {
+          "status": "ok",
+          "case": 29,
+          "name": "complete product reservation runs through real coordinator and SQL using only synthetic charge evidence"
+        },
+        {
+          "status": "ok",
+          "case": 30,
+          "name": "synthetic lower charge amount cannot mark full pack and schmear paid or lose products"
+        },
+        {
+          "status": "ok",
+          "case": 31,
+          "name": "synthetic provider failure preserves complete snapshot and prevents automatic second attempt"
+        },
+        {
+          "status": "ok",
+          "case": 32,
+          "name": "synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot"
+        },
+        {
+          "status": "ok",
+          "case": 33,
+          "name": "isolated packing reader fails on corrupted physical composition instead of inventing a missing pot"
+        },
+        {
+          "status": "ok",
+          "case": 34,
+          "name": "read-only packing projection rejects missing changed or invented physical bagels and mismatched header"
+        }
+      ]
+    },
+    {
+      "run": "corrected-f6f96bb",
+      "base_commit": "f6f96bb60951f5e1ba170ea1c5c9fdc74894335a",
+      "local_assertion_fix_applied": true,
+      "raw_tap_sha256": "aa23a62c217858b77391a10f78216e280aaab78041749b277b6676bd76e69452",
+      "published_tap_sha256": "aa23a62c217858b77391a10f78216e280aaab78041749b277b6676bd76e69452",
+      "cwd": "/workspace/bagelito-sql-f6f96bb",
+      "command": "NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs",
+      "started_at": "2026-11-02T14:23:07.840860+00:00",
+      "resource_before": {
+        "memory.max": "17179869184",
+        "memory.current": "948076544",
+        "memory.peak": "1978736640",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "finished_at": "2026-11-02T14:23:18.550675+00:00",
+      "elapsed_seconds": 10.709440083999993,
+      "exit_code": 0,
+      "signal": null,
+      "resource_after": {
+        "memory.max": "17179869184",
+        "memory.current": "949219328",
+        "memory.peak": "2081705984",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "child_process_max_rss_kib": 1116020,
+      "tap_summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "case_results": [
+        {
+          "status": "ok",
+          "case": 1,
+          "name": "policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged"
+        },
+        {
+          "status": "ok",
+          "case": 2,
+          "name": "pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once"
+        },
+        {
+          "status": "ok",
+          "case": 3,
+          "name": "all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels"
+        },
+        {
+          "status": "ok",
+          "case": 4,
+          "name": "all four ordinary pack prices and pack-plus-pot prices match existing contract"
+        },
+        {
+          "status": "ok",
+          "case": 5,
+          "name": "all district delivery fees are recomputed in SQL rather than trusted from caller"
+        },
+        {
+          "status": "ok",
+          "case": 6,
+          "name": "exact replay returns original identity/expiry with no second order, line or history"
+        },
+        {
+          "status": "ok",
+          "case": 7,
+          "name": "canonical bagel row order does not change the replay identity"
+        },
+        {
+          "status": "ok",
+          "case": 8,
+          "name": "same-price schmear substitution and same-total bagel substitution are rejected"
+        },
+        {
+          "status": "ok",
+          "case": 9,
+          "name": "changed customer, delivery, terms or missing snapshot never reuse an existing session"
+        },
+        {
+          "status": "ok",
+          "case": 10,
+          "name": "tampered persisted bagel rows, total and snapshot fail replay without repair or second charge"
+        },
+        {
+          "status": "ok",
+          "case": 11,
+          "name": "expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake"
+        },
+        {
+          "status": "ok",
+          "case": 12,
+          "name": "zero-bagel standalone consumes one order slot, not bagel capacity"
+        },
+        {
+          "status": "ok",
+          "case": 13,
+          "name": "bagel capacity and closed/future/missing-delivery batches remain fail closed"
+        },
+        {
+          "status": "ok",
+          "case": 14,
+          "name": "new expired or overly long holds cannot reserve capacity"
+        },
+        {
+          "status": "ok",
+          "case": 15,
+          "name": "fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically"
+        },
+        {
+          "status": "ok",
+          "case": 16,
+          "name": "unpriced combos and extras cannot be given an invented selling price at either boundary"
+        },
+        {
+          "status": "ok",
+          "case": 17,
+          "name": "legal trigger mismatch rolls back the entire transaction including bagels/history"
+        },
+        {
+          "status": "ok",
+          "case": 18,
+          "name": "failure after order/item insert rolls back all partial records"
+        },
+        {
+          "status": "ok",
+          "case": 19,
+          "name": "anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes"
+        },
+        {
+          "status": "ok",
+          "case": 20,
+          "name": "new migration replay preserves enabled policy, snapshot data and financial core definitions"
+        },
+        {
+          "status": "ok",
+          "case": 21,
+          "name": "unrecognized relation collision and schema drift fail before replacing own objects"
+        },
+        {
+          "status": "ok",
+          "case": 22,
+          "name": "existing financial token preparation sees the complete total and does not claim a provider payment"
+        },
+        {
+          "status": "ok",
+          "case": 23,
+          "name": "new adapter is not imported by any current public API route"
+        },
+        {
+          "status": "ok",
+          "case": 24,
+          "name": "missing financial prerequisite fails migration without creating product objects"
+        },
+        {
+          "status": "ok",
+          "case": 25,
+          "name": "unknown or altered function definition is not silently replaced on migration replay"
+        },
+        {
+          "status": "ok",
+          "case": 26,
+          "name": "persisted snapshot substitution is detected, never repaired or used as a new price"
+        },
+        {
+          "status": "ok",
+          "case": 27,
+          "name": "service-only snapshot reader works after payment and closed intake without another reservation"
+        },
+        {
+          "status": "ok",
+          "case": 28,
+          "name": "snapshot reader returns no record for unknown order and rejects inconsistent stored money"
+        },
+        {
+          "status": "ok",
+          "case": 29,
+          "name": "complete product reservation runs through real coordinator and SQL using only synthetic charge evidence"
+        },
+        {
+          "status": "ok",
+          "case": 30,
+          "name": "synthetic lower charge amount cannot mark full pack and schmear paid or lose products"
+        },
+        {
+          "status": "ok",
+          "case": 31,
+          "name": "synthetic provider failure preserves complete snapshot and prevents automatic second attempt"
+        },
+        {
+          "status": "ok",
+          "case": 32,
+          "name": "synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot"
+        },
+        {
+          "status": "ok",
+          "case": 33,
+          "name": "isolated packing reader fails on corrupted physical composition instead of inventing a missing pot"
+        },
+        {
+          "status": "ok",
+          "case": 34,
+          "name": "read-only packing projection rejects missing changed or invented physical bagels and mismatched header"
+        }
+      ]
+    },
+    {
+      "run": "original-67acdf2",
+      "base_commit": "67acdf2e70f03141e019f2bc53915751a257995e",
+      "local_assertion_fix_applied": false,
+      "raw_tap_sha256": "81d200fbac67402b19c85b47ff342e5f320ba91e9fccd67c634f3144c8bb0dd9",
+      "published_tap_sha256": "dac461bdc7dd66b060e6d247827f923af1ed46d4bf13e84940c00961bd11b389",
+      "cwd": "/workspace/bagelito-sql-67acdf2",
+      "command": "NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs",
+      "started_at": "2026-11-02T14:27:35.635108+00:00",
+      "resource_before": {
+        "memory.max": "17179869184",
+        "memory.current": "1719275520",
+        "memory.peak": "2081705984",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "finished_at": "2026-11-02T14:27:42.450292+00:00",
+      "elapsed_seconds": 6.814978741999994,
+      "exit_code": 1,
+      "signal": null,
+      "resource_after": {
+        "memory.max": "17179869184",
+        "memory.current": "1721425920",
+        "memory.peak": "2751877120",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "child_process_max_rss_kib": 1017800,
+      "tap_summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 33,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "case_results": [
+        {
+          "status": "ok",
+          "case": 1,
+          "name": "policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged"
+        },
+        {
+          "status": "ok",
+          "case": 2,
+          "name": "pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once"
+        },
+        {
+          "status": "ok",
+          "case": 3,
+          "name": "all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels"
+        },
+        {
+          "status": "ok",
+          "case": 4,
+          "name": "all four ordinary pack prices and pack-plus-pot prices match existing contract"
+        },
+        {
+          "status": "ok",
+          "case": 5,
+          "name": "all district delivery fees are recomputed in SQL rather than trusted from caller"
+        },
+        {
+          "status": "ok",
+          "case": 6,
+          "name": "exact replay returns original identity/expiry with no second order, line or history"
+        },
+        {
+          "status": "ok",
+          "case": 7,
+          "name": "canonical bagel row order does not change the replay identity"
+        },
+        {
+          "status": "ok",
+          "case": 8,
+          "name": "same-price schmear substitution and same-total bagel substitution are rejected"
+        },
+        {
+          "status": "ok",
+          "case": 9,
+          "name": "changed customer, delivery, terms or missing snapshot never reuse an existing session"
+        },
+        {
+          "status": "ok",
+          "case": 10,
+          "name": "tampered persisted bagel rows, total and snapshot fail replay without repair or second charge"
+        },
+        {
+          "status": "ok",
+          "case": 11,
+          "name": "expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake"
+        },
+        {
+          "status": "ok",
+          "case": 12,
+          "name": "zero-bagel standalone consumes one order slot, not bagel capacity"
+        },
+        {
+          "status": "ok",
+          "case": 13,
+          "name": "bagel capacity and closed/future/missing-delivery batches remain fail closed"
+        },
+        {
+          "status": "ok",
+          "case": 14,
+          "name": "new expired or overly long holds cannot reserve capacity"
+        },
+        {
+          "status": "ok",
+          "case": 15,
+          "name": "fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically"
+        },
+        {
+          "status": "ok",
+          "case": 16,
+          "name": "unpriced combos and extras cannot be given an invented selling price at either boundary"
+        },
+        {
+          "status": "ok",
+          "case": 17,
+          "name": "legal trigger mismatch rolls back the entire transaction including bagels/history"
+        },
+        {
+          "status": "ok",
+          "case": 18,
+          "name": "failure after order/item insert rolls back all partial records"
+        },
+        {
+          "status": "ok",
+          "case": 19,
+          "name": "anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes"
+        },
+        {
+          "status": "ok",
+          "case": 20,
+          "name": "new migration replay preserves enabled policy, snapshot data and financial core definitions"
+        },
+        {
+          "status": "ok",
+          "case": 21,
+          "name": "unrecognized relation collision and schema drift fail before replacing own objects"
+        },
+        {
+          "status": "ok",
+          "case": 22,
+          "name": "existing financial token preparation sees the complete total and does not claim a provider payment"
+        },
+        {
+          "status": "ok",
+          "case": 23,
+          "name": "new adapter is not imported by any current public API route"
+        },
+        {
+          "status": "ok",
+          "case": 24,
+          "name": "missing financial prerequisite fails migration without creating product objects"
+        },
+        {
+          "status": "ok",
+          "case": 25,
+          "name": "unknown or altered function definition is not silently replaced on migration replay"
+        },
+        {
+          "status": "ok",
+          "case": 26,
+          "name": "persisted snapshot substitution is detected, never repaired or used as a new price"
+        },
+        {
+          "status": "not ok",
+          "case": 27,
+          "name": "service-only snapshot reader works after payment and closed intake without another reservation"
+        },
+        {
+          "status": "ok",
+          "case": 28,
+          "name": "snapshot reader returns no record for unknown order and rejects inconsistent stored money"
+        },
+        {
+          "status": "ok",
+          "case": 29,
+          "name": "complete product reservation runs through real coordinator and SQL using only synthetic charge evidence"
+        },
+        {
+          "status": "ok",
+          "case": 30,
+          "name": "synthetic lower charge amount cannot mark full pack and schmear paid or lose products"
+        },
+        {
+          "status": "ok",
+          "case": 31,
+          "name": "synthetic provider failure preserves complete snapshot and prevents automatic second attempt"
+        },
+        {
+          "status": "ok",
+          "case": 32,
+          "name": "synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot"
+        },
+        {
+          "status": "ok",
+          "case": 33,
+          "name": "isolated packing reader fails on corrupted physical composition instead of inventing a missing pot"
+        },
+        {
+          "status": "ok",
+          "case": 34,
+          "name": "read-only packing projection rejects missing changed or invented physical bagels and mismatched header"
+        }
+      ]
+    },
+    {
+      "run": "corrected-67acdf2",
+      "base_commit": "67acdf2e70f03141e019f2bc53915751a257995e",
+      "local_assertion_fix_applied": true,
+      "raw_tap_sha256": "25d77884b088977b4fe3a8ea3371776256bfa64c62ed4f9b08400f8cbdd0a959",
+      "published_tap_sha256": "25d77884b088977b4fe3a8ea3371776256bfa64c62ed4f9b08400f8cbdd0a959",
+      "cwd": "/workspace/bagelito-sql-67acdf2",
+      "command": "NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs",
+      "started_at": "2026-11-02T14:28:19.002126+00:00",
+      "resource_before": {
+        "memory.max": "17179869184",
+        "memory.current": "1719603200",
+        "memory.peak": "2751877120",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "finished_at": "2026-11-02T14:28:25.256528+00:00",
+      "elapsed_seconds": 6.25424758500003,
+      "exit_code": 0,
+      "signal": null,
+      "resource_after": {
+        "memory.max": "17179869184",
+        "memory.current": "1721438208",
+        "memory.peak": "2777473024",
+        "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+      },
+      "child_process_max_rss_kib": 1042764,
+      "tap_summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "case_results": [
+        {
+          "status": "ok",
+          "case": 1,
+          "name": "policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged"
+        },
+        {
+          "status": "ok",
+          "case": 2,
+          "name": "pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once"
+        },
+        {
+          "status": "ok",
+          "case": 3,
+          "name": "all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels"
+        },
+        {
+          "status": "ok",
+          "case": 4,
+          "name": "all four ordinary pack prices and pack-plus-pot prices match existing contract"
+        },
+        {
+          "status": "ok",
+          "case": 5,
+          "name": "all district delivery fees are recomputed in SQL rather than trusted from caller"
+        },
+        {
+          "status": "ok",
+          "case": 6,
+          "name": "exact replay returns original identity/expiry with no second order, line or history"
+        },
+        {
+          "status": "ok",
+          "case": 7,
+          "name": "canonical bagel row order does not change the replay identity"
+        },
+        {
+          "status": "ok",
+          "case": 8,
+          "name": "same-price schmear substitution and same-total bagel substitution are rejected"
+        },
+        {
+          "status": "ok",
+          "case": 9,
+          "name": "changed customer, delivery, terms or missing snapshot never reuse an existing session"
+        },
+        {
+          "status": "ok",
+          "case": 10,
+          "name": "tampered persisted bagel rows, total and snapshot fail replay without repair or second charge"
+        },
+        {
+          "status": "ok",
+          "case": 11,
+          "name": "expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake"
+        },
+        {
+          "status": "ok",
+          "case": 12,
+          "name": "zero-bagel standalone consumes one order slot, not bagel capacity"
+        },
+        {
+          "status": "ok",
+          "case": 13,
+          "name": "bagel capacity and closed/future/missing-delivery batches remain fail closed"
+        },
+        {
+          "status": "ok",
+          "case": 14,
+          "name": "new expired or overly long holds cannot reserve capacity"
+        },
+        {
+          "status": "ok",
+          "case": 15,
+          "name": "fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically"
+        },
+        {
+          "status": "ok",
+          "case": 16,
+          "name": "unpriced combos and extras cannot be given an invented selling price at either boundary"
+        },
+        {
+          "status": "ok",
+          "case": 17,
+          "name": "legal trigger mismatch rolls back the entire transaction including bagels/history"
+        },
+        {
+          "status": "ok",
+          "case": 18,
+          "name": "failure after order/item insert rolls back all partial records"
+        },
+        {
+          "status": "ok",
+          "case": 19,
+          "name": "anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes"
+        },
+        {
+          "status": "ok",
+          "case": 20,
+          "name": "new migration replay preserves enabled policy, snapshot data and financial core definitions"
+        },
+        {
+          "status": "ok",
+          "case": 21,
+          "name": "unrecognized relation collision and schema drift fail before replacing own objects"
+        },
+        {
+          "status": "ok",
+          "case": 22,
+          "name": "existing financial token preparation sees the complete total and does not claim a provider payment"
+        },
+        {
+          "status": "ok",
+          "case": 23,
+          "name": "new adapter is not imported by any current public API route"
+        },
+        {
+          "status": "ok",
+          "case": 24,
+          "name": "missing financial prerequisite fails migration without creating product objects"
+        },
+        {
+          "status": "ok",
+          "case": 25,
+          "name": "unknown or altered function definition is not silently replaced on migration replay"
+        },
+        {
+          "status": "ok",
+          "case": 26,
+          "name": "persisted snapshot substitution is detected, never repaired or used as a new price"
+        },
+        {
+          "status": "ok",
+          "case": 27,
+          "name": "service-only snapshot reader works after payment and closed intake without another reservation"
+        },
+        {
+          "status": "ok",
+          "case": 28,
+          "name": "snapshot reader returns no record for unknown order and rejects inconsistent stored money"
+        },
+        {
+          "status": "ok",
+          "case": 29,
+          "name": "complete product reservation runs through real coordinator and SQL using only synthetic charge evidence"
+        },
+        {
+          "status": "ok",
+          "case": 30,
+          "name": "synthetic lower charge amount cannot mark full pack and schmear paid or lose products"
+        },
+        {
+          "status": "ok",
+          "case": 31,
+          "name": "synthetic provider failure preserves complete snapshot and prevents automatic second attempt"
+        },
+        {
+          "status": "ok",
+          "case": 32,
+          "name": "synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot"
+        },
+        {
+          "status": "ok",
+          "case": 33,
+          "name": "isolated packing reader fails on corrupted physical composition instead of inventing a missing pot"
+        },
+        {
+          "status": "ok",
+          "case": 34,
+          "name": "read-only packing projection rejects missing changed or invented physical bagels and mismatched header"
+        }
+      ]
+    }
+  ]
+}
