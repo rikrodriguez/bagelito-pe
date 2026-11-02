@@ -1,0 +1,6 @@
+48e53c768fde52953b4fed793e56b847ac1ff2225d3ba624ef4626bfedd5014c  ../bagelito-pr47-continuation/src/playable/CulqiBrowserCheckout.tsx
+413d807bed08cdf5e30c000a49a6ab52293fe5053294cd2caca2a99f6c2de975  ../bagelito-pr47-continuation/src/playable/PaidOrderReceiptDetails.tsx
+3f9a58e55eb345ce8e4e517a5cb248055d20c9ffbc1d5a471e0127c6059b0c49  ../bagelito-pr47-continuation/src/domain/lib/paid-order-receipt.ts
+c26ec01505d1355423dfd326631efdb20dd60ebec19654e014d002e91a1fd25e  ../bagelito-pr47-continuation/src/domain/lib/guided-product-snapshot.ts
+d583c7e93fe80429c3aa0ebf44b5d34428a946a2a846502a6f715f0a5f1dfeef  main.tsx
+87b16228b7e37c7c3f09d81c9dff42aa28d5599bd2d1418ae4c78b3d6bbca18f  bundle.js

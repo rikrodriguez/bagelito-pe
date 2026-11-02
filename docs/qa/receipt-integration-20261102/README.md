@@ -47,6 +47,20 @@ The fixture supplies `new PGlite()` with no URL, data directory, credential or s
 
 The private reader remains unregistered and requires prior caller authorization/trusted payment state; the status endpoint still does not expose product snapshots. Source stays review-only/default-disabled, non-fiscal and without dispatch permission. No prices, policy, workflows, application/test code, environment credentials, deployment or merge changed. **Native concurrency/lock-race and real processor sandbox/3DS/webhook/refund acceptance remain untested.** No readiness or fulfillment authorization follows from these 36 serialized simulations.
 
+## Independent real-browser component results
+
+**8/8 PASS**, observed in the actual Chrome accessibility tree and screenshot at 2026-11-02 15:16–15:17 UTC. This separate fixture used real ReactDOM and the unchanged application components from `d0997a54`; it did not use the simulated-hook Node harness. These eight cases are not added to the 228 Node or 36 serialized SQL counts.
+
+The private static fixture was compiled with the already installed esbuild binary, opened in its own browser tab, and started through the visible **Run isolated QA** button. [Exact harness](browser-harness.tsx.txt), [HTML/CSP](browser-page.html.txt), [static server](browser-static-server.cjs.txt), [source/bundle hashes](browser-source-sha256.txt), and [observed accessibility output](browser-ax.txt) are retained. The screenshot was visually inspected during execution; no screenshot artifact is included here. The archived fixture files are evidence, not an installed application route or CI runner.
+
+Cases cover unmount during reservation, changed-cart response invalidation, late recovery, wrong paid order identity, double recovery clicks, late widget token, late paid poll, and a complete historical receipt. The final rendered detail visibly contained **6 × Sesame**, **1 × Whipped Original · 120 g**, products **S/62**, delivery **S/8**, total **S/70**, and the non-fiscal/no-dispatch disclaimer. The current editable fixture cart contained Plain; it did not replace historical products.
+
+All fetches stayed intercepted for the page lifetime, SDK/3DS objects were inert mocks, and localStorage was replaced with a fresh in-memory map without reading or clearing actual stored recovery. Empty ready-marker script tags had no external source; response and page CSP denied all connections, frames, images and forms. The amounts and identity were synthetic test evidence, not a price or live transaction approval. Actual SDK loading, network, provider, database, webhook, authentication, production storefront layout and mobile fidelity were not tested by this fixture.
+
+The existing private Sites preview was **stopped** before use. Only the owned QA tab was closed and the temporary preview was stopped afterward; stopped status was confirmed. No published site, existing tab, real order or credential changed.
+
+Independent evidence was also verified locally: all four files in SQL evidence commit `9f19269d` matched their Git blob hashes, its exact tree `f50169f95aed2460a94652aea32ba68cca0193a7` matched the local synchronized tree, and all 89 pre-execution tracked-file SHA-256 values matched their tested versions.
+
 ## Regression evidence
 
 A preserved13-case early harness against the previous TSX produced **1 PASS /12 FAIL**. It demonstrates late reservation/preparation continuation, stale recovered confirmation, duplicate recovery and insufficient paid-response validation. That is not a claim that all37 final cases were run as RED. The final harness adds affirmative controls and stricter reservation/preparation cases; its double-event test invokes the same captured handler twice before re-render, matching a queued duplicate event rather than clicking a removed element.
