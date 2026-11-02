@@ -63,6 +63,7 @@ function validSource(sourceId: string, mode: 'sandbox' | 'live') {
   return new RegExp('^(tkn|ype)_' + env + '_[A-Za-z0-9_-]{8,100}$').test(sourceId)
 }
 
+// Callers include response-body consumption: fetch alone resolves at headers.
 async function withinDeadline<T>(operation: (signal: AbortSignal) => Promise<T>) {
   const controller = new AbortController()
   const timeoutError = new DOMException('Culqi request deadline exceeded.', 'TimeoutError')
@@ -110,47 +111,51 @@ export async function createCulqiCharge(input: {
   const phone = digits.startsWith('51') && digits.length === 11 ? digits.slice(2) : digits.slice(-9)
 
   const url = 'https://api.culqi.com/v2/charges'
-  const response = await withinDeadline((signal) => fetch(url, {
-    method: 'POST',
-    signal,
-    cache: 'no-store',
-    redirect: 'error',
-    credentials: 'omit',
-    headers: {
-      Authorization: 'Bearer ' + cfg.secretKey,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify({
-      amount: minor(input.amountPen),
-      capture: true,
-      currency_code: 'PEN',
-      description: 'Bagelito - ' + input.orderCode,
-      email: input.email.trim().toLowerCase(),
-      metadata: { bagelito_order_code: input.orderCode },
-      source_id: input.sourceId,
-      antifraud_details: {
-        address: input.address,
-        address_city: input.district,
-        country_code: 'PE',
-        email: input.email.trim().toLowerCase(),
-        first_name: firstName,
-        last_name: lastName,
-        phone_number: phone,
-        ...(input.deviceId ? { device_finger_print_id: input.deviceId } : {}),
+  const { response, payload } = await withinDeadline(async (signal) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      signal,
+      cache: 'no-store',
+      redirect: 'error',
+      credentials: 'omit',
+      headers: {
+        Authorization: 'Bearer ' + cfg.secretKey,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      ...(input.authentication3DS ? { authentication_3DS: input.authentication3DS } : {}),
-    }),
-  }))
+      body: JSON.stringify({
+        amount: minor(input.amountPen),
+        capture: true,
+        currency_code: 'PEN',
+        description: 'Bagelito - ' + input.orderCode,
+        email: input.email.trim().toLowerCase(),
+        metadata: { bagelito_order_code: input.orderCode },
+        source_id: input.sourceId,
+        antifraud_details: {
+          address: input.address,
+          address_city: input.district,
+          country_code: 'PE',
+          email: input.email.trim().toLowerCase(),
+          first_name: firstName,
+          last_name: lastName,
+          phone_number: phone,
+          ...(input.deviceId ? { device_finger_print_id: input.deviceId } : {}),
+        },
+        ...(input.authentication3DS ? { authentication_3DS: input.authentication3DS } : {}),
+      }),
+    })
 
-  if (response.redirected || (response.url && response.url !== url)) {
-    throw new Error('Culqi charge request cannot follow redirects.')
-  }
+    if (response.redirected || (response.url && response.url !== url)) {
+      throw new Error('Culqi charge request cannot follow redirects.')
+    }
 
-  const payload = await response.json().catch(() => null) as
-    | CulqiCharge
-    | { user_message?: string; merchant_message?: string }
-    | null
+    const payload = await response.json().catch(() => null) as
+      | CulqiCharge
+      | { user_message?: string; merchant_message?: string }
+      | null
+
+    return { response, payload }
+  })
 
   if (!response.ok) {
     const message = payload && 'user_message' in payload
@@ -195,26 +200,29 @@ export async function fetchCulqiCharge(chargeId: string) {
   }
 
   const url = 'https://api.culqi.com/v2/charges/' + encodeURIComponent(chargeId)
-  const response = await withinDeadline((signal) => fetch(url, {
-    method: 'GET',
-    signal,
-    cache: 'no-store',
-    redirect: 'error',
-    credentials: 'omit',
-    headers: {
-      Authorization: 'Bearer ' + cfg.secretKey,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'x-api-version': '2',
-      'x-culqi-env': env,
-    },
-  }))
+  const { response, payload } = await withinDeadline(async (signal) => {
+    const response = await fetch(url, {
+      method: 'GET',
+      signal,
+      cache: 'no-store',
+      redirect: 'error',
+      credentials: 'omit',
+      headers: {
+        Authorization: 'Bearer ' + cfg.secretKey,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'x-api-version': '2',
+        'x-culqi-env': env,
+      },
+    })
 
-  if (response.redirected || (response.url && response.url !== url)) {
-    throw new Error('Culqi charge lookup cannot follow redirects.')
-  }
+    if (response.redirected || (response.url && response.url !== url)) {
+      throw new Error('Culqi charge lookup cannot follow redirects.')
+    }
 
-  const payload = await response.json().catch(() => null) as CulqiCharge | null
+    const payload = await response.json().catch(() => null) as CulqiCharge | null
+    return { response, payload }
+  })
   if (!response.ok || !payload || payload.object !== 'charge' || payload.id !== chargeId) {
     throw new Error('Culqi charge could not be verified.')
   }
