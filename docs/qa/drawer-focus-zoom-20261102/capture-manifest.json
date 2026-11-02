@@ -1,0 +1,44 @@
+[
+  {
+    "path": "captures/cart-after-500.jpg",
+    "width": 485,
+    "height": 693,
+    "sha256": "c2c6f317f7fbeb2fe1bc186c556e6f996166865771ea14d8bcd19f23378aaa92"
+  },
+  {
+    "path": "captures/closed-gate-500.jpg",
+    "width": 485,
+    "height": 693,
+    "sha256": "f7a54158d0eeee0efc78329ff8cb95c6abc77ae88a645f07aadfd38776adb2fd"
+  },
+  {
+    "path": "captures/menu-after-1180.jpg",
+    "width": 1165,
+    "height": 747,
+    "sha256": "a20ed443b604468a036590637e6fefa749641a9fc70d72d3a71ba5c76f55b66d"
+  },
+  {
+    "path": "captures/menu-before-1180.jpg",
+    "width": 1165,
+    "height": 747,
+    "sha256": "f88f25d8e6380e6335f47b01fa1b3ad788d70be9add2f4ed267846e28fc23552"
+  },
+  {
+    "path": "captures/zoom200-after-cards.jpg",
+    "width": 243,
+    "height": 347,
+    "sha256": "2c8b65465c6e46008cf09f6d47711e86eb4acb030948374b3fc2ec15258b3951"
+  },
+  {
+    "path": "captures/zoom200-after-top.jpg",
+    "width": 243,
+    "height": 347,
+    "sha256": "0d8771cc1e7a4eb91c1a70d4f0631a289510fba2b451f48a20c4e5bb0b987077"
+  },
+  {
+    "path": "captures/zoom200-before.jpg",
+    "width": 243,
+    "height": 347,
+    "sha256": "32d360a7aa540d1d7bf01f78cef9f894b95bb59a2fa19aa3fe7b02a74fed89ce"
+  }
+]
