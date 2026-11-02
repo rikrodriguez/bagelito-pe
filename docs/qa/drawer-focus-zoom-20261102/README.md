@@ -25,7 +25,7 @@ Selected screenshots preserve original JPEG tool bytes. Tool captures are conten
 - Independent source review found no critical issue and independently reran the ten focus tests.
 - Native 1180×757: menu initial focus; Shift+Tab first→last; Tab last→first; middle traversal; Escape; explicit in-panel close; empty cart single-control cycle; focus restored to each opener and inert removed.
 - Native 500×714 at 100%: menu navigation across scenes and same-scene category dismissal; populated cart initial focus, reverse/forward wrap, Editar sabores dismissal and opener restoration. Selections remain intact.
-- Native 500px window at 150%: 333×476 CSS px, DPR 1.5, cards 96/96 and document overflow 0. At 200%: 250×357 CSS px, DPR 2, document overflow 0, cards 221/221, copy 105/105, actual native scrolling reaches all three cards. Combo click works at 200%; progress computes three columns. Header screenshot immediately after Ctrl+Home was taken during smooth-scroll, so it does **not** prove settled header clearance.
+- Native 500px window at 150%: 333×476 CSS px, DPR 1.5, cards 96/96 and document overflow 0. At 200%: 250×357 CSS px, DPR 2, document overflow 0, cards 221/221, copy 105/105, actual native scrolling reaches all three cards. Combo click works at 200%; progress computes three columns. The first header screenshot immediately after Ctrl+Home was taken during smooth-scroll; settled header clearance was subsequently verified in the supplement below.
 - After one browser recovery: one complete review-only Combo path at 500px, Everything + Sesame + Ají Amarillo 120 g → review → delivery/consent. Checkbox checked and unchecked; Pago no activo remained disabled. No contact/address data entered or submitted. The [closed gate capture](captures/closed-gate-500.jpg) also shows the unchanged 10-order loyalty promise and inactive tracking/redemption.
 - [Source audit](source-audit.json): 159 existing runtime/asset/config files unchanged; 24 named selection/commerce functions and the commercial render after the chrome are byte-identical. One menu callback intentionally adds dismissal; not all onClick expressions are unchanged. Only GuidedCommerce chrome, the new focus helper and aligned CSS change at runtime. Catalog, checkout, loyalty, payments, all image/reference/brand bytes and scene geometry are untouched.
 - [Node log](node-tests.log), [build log](build.log), [browser observations](browser-observations.json), [preflight](preflight.json). Preflight only checks source pinning and lists a **planned**, unexecuted automated matrix; it is not evidence that those scenarios ran.
@@ -47,3 +47,19 @@ This is native desktop-window/zoom QA, not mobile/touch emulation or a full 320/
 The official arched logo still needs a clean export from the original authenticated design. The current approximate wordmark is unchanged; no guessed font, screenshot crop or invented asset is substituted. Upper/rear case glass still differs from the approved reference. No claim of exact visual equivalence.
 
 Sites loopback preview was stopped, matching its initial state. QA tab 119 was closed; native viewport restored to 1180×757, DPR 1/100% zoom. Final DOM: reviewOnly=true, inertCount 0, Canvas 0. No Site save/sync/publish, production deploy, merge, credentials, permissions, dependencies, spending or third-party message. Review-only guards and autodeploy=false remain unchanged. PR remains draft; remote CI is reported separately.
+
+## Supplement: settled header and narrower CSS viewports (04:54–04:56 UTC)
+
+Same application 09eb1a3; no source changes, rebuild or test-count increase.
+Native Chrome window resizing and zoom, **not device emulation**:
+
+| CSS viewport / zoom | Observation |
+| --- | --- |
+|390×505 /150%, native window 585px wide|Three category cards: clientWidth 112 = scrollWidth 112; document horizontal overflow 0. [Entry](captures/entry-native-390.jpg).|
+|320×378 /200%, native window 640px wide|Cards 92/92, copy 78/78, document overflow 0. [Entry](captures/entry-native-320.jpg).|
+|250×357 /200%, native window 500px wide|After native Ctrl+Home and a separate settled observation, scrollY 0. Topbar y10–54; brand y58–106.75; progress y116.75–233.9375. No vertical overlap, five steps in 3+2 rows; each button 71/71; document overflow 0. [Settled header](captures/compact-header-native-250.jpg).|
+|250×357 menu|Initial focus Inicio; native Shift+Tab→Cerrar menú stays in dialog; panel y70–337 fits viewport. Escape returns focus to opener. [Menu](captures/menu-native-250.jpg).|
+
+[Raw observations](native-zoom-supplement.json). The 390/320 entry images are viewport-region captures, not full-page screenshots. No complete journey, touch, phone hardware or screen-reader certification at those widths is added. This supplement closes the earlier settled-header evidence gap only within the listed native states.
+
+QA tab 131 closed, zoom 100% and viewport 1180×757 restored; sites-preview stopped again, matching the starting state. No other tabs closed or browser restarted.

@@ -12,6 +12,24 @@
     "sha256": "f7a54158d0eeee0efc78329ff8cb95c6abc77ae88a645f07aadfd38776adb2fd"
   },
   {
+    "path": "captures/compact-header-native-250.jpg",
+    "width": 243,
+    "height": 347,
+    "sha256": "a02e79cb508a0704589b6b747b9d6679ad2668005c4d1b693c7280927c9cce79"
+  },
+  {
+    "path": "captures/entry-native-320.jpg",
+    "width": 313,
+    "height": 370,
+    "sha256": "125a38cd4a86c1e5f11a5ce67c48e757082ff3ad18b6a512c1a3d0e60cf405a2"
+  },
+  {
+    "path": "captures/entry-native-390.jpg",
+    "width": 380,
+    "height": 492,
+    "sha256": "b482f509abbccdf8d6be8f9783455eff5166f8d3abafc1265a64cc630ddae655"
+  },
+  {
     "path": "captures/menu-after-1180.jpg",
     "width": 1165,
     "height": 747,
@@ -22,6 +40,12 @@
     "width": 1165,
     "height": 747,
     "sha256": "f88f25d8e6380e6335f47b01fa1b3ad788d70be9add2f4ed267846e28fc23552"
+  },
+  {
+    "path": "captures/menu-native-250.jpg",
+    "width": 243,
+    "height": 347,
+    "sha256": "e5598d6d2c48d5809d29aeb0a4fb434700f7647ce42defd36de859272b35b0d7"
   },
   {
     "path": "captures/zoom200-after-cards.jpg",
