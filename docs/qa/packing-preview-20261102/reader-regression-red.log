@@ -1,0 +1,37 @@
+✔ adapter derives money from confirmed catalog, not client amount fields (4.006482ms)
+✔ adapter normalizes bounded customer data without silently truncating (1.292947ms)
+✔ missing affirmative current consent cannot call any RPC (0.675767ms)
+✔ invalid customer, district, identity and expiry fail before persistence (1.254909ms)
+✔ unpriced extras, combo, mini and premium never create a persistence candidate (0.998333ms)
+✔ RPC receives only canonical product lines, customer and server context (10.257413ms)
+✔ RPC errors remain a failure and never leak provider or database details (0.467604ms)
+✔ malformed or partial RPC results cannot be accepted as complete reservations (4.093493ms)
+✔ JSONB key ordering does not cause a false mismatch on replay (1.041028ms)
+✔ read-only adapter rejects invalid identity before RPC and returns null for no snapshot (1.32157ms)
+✔ snapshot read validates version and stored monetary consistency without current catalog repricing (2.326908ms)
+✔ snapshot read errors are not treated as missing products or leaked diagnostics (0.908168ms)
+✖ read-only snapshot rejects malformed composition before any fulfillment projection (1.371946ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 487.996332
+
+✖ failing tests:
+
+test at tests/guided-product-adapter.test.cjs:93:1
+✖ read-only snapshot rejects malformed composition before any fulfillment projection (1.371946ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:99:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /inconsistent/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
