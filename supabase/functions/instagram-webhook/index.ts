@@ -253,6 +253,61 @@ function extractOutputText(payload: any) {
   return parts.join("\n").trim();
 }
 
+
+const DM_FORMAT_VERSION = "dawn-mobile-2026-11-03-v1";
+
+function normalizeInstagramText(value: string) {
+  return value
+    .replace(/\r\n?/g, "\n")
+    .replace(/[ \t]+\|[ \t]+/g, "\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n[ \t]+/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function isReadableInstagramText(value: string) {
+  const text = value.trim();
+  if (!text || [...text].length > 450 || text.includes("|")) return false;
+  if (text.split("\n").some((line) => [...line].length > 155)) return false;
+  // A newline elsewhere must not excuse one long, dense paragraph.
+  return text.split(/\n\s*\n/).every((block) => [...block].length <= 180);
+}
+
+function mediaFamilyKey(asset: any) {
+  if (!asset) return null;
+  const tags = Array.isArray(asset.tags) ? asset.tags : [];
+  if (tags.includes("catalog-overview")) return "catalog-overview";
+  if (asset.product_slug) return `product:${asset.product_slug}`;
+  return asset.asset_key ?? null;
+}
+
+function preferredHumanMedia(assets: any[]) {
+  return assets
+    .filter((asset: any) =>
+      asset.category === "human_reference" &&
+      Array.isArray(asset.tags) &&
+      asset.tags.includes("human-used")
+    )
+    .sort((a: any, b: any) =>
+      Number(b.tags.includes("catalog-overview")) - Number(a.tags.includes("catalog-overview"))
+    );
+}
+
+type InstagramOutboundStep =
+  | { kind: "text"; text: string }
+  | { kind: "image"; asset: any };
+
+function buildInstagramOutboundSteps(messages: string[], media: any[], intent: string): InstagramOutboundStep[] {
+  const texts: InstagramOutboundStep[] = messages.map((text) => ({ kind: "text", text }));
+  const images: InstagramOutboundStep[] = media.map((asset) => ({ kind: "image", asset }));
+  const catalogReply = ["flavors", "menu", "how_to_order", "price", "product_photo"].includes(intent);
+  if (catalogReply && texts.length > 1 && images.length > 0) {
+    return [texts[0], ...images, ...texts.slice(1)];
+  }
+  return [...texts, ...images];
+}
+
 async function generateShadowDraft(args: {
   db: any;
   conversationId: string;
@@ -260,8 +315,9 @@ async function generateShadowDraft(args: {
   customerId: string;
   openaiKey: string;
   model: string;
+  runtimeSettings?: any;
 }) {
-  const { db, conversationId, triggeringMessageId, customerId, openaiKey, model } = args;
+  const { db, conversationId, triggeringMessageId, customerId, openaiKey, model, runtimeSettings } = args;
 
   const [{ data: messages }, { data: facts }, { data: batch }, { data: mediaAssets }] = await Promise.all([
     db.from("instagram_messages")
@@ -285,41 +341,67 @@ async function generateShadowDraft(args: {
   const recentMessages = [...(messages ?? [])].reverse();
   const factMap = Object.fromEntries((facts ?? []).map((f: any) => [f.fact_key, f.fact_value]));
 
+  const { data: recentMediaSends } = await db
+    .from("instagram_outbound_sends")
+    .select("asset_key,created_at")
+    .eq("conversation_id", conversationId)
+    .eq("kind", "image")
+    .not("asset_key", "is", null)
+    .order("created_at", { ascending: false })
+    .limit(12);
+
+  const approvedMediaByKeyForHistory = new Map((mediaAssets ?? []).map((asset: any) => [asset.asset_key, asset]));
+  const recentMediaFamilies = new Set(
+    (recentMediaSends ?? [])
+      .map((send: any) => mediaFamilyKey(approvedMediaByKeyForHistory.get(send.asset_key)))
+      .filter(Boolean)
+  );
+  const latestInboundText =
+    [...recentMessages].reverse().find((message: any) => message.direction === "inbound")?.text_content ?? "";
+  const explicitRepeatMediaRequest =
+    /\b(otra vez|de nuevo|again|reenvi|reenv[ií]a|m[aá]ndame otra|send it again)\b/i.test(latestInboundText);
+  const catalogAlreadySentRecently = recentMediaFamilies.has("catalog-overview");
+
+  const configuredMediaLimit = runtimeSettings?.media_enabled
+    ? Math.max(0, Math.min(7, Number(runtimeSettings?.max_media ?? 0)))
+    : 0;
+  const catalogAvailableForReply = preferredHumanMedia(mediaAssets ?? [])
+    .filter((asset: any) => asset.sendable)
+    .slice(0, configuredMediaLimit)
+    .some((asset: any) => asset.tags.includes("catalog-overview"));
+
   const instructions = [
-    "Dawn formatting is part of the Bagelito voice. Never send a long wall of text.",
-    "Short operational replies can stay on one natural line when that is enough.",
-    "For medium or long answers, use short paragraphs with a blank line between ideas; usually one or two sentences per paragraph.",
-    "For orders, menus, flavors, prices, totals, address, payment, or delivery, use vertical scan-friendly formatting and separate visual blocks.",
-    "Use emojis as visual anchors for sections or tone, not as decoration on every sentence.",
-    "For flavors, menu, and how-to-order, never compress the whole answer into one paragraph.",
-    "Dawn usually speaks in first person singular: me avisas, te cuento, te confirmo, puedo mandarlo. Avoid support-bot phrasing like te guiamos con los siguientes pasos.",
-    "For flavors/menu/how-to-order, add visual breathing room after the greeting and between product, pack, delivery, and CTA blocks.",
-    "Never use the pipe character | to place multiple prices on one line. Put each pack and price on its own line.",
-    "For pack lists, prefer a vertical rhythm such as 🥯 6 mixtos — S/. 60 on its own line, then the next pack on the next line.",
-    "The second bubble in a sales flow should sound like Dawn: Para hacer tu pedido, solo necesito... followed by the missing order fields, then a short natural close such as Con eso te confirmo el total con delivery 😊.",
-    "Avoid generic assistant language such as siguientes pasos, podemos ayudarte, te guiamos, or formal customer-service wording when a natural Dawn-style phrase works.",
-    "Use proposed_messages as the exact outbound Instagram bubbles, in order. Return 1 or 2 messages only.",
-    "Use 1 message for simple direct replies, logistics, confirmations, and short explanations.",
-    "For flavors/menu/how-to-order, prefer 2 messages when useful: message 1 = offer/catalog/prices/current delivery context; message 2 = exact information needed to order plus a concise CTA. Media follows after the text messages.",
-    "Do not split into 2 messages if the second would be redundant or unnatural.",
-    "proposed_reply is only a legacy combined preview and must equal proposed_messages joined with a blank line.",
-    "You are Bagelito's Instagram sales assistant. Your response may be used in Shadow Mode or controlled automation; never claim an external action happened unless LIVE_FACTS explicitly confirms it.",
-    "Write in the customer's language and natural style. Spanish and English should sound native, not translated.",
-    "Bagelito voice learned from historical DMs: warm, personal, concise, lightly enthusiastic, sometimes playful elongation like 'Holaaa', and natural emojis.",
-    "A simple operational question gets a simple answer, EXCEPT flavors/menu/how-to-order intents: live Bagelito handling treats these as high-intent sales moments and usually gives a compact full sales answer.",
-    "For flavors/menu/how-to-order, when LIVE_FACTS supports it, structure the answer as: warm greeting -> active promo if explicitly current -> regular flavors/products -> relevant packs/prices -> schmears/add-ons -> current production/delivery timing -> exact information needed to order -> approved human-used photos.",
-    "This commercial exception should reduce back-and-forth without sounding pushy. Never invent or reuse stale promo, price, date, delivery, availability, inventory, or payment facts.",
-    "Always format Peruvian-sol prices exactly as S/. followed by the amount, for example S/. 10 or S/. 60. Never use the dollar sign, USD, S/ or bare numbers for PEN prices.",
-    "Operational facts MUST come only from LIVE_FACTS below. Never invent price, stock, availability, batch date, delivery fee, payment state, address, product, exception, refund, compensation, or custom promise.",
-    "A seasonal=true flavor is NOT proof that it is currently available. Mention it only as seasonal/depending on batch unless explicit availability exists.",
-    "For complaints, refunds, missing/damaged orders, allergies/celiac/food safety, payment disputes, or fraud: classify the matching high-risk intent and draft a cautious acknowledgement without making promises.",
-    "For media, use ONLY exact asset_key values provided in LIVE_FACTS.media_assets. Never invent an asset key or URL.",
-    "Historical Bagelito behavior is media-forward: when customers ask for flavors, menu/carta, options, or how to order, Bagelito commonly sends product photos proactively even when the customer did not explicitly ask for a photo.",
-    "For flavors, menu/carta, or how_to_order intents, prioritize approved media with category=human_reference and tag=human-used. These are the exact images Bagelito's human operator has actually used in real DMs.",
-    "For flavors or menu/carta intents, propose the human-used reference set first (normally up to 7 images) alongside the concise text answer. Do not replace this set with generic storefront photos unless human-used references are unavailable.",
-    "For how_to_order, also prioritize the same human-used reference set because historical Bagelito behavior sends the actual sales/catalog images after explaining the process.",
-    "For a specific flavor or pack question, prefer the exact matching approved asset. For other intents, suggest media only when it genuinely helps.",
-    "A media asset with sendable=false may still be suggested in Shadow Mode, but must not be sent until validated.",
+    "You are Bagelito's Instagram sales assistant. Follow the customer's latest request in the context of this conversation.",
+    "Dawn's message layout and rhythm are essential: warm, personal, direct, with breathing room. Use natural Spanish or English matching the customer.",
+    "Dawn usually speaks in first person singular: me avisas, te cuento, te confirmo, puedo mandarlo. Match that natural voice.",
+    "Each line must stay within 155 characters. Put each pack and price on its own line; never compress separate options using a pipe.",
+    "When order fields are needed, use Dawn-style wording such as Para hacer tu pedido, solo necesito, put the missing fields on separate lines, and close naturally. Do not re-request fields the customer has already given.",
+    "Use proposed_messages as the exact Instagram text bubbles, in order. Return only 1 or 2 bubbles. A simple question normally needs 1 bubble.",
+    "Each bubble MUST have at most 450 characters, and each paragraph or list block MUST have at most 180 characters. Separate ideas with a blank line. Do not pad a simple reply to reach these limits.",
+    "When a greeting is appropriate, put it on its own line followed by a blank line, for example 'Holaaa! 😊'. Do not greet again in every reply.",
+    "Put each pack, price, or requested order detail on its own line. Never place two options on the same line separated by a vertical bar or semicolon.",
+    "Use a few natural emojis as Dawn does, normally 1 or 2 per reply. Avoid bureaucratic phrases such as 'te guiamos con los siguientes pasos'.",
+    "Answer the latest question first. If the customer asks how to order, explain that they can order here and ask for the next missing order information.",
+    "Read RECENT_MESSAGES: do not repeat the entire menu, the same prices, an earlier greeting, or order details already supplied. If the user asks to see something again, do provide it.",
+    "Do not resend a catalog image or equivalent catalog-overview image if LIVE_FACTS.media_delivery.catalog_already_sent_recently is true, unless explicit_repeat_media_request is true.",
+    "If the latest customer message asks about a birthday bagel, custom shape, custom color, personalization, or another special request, answer that latest question first and classify it as custom_order for human review instead of auto-sending a generic order summary.",
+    "For an initial menu inquiry, a useful order is a brief greeting and relevant prices, the approved catalog image, then one short question. Images are sent AFTER the first bubble and BEFORE the second bubble for catalog replies.",
+    "If LIVE_FACTS.media_delivery.catalog_available_for_reply is true, use that catalog to show the flavors; do not also recite every flavor in a paragraph. Answer specific flavor questions in text.",
+    "If no sendable catalog is available, provide the requested flavors in a concise vertical list. Never imply that a picture will be sent when media delivery is disabled or no suitable sendable image exists.",
+    "For a how_to_order follow-up when the menu was already shared, focus on ordering rather than reselling the full catalog. Ask one manageable next-step question, such as quantity and flavors; request delivery/contact details when needed to continue the order.",
+    "Keep delivery context separate from the question. If the delivery date is unknown, say so when asked about delivery or before confirming an order; do not append it as a default footer to unrelated replies.",
+    "Only mention promos, special flavors, add-ons, unit prices or payment instructions when relevant and explicitly supported by LIVE_FACTS. A menu inquiry is not a requirement to list every product and every operational detail.",
+    "proposed_reply is a legacy preview and must equal proposed_messages joined with a blank line.",
+    "Always format Peruvian-sol prices exactly as S/. followed by the amount, for example S/. 10 or S/. 60. Never use $, USD, S/ or bare numbers for PEN prices.",
+    "Operational facts MUST come only from LIVE_FACTS. Never invent price, stock, availability, batch date, delivery fee, payment state, address, product, exception, refund, compensation, or a custom promise.",
+    "RECENT_MESSAGES may contain older AI replies or expired promotions. Use them for context only; they are not authoritative facts or examples to copy.",
+    "A seasonal=true flavor is NOT proof of current availability. Do not promote it as available unless current explicit availability exists. If asked, explain the uncertainty briefly.",
+    "Never claim an external action happened unless LIVE_FACTS explicitly confirms it.",
+    "For complaints, refunds, missing/damaged orders, allergies/celiac/food safety, payment disputes, or fraud: classify the matching high-risk intent and draft a cautious acknowledgement without promises.",
+    "For media, use ONLY exact asset_key values supplied in LIVE_FACTS.media_assets. Never invent asset keys or URLs.",
+    "Bagelito uses its real human-used catalog photos for flavors, menu and how_to_order. Prioritize approved human_reference assets tagged human-used, with catalog-overview first. A sendable=false asset is a shadow suggestion only.",
+    "For a specific flavor or pack question, prefer the matching approved asset. For other intents, suggest media only when it helps.",
+    "Format example only (all prices must be filled from LIVE_FACTS): 'Holaaa! 😊\\n\\nTe mando los sabores y los packs:\\n\\n🥯 De un mismo sabor\\n6 bagels: S/. [live amount]\\n12 bagels: S/. [live amount]\\n\\n🥯 Mixtos\\n6 bagels: S/. [live amount]\\n12 bagels: S/. [live amount]'; after the catalog, a separate short question. Never send placeholders.",
     "Return JSON only matching the schema."
   ].join("\n");
 
@@ -330,6 +412,13 @@ async function generateShadowDraft(args: {
       menu: factMap,
       current_batch: batch ?? null,
       media_assets: mediaAssets ?? [],
+      media_delivery: {
+        enabled: Boolean(runtimeSettings?.media_enabled),
+        maximum_images: configuredMediaLimit,
+        catalog_available_for_reply: catalogAvailableForReply,
+        catalog_already_sent_recently: catalogAlreadySentRecently,
+        explicit_repeat_media_request: explicitRepeatMediaRequest
+      },
       truth_policy: "Configured regular menu items may be described as menu offerings. Seasonal items are not confirmed live stock unless explicit availability exists."
     }
   };
@@ -445,14 +534,14 @@ async function generateShadowDraft(args: {
   const rawMessages = Array.isArray(parsed.proposed_messages)
     ? parsed.proposed_messages
         .filter((item: unknown) => typeof item === "string")
-        .map((item: string) => item.trim())
+        .map((item: string) => normalizeInstagramText(item))
         .filter(Boolean)
         .slice(0, 2)
     : [];
   const proposedMessages = rawMessages.length
     ? rawMessages
     : (typeof parsed.proposed_reply === "string" && parsed.proposed_reply.trim()
-        ? [parsed.proposed_reply.trim()]
+        ? [normalizeInstagramText(parsed.proposed_reply)]
         : []);
   const proposedReply = proposedMessages.join("\n\n");
   let requestedMediaKeys = Array.isArray(parsed.proposed_media_tags) ? parsed.proposed_media_tags.slice(0,8) : [];
@@ -461,12 +550,7 @@ async function generateShadowDraft(args: {
   // Historical audit: Bagelito proactively sends multiple product photos for
   // flavors/menu questions. Enforce that behavior even if the model returns
   // too few media suggestions.
-  const humanUsedKeys = (mediaAssets ?? [])
-    .filter((asset: any) =>
-      asset.category === "human_reference" &&
-      Array.isArray(asset.tags) &&
-      asset.tags.includes("human-used")
-    )
+  const humanUsedKeys = preferredHumanMedia(mediaAssets ?? [])
     .map((asset: any) => asset.asset_key)
     .slice(0, 7);
 
@@ -499,8 +583,19 @@ async function generateShadowDraft(args: {
       public_url: asset.public_url,
       category: asset.category,
       product_slug: asset.product_slug,
+      tags: Array.isArray(asset.tags) ? asset.tags : [],
       sendable: asset.sendable
     }));
+
+  const seenFamiliesThisReply = new Set<string>();
+  const dedupedProposedMedia = proposedMedia.filter((asset: any) => {
+    const family = mediaFamilyKey(asset);
+    if (!family) return false;
+    if (!explicitRepeatMediaRequest && recentMediaFamilies.has(family)) return false;
+    if (seenFamiliesThisReply.has(family)) return false;
+    seenFamiliesThisReply.add(family);
+    return true;
+  });
 
   const { data: aiRun, error: aiRunError } = await db
     .from("instagram_ai_runs")
@@ -513,11 +608,13 @@ async function generateShadowDraft(args: {
       confidence,
       proposed_reply: proposedReply,
       proposed_messages: proposedMessages,
-      proposed_media: proposedMedia,
+      proposed_media: dedupedProposedMedia,
       facts_used: {
         fact_keys: (facts ?? []).map((f: any) => f.fact_key),
         current_batch: batch ?? null,
-        risk: RISK[intent] ?? "review"
+        risk: RISK[intent] ?? "review",
+        formatting_version: DM_FORMAT_VERSION,
+        readable: proposedMessages.length > 0 && proposedMessages.every(isReadableInstagramText)
       },
       model,
       status: "proposed"
@@ -542,7 +639,7 @@ async function generateShadowDraft(args: {
     risk: RISK[intent] ?? "review",
     proposedReply,
     proposedMessages,
-    proposedMedia
+    proposedMedia: dedupedProposedMedia
   };
 }
 
@@ -793,7 +890,8 @@ Deno.serve(async (req: Request) => {
             triggeringMessageId: insertedMessage.id,
             customerId: contactInstagramId,
             openaiKey,
-            model: aiModel
+            model: aiModel,
+            runtimeSettings
           });
           if (shadow.generated) {
             shadowGenerated += 1;
@@ -809,34 +907,21 @@ Deno.serve(async (req: Request) => {
               runtimeSettings?.mode === "test_auto" &&
               configuredTestRecipients.includes(contactInstagramId);
             const fullAuto = runtimeSettings?.mode === "auto";
+            const latestMessageNeedsCustomReview =
+              /\b(birthday|cumplea[nñ]os|cumple|custom|personaliz|forma especial|shape|color especial)\b/i.test(latestInboundText);
             const maxTextMessages = Math.max(1, Math.min(2, Number(runtimeSettings?.max_text_messages ?? 2)));
             const outboundTextMessages = Array.isArray(shadow.proposedMessages) && shadow.proposedMessages.length
               ? shadow.proposedMessages.slice(0, maxTextMessages)
               : [shadow.proposedReply].filter(Boolean).slice(0, maxTextMessages);
-            const commercialIntent =
-              shadow.intent === "flavors" ||
-              shadow.intent === "menu" ||
-              shadow.intent === "how_to_order";
-
-            const commercialLinesLookReadable =
-              !commercialIntent ||
-              outboundTextMessages.every((message: string) =>
-                !message.includes("|") &&
-                message.split("\n").every((line: string) => line.length <= 155)
-              );
-
             const replyLooksReadable =
               outboundTextMessages.length > 0 &&
-              outboundTextMessages.every((message: string) =>
-                message.trim().length > 0 &&
-                (message.trim().length <= 220 || message.includes("\n"))
-              ) &&
-              commercialLinesLookReadable;
+              outboundTextMessages.every(isReadableInstagramText);
             const safeForAuto =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
               (testOnly || conversation.mode !== "human_active") &&
               (testOnly || fullAuto) &&
+              !latestMessageNeedsCustomReview &&
               autoIntents.includes(shadow.intent) &&
               typeof shadow.confidence === "number" &&
               shadow.confidence >= minConfidence &&
@@ -845,43 +930,57 @@ Deno.serve(async (req: Request) => {
               shadow.proposedReply.trim().length > 0 &&
               replyLooksReadable;
 
+            if (!replyLooksReadable) {
+              await db.from("instagram_conversation_events").insert({
+                conversation_id: conversation.id,
+                event_type: "auto_send_held",
+                from_mode: conversation.mode,
+                to_mode: conversation.mode,
+                reason: "reply_format_needs_review",
+                actor: "ai",
+                metadata: { ai_run_id: shadow.aiRunId, formatting_version: DM_FORMAT_VERSION }
+              });
+            }
+
             if (safeForAuto) {
               try {
                 const sentTextMessages: any[] = [];
-                for (const outboundText of outboundTextMessages) {
-                  const textSend = await postInstagramMessage({
-                    accountId: igAccountId,
-                    recipientId: contactInstagramId,
-                    accessToken: instagramAccessToken,
-                    message: { text: outboundText.trim() }
-                  });
-
-                  if (textSend?.message_id) {
-                    await db.from("instagram_outbound_sends").insert({
-                      conversation_id: conversation.id,
-                      ai_run_id: shadow.aiRunId,
-                      provider_message_id: textSend.message_id,
-                      recipient_igsid: contactInstagramId,
-                      kind: "text",
-                      source: "ai"
-                    });
-                  }
-
-                  sentTextMessages.push({
-                    provider_message_id: textSend?.message_id ?? null,
-                    text: outboundText.trim()
-                  });
-                }
-
                 const sentMedia: any[] = [];
-                if (runtimeSettings?.media_enabled) {
-                  const maxMedia = Math.max(0, Math.min(7, Number(runtimeSettings?.max_media ?? 0)));
+                const maxMedia = runtimeSettings?.media_enabled
+                  ? Math.max(0, Math.min(7, Number(runtimeSettings?.max_media ?? 0)))
+                  : 0;
+                const mediaToSend = (shadow.proposedMedia ?? [])
+                  .filter((asset: any) => asset?.sendable)
+                  .slice(0, maxMedia);
+                const steps = buildInstagramOutboundSteps(outboundTextMessages, mediaToSend, shadow.intent);
 
-                  for (const asset of (shadow.proposedMedia ?? []).slice(0, maxMedia)) {
-                    if (!asset?.sendable) continue;
+                for (const step of steps) {
+                  if (step.kind === "text") {
+                    const textSend = await postInstagramMessage({
+                      accountId: igAccountId,
+                      recipientId: contactInstagramId,
+                      accessToken: instagramAccessToken,
+                      message: { text: step.text.trim() }
+                    });
+
+                    if (textSend?.message_id) {
+                      await db.from("instagram_outbound_sends").insert({
+                        conversation_id: conversation.id,
+                        ai_run_id: shadow.aiRunId,
+                        provider_message_id: textSend.message_id,
+                        recipient_igsid: contactInstagramId,
+                        kind: "text",
+                        source: "ai"
+                      });
+                    }
+                    sentTextMessages.push({
+                      provider_message_id: textSend?.message_id ?? null,
+                      text: step.text.trim()
+                    });
+                  } else {
+                    const asset = step.asset;
                     const mediaUrl = await resolveInstagramMediaUrl(db, asset);
                     if (!mediaUrl) continue;
-
                     const mediaSend = await postInstagramMessage({
                       accountId: igAccountId,
                       recipientId: contactInstagramId,
@@ -905,7 +1004,6 @@ Deno.serve(async (req: Request) => {
                         source: "ai"
                       });
                     }
-
                     sentMedia.push({
                       asset_key: asset.asset_key ?? null,
                       provider_message_id: mediaSend?.message_id ?? null
@@ -937,7 +1035,8 @@ Deno.serve(async (req: Request) => {
                     confidence: shadow.confidence,
                     provider_message_id: sentTextMessages[0]?.provider_message_id ?? null,
                     sent_text_messages: sentTextMessages,
-                    sent_media: sentMedia
+                    sent_media: sentMedia,
+                    formatting_version: DM_FORMAT_VERSION
                   }
                 });
 
@@ -995,3 +1094,4 @@ Deno.serve(async (req: Request) => {
     return respond({ ok: false, error: "processing_failed" }, 500);
   }
 });
+
