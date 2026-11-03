@@ -1,0 +1,588 @@
+{
+  "date": "2026-11-03",
+  "baseHead": "eff2f0848bc82c3ca58be1b0a6a66500cbc13026",
+  "scope": "Metadata-only inventory; no decrypt, secret values, remote SQL, test orders or payment requests.",
+  "local": {
+    "paymentRuntimeVariableNames": [],
+    "actualEnvFiles": [],
+    "checkedWorktrees": [
+      "bagelito-manual-inquiry-qa",
+      "bagelito-pr47-transaction",
+      "bagelito-pe"
+    ],
+    "exampleFilesExcluded": true
+  },
+  "vercel": {
+    "project": "bagelito-pe",
+    "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0",
+    "currentBranch": {
+      "label": "currentBranch",
+      "branch": "feat/rebuilt-storefront-20261101",
+      "deployments": []
+    },
+    "currentBranchEnv": {
+      "label": "branchEnv",
+      "keys": [
+        "envs",
+        "hiddenProductionEnvCount"
+      ],
+      "variables": [],
+      "decryptRequested": false,
+      "secretValuesRequested": false
+    },
+    "playableCurrentBranch": {
+      "label": "playableCurrentBranch",
+      "keys": [
+        "deployments"
+      ],
+      "error": null,
+      "deployments": [],
+      "pagination": {
+        "count": 0
+      }
+    },
+    "playableEnv": {
+      "label": "playableEnv",
+      "keys": [
+        "envs",
+        "hiddenProductionEnvCount"
+      ],
+      "variables": [],
+      "decryptRequested": false,
+      "secretValuesRequested": false
+    },
+    "customEnvironments": {
+      "label": "customEnvironments",
+      "keys": [
+        "accountLimit",
+        "environments"
+      ],
+      "error": null,
+      "metadata": []
+    },
+    "recentSessions": {
+      "label": "sessions",
+      "keys": [
+        "sessions",
+        "pagination"
+      ],
+      "error": null,
+      "metadata": [
+        {
+          "id": "sbx_bIEVPEjoTgXthjaufhnO7wod0iYB",
+          "status": "stopped",
+          "createdAt": 1793230274940,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_KhhUcftm7REYNvOxLT2EJrAMig89",
+          "status": "stopped",
+          "createdAt": 1793226867865,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_DPETGrLu13nyqE1GzIxUktQVOJz6",
+          "status": "stopped",
+          "createdAt": 1793225658041,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_d4bYEeMQr3X2m24x96q0GCZRRzVI",
+          "status": "stopped",
+          "createdAt": 1793224496854,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_5DffhmbeluwLaT35bRvXdKBlJZly",
+          "status": "stopped",
+          "createdAt": 1793191376307,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_Vd2OBoRpiSRtyooekDArKN5m5jVQ",
+          "status": "stopped",
+          "createdAt": 1793187364256,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_h2UhP8wdsArcCfD8lhIHpkXW4YEz",
+          "status": "stopped",
+          "createdAt": 1793171261279,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_wDb6lAG7W6rRZ56q51mSrQ91e0qP",
+          "status": "stopped",
+          "createdAt": 1793166943353,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_8pzLJGY8v4TDUANybMRiHvWm1Fr8",
+          "status": "stopped",
+          "createdAt": 1793165124825,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_34RcCPAQuCxGLgzePlNZwSnK0ClF",
+          "status": "stopped",
+          "createdAt": 1793162737394,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_u7y2Qn9KHjW1k8DHoZQIlTcEpR1i",
+          "status": "stopped",
+          "createdAt": 1793162587523,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_ysS24rKxUZn9CRI6UawBoy3Mqxx7",
+          "status": "stopped",
+          "createdAt": 1793162338663,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_XrxsfUqA7klNX86Pn0L9cwLmWQOt",
+          "status": "stopped",
+          "createdAt": 1793162304536,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_bbZ8obnX3SvMSOJeIvgJlamtKqcL",
+          "status": "stopped",
+          "createdAt": 1793161485518,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_Iu0Y1LQ67i830S8yMkqryvNqrqks",
+          "status": "stopped",
+          "createdAt": 1793159532125,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_2O36Rm799rhu4XWIVNZlsgbAyAKd",
+          "status": "stopped",
+          "createdAt": 1793159313600,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_4TSvsgoMPwazRxDFEdjIpTEcNFUQ",
+          "status": "stopped",
+          "createdAt": 1793158120442,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_bBV51r4jfrobawcldpVmnCzZI8Re",
+          "status": "stopped",
+          "createdAt": 1793157780842,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_Cui5Mnc2KRN0Dw4tYwhXNLbNBaYt",
+          "status": "stopped",
+          "createdAt": 1793156860777,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        },
+        {
+          "id": "sbx_mPOYMo7uFThD5WfP4bW4QC258cTZ",
+          "status": "stopped",
+          "createdAt": 1793156607627,
+          "projectId": "prj_AG2RGkfuiwmXUObT8Mjc8pcG6Lx0"
+        }
+      ]
+    },
+    "recentSessionsLimit": 20,
+    "relevantVariableMetadata": [
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/guided-playable-commerce-v1-20261028"
+      },
+      {
+        "key": "CULQI_ENABLED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/guided-playable-commerce-v1-20261028"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/category-pack-size-flow-20261027"
+      },
+      {
+        "key": "CULQI_ENABLED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/category-pack-size-flow-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/visita-isolated-packs-config-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/packs-config-v1-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/packs-size-choice-v1-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/visit-menu-reference-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/photo-visit-packs-step2-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/photo-visit-step1-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/bagelito-spatial-v3-20261027"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "feat/immersive-shop-visit-20261026"
+      },
+      {
+        "key": "BAGELITO_MERCHANT_REVIEW_ONLY",
+        "type": "plain",
+        "target": [
+          "production"
+        ]
+      },
+      {
+        "key": "NEXT_PUBLIC_SITE_URL",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "NEXT_PUBLIC_CULQI_PUBLIC_KEY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "NEXT_PUBLIC_CULQI_RSA_ID",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "NEXT_PUBLIC_SUPABASE_URL",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "CULQI_MODE",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "CULQI_ENABLED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "CULQI_LIVE_APPROVED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "CULQI_SECRET_KEY",
+        "type": "sensitive",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "SUPABASE_SERVICE_ROLE_KEY",
+        "type": "sensitive",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "codex/culqi-payment-split-20261021"
+      },
+      {
+        "key": "CULQI_STATUS_RECOVERY_APPROVED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012"
+      },
+      {
+        "key": "SUPABASE_SERVICE_ROLE_KEY",
+        "type": "sensitive",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012",
+        "customEnvironmentIds": []
+      },
+      {
+        "key": "CULQI_SECRET_KEY",
+        "type": "sensitive",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012",
+        "customEnvironmentIds": []
+      },
+      {
+        "key": "NEXT_PUBLIC_CULQI_PUBLIC_KEY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012",
+        "customEnvironmentIds": []
+      },
+      {
+        "key": "NEXT_PUBLIC_CULQI_RSA_ID",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012",
+        "customEnvironmentIds": []
+      },
+      {
+        "key": "NEXT_PUBLIC_CULQI_RSA_PUBLIC_KEY",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012",
+        "customEnvironmentIds": []
+      },
+      {
+        "key": "NEXT_PUBLIC_SITE_URL",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012"
+      },
+      {
+        "key": "NEXT_PUBLIC_SUPABASE_URL",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012"
+      },
+      {
+        "key": "CULQI_MODE",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012"
+      },
+      {
+        "key": "CULQI_LIVE_APPROVED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012"
+      },
+      {
+        "key": "CULQI_ENABLED",
+        "type": "plain",
+        "target": [
+          "preview"
+        ],
+        "gitBranch": "fix/culqi-payment-coordination-20261012"
+      },
+      {
+        "key": "NEXT_PUBLIC_SITE_URL",
+        "type": "sensitive",
+        "target": [
+          "production"
+        ]
+      },
+      {
+        "key": "SUPABASE_SERVICE_ROLE_KEY",
+        "type": "sensitive",
+        "target": [
+          "production"
+        ]
+      },
+      {
+        "key": "NEXT_PUBLIC_SUPABASE_URL",
+        "type": "sensitive",
+        "target": [
+          "production"
+        ]
+      }
+    ],
+    "valuesRequested": false,
+    "decryptRequested": false,
+    "historicalFinancialDeployments": {
+      "label": "legacyFinancialBranch",
+      "branch": "codex/culqi-payment-split-20261021",
+      "deployments": [
+        {
+          "id": "dpl_2SfYZqaUimyxnkf2cpfuJdpfS1wA",
+          "url": "bagelito-2hm42kpug-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+          "state": "READY",
+          "target": null,
+          "gitBranch": "codex/culqi-payment-split-20261021",
+          "gitSha": "085f3df93f9d6a2b0f92cbe8ebe8bfef475eefca"
+        },
+        {
+          "id": "dpl_ziMd8mmhs9QsS6NzusEFafz6YKG8",
+          "url": "bagelito-ojnwz9f31-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+          "state": "READY",
+          "target": null,
+          "gitBranch": "codex/culqi-payment-split-20261021",
+          "gitSha": "158d9c4bb49aeada6fe90b9c2673271a2cd3202f"
+        },
+        {
+          "id": "dpl_DwGd4X2ZiQ94Txegx3ouZC8t8Bj1",
+          "url": "bagelito-eyuwlmvje-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+          "state": "READY",
+          "target": null,
+          "gitBranch": "codex/culqi-payment-split-20261021",
+          "gitSha": "a362e3a17d7a2c4665785fb325e704fa778cdefb"
+        }
+      ]
+    },
+    "historicalCoordinationDeployments": {
+      "label": "legacyCoordinationBranch",
+      "branch": "fix/culqi-payment-coordination-20261012",
+      "deployments": [
+        {
+          "id": "dpl_CW95rCZiCcjMCEtuYvSKYs7YkmBe",
+          "url": "bagelito-4qbj086x8-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+          "state": "READY",
+          "target": null,
+          "gitBranch": "fix/culqi-payment-coordination-20261012",
+          "gitSha": "aba57373376245f6be071ec8b168f25e0bed06f1"
+        },
+        {
+          "id": "dpl_9RoAm1RKYe364jSV1iGbrwQf4MZS",
+          "url": "bagelito-n7azs33aq-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+          "state": "READY",
+          "target": null,
+          "gitBranch": "fix/culqi-payment-coordination-20261012",
+          "gitSha": "d45c71cf9e242469c7171debdb756c1c527b63b9"
+        },
+        {
+          "id": "dpl_632Pwm4d811Vy8Tkt51iaLw12Gxs",
+          "url": "bagelito-ns4d8v70t-ricardo-rodriguezs-projects-487b7b64.vercel.app",
+          "state": "READY",
+          "target": null,
+          "gitBranch": "fix/culqi-payment-coordination-20261012",
+          "gitSha": "d1d539670d720df5f467e8c4f31a17d345bce3a4"
+        }
+      ]
+    },
+    "legacyHttpProbe": {
+      "method": "GET",
+      "path": "/api/payments/culqi/config",
+      "result": "Node fetch failed EAI_AGAIN before an HTTP response; no runtime mode established; no alternate access route used."
+    }
+  },
+  "supabase": {
+    "projectId": "enqpahoanbthnkrxfnxf",
+    "projectName": "bagelito-pe",
+    "state": "ACTIVE_HEALTHY",
+    "branches": {
+      "label": "databaseBranches",
+      "keys": [
+        "branches"
+      ],
+      "branches": []
+    },
+    "sqlExecuted": false,
+    "keysRequested": false,
+    "customerRowsRead": false
+  },
+  "environment": {
+    "observationsCurrent": true,
+    "networkPolicy": {
+      "mode": "restricted",
+      "state": "enforced",
+      "vercelAndCulqiDestinationsAllowed": false
+    },
+    "capabilities": [],
+    "secretBindings": [],
+    "runtimeVariables": []
+  },
+  "conclusion": "No existing accessible sandbox running the current PR47 candidate with verified test merchant mode and isolated test data was established. Legacy names and READY deployments do not prove sandbox configuration. No provider transactions attempted."
+}

@@ -277,10 +277,10 @@ export function CulqiBrowserCheckout(props: {
     return () => aliveRef.current && version === operationVersionRef.current
   }, [])
 
-  const review = useCallback((text: string) => {
+  const review = useCallback((text: string, preserveStoredReference = false) => {
     awaiting3DSRef.current = false
     const session = sessionRef.current
-    if (session) setRecovery(session, 'review')
+    if (session && !preserveStoredReference) setRecovery(session, 'review')
     busyRef.current = true
     setStatus('review')
     setMessage(text)
@@ -377,7 +377,17 @@ export function CulqiBrowserCheckout(props: {
         onPaid({ orderCode: receipt.orderCode, amountPen: receipt.amountMinor / 100, receipt })
         return
       }
-      if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+      if (result.paymentStatus === 'failed') {
+        // A failed attempt does not release the reservation immediately or
+        // rule out a later provider observation. Leave the persisted capability
+        // untouched: another tab may have replaced or resolved it meanwhile.
+        clearReservationTimer()
+        reservationExpiresAtRef.current = null
+        tokenRef.current = null
+        review('El intento del pedido ' + session.orderCode + ' figura como fallido. Conservamos la referencia; verifica su estado con Bagelito antes de volver a pagar. El cupo no se libera de inmediato.', true)
+        return
+      }
+      if (result.paymentStatus === 'expired') {
         clearReservationTimer()
         clearRecovery(session)
         busyRef.current = false
@@ -505,7 +515,19 @@ export function CulqiBrowserCheckout(props: {
         })
         return
       }
-      if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+      if (result.paymentStatus === 'failed') {
+        clearReservationTimer()
+        reservationExpiresAtRef.current = null
+        awaiting3DSRef.current = false
+        tokenRef.current = null
+        // Recovery was already persisted before this lookup; never overwrite
+        // a newer reference from another tab with this older observation.
+        busyRef.current = true
+        setStatus('review')
+        setMessage('El intento del pedido ' + recovered.orderCode + ' figura como fallido. Conservamos la referencia; verifica su estado con Bagelito antes de volver a pagar. El cupo no se libera de inmediato.')
+        return
+      }
+      if (result.paymentStatus === 'expired') {
         clearReservationTimer()
         clearRecovery(recovered)
         busyRef.current = false

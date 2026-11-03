@@ -13,6 +13,8 @@ const props=()=>({config:{enabled:true,configured:true,intakeEnabled:true,bridge
 // This is not browser/SDK integration or React concurrent-render certification.
 function harness({recovery=false,scriptsReady=true}={}) {
  const calls=[],paid=[],reviews=[],widgets=[],timers=new Map(),storage=new Map(),listeners=new Map(),slots=[]
+ let clockOffset=0
+ class Clock extends Date {static now(){return Date.now()+clockOffset}}
  let cursor=0,dirty=false,mounted=true,tree,pendingEffects=[],timerId=0,opened=0
  if(recovery)storage.set(recoveryKey,JSON.stringify({checkoutSessionId:sessionId,orderCode:'BAG-ORIGINAL',state:'pending'}))
  const equal=(a,b)=>a&&b&&a.length===b.length&&a.every((x,i)=>Object.is(x,b[i]))
@@ -47,7 +49,7 @@ function harness({recovery=false,scriptsReady=true}={}) {
  function load(file){if(cache.has(file))return cache.get(file);if(file.endsWith('.json'))return JSON.parse(fs.readFileSync(file,'utf8'))
   const module={exports:{}};cache.set(file,module.exports)
   const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText
-  vm.runInNewContext(code,{module,exports:module.exports,window:fakeWindow,document:fakeDocument,fetch,AbortController,Date,URL,Promise,console,
+  vm.runInNewContext(code,{module,exports:module.exports,window:fakeWindow,document:fakeDocument,fetch,AbortController,Date:Clock,URL,Promise,console,
    crypto:{randomUUID:()=>sessionId},require(id){if(id==='react')return hooks;if(id==='react/jsx-runtime')return jsx
     if(!id.startsWith('.'))throw Error('Unexpected external import '+id)
     const target=path.resolve(path.dirname(file),id);return load(target+(target.endsWith('.json')?'':fs.existsSync(target+'.ts')?'.ts':'.tsx'))}})
@@ -59,7 +61,10 @@ function harness({recovery=false,scriptsReady=true}={}) {
  function elements(node,found=[]){if(!node||typeof node!=='object')return found;if(Array.isArray(node)){node.forEach(x=>elements(x,found));return found}if(node.type)found.push(node);elements(node.props?.children,found);return found}
  render()
  return{calls,paid,reviews,storage,widgets,scripts,inserted,window:fakeWindow,timers,get opened(){return opened},
+  get startDisabled(){if(dirty&&mounted)render();return elements(tree).find(x=>x.type==='button'&&x.props.className==='culqi-start-button')?.props.disabled},
+  get text(){if(dirty&&mounted)render();const read=node=>Array.isArray(node)?node.map(read).join(' '):node&&typeof node==='object'?read(node.props?.children):typeof node==='string'||typeof node==='number'?String(node):'';return read(tree)},
   async settle(){for(let i=0;i<24;i++){await Promise.resolve();if(dirty&&mounted)render()}},
+  advanceClock(ms){clockOffset+=ms},
   click(kind='start',times=1){if(dirty)render();const button=elements(tree).find(x=>x.type==='button'&&x.props.className===(kind==='start'?'culqi-start-button':'culqi-recovery-button'));assert.ok(button,'actual '+kind+' button exists');const handler=button.props.onClick;for(let i=0;i<times;i++)handler()},
   dispatch(type,event){for(const fn of [...(listeners.get(type)??[])])fn(event)},
   rerender(patch){current={...current,...patch};render()},
@@ -174,6 +179,109 @@ async function openWidget(h){
  h.calls[1].resolve(response({ok:true,sessionId,amount:5800,expiresAt:reserved.expiresAt}));await h.settle();assert.equal(h.opened,1)
  return h.widgets[0]
 }
+const failedStatus=()=>({...paidStatus(),paymentStatus:'failed',orderStatus:'needs_correction'})
+const expiredStatus=()=>({...paidStatus(),paymentStatus:'expired',orderStatus:'cancelled'})
+function assertOriginalRecovery(h){
+ const saved=h.storage.get(recoveryKey)
+ assert.ok(saved,'a failed observation must retain the capability needed to reconcile a later result')
+ const reference=JSON.parse(saved)
+ assert.equal(reference.checkoutSessionId,sessionId);assert.equal(reference.orderCode,'BAG-ORIGINAL')
+ assert.equal(h.startDisabled,true,'a failed observation must not offer a fresh payment')
+ assert.doesNotMatch(h.text,/Puedes iniciar un nuevo checkout/)
+ assert.equal(h.paid.length,0)
+}
+async function observeAfterSyntheticToken(h,status){
+ const widget=await openWidget(h);widget.token={id:'tkn_fixture'};widget.culqi();await h.settle()
+ assert.equal(h.calls[2].url,'/api/payments/culqi/charge')
+ h.calls[2].resolve(response({ok:true,paymentStatus:'awaiting_webhook'}));await h.settle()
+ assert.equal(h.calls[3].url,'/api/payments/culqi/status')
+ h.calls[3].resolve(response(status));await h.settle();return widget
+}
+test('failed in-flight observation retains recovery, blocks new payment and can reconcile later paid',async()=>{
+ const h=harness()
+ try {
+  const widget=await observeAfterSyntheticToken(h,failedStatus());assertOriginalRecovery(h)
+  // Exercise even programmatic repeat clicks and retired widget callbacks.
+  h.click('start',2);widget.culqi();widget.culqi();await h.settle()
+  assert.equal(h.calls.length,4,'failed payment cannot create a new reservation or charge')
+  h.click('recovery',2);await h.settle()
+  assert.equal(h.calls.length,5,'status recovery is coalesced while one lookup is pending')
+  assert.equal(h.calls[4].url,'/api/payments/culqi/status')
+  assert.deepEqual(h.calls[4].body,{checkoutSessionId:sessionId,orderCode:'BAG-ORIGINAL'})
+  h.calls[4].resolve(response(paidStatus()));await h.settle()
+  assert.equal(h.paid.length,1);assert.equal(h.paid[0].orderCode,'BAG-ORIGINAL')
+  assert.equal(h.storage.has(recoveryKey),false,'matching paid result can settle and clear the original reference')
+  assert.equal(h.calls.filter(call=>call.url==='/api/checkout/session').length,1)
+  assert.equal(h.calls.filter(call=>call.url==='/api/payments/culqi/charge').length,1)
+ } finally {h.unmount()}
+})
+test('failed recovered observation retains identity through repeated lookups until matching paid',async()=>{
+ const h=harness({recovery:true})
+ try {
+  h.click();await h.settle();h.calls[0].resolve(response(failedStatus()));await h.settle();assertOriginalRecovery(h)
+  h.click('start',2);await h.settle();assert.equal(h.calls.length,1,'a retained failed reference blocks fresh intake')
+  h.click('recovery',2);await h.settle();assert.equal(h.calls.length,2)
+  assert.deepEqual(h.calls[1].body,{checkoutSessionId:sessionId,orderCode:'BAG-ORIGINAL'})
+  h.calls[1].resolve(response(failedStatus()));await h.settle();assertOriginalRecovery(h)
+  h.click('recovery');await h.settle();assert.equal(h.calls.length,3)
+  h.calls[2].resolve(response(paidStatus()));await h.settle()
+  assert.equal(h.paid.length,1);assert.equal(h.paid[0].orderCode,'BAG-ORIGINAL')
+  assert.equal(h.storage.has(recoveryKey),false)
+  assert.ok(h.calls.every(call=>call.url==='/api/payments/culqi/status'),'recovery must never turn into reservation or charge')
+  assert.equal(h.opened,0);assert.equal(h.inserted.length,0)
+ } finally {h.unmount()}
+})
+for(const mode of ['in-flight','recovered'])test('failed '+mode+' observation cannot overwrite a newer recovery reference from another tab',async()=>{
+ const h=harness({recovery:mode==='recovered'})
+ try {
+  if(mode==='recovered'){h.click();await h.settle()}
+  else {
+   const widget=await openWidget(h);widget.token={id:'tkn_fixture'};widget.culqi();await h.settle()
+   h.calls[2].resolve(response({ok:true,paymentStatus:'awaiting_webhook'}));await h.settle()
+  }
+  const lookup=h.calls.at(-1)
+  assert.equal(lookup.url,'/api/payments/culqi/status')
+  assert.deepEqual(lookup.body,{checkoutSessionId:sessionId,orderCode:'BAG-ORIGINAL'})
+  const newer={checkoutSessionId:'22222222-2222-4222-8222-222222222222',orderCode:'BAG-NEWER',state:'pending'}
+  // Another tab stores B after this tab submitted its observation of A.
+  h.storage.set(recoveryKey,JSON.stringify(newer))
+  lookup.resolve(response(failedStatus()));await h.settle()
+  assert.deepEqual(JSON.parse(h.storage.get(recoveryKey)),newer,'a failed observation of A must preserve the newer capability B')
+  assert.equal(h.startDisabled,true);assert.equal(h.paid.length,0)
+  const before=h.calls.length;h.click('start',2);await h.settle()
+  assert.equal(h.calls.length,before,'the failed observation must still block a new payment')
+  h.click('recovery');await h.settle()
+  assert.equal(h.calls.length,before+1)
+  assert.equal(h.calls[before].url,'/api/payments/culqi/status')
+  assert.deepEqual(h.calls[before].body,{checkoutSessionId:newer.checkoutSessionId,orderCode:newer.orderCode})
+ } finally {h.unmount()}
+})
+for(const mode of ['replaced','removed'])test('failed observation retires local expiry clock without changing '+mode+' recovery reference',async()=>{
+ const h=harness()
+ try {
+  const widget=await observeAfterSyntheticToken(h,failedStatus())
+  const newer={checkoutSessionId:'22222222-2222-4222-8222-222222222222',orderCode:'BAG-NEWER',state:'pending'}
+  if(mode==='replaced')h.storage.set(recoveryKey,JSON.stringify(newer))
+  else h.storage.delete(recoveryKey)
+  const saved=h.storage.get(recoveryKey)
+  h.advanceClock(16*60_000);h.dispatch('focus');await h.settle()
+  assert.equal(h.storage.get(recoveryKey),saved,'foreground after the old deadline must not replace or resurrect a recovery capability')
+  assert.equal(h.startDisabled,true);assert.equal(h.paid.length,0)
+  const before=h.calls.length
+  h.click('start',2);widget.culqi();widget.culqi();await h.settle()
+  assert.equal(h.calls.length,before,'retiring a failed reservation clock must not allow another payment')
+ } finally {h.unmount()}
+})
+for(const mode of ['in-flight','recovered'])test('bound expired '+mode+' observation keeps existing fresh-checkout behavior',async()=>{
+ const h=harness({recovery:mode==='recovered'})
+ try {
+  if(mode==='recovered'){h.click();await h.settle();h.calls[0].resolve(response(expiredStatus()));await h.settle()}
+  else await observeAfterSyntheticToken(h,expiredStatus())
+  assert.equal(h.storage.has(recoveryKey),false);assert.equal(h.startDisabled,false);assert.equal(h.paid.length,0)
+  const before=h.calls.length;h.click();await h.settle()
+  assert.equal(h.calls.length,before+1);assert.equal(h.calls[before].url,'/api/checkout/session')
+ } finally {h.unmount()}
+})
 test('late widget token callback after unmount cannot submit a charge',async()=>{
  const h=harness(),widget=await openWidget(h);widget.token={id:'tkn_fixture'};h.unmount();widget.culqi();await h.settle()
  assert.equal(h.calls.length,2);assert.equal(h.paid.length,0)

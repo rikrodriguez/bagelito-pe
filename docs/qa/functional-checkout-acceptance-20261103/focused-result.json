@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "tests/culqi-ui-lifecycle.test.cjs",
+    "tests/payment-status-receipt.test.cjs",
+    "tests/payment-config.test.cjs",
+    "tests/guided-product-payment-gate.test.cjs"
+  ],
+  "exitCode": 0,
+  "elapsedMs": 8232
+}
