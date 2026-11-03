@@ -1,0 +1,70 @@
+{
+  "baseRemoteHead": "ab0565e4a8209d04b0a241f9203e6249c718da9e",
+  "baseLocalHead": "401a2d54827c1609a7954a3959fa60f29b96469f",
+  "changedExistingFiles": {
+    "src/routes/api/payments/culqi/order.ts": "a40d6f8df3652ae067e0ea646e30a357347c886af742a53505a03341386198f6",
+    "src/routes/api/payments/culqi/charge.ts": "b5849dba8b15b17bea82a2d564916eede3ff581c4e905f2fe2ed52bf0a48e39f",
+    "tests/guided-product-payment-gate.test.cjs": "e883d7e744e3b656578778a7a081a53c3e85530040cdd80ed9e429d71862f147"
+  },
+  "partialMitigationOnly": true,
+  "atomicFinancialRaceResolved": false,
+  "failedReservationCapacityRecoveryResolved": false,
+  "before": {
+    "cases": 26,
+    "failed": 12,
+    "description": "Actual HTTP handlers with mocked database/provider; not real charges"
+  },
+  "focused": {
+    "passed": 26,
+    "newCases": 14,
+    "includedInNodeTotal": true
+  },
+  "node": {
+    "passed": 352,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "typescript": "PASS",
+    "structuralPassed": 11,
+    "manualFallbackPassed": 4,
+    "movementPassed": 14,
+    "repeatedSubsetsNotAdded": true
+  },
+  "independentReview": {
+    "focusedPassed": 26,
+    "exitCode": 0,
+    "blockingRegressionsFound": false,
+    "scope": "HTTP admission and faithful partial-risk documentation"
+  },
+  "sqlThisRound": "BLOCKED locally before fixture initialization; no SQL or concurrency PASS claimed",
+  "providerRequests": 0,
+  "charges": 0,
+  "externalDatabaseMutations": 0,
+  "sqlChanges": 0,
+  "remoteCi": "No workflow added; verify exact published head separately",
+  "unchanged": [
+    "coordinator",
+    "provider",
+    "webhook",
+    "SQL",
+    "catalog/prices",
+    "UI",
+    "SDK",
+    "deployment config",
+    "enablement gates"
+  ],
+  "hdrFixtureSha256": "a02c9615adeba91a753c3e4737c3ce7a719273df822eeaa85d24982bd43c9ecb",
+  "artifactSha256": {
+    "README.md": "f2acc1202a7b2605cfbfd78c71122f54da81d22b049a9b7f209360485381cf34",
+    "before.log": "fe4b850531acfcb278e24c66176cdf445f52d6c6c0f95c4a411249ea406dced5",
+    "build-result.json": "ce59b9a3d1cfef9324f18513de5f36f297c0b96d45bdc41554bab3d22363769e",
+    "build.log": "31681f0c24e75d2b3e745e1ccf18380afaf651969a0edbf7979051a63b707576",
+    "focused.log": "a6ee4d28280dcbffa755833c8edf4ea1f916df0e3fb5fc59016d1dbd1ac8c5fe",
+    "node-full-result.json": "9695d11c7240899f35b54ad46e85443221060e38f4a2e7b42dbfb764216af125",
+    "node-full.log": "3a4a9f85a5575a993e46c0550ab794552b780b5faa5ab179017d19fde4949ab6"
+  }
+}

@@ -20,6 +20,7 @@ function setup(options = {}) {
       pack_slug: options.slug ?? 'guided-v1:6-single', status: 'payment_pending_review', payment_status: 'pending',
       payment_provider: 'culqi', payment_lane: 'token', payment_order_id: null,
       payment_expires_at: new Date(Date.now() + 600000).toISOString(),
+      ...options.order,
     }}},
   }}, async rpc(name) {effects.rpc.push(name); return {data: {sessionId: 'synthetic-session', amount: 7000}, error: null}}}
   class PublicApiError extends Error {constructor(message, status = 400) {super(message); this.status = status}}
@@ -120,5 +121,25 @@ for (const route of ['order', 'charge']) {
       CULQI_MODE: 'live', CULQI_LIVE_APPROVED: 'true', CULQI_PUBLIC_KEY: 'pk_live_fixture', CULQI_SECRET_KEY: 'sk_live_fixture'}})
     assert.equal((await f.call(route)).status, 200)
     assert.equal(route === 'order' ? f.effects.rpc.length : f.effects.coordinate, 1)
+  })
+}
+
+for (const route of ['order','charge']) {
+  for(const paymentStatus of ['failed','expired','refunded','unexpected',null,undefined]) {
+    test(`${route}: ${String(paymentStatus)} payment state cannot prepare or submit another charge`,async()=>{
+      const f=setup({order:{payment_status:paymentStatus,status:'needs_correction'}})
+      const response=await f.call(route)
+      assert.equal(response.status,409)
+      assert.equal((await response.json()).ok,false)
+      assert.equal(f.effects.rpc.length,0,'terminal or missing state cannot prepare an attempt')
+      assert.equal(f.effects.coordinate,0,'terminal or missing state cannot claim an attempt')
+      assert.equal(f.effects.provider,0,'no provider call after an unconfirmed prior attempt')
+    })
+  }
+  test(`${route}: already paid state never creates a new attempt`,async()=>{
+    const f=setup({order:{payment_status:'paid',status:'payment_confirmed'}}),response=await f.call(route)
+    assert.equal(response.status,route==='charge'?200:409)
+    assert.equal(f.effects.rpc.length,0);assert.equal(f.effects.coordinate,0);assert.equal(f.effects.provider,0)
+    if(route==='charge')assert.equal((await response.json()).paymentStatus,'paid')
   })
 }

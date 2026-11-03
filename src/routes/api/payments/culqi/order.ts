@@ -50,6 +50,11 @@ export const Route = createFileRoute('/api/payments/culqi/order')({
           if (!isPersistedProductPaymentRequestAllowed(request, order.pack_slug)) {
             throw new PublicApiError('This product checkout is not enabled for this environment.', 503)
           }
+          // A terminal result does not reset the order/attempt to pending.
+          // Admission guard only: the core claim still needs an atomic state gate.
+          if (order.payment_status !== 'pending') {
+            throw new PublicApiError('This reservation cannot start another payment attempt. Check its payment status.', 409)
+          }
           if (order.status === 'cancelled' || order.status === 'delivered'
             || order.payment_provider !== 'culqi'
             || order.payment_lane !== 'token'
