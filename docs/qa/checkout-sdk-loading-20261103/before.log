@@ -1,0 +1,132 @@
+✔ unmount during reservation prevents preparation and opening abandoned Culqi widget (161.833113ms)
+✔ changed order invalidates pending reservation instead of continuing with old details (64.741286ms)
+✔ changed customer invalidates pending reservation instead of continuing with old details (47.887691ms)
+✔ late recovered paid response after unmount never calls parent confirmation (43.774077ms)
+✔ double-click payment recovery coalesces one pending status request (53.89827ms)
+✔ recovery refuses confirmation for different order code (40.056745ms)
+✔ recovery refuses confirmation for invalid amount (42.760821ms)
+✔ recovery refuses confirmation for contradictory transport status (34.542122ms)
+✔ recovery refuses confirmation for contradictory order state (34.878704ms)
+✔ recovery refuses confirmation for reconciliation flagged (35.074008ms)
+✔ recovery refuses confirmation for malformed supplied snapshot (29.863682ms)
+✔ valid recovered payment without product snapshot explicitly omits editable cart details (29.480567ms)
+✔ unmount during payment preparation prevents late widget opening (43.709279ms)
+✔ equal-content rerender does not invalidate an otherwise current reservation (27.075756ms)
+✔ valid recovered snapshot supplies historical items instead of the new editable cart (26.85344ms)
+✔ changed order rejects old pending reservation but permits a fresh checkout attempt (35.382933ms)
+✔ context change during recovery retains payment reference and never creates another reservation (26.874243ms)
+✔ invalid reservation different session identity never proceeds to payment preparation (25.76979ms)
+✔ invalid reservation missing session identity never proceeds to payment preparation (37.286189ms)
+✔ invalid reservation invalid order code never proceeds to payment preparation (54.949673ms)
+✔ invalid reservation negative amount never proceeds to payment preparation (37.05445ms)
+✔ invalid reservation fractional minor amount never proceeds to payment preparation (46.773588ms)
+✔ invalid reservation missing expiry never proceeds to payment preparation (74.911748ms)
+✔ invalid reservation expired reservation never proceeds to payment preparation (74.955304ms)
+✔ invalid payment preparation malformed payment attempt UUID never opens widget (43.594337ms)
+✔ invalid payment preparation mismatched amount never opens widget (42.037443ms)
+✔ invalid payment preparation extended expiry never opens widget (40.342451ms)
+✔ invalid payment preparation shortened expiry never opens widget (50.788027ms)
+✔ invalid payment preparation missing expiry never opens widget (37.947214ms)
+✔ late widget token callback after unmount cannot submit a charge (36.654518ms)
+✔ unmount while token device generation waits prevents charge submission (36.143568ms)
+✔ late charge response after unmount cannot initiate payment status polling (37.667984ms)
+✔ late paid poll after unmount cannot confirm checkout (35.452673ms)
+✔ live token and matching paid status still confirm the reserved amount (38.132953ms)
+✔ duplicate live widget callbacks submit only one token charge (31.287527ms)
+✔ paid poll with another amount cannot confirm a known reservation (34.737551ms)
+✔ poll delay waking after unmount cannot send a further status request (36.131821ms)
+✔ 3DS message before challenge cannot submit a payment continuation (35.902475ms)
+✔ duplicate 3DS messages consume one challenge and submit one continuation (35.534311ms)
+✔ closed 3DS challenge ignores a late authentication message (44.46022ms)
+✔ 3DS failure consumes challenge before a later success message (30.557453ms)
+✔ foreign and unrelated messages do not consume a valid 3DS challenge (31.025342ms)
+✔ late 3DS message after context change cannot resume the abandoned payment (37.33712ms)
+✔ programmatic 3DS reset after consumed success does not downgrade payment confirmation (34.86304ms)
+✔ expiry disarms 3DS before SDK reset can synchronously deliver a message (34.491071ms)
+✔ late 3DS-required response after reservation expiry never opens a challenge (51.471316ms)
+✔ late non-3DS charge response after expiry still observes the submitted payment (27.540004ms)
+✖ failed SDK load can be retried without reinserting the successful sibling (22.672305ms)
+✖ hung SDK wait is bounded and manual retry never duplicates an uncertain script (24.825347ms)
+✖ retry after one SDK error shares its still-loading sibling (22.075127ms)
+✔ successful SDK load clears loader listeners and deadlines (22.890034ms)
+✔ unmount during SDK load never reserves or opens a late widget (24.282169ms)
+✖ preexisting SDK element with unexpected source fails closed (21.939572ms)
+✔ duplicate clicks during script loading create one pair and one reservation (24.108519ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 50
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2454.896301
+
+✖ failing tests:
+
+test at tests/culqi-ui-lifecycle.test.cjs:297:1
+✖ failed SDK load can be retried without reinserting the successful sibling (22.672305ms)
+  AssertionError [ERR_ASSERTION]: manual retry replaces only the terminally failed script
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-checkout-sdk-20261103/tests/culqi-ui-lifecycle.test.cjs:301:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:304:1
+✖ hung SDK wait is bounded and manual retry never duplicates an uncertain script (24.825347ms)
+  AssertionError [ERR_ASSERTION]: both SDK waits need a finite deadline
+  
+  0 !== 2
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-checkout-sdk-20261103/tests/culqi-ui-lifecycle.test.cjs:306:72)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:312:1
+✖ retry after one SDK error shares its still-loading sibling (22.075127ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-checkout-sdk-20261103/tests/culqi-ui-lifecycle.test.cjs:314:36)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:327:1
+✖ preexisting SDK element with unexpected source fails closed (21.939572ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-checkout-sdk-20261103/tests/culqi-ui-lifecycle.test.cjs:329:36)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

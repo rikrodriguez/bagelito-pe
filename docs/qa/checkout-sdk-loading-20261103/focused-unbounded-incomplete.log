@@ -1,0 +1,15 @@
+✖ tests/culqi-ui-lifecycle.test.cjs (1416.876862ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1424.461114
+
+✖ failing tests:
+
+test at tests/culqi-ui-lifecycle.test.cjs:1:1
+✖ tests/culqi-ui-lifecycle.test.cjs (1416.876862ms)
+  'test failed'

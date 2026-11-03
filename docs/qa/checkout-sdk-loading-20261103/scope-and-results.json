@@ -1,0 +1,50 @@
+{
+  "base_remote_commit": "0b876a1d7533e36313c2f9749bc53d28e9b4e231",
+  "base_local_commit": "cba01ad74bde50c9b50abd4705f67a8cfe7c2372",
+  "base_tree": "7cc3dc9a3d4aa08b8ddfa87e0a8b136545eee1e4",
+  "code_only_tree": "5a8ac364a35df6e13fbe5227e831d5c76c474f05",
+  "existing_changed_paths": [
+    "src/playable/CulqiBrowserCheckout.tsx",
+    "tests/culqi-ui-lifecycle.test.cjs"
+  ],
+  "all_other_tracked_files_unchanged": true,
+  "source_sha256": {
+    "src/playable/CulqiBrowserCheckout.tsx": "cafa229bc7dbe0f49484ea5ec62c108746a5347a4d6a3f675a2fdbb0ae15934e",
+    "tests/culqi-ui-lifecycle.test.cjs": "dd24a9e9b7531df0bb05ec0845cdbc5ac7a9be92e8a90450c94921b0e52d4048"
+  },
+  "node": {
+    "tests": 338,
+    "pass": 338,
+    "fail": 0,
+    "skipped": 0,
+    "new_cases": 9,
+    "lifecycle_subset": 56
+  },
+  "build": {
+    "aggregate": "PASS",
+    "typecheck": "PASS",
+    "returncode": 0,
+    "structural": 11,
+    "manual_fallback": 4,
+    "movement": 14,
+    "movement_in_node_count": true
+  },
+  "browser": {
+    "status": "blocked_before_cases",
+    "reason": "Chromium process_singleton_posix socket() Operation not permitted; SIGABRT",
+    "permission_expansion_or_bypass": false,
+    "provider_acceptance": false
+  },
+  "prices_changed": false,
+  "credentials_or_config_changed": false,
+  "autodeploy": false,
+  "sql": "unchanged; not rerun",
+  "runtime": "Node v24.22.1; npm 11.9.0; existing dependency tree reused, no install",
+  "independent_review": {
+    "lifecycle_pass": 56,
+    "blocking_findings": 0,
+    "additional_in_memory_probes": 3,
+    "additional_probes_added_to_total": false,
+    "browser_attempted": false
+  }
+}

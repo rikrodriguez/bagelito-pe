@@ -11,7 +11,7 @@ const props=()=>({config:{enabled:true,configured:true,intakeEnabled:true,bridge
 // In-process execution of the actual TSX and its imports. Hooks model state,
 // dependency changes and effect cleanup; JSX elements use React's real runtime.
 // This is not browser/SDK integration or React concurrent-render certification.
-function harness({recovery=false}={}) {
+function harness({recovery=false,scriptsReady=true}={}) {
  const calls=[],paid=[],reviews=[],widgets=[],timers=new Map(),storage=new Map(),listeners=new Map(),slots=[]
  let cursor=0,dirty=false,mounted=true,tree,pendingEffects=[],timerId=0,opened=0
  if(recovery)storage.set(recoveryKey,JSON.stringify({checkoutSessionId:sessionId,orderCode:'BAG-ORIGINAL',state:'pending'}))
@@ -30,8 +30,18 @@ function harness({recovery=false}={}) {
   setTimeout(fn,ms){const id=++timerId;timers.set(id,{fn,ms});return id},clearTimeout:id=>timers.delete(id),
   CulqiCheckout:class{constructor(){this.token=null;widgets.push(this)}open(){opened++}close(){}},
   Culqi3DS:{publicKey:'',settings:{},options:{},generateDevice:async()=> 'device_fixture',initAuthentication:async()=>{},reset(){}}}
- const fakeDocument={visibilityState:'visible',getElementById:()=>({dataset:{ready:'true'}}),addEventListener:add,removeEventListener:remove,
-  createElement(){throw Error('Unexpected real script creation')},body:{appendChild(){throw Error('Unexpected SDK loading')}}}
+ const scripts=new Map(),inserted=[]
+ const sdkSources={'culqi-custom-checkout':'https://js.culqi.com/checkout-js','culqi-3ds':'https://3ds.culqi.com/'}
+ function makeScript(){const handlers=new Map();return{tagName:'SCRIPT',dataset:{},src:'',id:'',defer:false,
+  addEventListener(type,fn){if(!handlers.has(type))handlers.set(type,new Set());handlers.get(type).add(fn)},
+  removeEventListener(type,fn){handlers.get(type)?.delete(fn)},
+  emit(type){this['on'+type]?.();for(const fn of [...(handlers.get(type)??[])])fn()},
+  remove(){if(scripts.get(this.id)===this)scripts.delete(this.id)},
+  listenerCount(){return [...handlers.values()].reduce((n,x)=>n+x.size,0)},
+ }}
+ if(scriptsReady)for(const [id,src]of Object.entries(sdkSources)){const script=makeScript();Object.assign(script,{id,src});script.dataset.ready='true';scripts.set(id,script)}
+ const fakeDocument={visibilityState:'visible',getElementById:id=>scripts.get(id)??null,addEventListener:add,removeEventListener:remove,
+  createElement(tag){assert.equal(tag,'script');return makeScript()},body:{appendChild(script){scripts.set(script.id,script);inserted.push(script)}}}
  const fetch=(url,init)=>{const d=deferred();calls.push({url,init,body:JSON.parse(init.body),...d});return d.promise}
  const cache=new Map()
  function load(file){if(cache.has(file))return cache.get(file);if(file.endsWith('.json'))return JSON.parse(fs.readFileSync(file,'utf8'))
@@ -48,7 +58,7 @@ function harness({recovery=false}={}) {
  function render(){if(!mounted)return;dirty=false;cursor=0;pendingEffects=[];tree=Component(current);for(const effect of pendingEffects)effect()}
  function elements(node,found=[]){if(!node||typeof node!=='object')return found;if(Array.isArray(node)){node.forEach(x=>elements(x,found));return found}if(node.type)found.push(node);elements(node.props?.children,found);return found}
  render()
- return{calls,paid,reviews,storage,widgets,window:fakeWindow,timers,get opened(){return opened},
+ return{calls,paid,reviews,storage,widgets,scripts,inserted,window:fakeWindow,timers,get opened(){return opened},
   async settle(){for(let i=0;i<24;i++){await Promise.resolve();if(dirty&&mounted)render()}},
   click(kind='start',times=1){if(dirty)render();const button=elements(tree).find(x=>x.type==='button'&&x.props.className===(kind==='start'?'culqi-start-button':'culqi-recovery-button'));assert.ok(button,'actual '+kind+' button exists');const handler=button.props.onClick;for(let i=0;i<times;i++)handler()},
   dispatch(type,event){for(const fn of [...(listeners.get(type)??[])])fn(event)},
@@ -282,4 +292,59 @@ test('late non-3DS charge response after expiry still observes the submitted pay
   assert.equal(h.calls.length,4);assert.equal(h.calls[3].url,'/api/payments/culqi/status')
   h.calls[3].resolve(response(paidStatus()));await h.settle();assert.equal(h.paid.length,1)
  } finally {Date.now=oldNow;h.unmount()}
+})
+
+test('failed SDK load can be retried without reinserting the successful sibling',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle();assert.equal(h.inserted.length,2)
+ const failed=h.scripts.get('culqi-custom-checkout');h.scripts.get('culqi-3ds').emit('load');failed.emit('error');await h.settle()
+ assert.equal(h.calls.length,0);assert.equal(h.opened,0);h.click();await h.settle()
+ assert.equal(h.inserted.length,3,'manual retry replaces only the terminally failed script')
+ failed.emit('load');await h.settle();assert.equal(h.calls.length,0,'retired script events cannot resolve a replacement')
+ h.scripts.get('culqi-custom-checkout').emit('load');await h.settle();assert.equal(h.calls.length,1);h.unmount()
+})
+test('hung SDK wait is bounded and manual retry never duplicates an uncertain script',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle()
+ const deadlines=[...h.timers.values()].filter(t=>t.ms===12000);assert.equal(deadlines.length,2,'both SDK waits need a finite deadline')
+ deadlines.forEach(t=>t.fn());await h.settle();assert.equal(h.calls.length,0);assert.equal(h.opened,0)
+ h.click();await h.settle();assert.equal(h.inserted.length,2,'timeout is not proof of script execution failure')
+ h.scripts.get('culqi-custom-checkout').emit('load');h.scripts.get('culqi-3ds').emit('load');await h.settle()
+ assert.equal(h.calls.length,1,'only the current operation can reserve');h.unmount()
+})
+test('retry after one SDK error shares its still-loading sibling',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle();h.scripts.get('culqi-custom-checkout').emit('error');await h.settle()
+ h.click();await h.settle();assert.equal(h.inserted.length,3)
+ h.scripts.get('culqi-custom-checkout').emit('load');h.scripts.get('culqi-3ds').emit('load');await h.settle();assert.equal(h.calls.length,1);h.unmount()
+})
+test('successful SDK load clears loader listeners and deadlines',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle()
+ for(const script of h.scripts.values())script.emit('load');await h.settle()
+ assert.equal(h.calls.length,1);assert.equal([...h.timers.values()].filter(t=>t.ms===12000).length,0)
+ for(const script of h.scripts.values())assert.equal(script.listenerCount(),0);h.unmount()
+})
+test('unmount during SDK load never reserves or opens a late widget',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle();h.unmount()
+ for(const script of h.scripts.values())script.emit('load');await h.settle();assert.equal(h.calls.length,0);assert.equal(h.opened,0)
+})
+test('preexisting SDK element with unexpected source fails closed',async()=>{
+ const h=harness();h.scripts.get('culqi-custom-checkout').src='https://foreign.invalid/sdk.js'
+ h.click();await h.settle();assert.equal(h.calls.length,0);assert.equal(h.inserted.length,0);assert.equal(h.opened,0);h.unmount()
+})
+test('duplicate clicks during script loading create one pair and one reservation',async()=>{
+ const h=harness({scriptsReady:false});h.click('start',2);await h.settle();assert.equal(h.inserted.length,2)
+ for(const script of h.scripts.values())script.emit('load');await h.settle();assert.equal(h.calls.length,1);h.unmount()
+})
+
+test('changed checkout during SDK loading shares downloads but only reserves current details',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle()
+ h.rerender({order:{...props().order,bagels:{sesame:6}}});await h.settle();h.click();await h.settle()
+ assert.equal(h.inserted.length,2)
+ for(const script of h.scripts.values())script.emit('load');await h.settle()
+ assert.equal(h.calls.length,1);assert.equal(h.calls[0].body.bagels.sesame,6);h.unmount()
+})
+test('late terminal error after timeout permits a fresh manual attempt',async()=>{
+ const h=harness({scriptsReady:false});h.click();await h.settle()
+ const failed=h.scripts.get('culqi-custom-checkout');h.scripts.get('culqi-3ds').emit('load')
+ const deadline=[...h.timers.values()].find(t=>t.ms===12000);assert.ok(deadline);deadline.fn();await h.settle()
+ failed.emit('error');await h.settle();h.click();await h.settle();assert.equal(h.inserted.length,3)
+ h.scripts.get('culqi-custom-checkout').emit('load');await h.settle();assert.equal(h.calls.length,1);h.unmount()
 })

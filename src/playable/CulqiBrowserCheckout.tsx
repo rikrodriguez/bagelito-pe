@@ -122,26 +122,78 @@ function confirmBrowserPreparation(value: unknown, reservation: ReservedCheckout
   return {...reservation, sessionId: r.sessionId}
 }
 
-function loadScript(id: string, src: string) {
-  return new Promise<void>((resolve, reject) => {
-    const existing = document.getElementById(id) as HTMLScriptElement | null
-    if (existing?.dataset.ready === 'true') return resolve()
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true })
-      existing.addEventListener('error', () => reject(new Error('script-load-failed')), { once: true })
-      return
+type ScriptLoadState = {
+  script: HTMLScriptElement
+  src: string
+  status: 'loading' | 'ready' | 'failed'
+  waiters: Set<(error?: Error) => void>
+}
+const scriptLoads = new Map<string, ScriptLoadState>()
+const SDK_LOAD_WAIT_MS = 12_000
+
+function loadScript(id: string, src: string): Promise<void> {
+  const expectedSrc = new URL(src).href
+  const existing = document.getElementById(id) as HTMLScriptElement | null
+  // A matching id alone is not evidence that the expected SDK was loaded.
+  if (existing && (existing.tagName !== 'SCRIPT' || existing.src !== expectedSrc)) {
+    return Promise.reject(new Error('No se pudo verificar la carga de Culqi. Recarga la página.'))
+  }
+  let state = scriptLoads.get(id)
+  if (state && (state.src !== expectedSrc || (state.status === 'loading' && state.script !== existing))) {
+    return Promise.reject(new Error('La carga de Culqi cambió. Recarga la página.'))
+  }
+  if (state?.status === 'ready' || existing?.dataset.ready === 'true') return Promise.resolve()
+
+  let append: (() => void) | undefined
+  if (!state) {
+    const script = existing ?? document.createElement('script')
+    if (!existing) {
+      script.id = id
+      script.src = expectedSrc
+      script.defer = true
     }
-    const script = document.createElement('script')
-    script.id = id
-    script.src = src
-    script.defer = true
-    script.onload = () => {
-      script.dataset.ready = 'true'
-      resolve()
+    const created: ScriptLoadState = {script, src: expectedSrc, status: 'loading', waiters: new Set()}
+    state = created
+    scriptLoads.set(id, created)
+    const settle = (error?: Error) => {
+      if (created.status !== 'loading') return
+      created.status = error ? 'failed' : 'ready'
+      script.removeEventListener('load', onLoad)
+      script.removeEventListener('error', onError)
+      if (error) {
+        // Only a terminal error permits replacement on a later, manual attempt.
+        // A timed-out script may still execute, so timeouts never remove/reinsert it.
+        if (document.getElementById(id) === script) script.remove()
+        if (scriptLoads.get(id) === created) scriptLoads.delete(id)
+      } else script.dataset.ready = 'true'
+      for (const waiter of [...created.waiters]) waiter(error)
     }
-    script.onerror = () => reject(new Error('script-load-failed'))
-    document.body.appendChild(script)
+    const onLoad = () => settle()
+    const onError = () => settle(new Error('No se pudo cargar Culqi. Revisa tu conexión e inténtalo otra vez.'))
+    script.addEventListener('load', onLoad)
+    script.addEventListener('error', onError)
+    if (!existing) append = () => {
+      try { document.body.appendChild(script) }
+      catch { onError() }
+    }
+  }
+
+  const current = state
+  const promise = new Promise<void>((resolve, reject) => {
+    let settled = false
+    const finish = (error?: Error) => {
+      if (settled) return
+      settled = true
+      window.clearTimeout(timer)
+      current.waiters.delete(finish)
+      if (error) reject(error)
+      else resolve()
+    }
+    const timer = window.setTimeout(() => finish(new Error('La carga de Culqi está tardando demasiado. Revisa tu conexión y vuelve a intentarlo.')), SDK_LOAD_WAIT_MS)
+    current.waiters.add(finish)
   })
+  append?.()
+  return promise
 }
 
 function readRecovery(): RecoveryReference | InvalidRecovery | null {
