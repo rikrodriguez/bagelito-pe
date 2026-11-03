@@ -292,6 +292,12 @@ async function generateShadowDraft(args: {
     "For orders, menus, flavors, prices, totals, address, payment, or delivery, use vertical scan-friendly formatting and separate visual blocks.",
     "Use emojis as visual anchors for sections or tone, not as decoration on every sentence.",
     "For flavors, menu, and how-to-order, never compress the whole answer into one paragraph.",
+    "Dawn usually speaks in first person singular: me avisas, te cuento, te confirmo, puedo mandarlo. Avoid support-bot phrasing like te guiamos con los siguientes pasos.",
+    "For flavors/menu/how-to-order, add visual breathing room after the greeting and between product, pack, delivery, and CTA blocks.",
+    "Never use the pipe character | to place multiple prices on one line. Put each pack and price on its own line.",
+    "For pack lists, prefer a vertical rhythm such as 🥯 6 mixtos — S/. 60 on its own line, then the next pack on the next line.",
+    "The second bubble in a sales flow should sound like Dawn: Para hacer tu pedido, solo necesito... followed by the missing order fields, then a short natural close such as Con eso te confirmo el total con delivery 😊.",
+    "Avoid generic assistant language such as siguientes pasos, podemos ayudarte, te guiamos, or formal customer-service wording when a natural Dawn-style phrase works.",
     "Use proposed_messages as the exact outbound Instagram bubbles, in order. Return 1 or 2 messages only.",
     "Use 1 message for simple direct replies, logistics, confirmations, and short explanations.",
     "For flavors/menu/how-to-order, prefer 2 messages when useful: message 1 = offer/catalog/prices/current delivery context; message 2 = exact information needed to order plus a concise CTA. Media follows after the text messages.",
@@ -807,12 +813,25 @@ Deno.serve(async (req: Request) => {
             const outboundTextMessages = Array.isArray(shadow.proposedMessages) && shadow.proposedMessages.length
               ? shadow.proposedMessages.slice(0, maxTextMessages)
               : [shadow.proposedReply].filter(Boolean).slice(0, maxTextMessages);
+            const commercialIntent =
+              shadow.intent === "flavors" ||
+              shadow.intent === "menu" ||
+              shadow.intent === "how_to_order";
+
+            const commercialLinesLookReadable =
+              !commercialIntent ||
+              outboundTextMessages.every((message: string) =>
+                !message.includes("|") &&
+                message.split("\n").every((line: string) => line.length <= 155)
+              );
+
             const replyLooksReadable =
               outboundTextMessages.length > 0 &&
               outboundTextMessages.every((message: string) =>
                 message.trim().length > 0 &&
                 (message.trim().length <= 220 || message.includes("\n"))
-              );
+              ) &&
+              commercialLinesLookReadable;
             const safeForAuto =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
@@ -916,7 +935,8 @@ Deno.serve(async (req: Request) => {
                     ai_run_id: shadow.aiRunId,
                     intent: shadow.intent,
                     confidence: shadow.confidence,
-                    provider_message_id: textSend?.message_id ?? null,
+                    provider_message_id: sentTextMessages[0]?.provider_message_id ?? null,
+                    sent_text_messages: sentTextMessages,
                     sent_media: sentMedia
                   }
                 });
