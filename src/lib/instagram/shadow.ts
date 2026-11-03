@@ -26,6 +26,7 @@ export type InstagramShadowSuggestion = {
   language: InstagramLanguage;
   confidence: number;
   proposedReply: string;
+  proposedMessages: string[];
   proposedMediaTags: string[];
   risk: "auto" | "review" | "human";
   model: string;
@@ -76,6 +77,12 @@ function parseSuggestion(value: string) {
   if (typeof parsed.proposed_reply !== "string") {
     throw new Error("instagram_ai_invalid_reply");
   }
+  if (!Array.isArray(parsed.proposed_messages) ||
+      parsed.proposed_messages.length < 1 ||
+      parsed.proposed_messages.length > 2 ||
+      !parsed.proposed_messages.every((item) => typeof item === "string" && item.trim().length > 0)) {
+    throw new Error("instagram_ai_invalid_messages");
+  }
   if (!Array.isArray(parsed.proposed_media_tags) || !parsed.proposed_media_tags.every((item) => typeof item === "string")) {
     throw new Error("instagram_ai_invalid_media_tags");
   }
@@ -84,7 +91,8 @@ function parseSuggestion(value: string) {
     intent: parsed.intent,
     language: parsed.language,
     confidence: parsed.confidence,
-    proposedReply: parsed.proposed_reply.trim(),
+    proposedReply: parsed.proposed_messages.join("\n\n").trim(),
+    proposedMessages: parsed.proposed_messages.map((item) => item.trim()).slice(0, 2),
     proposedMediaTags: parsed.proposed_media_tags.slice(0, 5),
   };
 }
@@ -93,6 +101,11 @@ function buildInstructions() {
   return [
     "You are the Shadow Mode Instagram assistant for Bagelito, a small bagel brand in Lima.",
     "Your output is an internal draft for a human operator. Never claim that you sent a message or took an external action.",
+    "Use proposed_messages as the exact Instagram bubbles, in order. Return 1 or 2 messages only.",
+    "Use 1 message for simple direct replies, logistics, confirmations, and short explanations.",
+    "For flavors/menu/how-to-order, prefer 2 messages when useful: message 1 = offer/catalog/prices/current delivery context; message 2 = exact information needed to order plus a concise CTA. Media follows after the text messages.",
+    "Do not split into 2 messages if the second would be redundant or unnatural.",
+    "proposed_reply is only a legacy combined preview and must equal proposed_messages joined with a blank line.",
     "Conversation style is learned from Dawn @ Bagelito's historical Instagram behavior; operational facts must come ONLY from LIVE_FACTS.",
     "Voice: warm, personal, natural, concise, lightly enthusiastic. Spanish and English are native voices, not literal translations.",
     "A simple operational question gets a simple answer, EXCEPT flavors/menu/how-to-order intents: historical and live Bagelito handling treats these as sales moments and usually gives a compact full sales answer.",
@@ -163,6 +176,12 @@ export async function generateInstagramShadowSuggestion(
               language: { type: "string", enum: languageValues },
               confidence: { type: "number", minimum: 0, maximum: 1 },
               proposed_reply: { type: "string" },
+              proposed_messages: {
+                type: "array",
+                minItems: 1,
+                maxItems: 2,
+                items: { type: "string" },
+              },
               proposed_media_tags: {
                 type: "array",
                 maxItems: 5,
@@ -174,6 +193,7 @@ export async function generateInstagramShadowSuggestion(
               "language",
               "confidence",
               "proposed_reply",
+              "proposed_messages",
               "proposed_media_tags",
             ],
           },
