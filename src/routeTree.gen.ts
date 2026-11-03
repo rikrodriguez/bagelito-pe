@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsultaRouteImport } from './routes/consulta'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as PlayableRouteImport } from './routes/playable'
 import { Route as SandboxCheckoutRouteImport } from './routes/sandbox-checkout'
@@ -26,6 +27,11 @@ import { Route as ApiPaymentsCulqiStatusRouteImport } from './routes/api/payment
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsultaRoute = ConsultaRouteImport.update({
+  id: '/consulta',
+  path: '/consulta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalRoute = LegalRouteImport.update({
@@ -91,6 +97,7 @@ const ApiPaymentsCulqiStatusRoute = ApiPaymentsCulqiStatusRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/consulta': typeof ConsultaRoute
   '/legal': typeof LegalRoute
   '/playable': typeof PlayableRoute
   '/sandbox-checkout': typeof SandboxCheckoutRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/consulta': typeof ConsultaRoute
   '/legal': typeof LegalRoute
   '/playable': typeof PlayableRoute
   '/sandbox-checkout': typeof SandboxCheckoutRoute
@@ -122,6 +130,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/consulta': typeof ConsultaRoute
   '/legal': typeof LegalRoute
   '/playable': typeof PlayableRoute
   '/sandbox-checkout': typeof SandboxCheckoutRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/consulta'
     | '/legal'
     | '/playable'
     | '/sandbox-checkout'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/consulta'
     | '/legal'
     | '/playable'
     | '/sandbox-checkout'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/consulta'
     | '/legal'
     | '/playable'
     | '/sandbox-checkout'
@@ -185,6 +197,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsultaRoute: typeof ConsultaRoute
   LegalRoute: typeof LegalRoute
   PlayableRoute: typeof PlayableRoute
   SandboxCheckoutRoute: typeof SandboxCheckoutRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consulta': {
+      id: '/consulta'
+      path: '/consulta'
+      fullPath: '/consulta'
+      preLoaderRoute: typeof ConsultaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal': {
@@ -297,6 +317,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsultaRoute: ConsultaRoute,
   LegalRoute: LegalRoute,
   PlayableRoute: PlayableRoute,
   SandboxCheckoutRoute: SandboxCheckoutRoute,

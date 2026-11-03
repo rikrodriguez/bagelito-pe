@@ -20,7 +20,7 @@ function render({sandboxMode = false, reviewOnly = false, enabled = true} = {}) 
   vm.runInNewContext(code, {
     module, exports: module.exports,
     require(id) {assert.equal(id, 'react/jsx-runtime'); return {jsx, jsxs: jsx}},
-    sandboxMode, reviewOnly, scene: 'cashier', category: 'packs', canReviewAtCashier: true,
+    sandboxMode, reviewOnly, manualInquiry: false, manualContact: false, scene: 'cashier', category: 'packs', canReviewAtCashier: true,
     canPayOnline: enabled && !reviewOnly, qaMode: false, quoteLoading: false,
     paymentConfig: {enabled}, checkoutQuote: {checkoutAllowed: enabled, amountPen: 62},
     packFormat: 'grande', packQty: 6, packMix: 'single', selectedCombo: null, schmearSize: 120,

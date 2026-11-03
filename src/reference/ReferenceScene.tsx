@@ -14,6 +14,7 @@ type Props = {
   dynamicChrome: boolean
   menuOpen?: boolean
   cartOpen?: boolean
+  hidePaymentStep?: boolean
 }
 
 const bagels = [
@@ -214,7 +215,7 @@ export function ReferenceScene(props: Props) {
     </div>
 
     <nav className="rebuilt-progress" aria-label="Pasos de compra">
-      {steps.map((label, index) => <button type="button" key={label} aria-label={`Ir a ${label}`}
+      {(props.hidePaymentStep ? steps.slice(0, 4) : steps).map((label, index) => <button type="button" key={label} aria-label={`Ir a ${label}`}
         disabled={!props.accessibleSteps[index]} aria-current={props.progressIndex === index ? 'step' : undefined}
         onClick={() => props.onStep(index)}>
         <i aria-hidden="true"><StepIcon index={index} /></i>{label === 'Selecciona'

@@ -108,7 +108,7 @@ const SCHMEAR_SPOTS = [
   { left: '77%', top: '20%', width: '17%', height: '61%' },
 ] as const
 
-export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, sandboxMode = false, exitLabel = 'Explorar tienda 3D' }: {
+export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly: requestedReviewOnly = false, sandboxMode = false, manualInquiry = false, exitLabel = 'Explorar tienda 3D' }: {
   onExit: () => void
   customerName?: string | null
   initialCategory?: Category | null
@@ -117,9 +117,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   referenceMode?: boolean
   reviewOnly?: boolean
   sandboxMode?: boolean
+  manualInquiry?: boolean
   exitLabel?: string
   onSceneChange?: (scene: string) => void
 }) {
+  // Manual inquiry inherits every no-payment/no-storage review guard. Only the
+  // completed-selection contact link is allowed; conflicting modes fail closed.
+  const reviewOnly = requestedReviewOnly || manualInquiry
+  const manualContact = manualInquiry && !requestedReviewOnly && !sandboxMode
   // A shopper coming from a physical 3D station enters the matching product
   // category or the totem selector, without repeating the entry scene.
   const [scene, setScene] = useState<Scene>(initialCategory === 'packs' ? 'pack-size'
@@ -665,7 +670,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
   const canPayOnline = !reviewOnly && paymentConfig?.enabled === true && checkoutQuote?.checkoutAllowed === true
 
-  const manualOrderHref = !reviewOnly && !sandboxMode && category && canReviewAtCashier
+  const manualOrderHref = (!reviewOnly || manualContact) && !sandboxMode && category && canReviewAtCashier
     ? createManualOrderWhatsAppHref({
         category,
         format: packFormat,
@@ -754,6 +759,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       accessibleSteps={referenceAccessibleSteps}
       onStep={jumpToReferenceStage}
       dynamicChrome={!['entrance', 'selector'].includes(scene) || visibleCartCount > 0}
+      hidePaymentStep={manualInquiry}
     />}
     {!referenceMode && !liveWorld && <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />}
     {!referenceMode && !liveWorld && scene !== 'bagels' && scene !== 'schmears' && <img key={'master-' + scene} className="guided-scene-image" src={sceneImage} alt="" />}
@@ -804,7 +810,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       {visibleCartCount === 0 && <p>Aún no has elegido productos.</p>}
       {selectedBagelSummary.map((item) => <div key={'bagel-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
       {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
-      <small>{checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
+      <small>{manualInquiry ? 'Precio final por confirmar con Bagelito.' : checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
       {canEditOrder && category && visibleCartCount > 0 && <button type="button" onClick={() => {
         setCartOpen(false)
         setScene(category === 'schmears' ? 'schmears' : 'bagels')
@@ -813,7 +819,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     </CartPanel>}
 
     {!referenceMode && showProgress && <nav className="guided-progress-master" aria-label="Pasos de compra">
-      {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => {
+      {(manualInquiry ? ['Elige', 'Bagels', 'Schmears', 'Caja'] : ['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago']).map((label, index) => {
         const accessible = index <= progressIndex && index < 4
           && (index === 0
             || index === 1 && category !== 'schmears'
@@ -1052,14 +1058,16 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{category === 'schmears' ? ' · ' + schmearSize + ' g' : ''}</b></span>)}
         </div>
         <div className="guided-cashier-quote">
-          <span>{paymentConfig?.enabled !== true
+          <span>{manualInquiry || paymentConfig?.enabled !== true
             ? 'Precio final por confirmar'
             : quoteLoading
               ? 'Validando precio e inventario…'
               : checkoutQuote?.checkoutAllowed ? 'Subtotal verificado' : 'Necesita revisión'}</span>
-          {paymentConfig?.enabled === true && checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
+          {!manualInquiry && paymentConfig?.enabled === true && checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
         </div>
-        {reviewOnly
+        {manualInquiry
+          ? <p>Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.</p>
+          : reviewOnly
           ? <p>Revisa tu selección, los datos de entrega y el consentimiento. Esta vista no envía pedidos ni realiza pagos.</p>
           : sandboxMode
           ? <p>Prueba sandbox con datos autorizados. No es una venta ni confirma una entrega.</p>
@@ -1069,14 +1077,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             ? <p>{checkoutQuote.reasons[0]}</p>
             : <p>El delivery se calcula con tu dirección antes de crear la reserva.</p>}
       </div>
-      {(reviewOnly || canPayOnline || qaMode) && <button
+      {!manualInquiry && (reviewOnly || canPayOnline || qaMode) && <button
         type="button"
         disabled={quoteLoading && !qaMode}
         onClick={() => { if (reviewOnly || canPayOnline || qaMode) setScene('pay') }}
       >
         {reviewOnly ? 'Revisar entrega y consentimiento' : sandboxMode ? 'Continuar prueba sandbox' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
       </button>}
-      {!reviewOnly && !sandboxMode && <div className="guided-launch-contact">
+      {(!reviewOnly || manualContact) && !sandboxMode && <div className="guided-launch-contact">
         {manualOrderHref && <a
           className={canPayOnline ? 'is-secondary' : 'is-primary'}
           href={manualOrderHref}
@@ -1092,7 +1100,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       </div>}
     </div>}
 
-    {scene === 'pay' && <div className="guided-payment-gate">
+    {scene === 'pay' && !manualInquiry && <div className="guided-payment-gate">
       <div className="guided-payment-sheet">
         <div className="guided-payment-copy">
           <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : sandboxMode ? 'PRUEBA SANDBOX' : 'PAGO SEGURO'}</small>

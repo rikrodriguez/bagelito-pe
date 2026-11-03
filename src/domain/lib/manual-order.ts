@@ -35,7 +35,7 @@ export function formatManualOrderInquiry(input: ManualOrderInput) {
   const schmears = input.schmears
     .filter(item => Number.isInteger(item.quantity) && item.quantity > 0)
     .map(item => '- ' + item.quantity + ' × ' + item.name +
-      (input.category === 'schmears' ? ' (' + String(input.schmearSizeGrams || 120) + ' g)' : ''))
+      (input.schmearSizeGrams || input.category === 'schmears' ? ' (' + String(input.schmearSizeGrams || 120) + ' g)' : ''))
 
   return [
     'Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:',
