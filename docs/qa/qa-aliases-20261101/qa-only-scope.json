@@ -1,0 +1,20 @@
+{
+  "base": "2a824c5b29bb85a41b616d20286ed29295e80ed7",
+  "appSourceUnchanged": true,
+  "dependenciesAndPackageMetadataUnchanged": true,
+  "aliases": {
+    "qa:reference:text": {
+      "before": "node scripts/qa-reference-card-text.cjs",
+      "after": "node scripts/qa-rebuilt-storefront.cjs --profile=text"
+    },
+    "qa:reference:secondary": {
+      "before": "node scripts/qa-reference-secondary-text.cjs",
+      "after": "node scripts/qa-rebuilt-storefront.cjs --profile=secondary"
+    },
+    "qa:reference:entry": {
+      "before": "node scripts/qa-reference-direct-entry.cjs",
+      "after": "node scripts/qa-rebuilt-storefront.cjs --profile=entry"
+    }
+  },
+  "lockfileGenerated": false
+}

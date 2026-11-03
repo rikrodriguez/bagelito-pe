@@ -1,0 +1,100 @@
+✔ unmount during reservation prevents preparation and opening abandoned Culqi widget (192.50759ms)
+✔ changed order invalidates pending reservation instead of continuing with old details (81.21141ms)
+✔ changed customer invalidates pending reservation instead of continuing with old details (61.532829ms)
+✔ late recovered paid response after unmount never calls parent confirmation (56.72326ms)
+✔ double-click payment recovery coalesces one pending status request (47.368401ms)
+✔ recovery refuses confirmation for different order code (46.83311ms)
+✔ recovery refuses confirmation for invalid amount (63.608857ms)
+✔ recovery refuses confirmation for contradictory transport status (35.175462ms)
+✔ recovery refuses confirmation for contradictory order state (45.905753ms)
+✔ recovery refuses confirmation for reconciliation flagged (50.100684ms)
+✔ recovery refuses confirmation for malformed supplied snapshot (50.234421ms)
+✔ valid recovered payment without product snapshot explicitly omits editable cart details (52.56352ms)
+✔ unmount during payment preparation prevents late widget opening (59.625158ms)
+✔ equal-content rerender does not invalidate an otherwise current reservation (40.86137ms)
+✔ valid recovered snapshot supplies historical items instead of the new editable cart (43.928323ms)
+✔ changed order rejects old pending reservation but permits a fresh checkout attempt (74.85764ms)
+✔ context change during recovery retains payment reference and never creates another reservation (47.03913ms)
+✔ invalid reservation different session identity never proceeds to payment preparation (38.046011ms)
+✔ invalid reservation missing session identity never proceeds to payment preparation (46.572427ms)
+✔ invalid reservation invalid order code never proceeds to payment preparation (65.47553ms)
+✔ invalid reservation negative amount never proceeds to payment preparation (56.665188ms)
+✔ invalid reservation fractional minor amount never proceeds to payment preparation (70.612807ms)
+✔ invalid reservation missing expiry never proceeds to payment preparation (94.891387ms)
+✔ invalid reservation expired reservation never proceeds to payment preparation (39.84638ms)
+✔ invalid payment preparation malformed payment attempt UUID never opens widget (46.408104ms)
+✔ invalid payment preparation mismatched amount never opens widget (47.014253ms)
+✔ invalid payment preparation extended expiry never opens widget (67.356074ms)
+✔ invalid payment preparation shortened expiry never opens widget (65.991907ms)
+✔ invalid payment preparation missing expiry never opens widget (38.141311ms)
+✖ failed in-flight observation retains recovery, blocks new payment and can reconcile later paid (31.580304ms)
+✖ failed recovered observation retains identity through repeated lookups until matching paid (29.923726ms)
+✔ bound expired in-flight observation keeps existing fresh-checkout behavior (32.531446ms)
+✔ bound expired recovered observation keeps existing fresh-checkout behavior (30.119418ms)
+✔ late widget token callback after unmount cannot submit a charge (48.8542ms)
+✔ unmount while token device generation waits prevents charge submission (57.107495ms)
+✔ late charge response after unmount cannot initiate payment status polling (32.565615ms)
+✔ late paid poll after unmount cannot confirm checkout (31.815124ms)
+✔ live token and matching paid status still confirm the reserved amount (38.066959ms)
+✔ duplicate live widget callbacks submit only one token charge (39.435547ms)
+✔ paid poll with another amount cannot confirm a known reservation (56.275845ms)
+✔ poll delay waking after unmount cannot send a further status request (33.994999ms)
+✔ 3DS message before challenge cannot submit a payment continuation (33.107882ms)
+✔ duplicate 3DS messages consume one challenge and submit one continuation (37.774079ms)
+✔ closed 3DS challenge ignores a late authentication message (35.035486ms)
+✔ 3DS failure consumes challenge before a later success message (23.189295ms)
+✔ foreign and unrelated messages do not consume a valid 3DS challenge (24.139577ms)
+✔ late 3DS message after context change cannot resume the abandoned payment (23.587465ms)
+✔ programmatic 3DS reset after consumed success does not downgrade payment confirmation (23.370467ms)
+✔ expiry disarms 3DS before SDK reset can synchronously deliver a message (23.13202ms)
+✔ late 3DS-required response after reservation expiry never opens a challenge (23.415686ms)
+✔ late non-3DS charge response after expiry still observes the submitted payment (22.057029ms)
+✔ failed SDK load can be retried without reinserting the successful sibling (35.649031ms)
+✔ hung SDK wait is bounded and manual retry never duplicates an uncertain script (23.064698ms)
+✔ retry after one SDK error shares its still-loading sibling (24.253899ms)
+✔ successful SDK load clears loader listeners and deadlines (23.005418ms)
+✔ unmount during SDK load never reserves or opens a late widget (22.733558ms)
+✔ preexisting SDK element with unexpected source fails closed (36.460004ms)
+✔ duplicate clicks during script loading create one pair and one reservation (21.863848ms)
+✔ changed checkout during SDK loading shares downloads but only reserves current details (24.966493ms)
+✔ late terminal error after timeout permits a fresh manual attempt (23.555507ms)
+ℹ tests 60
+ℹ suites 0
+ℹ pass 58
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3002.195426
+
+✖ failing tests:
+
+test at tests/culqi-ui-lifecycle.test.cjs:197:1
+✖ failed in-flight observation retains recovery, blocks new payment and can reconcile later paid (31.580304ms)
+  AssertionError [ERR_ASSERTION]: a failed observation must retain the capability needed to reconcile a later result
+      at assertOriginalRecovery (/workspace/bagelito-manual-inquiry-qa/tests/culqi-ui-lifecycle.test.cjs:183:9)
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/culqi-ui-lifecycle.test.cjs:200:67)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:215:1
+✖ failed recovered observation retains identity through repeated lookups until matching paid (29.923726ms)
+  AssertionError [ERR_ASSERTION]: a failed observation must retain the capability needed to reconcile a later result
+      at assertOriginalRecovery (/workspace/bagelito-manual-inquiry-qa/tests/culqi-ui-lifecycle.test.cjs:183:9)
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/culqi-ui-lifecycle.test.cjs:218:92)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

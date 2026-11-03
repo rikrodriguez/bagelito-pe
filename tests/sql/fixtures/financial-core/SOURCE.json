@@ -1,0 +1,42 @@
+{
+  "repository": "rikrodriguez/bagelito-pe",
+  "ref": "085f3df93f9d6a2b0f92cbe8ebe8bfef475eefca",
+  "purpose": "Immutable SQL fixture sources from financial PR23. Never apply these fixture copies to any existing database. Current legal SQL is loaded from PR47 separately.",
+  "files": [
+    {
+      "path": "setup-bagelito-reservations.sql",
+      "git_blob_sha": "2ba168813cc019cd267a701b67467780f6a9a962",
+      "sha256": "932e735514b6a6741aad079f75c6f7456c41fe9e563732d6dd55425a04a11c67"
+    },
+    {
+      "path": "add-public-api-hardening.sql",
+      "git_blob_sha": "377aae75155a69161b5eac7a6002857698902133",
+      "sha256": "02d4f55c5ebe034d48506c7e845cc2e713838e84ba893d39aa9ac8dba8d4ac54"
+    },
+    {
+      "path": "add-payment-provider.sql",
+      "git_blob_sha": "2abdd93d3d01fb3b45c94b5c30319c57c7c38cd3",
+      "sha256": "e8d6237640012810fdb050c9f8750148db63c548d5ed88b3390eb7acff18a88c"
+    },
+    {
+      "path": "add-checkout-safety.sql",
+      "git_blob_sha": "2d6b7cf5485b517cf60e6448768a135eebdb2c53",
+      "sha256": "f5fc23551be00ac1eb869e8997e33df9ea7dadc34821cbcc87ed1fbfba1e2292"
+    },
+    {
+      "path": "add-culqi-session-expiry.sql",
+      "git_blob_sha": "f817bdd6405185301e017c69438029377337ccb5",
+      "sha256": "40e87814e92edc5f5e199202ee827692fafab99140fb3cd266c265486e378dee"
+    },
+    {
+      "path": "add-culqi-checkout-replay-guard.sql",
+      "git_blob_sha": "fec130df39d78338d44dbb313a2e3b5a9b802404",
+      "sha256": "19417fad8061e3533b2b2100281e49e2d1c85bef38c2335677d5a8d2222097b2"
+    },
+    {
+      "path": "add-culqi-charge-confirmation.sql",
+      "git_blob_sha": "72ee7e71cd4e913b79e80884f83e14b75c553a13",
+      "sha256": "f89d6ea4838a60d316de238c867f5b97cbd8a56f8aa62259dcce44e5abd3c11f"
+    }
+  ]
+}

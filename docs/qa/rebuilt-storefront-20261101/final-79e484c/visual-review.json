@@ -1,0 +1,16 @@
+{
+  "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "method": "Actual PNG inspection by root and independent art-direction agent; no image compositing or DOM alteration",
+  "reviewed": [
+    "Loaded gallery in7widths; all8bagels and5schmears visible",
+    "Combo art/copy separation in7widths",
+    "Long mobile upsell/product/summary/consent/cart states and desktop checkout spacing"
+  ],
+  "observed": "No remaining material product/text occlusion or clipping observed in inspected captures. Native scene spans viewport; natural vertical scroll.",
+  "remainingVisualLimits": [
+    "Chromium151 emulation/DPR1; Safari and physical devices not certified",
+    "Editorial DOM/CSS interpretation, not a photographic replica of the kitchen",
+    "Three synthetic concept assets, neutral cream repeated for four flavors; existing bagel source softness retained"
+  ],
+  "priorFailure": "b974 Combo bowl occluded copy although text-only audit passed; before evidence and new RED13 retained in candidate-b974ddc"
+}

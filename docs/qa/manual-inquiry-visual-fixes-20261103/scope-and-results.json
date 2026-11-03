@@ -1,0 +1,65 @@
+{
+  "baseHead": "1cbf5162b3e9abc5ddf6a29efc34896bc9feffef",
+  "sourceFiles": {
+    "src/playable/GuidedCommerce.tsx": "de09c687a3749ef7f7913d0b1939094dcfaa53ead7306f1d91076cb3395978f6",
+    "scripts/qa-manual-inquiry.cjs": "fc0787a4c7ed1c4ceb4f95a9f7e4ac71bd61e430819bdf112a0a9890d9fa942d",
+    "tests/manual-inquiry-journey.test.cjs": "e2a8b6e60c8147f8672ad4ffba2064cd44e685f4537787734a37bb05a1906fa2"
+  },
+  "focused": {
+    "pass": 22,
+    "fail": 0,
+    "includedInNodeTotal": true
+  },
+  "node": {
+    "pass": 349,
+    "fail": 0,
+    "excludedFiles": [
+      "qa-guided-driver.test.cjs",
+      "qa-loopback-guard.test.cjs",
+      "qa-world-driver.test.cjs"
+    ],
+    "unexecutedCases": 25,
+    "reason": "Approved offline HDR not available"
+  },
+  "build": {
+    "exitCode": 0
+  },
+  "visual": {
+    "closed": 2,
+    "enabled": 20,
+    "failed": 0,
+    "viewports": [
+      390,
+      1280
+    ],
+    "allEnabledCashierOpacity": 1,
+    "overflows": 0,
+    "forbiddenRequests": 0,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "routeErrors": 0
+  },
+  "reviews": {
+    "source": "GO draft only; no blocking regression",
+    "visual": "Eight PNG independently inspected; both fixes visible; no evident layout regression"
+  },
+  "scope": {
+    "deployment": false,
+    "payment": false,
+    "orderSubmission": false,
+    "whatsAppOpened": false,
+    "dbWrite": false,
+    "draftStateMutation": false
+  },
+  "browser": {
+    "executable": "/usr/bin/chromium",
+    "version": "Chromium 151.0.7922.173 built on Debian GNU/Linux 13 (trixie)",
+    "playwright": "1.64.1"
+  },
+  "limits": [
+    "System Chromium only, not bundled Chromium whose download had returned403",
+    "No real-device, full accessibility/focus/contrast, StrictMode or other-engine certification",
+    "No full-fidelity claim from desktop landing reference",
+    "No real WhatsApp delivery, provider acceptance, installed schema or multi-session financial proof"
+  ]
+}

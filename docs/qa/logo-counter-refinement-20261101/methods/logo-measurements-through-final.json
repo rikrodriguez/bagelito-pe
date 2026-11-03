@@ -1,0 +1,1089 @@
+{
+  "method": {
+    "roiXYXY": [
+      475,
+      40,
+      1230,
+      250
+    ],
+    "blueThreshold": "R<95,20<G<145,B>125,B-G>30; same thresholds for every file.",
+    "largeGlyphMinimumPixels": 501,
+    "connectivity": "scipy.ndimage.label default4-neighbor",
+    "taglineSelection": "Non-large components with25<area<500,bboxYmin>=170,650<=bboxX<=1050.",
+    "counterScope": "Enclosed non-blue regions within one blue glyph component, including inner coral/background; not a white-only hole mask.",
+    "limits": "Photographic lighting/antialiasing and native rasterization differ. No outlines are traced or emitted from image pixels."
+  },
+  "codeSHAs": {
+    "baseline2199": "2199afb6b51a3321259f512242bd47268ac3300c",
+    "pass1": "e9d995c557f13cbe05513b2c808e1a6d868ce467",
+    "pass2": "2e03fd0ae5ee2b8264a37de9fb84088506975439",
+    "final": "5f318730e928fd3e6d05dcdb7b34dbfc13247c59"
+  },
+  "images": {
+    "reference": {
+      "path": "/workspace/bagelito-rebuilt-storefront/public/images/store-reference-approved.webp",
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "letters": {
+        "B": {
+          "bbox": [
+            508,
+            129,
+            606,
+            232
+          ],
+          "bluePixelArea": 4580,
+          "bboxFillRatio": 0.45373489201505846,
+          "enclosedBlueCounters": [
+            {
+              "area": 741,
+              "bbox": [
+                535,
+                150,
+                571,
+                181
+              ]
+            },
+            {
+              "area": 723,
+              "bbox": [
+                549,
+                177,
+                584,
+                208
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 25.59173574559081,
+          "inkPCAEigenvalueRatio": 1.6040247388919322,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "A": {
+          "bbox": [
+            616,
+            103,
+            698,
+            198
+          ],
+          "bluePixelArea": 3959,
+          "bboxFillRatio": 0.5082156611039794,
+          "enclosedBlueCounters": [
+            {
+              "area": 432,
+              "bbox": [
+                637,
+                128,
+                660,
+                157
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 28.804735134683256,
+          "inkPCAEigenvalueRatio": 1.0818518136802255,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "G": {
+          "bbox": [
+            695,
+            75,
+            782,
+            171
+          ],
+          "bluePixelArea": 4666,
+          "bboxFillRatio": 0.5586685823754789,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 13.646530399518412,
+          "inkPCAEigenvalueRatio": 1.3496500420701385,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "E": {
+          "bbox": [
+            788,
+            67,
+            860,
+            164
+          ],
+          "bluePixelArea": 4332,
+          "bboxFillRatio": 0.6202749140893471,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -1.4653112846566785,
+          "inkPCAEigenvalueRatio": 2.6097730756199367,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "L": {
+          "bbox": [
+            871,
+            69,
+            942,
+            169
+          ],
+          "bluePixelArea": 3091,
+          "bboxFillRatio": 0.43535211267605634,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 22.925444266605766,
+          "inkPCAEigenvalueRatio": 4.561699688025048,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "I": {
+          "bbox": [
+            954,
+            81,
+            990,
+            176
+          ],
+          "bluePixelArea": 2179,
+          "bboxFillRatio": 0.6371345029239766,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -9.686944993111268,
+          "inkPCAEigenvalueRatio": 15.055886555123628,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "T": {
+          "bbox": [
+            1004,
+            89,
+            1084,
+            188
+          ],
+          "bluePixelArea": 3382,
+          "bboxFillRatio": 0.427020202020202,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -16.465299737117817,
+          "inkPCAEigenvalueRatio": 2.614532492378554,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "O": {
+          "bbox": [
+            1077,
+            128,
+            1174,
+            224
+          ],
+          "bluePixelArea": 4890,
+          "bboxFillRatio": 0.5251288659793815,
+          "enclosedBlueCounters": [
+            {
+              "area": 2242,
+              "bbox": [
+                1096,
+                151,
+                1156,
+                202
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": -33.29260135758378,
+          "inkPCAEigenvalueRatio": 1.1618451307832711,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        }
+      },
+      "tagline": {
+        "bbox": [
+          660,
+          183,
+          989,
+          230
+        ],
+        "bluePixelArea": 2553,
+        "medianCharacterHalfStrokeMaximum": 3.0
+      },
+      "blueMedianRGB": [
+        2.0,
+        58.0,
+        155.0
+      ],
+      "coralMedianRGB": [
+        241.0,
+        139.0,
+        133.0
+      ]
+    },
+    "baseline2199": {
+      "path": "/workspace/bagelito-rebuilt-storefront/docs/qa/reference-anchors-20261101/clean-2199afb/read-only/1536-entry.png",
+      "sha256": "8a0bfcb7c84de7f286914093c0e9a04036a49dce8d928696a21fb365d2f8124f",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "letters": {
+        "B": {
+          "bbox": [
+            495,
+            131,
+            589,
+            239
+          ],
+          "bluePixelArea": 6396,
+          "bboxFillRatio": 0.6300236406619385,
+          "enclosedBlueCounters": [
+            {
+              "area": 873,
+              "bbox": [
+                525,
+                157,
+                564,
+                209
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 19.03342326256299,
+          "inkPCAEigenvalueRatio": 1.6289041547654726,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "A": {
+          "bbox": [
+            594,
+            98,
+            692,
+            204
+          ],
+          "bluePixelArea": 5246,
+          "bboxFillRatio": 0.5050057758952637,
+          "enclosedBlueCounters": [
+            {
+              "area": 97,
+              "bbox": [
+                630,
+                140,
+                642,
+                155
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 13.739800730187596,
+          "inkPCAEigenvalueRatio": 1.071840164096031,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "G": {
+          "bbox": [
+            682,
+            69,
+            776,
+            172
+          ],
+          "bluePixelArea": 6255,
+          "bboxFillRatio": 0.6460442057426151,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 18.75884710945553,
+          "inkPCAEigenvalueRatio": 1.3396970007798972,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "E": {
+          "bbox": [
+            783,
+            60,
+            864,
+            162
+          ],
+          "bluePixelArea": 5996,
+          "bboxFillRatio": 0.7257322682159284,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 1.850862419768461,
+          "inkPCAEigenvalueRatio": 2.078821151788508,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "L": {
+          "bbox": [
+            869,
+            61,
+            941,
+            164
+          ],
+          "bluePixelArea": 3511,
+          "bboxFillRatio": 0.4734358144552319,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 18.635968180806117,
+          "inkPCAEigenvalueRatio": 4.5334755198676255,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "I": {
+          "bbox": [
+            960,
+            75,
+            998,
+            175
+          ],
+          "bluePixelArea": 2503,
+          "bboxFillRatio": 0.6586842105263158,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -8.985331112913116,
+          "inkPCAEigenvalueRatio": 14.467278242815942,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "T": {
+          "bbox": [
+            1024,
+            92,
+            1110,
+            198
+          ],
+          "bluePixelArea": 3779,
+          "bboxFillRatio": 0.4145458534444932,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -14.329800987453055,
+          "inkPCAEigenvalueRatio": 2.7735844025742376,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "O": {
+          "bbox": [
+            1103,
+            134,
+            1202,
+            237
+          ],
+          "bluePixelArea": 6107,
+          "bboxFillRatio": 0.5989016377365892,
+          "enclosedBlueCounters": [
+            {
+              "area": 1861,
+              "bbox": [
+                1129,
+                160,
+                1176,
+                210
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": -18.17386543822883,
+          "inkPCAEigenvalueRatio": 1.0744623601159735,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        }
+      },
+      "tagline": {
+        "bbox": [
+          683,
+          180,
+          1032,
+          225
+        ],
+        "bluePixelArea": 5082,
+        "medianCharacterHalfStrokeMaximum": 5.0990195135927845
+      },
+      "blueMedianRGB": [
+        0.0,
+        74.0,
+        173.0
+      ],
+      "coralMedianRGB": [
+        250.0,
+        150.0,
+        127.0
+      ]
+    },
+    "pass1": {
+      "path": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/pass1-e9d995c/1536-entry.png",
+      "sha256": "5e50484ea9e3077d5c79becc352429d928e263b654ddd9cda8836021fffddb19",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "letters": {
+        "B": {
+          "bbox": [
+            503,
+            125,
+            611,
+            235
+          ],
+          "bluePixelArea": 5882,
+          "bboxFillRatio": 0.4951178451178451,
+          "enclosedBlueCounters": [
+            {
+              "area": 2014,
+              "bbox": [
+                528,
+                145,
+                591,
+                211
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 28.38226049999645,
+          "inkPCAEigenvalueRatio": 1.17997746821531,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "A": {
+          "bbox": [
+            614,
+            99,
+            695,
+            193
+          ],
+          "bluePixelArea": 3519,
+          "bboxFillRatio": 0.46217494089834515,
+          "enclosedBlueCounters": [
+            {
+              "area": 201,
+              "bbox": [
+                642,
+                130,
+                659,
+                153
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 8.46173640086019,
+          "inkPCAEigenvalueRatio": 1.3319580758671414,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "G": {
+          "bbox": [
+            696,
+            74,
+            781,
+            169
+          ],
+          "bluePixelArea": 4644,
+          "bboxFillRatio": 0.575108359133127,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 17.667778253202016,
+          "inkPCAEigenvalueRatio": 1.4207058348487365,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "E": {
+          "bbox": [
+            790,
+            66,
+            859,
+            162
+          ],
+          "bluePixelArea": 4296,
+          "bboxFillRatio": 0.6485507246376812,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 1.7853353451466916,
+          "inkPCAEigenvalueRatio": 2.750182143550775,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "L": {
+          "bbox": [
+            870,
+            69,
+            941,
+            169
+          ],
+          "bluePixelArea": 2871,
+          "bboxFillRatio": 0.4043661971830986,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 20.73407543222706,
+          "inkPCAEigenvalueRatio": 4.646262157151633,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "I": {
+          "bbox": [
+            955,
+            81,
+            988,
+            175
+          ],
+          "bluePixelArea": 1878,
+          "bboxFillRatio": 0.6054158607350096,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -9.070289389630702,
+          "inkPCAEigenvalueRatio": 21.053082895536935,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "T": {
+          "bbox": [
+            1003,
+            87,
+            1082,
+            187
+          ],
+          "bluePixelArea": 2798,
+          "bboxFillRatio": 0.35417721518987344,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -13.870591911123256,
+          "inkPCAEigenvalueRatio": 3.0343418597308576,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "O": {
+          "bbox": [
+            1075,
+            126,
+            1175,
+            222
+          ],
+          "bluePixelArea": 4927,
+          "bboxFillRatio": 0.5132291666666666,
+          "enclosedBlueCounters": [
+            {
+              "area": 2584,
+              "bbox": [
+                1096,
+                146,
+                1154,
+                202
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 70.93211993318073,
+          "inkPCAEigenvalueRatio": 1.0801391118738068,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        }
+      },
+      "tagline": {
+        "bbox": [
+          653,
+          184,
+          997,
+          228
+        ],
+        "bluePixelArea": 2993,
+        "medianCharacterHalfStrokeMaximum": 4.0
+      },
+      "blueMedianRGB": [
+        2.0,
+        58.0,
+        155.0
+      ],
+      "coralMedianRGB": [
+        241.0,
+        139.0,
+        133.0
+      ]
+    },
+    "pass2": {
+      "path": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/pass2-2e03fd0/1536-entry.png",
+      "sha256": "c916da079b7d22b1aeeb98e2763b80964d0af5bfdfeaf1bc9b06b49b0af505d5",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "letters": {
+        "B": {
+          "bbox": [
+            508,
+            129,
+            606,
+            232
+          ],
+          "bluePixelArea": 4510,
+          "bboxFillRatio": 0.446800079255003,
+          "enclosedBlueCounters": [
+            {
+              "area": 924,
+              "bbox": [
+                527,
+                145,
+                573,
+                180
+              ]
+            },
+            {
+              "area": 1108,
+              "bbox": [
+                541,
+                175,
+                590,
+                213
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 28.31402087815178,
+          "inkPCAEigenvalueRatio": 1.3079745946410453,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "A": {
+          "bbox": [
+            615,
+            103,
+            698,
+            198
+          ],
+          "bluePixelArea": 3321,
+          "bboxFillRatio": 0.42117945466074824,
+          "enclosedBlueCounters": [
+            {
+              "area": 747,
+              "bbox": [
+                632,
+                124,
+                665,
+                162
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 3.9515876091134885,
+          "inkPCAEigenvalueRatio": 1.2475393292386754,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "G": {
+          "bbox": [
+            695,
+            73,
+            782,
+            170
+          ],
+          "bluePixelArea": 4800,
+          "bboxFillRatio": 0.5687877710629221,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 18.400038119587975,
+          "inkPCAEigenvalueRatio": 1.3909137078726088,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "E": {
+          "bbox": [
+            787,
+            67,
+            860,
+            164
+          ],
+          "bluePixelArea": 4553,
+          "bboxFillRatio": 0.6429882784917385,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 2.06950089521753,
+          "inkPCAEigenvalueRatio": 2.519566428884055,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "L": {
+          "bbox": [
+            870,
+            69,
+            942,
+            169
+          ],
+          "bluePixelArea": 3081,
+          "bboxFillRatio": 0.42791666666666667,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 20.79363483619875,
+          "inkPCAEigenvalueRatio": 4.486352626658401,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "I": {
+          "bbox": [
+            955,
+            80,
+            989,
+            176
+          ],
+          "bluePixelArea": 2112,
+          "bboxFillRatio": 0.6470588235294118,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -8.972543744890828,
+          "inkPCAEigenvalueRatio": 17.322419025353657,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "T": {
+          "bbox": [
+            1004,
+            89,
+            1083,
+            188
+          ],
+          "bluePixelArea": 3278,
+          "bboxFillRatio": 0.4191279887482419,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -13.966419806689117,
+          "inkPCAEigenvalueRatio": 2.8220808203462755,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "O": {
+          "bbox": [
+            1079,
+            128,
+            1172,
+            223
+          ],
+          "bluePixelArea": 4689,
+          "bboxFillRatio": 0.5307300509337861,
+          "enclosedBlueCounters": [
+            {
+              "area": 2281,
+              "bbox": [
+                1099,
+                148,
+                1152,
+                203
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": -15.242053656583394,
+          "inkPCAEigenvalueRatio": 1.0396864047494623,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        }
+      },
+      "tagline": {
+        "bbox": [
+          657,
+          185,
+          993,
+          228
+        ],
+        "bluePixelArea": 2819,
+        "medianCharacterHalfStrokeMaximum": 4.0
+      },
+      "blueMedianRGB": [
+        2.0,
+        58.0,
+        155.0
+      ],
+      "coralMedianRGB": [
+        241.0,
+        139.0,
+        133.0
+      ]
+    },
+    "final": {
+      "path": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/final-5f31873/read-only/1536-entry.png",
+      "sha256": "98477829e9e24478be7fd13412cb00edac793d45201a6786e924ef5c5b1a692d",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "letters": {
+        "B": {
+          "bbox": [
+            508,
+            129,
+            606,
+            232
+          ],
+          "bluePixelArea": 4510,
+          "bboxFillRatio": 0.446800079255003,
+          "enclosedBlueCounters": [
+            {
+              "area": 924,
+              "bbox": [
+                527,
+                145,
+                573,
+                180
+              ]
+            },
+            {
+              "area": 1108,
+              "bbox": [
+                541,
+                175,
+                590,
+                213
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 28.31402087815178,
+          "inkPCAEigenvalueRatio": 1.3079745946410453,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "A": {
+          "bbox": [
+            615,
+            103,
+            698,
+            198
+          ],
+          "bluePixelArea": 3630,
+          "bboxFillRatio": 0.4603677869372226,
+          "enclosedBlueCounters": [
+            {
+              "area": 438,
+              "bbox": [
+                636,
+                128,
+                661,
+                159
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": 6.212775873493982,
+          "inkPCAEigenvalueRatio": 1.2645421340860505,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "G": {
+          "bbox": [
+            695,
+            73,
+            782,
+            170
+          ],
+          "bluePixelArea": 4800,
+          "bboxFillRatio": 0.5687877710629221,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 18.400038119587975,
+          "inkPCAEigenvalueRatio": 1.3909137078726088,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "E": {
+          "bbox": [
+            787,
+            67,
+            860,
+            164
+          ],
+          "bluePixelArea": 4553,
+          "bboxFillRatio": 0.6429882784917385,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 2.06950089521753,
+          "inkPCAEigenvalueRatio": 2.519566428884055,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "L": {
+          "bbox": [
+            870,
+            69,
+            942,
+            169
+          ],
+          "bluePixelArea": 3081,
+          "bboxFillRatio": 0.42791666666666667,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": 20.79363483619875,
+          "inkPCAEigenvalueRatio": 4.486352626658401,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "I": {
+          "bbox": [
+            955,
+            80,
+            989,
+            176
+          ],
+          "bluePixelArea": 2112,
+          "bboxFillRatio": 0.6470588235294118,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -8.972543744890828,
+          "inkPCAEigenvalueRatio": 17.322419025353657,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "T": {
+          "bbox": [
+            1004,
+            89,
+            1083,
+            188
+          ],
+          "bluePixelArea": 3278,
+          "bboxFillRatio": 0.4191279887482419,
+          "enclosedBlueCounters": [],
+          "inkPCAAngleFromVerticalDegrees": -13.966419806689117,
+          "inkPCAEigenvalueRatio": 2.8220808203462755,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        },
+        "O": {
+          "bbox": [
+            1079,
+            128,
+            1172,
+            223
+          ],
+          "bluePixelArea": 4689,
+          "bboxFillRatio": 0.5307300509337861,
+          "enclosedBlueCounters": [
+            {
+              "area": 2281,
+              "bbox": [
+                1099,
+                148,
+                1152,
+                203
+              ]
+            }
+          ],
+          "inkPCAAngleFromVerticalDegrees": -15.242053656583394,
+          "inkPCAEigenvalueRatio": 1.0396864047494623,
+          "angleCaution": "Ink inertia, not actual font rotation; nearly round glyphs have unstable angles."
+        }
+      },
+      "tagline": {
+        "bbox": [
+          657,
+          185,
+          993,
+          228
+        ],
+        "bluePixelArea": 2819,
+        "medianCharacterHalfStrokeMaximum": 4.0
+      },
+      "blueMedianRGB": [
+        2.0,
+        58.0,
+        155.0
+      ],
+      "coralMedianRGB": [
+        241.0,
+        139.0,
+        133.0
+      ]
+    }
+  },
+  "fontEvidence": {
+    "path": "/workspace/bagelito-rebuilt-storefront/public/fonts/fredoka-variable.ttf",
+    "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8",
+    "axes": [
+      {
+        "tag": "wght",
+        "min": 300.0,
+        "default": 300.0,
+        "max": 700.0
+      },
+      {
+        "tag": "wdth",
+        "min": 75.0,
+        "default": 100.0,
+        "max": 125.0
+      }
+    ],
+    "contourCounts": {
+      "B": 2,
+      "A": 2,
+      "G": 1,
+      "O": 2
+    },
+    "anatomyCaution": "FredokaBhasoneenclosedcounter(outer+counter);AcontoursareLambdaandcrossbar,notouter+hole;Ghasopeninterior. Contourcountaloneisnotnumberofholes."
+  },
+  "nativeModelEvidence": {
+    "baselineWrapperXY": [
+      460,
+      45
+    ],
+    "baselineScreenScale": 0.8125,
+    "letterSpacingSVG": -8,
+    "baselineTextRotations": {
+      "B": -17,
+      "A": -12,
+      "G": -7,
+      "E": -2,
+      "L": 4,
+      "I": 9,
+      "T": 14,
+      "O": 20
+    },
+    "pass1TextRotations": {
+      "B": -24,
+      "A": -8,
+      "G": -7,
+      "E": -2,
+      "L": 4,
+      "I": 9,
+      "T": 14,
+      "O": 18
+    },
+    "scope": "OwnFontToolsoutlinetransformreproducedbaseline8bluebboxtowithin0.75CSSpx. Newperlettertargetsarebbox/weightdiagnosticsnotautotraceoridentityproof."
+  },
+  "summary": {
+    "reference": {
+      "wordBlueBBox": [
+        508,
+        67,
+        1174,
+        232
+      ],
+      "wordBluePixelArea": 31079,
+      "maximumPerLetterBBoxCoordinateErrorCSSPx": 0,
+      "perLetterAreaDifferencePercent": {
+        "B": 0.0,
+        "A": 0.0,
+        "G": 0.0,
+        "E": 0.0,
+        "L": 0.0,
+        "I": 0.0,
+        "T": 0.0,
+        "O": 0.0
+      },
+      "taglineBlueAreaDifferencePercent": 0.0
+    },
+    "baseline2199": {
+      "wordBlueBBox": [
+        495,
+        60,
+        1202,
+        239
+      ],
+      "wordBluePixelArea": 39793,
+      "maximumPerLetterBBoxCoordinateErrorCSSPx": 28,
+      "perLetterAreaDifferencePercent": {
+        "B": 39.65,
+        "A": 32.51,
+        "G": 34.05,
+        "E": 38.41,
+        "L": 13.59,
+        "I": 14.87,
+        "T": 11.74,
+        "O": 24.89
+      },
+      "taglineBlueAreaDifferencePercent": 99.06
+    },
+    "pass1": {
+      "wordBlueBBox": [
+        503,
+        66,
+        1175,
+        235
+      ],
+      "wordBluePixelArea": 30815,
+      "maximumPerLetterBBoxCoordinateErrorCSSPx": 5,
+      "perLetterAreaDifferencePercent": {
+        "B": 28.43,
+        "A": -11.11,
+        "G": -0.47,
+        "E": -0.83,
+        "L": -7.12,
+        "I": -13.81,
+        "T": -17.27,
+        "O": 0.76
+      },
+      "taglineBlueAreaDifferencePercent": 17.23
+    },
+    "pass2": {
+      "wordBlueBBox": [
+        508,
+        67,
+        1172,
+        232
+      ],
+      "wordBluePixelArea": 30344,
+      "maximumPerLetterBBoxCoordinateErrorCSSPx": 2,
+      "perLetterAreaDifferencePercent": {
+        "B": -1.53,
+        "A": -16.12,
+        "G": 2.87,
+        "E": 5.1,
+        "L": -0.32,
+        "I": -3.07,
+        "T": -3.08,
+        "O": -4.11
+      },
+      "taglineBlueAreaDifferencePercent": 10.42
+    },
+    "final": {
+      "wordBlueBBox": [
+        508,
+        67,
+        1172,
+        232
+      ],
+      "wordBluePixelArea": 30653,
+      "maximumPerLetterBBoxCoordinateErrorCSSPx": 2,
+      "perLetterAreaDifferencePercent": {
+        "B": -1.53,
+        "A": -8.31,
+        "G": 2.87,
+        "E": 5.1,
+        "L": -0.32,
+        "I": -3.07,
+        "T": -3.08,
+        "O": -4.11
+      },
+      "taglineBlueAreaDifferencePercent": 10.42
+    }
+  },
+  "pass2SourceEvidence": {
+    "codeSHA": "2e03fd0ae5ee2b8264a37de9fb84088506975439",
+    "sourceSHA256": {
+      "src/reference/ReferenceScene.tsx": "002de313c086ef49ab7c4abfe7000c716c292f62c123063f185e4def87f08ce2",
+      "src/reference/reference-aligned.css": "107ea7c48898ea0e672ed78172132c22865007138ecd6976b4247259256de632"
+    },
+    "B": "Onefont-derivednativeSVGpathwithtwo manuallyseparatedcounters;actualrastertwoholes.",
+    "A": "Nativefonttextwght650withtrianglegroupmaskand11SVGpxcoraledge;edgeoutsidehalfexpandsnonbluecounter."
+  },
+  "finalSourceEvidence": {
+    "codeSHA": "5f318730e928fd3e6d05dcdb7b34dbfc13247c59",
+    "sourceSHA256": {
+      "src/reference/ReferenceScene.tsx": "002de313c086ef49ab7c4abfe7000c716c292f62c123063f185e4def87f08ce2",
+      "src/reference/reference-aligned.css": "e2b5ea99a42d5c6e522b69615d2c90725bd0f094ec6903ecda8b4d91625ca167"
+    },
+    "scope": "Only final app change versus PASS2: A counter edge stroke-width11 to3.5 SVGpx. Same pixel criteria; no further optimization suggested."
+  }
+}

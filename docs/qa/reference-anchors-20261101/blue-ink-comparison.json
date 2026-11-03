@@ -1,0 +1,32 @@
+{
+  "roi": [
+    450,
+    20,
+    1250,
+    270
+  ],
+  "criterion": "R<90,G<145,B>115,B>1.6R,B>1.12G",
+  "scope": "Simple threshold in equal1536x1024frames; not a perceived-fidelity score.",
+  "results": [
+    {
+      "image": "reference",
+      "path": "public/images/store-reference-approved.webp",
+      "blueBounds": [
+        507,
+        67,
+        1180,
+        234
+      ]
+    },
+    {
+      "image": "current",
+      "path": "docs/qa/reference-anchors-20261101/final-4be846f/read-only/1536-entry.png",
+      "blueBounds": [
+        493,
+        60,
+        1205,
+        245
+      ]
+    }
+  ]
+}

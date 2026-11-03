@@ -1,0 +1,147 @@
+✖ manual pack journey {"mix":"single"} (251.067721ms)
+✖ manual pack journey {"mix":"mixed"} (138.93274ms)
+✖ manual pack journey {"format":"mini","quantity":24} (101.254013ms)
+✖ combo requires two bagels and one schmear (97.754207ms)
+✔ standalone 120 grams (79.35502ms)
+✔ standalone 180 grams (91.387282ms)
+✔ standalone 240 grams (83.120327ms)
+✖ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (86.475514ms)
+✔ conflicting mode fails closed {"sandboxMode":true} (87.567811ms)
+✔ conflicting mode fails closed {"reviewOnly":true} (94.632541ms)
+✔ conflicting mode fails closed {"sandboxMode":true,"reviewOnly":true} (72.748044ms)
+✔ manual payment scene cannot expose form; incomplete selection has no link (81.629363ms)
+✔ manual cart copy confirms price later and progress excludes payment (82.6121ms)
+✔ even hostile enabled payment and QA state cannot mount payment in manual mode (92.77745ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 9
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1697.647149
+
+✖ failing tests:
+
+test at tests/manual-inquiry-journey.test.cjs:105:82
+✖ manual pack journey {"mix":"single"} (251.067721ms)
+  AssertionError [ERR_ASSERTION]: visible size must match the selected product, not only the contact message
+  + actual - expected
+  
+  + null
+  - [
+  -   '120 g'
+  - ]
+  
+      at assertVisibleSchmearSize (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:103:10)
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:107:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [ '120 g' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:105:82
+✖ manual pack journey {"mix":"mixed"} (138.93274ms)
+  AssertionError [ERR_ASSERTION]: visible size must match the selected product, not only the contact message
+  + actual - expected
+  
+  + null
+  - [
+  -   '120 g'
+  - ]
+  
+      at assertVisibleSchmearSize (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:103:10)
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:107:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [ '120 g' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:105:82
+✖ manual pack journey {"format":"mini","quantity":24} (101.254013ms)
+  AssertionError [ERR_ASSERTION]: visible size must match the selected product, not only the contact message
+  + actual - expected
+  
+  + null
+  - [
+  -   '120 g'
+  - ]
+  
+      at assertVisibleSchmearSize (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:103:10)
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:107:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [ '120 g' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:118:1
+✖ combo requires two bagels and one schmear (97.754207ms)
+  AssertionError [ERR_ASSERTION]: visible size must match the selected product, not only the contact message
+  + actual - expected
+  
+  + null
+  - [
+  -   '120 g'
+  - ]
+  
+      at assertVisibleSchmearSize (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:103:10)
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:122:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [ '120 g' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:131:1
+✖ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (86.475514ms)
+  AssertionError [ERR_ASSERTION]: outgoing contact icon must be an inline vector, independent of installed fonts
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:139:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

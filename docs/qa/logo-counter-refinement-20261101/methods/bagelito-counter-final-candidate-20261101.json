@@ -1,0 +1,286 @@
+{
+  "selectedAsset": "/workspace/generated_images/exec-36b58e1b-55b0-4d0a-89f3-262b85cca7a6.png",
+  "sha256": "3350bfefeccc2e88afdc6197737075b3c81d40ac77fb8c77268b8abef3f38afc",
+  "bytes": 1738825,
+  "dimensions": [
+    2020,
+    778
+  ],
+  "mode": "RGBA",
+  "alphaGt8": [
+    24,
+    189,
+    1997,
+    647
+  ],
+  "scope": "Latest explicitly authorized native intermediate render, not a cropped user screenshot; no further generations. Acceptable as measured improvement, not pixel-perfect final.",
+  "counts": {
+    "bagels": 8,
+    "schmears": 5,
+    "blankPlacards": 13
+  },
+  "measuredSourceLandmarks": {
+    "leftFrontCyanPeak": 57,
+    "bagelRightInnerCyan": 1080,
+    "nextSchmearJambCyan": 1107,
+    "frontTopRail": 211,
+    "middleSteelEdges": [
+      394,
+      416
+    ],
+    "lowerGreenRail": 586,
+    "steelInnerBase": 615,
+    "rightColumn": 1967
+  },
+  "geometryAssessment": {
+    "intermediateBetweenRejectedLayouts": true,
+    "dividerPrimaryJambPercent": 54.801980198019805,
+    "bagelInnerPercent": 53.46534653465347,
+    "requestedDividerSource": 1113,
+    "primaryJambDelta": -6,
+    "sameInnerPlaneDelta": -33,
+    "leftColumnStillOff": 34,
+    "noFoodSquashObserved": true,
+    "verticalSourceVariationFrom4feba": "front/mid/lower rails -2px, innerbase -3px; alpha top -5,bottom+2"
+  },
+  "sourcePlacardCenters": {
+    "plain": [
+      207,
+      372.5
+    ],
+    "everything": [
+      453.5,
+      372
+    ],
+    "sesame": [
+      702,
+      372
+    ],
+    "classic-onion": [
+      956,
+      373.5
+    ],
+    "jalapeno-cheddar": [
+      188,
+      556.5
+    ],
+    "cheddar": [
+      439,
+      557
+    ],
+    "cinnamon-raisin": [
+      696.5,
+      556.5
+    ],
+    "blueberry": [
+      956.5,
+      557
+    ],
+    "original": [
+      1248.5,
+      413
+    ],
+    "aji": [
+      1513,
+      413.5
+    ],
+    "herbs": [
+      1795,
+      413.5
+    ],
+    "honey": [
+      1314.5,
+      560.5
+    ],
+    "strawberry": [
+      1742.5,
+      560.5
+    ]
+  },
+  "sourcePlacardThresholdBoxes": {
+    "plain": [
+      110,
+      351,
+      304,
+      394
+    ],
+    "everything": [
+      355,
+      351,
+      552,
+      393
+    ],
+    "sesame": [
+      595,
+      351,
+      809,
+      393
+    ],
+    "classic-onion": [
+      857,
+      353,
+      1055,
+      394
+    ],
+    "jalapeno-cheddar": [
+      87,
+      533,
+      289,
+      580
+    ],
+    "cheddar": [
+      338,
+      534,
+      540,
+      580
+    ],
+    "cinnamon-raisin": [
+      588,
+      533,
+      805,
+      580
+    ],
+    "blueberry": [
+      854,
+      534,
+      1059,
+      580
+    ],
+    "original": [
+      1142,
+      391,
+      1355,
+      435
+    ],
+    "aji": [
+      1397,
+      391,
+      1629,
+      436
+    ],
+    "herbs": [
+      1670,
+      391,
+      1920,
+      436
+    ],
+    "honey": [
+      1169,
+      536,
+      1460,
+      585
+    ],
+    "strawberry": [
+      1577,
+      536,
+      1908,
+      585
+    ]
+  },
+  "placardMeasurementMethod": "At known panel row detect alpha>240, channelmin>155 and channelrange<22; center each continuous gray run, then gray vertical span at its midpoint. Bounds exclude dark bevels, so use as positioning measurements, not pan silhouette.",
+  "rootProposedUniformFit": {
+    "scale": 0.741904761904762,
+    "wholeWidth": 1498.6476190476192,
+    "absoluteImageX": 63.71142857142857,
+    "absoluteImageY": 437.6975238095238,
+    "centresScreen": {
+      "plain": [
+        217.286,
+        714.057
+      ],
+      "everything": [
+        400.165,
+        713.686
+      ],
+      "sesame": [
+        584.529,
+        713.686
+      ],
+      "classic-onion": [
+        772.972,
+        714.799
+      ],
+      "jalapeno-cheddar": [
+        203.19,
+        850.568
+      ],
+      "cheddar": [
+        389.408,
+        850.938
+      ],
+      "cinnamon-raisin": [
+        580.448,
+        850.568
+      ],
+      "blueberry": [
+        773.343,
+        850.938
+      ],
+      "original": [
+        989.98,
+        744.104
+      ],
+      "aji": [
+        1186.213,
+        744.475
+      ],
+      "herbs": [
+        1395.43,
+        744.475
+      ],
+      "honey": [
+        1038.945,
+        853.535
+      ],
+      "strawberry": [
+        1356.48,
+        853.535
+      ]
+    },
+    "mappedLandmarks": {
+      "frontTop": 594.239,
+      "midTop": 730.008,
+      "midBottom": 746.33,
+      "lowerGreen": 872.454,
+      "innerBase": 893.969,
+      "outerAlphaFoot": 917.71
+    },
+    "mappedColumns": {
+      "left": 106.0,
+      "bagelInner": 864.969,
+      "schmearJamb": 885.0,
+      "right": 1523.038,
+      "alphaRight": 1545.295
+    },
+    "rightViewportClipStartsAtSourceX": 1984.4711168164313,
+    "clippedAlphaGt128SourceBBox": [
+      1985,
+      519,
+      1996,
+      646
+    ],
+    "all13PlacardsInsideViewport": true,
+    "pixelInspection": "Clipped right strip contains outer steel/glass edge/shadow; all thirteen panels and food masses visibly end left of that strip. Do not call the entire asset uncropped.",
+    "importantPlaneCaveat": "This fit maps nextSchmearJamb1107 to reference bagelInner885. Same-plane reference was885 for bagelInner and907 for nextSchmearJamb; mapped inner865/next885 are20/22px left of those landmarks. It is a tradeoff, not exact paired-jamb alignment."
+  },
+  "alternativeSameBagelPlaneFit": {
+    "scale": 0.761485826001955,
+    "absoluteX": 62.59530791788856,
+    "mappedBagelInner": 885.0,
+    "mappedSchmearJamb": 905.5601173020528,
+    "mappedRightColumn": 1560.437927663734,
+    "limitation": "Fixes left/bagel-inner but pushes right column beyond1536; not recommended without separate uniform case windows or accepting a right gap/clip. Do not nonuniformly stretch food."
+  },
+  "priorGeometryCandidates": [
+    {
+      "path": "/workspace/generated_images/exec-4feba6dd-bef4-468e-a2c3-6f76ab1adeed.png",
+      "rejectFor": "right primary jamb1183 versus target1113; leftcolumn63; height improved"
+    },
+    {
+      "path": "/workspace/generated_images/exec-3af9ba7a-4fc4-4aca-9d77-17240ddafcd7.png",
+      "rejectFor": "horizontal overshoot primaryjamb1025 and extra canvaspixel779height; height/counts preserved"
+    }
+  ],
+  "mobilePreservation": "To retain existing mobile pixels/layout, keep old mobile SVG image+old center coordinates; serve this selected asset and new center coordinates for desktop only. Replacing the shared old asset also requires mobile viewBox/coordinate changes and fresh mobile QA.",
+  "repositoryEdits": false
+}

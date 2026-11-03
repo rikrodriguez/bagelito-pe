@@ -1,0 +1,46 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:product-lines
+> node --test --test-concurrency=1 tests/sql/product-lines.test.cjs
+
+✔ policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged (3639.311052ms)
+✔ pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once (44.130714ms)
+✔ all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels (53.150405ms)
+✔ all four ordinary pack prices and pack-plus-pot prices match existing contract (39.631695ms)
+✔ all district delivery fees are recomputed in SQL rather than trusted from caller (68.112519ms)
+✔ exact replay returns original identity/expiry with no second order, line or history (17.729174ms)
+✔ canonical bagel row order does not change the replay identity (16.963921ms)
+✔ same-price schmear substitution and same-total bagel substitution are rejected (31.90323ms)
+✔ changed customer, delivery, terms or missing snapshot never reuse an existing session (50.837319ms)
+✔ tampered persisted bagel rows, total and snapshot fail replay without repair or second charge (28.989761ms)
+✔ expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake (192.951926ms)
+✔ zero-bagel standalone consumes one order slot, not bagel capacity (23.521081ms)
+✔ bagel capacity and closed/future/missing-delivery batches remain fail closed (131.07673ms)
+✔ new expired or overly long holds cannot reserve capacity (24.65593ms)
+✔ fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically (44.418918ms)
+✔ unpriced combos and extras cannot be given an invented selling price at either boundary (19.351187ms)
+✔ legal trigger mismatch rolls back the entire transaction including bagels/history (19.841146ms)
+✔ failure after order/item insert rolls back all partial records (20.364765ms)
+✔ anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes (23.151673ms)
+✔ new migration replay preserves enabled policy, snapshot data and financial core definitions (40.356727ms)
+✔ unrecognized relation collision and schema drift fail before replacing own objects (45.64802ms)
+✔ existing financial token preparation sees the complete total and does not claim a provider payment (29.171123ms)
+✔ new adapter is not imported by any current public API route (17.064192ms)
+✔ missing financial prerequisite fails migration without creating product objects (1588.141599ms)
+✔ unknown or altered function definition is not silently replaced on migration replay (42.004514ms)
+✔ persisted snapshot substitution is detected, never repaired or used as a new price (24.932683ms)
+✔ service-only snapshot reader works after payment and closed intake without another reservation (23.667337ms)
+✔ snapshot reader returns no record for unknown order and rejects inconsistent stored money (17.458132ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6802.840095
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -1,0 +1,26 @@
+{
+  "codeSHA": "4be846f06e0cf8ab4ba20df37b114104f96955db",
+  "comparedTo": "7cd5c456a4d041a0696cfa5cef54ca046aa0af24",
+  "callbacksUnchanged": 8,
+  "helpersUnchanged": [
+    "qa-rebuilt-geometry.cjs",
+    "qa-rebuilt-composition.cjs",
+    "qa-rebuilt-safety.cjs",
+    "qa-reference-review-steps.cjs",
+    "qa-reference-text-geometry.cjs",
+    "qa-reference-secondary-readability.cjs"
+  ],
+  "protectedFilesUnchanged": [
+    "package.json",
+    "vercel.json",
+    "src/reference/ReferenceStorefront.tsx",
+    "src/reference/rebuilt-flow.css",
+    "src/playable/GuidedCommerce.tsx"
+  ],
+  "autodeploy": false,
+  "retiredCopyAbsent": true,
+  "changedSrc": [
+    "src/reference/ReferenceScene.tsx",
+    "src/reference/reference-aligned.css"
+  ]
+}

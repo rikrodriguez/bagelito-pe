@@ -1,0 +1,35 @@
+[
+  {
+    "stage": "entry",
+    "command": [
+      "npm",
+      "run",
+      "qa:reference:entry"
+    ],
+    "widths": "1280,1920",
+    "scenarios": null,
+    "startedAt": "2026-11-01T14:34:28.621304+00:00",
+    "codeSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+    "log": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/entry.log",
+    "pid": 71516,
+    "exitCode": 0,
+    "endedAt": "2026-11-01T14:35:02.657970+00:00",
+    "sourcesUnchanged": true
+  },
+  {
+    "stage": "pack-390",
+    "command": [
+      "node",
+      "scripts/qa-rebuilt-storefront.cjs"
+    ],
+    "widths": "390",
+    "scenarios": "pack-flavoured",
+    "startedAt": "2026-11-01T14:35:02.706329+00:00",
+    "codeSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+    "log": "/workspace/bagelito-boutique-evidence-20261101/final-7323f9a/pack-390.log",
+    "pid": 71777,
+    "exitCode": 0,
+    "endedAt": "2026-11-01T14:35:19.200147+00:00",
+    "sourcesUnchanged": true
+  }
+]

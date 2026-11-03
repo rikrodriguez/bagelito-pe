@@ -1,0 +1,420 @@
+{
+  "codeSHA": "2199afb6b51a3321259f512242bd47268ac3300c",
+  "scope": "Focused native left/right case callbacks only, fresh navigation before each action. Not a purchase journey.",
+  "cases": [
+    {
+      "width": 320,
+      "height": 700,
+      "touch": true,
+      "callbacks": [
+        {
+          "selector": ".rebuilt-bagel-display .rebuilt-case-link",
+          "expectedScene": "pack-size",
+          "observedScene": "pack-size",
+          "method": "native touchscreen at actual label-span center",
+          "labelFontCSSPx": 15,
+          "bounds": {
+            "x": 10,
+            "y": 547.203125,
+            "width": 300,
+            "height": 44
+          },
+          "hit": {
+            "hittable": true,
+            "topHit": "rebuilt-case-label"
+          },
+          "pass": true,
+          "capture": {
+            "file": "/workspace/bagelito-boutique-evidence-20261101/anchors-2199afb/label-taps/320-pack-size.png",
+            "sha256": "d4934052c403f299808c6a03aec84b7b896bf734877cfed446d070463dc02131"
+          }
+        },
+        {
+          "selector": ".rebuilt-schmear-display .rebuilt-case-link",
+          "expectedScene": "schmear-size",
+          "observedScene": "schmear-size",
+          "method": "native touchscreen at actual label-span center",
+          "labelFontCSSPx": 15,
+          "bounds": {
+            "x": 10,
+            "y": 462.171875,
+            "width": 300,
+            "height": 44
+          },
+          "hit": {
+            "hittable": true,
+            "topHit": "rebuilt-case-label"
+          },
+          "pass": true,
+          "capture": {
+            "file": "/workspace/bagelito-boutique-evidence-20261101/anchors-2199afb/label-taps/320-schmear-size.png",
+            "sha256": "46f588c86f44857654b1ca89918c773cd41422cb0d4a72278830e34c0c7f28f3"
+          }
+        }
+      ],
+      "safetyFailures": [],
+      "traffic": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/ReferenceStorefront-BmJtejQn.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/routes-Dzf2E-JX.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/ReferenceStorefront-CwSXv3Ca.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/index-CkhJEOQe.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-room-mobile.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-combo.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-counter.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/bagel-everything.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/bagel-plain.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/ReferenceStorefront-BmJtejQn.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/routes-Dzf2E-JX.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/ReferenceStorefront-CwSXv3Ca.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-combo.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/assets/index-CkhJEOQe.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-room-mobile.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-counter.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3250/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          }
+        ],
+        "legalRedirects": [],
+        "blocked": [],
+        "errors": [],
+        "expectedClosingErrors": [],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64907)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64983",
+            "documentId": "1793549103012.7:fbty031jom5",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3250/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65028)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65097",
+            "documentId": "1793549103012.7:fbty031jom5",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3250/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64907)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64983",
+            "documentId": "1793549103942.8:3bdr4c5seh6",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3250/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65028)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65097",
+            "documentId": "1793549103942.8:3bdr4c5seh6",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3250/",
+            "pageId": 1
+          }
+        ],
+        "documents": [
+          {
+            "kind": "document-init",
+            "documentId": "1793549102945.1:q7cdm4o837",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793549103012.7:fbty031jom5",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3250/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793549103942.8:3bdr4c5seh6",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3250/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793549104710.9:9qqplm1iiqn",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          }
+        ],
+        "pages": [
+          {
+            "id": 1,
+            "url": "about:blank",
+            "closed": true
+          }
+        ],
+        "pageErrors": [],
+        "consoleErrors": [],
+        "assets": [
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-room-mobile.webp",
+            "contentType": "image/webp",
+            "sha256": "12a0629770075556bd27a86a6f6489a9f598599173c9336fcfd472be00a63dfc"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-combo.webp",
+            "contentType": "image/webp",
+            "sha256": "8bf111ef1cd6b37642c0a472dabe95e01636925e575d08f5aed4df37b9a6a763"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-counter.webp",
+            "contentType": "image/webp",
+            "sha256": "490bbcf7545bf3d2deb3bbbc8768358765b710010145101ce4325ef176496074"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/bagel-everything.webp",
+            "contentType": "image/webp",
+            "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/bagel-plain.webp",
+            "contentType": "image/webp",
+            "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-combo.webp",
+            "contentType": "image/webp",
+            "sha256": "8bf111ef1cd6b37642c0a472dabe95e01636925e575d08f5aed4df37b9a6a763"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-room-mobile.webp",
+            "contentType": "image/webp",
+            "sha256": "12a0629770075556bd27a86a6f6489a9f598599173c9336fcfd472be00a63dfc"
+          },
+          {
+            "url": "http://127.0.0.1:3250/images/rebuilt-aligned-counter.webp",
+            "contentType": "image/webp",
+            "sha256": "490bbcf7545bf3d2deb3bbbc8768358765b710010145101ce4325ef176496074"
+          }
+        ],
+        "callbackErrors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793549103012.7:fbty031jom5",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64907)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65028)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65097",
+              "url": "http://127.0.0.1:3250/"
+            },
+            {
+              "documentId": "1793549103942.8:3bdr4c5seh6",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64907)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65028)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65097",
+              "url": "http://127.0.0.1:3250/"
+            }
+          ],
+          "errors": [],
+          "documentCount": 2
+        }
+      },
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793549103012.7:fbty031jom5",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64907)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65028)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65097",
+            "url": "http://127.0.0.1:3250/"
+          },
+          {
+            "documentId": "1793549103942.8:3bdr4c5seh6",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64907)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65028)\n    at http://127.0.0.1:3250/assets/index-CkhJEOQe.js:10:65097",
+            "url": "http://127.0.0.1:3250/"
+          }
+        ],
+        "errors": [],
+        "documentCount": 2
+      }
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-11-01T16:05:04.794Z"
+}

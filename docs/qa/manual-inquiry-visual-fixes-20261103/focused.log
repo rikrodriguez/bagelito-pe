@@ -1,0 +1,30 @@
+✔ availability false returns only a boolean capability and is private/uncached (103.616056ms)
+✔ availability true returns only a boolean capability and is private/uncached (14.862122ms)
+✔ manual document declares private no-store and noindex independently of availability (11.31793ms)
+✔ manual route is closed by default, with payments enabled or any non-exact opt-in (1.242884ms)
+✔ only an explicit contact-only flag plus exact HTTPS origin enables the route (2.883226ms)
+✔ malformed, credentialed, insecure and non-origin configuration fails closed (0.354654ms)
+✔ forwarded headers cannot enable an unapproved request origin (0.820887ms)
+✔ HTTP is allowed only on an explicitly configured loopback development origin (0.692103ms)
+✔ manual pack journey {"mix":"single"} (286.106889ms)
+✔ manual pack journey {"mix":"mixed"} (137.475517ms)
+✔ manual pack journey {"format":"mini","quantity":24} (118.507016ms)
+✔ combo requires two bagels and one schmear (110.798375ms)
+✔ standalone 120 grams (81.448418ms)
+✔ standalone 180 grams (75.341813ms)
+✔ standalone 240 grams (84.843531ms)
+✔ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (92.038841ms)
+✔ conflicting mode fails closed {"sandboxMode":true} (78.481831ms)
+✔ conflicting mode fails closed {"reviewOnly":true} (84.436581ms)
+✔ conflicting mode fails closed {"sandboxMode":true,"reviewOnly":true} (67.972618ms)
+✔ manual payment scene cannot expose form; incomplete selection has no link (93.823363ms)
+✔ manual cart copy confirms price later and progress excludes payment (68.756013ms)
+✔ even hostile enabled payment and QA state cannot mount payment in manual mode (87.990917ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1768.240223

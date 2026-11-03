@@ -7,7 +7,7 @@ const assert = require('node:assert/strict')
 const vm = require('node:vm')
 const fs = require('node:fs')
 const { resolve } = require('node:path')
-const { execFileSync } = require('node:child_process')
+const { createHash } = require('node:crypto')
 const { tmpdir } = require('node:os')
 const root = resolve(__dirname, '..')
 assert.ok(process.env.QA_HDR_FIXTURE_PATH, 'Set QA_HDR_FIXTURE_PATH to the pinned HDR fixture used by qa:3d')
@@ -15,7 +15,10 @@ const fixturePath = resolve(process.env.QA_HDR_FIXTURE_PATH)
 const outputRoot = fs.mkdtempSync(resolve(tmpdir(), 'bagelito-world-driver-'))
 after(() => fs.rmSync(outputRoot, {recursive: true, force: true}))
 const current = fs.readFileSync(resolve(root, 'scripts/qa-world-tour.cjs'), 'utf8')
-const original = execFileSync('git', ['show', '925c050659ac7682488a9bc9c9c4906787663eb1:scripts/qa-world-tour.cjs'], {cwd: root, encoding: 'utf8'})
+// Exact historical source, pinned locally so fresh/shallow clones keep both
+// the unchanged-logic assertions and the opt-in red-baseline replay offline.
+const original = fs.readFileSync(resolve(__dirname, 'fixtures/qa-world-tour.925c050.cjs.txt'), 'utf8')
+assert.equal(createHash('sha256').update(original).digest('hex'), '1451c7fec8951f160689f4db1667c8a524f7e1183f0423556d9d06f819578230')
 const originalMode = process.env.QA_DRIVER_TEST_ORIGINAL === 'true'
 const source = originalMode ? original : current
 const currentGuardTest = (name, run) => test(name, {skip: originalMode ? 'This guard does not exist in the historical baseline' : false}, run)

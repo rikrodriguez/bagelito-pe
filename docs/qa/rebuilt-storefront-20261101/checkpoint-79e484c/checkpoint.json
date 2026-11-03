@@ -1,0 +1,48 @@
+{
+  "status": "WIP; sufficient final regressions in progress",
+  "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "executed": {
+    "buildExitCode": 0,
+    "node": "58/58 PASS; 0 skips",
+    "entry": "7/7 PASS; 21 category + 14 vitrine callbacks; new image-copy composition assertion PASS",
+    "desktopJourneys": "5/5 PASS in1280; all five paths +5legal tabs; 0 flags"
+  },
+  "pending": {
+    "mobileFocused": "4cases: pack-flavoured/combo×320/390; active runner",
+    "responsive": "3pack-decline cases768/1024/844; not started",
+    "decodedEntry": "7viewports on immutable79; pending"
+  },
+  "scope": "First-pixels files are viewport captures with natural scroll below fold; combo-full captures show image/copy separation. Oldb974 rounds retain failures; not attributed to79. No deployment, preview change or real payment/order.",
+  "captures": [
+    {
+      "file": "390-entry-01-first-pixels.png",
+      "sha256": "73202258e0a18db79a39f810d9559e4039cb30087a8e1e72ec87658951836c3e",
+      "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89"
+    },
+    {
+      "file": "390-entry-05-scene-combos-full.png",
+      "sha256": "d7db05e445d183c510f139d97d77fae3b6e1b555d47510182a7e8f30ba4b2721",
+      "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89"
+    },
+    {
+      "file": "768-entry-01-first-pixels.png",
+      "sha256": "f1cc5c7684e5c66ab426a2be8a1ce5d312a8641d7a3ca73b4004902affeb7a00",
+      "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89"
+    },
+    {
+      "file": "768-entry-05-scene-combos-full.png",
+      "sha256": "8bdd23ddcf9fda8bc946e196a7b68991822a3df3afc464dd0d6e64b5ce804789",
+      "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89"
+    },
+    {
+      "file": "1920-entry-01-first-pixels.png",
+      "sha256": "506e8bd7f3c4c58c9d259a5d47ad0246985b83901bb7fb786a740001621a6265",
+      "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89"
+    },
+    {
+      "file": "1920-entry-05-scene-combos-full.png",
+      "sha256": "3a1cc28be32a130d8d82b0c69b015635571771dffca8a0b6118cd632aef9f5e4",
+      "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89"
+    }
+  ]
+}

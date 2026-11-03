@@ -1,0 +1,19 @@
+# SQL36
+# cwd: /workspace/bagelito-status-84425e3
+NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs
+
+# Initial typecheck missing dependencies
+# cwd: /workspace/bagelito-status-84425e3
+NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node /workspace/sql-validation-f6f96bb/typescript-loader/node_modules/typescript/bin/tsc --noEmit
+
+# Initial build missing dependencies
+# cwd: /workspace/bagelito-status-84425e3
+NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' npm run build
+
+# Final typecheck exact reconstructed installation
+# cwd: /workspace/bagelito-status-84425e3
+NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=1 UV_THREADPOOL_SIZE=1 node node_modules/typescript/bin/tsc --noEmit
+
+# Full final build exact reconstructed installation
+# cwd: /workspace/bagelito-status-84425e3
+NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=1 UV_THREADPOOL_SIZE=1 npm run build

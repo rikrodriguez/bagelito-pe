@@ -1,0 +1,215 @@
+✖ unmount during reservation prevents preparation and opening abandoned Culqi widget (129.233457ms)
+✖ changed order invalidates pending reservation instead of continuing with old details (41.388281ms)
+✖ changed customer invalidates pending reservation instead of continuing with old details (34.536547ms)
+✖ late recovered paid response after unmount never calls parent confirmation (27.167812ms)
+✖ double-click payment recovery coalesces one pending status request (27.434635ms)
+✖ recovery refuses confirmation for different order code (23.672756ms)
+✖ recovery refuses confirmation for invalid amount (25.370961ms)
+✖ recovery refuses confirmation for contradictory transport status (32.74367ms)
+✖ recovery refuses confirmation for contradictory order state (20.359204ms)
+✔ recovery refuses confirmation for reconciliation flagged (20.4497ms)
+✖ recovery refuses confirmation for malformed supplied snapshot (21.137891ms)
+✖ valid recovered payment without product snapshot explicitly omits editable cart details (25.455488ms)
+✖ unmount during payment preparation prevents late widget opening (29.207412ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 1
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 770.179065
+
+✖ failing tests:
+
+test at tests/culqi-ui-lifecycle.test.cjs:62:1
+✖ unmount during reservation prevents preparation and opening abandoned Culqi widget (129.233457ms)
+  AssertionError [ERR_ASSERTION]: stale reservation must not prepare another payment request
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:64:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:66:41
+✖ changed order invalidates pending reservation instead of continuing with old details (41.388281ms)
+  AssertionError [ERR_ASSERTION]: changed checkout identity must invalidate pending continuation
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:70:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:66:41
+✖ changed customer invalidates pending reservation instead of continuing with old details (34.536547ms)
+  AssertionError [ERR_ASSERTION]: changed checkout identity must invalidate pending continuation
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:70:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:72:1
+✖ late recovered paid response after unmount never calls parent confirmation (27.167812ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:74:69)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:76:1
+✖ double-click payment recovery coalesces one pending status request (27.434635ms)
+  AssertionError [ERR_ASSERTION]: actual recovery button exists
+      at Object.click (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:53:186)
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:79:24)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:89:3
+✖ recovery refuses confirmation for different order code (23.672756ms)
+  AssertionError [ERR_ASSERTION]: incomplete or mismatched evidence cannot become a receipt
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:91:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:89:3
+✖ recovery refuses confirmation for invalid amount (25.370961ms)
+  AssertionError [ERR_ASSERTION]: incomplete or mismatched evidence cannot become a receipt
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:91:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:89:3
+✖ recovery refuses confirmation for contradictory transport status (32.74367ms)
+  AssertionError [ERR_ASSERTION]: incomplete or mismatched evidence cannot become a receipt
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:91:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:89:3
+✖ recovery refuses confirmation for contradictory order state (20.359204ms)
+  AssertionError [ERR_ASSERTION]: incomplete or mismatched evidence cannot become a receipt
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:91:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:89:3
+✖ recovery refuses confirmation for malformed supplied snapshot (21.137891ms)
+  AssertionError [ERR_ASSERTION]: incomplete or mismatched evidence cannot become a receipt
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:91:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:94:1
+✖ valid recovered payment without product snapshot explicitly omits editable cart details (25.455488ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'detailsAvailable')
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:97:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/culqi-ui-lifecycle.test.cjs:100:1
+✖ unmount during payment preparation prevents late widget opening (29.207412ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/culqi-ui-lifecycle.test.cjs:104:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

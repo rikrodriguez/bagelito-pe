@@ -1,0 +1,15 @@
+{
+  "original": "/workspace/generated_images/exec-36b58e1b-55b0-4d0a-89f3-262b85cca7a6.png",
+  "originalSHA256": "3350bfefeccc2e88afdc6197737075b3c81d40ac77fb8c77268b8abef3f38afc",
+  "runtime": "public/images/rebuilt-aligned-counter-desktop.webp",
+  "runtimeSHA256": "3a19a37ebbedc735599e719e6b3b9feb80358937fcf288758e2a68483372642f",
+  "dimensions": [
+    2020,
+    778
+  ],
+  "bytes": 1247534,
+  "rawRGBAEqual": true,
+  "RGBA8SHA256": "855f2a27e3f6dcbe5c565f87d6cdc039998a9311a8da729790aebb5ce24a589f",
+  "encodingOnly": true,
+  "scope": "New native-edited conceptual desktop counter; previous counter retained on mobile, no original-reference raster request."
+}

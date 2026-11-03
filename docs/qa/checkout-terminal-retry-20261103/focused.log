@@ -1,0 +1,34 @@
+✔ full-product flag defaults closed and never appears in public configuration (191.606758ms)
+✔ explicit Origin, matching proxy origin, same-site metadata and every intake flag remain mandatory (81.848791ms)
+✔ order: complete guided reservations cannot enter live, production, review-only or closed sandbox lanes (83.160838ms)
+✔ order: cross-site guided payment cannot reach preparation or provider (54.221953ms)
+✔ order: allowed sandbox preserves complete pack/pot contract and exact namespace (90.362948ms)
+✔ order: unknown guided contracts stay closed even with sandbox opt-in (64.802652ms)
+✔ order: legacy reservation keeps its existing live path without the new opt-in (15.572981ms)
+✔ charge: complete guided reservations cannot enter live, production, review-only or closed sandbox lanes (79.616959ms)
+✔ charge: cross-site guided payment cannot reach preparation or provider (63.088671ms)
+✔ charge: allowed sandbox preserves complete pack/pot contract and exact namespace (87.445252ms)
+✔ charge: unknown guided contracts stay closed even with sandbox opt-in (59.342727ms)
+✔ charge: legacy reservation keeps its existing live path without the new opt-in (15.308482ms)
+✔ order: failed payment state cannot prepare or submit another charge (10.531575ms)
+✔ order: expired payment state cannot prepare or submit another charge (12.889688ms)
+✔ order: refunded payment state cannot prepare or submit another charge (10.578216ms)
+✔ order: unexpected payment state cannot prepare or submit another charge (12.23427ms)
+✔ order: null payment state cannot prepare or submit another charge (11.960378ms)
+✔ order: undefined payment state cannot prepare or submit another charge (10.490954ms)
+✔ order: already paid state never creates a new attempt (10.376932ms)
+✔ charge: failed payment state cannot prepare or submit another charge (13.715963ms)
+✔ charge: expired payment state cannot prepare or submit another charge (11.760616ms)
+✔ charge: refunded payment state cannot prepare or submit another charge (16.424984ms)
+✔ charge: unexpected payment state cannot prepare or submit another charge (19.393436ms)
+✔ charge: null payment state cannot prepare or submit another charge (11.903572ms)
+✔ charge: undefined payment state cannot prepare or submit another charge (16.987306ms)
+✔ charge: already paid state never creates a new attempt (13.582612ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1379.585349

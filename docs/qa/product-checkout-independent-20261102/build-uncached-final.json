@@ -1,0 +1,14 @@
+{
+  "label": "build-uncached-final",
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "started_utc": "2026-11-02T21:36:47.883926+00:00",
+  "elapsed_seconds": 15.209,
+  "returncode": 0,
+  "environment": "minimal explicit allowlist; no inherited credentials",
+  "node_options": "--max-old-space-size=512 --max-semi-space-size=4",
+  "max_child_rss_kib": 533160
+}

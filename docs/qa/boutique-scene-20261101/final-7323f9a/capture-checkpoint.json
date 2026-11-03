@@ -1,0 +1,22 @@
+{
+  "codeSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+  "scope": "Current actual first screenshots after user-requested rejected copy removal. Geometry0 and copy-absence checked on these two viewports; affected functional QA still running at checkpoint. Not visual acceptance.",
+  "files": [
+    {
+      "path": "docs/qa/boutique-scene-20261101/final-7323f9a/read-only/1536-entry.png",
+      "sha256": "14c0d1e9e6b11130ac68f70fcc6765c8789a8d4c64f88d64f9fa7797f8cdb3ab"
+    },
+    {
+      "path": "docs/qa/boutique-scene-20261101/final-7323f9a/read-only/1536-entry-full.png",
+      "sha256": "ebd353380ce95f07bc8b95a93850a7b2dd8d01a62182f1be3b343dd3d1cadbc8"
+    },
+    {
+      "path": "docs/qa/boutique-scene-20261101/final-7323f9a/read-only/390-entry.png",
+      "sha256": "06f3b2d1468743457b3101fe098bc7debd71b911dcbda43fb04453de2f180b60"
+    },
+    {
+      "path": "docs/qa/boutique-scene-20261101/final-7323f9a/read-only/390-entry-full.png",
+      "sha256": "e8b53ee3014a92684109b130dd6ae7d05fac4eea39c71129aad655509fad87b9"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+✔ unexpired failed reservation retains the last order and bagel slot (1723.980177ms)
+✔ same-source success after failure before expiry confirms the retained reservation (31.558387ms)
+✔ expired failed hold may be replaced but its later success stays cancelled for reconciliation (41.033936ms)
+✔ duplicate failure and success deliveries do not replay payment or fulfillment transitions (32.390481ms)
+ℹ Forward pending-charge guard applied in memory
+# Baseline reproduced: synthetic provider calls=1, order=failed, attempt=failed, receipts=0
+✔ baseline: a failed webhook permits a second synthetic charge that confirmation cannot apply (1642.716958ms)
+✔ failed order cannot prepare or charge again and keeps its evidence and capacity state (43.793705ms)
+✔ pending API read followed by committed failed webhook cannot authorize a stale charge (32.782723ms)
+✔ simultaneously submitted claims have one winner and cannot repeat a provider operation (38.732469ms)
+✔ failed event queued before competing claims blocks every claim and duplicate event changes nothing (37.443436ms)
+✔ a failure committed after claim preserves the failure and blocks subsequent 3DS continuation (31.288991ms)
+✔ pending order with nonpending attempt or mismatched money cannot reopen preparation or charge (193.631658ms)
+✔ nonpending orders, review flags and invalid expiries cannot enter the provider lane (152.920658ms)
+✔ pending session preparation is idempotent and supports a single bound 3DS continuation (35.199945ms)
+✔ competing bound 3DS continuations authorize one synthetic provider operation (34.496405ms)
+✔ migration replay leaves all state and unrelated financial functions unchanged (39.457521ms)
+✔ RPCs remain service-only and missing prerequisites roll back without replacing known functions (40.557479ms)
+✔ unrecognized body is rejected before mutation: public.prepare_culqi_token_session(uuid) (1675.742784ms)
+✔ search_path drift is rejected before mutation: public.prepare_culqi_token_session(uuid) (42.09774ms)
+✔ extra function configuration is rejected before mutation: public.prepare_culqi_token_session(uuid) (33.748598ms)
+✔ security invoker drift is rejected before mutation: public.prepare_culqi_token_session(uuid) (30.460743ms)
+✔ unrecognized body is rejected before mutation: public.claim_culqi_charge(uuid,text,text,boolean) (38.215669ms)
+✔ search_path drift is rejected before mutation: public.claim_culqi_charge(uuid,text,text,boolean) (36.388601ms)
+✔ extra function configuration is rejected before mutation: public.claim_culqi_charge(uuid,text,text,boolean) (34.174229ms)
+✔ security invoker drift is rejected before mutation: public.claim_culqi_charge(uuid,text,text,boolean) (35.350913ms)
+✔ unrecognized body is rejected before mutation: public.confirm_culqi_charge_result(uuid,uuid,uuid,timestamptz,text,text,jsonb) (42.132457ms)
+✔ search_path drift is rejected before mutation: public.confirm_culqi_charge_result(uuid,uuid,uuid,timestamptz,text,text,jsonb) (32.597354ms)
+✔ extra function configuration is rejected before mutation: public.confirm_culqi_charge_result(uuid,uuid,uuid,timestamptz,text,text,jsonb) (29.596851ms)
+✔ security invoker drift is rejected before mutation: public.confirm_culqi_charge_result(uuid,uuid,uuid,timestamptz,text,text,jsonb) (30.891262ms)
+✔ strict argument semantics drift is rejected before mutation (30.238609ms)
+✔ volatility drift is rejected before mutation (26.597562ms)
+✔ parallel execution drift is rejected before mutation (30.011496ms)
+✔ missing configuration drift is rejected before mutation (33.737452ms)
+✔ argument names are part of the reviewed RPC contract (33.684211ms)
+✔ argument defaults cannot silently broaden the reviewed signature (30.481605ms)
+✔ a different procedural language cannot satisfy the prerequisite (30.600164ms)
+✔ an exposed function cannot satisfy the service-only prerequisite (26.743771ms)
+✔ missing service execution privilege cannot satisfy the prerequisite (26.439835ms)
+✔ a missing reviewed function aborts before replacing either entry point (30.631741ms)
+✔ known baseline upgrades and exact fixed replay preserve all data (34.30744ms)
+✔ a mixture of reviewed baseline and fixed entry points can complete the upgrade (65.640909ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7726.425917

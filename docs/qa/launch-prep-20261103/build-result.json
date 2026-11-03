@@ -1,0 +1,11 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "baseHead": "bbd149019b249edf4243fb4776c6acff944775be",
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 10162
+}

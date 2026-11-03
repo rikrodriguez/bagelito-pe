@@ -1,0 +1,341 @@
+✖ stalled RPC has a finite deadline, aborts, and never retries or consumes the contact (10.519063ms)
+✖ requester and contact share the same 2 s budget (2.630574ms)
+✖ late result cannot win after elapsed deadline even if timer has not fired (1.545048ms)
+✔ timely allowed response preserves exact scopes, hashing and sequential consumption (2.374248ms)
+✔ valid denial stays 429 and never advances to contact consumption (1.64586ms)
+✖ malformed truthy string fails closed with 503, not permission or misleading throttling (1.309213ms)
+✖ malformed truthy number fails closed with 503, not permission or misleading throttling (0.996992ms)
+✖ malformed truthy array fails closed with 503, not permission or misleading throttling (0.98213ms)
+✖ malformed missing boolean fails closed with 503, not permission or misleading throttling (1.198636ms)
+✖ malformed null fails closed with 503, not permission or misleading throttling (1.100518ms)
+✖ malformed array row fails closed with 503, not permission or misleading throttling (1.020748ms)
+✖ malformed false with NaN retry fails closed with 503, not permission or misleading throttling (1.426439ms)
+✖ malformed false with string retry fails closed with 503, not permission or misleading throttling (1.393911ms)
+✖ malformed false with infinite retry fails closed with 503, not permission or misleading throttling (0.954108ms)
+✖ malformed false with negative retry fails closed with 503, not permission or misleading throttling (0.878524ms)
+✖ malformed false with fractional retry fails closed with 503, not permission or misleading throttling (0.753857ms)
+✖ missing error envelope or RPC error fails closed without leaking details (1.019225ms)
+✔ missing error envelope or RPC error fails closed without leaking details (0.758533ms)
+✔ throwing transport is sanitized and clears its timer (1.018235ms)
+✔ honeypot is rejected before creating a client (0.865274ms)
+✔ valid denial retry undefined is bounded to the configured window (0.940748ms)
+✔ valid denial retry null is bounded to the configured window (0.965165ms)
+✖ valid denial retry 0 is bounded to the configured window (0.788909ms)
+✖ valid denial retry 999999 is bounded to the configured window (0.828299ms)
+✖ late completion after timeout cannot authorize or trigger contact consumption (9.382519ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 7
+ℹ fail 18
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 460.372704
+
+✖ failing tests:
+
+test at tests/public-api-security-deadline.test.cjs:50:1
+✖ stalled RPC has a finite deadline, aborts, and never retries or consumes the contact (10.519063ms)
+  AssertionError [ERR_ASSERTION]: rate-limit RPC must remain inside a deadline
+
+  0 !== 1
+
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:54:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:63:1
+✖ requester and contact share the same 2 s budget (2.630574ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:70:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:78:1
+✖ late result cannot win after elapsed deadline even if timer has not fired (1.545048ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection (unavailable).
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:80:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed truthy string fails closed with 503, not permission or misleading throttling (1.309213ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection (unavailable).
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed truthy number fails closed with 503, not permission or misleading throttling (0.996992ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection (unavailable).
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed truthy array fails closed with 503, not permission or misleading throttling (0.98213ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection (unavailable).
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed missing boolean fails closed with 503, not permission or misleading throttling (1.198636ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed null fails closed with 503, not permission or misleading throttling (1.100518ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed array row fails closed with 503, not permission or misleading throttling (1.020748ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed false with NaN retry fails closed with 503, not permission or misleading throttling (1.426439ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed false with string retry fails closed with 503, not permission or misleading throttling (1.393911ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed false with infinite retry fails closed with 503, not permission or misleading throttling (0.954108ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed false with negative retry fails closed with 503, not permission or misleading throttling (0.878524ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:112:4
+✖ malformed false with fractional retry fails closed with 503, not permission or misleading throttling (0.753857ms)
+  AssertionError [ERR_ASSERTION]: The "unavailable" validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:114:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:120:3
+✖ missing error envelope or RPC error fails closed without leaking details (1.019225ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection (unavailable).
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:122:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:142:3
+✖ valid denial retry 0 is bounded to the configured window (0.788909ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:144:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:142:3
+✖ valid denial retry 999999 is bounded to the configured window (0.828299ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  PublicApiError: Too many attempts. Please try again later.
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:144:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PublicApiError: Too many attempts. Please try again later.
+        at consume (evalmachine.<anonymous>:73:15)
+        at async Object.enforcePublicApiSecurity (evalmachine.<anonymous>:81:5),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/public-api-security-deadline.test.cjs:149:1
+✖ late completion after timeout cannot authorize or trigger contact consumption (9.382519ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-starter-hardening-20261102/tests/public-api-security-deadline.test.cjs:154:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

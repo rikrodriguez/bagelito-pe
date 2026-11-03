@@ -1,0 +1,89 @@
+✔ manual pack journey {"mix":"single"} (278.242214ms)
+✔ manual pack journey {"mix":"mixed"} (138.47042ms)
+✔ manual pack journey {"format":"mini","quantity":24} (110.276488ms)
+✖ combo requires two bagels and one schmear (86.159437ms)
+✔ standalone 120 grams (82.12532ms)
+✔ standalone 180 grams (76.097387ms)
+✔ standalone 240 grams (96.982413ms)
+✔ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (77.15313ms)
+✔ conflicting mode fails closed {"sandboxMode":true} (85.508745ms)
+✔ conflicting mode fails closed {"reviewOnly":true} (74.066152ms)
+✔ conflicting mode fails closed {"sandboxMode":true,"reviewOnly":true} (85.674354ms)
+✔ manual payment scene cannot expose form; incomplete selection has no link (69.56304ms)
+✔ manual cart copy confirms price later and progress excludes payment (80.640642ms)
+✔ even hostile enabled payment and QA state cannot mount payment in manual mode (82.570512ms)
+✔ one-flavor selection from mixed grande inquiry uses its actual single composition (101.157552ms)
+✔ one-flavor selection from mixed mini inquiry uses its actual single composition (83.362337ms)
+✔ two-flavor grande inquiry keeps its mixed composition (80.172414ms)
+✔ two-flavor mini inquiry keeps its mixed composition (73.799012ms)
+✔ cart review retains selected standalone 120 g context (86.180819ms)
+✔ cart review retains selected standalone 180 g context (72.222655ms)
+✔ cart review retains selected standalone 240 g context (66.017126ms)
+✔ removing the optional pack pot clears its size from cart review (111.648607ms)
+✔ cart and cashier identify grande 6 pack before inquiry (75.554039ms)
+✔ cart and cashier identify mini 24 pack before inquiry (84.522595ms)
+✔ normal standalone-to-pack category change clears the old pot and resets its size (68.057734ms)
+✔ normal format change clears the old mini pack quantities and optional pot (81.964105ms)
+✔ the physical box mirrors add, remove, full, back and format-reset selection (72.024456ms)
+✔ single-flavor box replacement and explicit clear action match the whole-pack behavior (81.862463ms)
+node:internal/modules/cjs/loader:1568
+  throw err;
+  ^
+
+Error: Cannot find module '../domain/lib/approved-shop-contract'
+Require stack:
+- /workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/reference-category-presentation.test.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+    at Module._load (node:internal/modules/cjs/loader:1341:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.require (node:internal/modules/cjs/loader:1674:12)
+    at require (node:internal/modules/helpers:157:16)
+    at require (/workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/reference-category-presentation.test.cjs:14:108)
+    at evalmachine.<anonymous>:8:34 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/reference-category-presentation.test.cjs'
+  ]
+}
+
+Node.js v24.22.1
+✖ tests/reference-category-presentation.test.cjs (291.594889ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 27
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3149.833051
+
+✖ failing tests:
+
+test at tests/manual-inquiry-journey.test.cjs:118:1
+✖ combo requires two bagels and one schmear (86.159437ms)
+  AssertionError [ERR_ASSERTION]: one button Bagels + schmears
+  
+  0 !== 1
+  
+      at Object.click (/workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/manual-inquiry-journey.test.cjs:66:12)
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/manual-inquiry-journey.test.cjs:119:50)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reference-category-presentation.test.cjs:1:1
+✖ tests/reference-category-presentation.test.cjs (291.594889ms)
+  'test failed'

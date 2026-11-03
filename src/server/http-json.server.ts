@@ -35,7 +35,10 @@ export async function readBoundedJsonObject(request: Request, maxBytes = 16 * 10
       chunks.push(chunk.value)
     }
   } finally {
-    try { await reader.cancel() } catch {}
+    // Cancellation is best-effort cleanup, not part of the client's deadline.
+    // An underlying source may never settle its cancel promise. Do not let it
+    // hold a timed-out/oversized request open; still handle async rejection.
+    try { void reader.cancel().catch(() => {}) } catch {}
     try { reader.releaseLock() } catch {}
   }
 

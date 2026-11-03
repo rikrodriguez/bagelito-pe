@@ -1,0 +1,5 @@
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 build
+> vite build && tsc --noEmit && npm run qa:static && npm run qa:launch && npm run qa:movement
+
+sh: 1: vite: not found

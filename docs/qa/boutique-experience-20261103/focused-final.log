@@ -1,0 +1,93 @@
+✔ manual pack journey {"mix":"single"} (287.874046ms)
+✔ manual pack journey {"mix":"mixed"} (123.84134ms)
+✔ manual pack journey {"format":"mini","quantity":24} (106.35569ms)
+✔ combo requires two bagels and one schmear (77.00794ms)
+✔ standalone 120 grams (81.822041ms)
+✔ standalone 180 grams (80.955345ms)
+✔ standalone 240 grams (80.88572ms)
+✔ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (84.991083ms)
+✔ conflicting mode fails closed {"sandboxMode":true} (73.565695ms)
+✔ conflicting mode fails closed {"reviewOnly":true} (87.999545ms)
+✔ conflicting mode fails closed {"sandboxMode":true,"reviewOnly":true} (68.343811ms)
+✔ manual payment scene cannot expose form; incomplete selection has no link (68.789442ms)
+✔ manual cart copy confirms price later and progress excludes payment (77.794494ms)
+✔ even hostile enabled payment and QA state cannot mount payment in manual mode (78.353196ms)
+✔ one-flavor selection from mixed grande inquiry uses its actual single composition (65.93951ms)
+✔ one-flavor selection from mixed mini inquiry uses its actual single composition (76.62273ms)
+✔ two-flavor grande inquiry keeps its mixed composition (68.040524ms)
+✔ two-flavor mini inquiry keeps its mixed composition (81.15087ms)
+✔ cart review retains selected standalone 120 g context (67.6328ms)
+✔ cart review retains selected standalone 180 g context (95.097955ms)
+✔ cart review retains selected standalone 240 g context (67.55291ms)
+✔ removing the optional pack pot clears its size from cart review (78.095949ms)
+✔ cart and cashier identify grande 6 pack before inquiry (77.296194ms)
+✔ cart and cashier identify mini 24 pack before inquiry (85.446569ms)
+✔ normal standalone-to-pack category change clears the old pot and resets its size (88.646391ms)
+✔ normal format change clears the old mini pack quantities and optional pot (63.711637ms)
+✔ the physical box mirrors add, remove, full, back and format-reset selection (74.1137ms)
+✖ single-flavor box replacement and explicit clear action match the whole-pack behavior (63.852443ms)
+✔ receipt disclosure defaults closed; only exact true enables the server gate (475.31589ms)
+✔ authorized sandbox paid status exposes minimal complete receipt and actual client consumes it (64.433731ms)
+✔ disclosure cannot be enabled on live or production even with explicit flag and coherent configuration (148.889506ms)
+✔ same-origin recovery remains available with intake closed or merchant review, without enabling charges (106.416561ms)
+✔ cross-origin or unconfigured requests stop before security DB and product access (223.908329ms)
+✔ missing Origin and cross-site fetch metadata never disclose products but preserve basic recovery (127.573718ms)
+✔ rate limit rejection stops before order query or snapshot and keeps no-store (55.320813ms)
+✔ invalid bounded JSON or non-string capability rejects before security and DB (313.085271ms)
+✔ matching only code or only UUID returns the same 404 without status RPC or detail (75.51351ms)
+✔ payload orderId amount payment state and products cannot override the authorized database context (37.38972ms)
+✔ legacy paid order never needs the proposed snapshot migration (59.73336ms)
+✔ non-v4 legacy capability never unlocks product details (54.319791ms)
+✔ unconfirmed reconciliating or cancelled state never fetches commercial detail (365.295779ms)
+✔ malformed status or amount fails closed without reader and without diagnostic leakage (592.142467ms)
+✔ guided money and currency must match before the snapshot read (81.369969ms)
+✔ missing corrupt wrong-order wrong-money or unpaid guided snapshot never degrades to a paid receipt (303.452617ms)
+✔ transport rejections and malformed envelopes return a generic error without automatic retry (340.134296ms)
+✔ later refund cancellation or reconciliation prevents returning a stale paid product receipt (148.74249ms)
+✔ changed amount identity capability or storage header during snapshot read fails closed (308.140321ms)
+✔ snapshot and response extensions cannot disclose contacts tokens or arbitrary item names (36.258758ms)
+✔ client rejects corrupt minimized receipts and ambiguous dual representations (56.518215ms)
+✔ valid two-decimal legacy money survives integer-cent conversion without binary floating rejection (137.479484ms)
+✔ query filters are insufficient alone: returned contradictory row identity is independently rejected (123.993164ms)
+✔ all fifteen minimal pot projections and four pack shapes validate without repricing historical money (43.705495ms)
+✔ snapshot transport ignoring abort still times out generically, retains no retry, and stops later work (2052.297184ms)
+✔ sequential observations share a global 5 s budget rather than restarting it for every DB operation (51.407132ms)
+✔ a final state response resolving beyond its budget is discarded even if its timer has not run (53.519838ms)
+✔ Packs uses a distinct proportional open-tray asset, not reference-image crops (13.652215ms)
+✔ only the three category arrows use native chevrons; cart and payment state remain intact (5.874649ms)
+✔ full step wording is desktop-entry-only; compact and narrow headers retain short labels (0.445722ms)
+✔ separate display buttons keep real text outside the photograph with numbered trays (9.222943ms)
+✔ the authentic supplied logo is used without font reconstruction or gallery badge (4.330012ms)
+✔ very narrow native-zoom layouts reflow categories and progress without smaller text (0.320273ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 60
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9736.154734
+
+✖ failing tests:
+
+test at tests/manual-inquiry-journey.test.cjs:260:1
+✖ single-flavor box replacement and explicit clear action match the whole-pack behavior (63.852443ms)
+  AssertionError [ERR_ASSERTION]: one button Vaciar caja de 24 bagels
+  
+  0 !== 1
+  
+      at Object.click (/workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/manual-inquiry-journey.test.cjs:66:12)
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-store-design-20261103/tests/manual-inquiry-journey.test.cjs:268:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

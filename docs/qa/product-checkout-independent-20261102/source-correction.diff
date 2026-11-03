@@ -1,0 +1,341 @@
+diff --git a/docs/guided-product-checkout-integration-20261102.md b/docs/guided-product-checkout-integration-20261102.md
+index 6e62772..0ae8db0 100644
+--- a/docs/guided-product-checkout-integration-20261102.md
++++ b/docs/guided-product-checkout-integration-20261102.md
+@@ -11,6 +11,9 @@ the unchanged `ReferenceStorefront` with `reviewOnly` explicitly set.
+ 1. A server-only GET function returns a single availability boolean for the
+    sandbox entry. Disabled entry renders a closed notice, without mounting the
+    commerce journey or Culqi. The page is noindex and private/no-store.
++   The entry explicitly opts into sandbox presentation: cashier and Culqi buttons
++   identify a test, and commercial WhatsApp links/contact blocks are neither
++   constructed nor rendered. Other entries retain their default presentation.
+ 2. The quote route derives complete-product capability from the private request
+    gate, never browser JSON. It recognizes regular large packs of 6/12, optional
+    120 g pot, and standalone 120/180/240 g pots using existing canonical prices.
+diff --git a/src/playable/CulqiBrowserCheckout.tsx b/src/playable/CulqiBrowserCheckout.tsx
+index de47b2d..20f3ad4 100644
+--- a/src/playable/CulqiBrowserCheckout.tsx
++++ b/src/playable/CulqiBrowserCheckout.tsx
+@@ -196,10 +196,11 @@ export function CulqiBrowserCheckout(props: {
+   customer: CheckoutCustomer
+   order: GuidedOrderPayload
+   subtotalPen: number
++  sandboxMode?: boolean
+   onPaid: (result: { orderCode: string; amountPen: number; receipt: PaidOrderReceipt }) => void
+   onReview: (message: string) => void
+ }) {
+-  const { config, customer, order, subtotalPen, onPaid, onReview } = props
++  const { config, customer, order, subtotalPen, onPaid, onReview, sandboxMode = false } = props
+   const [status, setStatus] = useState<'idle'|'loading'|'ready'|'charging'|'3ds'|'confirming'|'review'|'error'|'expired'>('idle')
+   const [message, setMessage] = useState('')
+   const checkoutRef = useRef<CheckoutInstance | null>(null)
+@@ -724,24 +725,25 @@ export function CulqiBrowserCheckout(props: {
+ 
+   if (!config.enabled) {
+     return <div className="culqi-browser-status is-locked">
+-      <b>Checkout Culqi bloqueado</b>
++      <b>{sandboxMode ? 'Prueba sandbox bloqueada' : 'Checkout Culqi bloqueado'}</b>
+       <span>Subtotal actual: S/ {subtotalPen}. Se habilitará solo cuando cliente, webhook, datos legales y batch estén listos.</span>
+     </div>
+   }
+ 
+   return <div className="culqi-browser-checkout">
+     <button type="button" className="culqi-start-button" disabled={!customerReady || status === 'loading' || status === 'charging' || status === '3ds' || status === 'confirming' || status === 'review'} onClick={() => void startCheckout()}>
++      {sandboxMode && 'Prueba sandbox · '}
+       {status === 'loading' ? 'Preparando…'
+         : status === 'expired' ? 'Reserva vencida'
+           : status === 'charging' ? 'Procesando…'
+           : status === '3ds' ? 'Autenticando banco…'
+             : status === 'confirming' ? 'Confirmando pago…'
+               : status === 'review' ? 'Pago en revisión'
+-                : 'Pagar con Culqi'}
++                : sandboxMode ? 'Iniciar prueba con Culqi' : 'Pagar con Culqi'}
+     </button>
+-    {!customerReady && <p className="culqi-browser-message">Completa tus datos y acepta los términos para habilitar el pago.</p>}
++    {!customerReady && <p className="culqi-browser-message">{sandboxMode ? 'Completa los datos de prueba autorizados y acepta los términos para habilitar la prueba sandbox.' : 'Completa tus datos y acepta los términos para habilitar el pago.'}</p>}
+     {message && <p className="culqi-browser-message">{message}</p>}
+-    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>Consultar estado del pago</button>}
++    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>{sandboxMode ? 'Consultar estado de la prueba sandbox' : 'Consultar estado del pago'}</button>}
+     <div id="culqi-checkout-container" className="culqi-browser-container" />
+   </div>
+ }
+diff --git a/src/playable/GuidedCommerce.tsx b/src/playable/GuidedCommerce.tsx
+index 92159d0..be39985 100644
+--- a/src/playable/GuidedCommerce.tsx
++++ b/src/playable/GuidedCommerce.tsx
+@@ -108,7 +108,7 @@ const SCHMEAR_SPOTS = [
+   { left: '77%', top: '20%', width: '17%', height: '61%' },
+ ] as const
+ 
+-export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, exitLabel = 'Explorar tienda 3D' }: {
++export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, sandboxMode = false, exitLabel = 'Explorar tienda 3D' }: {
+   onExit: () => void
+   customerName?: string | null
+   initialCategory?: Category | null
+@@ -116,6 +116,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
+   liveWorld?: boolean
+   referenceMode?: boolean
+   reviewOnly?: boolean
++  sandboxMode?: boolean
+   exitLabel?: string
+   onSceneChange?: (scene: string) => void
+ }) {
+@@ -664,7 +665,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
+       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
+   const canPayOnline = !reviewOnly && paymentConfig?.enabled === true && checkoutQuote?.checkoutAllowed === true
+ 
+-  const manualOrderHref = !reviewOnly && category && canReviewAtCashier
++  const manualOrderHref = !reviewOnly && !sandboxMode && category && canReviewAtCashier
+     ? createManualOrderWhatsAppHref({
+         category,
+         format: packFormat,
+@@ -1060,6 +1061,8 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
+         </div>
+         {reviewOnly
+           ? <p>Revisa tu selección, los datos de entrega y el consentimiento. Esta vista no envía pedidos ni realiza pagos.</p>
++          : sandboxMode
++          ? <p>Prueba sandbox con datos autorizados. No es una venta ni confirma una entrega.</p>
+           : paymentConfig?.enabled !== true
+           ? <p>Tu selección está lista para consultar. Bagelito confirmará el precio y la fecha de entrega por WhatsApp.</p>
+           : !quoteLoading && checkoutQuote?.reasons?.length
+@@ -1071,9 +1074,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
+         disabled={quoteLoading && !qaMode}
+         onClick={() => { if (reviewOnly || canPayOnline || qaMode) setScene('pay') }}
+       >
+-        {reviewOnly ? 'Revisar entrega y consentimiento' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
++        {reviewOnly ? 'Revisar entrega y consentimiento' : sandboxMode ? 'Continuar prueba sandbox' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
+       </button>}
+-      {!reviewOnly && <div className="guided-launch-contact">
++      {!reviewOnly && !sandboxMode && <div className="guided-launch-contact">
+         {manualOrderHref && <a
+           className={canPayOnline ? 'is-secondary' : 'is-primary'}
+           href={manualOrderHref}
+@@ -1092,7 +1095,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
+     {scene === 'pay' && <div className="guided-payment-gate">
+       <div className="guided-payment-sheet">
+         <div className="guided-payment-copy">
+-          <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : 'PAGO SEGURO'}</small>
++          <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : sandboxMode ? 'PRUEBA SANDBOX' : 'PAGO SEGURO'}</small>
+           <b>Completa tu delivery</b>
+           <span>{reviewOnly
+             ? 'Puedes revisar tus datos y el consentimiento. El pago no está activo en esta vista.'
+@@ -1126,6 +1129,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
+ 
+         {!reviewOnly && paymentConfig && checkoutQuote?.amountPen != null && <CulqiBrowserCheckout
+           config={paymentConfig}
++          sandboxMode={sandboxMode}
+           customer={checkoutCustomer}
+           subtotalPen={checkoutQuote.amountPen}
+           order={{
+diff --git a/src/routes/sandbox-checkout.tsx b/src/routes/sandbox-checkout.tsx
+index 33d4b7c..d296680 100644
+--- a/src/routes/sandbox-checkout.tsx
++++ b/src/routes/sandbox-checkout.tsx
+@@ -7,8 +7,10 @@ import '../reference/rebuilt-flow.css'
+ 
+ // Return only availability; server credentials/configuration never enter props.
+ const readSandboxAvailability = createServerFn({ method: 'GET' }).handler(async () => {
+-  const { getRequest } = await import('@tanstack/react-start/server')
++  const { getRequest, setResponseHeader } = await import('@tanstack/react-start/server')
+   const { isGuidedProductCheckoutPageAllowed } = await import('../server/payment-config.server')
++  setResponseHeader('Cache-Control', 'private, no-store, max-age=0')
++  setResponseHeader('CDN-Cache-Control', 'no-store')
+   return { enabled: isGuidedProductCheckoutPageAllowed(getRequest()) }
+ })
+ 
+@@ -46,7 +48,7 @@ function SandboxJourney() {
+     <aside role="note" style={{ padding: '1rem', background: '#fff3cd', color: '#382b00', position: 'relative', zIndex: 30 }}>
+       <strong>Entorno de pruebas Culqi.</strong> No es una venta ni autoriza entrega. Usa sólo datos de prueba autorizados; nunca una tarjeta real.
+     </aside>
+-    <GuidedCommerce referenceMode skipEntrance
++    <GuidedCommerce referenceMode skipEntrance sandboxMode
+       exitLabel="Volver a la vitrina" onExit={() => window.location.assign('/sandbox-checkout')}
+       onSceneChange={setScene} />
+   </div>
+diff --git a/src/server/guided-product-reservation.server.ts b/src/server/guided-product-reservation.server.ts
+index 1a9b778..759db21 100644
+--- a/src/server/guided-product-reservation.server.ts
++++ b/src/server/guided-product-reservation.server.ts
+@@ -1,9 +1,9 @@
+ /**
+- * Proposed product-line persistence adapter. Writes remain unregistered. Reads
+- * may be used by the separately gated status service after capability validation.
++ * Product-line persistence adapter for the separately gated sandbox checkout.
++ * Reads may be used by the status service after capability validation.
+  * Requires an explicitly injected DB; never reads credentials.
+  * The additive SQL RPC is independently disabled by its owner-only policy.
+- * Future routes must retain payment/origin/rate-limit guards; this is not an HTTP handler.
++ * Callers must retain payment/origin/rate-limit guards; this is not an HTTP handler.
+  */
+ import { planGuidedOrder, type GuidedQuoteRequest } from '../domain/lib/guided-order-quote'
+ import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
+diff --git a/tests/guided-sandbox-contact.test.cjs b/tests/guided-sandbox-contact.test.cjs
+new file mode 100644
+index 0000000..21fd01e
+--- /dev/null
++++ b/tests/guided-sandbox-contact.test.cjs
+@@ -0,0 +1,119 @@
++const test = require('node:test'), assert = require('node:assert/strict')
++const fs = require('node:fs'), vm = require('node:vm'), ts = require('typescript')
++
++// Execute the actual cashier JSX and link expression with explicit state and a
++// local JSX runtime. No browser, network, provider or navigation is invoked.
++const source = fs.readFileSync('src/playable/GuidedCommerce.tsx', 'utf8')
++const link = source.match(/  const manualOrderHref = [\s\S]*?\n    : null/)?.[0]
++const start = source.indexOf("{scene === 'cashier' &&")
++const end = source.indexOf("{scene === 'pay' &&", start)
++assert.ok(link && start > 0 && end > start, 'actual cashier and link must exist')
++const cashier = source.slice(start, end).trim().slice(1, -1)
++const code = ts.transpileModule(`${link}\nmodule.exports = (${cashier})`, {
++  fileName: 'actual-cashier.tsx',
++  compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX},
++}).outputText
++
++function render({sandboxMode = false, reviewOnly = false, enabled = true} = {}) {
++  const calls = [], module = {exports: {}}
++  const jsx = (type, props) => ({type, props})
++  vm.runInNewContext(code, {
++    module, exports: module.exports,
++    require(id) {assert.equal(id, 'react/jsx-runtime'); return {jsx, jsxs: jsx}},
++    sandboxMode, reviewOnly, scene: 'cashier', category: 'packs', canReviewAtCashier: true,
++    canPayOnline: enabled && !reviewOnly, qaMode: false, quoteLoading: false,
++    paymentConfig: {enabled}, checkoutQuote: {checkoutAllowed: enabled, amountPen: 62},
++    packFormat: 'grande', packQty: 6, packMix: 'single', selectedCombo: null, schmearSize: 120,
++    selectedBagelSummary: [{name: 'Plain', quantity: 6}], selectedSchmearSummary: [],
++    setScene() {throw Error('navigation is outside this render test')},
++    createManualOrderWhatsAppHref(input) {calls.push(input); return 'https://contact.example.test/fixture'},
++  })
++  const nodes = [], text = []
++  function walk(value) {
++    if (Array.isArray(value)) return value.forEach(walk)
++    if (value && typeof value === 'object') {nodes.push(value); walk(value.props?.children)}
++    else if (typeof value === 'string' || typeof value === 'number') text.push(String(value))
++  }
++  walk(module.exports)
++  return {calls, nodes, text: text.join(' ')}
++}
++
++test('sandbox cashier never generates a commercial link or offers the contact block', () => {
++  for (const enabled of [false, true]) {
++    const result = render({sandboxMode: true, enabled})
++    assert.equal(result.calls.length, 0)
++    assert.equal(result.nodes.some(node => node.type === 'a' || node.props?.className === 'guided-launch-contact'), false)
++    assert.doesNotMatch(result.text, /WhatsApp|confirmará el precio/)
++    assert.match(result.text, /Prueba sandbox con datos autorizados/)
++    if (enabled) assert.match(result.text, /Continuar prueba sandbox/)
++  }
++})
++
++test('ordinary cashier keeps its commercial contact and payment wording by default', () => {
++  const result = render()
++  assert.equal(result.calls.length, 1)
++  assert.equal(result.nodes.filter(node => node.type === 'a').length, 1)
++  assert.match(result.text, /Consultar por WhatsApp/)
++  assert.match(result.text, /Pagar online de forma segura/)
++  assert.doesNotMatch(result.text, /prueba sandbox/i)
++})
++
++test('review-only cashier still offers review without a commercial link or payment', () => {
++  const result = render({reviewOnly: true})
++  assert.equal(result.calls.length, 0)
++  assert.equal(result.nodes.some(node => node.type === 'a'), false)
++  assert.match(result.text, /Revisar entrega y consentimiento/)
++  assert.doesNotMatch(result.text, /Pagar online|prueba sandbox/i)
++})
++
++// Execute the actual final render of the Culqi component without its effects.
++// This checks copy and disabled states only, never SDK or payment acceptance.
++const culqi = fs.readFileSync('src/playable/CulqiBrowserCheckout.tsx', 'utf8')
++const culqiTail = culqi.slice(culqi.indexOf('  const customerReady ='), culqi.lastIndexOf('\n}'))
++const culqiCode = ts.transpileModule(`function render() {${culqiTail}\n}\nmodule.exports = render()`, {
++  fileName: 'actual-culqi-render.tsx',
++  compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX},
++}).outputText
++function renderCulqi({sandboxMode = false, enabled = true, status = 'idle', complete = true} = {}) {
++  const module = {exports: {}}, jsx = (type, props) => ({type, props})
++  vm.runInNewContext(culqiCode, {
++    module, exports: module.exports,
++    require(id) {assert.equal(id, 'react/jsx-runtime'); return {jsx, jsxs: jsx}},
++    sandboxMode, config: {enabled}, status, subtotalPen: 62, message: '',
++    customer: {customerName: 'Synthetic Customer', email: 'fixture@example.test', whatsapp: '000000000',
++      deliveryAddress: 'Synthetic address', district: 'Lince', termsAccepted: complete},
++    startCheckout() {throw Error('SDK invocation is outside this render test')},
++    recoverPayment() {throw Error('status lookup is outside this render test')},
++  })
++  const nodes = [], text = []
++  function walk(value) {
++    if (Array.isArray(value)) return value.forEach(walk)
++    if (value && typeof value === 'object') {nodes.push(value); walk(value.props?.children)}
++    else if (typeof value === 'string' || typeof value === 'number') text.push(String(value))
++  }
++  walk(module.exports)
++  return {nodes, text: text.join(' ')}
++}
++
++test('explicit sandbox labels the actual Culqi button in every state without changing disabled behavior', () => {
++  for (const status of ['idle', 'loading', 'ready', 'charging', '3ds', 'confirming', 'review', 'error', 'expired']) {
++    const sandbox = renderCulqi({sandboxMode: true, status}), ordinary = renderCulqi({status})
++    const start = value => value.nodes.find(node => node.props?.className === 'culqi-start-button')
++    assert.equal(start(sandbox).props.disabled, start(ordinary).props.disabled, status)
++    assert.match(sandbox.text, /Prueba sandbox ·/)
++    if (status === 'idle') assert.match(sandbox.text, /Iniciar prueba con Culqi/)
++    if (status === 'review') assert.match(sandbox.text, /Consultar estado de la prueba sandbox/)
++    assert.doesNotMatch(ordinary.text, /sandbox/i)
++  }
++  assert.match(renderCulqi().text, /Pagar con Culqi/)
++})
++
++test('closed sandbox and incomplete customer remain explicitly marked as a test', () => {
++  const closed = renderCulqi({sandboxMode: true, enabled: false})
++  assert.match(closed.text, /Prueba sandbox bloqueada/)
++  assert.equal(closed.nodes.some(node => node.type === 'button'), false)
++  const incomplete = renderCulqi({sandboxMode: true, complete: false})
++  assert.match(incomplete.text, /datos de prueba autorizados/)
++  assert.equal(incomplete.nodes.find(node => node.props?.className === 'culqi-start-button').props.disabled, true)
++  assert.match(renderCulqi({enabled: false}).text, /Checkout Culqi bloqueado/)
++})
+diff --git a/tests/sandbox-entry-availability.test.cjs b/tests/sandbox-entry-availability.test.cjs
+new file mode 100644
+index 0000000..059b1ec
+--- /dev/null
++++ b/tests/sandbox-entry-availability.test.cjs
+@@ -0,0 +1,39 @@
++const test = require('node:test'), assert = require('node:assert/strict')
++const fs = require('node:fs'), vm = require('node:vm'), ts = require('typescript')
++const source = fs.readFileSync('src/routes/sandbox-checkout.tsx', 'utf8')
++function setup(enabled) {
++  const module = {exports: {}}, headers = new Map()
++  const request = new Request('https://fixture.example.test/sandbox-checkout')
++  const code = ts.transpileModule(source, {compilerOptions: {
++    module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX,
++  }}).outputText
++  vm.runInNewContext(code, {module, exports: module.exports, require(id) {
++    if (id === '@tanstack/react-start') return {createServerFn(options) {
++      assert.equal(options.method, 'GET'); return {handler: fn => fn}
++    }}
++    if (id === '@tanstack/react-start/server') return {
++      getRequest: () => request, setResponseHeader: (key, value) => headers.set(key.toLowerCase(), value),
++    }
++    if (id === '../server/payment-config.server') return {isGuidedProductCheckoutPageAllowed(actual) {
++      assert.equal(actual, request); return enabled
++    }}
++    if (id === '@tanstack/react-router') return {createFileRoute: path => {
++      assert.equal(path, '/sandbox-checkout'); return value => value
++    }}
++    if (id === 'react' || id === 'react/jsx-runtime' || id.endsWith('.css') || id === '../playable/GuidedCommerce') return {}
++    throw Error('Unexpected module '+id)
++  }})
++  return {route: module.exports.Route, headers}
++}
++for (const enabled of [false, true]) test(`availability ${enabled} returns only a boolean capability and is private/uncached`, async () => {
++  const app = setup(enabled), result = await app.route.loader()
++  assert.deepEqual(Object.keys(result), ['enabled']); assert.equal(result.enabled, enabled)
++  assert.equal(app.headers.get('cache-control'), 'private, no-store, max-age=0')
++  assert.equal(app.headers.get('cdn-cache-control'), 'no-store')
++})
++test('sandbox document declares private no-store and noindex independently of availability', () => {
++  const {route} = setup(false)
++  assert.equal(route.headers()['Cache-Control'], 'private, no-store, max-age=0')
++  assert.equal(route.headers()['CDN-Cache-Control'], 'no-store')
++  assert.ok(route.head().meta.some(meta => meta.name === 'robots' && meta.content === 'noindex,nofollow,noarchive'))
++})

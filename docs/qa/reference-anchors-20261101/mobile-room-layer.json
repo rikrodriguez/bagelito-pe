@@ -1,0 +1,27 @@
+{
+  "asset": "/workspace/generated_images/exec-b45867dd-fb47-49e4-87b7-2e8158dad538.png",
+  "dimensions": [
+    1024,
+    1536
+  ],
+  "bytes": 2089313,
+  "sha256": "899ab458054cdf465b618e69b86478061c21938db30c813cecc61433a14cf0da",
+  "generation": "native imagegen, reference-guided new portrait composition using approved original and selected wide architectural layer",
+  "referenceInputs": [
+    "/workspace/bagelito-rebuilt-storefront/public/images/store-reference-approved.webp",
+    "/workspace/generated_images/exec-64439a92-4053-4334-beaa-9ef938a89ca1.png"
+  ],
+  "scope": "Conceptual architecture only; blank wall/uniforms/tote; no words, logo, digital UI, food or offered beverages. No crop or vertical stretch command performed.",
+  "pixelObservations": [
+    "Complete pendant globes and blacktracklights in frame",
+    "White glazed upper wall, neutral white-warm steel kitchen matching selected wide venue",
+    "Two back-facing fictional staff, plants/shelves and right blank tote",
+    "Low frontal empty two-level glass counter; deeper lower cabinet area than wide composition"
+  ],
+  "limitations": [
+    "Not exact photographic reconstruction",
+    "Left menu pillar is reduced to a narrow architectural glimpse",
+    "More empty lower cabinet area than wide layer; native composition must allocate it carefully",
+    "Small sliver of empty paper packaging/cup props remains farleft; not a beverage offer"
+  ]
+}

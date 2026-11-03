@@ -1,0 +1,108 @@
+Browser tab: 154, Title: "Bagelito isolated status receipt QA", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bagelito isolated status receipt QA, URL: 127.0.0.1:4173/
+	1 heading Bagelito — isolated browser QA, Value: 1
+		2 text Bagelito — isolated browser QA
+	3 container
+		4 text SIMULATION ONLY — no charge, no backend, no real SDK.  Real ReactDOM and application components; all fetches are intercepted, localStorage is memory-only, CSP blocks outgoing connections.
+	5 button Run isolated QA, ID: run
+	17 text 10/10 passed — simulation only
+	12 content list results
+		13 container
+			14 AXListMarker 1. 
+			15 text PASS: Unmount pending reservation: no preparation or widget
+		18 container
+			19 AXListMarker 2. 
+			20 text PASS: Changed cart ignores old reservation response
+		21 container
+			22 AXListMarker 3. 
+			23 text PASS: Late recovery after unmount never confirms
+		24 container
+			25 AXListMarker 4. 
+			26 text PASS: Wrong paid order code never confirms
+		27 container
+			28 AXListMarker 5. 
+			29 text PASS: Two DOM recovery clicks create one pending lookup
+		30 container
+			31 AXListMarker 6. 
+			32 text PASS: Mock widget opens, token callback after unmount cannot charge
+		33 container
+			34 AXListMarker 7. 
+			35 text PASS: Paid poll after unmount never confirms
+		36 container
+			37 AXListMarker 8. 
+			38 text PASS: Recovered snapshot renders Sesame and 120 g, never current Plain cart
+		39 container
+			40 AXListMarker 9. 
+			41 text PASS: Corrupt minimal productReceipt is rejected without confirmation
+		42 container
+			43 AXListMarker 10. 
+			44 text PASS: Minimal recovered receipt shows Sesame + Original 120 g / S70 without snapshot or private fields
+	7 heading Component fixture / recovered receipt, Value: 2
+		8 text Component fixture / recovered receipt
+	16 container fixture
+		45 container
+			46 text 6  ×
+		47 text Sesame
+		48 container
+			49 text 1  ×
+		50 container
+			51 text Whipped Original  · 120 g
+		52 text Productos
+		53 container
+			54 text S/  62.00
+		55 text Delivery
+		56 container
+			57 text S/  8.00
+		58 container
+			59 text TOTAL REGISTRADO S/  70.00
+		60 text Detalle informativo. No es comprobante fiscal ni autorización de despacho.
+	9 heading Results JSON, Value: 2
+		10 text Results JSON
+	61 text {
+  "simulation": true,
+  "realPayments": false,
+  "results": [
+    {
+      "name": "Unmount pending reservation: no preparation or widget",
+      "status": "PASS"
+    },
+    {
+      "name": "Changed cart ignores old reservation response",
+      "status": "PASS"
+    },
+    {
+      "name": "Late recovery after unmount never confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "Wrong paid order code never confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "Two DOM recovery clicks create one pending lookup",
+      "status": "PASS"
+    },
+    {
+      "name": "Mock widget opens, token callback after unmount cannot charge",
+      "status": "PASS"
+    },
+    {
+      "name": "Paid poll after unmount never confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "Recovered snapshot renders Sesame and 120 g, never current Plain cart",
+      "status": "PASS"
+    },
+    {
+      "name": "Corrupt minimal productReceipt is rejected without confirmation",
+      "status": "PASS"
+    },
+    {
+      "name": "Minimal recovered receipt shows Sesame + Original 120 g / S70 without snapshot or private fields",
+      "status": "PASS"
+    }
+  ]
+}
+
+The focused UI element is 0 AXWebArea Bagelito isolated status receipt QA, URL: 127.0.0.1:4173/

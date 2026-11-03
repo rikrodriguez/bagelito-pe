@@ -1,0 +1,36 @@
+✔ manual pack journey {"mix":"single"} (274.458737ms)
+✔ manual pack journey {"mix":"mixed"} (125.322289ms)
+✔ manual pack journey {"format":"mini","quantity":24} (109.575699ms)
+✔ combo requires two bagels and one schmear (104.807821ms)
+✔ standalone 120 grams (89.431711ms)
+✔ standalone 180 grams (84.40107ms)
+✔ standalone 240 grams (75.547592ms)
+✔ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (84.491027ms)
+✔ conflicting mode fails closed {"sandboxMode":true} (77.48416ms)
+✔ conflicting mode fails closed {"reviewOnly":true} (82.788551ms)
+✔ conflicting mode fails closed {"sandboxMode":true,"reviewOnly":true} (67.155589ms)
+✔ manual payment scene cannot expose form; incomplete selection has no link (75.476575ms)
+✔ manual cart copy confirms price later and progress excludes payment (67.015847ms)
+✔ even hostile enabled payment and QA state cannot mount payment in manual mode (87.281791ms)
+✔ one-flavor selection from mixed grande inquiry uses its actual single composition (69.840493ms)
+✔ one-flavor selection from mixed mini inquiry uses its actual single composition (66.61862ms)
+✔ two-flavor grande inquiry keeps its mixed composition (75.844199ms)
+✔ two-flavor mini inquiry keeps its mixed composition (82.379727ms)
+✔ cart review retains selected standalone 120 g context (77.602757ms)
+✔ cart review retains selected standalone 180 g context (80.53686ms)
+✔ cart review retains selected standalone 240 g context (62.293554ms)
+✔ removing the optional pack pot clears its size from cart review (83.328225ms)
+✔ cart and cashier identify grande 6 pack before inquiry (74.154693ms)
+✔ cart and cashier identify mini 24 pack before inquiry (74.514586ms)
+✔ normal standalone-to-pack category change clears the old pot and resets its size (69.361202ms)
+✔ normal format change clears the old mini pack quantities and optional pot (71.998545ms)
+✔ the physical box mirrors add, remove, full, back and format-reset selection (60.79778ms)
+✔ single-flavor box replacement and explicit clear action match the whole-pack behavior (76.877675ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2721.274398

@@ -1,9 +1,15 @@
 import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { planGuidedOrder } from '../domain/lib/guided-order-quote'
 import { ReferenceScene } from '../reference/ReferenceScene'
+import { SelectionBox } from '../reference/SelectionBox'
+import { BagelVitrine } from '../reference/BagelVitrine'
+import { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
-import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'
+import { createManualOrderWhatsAppHref, describeManualOrderSelection } from '../domain/lib/manual-order'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
+import type { PaidOrderReceipt } from '../domain/lib/paid-order-receipt'
+import { PaidOrderReceiptDetails } from './PaidOrderReceiptDetails'
 import {
   CulqiBrowserCheckout,
   type CheckoutCustomer,
@@ -13,7 +19,8 @@ import './guided-commerce.css'
 
 const menu = getVerifiedDisplayMenu()
 const optionalPackSchmearSize = menu.schmearSizes.find((size) => size.grams === 120)
-const combos = [{ id: 'two-bagel-schmear', name: '2 Bagels + Schmear', bagels: 2, schmear_count: 1, price: null }] as const
+const combos = menu.publishedCombos
+const legacyCombo = { id: 'two-bagel-schmear', name: '2 Bagels + Schmear (selección anterior)', bagels: 2, schmear_count: 1, price: null } as const
 
 function revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {
   const grid = event.currentTarget
@@ -85,13 +92,13 @@ const GUIDED_DRAFT_KEY = 'bagelito.guided.product-draft.v1'
 const GUIDED_DRAFT_TTL_MS = 24 * 60 * 60 * 1000
 
 function readSafeSelections(raw: unknown, allowedIds: readonly string[]) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}
+  if (raw === undefined) return {}
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('invalid-product-draft')
   const next: Record<string,number> = {}
   for (const [id,value] of Object.entries(raw)) {
-    if (allowedIds.includes(id) && typeof value === 'number'
-      && Number.isInteger(value) && value > 0 && value <= 24) {
-      next[id] = value
-    }
+    if (!allowedIds.includes(id) || typeof value !== 'number'
+      || !Number.isInteger(value) || value < 0 || value > 24) throw new Error('invalid-product-draft')
+    if (value > 0) next[id] = value
   }
   return next
 }
@@ -104,7 +111,7 @@ const SCHMEAR_SPOTS = [
   { left: '77%', top: '20%', width: '17%', height: '61%' },
 ] as const
 
-export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, exitLabel = 'Explorar tienda 3D' }: {
+export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly: requestedReviewOnly = false, sandboxMode = false, manualInquiry = false, exitLabel = 'Explorar tienda 3D' }: {
   onExit: () => void
   customerName?: string | null
   initialCategory?: Category | null
@@ -112,9 +119,15 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   liveWorld?: boolean
   referenceMode?: boolean
   reviewOnly?: boolean
+  sandboxMode?: boolean
+  manualInquiry?: boolean
   exitLabel?: string
   onSceneChange?: (scene: string) => void
 }) {
+  // Manual inquiry inherits every no-payment/no-storage review guard. Only the
+  // completed-selection contact link is allowed; conflicting modes fail closed.
+  const reviewOnly = requestedReviewOnly || manualInquiry
+  const manualContact = manualInquiry && !requestedReviewOnly && !sandboxMode
   // A shopper coming from a physical 3D station enters the matching product
   // category or the totem selector, without repeating the entry scene.
   const [scene, setScene] = useState<Scene>(initialCategory === 'packs' ? 'pack-size'
@@ -135,7 +148,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const [receiptPulled, setReceiptPulled] = useState(false)
   const [walletSaved, setWalletSaved] = useState(false)
   const [paidOrderCode, setPaidOrderCode] = useState<string | null>(null)
-  const [paidAmountPen, setPaidAmountPen] = useState<number | null>(null)
+  const [paidReceipt, setPaidReceipt] = useState<PaidOrderReceipt | null>(null)
   const [paymentReviewMessage, setPaymentReviewMessage] = useState('')
   const [checkoutCustomer, setCheckoutCustomer] = useState<CheckoutCustomer>({
     customerName: customerName ?? '',
@@ -152,12 +165,16 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
   const [draftLoaded, setDraftLoaded] = useState(false)
+  const [draftRecoveryMessage, setDraftRecoveryMessage] = useState('')
   const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'
   const qaMode = !referenceMode && !reviewOnly && qaRequested && paymentConfig?.visualQaAllowed === true
   const directCatalog = liveWorld || referenceMode
   const receiptDrag = useRef({ startY: 0, offset: 0 })
   const receiptPulledRef = useRef(false)
   const sceneChangeCallback = useRef(onSceneChange)
+  const referenceRoot = useRef<HTMLDivElement>(null)
+  const MenuPanel = referenceMode ? 'section' : 'nav'
+  const CartPanel = referenceMode ? 'section' : 'aside'
 
   // Only product IDs and quantities are saved for a short-lived in-tab draft.
   // Never store contact details, 3DS tokens, payment data or confirmation state.
@@ -168,11 +185,20 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         const raw = window.sessionStorage.getItem(GUIDED_DRAFT_KEY)
         if (raw) {
           const draft = JSON.parse(raw) as Record<string,unknown>
+          if (!draft || typeof draft !== 'object' || Array.isArray(draft)) throw new Error('invalid-product-draft')
           const age = Date.now() - Number(draft.updatedAt)
-          if (!Number.isFinite(age) || age < 0 || age > GUIDED_DRAFT_TTL_MS
-            || !['packs','combos','schmears'].includes(String(draft.category))) {
+          if (!Number.isFinite(age) || age < 0
+            || typeof draft.category !== 'string' || !['packs','combos','schmears'].includes(draft.category)) throw new Error('invalid-product-draft')
+          if (age > GUIDED_DRAFT_TTL_MS) {
             window.sessionStorage.removeItem(GUIDED_DRAFT_KEY)
           } else {
+            if (typeof draft.format !== 'string' || !['mini','grande'].includes(draft.format)
+              || typeof draft.packMix !== 'string' || !['single','mixed'].includes(draft.packMix)
+              || typeof draft.packQty !== 'number' || !Number.isInteger(draft.packQty)
+              || !(draft.format === 'mini' ? [6,12,24] : [6,12]).includes(draft.packQty)
+              || typeof draft.schmearSize !== 'number' || ![120,180,240].includes(draft.schmearSize)) {
+              throw new Error('invalid-product-draft')
+            }
             const restoredCategory = draft.category as Category
             const safeBagels = readSafeSelections(draft.bagels, menu.bagels.map(item => item.id))
             const safeSchmears = readSafeSelections(draft.schmears, menu.schmears.map(item => item.id))
@@ -186,30 +212,47 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             const requestedScene: Scene = allowedScenes.includes(restoredScene)
               ? restoredScene as Scene
               : restoredCategory === 'schmears' ? 'schmear-size' : 'pack-size'
-            const requiredBagels = restoredCategory === 'combos' ? 2 : safeQty
+            const safeMode = draft.bagelMode === undefined ? (restoredCategory === 'combos' ? 'combo' : 'pack') : draft.bagelMode
             const bagelTotal = Object.values(safeBagels).reduce((sum,n)=>sum+n,0)
             const schmearTotal = Object.values(safeSchmears).reduce((sum,n)=>sum+n,0)
-            const complete = restoredCategory === 'schmears'
-              ? schmearTotal === 1
-              : restoredCategory === 'packs'
-                ? bagelTotal === requiredBagels
-                : bagelTotal === 2 && schmearTotal === 1
+            const modeValid = typeof safeMode === 'string' && (restoredCategory === 'packs' ? safeMode === 'pack'
+              : restoredCategory === 'combos' ? safeMode === 'combo'
+                : ['pack','upsell8','downsell2'].includes(safeMode))
+            const restoredCombo = restoredCategory === 'combos'
+              ? draft.comboId === undefined || draft.comboId === legacyCombo.id ? legacyCombo : combos.find(item => item.id === draft.comboId) ?? null
+              : null
+            if (restoredCategory === 'combos' && !restoredCombo
+              && !(draft.comboId === null && requestedScene === 'combos' && bagelTotal === 0 && schmearTotal === 0)) throw new Error('invalid-product-draft')
+            const target = restoredCategory === 'packs' ? safeQty : restoredCategory === 'combos' ? restoredCombo?.bagels ?? 0
+              : safeMode === 'upsell8' ? 8 : safeMode === 'downsell2' ? 2 : 0
+            if (!modeValid || bagelTotal > target || schmearTotal > (restoredCategory === 'combos' ? restoredCombo?.schmear_count ?? 0 : 1)
+              || (safeMix === 'single' && restoredCategory === 'packs' && Object.keys(safeBagels).length > 1)
+              || (restoredCategory !== 'schmears' && safeSize !== 120)) throw new Error('invalid-product-draft')
+            const restoredPlan = planGuidedOrder({category: restoredCategory, packFormat: safeFormat,
+              packQty: safeQty, packMix: safeMix, bagels: safeBagels, schmears: safeSchmears,
+              schmearSize: safeSize, bagelMode: safeMode,
+              comboId: restoredCombo?.id})
+            const complete = restoredPlan.status !== 'invalid'
             setCategory(restoredCategory)
             setPackFormat(safeFormat)
             setPackQty(safeQty)
             setPackMix(safeMix)
-            setComboId(restoredCategory === 'combos' ? 'two-bagel-schmear' : null)
+            setComboId(restoredCombo?.id ?? null)
             setSchmearSize(safeSize)
-            setBagelMode(restoredCategory === 'combos' ? 'combo' : 'pack')
+            setBagelMode(safeMode as BagelMode)
             setBagelCounts(safeBagels)
             setSchmearCounts(safeSchmears)
             setScene(requestedScene === 'cashier' && !complete
-              ? restoredCategory === 'schmears' ? 'schmears' : 'bagels'
+              ? bagelTotal < target ? 'bagels' : 'schmears'
               : requestedScene)
           }
         }
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof SyntaxError || (error instanceof Error && error.message === 'invalid-product-draft')) {
+        setDraftRecoveryMessage('No pudimos recuperar tu selección completa. Revisa y vuelve a elegir tus productos; no se creó ningún pedido.')
+        try { window.sessionStorage.removeItem(GUIDED_DRAFT_KEY) } catch {}
+      }
       // No storage access or malformed draft must never block shopping.
     }
     setDraftLoaded(true)
@@ -229,14 +272,16 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         format: packFormat,
         packQty,
         packMix,
+        comboId,
         schmearSize,
+        bagelMode,
         bagels: bagelCounts,
         schmears: schmearCounts,
       }))
     } catch {
       // Safari private mode or a blocked storage quota is non-fatal.
     }
-  }, [draftLoaded,category,scene,packFormat,packQty,packMix,schmearSize,bagelCounts,schmearCounts,paidOrderCode,reviewOnly])
+  }, [draftLoaded,category,scene,packFormat,packQty,packMix,comboId,schmearSize,bagelMode,bagelCounts,schmearCounts,paidOrderCode,reviewOnly])
 
   // Navigation and order drawer stay in their own layer while walking.
   // Close both when the customer moves to a new scene.
@@ -257,6 +302,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     window.addEventListener('keydown', dismissOnEscape)
     return () => window.removeEventListener('keydown', dismissOnEscape)
   }, [menuOpen, cartOpen])
+
+  useEffect(() => {
+    if (!referenceMode || (!menuOpen && !cartOpen)) return
+    const root = referenceRoot.current
+    const panel = root?.querySelector<HTMLElement>(menuOpen ? '.guided-store-menu-panel' : '.guided-store-cart-panel')
+    const trigger = root?.querySelector<HTMLElement>(menuOpen ? '.rebuilt-menu' : '.rebuilt-cart') ?? null
+    if (root && panel) return containReferenceDrawerFocus(root, panel, trigger)
+  }, [referenceMode, menuOpen, cartOpen])
 
   useEffect(() => {
     if (customerName) {
@@ -387,7 +440,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     return () => { active = false }
   }, [scene, category, packFormat, packQty, packMix, bagelCounts, schmearCounts, schmearSize, comboId, bagelMode, paymentConfig, qaMode, reviewOnly])
 
-  const selectedCombo = combos.find((c) => c.id === comboId) ?? null
+  const selectedCombo = combos.find((c) => c.id === comboId) ?? (comboId === legacyCombo.id ? legacyCombo : null)
   const bagelTotal = Object.values(bagelCounts).reduce((sum, n) => sum + n, 0)
   const schmearTotal = Object.values(schmearCounts).reduce((sum, n) => sum + n, 0)
   const selectedBagelSummary = menu.bagels
@@ -476,6 +529,8 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     if (value !== category) {
       resetSelections()
       setComboId(null)
+      setBagelMode(value === 'combos' ? 'combo' : 'pack')
+      if (value === 'packs' || value === 'combos') setSchmearSize(120)
     }
     setCategory(value)
     if (value === 'packs') setScene('pack-size')
@@ -515,6 +570,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   function chooseCombo(id: string) {
     if (id !== comboId) resetSelections()
     setComboId(id)
+    setSchmearSize(120)
     setBagelMode('combo')
     setScene('bagels')
   }
@@ -624,7 +680,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       : category === 'combos' && bagelTotal === bagelTarget && schmearTotal === schmearTarget
   const canPayOnline = !reviewOnly && paymentConfig?.enabled === true && checkoutQuote?.checkoutAllowed === true
 
-  const manualOrderHref = !reviewOnly && category && canReviewAtCashier
+  const manualOrderHref = (!reviewOnly || manualContact) && !sandboxMode && category && canReviewAtCashier
     ? createManualOrderWhatsAppHref({
         category,
         format: packFormat,
@@ -636,6 +692,15 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         schmears: selectedSchmearSummary,
       })
     : null
+
+  const displayPlan = planGuidedOrder({category, packFormat, packQty, packMix, comboId,
+    bagels: bagelCounts, schmears: schmearCounts, schmearSize, bagelMode})
+
+  const selectionDescription = category ? describeManualOrderSelection({
+    category, format: packFormat, packQuantity: packQty, packMix,
+    comboName: selectedCombo?.name, schmearSizeGrams: schmearSize,
+    bagels: selectedBagelSummary, schmears: selectedSchmearSummary,
+  }) : null
 
   function goBack() {
     const previous: Scene | null = scene === 'selector' ? 'entrance'
@@ -668,7 +733,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     receiptPulledRef.current = false
     setWalletSaved(false)
     setPaidOrderCode(null)
-    setPaidAmountPen(null)
+    setPaidReceipt(null)
     setCheckoutQuote(null)
     setScene('entrance')
   }
@@ -697,7 +762,8 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     if (index === 3 && canReviewAtCashier) setScene('cashier')
   }
 
-  return <div className={'guided-commerce' + (referenceMode ? ' reference-mode' : '')} data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined} data-direct-catalog={directCatalog ? 'true' : undefined} data-reference-mode={referenceMode ? 'true' : undefined} data-review-only={reviewOnly ? 'true' : undefined}>
+  return <div ref={referenceMode ? referenceRoot : undefined} className={'guided-commerce' + (referenceMode ? ' reference-mode' : '')} data-scene={scene} data-qa={qaMode ? 'true' : 'false'} data-live-world={liveWorld ? 'true' : undefined} data-direct-catalog={directCatalog ? 'true' : undefined} data-reference-mode={referenceMode ? 'true' : undefined} data-review-only={reviewOnly ? 'true' : undefined}>
+    {!reviewOnly && draftRecoveryMessage && <p role="status" className="guided-draft-recovery" style={{position: 'fixed', top: 70, left: 12, right: 12, zIndex: 150, padding: 12, background: '#fff', color: '#004aad', border: '2px solid #004aad', borderRadius: 12}}>{draftRecoveryMessage} <button type="button" onClick={() => setDraftRecoveryMessage('')} aria-label="Cerrar aviso de recuperación">Cerrar</button></p>}
     {referenceMode && <ReferenceScene
       onCategory={(value) => {
         if (value === 'packs') setSchmearSize(120)
@@ -712,6 +778,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       accessibleSteps={referenceAccessibleSteps}
       onStep={jumpToReferenceStage}
       dynamicChrome={!['entrance', 'selector'].includes(scene) || visibleCartCount > 0}
+      hidePaymentStep={manualInquiry}
     />}
     {!referenceMode && !liveWorld && <div key={'backdrop-' + scene} className="guided-scene-backdrop" style={{ backgroundImage: 'url("' + sceneImage + '")' }} />}
     {!referenceMode && !liveWorld && scene !== 'bagels' && scene !== 'schmears' && <img key={'master-' + scene} className="guided-scene-image" src={sceneImage} alt="" />}
@@ -747,30 +814,32 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <span aria-hidden="true">←</span><span>Volver</span>
     </button>}
 
-    {(menuOpen || cartOpen) && <button type="button" className="guided-overlay-dismiss" aria-label="Cerrar panel abierto" onClick={() => { setMenuOpen(false); setCartOpen(false) }} />}
+    {(menuOpen || cartOpen) && <button type="button" className="guided-overlay-dismiss" tabIndex={referenceMode ? -1 : undefined} aria-label="Cerrar panel abierto" onClick={() => { setMenuOpen(false); setCartOpen(false) }} />}
 
-    {menuOpen && <nav className="guided-store-menu-panel" aria-label="Menú Bagelito">
+    {menuOpen && <MenuPanel className="guided-store-menu-panel" aria-label="Menú Bagelito" role={referenceMode ? 'dialog' : undefined} aria-modal={referenceMode || undefined} tabIndex={referenceMode ? -1 : undefined}>
       <strong>Bagelito</strong>
       <button type="button" onClick={goToEntrance}>Inicio</button>
-      <button type="button" onClick={() => setScene('selector')}>Packs · Combos · Schmears</button>
+      <button type="button" onClick={() => { if (referenceMode) setMenuOpen(false); setScene('selector') }}>Packs · Combos · Schmears</button>
       <button type="button" onClick={onExit}>{exitLabel}</button>
-    </nav>}
+      {referenceMode && <button type="button" onClick={() => setMenuOpen(false)}>Cerrar menú</button>}
+    </MenuPanel>}
 
-    {cartOpen && <aside className="guided-store-cart-panel" aria-label="Resumen de tu pedido">
+    {cartOpen && <CartPanel className="guided-store-cart-panel" aria-label="Resumen de tu pedido" role={referenceMode ? 'dialog' : undefined} aria-modal={referenceMode || undefined} tabIndex={referenceMode ? -1 : undefined}>
       <strong>Tu pedido</strong>
       {visibleCartCount === 0 && <p>Aún no has elegido productos.</p>}
+      {visibleCartCount > 0 && selectionDescription && <p>{selectionDescription}</p>}
       {selectedBagelSummary.map((item) => <div key={'bagel-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
-      {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
-      <small>{checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
+      {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}{' · ' + schmearSize + ' g'}</span><b>× {item.quantity}</b></div>)}
+      <small>{manualInquiry ? 'Precio final por confirmar con Bagelito.' : checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
       {canEditOrder && category && visibleCartCount > 0 && <button type="button" onClick={() => {
         setCartOpen(false)
         setScene(category === 'schmears' ? 'schmears' : 'bagels')
       }}>Editar sabores</button>}
       <button type="button" onClick={() => setCartOpen(false)}>Cerrar resumen</button>
-    </aside>}
+    </CartPanel>}
 
     {!referenceMode && showProgress && <nav className="guided-progress-master" aria-label="Pasos de compra">
-      {['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago'].map((label, index) => {
+      {(manualInquiry ? ['Elige', 'Bagels', 'Schmears', 'Caja'] : ['Elige', 'Bagels', 'Schmears', 'Caja', 'Pago']).map((label, index) => {
         const accessible = index <= progressIndex && index < 4
           && (index === 0
             || index === 1 && category !== 'schmears'
@@ -806,7 +875,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         </button>
         <button aria-label="Combos" onClick={() => chooseCategory('combos')}>
           <span className="selector-product-photo selector-product-combo" role="img" aria-label="Fotografía de dos bagels con schmear" data-art-medium="photograph-crop" />
-          <span><b>Combos</b><small>2 bagels + schmear</small></span>
+          <span><b>Combos</b><small>Bagels + schmears</small></span>
         </button>
         <button aria-label="Schmears" onClick={() => chooseCategory('schmears')}>
           <span className="selector-product-photo selector-product-schmear" role="img" aria-label="Fotografía de un schmear" data-art-medium="photograph-crop" />
@@ -847,7 +916,11 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <div className="pack-choice-grid">
         {(packFormat === 'mini' ? [6, 12, 24] : [6, 12]).map((qty) => <button key={qty} onClick={() => choosePack(qty, packMix)}
           aria-label={'Elegir ' + qty + ' ' + (packFormat === 'mini' ? 'mini bagels' : 'bagels') + ', ' + (packMix === 'single' ? 'un sabor' : 'mixtos')}>
-          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Elegir sabores →</small>
+          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span>
+          <strong className="boutique-pack-price">S/ {packFormat === 'mini'
+            ? menu.miniPacks.find(item => item.quantity === qty)?.[packMix === 'mixed' ? 'mixed_price' : 'single_price']
+            : menu.largePacks.find(item => item.quantity === qty && item.mix === packMix)?.price}</strong>
+          <small>Elegir sabores →</small>
         </button>)}
       </div>
       <p>{packMix === 'single'
@@ -858,15 +931,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     {scene === 'combos' && <div className="guided-combo-overlay approved-combo-overlay">
       {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={combo.name}>
         <span className="approved-combo-art">
-          <img src="/images/bagel-everything.webp" alt="" />
-          <img src="/images/bagel-sesame.webp" alt="" />
-          <i className="approved-schmear" />
+          <img className="boutique-combo-pack" src="/images/rebuilt-pack-open-tray-480.webp" alt="" width={1536} height={1024} />
+          {referenceMode ? <img className="rebuilt-combo-schmear" src="/images/rebuilt-schmear-neutral-480.webp" srcSet="/images/rebuilt-schmear-neutral-480.webp 480w, /images/rebuilt-schmear-neutral-800.webp 800w" sizes="140px" alt="" /> : <i className="approved-schmear" />}
         </span>
         <span className="approved-combo-copy">
           <small>COMBO BAGELITO</small>
           <b>{combo.name}</b>
-          <em>Elige 2 bagels + 1 schmear</em>
-          <strong>Precio por confirmar</strong>
+          <em>{combo.bagels} bagels mixtos + {combo.schmear_count} {combo.schmear_count === 1 ? 'schmear' : 'schmears'} de 120 g</em>
+          <strong>S/ {combo.price}</strong>
         </span>
         <span className="approved-combo-arrow">→</span>
       </button>)}
@@ -883,14 +955,18 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <section className="mobile-product-stage mobile-bagel-stage" data-format={category === 'packs' ? packFormat : 'grande'} aria-label="Selecciona sabores de bagels">
         <header>
           <small>VITRINA BAGELITO · {packFormat === 'mini' && category === 'packs' ? 'MINIS' : 'GRANDES'}</small>
-          <h2>{category === 'packs' && packMix === 'single' ? 'Elige un sabor' : 'Elige tus sabores'}</h2>
+          <h2>{category === 'packs' && packMix === 'single' ? (referenceMode ? 'Un sabor, toda tu caja' : 'Elige un sabor') : referenceMode ? 'De la vitrina a tu caja' : 'Elige tus sabores'}</h2>
           <span>{category === 'packs' && packMix === 'single' ? 'Un toque completa todo tu pack.' : bagelTotal + ' de ' + bagelTarget + ' seleccionados'}</span>
         </header>
-        <div className="mobile-bagel-grid" onFocusCapture={directCatalog ? revealFocusedCatalogCard : undefined}>
+        {referenceMode && <SelectionBox bagels={menu.bagels} counts={bagelCounts} target={bagelTarget} singleFlavor={category === 'packs' && packMix === 'single'} onRemove={(id) => {
+          removeBagel(id)
+          referenceRoot.current?.querySelector<HTMLButtonElement>(`[data-bagel-id="${id}"]`)?.focus()
+        }} />}
+        {referenceMode ? <BagelVitrine counts={bagelCounts} onAdd={addBagel} /> : <div className="mobile-bagel-grid" onFocusCapture={directCatalog ? revealFocusedCatalogCard : undefined}>
           {menu.bagels.map((bagel) => {
             const count = bagelCounts[bagel.id] ?? 0
             return <article key={bagel.id} className="mobile-bagel-card" data-selected={count > 0}>
-              <button type="button" onClick={() => addBagel(bagel.id)} aria-label={'Agregar ' + bagel.name}>
+              <button type="button" data-bagel-id={bagel.id} onClick={() => addBagel(bagel.id)} aria-label={'Agregar ' + bagel.name}>
                 <img src={'/images/bagel-' + bagel.id + '.webp'} alt={bagel.name} loading="eager" />
                 <span className="mobile-bagel-sign">{bagel.name}</span>
                 {bagel.premium && <small>Premium</small>}
@@ -902,7 +978,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
               </div>}
             </article>
           })}
-        </div>
+        </div>}
       </section>
       {!directCatalog && <div className="guided-product-frame bagel-product-frame">
         <img src={sceneImage} alt="Vitrina con ocho sabores de bagels" />
@@ -929,7 +1005,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           </button>
         })}
       </div></div>}
-      <div className="guided-order-counter bagel-live-summary">
+      <div className="guided-order-counter bagel-live-summary" data-box-visible={referenceMode ? 'true' : undefined}>
         <small>{bagelMode === 'upsell8' ? '6 + 2 GRATIS' : bagelMode === 'downsell2' ? 'PRUEBA CON 2' : category === 'combos' ? selectedCombo?.name : packFormat === 'mini' ? 'MINIS' : 'TU PACK'}</small>
         <b>{bagelTotal}/{bagelTarget}</b>
         <div className="bagel-summary-lines">
@@ -940,7 +1016,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           : category === 'packs' && packMix === 'single' ? 'Toca un solo sabor para todo tu pack'
           : 'Toca los sabores en la vitrina'}</em>
       </div>
-      {bagelTotal === bagelTarget && <button className="guided-primary-next" onClick={nextFromBagels}>Continuar <b>→</b></button>}
+      {bagelTotal === bagelTarget && <button className="guided-primary-next" onClick={nextFromBagels}>{referenceMode ? 'Elegir schmear' : 'Continuar'} <b>→</b></button>}
     </>}
 
     {scene === 'schmears' && <>
@@ -955,7 +1031,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             const count = schmearCounts[item.id] ?? 0
             return <article key={item.id} className="mobile-schmear-card" data-selected={count > 0}>
               <button type="button" onClick={() => addSchmear(item.id)} aria-label={'Agregar ' + item.name}>
-                <span className="mobile-schmear-pot" style={{backgroundImage: 'url("' + sceneImage + '")', backgroundPosition: (index * 25) + '% center'}} />
+                {referenceMode
+                  ? <img className="mobile-schmear-pot rebuilt-flow-schmear" data-flavour={item.id} src={item.id === 'classic-strawberry' ? '/images/rebuilt-schmear-bowl-480.webp' : '/images/rebuilt-schmear-neutral-480.webp'} srcSet={item.id === 'classic-strawberry' ? '/images/rebuilt-schmear-bowl-480.webp 480w, /images/rebuilt-schmear-bowl-800.webp 800w' : '/images/rebuilt-schmear-neutral-480.webp 480w, /images/rebuilt-schmear-neutral-800.webp 800w'} sizes="130px" alt="" />
+                  : <span className="mobile-schmear-pot" style={{backgroundImage: 'url("' + sceneImage + '")', backgroundPosition: (index * 25) + '% center'}} />}
                 <span className="mobile-schmear-label">{item.name}</span>
                 {item.note && <small>{item.note}</small>}
                 {referenceMode && category === 'packs' && optionalPackSchmearSize && <small className="reference-schmear-price">
@@ -1002,34 +1080,42 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <div className="guided-cashier-copy">
         <small>CAJA BAGELITO</small>
         <h2>Tu pedido</h2>
+        {selectionDescription && <p>{selectionDescription}</p>}
         <div className="guided-cashier-lines">
           {selectedBagelSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
-          {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{category === 'schmears' ? ' · ' + schmearSize + ' g' : ''}</b></span>)}
+          {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{' · ' + schmearSize + ' g'}</b></span>)}
         </div>
         <div className="guided-cashier-quote">
-          <span>{paymentConfig?.enabled !== true
-            ? 'Precio final por confirmar'
+          <span>{manualInquiry || paymentConfig?.enabled !== true
+            ? displayPlan.amountPen != null ? 'Precio de carta · sin delivery' : 'Precio final por confirmar'
             : quoteLoading
               ? 'Validando precio e inventario…'
               : checkoutQuote?.checkoutAllowed ? 'Subtotal verificado' : 'Necesita revisión'}</span>
-          {paymentConfig?.enabled === true && checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
+          {!manualInquiry && paymentConfig?.enabled === true && checkoutQuote?.amountPen != null
+            ? <strong>S/ {checkoutQuote.amountPen}</strong>
+            : displayPlan.amountPen != null && <strong>S/ {displayPlan.amountPen}</strong>}
+          {displayPlan.reasons.some(reason => /premium/i.test(reason)) && <small>Base de carta. Los sabores premium requieren confirmar el total.</small>}
         </div>
-        {reviewOnly
+        {manualInquiry
+          ? <p>Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.</p>
+          : reviewOnly
           ? <p>Revisa tu selección, los datos de entrega y el consentimiento. Esta vista no envía pedidos ni realiza pagos.</p>
+          : sandboxMode
+          ? <p>Prueba sandbox con datos autorizados. No es una venta ni confirma una entrega.</p>
           : paymentConfig?.enabled !== true
           ? <p>Tu selección está lista para consultar. Bagelito confirmará el precio y la fecha de entrega por WhatsApp.</p>
           : !quoteLoading && checkoutQuote?.reasons?.length
             ? <p>{checkoutQuote.reasons[0]}</p>
             : <p>El delivery se calcula con tu dirección antes de crear la reserva.</p>}
       </div>
-      {(reviewOnly || canPayOnline || qaMode) && <button
+      {!manualInquiry && (reviewOnly || canPayOnline || qaMode) && <button
         type="button"
         disabled={quoteLoading && !qaMode}
         onClick={() => { if (reviewOnly || canPayOnline || qaMode) setScene('pay') }}
       >
-        {reviewOnly ? 'Revisar entrega y consentimiento' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
+        {reviewOnly ? 'Revisar entrega y consentimiento' : sandboxMode ? 'Continuar prueba sandbox' : qaMode && !canPayOnline ? 'Continuar QA' : 'Pagar online de forma segura'} <b>→</b>
       </button>}
-      {!reviewOnly && <div className="guided-launch-contact">
+      {(!reviewOnly || manualContact) && !sandboxMode && <div className="guided-launch-contact">
         {manualOrderHref && <a
           className={canPayOnline ? 'is-secondary' : 'is-primary'}
           href={manualOrderHref}
@@ -1037,7 +1123,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           rel="noopener noreferrer"
         >
           {canPayOnline ? 'Consultar por WhatsApp' : 'Consultar mi pedido por WhatsApp'}
-          <b aria-hidden="true">↗</b>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M7 7h10v10" />
+          </svg>
         </a>}
         <p>{canPayOnline
           ? 'Consulta adicional, sin modificar tu pedido.'
@@ -1045,10 +1133,10 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       </div>}
     </div>}
 
-    {scene === 'pay' && <div className="guided-payment-gate">
+    {scene === 'pay' && !manualInquiry && <div className="guided-payment-gate">
       <div className="guided-payment-sheet">
         <div className="guided-payment-copy">
-          <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : 'PAGO SEGURO'}</small>
+          <small>{reviewOnly ? 'REVISIÓN DE ENTREGA' : sandboxMode ? 'PRUEBA SANDBOX' : 'PAGO SEGURO'}</small>
           <b>Completa tu delivery</b>
           <span>{reviewOnly
             ? 'Puedes revisar tus datos y el consentimiento. El pago no está activo en esta vista.'
@@ -1082,6 +1170,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
 
         {!reviewOnly && paymentConfig && checkoutQuote?.amountPen != null && <CulqiBrowserCheckout
           config={paymentConfig}
+          sandboxMode={sandboxMode}
           customer={checkoutCustomer}
           subtotalPen={checkoutQuote.amountPen}
           order={{
@@ -1096,9 +1185,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             bagelMode,
           }}
           onReview={setPaymentReviewMessage}
-          onPaid={({ orderCode, amountPen }) => {
+          onPaid={({ orderCode, receipt }) => {
             setPaidOrderCode(orderCode)
-            setPaidAmountPen(amountPen)
+            setPaidReceipt(receipt)
             setPaymentReviewMessage('')
             setScene('receipt')
           }}
@@ -1119,17 +1208,18 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <div className={'live-receipt-sheet' + (receiptPulled ? ' pulled' : '')}>
         <div className="live-receipt-brand">
           <small>{qaMode ? 'PREVIEW VISUAL · SIN COBRO' : 'BAGELITO'}</small>
-          <b>{paidOrderCode ?? (qaMode ? 'QA PREVIEW' : 'PEDIDO CONFIRMADO')}</b>
+          <b>{paidOrderCode ?? (qaMode ? 'QA PREVIEW' : 'DETALLE NO DISPONIBLE')}</b>
         </div>
-        <div className="live-receipt-lines">
-          {selectedBagelSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
-          {selectedSchmearSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
-        </div>
-        <div className="live-receipt-total">
-          <span>TOTAL</span>
-          <strong>{paidAmountPen != null ? 'S/ ' + paidAmountPen.toFixed(2) : qaMode ? 'Validado al pagar' : 'Confirmado'}</strong>
-        </div>
-        <p>{qaMode ? 'Este recibo es solo una vista de QA.' : 'Gracias por tu compra.'}</p>
+        {qaMode ? <>
+          <div className="live-receipt-lines">
+            {selectedBagelSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+            {selectedSchmearSummary.map((item) => <span key={'receipt-'+item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
+          </div>
+          <div className="live-receipt-total"><span>TOTAL</span><strong>Validado al pagar</strong></div>
+          <p>Este recibo es solo una vista de QA.</p>
+        </> : paidReceipt
+          ? <PaidOrderReceiptDetails receipt={paidReceipt} />
+          : <p role="status">No hay un detalle de pago verificado. No se reconstruye desde el carrito.</p>}
       </div>
       <div className={'receipt-interaction' + (receiptPulled ? ' pulled' : '')}
         role="button"
@@ -1206,7 +1296,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
 
     {!reviewOnly && scene === 'returning' && <div className="guided-returning-action">
       <div><small>CLIENTE RECURRENTE</small><h2>Ya conoces el camino.</h2><p>El local sigue vivo alrededor de ti mientras vuelves a pedir.</p></div>
-      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); receiptPulledRef.current = false; setWalletSaved(false); setPaidOrderCode(null); setPaidAmountPen(null) }}>Volver al tótem <b>→</b></button>
+      <button onClick={() => { setScene('selector'); setCategory(null); resetSelections(); setReceiptPulled(false); receiptPulledRef.current = false; setWalletSaved(false); setPaidOrderCode(null); setPaidReceipt(null) }}>Volver al tótem <b>→</b></button>
     </div>}
   </div>
 }

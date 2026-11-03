@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: tests/sql/product-lines.test.cjs
+not ok 1 - tests/sql/product-lines.test.cjs
+  ---
+  duration_ms: 1325.175725
+  type: 'test'
+  location: '/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/sql/product-lines.test.cjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: ~
+  signal: 'SIGKILL'
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1336.466941

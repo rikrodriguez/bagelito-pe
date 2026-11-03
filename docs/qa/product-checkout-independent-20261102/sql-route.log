@@ -1,0 +1,16 @@
+Command: ["node", "--test", "--test-concurrency=1", "tests/sql/product-checkout-route.test.cjs"]
+✔ actual quote and session store the entire pack + pot and expose only the public reservation (1927.904615ms)
+✔ standalone 240 g flavored pot reaches actual SQL with no invented bagels (106.669396ms)
+✔ replay after last capacity slot and batch rotation preserves original identity and expiry (92.687019ms)
+✔ same-price changed flavor or customer fails through SQL without mutating the original (92.075601ms)
+✔ owner-only SQL policy remains an independent fail-closed gate after a ready quote (92.72772ms)
+✔ unpriced products, false legal acceptance and forged amounts never create partial reservations (103.123231ms)
+✔ JSON cannot opt into product lane and no error falls back to legacy persistence (146.261545ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2963.173188

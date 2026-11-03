@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
+import { planGuidedOrder } from '../domain/lib/guided-order-quote'
 import { quoteGuidedOrder, type GuidedQuoteRequest } from './checkout-quote.server'
 import { getDeliveryFee, isSupportedDistrict } from './delivery-pricing.server'
 import { enforcePublicApiSecurity, PublicApiError } from './public-api-security.server'
@@ -39,10 +40,6 @@ async function nextOrderCode() {
   const { data, error } = await supabase.rpc('next_order_code')
   if (!error && typeof data === 'string' && data.trim()) return data.trim().toUpperCase()
   return 'BAG-' + Date.now().toString(36).toUpperCase() + '-' + randomBytes(2).toString('hex').toUpperCase()
-}
-function packSlug(quantity: number, mix: string) {
-  const slug = quantity + '-' + mix
-  return ['6-mixed', '12-mixed', '6-single', '12-single'].includes(slug) ? slug : null
 }
 function normalizeItems(items: Array<{ flavor_slug: string; quantity: number }>) {
   return [...items]
@@ -90,19 +87,13 @@ export async function createGuidedCheckoutSession(request: Request, input: Check
   if (!quote.checkoutAllowed || quote.status !== 'ready' || typeof quote.amountPen !== 'number') {
     throw new PublicApiError(quote.reasons[0] || 'Este pedido no está habilitado para checkout.', 409)
   }
-  if (input.category !== 'packs' || input.packFormat !== 'grande') {
-    throw new PublicApiError('Este tipo de pedido todavía no está habilitado para checkout automático.', 409)
+  // A ready quote must also have a lossless projection into the existing RPC.
+  // Never drop a schmear/combo/extra just because the legacy table stores bagels.
+  const plan = planGuidedOrder(input)
+  if (!plan.legacyPack || !plan.checkoutAllowed || plan.amountPen !== quote.amountPen) {
+    throw new PublicApiError('Este pedido no puede persistirse completo con el checkout actual.', 409)
   }
-
-  const quantity = Number(input.packQty)
-  const bagels = input.bagels && typeof input.bagels === 'object' && !Array.isArray(input.bagels)
-    ? Object.entries(input.bagels as Record<string, unknown>)
-        .filter(([, qty]) => Number(qty) > 0)
-        .map(([flavorId, qty]) => ({ flavorId, quantity: Number(qty) }))
-    : []
-  const effectiveMix = bagels.length === 1 ? 'single' : 'mixed'
-  const slug = packSlug(quantity, effectiveMix)
-  if (!slug) throw new PublicApiError('Pack no compatible con checkout actual.', 409)
+  const {quantity, mix: effectiveMix, slug, bagels} = plan.legacyPack
 
   const menu = getVerifiedDisplayMenu()
   const items = bagels.map((row) => {

@@ -1,0 +1,517 @@
+{
+  "candidate_commit": "84425e3a09ab9a8f27d63af219d50b4d34e789ca",
+  "candidate_tree": "8459ffc1fc3ae8d844daa9d0e3deaaf20fc1273e",
+  "parent_and_expected_remote_head": "e85c984d079b3f5f4bb62a76affbba4a00764d68",
+  "versions": {
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "pglite": "0.5.12",
+    "typescript": "5.9.3"
+  },
+  "verified_direct_versions": {
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "@react-three/rapier": "2.2.0",
+    "@supabase/supabase-js": "2.118.0",
+    "@tanstack/react-router": "1.170.46",
+    "@tanstack/react-start": "1.169.4",
+    "howler": "2.2.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.186.1",
+    "zustand": "5.0.16",
+    "nitro": "3.0.260903-beta",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "5.9.3",
+    "vite": "8.3.5"
+  },
+  "canonical_public_manifest_sha256": "710fbebce2a60627aa45e729e13f63051861243d0d1e771f6686216ab52426be",
+  "pre_execution_tracked_file_sha256": {
+    "docs/guided-status-receipt-20261102.md": "d3a9bf460d42cb4d8c1fd5b60bcbc1033e186f9eec0eb5b190290503dfbf4839",
+    "package.json": "5da8eda3bc2d6498cc3ff96de38a03ec204164708ffc3a8f2ebb752b8912c551",
+    "scripts/lib/qa-loopback-guard.cjs": "51444e6c9bbb9a22522626b6c7ba6935344cebc0d354ea4a2d883ba57449386d",
+    "scripts/lib/qa-mobile-layout.cjs": "b725b2902e2a71e7feb108edcdce77a0d34ca4b3048855b7b73bf3ac384f9699",
+    "scripts/lib/qa-native-document-scroll.cjs": "5ae71348189e961d8d92188c4544cef8c4c0f215fbb92dbb0811bf428aedcc22",
+    "scripts/package-reference-preview.py": "02f0f24481579fe47bad314540baeef90deba80fd0b4bddc9ec4142133ef1415",
+    "scripts/qa-contact-shadow-bake.cjs": "e8c2498de1916939c00f0bc82778ce3bae2855df3664d87bdd8ab6af8d954783",
+    "scripts/qa-guided.cjs": "331d31b1064104e57853c9a207cb7d0aa17284dbedd57210b4d722b582d6948f",
+    "scripts/qa-header-hit.cjs": "72c6348c293bf8fd70be832712fd2fddff2078671f5bc905361bc307286ef9ab",
+    "scripts/qa-manual-order.cjs": "7f3e9c8f81d114b9ac843ddd9b01f3229320626875b6197b0817aaaa666ffba3",
+    "scripts/qa-mobile-vitrina.cjs": "22956007fefd79e1f5733bd476e65d337d57a9e31a7f66f12d718ce2711e4da3",
+    "scripts/qa-movement-events.cjs": "7836de612b3d5a5720a9721c62aabbe0d43b4b09cac575c9a7c1289a6cc1300a",
+    "scripts/qa-rebuilt-composition.cjs": "816e7acbc96aebeee6061af843a7d9f627174a6831637b2ab98a8cb53ee56bf2",
+    "scripts/qa-rebuilt-geometry-regression.cjs": "11e8dd01ebd1aa318bf740988cdea82e853fbdbdcd39e74806fcfb02ea198a7f",
+    "scripts/qa-rebuilt-geometry.cjs": "9e177b3759c0fd8cde0b057e462323e39ce4d2291f52e2efd9ac67d088fb6b89",
+    "scripts/qa-rebuilt-loaded-entry.cjs": "85ee33f869c873d9cdc56344b82ed85ca8456b7b726de5d15ff9e67b2f48956e",
+    "scripts/qa-rebuilt-safety.cjs": "040ddde2b18e8adcafada2abd805b115ce85c1258db0dd285f87453b69d1af2e",
+    "scripts/qa-rebuilt-storefront.cjs": "50ba3118743572909f004f4c191c886cd3f34f40487da180dd8ade6fa89971e5",
+    "scripts/qa-reference-card-text.cjs": "289e030b29b7241321a7d65726e4c72f3a8133a814cc04793cd29d7e097950df",
+    "scripts/qa-reference-direct-entry.cjs": "ec39b4ae0874fc0e24794a20dabbf58a648bd8515c803c7d2aa56a44d32601c3",
+    "scripts/qa-reference-entry-geometry.cjs": "36d5fe1a24d31fa045701666e8a2c2e61c9972dada91aaba928598ea81f9d4f9",
+    "scripts/qa-reference-review-steps.cjs": "c5ece83ed7a0959c8fddc381141ee8d0032c9f9de770321a81f8d14abfc7efd3",
+    "scripts/qa-reference-secondary-readability.cjs": "9bef826ce0a5526084aeb277f6cea0d8da305442fab3aef3e4c6b818699458c4",
+    "scripts/qa-reference-secondary-text.cjs": "304573d7088fd82a2dc767be9871cf71bbcbdf277c291564c971ae12b838482f",
+    "scripts/qa-reference-text-geometry.cjs": "47afa5fb7c75b66bd7386b427a17e5456159a6b34d29e7feb135485692d5f383",
+    "scripts/qa-tour-static.cjs": "879916e6ed20f226f8ba9f5bb27d43176702aae66c91618302d470c991f09c9d",
+    "scripts/qa-tour-visibility.cjs": "655dd925c48a5c9b7415f42bcbe7e786291038f8b7a4d4cafdb39293844c4e92",
+    "scripts/qa-visual-contract.cjs": "9bfcb3a618cd51526eaf8bdd7a003e37861a733278feba875a76d5bb593a43e7",
+    "scripts/qa-visual-framing.cjs": "7b7abaf02a311104f91dd25e74e8b1978eb76a3927f359c2f675e7a8e8670229",
+    "scripts/qa-visual-recovery.cjs": "8aeaa1201ab3b31db27ea267cde059e4a4d40e99010820b5944e5bd44c54e89b",
+    "scripts/qa-world-tour.cjs": "04172bb419eccaa878fa19181d2634614d6171d32ea11d2da3d4505721df21fa",
+    "src/domain/data/delivery-districts.ts": "0788568ab80080dc7b06dbac823a983e09f24aafe5a9938c93c213102affc51f",
+    "src/domain/data/flavors.ts": "66858a14c658e0629d920a55db0d6e49955aa86199eb5c493ee313bd406c02d1",
+    "src/domain/data/packs.ts": "d878f89207114f02bc317e06f74ae4a67f7bf23525128d9604a7f31039bca79d",
+    "src/domain/data/verified-menu-2026-10-21.json": "3c46de5ccdd34228941513d72c4b48e9a167bca92008ace2c4a77cefadadc0c2",
+    "src/domain/lib/approved-shop-contract.ts": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a",
+    "src/domain/lib/batch-availability.ts": "781cc38601dbe97ea3b232725ce42d309c9823c24a0b626b6eee090685c253aa",
+    "src/domain/lib/batch-read.ts": "96c68a4a1eb6fb5dc626721f8b3bac855a5822a1f2174014c211311360d8444c",
+    "src/domain/lib/batch-types.ts": "323be2fbe4af20595f6fdbecf3e3d670d7e0b2aadadcdb9f74810162d525e1a6",
+    "src/domain/lib/catalog.ts": "214d3415c174c459b28bd0ac7585d2d07da44909521f140dd71097bd0c092bcc",
+    "src/domain/lib/delivery-pricing.ts": "8a74561b843a5b8d1f8ab86ea4d46d451ea77aef67aedb781d4b3a562e49fdd1",
+    "src/domain/lib/guided-order-quote.ts": "673d0f3673898e5d85639bb6b258426a10be9c19d4489db53519c7dff80cecef",
+    "src/domain/lib/guided-product-snapshot.ts": "c26ec01505d1355423dfd326631efdb20dd60ebec19654e014d002e91a1fd25e",
+    "src/domain/lib/legal-version.ts": "207c158db72c81550aabe55dcd6ec153eb3b51b39fd75eb3169974cca2d7f4a9",
+    "src/domain/lib/manual-order.ts": "48c10a9678d205fe98c065481630d0e0465b6496431be668a8a08bdb400b4bf4",
+    "src/domain/lib/paid-order-receipt.ts": "5367fdec4d53c36e1ab9cf917592070212543b9558f65f973aad5fbe6ab048c4",
+    "src/domain/lib/public-batch-display.ts": "132f2393e08c9ce581e06aff2f99a6aed5014a723cd195951e7065b0da2cb6ae",
+    "src/legal.css": "fc7f70a810e89303816337481faf2c32676ade6e72e69026dae82953c45bad3c",
+    "src/playable/CinematicCommerce.tsx": "2724480ff0d54bb82d5271b0238fa6c3a17c5650da80061591c55006ea29b22b",
+    "src/playable/CulqiBrowserCheckout.tsx": "48e53c768fde52953b4fed793e56b847ac1ff2225d3ba624ef4626bfedd5014c",
+    "src/playable/GuidedCommerce.tsx": "f43c961f08cab37af9c709e21e083c2f27c2b8917e92d41dc3ebf2385bb97a69",
+    "src/playable/GuidedEntry.tsx": "568783f3f59273477dc9ee7b38c143f21a876b1315b0f59df64a08bc06393a5a",
+    "src/playable/PaidOrderReceiptDetails.tsx": "413d807bed08cdf5e30c000a49a6ab52293fe5053294cd2caca2a99f6c2de975",
+    "src/playable/PlayableStore.tsx": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904",
+    "src/playable/StoreArchitectureVisual.tsx": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265",
+    "src/playable/cinematic.css": "c8f94263fbd28b60552f99b38c1298442ed350f7c1dd8fc4b770e7c1624be283",
+    "src/playable/guided-commerce.css": "577a46b314f2e8fb37b7a6e57f7d71fb9ef338703ebef5c7fc8e213456164666",
+    "src/playable/movement-input.ts": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0",
+    "src/playable/playable.css": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6",
+    "src/reference/ReferenceScene.tsx": "a4dc57dfdc0e32ad115427f7612a2bacb5c1460a70aa1969ecbcf9749045b03e",
+    "src/reference/ReferenceStorefront.tsx": "b42a8a2af362b0f4b41e3577d262d8e509319a77161065a4cfe8faaa5bc6c84b",
+    "src/reference/rebuilt-flow.css": "b56006dbbc4041a85ea00f0e167a99e3ce336c60be05a3da073d9d4ce10ea8be",
+    "src/reference/rebuilt-storefront.css": "7f053a05bdfaf094f55256865b243fa898715849bcce59dcd4f275c23886c166",
+    "src/reference/reference-aligned.css": "20c960b0ec55b554b68c0bd65a00433c814cd16b445c163e54ea9da0866f7ccd",
+    "src/reference/reference-drawer-focus.ts": "06b4dea304562769b83508c4311b935c3914046ab65bb9358ab75054d7b3073e",
+    "src/reference/reference-storefront.css": "779b1bf1d6f96715b1b16b19a34595cad4b8b43ad97043aa808d399e0b30e366",
+    "src/routeTree.gen.ts": "bf39a8ae5b41b5e76f998160fab4037e3ac392177ca0aded0c536d685c4f9abc",
+    "src/router.tsx": "15451578f30e37e41d0ad208a45595e500ed3d4887ab4a418bf9c0034ca40d53",
+    "src/routes/__root.tsx": "fbb50db8512d0197d89d142db358513a3d7f9f981ac7bb52f5b782f3d6ae8dff",
+    "src/routes/api/batch.ts": "1ff9efedc38397bc864ae78a8a7b471a0b01129e42659dba1f8691461c0e3bc1",
+    "src/routes/api/catalog.ts": "be8004262be921f1716e9c1acc7d2ddfa3135602cb52aa32c7e7a559ff83d84a",
+    "src/routes/api/checkout/quote.ts": "75b04c289003959200d7a4f1855d3a4ba0e45a0a03ad7a5b09e97b4ef8018e3c",
+    "src/routes/api/checkout/session.ts": "12721edd2a79403adabb9a648f844b19b4062e73446fd62386afd010d6a8d995",
+    "src/routes/api/payments/culqi/charge.ts": "24dfd5035c55f46d08b01e7bef763aff57f9f1f005ca69a3dc092aa496c52cfe",
+    "src/routes/api/payments/culqi/config.ts": "e1d13b92151d688e285a7c3cfc60555c83d79db5b3fcf28af5ebc995e548a7df",
+    "src/routes/api/payments/culqi/order.ts": "3b7fdd14bf3a864c8b644003a0993ec49bc5b4fecb057f0c6c467f347e84a16d",
+    "src/routes/api/payments/culqi/status.ts": "2b3df1d01077b44c6d3a2c262af10dce180f8c8d9f74123af690f2d6a6294db4",
+    "src/routes/api/webhooks/culqi.ts": "70ba319e3623d778d9e8b0154faf69c638963e5bd6638eba63464b6e41dc52db",
+    "src/routes/index.tsx": "7063138b536a1e84670be8ff40ad4c0bd9d9f8787453431c217ea14fb02556a1",
+    "src/routes/legal.tsx": "7a4821a5453d0b1cca81335f96d534c03bd54799460c3e35f0c4824086a0553b",
+    "src/routes/playable.tsx": "dfcae28a3e398c4436fc70420779fc8abb4a069915f6fc9d47259bb8c7d0a073",
+    "src/server/batch.server.ts": "c0815c63a6065a2883d0c55e1b8a2540aebd7c0c569cf44935c4b503ea8ea483",
+    "src/server/charge-coordinator.server.ts": "18dc48b1d6156de35e8c3b0d9871c5fe84fd7d7c17b484de92fd836e1a58a5de",
+    "src/server/checkout-quote.server.ts": "a637cbadb16bc5771f7f2ed2465d63878d8947151b8f12653e98216126325e6f",
+    "src/server/checkout-session.server.ts": "1b8347db28905362afb2dc8d3cc8d55f94b55681fb12cc8d88cccd0723234205",
+    "src/server/culqi-charge-evidence.server.ts": "4f50be81475f55b067b910c682d2e84eaf5b4ee297a8679de433b29b49150719",
+    "src/server/culqi-event-evidence.server.ts": "1b281db88d9673b4199a3bc3850236088b313360c759ef2b167f47ea71ca3864",
+    "src/server/culqi.server.ts": "d7b690d9d44c6455cd1e8095b9f230ead64bd9ad5bb3df8a7ff4c7dafb7bfb33",
+    "src/server/delivery-pricing.server.ts": "d08b42672a17e1e33e74a81cc229d22d2d773e7c54ef78cb7ebc0fd887c7cee7",
+    "src/server/guided-paid-receipt.server.ts": "47601ce63ddb7696a136dfc319c2fb918a1d8b95bf2995752879a71af4d243ab",
+    "src/server/guided-product-reservation.server.ts": "1cf6e93cccc4ec832512bdba6ff87e8f648643384425fd2657cf965f924bcc55",
+    "src/server/http-json.server.ts": "d04e904d158d75993eb2d3786deabcf373de7881041300c3752dc2d6e7017698",
+    "src/server/payment-config.server.ts": "5f4950f30409e64cfbd0a41a946936bb4f895b65d4af91aeef904c5c0672232e",
+    "src/server/payment-status.server.ts": "347531f66fa87022843d5f4cf641c936e9bf1719f33e8985801a5a96746089dc",
+    "src/server/public-api-security.server.ts": "4f3d54667a6fd8a87840311cc185a4cc598f04dcdf29a7480365e5f529e036d2",
+    "src/server/reference-review-guard.server.ts": "1016d6e467145286c73de2c8a69cda129298a1d5fd9b72b90f4eba7388d8a3e9",
+    "src/server/supabase-admin.server.ts": "e5e341d4261e7813e7dc7c93844d006d5976468637b89e31fcf2c9e30a6deec6",
+    "src/styles.css": "bb7db83caa2b346c4c7a352e2151d185cdb7124d0db09118a649eee1ddd97fe6",
+    "supabase/add-checkout-legal-evidence.sql": "59c57678255676a1a449874d9231fe6d901a75a0b557d1a4d8b88e6512b5cd86",
+    "supabase/add-guided-product-lines.sql": "f342fe96bc03dd8668b3e3c0b181115062f0e442d12e50b67dfe82003011e23c",
+    "tests/culqi-provider-deadline.test.cjs": "132181f281a56f9da5b0b2a5c07f9fd457a86d30413be383c8625808744be55f",
+    "tests/culqi-ui-lifecycle.test.cjs": "1b45425289dee38fbc442bb7c9bf7d45a74b15f477917314c59b8a40a071ad76",
+    "tests/fixtures/README.md": "5ea416374b4d9e0f8275d0f165ed47ebe6d595156f05502261db11498e38b36f",
+    "tests/fixtures/qa-world-tour.925c050.cjs.txt": "1451c7fec8951f160689f4db1667c8a524f7e1183f0423556d9d06f819578230",
+    "tests/guided-category-transition.test.cjs": "367f1dcb845ed3ceaadc13671c4fe30904d0f513e67a4b3563c4aeae502e2f35",
+    "tests/guided-checkout-quote.test.cjs": "250bcf6f00ad73c4cc6235c89ce1066ce21c093202fd82cf8f10e098973fc9b3",
+    "tests/guided-checkout-session.test.cjs": "d8c7310681d41f685324ba505b578196f034f6a19d39bb7681a948316c4f6dac",
+    "tests/guided-draft-recovery.test.cjs": "ec74a5bcdcb6e84d24d177ee3a7b3d840973b4bc20a1613ccf208cbcf6954cb0",
+    "tests/guided-packing-preview.test.cjs": "3b99bec486e664948268046ea9b7f5305a870449a973fbecb3c617a679c351ff",
+    "tests/guided-product-adapter.test.cjs": "9ccd9b5fe6327c52e4dd48ba712d970eb61688b0594d21fe394a2df03e0c8374",
+    "tests/http-json-deadline.test.cjs": "b583387b50d6b61241a5fef3bc400b40688715ba6d2ba3985a7b4fe71f803fbc",
+    "tests/movement-input.test.cjs": "3cee261fd1096d4889a6ca617db599f9c278a39ced2b22492c85d3fe6e4b5e3a",
+    "tests/movement-integration.test.cjs": "7ee1953ede8c1e5822490605d85fdf245501d03481cca95936f36c324c2f534e",
+    "tests/native-document-scroll.test.cjs": "a4762b9d63adc0a501164b269d368107acf7e77bdaee7e49f64355d47994b19f",
+    "tests/paid-order-receipt.test.cjs": "b3bf337b0bf5289a8b89092020b6e423e7ae5600c858ac7ac9938f16bcbacb34",
+    "tests/payment-config.test.cjs": "b5adc2835e604d5912577c8694c5c11b28b830e576ca37383ef19fd17fd079b4",
+    "tests/payment-status-receipt.test.cjs": "3cb9909144335eb1ae2e18ee63668e875399bb755744f4068889d47b4e92a52f",
+    "tests/qa-guided-driver.test.cjs": "6a604fe9fcb6d67d5c49ec93a326a65ae3732134e28726ae72f5ce856ec653ff",
+    "tests/qa-loopback-guard.test.cjs": "d8d93a91e9e4df79c3211d99301e58ce9858607c2e9573f6e524961475524160",
+    "tests/qa-mobile-layout.test.cjs": "d2811c71462b7734d9da9df0f2ec14e12cdd733ef63d082a2b7a0820c778087d",
+    "tests/qa-movement-events-driver.test.cjs": "c1d71f635c9902830969d5bd5d807a8acded9d02f9715cfdb51500c8bb98b024",
+    "tests/qa-world-driver.test.cjs": "4c5a9f1f4be64663256a9b82e7a2ca6650fd2e45ead78c3731b68ea19a3034e4",
+    "tests/qa-world-source-selection.test.cjs": "2e77b732b49577a92553b4a1ae70ee94e0c9532bc882a1259421795e1f9d5b36",
+    "tests/reference-category-presentation.test.cjs": "1103473ad21517ac3b82a7a6ede62362a4843fe4df0508242b4fdc45552ca8b3",
+    "tests/reference-drawer-focus.test.cjs": "5d709a81daa6a886704266abb4e9bb85d9ed4d25aecfd49a1e3873475ca25f9a",
+    "tests/reference-review-guard.test.cjs": "784a3260cdcf41b59ff8e8b7f5eb9aa31c30fe535453f5ce035ed4d0428c8f3f",
+    "tests/schmear-price-evidence.test.cjs": "fd52f7253c76cf0e3bdd972aee93b8a7019b193f91576cde554109a2271aecea",
+    "tests/sql/fixture.cjs": "ec80232d0cdb579a5e30c5e96f9b26f8070308781054fb52642b337b9725eba0",
+    "tests/sql/fixtures/financial-core/SOURCE.json": "b5810cbe499f74dbfa75421cdee568a30568b3bd61860f3349bab24dd9b57d26",
+    "tests/sql/fixtures/financial-core/add-checkout-safety.sql": "f5fc23551be00ac1eb869e8997e33df9ea7dadc34821cbcc87ed1fbfba1e2292",
+    "tests/sql/fixtures/financial-core/add-culqi-charge-confirmation.sql": "f89d6ea4838a60d316de238c867f5b97cbd8a56f8aa62259dcce44e5abd3c11f",
+    "tests/sql/fixtures/financial-core/add-culqi-checkout-replay-guard.sql": "19417fad8061e3533b2b2100281e49e2d1c85bef38c2335677d5a8d2222097b2",
+    "tests/sql/fixtures/financial-core/add-culqi-session-expiry.sql": "40e87814e92edc5f5e199202ee827692fafab99140fb3cd266c265486e378dee",
+    "tests/sql/fixtures/financial-core/add-payment-provider.sql": "e8d6237640012810fdb050c9f8750148db63c548d5ed88b3390eb7acff18a88c",
+    "tests/sql/fixtures/financial-core/add-public-api-hardening.sql": "02d4f55c5ebe034d48506c7e845cc2e713838e84ba893d39aa9ac8dba8d4ac54",
+    "tests/sql/fixtures/financial-core/setup-bagelito-reservations.sql": "932e735514b6a6741aad079f75c6f7456c41fe9e563732d6dd55425a04a11c67",
+    "tests/sql/native-concurrency.cjs": "28f54ede8f4928bfa8456624a7b923a6f6b01b81dd27e0835b6bda1f189a486b",
+    "tests/sql/package-lock.json": "03c4e34543cecc573fc6e6e60da14d4d96dc13f9df4500d69c38538aadf3ddd6",
+    "tests/sql/package.json": "cfa0805a253dfa7764db9194a8c47237576cd85a028874b159853a713197fb0e",
+    "tests/sql/product-lines.test.cjs": "adee728a2d99b562f1f0fd6ce1f34074677fe1e1c7822a045bf511a8f3232390",
+    "tests/sql/run-native.cjs": "e5815893edd0cf7e7935094dbd7459c540bf32858c0f9e378efa9a51f99a9a32",
+    "tsconfig.json": "7b3e8d222398ad577bf7a55e013b7de8939bd84fe4538d0059263f466149f15b",
+    "vite.config.ts": "af546f3228201a21f813d8ab51aa14cf3f9b4edb238dfca1b89f4a06936cc1c6"
+  },
+  "all_tracked_hashes_unchanged_after_checks": true,
+  "typecheck": {
+    "check": "typecheck-final",
+    "cwd": "/workspace/bagelito-status-84425e3",
+    "command": "NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=1 UV_THREADPOOL_SIZE=1 node node_modules/typescript/bin/tsc --noEmit",
+    "started_at": "2026-11-02T16:14:55.125715+00:00",
+    "finished_at": "2026-11-02T16:15:01.968335+00:00",
+    "elapsed_seconds": 6.842646739999509,
+    "exit_code": 0,
+    "signal": null,
+    "resource_before": {
+      "memory.max": "17179869184",
+      "memory.current": "3101261824",
+      "memory.peak": "3658108928",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+    },
+    "resource_after": {
+      "memory.max": "17179869184",
+      "memory.current": "3117477888",
+      "memory.peak": "3658108928",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+    },
+    "child_process_max_rss_kib": 516896
+  },
+  "full_build": {
+    "check": "build-final",
+    "cwd": "/workspace/bagelito-status-84425e3",
+    "command": "NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=1 UV_THREADPOOL_SIZE=1 npm run build",
+    "started_at": "2026-11-02T16:15:01.968945+00:00",
+    "finished_at": "2026-11-02T16:15:11.377542+00:00",
+    "elapsed_seconds": 9.408618387999923,
+    "exit_code": 0,
+    "signal": null,
+    "resource_before": {
+      "memory.max": "17179869184",
+      "memory.current": "3117477888",
+      "memory.peak": "3658108928",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+    },
+    "resource_after": {
+      "memory.max": "17179869184",
+      "memory.current": "3163738112",
+      "memory.peak": "3702964224",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+    },
+    "child_process_max_rss_kib": 542328
+  },
+  "full_build_controls": {
+    "structural": {
+      "pass": 11,
+      "total": 11
+    },
+    "manual": {
+      "pass": 4,
+      "total": 4
+    },
+    "movement": {
+      "pass": 14,
+      "total": 14
+    }
+  },
+  "build_warnings": {
+    "module_level_directive_occurrences": 20,
+    "other_warnings": "Function-valued code-splitting group name; OS/architecture tracing reminder. Nonfatal warnings retained in log; no code changes."
+  },
+  "sql36": {
+    "cwd": "/workspace/bagelito-status-84425e3",
+    "command": "NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs",
+    "started_at": "2026-11-02T15:40:41.061641+00:00",
+    "resource_before": {
+      "memory.max": "17179869184",
+      "memory.current": "2628284416",
+      "memory.peak": "3209928704",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+    },
+    "finished_at": "2026-11-02T15:40:47.733953+00:00",
+    "elapsed_seconds": 6.672082625000257,
+    "exit_code": 0,
+    "signal": null,
+    "resource_after": {
+      "memory.max": "17179869184",
+      "memory.current": "2630086656",
+      "memory.peak": "3658108928",
+      "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+    },
+    "child_process_max_rss_kib": 1015076,
+    "tap_summary": {
+      "tests": 36,
+      "suites": 0,
+      "pass": 36,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "case_results": [
+      {
+        "status": "ok",
+        "case": 1,
+        "name": "policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged"
+      },
+      {
+        "status": "ok",
+        "case": 2,
+        "name": "pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once"
+      },
+      {
+        "status": "ok",
+        "case": 3,
+        "name": "all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels"
+      },
+      {
+        "status": "ok",
+        "case": 4,
+        "name": "all four ordinary pack prices and pack-plus-pot prices match existing contract"
+      },
+      {
+        "status": "ok",
+        "case": 5,
+        "name": "all district delivery fees are recomputed in SQL rather than trusted from caller"
+      },
+      {
+        "status": "ok",
+        "case": 6,
+        "name": "exact replay returns original identity/expiry with no second order, line or history"
+      },
+      {
+        "status": "ok",
+        "case": 7,
+        "name": "canonical bagel row order does not change the replay identity"
+      },
+      {
+        "status": "ok",
+        "case": 8,
+        "name": "same-price schmear substitution and same-total bagel substitution are rejected"
+      },
+      {
+        "status": "ok",
+        "case": 9,
+        "name": "changed customer, delivery, terms or missing snapshot never reuse an existing session"
+      },
+      {
+        "status": "ok",
+        "case": 10,
+        "name": "tampered persisted bagel rows, total and snapshot fail replay without repair or second charge"
+      },
+      {
+        "status": "ok",
+        "case": 11,
+        "name": "expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake"
+      },
+      {
+        "status": "ok",
+        "case": 12,
+        "name": "zero-bagel standalone consumes one order slot, not bagel capacity"
+      },
+      {
+        "status": "ok",
+        "case": 13,
+        "name": "bagel capacity and closed/future/missing-delivery batches remain fail closed"
+      },
+      {
+        "status": "ok",
+        "case": 14,
+        "name": "new expired or overly long holds cannot reserve capacity"
+      },
+      {
+        "status": "ok",
+        "case": 15,
+        "name": "fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically"
+      },
+      {
+        "status": "ok",
+        "case": 16,
+        "name": "unpriced combos and extras cannot be given an invented selling price at either boundary"
+      },
+      {
+        "status": "ok",
+        "case": 17,
+        "name": "legal trigger mismatch rolls back the entire transaction including bagels/history"
+      },
+      {
+        "status": "ok",
+        "case": 18,
+        "name": "failure after order/item insert rolls back all partial records"
+      },
+      {
+        "status": "ok",
+        "case": 19,
+        "name": "anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes"
+      },
+      {
+        "status": "ok",
+        "case": 20,
+        "name": "new migration replay preserves enabled policy, snapshot data and financial core definitions"
+      },
+      {
+        "status": "ok",
+        "case": 21,
+        "name": "unrecognized relation collision and schema drift fail before replacing own objects"
+      },
+      {
+        "status": "ok",
+        "case": 22,
+        "name": "existing financial token preparation sees the complete total and does not claim a provider payment"
+      },
+      {
+        "status": "ok",
+        "case": 23,
+        "name": "public routes never directly invoke the product adapter or product-write RPC"
+      },
+      {
+        "status": "ok",
+        "case": 24,
+        "name": "missing financial prerequisite fails migration without creating product objects"
+      },
+      {
+        "status": "ok",
+        "case": 25,
+        "name": "unknown or altered function definition is not silently replaced on migration replay"
+      },
+      {
+        "status": "ok",
+        "case": 26,
+        "name": "persisted snapshot substitution is detected, never repaired or used as a new price"
+      },
+      {
+        "status": "ok",
+        "case": 27,
+        "name": "service-only snapshot reader works after payment and closed intake without another reservation"
+      },
+      {
+        "status": "ok",
+        "case": 28,
+        "name": "snapshot reader returns no record for unknown order and rejects inconsistent stored money"
+      },
+      {
+        "status": "ok",
+        "case": 29,
+        "name": "complete product reservation runs through real coordinator and SQL using only synthetic charge evidence"
+      },
+      {
+        "status": "ok",
+        "case": 30,
+        "name": "synthetic lower charge amount cannot mark full pack and schmear paid or lose products"
+      },
+      {
+        "status": "ok",
+        "case": 31,
+        "name": "synthetic provider failure preserves complete snapshot and prevents automatic second attempt"
+      },
+      {
+        "status": "ok",
+        "case": 32,
+        "name": "synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot"
+      },
+      {
+        "status": "ok",
+        "case": 33,
+        "name": "isolated packing reader fails on corrupted physical composition instead of inventing a missing pot"
+      },
+      {
+        "status": "ok",
+        "case": 34,
+        "name": "read-only packing projection rejects missing changed or invented physical bagels and mismatched header"
+      },
+      {
+        "status": "ok",
+        "case": 35,
+        "name": "complete stored reservation flows into private non-fiscal UI detail after synthetic confirmation"
+      },
+      {
+        "status": "ok",
+        "case": 36,
+        "name": "private receipt bridge rejects unconfirmed or contradictory persisted order without another reservation"
+      }
+    ]
+  },
+  "node255": "Not rerun here; local255PASS reported separately by parent. No HDR fixture used or downloaded. Build movement14 not added to that count.",
+  "log_sanitization": "ANSI escapes removed, checkout/dependency path prefixes normalized, trailing whitespace removed; case results and diagnostics retained. Exact commands/cwd remain in metadata.",
+  "log_hashes": {
+    "sql36.tap": {
+      "raw_filename": "product-lines.tap",
+      "raw_sha256": "142af93bf6b83b226419c81e1b4be31921d4d62170021730ee513b1b7a406409",
+      "published_sha256": "142af93bf6b83b226419c81e1b4be31921d4d62170021730ee513b1b7a406409"
+    },
+    "typecheck.log": {
+      "raw_filename": "typecheck-final.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "build.log": {
+      "raw_filename": "build-final.log",
+      "raw_sha256": "95b73ef28df31c5b33d454a217facbdfcb426b2534a81c1f5b499300f96c61fb",
+      "published_sha256": "c94629939d986a06e2aaf94ca5ba138e3abe2b07a5f3595ffb6c0925ca097e08"
+    },
+    "typecheck-initial-missing-dependency.log": {
+      "raw_filename": "typecheck.log",
+      "raw_sha256": "22d754e33e5e414d820e237c9e477c81ec8db495c45ab51f7665351a89a3c783",
+      "published_sha256": "22d754e33e5e414d820e237c9e477c81ec8db495c45ab51f7665351a89a3c783"
+    },
+    "build-initial-missing-dependency.log": {
+      "raw_filename": "build.log",
+      "raw_sha256": "2390793be227afce258d6801ccada5db27704f5e4005cf8337ca69b67b0e4d90",
+      "published_sha256": "2390793be227afce258d6801ccada5db27704f5e4005cf8337ca69b67b0e4d90"
+    }
+  },
+  "reconstruction_helper_sha256": "c0ef26e86398e84c4b5201f87692bc90e84f09cb66f9551ab95d3d68bcf594fa",
+  "post_check_cleanup": {
+    "candidate_commit": "84425e3a09ab9a8f27d63af219d50b4d34e789ca",
+    "candidate_tree": "8459ffc1fc3ae8d844daa9d0e3deaaf20fc1273e",
+    "all_preflight_tracked_hashes": "unchanged after typecheck/build",
+    "temporary_checkout_link": "removed after checks; private installation retained",
+    "build_output": "generated .output moved to private evidence/build-output; no source/config changes",
+    "typecheck_exit_code": 0,
+    "build_exit_code": 0,
+    "structural": {
+      "pass": 11,
+      "total": 11
+    },
+    "manual": {
+      "pass": 4,
+      "total": 4
+    },
+    "movement": {
+      "pass": 14,
+      "total": 14
+    },
+    "sql36_preserved": {
+      "tests": 36,
+      "suites": 0,
+      "pass": 36,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "build_warning_occurrences": 20,
+    "candidate_worktree_status": "clean"
+  }
+}

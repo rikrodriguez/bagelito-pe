@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { readBoundedJsonObject } from '../../../../server/http-json.server'
 import { coordinateCulqiCharge } from '../../../../server/charge-coordinator.server'
 import { createCulqiCharge, fetchCulqiCharge, type CulqiAuthentication3DS } from '../../../../server/culqi.server'
-import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
+import { getPrivatePaymentConfig, isPaymentRequestAllowed, isPersistedProductPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { enforcePublicApiSecurity, PublicApiError } from '../../../../server/public-api-security.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
 
@@ -71,7 +71,7 @@ export const Route = createFileRoute('/api/payments/culqi/charge')({
           const supabase = createSupabaseAdminClient()
           const { data, error } = await supabase
             .from('orders')
-            .select('id,order_code,checkout_session_id,customer_name,email,whatsapp,delivery_address,district,total_amount,status,payment_status,payment_lane,payment_order_id,payment_expires_at')
+            .select('id,order_code,checkout_session_id,customer_name,email,whatsapp,delivery_address,district,pack_slug,total_amount,status,payment_status,payment_lane,payment_order_id,payment_expires_at')
             .eq('order_code', orderCode)
             .eq('checkout_session_id', checkoutSessionId)
             .maybeSingle()
@@ -86,6 +86,7 @@ export const Route = createFileRoute('/api/payments/culqi/charge')({
             whatsapp: string
             delivery_address: string
             district: string
+            pack_slug: string
             total_amount: number
             status: string
             payment_status: string | null
@@ -102,6 +103,14 @@ export const Route = createFileRoute('/api/payments/culqi/charge')({
           }
           if (order.payment_status === 'paid') {
             return Response.json({ ok: true, orderCode, paymentStatus: 'paid' }, { headers: { 'Cache-Control': 'no-store' } })
+          }
+          if (!isPersistedProductPaymentRequestAllowed(request, order.pack_slug)) {
+            throw new PublicApiError('This product checkout is not enabled for this environment.', 503)
+          }
+          // A terminal result does not reset the order/attempt to pending.
+          // Admission guard only: the core claim still needs an atomic state gate.
+          if (order.payment_status !== 'pending') {
+            throw new PublicApiError('This reservation cannot start another payment attempt. Check its payment status.', 409)
           }
           if (order.payment_expires_at && Date.parse(order.payment_expires_at) <= Date.now()) {
             throw new PublicApiError('This payment session expired.', 410)

@@ -1,0 +1,666 @@
+{
+  "codeSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "selectedCount": 94,
+  "allCapturedPNGs": 838,
+  "selection": "Exact PNG copies of loaded galleries, Combo composition, long product/upsell states, summaries, consent and legal pages. Full raw reports preserve hashes for every generated frame. Additional PNGs remain at the original /tmp run paths; this publication is a selected evidence bundle, not every transition.",
+  "captures": [
+    {
+      "case": "320-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/320-entry-loaded.png",
+      "sha256": "1ae7efd1d5a89f0abc6bd3cd5367fe9aa07006567605596b3c50620c6eb8c256"
+    },
+    {
+      "case": "320-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/320-entry-loaded-full.png",
+      "sha256": "f73ff572a2e12fbdd0b7f47e9389bf211c98a3fce5475c9e4be15a5f054b6bd9"
+    },
+    {
+      "case": "390-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/390-entry-loaded.png",
+      "sha256": "73202258e0a18db79a39f810d9559e4039cb30087a8e1e72ec87658951836c3e"
+    },
+    {
+      "case": "390-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/390-entry-loaded-full.png",
+      "sha256": "759ff0677e09419b4edca6f828b08ecb861efd03b5375ae49fe4ebddb3ae7902"
+    },
+    {
+      "case": "768-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/768-entry-loaded.png",
+      "sha256": "f1cc5c7684e5c66ab426a2be8a1ce5d312a8641d7a3ca73b4004902affeb7a00"
+    },
+    {
+      "case": "768-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/768-entry-loaded-full.png",
+      "sha256": "8e27f77d41f4c8612bd82cbbca8af12590a441848c96ee24c0dd81014f2a35e8"
+    },
+    {
+      "case": "1024-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/1024-entry-loaded.png",
+      "sha256": "b197d87037df764efb0acb4e8f5a54ebe4cfcf6e3e596a863b29af968e838133"
+    },
+    {
+      "case": "1024-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/1024-entry-loaded-full.png",
+      "sha256": "3b8fe46c7a4c908c672d9b00dd170ed9864b641012055080adf6272e09bfc61a"
+    },
+    {
+      "case": "844-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/844-entry-loaded.png",
+      "sha256": "0d9a4583d7c75cfa48f906372d13d11ca87d1522d99757a969030e6c6c5dbafa"
+    },
+    {
+      "case": "844-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/844-entry-loaded-full.png",
+      "sha256": "212b5372e3b5b16875959dbb6097450ae6ab7d6e2794a4512f4045c7f958575d"
+    },
+    {
+      "case": "1280-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/1280-entry-loaded.png",
+      "sha256": "6ebbe6623c48b5e9bd547d9b1f91a6600d742b1cc2302395d32c7b75c8df08f9"
+    },
+    {
+      "case": "1280-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/1280-entry-loaded-full.png",
+      "sha256": "5c37d29de76243ad062e14730760cdbf1c2612e76c2275312f871f3d3c4bf0e9"
+    },
+    {
+      "case": "1920-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/1920-entry-loaded.png",
+      "sha256": "d7cd508ad866868c5650ac95704d6c41940c006d90efb1896ad417603d523082"
+    },
+    {
+      "case": "1920-entry",
+      "stage": "gallery-after-native-scroll-and-decode",
+      "sourceRun": "loaded-entry",
+      "file": "captures/loaded-entry/1920-entry-loaded-full.png",
+      "sha256": "a15963e6ede99cf6da795ff1d948c5dab90cda2222329a290e2ca156d459e117"
+    },
+    {
+      "case": "390-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/390-entry-05-scene-combos-full.png",
+      "sha256": "d7db05e445d183c510f139d97d77fae3b6e1b555d47510182a7e8f30ba4b2721"
+    },
+    {
+      "case": "320-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/320-entry-05-scene-combos-full.png",
+      "sha256": "a4a377a2ea7605daa0b4c2c7e6f6a242b236fea5bbac608e42cc83d386e966be"
+    },
+    {
+      "case": "1280-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/1280-entry-05-scene-combos-full.png",
+      "sha256": "a282f19432ed2e24eb0502520fc8cf5a9ee9c3fa8eeaae01188a399b890c8b3d"
+    },
+    {
+      "case": "768-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/768-entry-05-scene-combos-full.png",
+      "sha256": "8bdd23ddcf9fda8bc946e196a7b68991822a3df3afc464dd0d6e64b5ce804789"
+    },
+    {
+      "case": "1024-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/1024-entry-05-scene-combos-full.png",
+      "sha256": "528237f4acd3d954fbc6769e80db93a7a4ce9c5fa6e510d195d3c915c10b9e9b"
+    },
+    {
+      "case": "844-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/844-entry-05-scene-combos-full.png",
+      "sha256": "28a2d4ac87816b361df9ed239e27a908bc0b03d927a955f36828adb30a02929a"
+    },
+    {
+      "case": "1920-entry",
+      "stage": "scene-combos",
+      "sourceRun": "entry",
+      "file": "captures/entry/1920-entry-05-scene-combos-full.png",
+      "sha256": "3a1cc28be32a130d8d82b0c69b015635571771dffca8a0b6118cd632aef9f5e4"
+    },
+    {
+      "case": "1280-pack-decline",
+      "stage": "summary",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-decline-08-summary-full.png",
+      "sha256": "bc8d9e824618503244fd4b6de703cc1db2c2ef6dac959cf175f25e180fdad24a"
+    },
+    {
+      "case": "1280-pack-decline",
+      "stage": "review-consented",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-decline-11-review-consented-full.png",
+      "sha256": "2621b5e0570692870f9fdbe3bf6073884620bf128a3d5f9b110d9ad3c1a4ab03"
+    },
+    {
+      "case": "1280-pack-decline",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-decline-legal.png",
+      "sha256": "94b17a7f9e6504c0d3bf769b100b544aba54b0fbdcbdc25d0e600edb5d9ef8b5"
+    },
+    {
+      "case": "1280-pack-original",
+      "stage": "summary",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-original-10-summary-full.png",
+      "sha256": "fcce4599d3b7e3a5a3a22e13ec27366388e2bae64e9451182ec09bfe77711311"
+    },
+    {
+      "case": "1280-pack-original",
+      "stage": "review-consented",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-original-13-review-consented-full.png",
+      "sha256": "fc4207121d42de17edef109e6224e6e58dfb24771bc9d9bf42c8133489c94da2"
+    },
+    {
+      "case": "1280-pack-original",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-original-legal.png",
+      "sha256": "94b17a7f9e6504c0d3bf769b100b544aba54b0fbdcbdc25d0e600edb5d9ef8b5"
+    },
+    {
+      "case": "1280-pack-flavoured",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-flavoured-06-scene-schmears-full.png",
+      "sha256": "cdb40bd9a6b2b9eba9e0f7580570ad068bc33c9749f921dc7291ad1f9057f8dd"
+    },
+    {
+      "case": "1280-pack-flavoured",
+      "stage": "optional-selected",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-flavoured-07-optional-selected-full.png",
+      "sha256": "1bcb50ea3cda2e5d07eff9ec9a2c0782506099a6e3b00332a10af50b623302af"
+    },
+    {
+      "case": "1280-pack-flavoured",
+      "stage": "summary",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-flavoured-10-summary-full.png",
+      "sha256": "5655ba971bc84905a1acb2125d9195921b4f6d0465dd25e688c9473a1eb5480b"
+    },
+    {
+      "case": "1280-pack-flavoured",
+      "stage": "review-consented",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-flavoured-13-review-consented-full.png",
+      "sha256": "fc4207121d42de17edef109e6224e6e58dfb24771bc9d9bf42c8133489c94da2"
+    },
+    {
+      "case": "1280-pack-flavoured",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-pack-flavoured-legal.png",
+      "sha256": "94b17a7f9e6504c0d3bf769b100b544aba54b0fbdcbdc25d0e600edb5d9ef8b5"
+    },
+    {
+      "case": "1280-combo",
+      "stage": "scene-combos",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-combo-02-scene-combos-full.png",
+      "sha256": "a282f19432ed2e24eb0502520fc8cf5a9ee9c3fa8eeaae01188a399b890c8b3d"
+    },
+    {
+      "case": "1280-combo",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-combo-05-scene-schmears-full.png",
+      "sha256": "cc5869b5b1dd1264840ea5b2b7befbe0b6a447db7a7703a9fe04d80cbbbc13ee"
+    },
+    {
+      "case": "1280-combo",
+      "stage": "combo-schmear-selected",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-combo-06-combo-schmear-selected-full.png",
+      "sha256": "e72a2bfb2313335802be780e19286d987950433cbe0f5da0d39898479af7ec6c"
+    },
+    {
+      "case": "1280-combo",
+      "stage": "summary",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-combo-08-summary-full.png",
+      "sha256": "44c39af2caeab94e83f44569c310eccabe49e386f21482361828ba929b1c373e"
+    },
+    {
+      "case": "1280-combo",
+      "stage": "review-consented",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-combo-11-review-consented-full.png",
+      "sha256": "56d14aa62f068145be3f5b28354e520283b64998f0f69ad2da39ba379567b63d"
+    },
+    {
+      "case": "1280-combo",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-combo-legal.png",
+      "sha256": "94b17a7f9e6504c0d3bf769b100b544aba54b0fbdcbdc25d0e600edb5d9ef8b5"
+    },
+    {
+      "case": "1280-schmear",
+      "stage": "scene-schmear-size",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-schmear-02-scene-schmear-size-full.png",
+      "sha256": "dde068f1a3734e7f9c2b61f2ac47cb46a9840800d7e699c568c9f4ca69b20b0e"
+    },
+    {
+      "case": "1280-schmear",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-schmear-03-scene-schmears-full.png",
+      "sha256": "61b9a88f6ddb2a1e603e79c7d8c3441ec6b01a59373722e40fcb550d93718acb"
+    },
+    {
+      "case": "1280-schmear",
+      "stage": "summary",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-schmear-05-summary-full.png",
+      "sha256": "ffb5d1d1a0510d0f94781d4f9348e6c7d74914bde467f8fcfd484f7289ec6d67"
+    },
+    {
+      "case": "1280-schmear",
+      "stage": "review-consented",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-schmear-08-review-consented-full.png",
+      "sha256": "6d61af109316c89a706596a5fac03b9864d78f6dad9ddcc678dd573ccb7eb580"
+    },
+    {
+      "case": "1280-schmear",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-desktop",
+      "file": "captures/journeys-desktop/1280-schmear-legal.png",
+      "sha256": "94b17a7f9e6504c0d3bf769b100b544aba54b0fbdcbdc25d0e600edb5d9ef8b5"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "scene-pack-size",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-02-scene-pack-size-full.png",
+      "sha256": "9464b4af15ffd28b7efd0a15c27c3864b19f98ca21f0cc54c9828f8294ab111b"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "scene-pack-qty",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-03-scene-pack-qty-full.png",
+      "sha256": "2e5021bf60ddc2e8f69c3b286cbdb7efdcb69f46e452d8bf6c760b12749488f1"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "bagels-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-05-bagels-selected-full.png",
+      "sha256": "6d1acd6d5548e812368126eaad562a85e87d34f3efeae0e43e2d3cd63de19726"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-06-scene-schmears-full.png",
+      "sha256": "8e8dc6f18a47babadd1debab5ef63c1540e9bf1bfa5de820b084e969fdd33713"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "optional-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-07-optional-selected-full.png",
+      "sha256": "95c8a43cf2bb3e85bd371d5b7d7daaf6a2dae85125d95594cc52f18f01284984"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "optional-deselected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-08-optional-deselected-full.png",
+      "sha256": "ea4513457b53cdb48a3d1a753505adea23e098d9dcfb1de70e985ad596c27de9"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "summary",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-10-summary-full.png",
+      "sha256": "3973d7ef08a1195d37305357b7043095e4dda3dbc1611702b7abf36a49f807d6"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "review-consented",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-13-review-consented-full.png",
+      "sha256": "e98651602d3a2e34546bc708f971270f90d4fe905a99f35fb276b7426ca8654b"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "cart-with-selection",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-15-cart-with-selection-full.png",
+      "sha256": "a2ad2331e0494938024283ecd5713c82e29f0e448efb9809de62c20362455fd9"
+    },
+    {
+      "case": "390-pack-flavoured",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-pack-flavoured-legal.png",
+      "sha256": "bee72cdf3980389a093c4770082a0c65fddf0615e4aea79c99b49e549b294a56"
+    },
+    {
+      "case": "390-combo",
+      "stage": "scene-combos",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-02-scene-combos-full.png",
+      "sha256": "a6a8c5b003af7054f18453bf85b612400ad2ff28a150859f3c9860ce119072fb"
+    },
+    {
+      "case": "390-combo",
+      "stage": "combo-bagels-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-04-combo-bagels-selected-full.png",
+      "sha256": "dd2ec6181003ddca966ff06131a17f628ac8645d0fded3eae20e86066dd1893c"
+    },
+    {
+      "case": "390-combo",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-05-scene-schmears-full.png",
+      "sha256": "ef03ac0ae88824c1da4a5995326d56928713a8012eae01fdbfc60e4ee4799a99"
+    },
+    {
+      "case": "390-combo",
+      "stage": "combo-schmear-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-06-combo-schmear-selected-full.png",
+      "sha256": "b03d747a8dac47fc8d3e66542ffb7cc0827f094df5fb38a8c34f277c6477254e"
+    },
+    {
+      "case": "390-combo",
+      "stage": "summary",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-08-summary-full.png",
+      "sha256": "5629c042b91b6d5e9ca7d6c77caccf17027f25850077079931b82d9e5567b7f0"
+    },
+    {
+      "case": "390-combo",
+      "stage": "review-consented",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-11-review-consented-full.png",
+      "sha256": "c26ac6ea084515a07fa793acfaa54584c5315ea3d0ffb1f27a3f0aa5829a4c38"
+    },
+    {
+      "case": "390-combo",
+      "stage": "cart-with-selection",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-13-cart-with-selection-full.png",
+      "sha256": "bcdbb17ff5792ddd6a8977331db12c708c24388da34701e0dfe58be979b9d647"
+    },
+    {
+      "case": "390-combo",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/390-combo-legal.png",
+      "sha256": "bee72cdf3980389a093c4770082a0c65fddf0615e4aea79c99b49e549b294a56"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "scene-pack-size",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-02-scene-pack-size-full.png",
+      "sha256": "b84da10a2362d20da2ba934803f5b897326279c97216706419bb0f06e46f9538"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "scene-pack-qty",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-03-scene-pack-qty-full.png",
+      "sha256": "31dde5d7f9903130b0d0689d9be287b6abfb8d0855a02a9700b3e1632739cccf"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "bagels-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-05-bagels-selected-full.png",
+      "sha256": "066f77ac4e5aedb47174d807c9404adf6863a33fbd56366804aa8fc83ce21f78"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-06-scene-schmears-full.png",
+      "sha256": "951eeb81eac81a0f072c551c82d23b2ae6df60c984360f739fc645aff139597b"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "optional-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-07-optional-selected-full.png",
+      "sha256": "23cfe8d6de383d77c28ea8b8bcfdcc22acabc9a6fe411cee57bd2bf0fd2bfc2f"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "optional-deselected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-08-optional-deselected-full.png",
+      "sha256": "5c337d1820147082baa477ea8c803aa25b07fe31a3dc6df2fd3a0e6fa6e70a26"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "summary",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-10-summary-full.png",
+      "sha256": "e19e34764ef5148ea1d2aa7a0a24d6c33df0dc02eef4b19d51fb6393411c73c9"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "review-consented",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-13-review-consented-full.png",
+      "sha256": "e9e7f09c346ddd18d33d6e7fdf20cc9e1dd8b15d529347b020ed2b64fd6d2207"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "cart-with-selection",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-15-cart-with-selection-full.png",
+      "sha256": "5ee343de7dd78db6bf280e536a1ac1a4f4a068e4860a3045e2f1bd7d3c30ece3"
+    },
+    {
+      "case": "320-pack-flavoured",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-pack-flavoured-legal.png",
+      "sha256": "eb77393852da202cc37c709100ba594f700d03e1aeec5f917f0c9bb6e2d2bb9a"
+    },
+    {
+      "case": "320-combo",
+      "stage": "scene-combos",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-02-scene-combos-full.png",
+      "sha256": "2438123a1a24e4b190eaedf54adf3f57d8c3f6aacb88893e2316da5d377152ca"
+    },
+    {
+      "case": "320-combo",
+      "stage": "combo-bagels-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-04-combo-bagels-selected-full.png",
+      "sha256": "93c7d51aaca15bc633181870fc0bbe70babcfff3c46be9de8af4bcf220089ea2"
+    },
+    {
+      "case": "320-combo",
+      "stage": "scene-schmears",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-05-scene-schmears-full.png",
+      "sha256": "302dabc58a7b61c391e3686f3be3711ffeeb3c7a247c8efbb2063a4a24afdde3"
+    },
+    {
+      "case": "320-combo",
+      "stage": "combo-schmear-selected",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-06-combo-schmear-selected-full.png",
+      "sha256": "ea6a02848a0965cac609953ae32253b534b8cbaf06d467559269fe966c8545ae"
+    },
+    {
+      "case": "320-combo",
+      "stage": "summary",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-08-summary-full.png",
+      "sha256": "3184b74491e9a127b224d0060d2245289b801af2a03ec1e538bd3400930c49ae"
+    },
+    {
+      "case": "320-combo",
+      "stage": "review-consented",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-11-review-consented-full.png",
+      "sha256": "07e868da317b2d48f45d7824822afff1960062151f2a76713c3cca83135181d9"
+    },
+    {
+      "case": "320-combo",
+      "stage": "cart-with-selection",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-13-cart-with-selection-full.png",
+      "sha256": "d67b68c69d09d7503a981ddd6e5136d0e093cac0c4a014c1aa9f09d93b1f34c3"
+    },
+    {
+      "case": "320-combo",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-mobile",
+      "file": "captures/journeys-mobile/320-combo-legal.png",
+      "sha256": "eb77393852da202cc37c709100ba594f700d03e1aeec5f917f0c9bb6e2d2bb9a"
+    },
+    {
+      "case": "768-pack-decline",
+      "stage": "scene-pack-qty",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/768-pack-decline-03-scene-pack-qty-full.png",
+      "sha256": "5b5c6ff39d87a557033ffa61087638355e9133da7198735416cdb18dd4a6cbfb"
+    },
+    {
+      "case": "768-pack-decline",
+      "stage": "bagels-selected",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/768-pack-decline-05-bagels-selected-full.png",
+      "sha256": "1fcfb3d61350580c97b3ea102ed8bbd047499d206a1376b99b4b8b247deaa87a"
+    },
+    {
+      "case": "768-pack-decline",
+      "stage": "summary",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/768-pack-decline-08-summary-full.png",
+      "sha256": "1ec682482bb528cbf26aa744763dba31a41571df30da7731eccaa1b8d19a4171"
+    },
+    {
+      "case": "768-pack-decline",
+      "stage": "review-consented",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/768-pack-decline-11-review-consented-full.png",
+      "sha256": "e0092358d8cf7b3ff5b1fee35d76da910ffcf18505c9df8ff0f8a0fd2791f495"
+    },
+    {
+      "case": "768-pack-decline",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/768-pack-decline-legal.png",
+      "sha256": "65f5d29671d826460f8dd9c415bf11eaf956ea6a5b390596621b867af0f4555c"
+    },
+    {
+      "case": "1024-pack-decline",
+      "stage": "scene-pack-qty",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/1024-pack-decline-03-scene-pack-qty-full.png",
+      "sha256": "aa6f142508622ff652e2743c6487db6a422480fd8bfa8ccb1fabe8d149399544"
+    },
+    {
+      "case": "1024-pack-decline",
+      "stage": "bagels-selected",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/1024-pack-decline-05-bagels-selected-full.png",
+      "sha256": "2c58bd7ae7a1a149105dcc3b978535fb7f5ed34c34ee918f56f7735da625395b"
+    },
+    {
+      "case": "1024-pack-decline",
+      "stage": "summary",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/1024-pack-decline-08-summary-full.png",
+      "sha256": "9cf7281ed1a9f415958d99802716109ecc9cb58b0b8e1eb18d5f14efecc96bbd"
+    },
+    {
+      "case": "1024-pack-decline",
+      "stage": "review-consented",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/1024-pack-decline-11-review-consented-full.png",
+      "sha256": "17b05475120d7f7e19b5f201e617495d110ff8bafec7918af04115746ee5c308"
+    },
+    {
+      "case": "1024-pack-decline",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/1024-pack-decline-legal.png",
+      "sha256": "399b1ee6e31e73375393f27d0d5fc53ce2e0fdd39f91e6e633084f2d41b8bf9a"
+    },
+    {
+      "case": "844-pack-decline",
+      "stage": "scene-pack-qty",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/844-pack-decline-03-scene-pack-qty-full.png",
+      "sha256": "f606b912a0aac323be2a1dbed7582fc285b378ea5636af55d9daa2d975b7d4a9"
+    },
+    {
+      "case": "844-pack-decline",
+      "stage": "bagels-selected",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/844-pack-decline-05-bagels-selected-full.png",
+      "sha256": "2ffbf2e2f973fb353754face434b4e16b3e66ff2ce1f86c8a55145bea29503c6"
+    },
+    {
+      "case": "844-pack-decline",
+      "stage": "summary",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/844-pack-decline-08-summary-full.png",
+      "sha256": "86ed8b6b8450bade97cc4ab68700c3d9d67d1d3e9095a6504f8667fdf10666b8"
+    },
+    {
+      "case": "844-pack-decline",
+      "stage": "review-consented",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/844-pack-decline-11-review-consented-full.png",
+      "sha256": "6bac24ff42f110e6136ca40bb3251f3881a78ed8885572d58d9bcc43c6dc3a2e"
+    },
+    {
+      "case": "844-pack-decline",
+      "stage": "legal-real-new-tab",
+      "sourceRun": "journeys-responsive",
+      "file": "captures/journeys-responsive/844-pack-decline-legal.png",
+      "sha256": "c8694fd913a660b1496b912148482660be065f316d6d0c0d3c480c2ebced0b80"
+    }
+  ]
+}

@@ -15,9 +15,11 @@
     "qa:tour-visibility": "node scripts/qa-tour-visibility.cjs",
     "qa:movement": "node --test tests/movement-input.test.cjs tests/movement-integration.test.cjs",
     "qa:contact-shadows": "node scripts/qa-contact-shadow-bake.cjs",
-    "qa:reference:text": "node scripts/qa-reference-card-text.cjs",
-    "qa:reference:secondary": "node scripts/qa-reference-secondary-text.cjs",
-    "qa:reference:entry": "node scripts/qa-reference-direct-entry.cjs"
+    "qa:reference:text": "node scripts/qa-rebuilt-storefront.cjs --profile=text",
+    "qa:reference:secondary": "node scripts/qa-rebuilt-storefront.cjs --profile=secondary",
+    "qa:reference:entry": "node scripts/qa-rebuilt-storefront.cjs --profile=entry",
+    "qa:product-lines": "node --test --test-concurrency=1 tests/sql/product-lines.test.cjs",
+    "qa:product-lines:postgres": "node tests/sql/run-native.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

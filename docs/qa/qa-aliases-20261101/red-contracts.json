@@ -1,0 +1,1692 @@
+{
+  "metadata": {
+    "declaredUISHA": "2a824c5b29bb85a41b616d20286ed29295e80ed7",
+    "compiledSnapshotSHA": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+    "uiHashes": {
+      "src/reference/ReferenceScene.tsx": "8d35200e7121348145f695b50b2a0af66035347c7b70b8eba86cded3923b7a87",
+      "src/reference/ReferenceStorefront.tsx": "b42a8a2af362b0f4b41e3577d262d8e509319a77161065a4cfe8faaa5bc6c84b",
+      "src/reference/rebuilt-storefront.css": "6d7296d8723e2e94cb95b57a194cd67d9ed508c55a994312d3c3632026c709e8",
+      "src/reference/rebuilt-flow.css": "b56006dbbc4041a85ea00f0e167a99e3ce336c60be05a3da073d9d4ce10ea8be",
+      "src/playable/GuidedCommerce.tsx": "88222b14ff0688dc22363dade8d85a764684283ad0eb886741dc905157e5879a",
+      "src/routes/index.tsx": "7063138b536a1e84670be8ff40ad4c0bd9d9f8787453431c217ea14fb02556a1",
+      "src/routes/playable.tsx": "dfcae28a3e398c4436fc70420779fc8abb4a069915f6fc9d47259bb8c7d0a073"
+    },
+    "legacyHelperHashes": {
+      "qa-reference-card-text.cjs": "289e030b29b7241321a7d65726e4c72f3a8133a814cc04793cd29d7e097950df",
+      "qa-reference-secondary-text.cjs": "304573d7088fd82a2dc767be9871cf71bbcbdf277c291564c971ae12b838482f",
+      "qa-reference-direct-entry.cjs": "ec39b4ae0874fc0e24794a20dabbf58a648bd8515c803c7d2aa56a44d32601c3",
+      "qa-reference-entry-geometry.cjs": "36d5fe1a24d31fa045701666e8a2c2e61c9972dada91aaba928598ea81f9d4f9",
+      "qa-rebuilt-safety.cjs": "040ddde2b18e8adcafada2abd805b115ce85c1258db0dd285f87453b69d1af2e"
+    },
+    "driverSHA256": "d2777b1329c2e1ad3572a07b36246362d86258c258b6312454dd9d049740d064",
+    "startedAt": "2026-11-01T07:44:17.598Z",
+    "scope": "Exact old browser predicates on the new real DOM, without invoking impossible image-response waits. Expected contract failures, not application failures; no npm legacy launcher is claimed here.",
+    "browserVersion": "151.0.7922.173",
+    "finishedAt": "2026-11-01T07:44:21.720Z"
+  },
+  "cases": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "expectedLegacyFailures": [
+        {
+          "script": "qa-reference-card-text.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        },
+        {
+          "script": "qa-reference-secondary-text.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        },
+        {
+          "script": "qa-reference-direct-entry.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        }
+      ],
+      "pass": true,
+      "capture": "320-actual-rebuilt.png",
+      "captureSHA256": "f631f9d6fc53981b8b63685ebc7d8f97b664437be9e8faae1b2dd8900126651e",
+      "oldNoZoom": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "mobile": true,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 14,
+              "y": 217.140625,
+              "right": 156,
+              "bottom": 515.140625,
+              "width": 142,
+              "height": 298
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 28,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 28,
+                    "y": 379.140625,
+                    "right": 95.1875,
+                    "bottom": 413.140625,
+                    "width": 67.1875,
+                    "height": 34
+                  }
+                ],
+                "clip": {
+                  "x": 14,
+                  "y": 217.140625,
+                  "right": 156,
+                  "bottom": 515.140625,
+                  "width": 142,
+                  "height": 298
+                }
+              },
+              {
+                "text": "Grandes o minis.",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 28,
+                    "y": 415.140625,
+                    "right": 135.390625,
+                    "bottom": 432.140625,
+                    "width": 107.390625,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 14,
+                  "y": 217.140625,
+                  "right": 156,
+                  "bottom": 515.140625,
+                  "width": 142,
+                  "height": 298
+                }
+              },
+              {
+                "text": "Para compartir.",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 28,
+                    "y": 435.390625,
+                    "right": 124.09375,
+                    "bottom": 452.390625,
+                    "width": 96.09375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 14,
+                  "y": 217.140625,
+                  "right": 156,
+                  "bottom": 515.140625,
+                  "width": 142,
+                  "height": 298
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 164,
+              "y": 217.140625,
+              "right": 306,
+              "bottom": 362.140625,
+              "width": 142,
+              "height": 145
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 23,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 178,
+                    "y": 271.140625,
+                    "right": 253.421875,
+                    "bottom": 298.140625,
+                    "width": 75.421875,
+                    "height": 27
+                  }
+                ],
+                "clip": {
+                  "x": 164,
+                  "y": 217.140625,
+                  "right": 306,
+                  "bottom": 362.140625,
+                  "width": 142,
+                  "height": 145
+                }
+              },
+              {
+                "text": "Bagels + schmears",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 178,
+                    "y": 302.140625,
+                    "right": 237.515625,
+                    "bottom": 319.140625,
+                    "width": 59.515625,
+                    "height": 17
+                  },
+                  {
+                    "x": 178,
+                    "y": 324.53125,
+                    "right": 244.15625,
+                    "bottom": 341.53125,
+                    "width": 66.15625,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 164,
+                  "y": 217.140625,
+                  "right": 306,
+                  "bottom": 362.140625,
+                  "width": 142,
+                  "height": 145
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 164,
+              "y": 370.140625,
+              "right": 306,
+              "bottom": 515.140625,
+              "width": 142,
+              "height": 145
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 23,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 178,
+                    "y": 424.140625,
+                    "right": 269.875,
+                    "bottom": 451.140625,
+                    "width": 91.875,
+                    "height": 27
+                  }
+                ],
+                "clip": {
+                  "x": 164,
+                  "y": 370.140625,
+                  "right": 306,
+                  "bottom": 515.140625,
+                  "width": 142,
+                  "height": 145
+                }
+              },
+              {
+                "text": "El toque que faltaba.",
+                "fontSize": 14,
+                "color": "rgb(0, 74, 173)",
+                "visible": false,
+                "rects": [],
+                "clip": {
+                  "x": 164,
+                  "y": 370.140625,
+                  "right": 306,
+                  "bottom": 515.140625,
+                  "width": 142,
+                  "height": 145
+                }
+              },
+              {
+                "text": "120, 180 o 240 g.",
+                "fontSize": 14,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 178,
+                    "y": 454.140625,
+                    "right": 281.046875,
+                    "bottom": 470.140625,
+                    "width": 103.046875,
+                    "height": 16
+                  }
+                ],
+                "clip": {
+                  "x": 164,
+                  "y": 370.140625,
+                  "right": 306,
+                  "bottom": 515.140625,
+                  "width": 142,
+                  "height": 145
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          }
+        ],
+        "arts": [],
+        "images": [],
+        "canvasCount": 0,
+        "failures": [
+          {
+            "type": "native-card-photo",
+            "category": "packs"
+          },
+          {
+            "type": "native-card-photo",
+            "category": "combos"
+          },
+          {
+            "type": "native-card-photo",
+            "category": "schmears"
+          },
+          {
+            "type": "hero-and-vitrina-crops-required",
+            "count": 0
+          }
+        ],
+        "pass": false,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "network": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-BfidDE5Q.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/routes-v6PhBbRo.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-B_F1lXjJ.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/index-D-KoXC6_.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "resourceType": "image",
+            "status": 200
+          }
+        ],
+        "legalRedirects": [],
+        "blocked": [],
+        "errors": [],
+        "expectedClosingErrors": [],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "documentId": "1793519058360.7:mrt9479l6vp",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "documentId": "1793519058360.7:mrt9479l6vp",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          }
+        ],
+        "documents": [
+          {
+            "kind": "document-init",
+            "documentId": "1793519058282.3:vpu342mq4cp",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793519058360.7:mrt9479l6vp",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793519059346.3:hm9ngv45qx9",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          }
+        ],
+        "pages": [
+          {
+            "id": 1,
+            "url": "about:blank",
+            "closed": true
+          }
+        ],
+        "pageErrors": [],
+        "consoleErrors": [],
+        "assets": [
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "contentType": "image/webp",
+            "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "contentType": "image/webp",
+            "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "contentType": "image/webp",
+            "sha256": "f4dd4afe1f06ea3c74aac6313332ba6f57f4323be13b87a8c168f6ef1bac7efd"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "contentType": "image/webp",
+            "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "contentType": "image/webp",
+            "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "contentType": "image/webp",
+            "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "contentType": "image/webp",
+            "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "contentType": "image/webp",
+            "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "contentType": "image/webp",
+            "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2"
+          }
+        ],
+        "callbackErrors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793519058360.7:mrt9479l6vp",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+              "url": "http://127.0.0.1:3237/"
+            }
+          ],
+          "errors": [],
+          "documentCount": 1
+        }
+      },
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793519058360.7:mrt9479l6vp",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "url": "http://127.0.0.1:3237/"
+          }
+        ],
+        "errors": [],
+        "documentCount": 1
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "expectedLegacyFailures": [
+        {
+          "script": "qa-reference-card-text.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        },
+        {
+          "script": "qa-reference-secondary-text.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        },
+        {
+          "script": "qa-reference-direct-entry.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        }
+      ],
+      "pass": true,
+      "capture": "390-actual-rebuilt.png",
+      "captureSHA256": "93cffe838277f8acbab208cf9ed4300278f43884659a989aac35fb969e9043d1",
+      "oldNoZoom": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mobile": true,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 14,
+              "y": 237.46875,
+              "right": 190,
+              "bottom": 525.46875,
+              "width": 176,
+              "height": 288
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 30,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 28,
+                    "y": 399.46875,
+                    "right": 99.984375,
+                    "bottom": 435.46875,
+                    "width": 71.984375,
+                    "height": 36
+                  }
+                ],
+                "clip": {
+                  "x": 14,
+                  "y": 237.46875,
+                  "right": 190,
+                  "bottom": 525.46875,
+                  "width": 176,
+                  "height": 288
+                }
+              },
+              {
+                "text": "Grandes o minis.",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 28,
+                    "y": 438.46875,
+                    "right": 142.546875,
+                    "bottom": 455.46875,
+                    "width": 114.546875,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 14,
+                  "y": 237.46875,
+                  "right": 190,
+                  "bottom": 525.46875,
+                  "width": 176,
+                  "height": 288
+                }
+              },
+              {
+                "text": "Para compartir.",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 28,
+                    "y": 460.0625,
+                    "right": 130.5,
+                    "bottom": 477.0625,
+                    "width": 102.5,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 14,
+                  "y": 237.46875,
+                  "right": 190,
+                  "bottom": 525.46875,
+                  "width": 176,
+                  "height": 288
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 200,
+              "y": 237.46875,
+              "right": 376,
+              "bottom": 376.46875,
+              "width": 176,
+              "height": 139
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 25,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 214,
+                    "y": 299.46875,
+                    "right": 295.984375,
+                    "bottom": 329.46875,
+                    "width": 81.984375,
+                    "height": 30
+                  }
+                ],
+                "clip": {
+                  "x": 200,
+                  "y": 237.46875,
+                  "right": 376,
+                  "bottom": 376.46875,
+                  "width": 176,
+                  "height": 139
+                }
+              },
+              {
+                "text": "Bagels + schmears",
+                "fontSize": 16,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 214,
+                    "y": 333.46875,
+                    "right": 343.71875,
+                    "bottom": 350.46875,
+                    "width": 129.71875,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 200,
+                  "y": 237.46875,
+                  "right": 376,
+                  "bottom": 376.46875,
+                  "width": 176,
+                  "height": 139
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 200,
+              "y": 386.46875,
+              "right": 376,
+              "bottom": 525.46875,
+              "width": 176,
+              "height": 139
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 25,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 214,
+                    "y": 448.46875,
+                    "right": 313.859375,
+                    "bottom": 478.46875,
+                    "width": 99.859375,
+                    "height": 30
+                  }
+                ],
+                "clip": {
+                  "x": 200,
+                  "y": 386.46875,
+                  "right": 376,
+                  "bottom": 525.46875,
+                  "width": 176,
+                  "height": 139
+                }
+              },
+              {
+                "text": "El toque que faltaba.",
+                "fontSize": 14,
+                "color": "rgb(0, 74, 173)",
+                "visible": false,
+                "rects": [],
+                "clip": {
+                  "x": 200,
+                  "y": 386.46875,
+                  "right": 376,
+                  "bottom": 525.46875,
+                  "width": 176,
+                  "height": 139
+                }
+              },
+              {
+                "text": "120, 180 o 240 g.",
+                "fontSize": 14,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 214,
+                    "y": 481.46875,
+                    "right": 317.046875,
+                    "bottom": 497.46875,
+                    "width": 103.046875,
+                    "height": 16
+                  }
+                ],
+                "clip": {
+                  "x": 200,
+                  "y": 386.46875,
+                  "right": 376,
+                  "bottom": 525.46875,
+                  "width": 176,
+                  "height": 139
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          }
+        ],
+        "arts": [],
+        "images": [],
+        "canvasCount": 0,
+        "failures": [
+          {
+            "type": "native-card-photo",
+            "category": "packs"
+          },
+          {
+            "type": "native-card-photo",
+            "category": "combos"
+          },
+          {
+            "type": "native-card-photo",
+            "category": "schmears"
+          },
+          {
+            "type": "hero-and-vitrina-crops-required",
+            "count": 0
+          }
+        ],
+        "pass": false,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "network": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-BfidDE5Q.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/routes-v6PhBbRo.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-B_F1lXjJ.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/index-D-KoXC6_.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "resourceType": "image",
+            "status": 200
+          }
+        ],
+        "legalRedirects": [],
+        "blocked": [],
+        "errors": [],
+        "expectedClosingErrors": [],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "documentId": "1793519059532.8:wstukpnczlm",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "documentId": "1793519059532.8:wstukpnczlm",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          }
+        ],
+        "documents": [
+          {
+            "kind": "document-init",
+            "documentId": "1793519059463.6:6orfootcyjo",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793519059532.8:wstukpnczlm",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793519060446.8:4tuzb63unfs",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          }
+        ],
+        "pages": [
+          {
+            "id": 1,
+            "url": "about:blank",
+            "closed": true
+          }
+        ],
+        "pageErrors": [],
+        "consoleErrors": [],
+        "assets": [
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "contentType": "image/webp",
+            "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "contentType": "image/webp",
+            "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "contentType": "image/webp",
+            "sha256": "f4dd4afe1f06ea3c74aac6313332ba6f57f4323be13b87a8c168f6ef1bac7efd"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "contentType": "image/webp",
+            "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "contentType": "image/webp",
+            "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "contentType": "image/webp",
+            "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "contentType": "image/webp",
+            "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "contentType": "image/webp",
+            "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "contentType": "image/webp",
+            "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2"
+          }
+        ],
+        "callbackErrors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793519059532.8:wstukpnczlm",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+              "url": "http://127.0.0.1:3237/"
+            }
+          ],
+          "errors": [],
+          "documentCount": 1
+        }
+      },
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793519059532.8:wstukpnczlm",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "url": "http://127.0.0.1:3237/"
+          }
+        ],
+        "errors": [],
+        "documentCount": 1
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "expectedLegacyFailures": [
+        {
+          "script": "qa-reference-card-text.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        },
+        {
+          "script": "qa-reference-secondary-text.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        },
+        {
+          "script": "qa-reference-direct-entry.cjs",
+          "message": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "stack": "page.evaluate: Error: The approved image must be a visible real image element\n    at inspectImageAndHotspots (eval at evaluate (:311:30), <anonymous>:3:18)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /workspace/bagelito-qa-alias-evidence-20261101/red-contracts/contract-probe.cjs:42:21"
+        }
+      ],
+      "pass": true,
+      "capture": "1280-actual-rebuilt.png",
+      "captureSHA256": "3d93cede8e09a581f295eb94c73cc32e7df503d2ae05f20d96191544820ad300",
+      "oldNoZoom": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "mobile": false,
+        "zoomControls": [],
+        "scrollRanges": [],
+        "overflow": 0,
+        "cards": [
+          {
+            "category": "packs",
+            "label": "Packs",
+            "rect": {
+              "x": 28.796875,
+              "y": 367.203125,
+              "right": 418.265625,
+              "bottom": 641.828125,
+              "width": 389.46875,
+              "height": 274.625
+            },
+            "runs": [
+              {
+                "text": "Packs",
+                "fontSize": 31,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 51.546875,
+                    "y": 531.59375,
+                    "right": 125.15625,
+                    "bottom": 568.59375,
+                    "width": 73.609375,
+                    "height": 37
+                  }
+                ],
+                "clip": {
+                  "x": 28.796875,
+                  "y": 367.203125,
+                  "right": 418.265625,
+                  "bottom": 641.828125,
+                  "width": 389.46875,
+                  "height": 274.625
+                }
+              },
+              {
+                "text": "Grandes o minis.",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 51.546875,
+                    "y": 573.828125,
+                    "right": 158.9375,
+                    "bottom": 590.828125,
+                    "width": 107.390625,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 28.796875,
+                  "y": 367.203125,
+                  "right": 418.265625,
+                  "bottom": 641.828125,
+                  "width": 389.46875,
+                  "height": 274.625
+                }
+              },
+              {
+                "text": "Para compartir.",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 51.546875,
+                    "y": 594.828125,
+                    "right": 147.640625,
+                    "bottom": 611.828125,
+                    "width": 96.09375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 28.796875,
+                  "y": 367.203125,
+                  "right": 418.265625,
+                  "bottom": 641.828125,
+                  "width": 389.46875,
+                  "height": 274.625
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "combos",
+            "label": "Combos",
+            "rect": {
+              "x": 437.453125,
+              "y": 367.203125,
+              "right": 842.53125,
+              "bottom": 641.828125,
+              "width": 405.078125,
+              "height": 274.625
+            },
+            "runs": [
+              {
+                "text": "Combos",
+                "fontSize": 31,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 460.203125,
+                    "y": 536.59375,
+                    "right": 560.921875,
+                    "bottom": 573.59375,
+                    "width": 100.71875,
+                    "height": 37
+                  }
+                ],
+                "clip": {
+                  "x": 437.453125,
+                  "y": 367.203125,
+                  "right": 842.53125,
+                  "bottom": 641.828125,
+                  "width": 405.078125,
+                  "height": 274.625
+                }
+              },
+              {
+                "text": "Bagels + schmears",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 460.203125,
+                    "y": 578.828125,
+                    "right": 581.8125,
+                    "bottom": 595.828125,
+                    "width": 121.609375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 437.453125,
+                  "y": 367.203125,
+                  "right": 842.53125,
+                  "bottom": 641.828125,
+                  "width": 405.078125,
+                  "height": 274.625
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          },
+          {
+            "category": "schmears",
+            "label": "Schmears",
+            "rect": {
+              "x": 861.71875,
+              "y": 367.203125,
+              "right": 1251.203125,
+              "bottom": 641.828125,
+              "width": 389.484375,
+              "height": 274.625
+            },
+            "runs": [
+              {
+                "text": "Schmears",
+                "fontSize": 31,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 884.46875,
+                    "y": 536.59375,
+                    "right": 1007.046875,
+                    "bottom": 573.59375,
+                    "width": 122.578125,
+                    "height": 37
+                  }
+                ],
+                "clip": {
+                  "x": 861.71875,
+                  "y": 367.203125,
+                  "right": 1251.203125,
+                  "bottom": 641.828125,
+                  "width": 389.484375,
+                  "height": 274.625
+                }
+              },
+              {
+                "text": "El toque que faltaba.",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 884.46875,
+                    "y": 578.828125,
+                    "right": 1014.203125,
+                    "bottom": 595.828125,
+                    "width": 129.734375,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 861.71875,
+                  "y": 367.203125,
+                  "right": 1251.203125,
+                  "bottom": 641.828125,
+                  "width": 389.484375,
+                  "height": 274.625
+                }
+              },
+              {
+                "text": "120, 180 o 240 g.",
+                "fontSize": 15,
+                "color": "rgb(0, 74, 173)",
+                "visible": true,
+                "rects": [
+                  {
+                    "x": 884.46875,
+                    "y": 599.828125,
+                    "right": 994.875,
+                    "bottom": 616.828125,
+                    "width": 110.40625,
+                    "height": 17
+                  }
+                ],
+                "clip": {
+                  "x": 861.71875,
+                  "y": 367.203125,
+                  "right": 1251.203125,
+                  "bottom": 641.828125,
+                  "width": 389.484375,
+                  "height": 274.625
+                }
+              }
+            ],
+            "photos": [],
+            "centerHit": true
+          }
+        ],
+        "arts": [],
+        "images": [],
+        "canvasCount": 0,
+        "failures": [
+          {
+            "type": "desktop-full-image",
+            "count": 0
+          }
+        ],
+        "pass": false,
+        "scope": "User changed mobile contract explicitly: readable native cards and exact-source crops, no zoom or horizontal pan. Desktop keeps full image."
+      },
+      "network": {
+        "reads": [
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/",
+            "resourceType": "document",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/index-B-tAIt2X.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-BfidDE5Q.css",
+            "resourceType": "stylesheet",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/index-D-KoXC6_.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/routes-v6PhBbRo.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/ReferenceStorefront-B_F1lXjJ.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/assets/legal-version-BguVS3S4.js",
+            "resourceType": "script",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/fonts/fredoka-variable.ttf",
+            "resourceType": "font",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "resourceType": "image",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "resourceType": "image",
+            "status": 200
+          }
+        ],
+        "legalRedirects": [],
+        "blocked": [],
+        "errors": [],
+        "expectedClosingErrors": [],
+        "capabilities": [
+          {
+            "kind": "storage-access",
+            "name": "sessionStorage",
+            "stack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "documentId": "1793519060571.5:h7sqxyjh5",
+            "sequence": 2,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          },
+          {
+            "kind": "storage-method",
+            "storage": "sessionStorage",
+            "name": "getItem",
+            "key": "tsr-scroll-restoration-v1_3",
+            "stack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "documentId": "1793519060571.5:h7sqxyjh5",
+            "sequence": 3,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          }
+        ],
+        "documents": [
+          {
+            "kind": "document-init",
+            "documentId": "1793519060518:oie9h7t272",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793519060571.5:h7sqxyjh5",
+            "sequence": 1,
+            "url": "http://127.0.0.1:3237/",
+            "pageId": 1
+          },
+          {
+            "kind": "document-init",
+            "documentId": "1793519061624.8:kna62722cxh",
+            "sequence": 1,
+            "url": "about:blank",
+            "pageId": 1
+          }
+        ],
+        "pages": [
+          {
+            "id": 1,
+            "url": "about:blank",
+            "closed": true
+          }
+        ],
+        "pageErrors": [],
+        "consoleErrors": [],
+        "assets": [
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-pack-bagels-480.webp",
+            "contentType": "image/webp",
+            "sha256": "bbdb1c7d88295b0095344c2cc1c8b30be1ccc57b8c8c384de9561fa550b1e3b8"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-everything.webp",
+            "contentType": "image/webp",
+            "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-neutral-480.webp",
+            "contentType": "image/webp",
+            "sha256": "f4dd4afe1f06ea3c74aac6313332ba6f57f4323be13b87a8c168f6ef1bac7efd"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-sesame.webp",
+            "contentType": "image/webp",
+            "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/rebuilt-schmear-bowl-480.webp",
+            "contentType": "image/webp",
+            "sha256": "9d76a2531ec33c622ca7bd390bba3208efb61e5ab51996d5d45ca68aba02a187"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-plain.webp",
+            "contentType": "image/webp",
+            "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-classic-onion.webp",
+            "contentType": "image/webp",
+            "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-jalapeno-cheddar.webp",
+            "contentType": "image/webp",
+            "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cheddar.webp",
+            "contentType": "image/webp",
+            "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-cinnamon-raisin.webp",
+            "contentType": "image/webp",
+            "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1"
+          },
+          {
+            "url": "http://127.0.0.1:3237/images/bagel-blueberry.webp",
+            "contentType": "image/webp",
+            "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2"
+          }
+        ],
+        "callbackErrors": [],
+        "capabilityAudit": {
+          "knownFrameworkReads": [
+            {
+              "documentId": "1793519060571.5:h7sqxyjh5",
+              "key": "tsr-scroll-restoration-v1_3",
+              "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+              "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+              "url": "http://127.0.0.1:3237/"
+            }
+          ],
+          "errors": [],
+          "documentCount": 1
+        }
+      },
+      "capabilityAudit": {
+        "knownFrameworkReads": [
+          {
+            "documentId": "1793519060571.5:h7sqxyjh5",
+            "key": "tsr-scroll-restoration-v1_3",
+            "accessStack": "Error\n    at get (<anonymous>:48:51)\n    at $e (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64907)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:64983",
+            "readStack": "Error\n    at denied.storage (<anonymous>:53:110)\n    at nt (http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65028)\n    at http://127.0.0.1:3237/assets/index-D-KoXC6_.js:10:65097",
+            "url": "http://127.0.0.1:3237/"
+          }
+        ],
+        "errors": [],
+        "documentCount": 1
+      }
+    }
+  ],
+  "failures": [],
+  "status": "red-reproduced"
+}

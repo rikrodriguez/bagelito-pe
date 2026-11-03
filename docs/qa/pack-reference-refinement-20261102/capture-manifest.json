@@ -1,0 +1,20 @@
+[
+  {
+    "path": "captures/entry-1180.jpg",
+    "bytes": 206968,
+    "sha256": "0fc38fb602c2b81287f0d04225d38c2a46f631eed2a9e30e15be15259d146800",
+    "mimeType": "image/jpeg"
+  },
+  {
+    "path": "captures/entry-500.jpg",
+    "bytes": 83631,
+    "sha256": "1aad9563f8d138ce48b0803c4845c1fae90085706d87c8cce70746551a340e84",
+    "mimeType": "image/jpeg"
+  },
+  {
+    "path": "captures/schmear-callback-500.jpg",
+    "bytes": 28067,
+    "sha256": "2a8193a0a4e7174039f873dfb317570f7fbb81701e9a08285a15d406a71805cc",
+    "mimeType": "image/jpeg"
+  }
+]

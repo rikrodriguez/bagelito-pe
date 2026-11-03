@@ -1,0 +1,10 @@
+{
+  "codeSHA": "b974ddcd7b8633c0a86e752facf7c58f183757b6",
+  "sourceHashes": {
+    "src/reference/ReferenceScene.tsx": "8d35200e7121348145f695b50b2a0af66035347c7b70b8eba86cded3923b7a87",
+    "src/reference/ReferenceStorefront.tsx": "b42a8a2af362b0f4b41e3577d262d8e509319a77161065a4cfe8faaa5bc6c84b",
+    "src/reference/rebuilt-storefront.css": "6d7296d8723e2e94cb95b57a194cd67d9ed508c55a994312d3c3632026c709e8",
+    "src/reference/rebuilt-flow.css": "1c932cdef719bd698de37e5b830024cb8b3132a5e7ac00e4fe2b218cec59cc02",
+    "src/playable/GuidedCommerce.tsx": "88222b14ff0688dc22363dade8d85a764684283ad0eb886741dc905157e5879a"
+  }
+}

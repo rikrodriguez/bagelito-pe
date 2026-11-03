@@ -1,0 +1,38 @@
+[
+  {
+    "path": "captures/entry-1180.jpg",
+    "sha256": "5f88d2d285b4c54eb695098d68b0da77fd99200ced623b055247154f05ab1ccf",
+    "bytes": 205043,
+    "width": 1165,
+    "height": 747,
+    "format": "JPEG",
+    "originalToolBytes": true
+  },
+  {
+    "path": "captures/entry-500.jpg",
+    "sha256": "1aad9563f8d138ce48b0803c4845c1fae90085706d87c8cce70746551a340e84",
+    "bytes": 83631,
+    "width": 485,
+    "height": 693,
+    "format": "JPEG",
+    "originalToolBytes": true
+  },
+  {
+    "path": "captures/lower-counter-500.jpg",
+    "sha256": "6a5354d4e8d0776766cefea43624c9a794971df1996302435e8783ee06633f41",
+    "bytes": 81247,
+    "width": 485,
+    "height": 693,
+    "format": "JPEG",
+    "originalToolBytes": true
+  },
+  {
+    "path": "captures/schmear-callback-500.jpg",
+    "sha256": "65ce0aa97ab4d83004d5ec201a045eeca5d0c5e5c9d55824e1354671074f02e0",
+    "bytes": 28055,
+    "width": 500,
+    "height": 714,
+    "format": "JPEG",
+    "originalToolBytes": true
+  }
+]

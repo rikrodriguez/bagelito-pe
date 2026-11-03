@@ -1,0 +1,8 @@
+{
+  "name": "bagelito-product-lines-isolated-sql-tests",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.12"
+  }
+}

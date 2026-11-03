@@ -1,0 +1,47 @@
+{
+  "tool": "native image_gen__imagegen",
+  "nativeCalls": 5,
+  "selectedAssets": 4,
+  "externalPaidGenerationTools": [],
+  "scope": "Independent conceptual architecture and food art; not verified product photography, recipes or inventory. PNG originals retained in generated_images; runtime derivatives lossless WebP. No reference screenshot/crops used as rendering assets. CSS room-only saturation/brightness styling differs from source pixels.",
+  "assets": [
+    {
+      "role": "room-desktop",
+      "selectedOriginal": "/workspace/generated_images/exec-ecd06f88-dbea-4873-898f-56ae89a2bb5c.png",
+      "sourceSHA256": "abab505bb2494be6a1ff76c5b0bb066bdd4669033f30269ee015f4ead6c89537",
+      "runtime": "public/images/rebuilt-boutique-room.webp",
+      "mode": "new text-only generation",
+      "direction": "Blank glazed-tile upper wall, cream globe pendants, black spots, deep working steel kitchen/racks/ovens, plants, empty foreground counter. No text/logo/UI/labels/food/people."
+    },
+    {
+      "role": "room-mobile-tablet",
+      "selectedOriginal": "/workspace/generated_images/exec-d7708d66-7b31-48ad-a750-577fc38ec2fd.png",
+      "sourceSHA256": "3e1163ad7d0de14d474a1b1e233d110a04bec070be2dcd65bb8d8d222a7be19f",
+      "runtime": "public/images/rebuilt-boutique-room-mobile.webp",
+      "mode": "new text-only generation",
+      "direction": "Portrait composition; upper tile around21%, complete globe lamps, deep kitchen below, plants and empty counter; no text/UI/people/food. Distinct composition rather than cropping desktop art."
+    },
+    {
+      "role": "bagel-case",
+      "selectedOriginal": "/workspace/generated_images/exec-5a9cf83a-a601-4d91-911c-ebdf40286c0f.png",
+      "sourceSHA256": "353b90295a62c889cdd95d5394767e7606aa96062f357c4ac9eac4fdd28c623c",
+      "runtime": "public/images/rebuilt-bagel-trays.webp",
+      "mode": "new text-only generation",
+      "direction": "Eight abundant steel trays4x2, visual concepts named by eight catalog bagel names, warm crispy texture; no labels/UI. No recipe, inventory or quantity guarantee."
+    },
+    {
+      "role": "schmear-case",
+      "selectedOriginal": "/workspace/generated_images/exec-dd734a8d-533a-4140-8449-75fc15b4bef1.png",
+      "sourceSHA256": "d5a453454efadf1d125da7f86338a309fbb012a7348ab240fff56d52aeeb9094",
+      "runtime": "public/images/rebuilt-schmear-trays.webp",
+      "mode": "new text-only generation, then one native imagegen edit of that own generated artwork to keep all pan rims in frame",
+      "supersededOriginal": "/workspace/generated_images/exec-52e4873d-0ae7-485a-b8ed-a9ec94e1b5af.png",
+      "direction": "Five steel pans3+2: white/golden/herb/beige/pink conceptual appearances based on current names. No sixth flavor, ingredient recipe verification, labels/UI or invented offer."
+    }
+  ],
+  "userReferenceImageInputs": [],
+  "ownGeneratedImageEditInput": {
+    "path": "/workspace/generated_images/exec-52e4873d-0ae7-485a-b8ed-a9ec94e1b5af.png",
+    "sha256": "9c8d9ba8e845f234b126dafa8ba1ba91b853371e0630bf08291d2de43ac6bcc1"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "scope": "Read-only pixel measurements at equal1536x1024 dimensions; no product or art edits by measurement. One later explicitly authorized native edit of own generated counter is recorded separately.",
+  "reference": {"path":"/workspace/bagelito-rebuilt-storefront/public/images/store-reference-approved.webp","sha256":"0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"},
+  "actual2199": {"path":"/workspace/bagelito-rebuilt-storefront/docs/qa/reference-anchors-20261101/clean-2199afb/read-only/1536-entry.png","sha256":"8a0bfcb7c84de7f286914093c0e9a04036a49dce8d928696a21fb365d2f8124f"},
+  "measurementMethod": {
+    "cyanPredicate": "G-R>8 and B-R>2 and abs(G-B)<45 and R+G+B>150",
+    "verticalRails": "Count cyan matches perx over y620..859; report local column peaks, not a claimed universal silhouette bbox.",
+    "horizontalRails": "Count cyan matches pery over x160..849; front top rail peak selected within y580..639.",
+    "steelEdges": "Median per-pixel absoluteRGB difference between adjacent rows across x140..854. Peaks selected in mid720..774 and base870..934.",
+    "limits": "Glass has rear/front edges, sloping jambs and reflected background structures. Comparing a top-left corner in one image to a bottom-left foot in the other is not the same landmark. Values below identify the specific chosen plane."
+  },
+  "landmarksScreenPixels": {
+    "leftFrontColumnCyanPeak": {"reference":106,"actual":126,"delta":20},
+    "bagelRightInnerCyanColumn": {"reference":885,"actual":920,"delta":35},
+    "nextSchmearJambCyanColumn": {"reference":907,"actual":941,"delta":34},
+    "frontTopHorizontalCyanRail": {"reference":604,"actual":599,"delta":-5},
+    "midSteelTopEdge": {"reference":729,"actual":737,"delta":8},
+    "midSteelBottomEdge": {"reference":744,"actual":753,"delta":9},
+    "lowerGreenRailPeak": {"reference":870,"actual":892,"delta":22},
+    "outerSteelBaseStrongEdge": {"referenceApprox":[889,890],"actualApprox":[910,912],"deltaApprox":[21,22]}
+  },
+  "ratiosSamePlane": {
+    "bagelInnerWidth": {"reference":779,"actual":794,"actualOverReference":1.01926},
+    "frontRailToOuterSteelBaseHeight": {"referenceApprox":286,"actualApprox":313,"actualOverReferenceApprox":1.0944},
+    "conclusion": "Required horizontal reduction~1.9percent differs from vertical reduction~8.6percent. A uniform image scale cannot align both. IndependentSVGwindows preserving aspectratio do not create the missing width/height geometry; they must letterbox or leave a gap rather than squish food.",
+    "splitCaveat": "Depending on outer/front-jamb plane, reference split is roughly55percent bagels and45percent schmears;54/46 was an approximate brief target. Actual is approximately57.5/42.5."
+  },
+  "singleAuthorizedNativeEdit": {
+    "path":"/workspace/generated_images/exec-4feba6dd-bef4-468e-a2c3-6f76ab1adeed.png",
+    "sha256":"6fd5a01978893ad441e13c79af7c63f44932493789b710bd46b921565b7a83e4",
+    "bytes":1815288,
+    "dimensions":[2020,778],
+    "mode":"RGBA",
+    "inputs":["ownexec-0ed65123-8fb8-4dc5-8b57-653447b7c61e.png","original reference only as perspective guide"],
+    "alphaGreaterThan8Bounds":[27,194,1998,645],
+    "strongSubjectHeight":451,
+    "oldStrongSubjectHeight":493,
+    "reductionPercent":8.52,
+    "countsAndIdentity":"8bageltrays4x2 plus5schmearpans3+2 retained; lower3brownraisin/lower4purpleblueberry concepts retained, unlike rejected earlier refinement",
+    "sourceLandmarks": {"leftColumnCyanPeak":63,"centralDividerCyan":1183,"frontTopRailApprox":213,"midSteelEdges":[396,418],"lowerGreenRail":588,"steelInnerBaseApprox":618},
+    "partialPass":"Height structurally reduced without bitmap squeeze and natural food shape maintained.",
+    "failure":"Requested divider1115 was not achieved; it stays1183. Requested leftcolumn22 was not achieved; it moves63 versus previous44. It is NOT a54/46 geometry success.",
+    "uniformVerticalPlacementExample": {
+      "imageScale":0.7128712871,
+      "wholeImageAbsoluteTop":452.16,
+      "wholeImageWidth":1440,
+      "expectedFrontRail":604,
+      "expectedMidSteelEdges":[734.46,750.14],
+      "expectedLowerGreenRail":871.33,
+      "expectedSteelInnerBase":892.71,
+      "unfixed":"Horizontal divider and left-column anchors remain wrong; do not mark full reference fidelityPASS."
+    }
+  },
+  "recommendation": "A physical native re-render is the correct way to solve the width/height mismatch rather than nonuniform CSS stretching. This one native edit supplies a useful height improvement but fails horizontal ratio targets. Either use it only as an explicitly partial candidate with source/labels remapped, or reject as a complete geometry fix. Do not crop essential food, invent a sixth flavor, or silently change mobileSVG framing. No further generation was executed.",
+  "productCodeEdits":false
+}

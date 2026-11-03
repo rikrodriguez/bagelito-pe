@@ -1,0 +1,35 @@
+{
+  "base": "e91f2e6f7e0480bc8fc9bab849130e9d723c9eb1",
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "unchangedSrcCount": 56,
+  "changedSrc": [
+    "src/reference/ReferenceScene.tsx",
+    "src/reference/rebuilt-storefront.css"
+  ],
+  "all8CallbacksUnchangedFromE91": true,
+  "protectedFilesIdentical": [
+    "src/playable/GuidedCommerce.tsx",
+    "src/reference/ReferenceStorefront.tsx",
+    "src/reference/reference-storefront.css",
+    "src/reference/rebuilt-flow.css",
+    "package.json",
+    "vercel.json"
+  ],
+  "all6QAHelpersIdentical": [
+    "qa-rebuilt-geometry.cjs",
+    "qa-rebuilt-composition.cjs",
+    "qa-rebuilt-safety.cjs",
+    "qa-reference-review-steps.cjs",
+    "qa-reference-text-geometry.cjs",
+    "qa-reference-secondary-readability.cjs"
+  ],
+  "autodeploy": false,
+  "scope": "Fullsourcecomparisons andcallbackaudit; notproofphotographicfidelity. QA driver changes only explicit scene8image roles/counts/ratios.",
+  "sourceSHA256": {
+    "src/reference/ReferenceScene.tsx": "34a1142a40e28ee1af737e91f1a58d25da05850d15128df8e72ba88599c9c68b",
+    "src/reference/rebuilt-storefront.css": "7f053a05bdfaf094f55256865b243fa898715849bcce59dcd4f275c23886c166",
+    "scripts/qa-rebuilt-storefront.cjs": "577fb865477ea187fceecc477bbbdc656c8bc5e153b4d13bded42de24ebddff3"
+  },
+  "observedDocumentationHEAD": "33b7cf5babdb82548129b7007383ac3b46052b1e",
+  "frozenSourceFilesVerifiedNow": 38
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "entry",
+    "originalSHA256": "6c4173973723b5cc8ff897e99b0c00c1454a4d7dd29db95c23629420b82c3e2d",
+    "gzipSHA256": "05bbb5db61f804b826b8c8de22d56bce08f0cdc121b7f96873d1882d4b85b6af",
+    "file": "raw-results/entry.json.gz"
+  },
+  {
+    "name": "journeys-desktop",
+    "originalSHA256": "e0593a560e1ac5e15ae9b917d6ad8288742387c4d3a3d9aee45ea75f78dc1721",
+    "gzipSHA256": "5bccf887cf2f040404536d244a3c952ab08acebfbeb7705e74cedfd1c5eb9237",
+    "file": "raw-results/journeys-desktop.json.gz"
+  },
+  {
+    "name": "journeys-mobile",
+    "originalSHA256": "9e5c71e8cdce46164c883c43d5cc21d5d497fa5730880ce7e854f00ff566b612",
+    "gzipSHA256": "ef52f45d4418a5177cc6bb85483bdd012e72b1333e70d67456103a0107982004",
+    "file": "raw-results/journeys-mobile.json.gz"
+  },
+  {
+    "name": "journeys-responsive",
+    "originalSHA256": "199fa87bdd68a8c6b6204a057caa355325c136c3a0e6ba1b7ac2c00d88868813",
+    "gzipSHA256": "c50306b051cd00bdddbd1c02b6b7fe6dc97760f2bdcc1e7fe7689d17d60347cd",
+    "file": "raw-results/journeys-responsive.json.gz"
+  },
+  {
+    "name": "loaded-entry",
+    "originalSHA256": "987c3144e6d406a06481e71784e506c148cd4088c26bf553f667866bb743b87d",
+    "gzipSHA256": "b7a473192e2eb0e22716d1dec65ac1df0a533b048f709c5578de2b0563e3e5b5",
+    "file": "raw-results/loaded-entry.json.gz"
+  }
+]

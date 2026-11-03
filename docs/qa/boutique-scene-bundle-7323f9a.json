@@ -1,0 +1,14 @@
+{
+  "applicationSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+  "priorBroaderQASHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "path": "docs/qa/boutique-scene-evidence-7323f9a.zip",
+  "bytes": 21368157,
+  "sha256": "e8b3b199ab8310facfbb94141a73fbebed7f5af731612d2412346c801160352d",
+  "archiveFiles": 68,
+  "manifestPath": "docs/qa/boutique-scene-20261101/artifact-manifest.json",
+  "manifestSHA256": "19513a32b52b5db19f2677b9f3bb90f02badab7606cfefbf4d7e1e5d801c8e53",
+  "type": "selected QA evidence; not a static application",
+  "contents": "Current14selectedPNG (10readonly+4purchase),currentrawQA,prior9eaallrawreportsandhasheswithoutpriorPNG,REDfailure,anddesign/provenance/source/terminalrecords. HistoricalWIPandpriorPNGremaininrepositorynotthisZIP. Notanapplicationexport.",
+  "previewUpdated": false,
+  "deployment": false
+}

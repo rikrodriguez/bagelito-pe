@@ -1,0 +1,53 @@
+{
+  "baseHead": "9f397542e599a2655655a0536edc152b4e400b8b",
+  "runtimeSourcesChanged": false,
+  "build": "passed on unchanged runtime sources before test-only fix",
+  "historylessNode": {
+    "tests": 60,
+    "passed": 60,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "fixture": {
+    "commit": "925c050659ac7682488a9bc9c9c4906787663eb1",
+    "path": "scripts/qa-world-tour.cjs",
+    "local": "tests/fixtures/qa-world-tour.925c050.cjs.txt",
+    "sha256": "1451c7fec8951f160689f4db1667c8a524f7e1183f0423556d9d06f819578230",
+    "byteIdentical": true
+  },
+  "files": {
+    "docs/qa/shallow-clone-regression-20261101/baseline-with-history.log": {
+      "bytes": 5534,
+      "sha256": "96883e7d44077fab0ca241cdb696326ac30d1da966aa39f1c3fe33c25c9051e2"
+    },
+    "docs/qa/shallow-clone-regression-20261101/build.log": {
+      "bytes": 23017,
+      "sha256": "faf578eb4f02fec16d3c8d40c8a200a8e1d7fa5c6df78bdfe69266555b6dcc87"
+    },
+    "docs/qa/shallow-clone-regression-20261101/dependencies-observed.json": {
+      "bytes": 1595,
+      "sha256": "f1e8ab8c05e2ae90d7899fb596828fd78ecb444ba3c404a11fb700c3adf049ba"
+    },
+    "docs/qa/shallow-clone-regression-20261101/green-historyless.log": {
+      "bytes": 5721,
+      "sha256": "9206294763c3872f6276339cfb10e24e40257851b2a6a8e0b8e46bc8abff394f"
+    },
+    "docs/qa/shallow-clone-regression-20261101/red-historical-replay.log": {
+      "bytes": 4014,
+      "sha256": "bde5bcd25a2a10ca5d4cc87894b8f24de73621b501a440659ca691c16701b362"
+    },
+    "docs/qa/shallow-clone-regression-20261101/red-shallow-startup.log": {
+      "bytes": 5861,
+      "sha256": "eede2c60c65682b706588cccdee01d22792d153b4d6ee17bd08d3b5f677f0352"
+    }
+  },
+  "browserQA": {
+    "status": "blocked-before-page-load",
+    "newPassedViewports": 0,
+    "localFailure": "Chromium socket() Operation not permitted",
+    "escalation": "environment failure: bwrap read-only mount setup, not authorization denial",
+    "connectedBrowser": "tab creation timed out; later inventory had no tabs"
+  },
+  "remoteCI": "No runs/statuses existed on initial head; no workflow added"
+}

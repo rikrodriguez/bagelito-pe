@@ -1,0 +1,44 @@
+[
+  {
+    "path": "captures/combo-review-500-after.jpg",
+    "bytes": 36068,
+    "sha256": "a93c068fe6c0b025eb2a867f77279a7b4f64e2e2a94e0b9c64c03e883e9ef721",
+    "format": "image/jpeg"
+  },
+  {
+    "path": "captures/entry-1180-after.jpg",
+    "bytes": 206003,
+    "sha256": "970bb40677a64c0a0f539eff9f24251018585d7917963439e7886810b385b7bb",
+    "format": "image/jpeg"
+  },
+  {
+    "path": "captures/entry-500-after.jpg",
+    "bytes": 84233,
+    "sha256": "7b91df794a859543290fa565c78732bc778e36882b7ef8ce811335a130f4ea2f",
+    "format": "image/jpeg"
+  },
+  {
+    "path": "captures/entry-500-before.jpg",
+    "bytes": 94807,
+    "sha256": "46036582f25a63bcae1ed88539f883e56333b9158cde50b36a540c9ed267e465",
+    "format": "image/jpeg"
+  },
+  {
+    "path": "captures/wheel-1180-after.jpg",
+    "bytes": 195728,
+    "sha256": "2aedd4ebd4b26b15467151d9fc7d20238ef6cbe7b34b54c18b5dfdab5983f3b0",
+    "format": "image/jpeg"
+  },
+  {
+    "path": "captures/wheel-500-after.jpg",
+    "bytes": 81046,
+    "sha256": "29569829b97129c2d3ed3e003031ebf2f1c08c7e1d77d43d837715bdcd777c4c",
+    "format": "image/jpeg"
+  },
+  {
+    "path": "captures/wheel-500-before.jpg",
+    "bytes": 95385,
+    "sha256": "e5d173038c0df6633146ee45b86ac921beb803995d9c731c16987c7767c09587",
+    "format": "image/jpeg"
+  }
+]

@@ -1,0 +1,58 @@
+{
+  "codeSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+  "scope": "Affected limited QA: two desktop entry contexts and one390pack-flavoured complete review-only journey. Earlier six-entry/four-journey matrix belongs only to9ea.",
+  "stages": [
+    {
+      "stage": "entry",
+      "status": "passed",
+      "completed": {
+        "entryViewports": 2,
+        "categoryCallbacks": 6,
+        "vitrineCallbacks": 4,
+        "keyboardEntries": 2,
+        "decodedEntryPhotos": 16,
+        "productTextStates": 0,
+        "productTextCards": 0,
+        "secondaryStates": 0,
+        "completeJourneys": 0,
+        "legalNewTabs": 0,
+        "screenshots": 60
+      },
+      "failures": 0,
+      "reportSHA256": "b73d2726b45b3a2dbde3ae77eafba17298bdde4468662ed3fb33705e0124ce10"
+    },
+    {
+      "stage": "pack-390",
+      "status": "passed",
+      "completed": {
+        "entryViewports": 0,
+        "categoryCallbacks": 0,
+        "vitrineCallbacks": 0,
+        "keyboardEntries": 0,
+        "decodedEntryPhotos": 0,
+        "productTextStates": 0,
+        "productTextCards": 0,
+        "secondaryStates": 0,
+        "completeJourneys": 1,
+        "legalNewTabs": 1,
+        "screenshots": 59
+      },
+      "failures": 0,
+      "reportSHA256": "66add4ff2523c43ae862ec2eb41ad346caf0a198a7b705e3736caf26226a64ba"
+    }
+  ],
+  "screenshots": 119,
+  "verifiedPNGHashes": 119,
+  "missingOrMismatch": [],
+  "sourcesUnchangedThroughAllTerminalStages": true,
+  "safety": {
+    "knownFrameworkReads": 4,
+    "capabilityErrors": 0,
+    "blockedRequests": 0,
+    "networkErrors": 0,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "callbackErrors": 0,
+    "documents": 4
+  }
+}

@@ -1,0 +1,89 @@
+✔ unmount during reservation prevents preparation and opening abandoned Culqi widget (164.826474ms)
+✔ changed order invalidates pending reservation instead of continuing with old details (68.434965ms)
+✔ changed customer invalidates pending reservation instead of continuing with old details (61.492376ms)
+✔ late recovered paid response after unmount never calls parent confirmation (43.42718ms)
+✔ double-click payment recovery coalesces one pending status request (46.032426ms)
+✔ recovery refuses confirmation for different order code (47.335769ms)
+✔ recovery refuses confirmation for invalid amount (33.93397ms)
+✔ recovery refuses confirmation for contradictory transport status (35.58634ms)
+✔ recovery refuses confirmation for contradictory order state (32.062381ms)
+✔ recovery refuses confirmation for reconciliation flagged (33.573848ms)
+✔ recovery refuses confirmation for malformed supplied snapshot (31.418631ms)
+✔ valid recovered payment without product snapshot explicitly omits editable cart details (45.974559ms)
+✔ unmount during payment preparation prevents late widget opening (29.742565ms)
+✔ equal-content rerender does not invalidate an otherwise current reservation (27.334048ms)
+✔ valid recovered snapshot supplies historical items instead of the new editable cart (29.837849ms)
+✔ changed order rejects old pending reservation but permits a fresh checkout attempt (36.118721ms)
+✔ context change during recovery retains payment reference and never creates another reservation (28.438261ms)
+✔ invalid reservation different session identity never proceeds to payment preparation (26.98423ms)
+✔ invalid reservation missing session identity never proceeds to payment preparation (35.875856ms)
+✔ invalid reservation invalid order code never proceeds to payment preparation (39.931665ms)
+✔ invalid reservation negative amount never proceeds to payment preparation (40.079098ms)
+✔ invalid reservation fractional minor amount never proceeds to payment preparation (38.741973ms)
+✔ invalid reservation missing expiry never proceeds to payment preparation (35.930828ms)
+✔ invalid reservation expired reservation never proceeds to payment preparation (30.602121ms)
+✔ invalid payment preparation malformed payment attempt UUID never opens widget (37.184046ms)
+✔ invalid payment preparation mismatched amount never opens widget (37.981988ms)
+✔ invalid payment preparation extended expiry never opens widget (36.717583ms)
+✔ invalid payment preparation shortened expiry never opens widget (41.152074ms)
+✔ invalid payment preparation missing expiry never opens widget (22.975732ms)
+✔ late widget token callback after unmount cannot submit a charge (24.219765ms)
+✔ unmount while token device generation waits prevents charge submission (22.331682ms)
+✔ late charge response after unmount cannot initiate payment status polling (23.040029ms)
+✔ late paid poll after unmount cannot confirm checkout (22.791645ms)
+✔ live token and matching paid status still confirm the reserved amount (34.301238ms)
+✔ duplicate live widget callbacks submit only one token charge (25.120543ms)
+✔ paid poll with another amount cannot confirm a known reservation (23.220882ms)
+✔ poll delay waking after unmount cannot send a further status request (25.952677ms)
+✔ 3DS message before challenge cannot submit a payment continuation (23.602817ms)
+✔ duplicate 3DS messages consume one challenge and submit one continuation (23.949089ms)
+✔ closed 3DS challenge ignores a late authentication message (35.402122ms)
+✔ 3DS failure consumes challenge before a later success message (24.4017ms)
+✔ foreign and unrelated messages do not consume a valid 3DS challenge (22.408978ms)
+✔ late 3DS message after context change cannot resume the abandoned payment (23.439711ms)
+✖ programmatic 3DS reset after consumed success does not downgrade payment confirmation (24.062149ms)
+✖ expiry disarms 3DS before SDK reset can synchronously deliver a message (26.085051ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 43
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1918.855944
+
+✖ failing tests:
+
+test at tests/culqi-ui-lifecycle.test.cjs:247:1
+✖ programmatic 3DS reset after consumed success does not downgrade payment confirmation (24.062149ms)
+  AssertionError [ERR_ASSERTION]: completed challenge reset is not a customer cancellation
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-checkout-3ds-20261103/tests/culqi-ui-lifecycle.test.cjs:253:39)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/culqi-ui-lifecycle.test.cjs:256:1
+✖ expiry disarms 3DS before SDK reset can synchronously deliver a message (26.085051ms)
+  AssertionError [ERR_ASSERTION]: expiry must enter review only once without reentrant processing
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-checkout-3ds-20261103/tests/culqi-ui-lifecycle.test.cjs:262:40)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

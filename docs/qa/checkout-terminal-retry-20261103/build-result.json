@@ -1,0 +1,11 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "nodeOptions": "--max-old-space-size=512 --max-semi-space-size=4",
+  "startedAtMachineClock": "2026-11-03T00:39:13.144505+00:00",
+  "elapsedSeconds": 9.498,
+  "exitCode": 0
+}

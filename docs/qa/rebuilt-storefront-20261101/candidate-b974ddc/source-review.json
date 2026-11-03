@@ -1,0 +1,851 @@
+{
+  "auditedAt": "2026-11-01T06:35:34.506Z",
+  "kind": "read-only immutable source/AST/CSS review; no browser/build/network",
+  "baseSHA": "9a94e4cfc5a043726f643d3a9c546f096007bd94",
+  "auditedSHA": "b974ddcd7b8633c0a86e752facf7c58f183757b6",
+  "observedHEAD": "b974ddcd7b8633c0a86e752facf7c58f183757b6",
+  "sourceHashes": {
+    "src/playable/GuidedCommerce.tsx": "88222b14ff0688dc22363dade8d85a764684283ad0eb886741dc905157e5879a",
+    "src/reference/ReferenceScene.tsx": "8d35200e7121348145f695b50b2a0af66035347c7b70b8eba86cded3923b7a87",
+    "src/reference/ReferenceStorefront.tsx": "b42a8a2af362b0f4b41e3577d262d8e509319a77161065a4cfe8faaa5bc6c84b",
+    "src/reference/rebuilt-flow.css": "1c932cdef719bd698de37e5b830024cb8b3132a5e7ac00e4fe2b218cec59cc02",
+    "src/reference/rebuilt-storefront.css": "6d7296d8723e2e94cb95b57a194cd67d9ed508c55a994312d3c3632026c709e8"
+  },
+  "workingPresentationMatchesAudited": true,
+  "guidedPrefixBytes": 27683,
+  "guidedPrefixUnchanged": true,
+  "guidedPrefixSHA256": "29057d0f7f1799c836709a3e63a79c6ac36f4705a60ecc5bede1b18f15b2d3fd",
+  "guidedHandlersOld": 70,
+  "guidedHandlersNew": 70,
+  "guidedHandlersIdentical": true,
+  "guidedHandlerHash": "ed4a9515384215e26d38dd8973afc7eac10f5ea8f9404b552603a5c72f670042",
+  "parseErrors": 0,
+  "protectedCount": 124,
+  "protectedChanged": [],
+  "workingProtectedChanges": [],
+  "protectedFiles": [
+    {
+      "path": "public/bagel-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "1b9cb1494c3e8dce490484ce7b3893cd0f48c3009b7b7ef1308d53895fde81b7"
+    },
+    {
+      "path": "public/bagelito-counter.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "598e70c42d2c979b2d86e91371b9070c1cbe40064bc9c3c913fd5402f2a9ecd8"
+    },
+    {
+      "path": "public/images/bagel-blueberry.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d170ec606dd4730291c31f8ed8628c7a732fbd00ebf3629eac8daa3349b792a2"
+    },
+    {
+      "path": "public/images/bagel-cheddar.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "a5c145bfa2e2d1738b0d52bb02095d8fa53a7f312b43fe04973e97bc91dc1300"
+    },
+    {
+      "path": "public/images/bagel-cinnamon-raisin.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "b78e24e9c8b1cbf7d4b8a29cd780a52a8176b481db7cf0212c31ce32a5315cd1"
+    },
+    {
+      "path": "public/images/bagel-classic-onion.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "640a56e2638b8b8a9a5d148c220590e6e686acf7a05d3a3b3c33d626379ff03b"
+    },
+    {
+      "path": "public/images/bagel-everything.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d0e17f6aa6cc64623b7a0618c0a19f9e9b144dde94e8f033c54e8601b2a0b5ba"
+    },
+    {
+      "path": "public/images/bagel-jalapeno-cheddar.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "5a46513a3e3fea4ab4245a352cff46290b6513a59b3c64cdf1c9c30f6f910875"
+    },
+    {
+      "path": "public/images/bagel-plain.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "0cb51a46de638c4a51d68116638cd953bddef8c4749e96c8fc04feb042ea85a3"
+    },
+    {
+      "path": "public/images/bagel-sesame.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "ee6efc74b9e2ecfa32de2099b36cc5b7cbc085edbbc8deb92048758ab4d6eaa0"
+    },
+    {
+      "path": "public/images/bagel-vitrina-photo.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "7e7c136e35f90642ff887259181f31320b8606ffd6f8e84b60f643cebaf73643"
+    },
+    {
+      "path": "public/images/bagelito-logo.svg",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e"
+    },
+    {
+      "path": "public/images/bagelito-wordmark.svg",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9"
+    },
+    {
+      "path": "public/images/guided-storyboard-atlas-2.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d61ef1b310b38ee3bccc950da47019b5e1026742b3ca876a28b82cb2f43e9489"
+    },
+    {
+      "path": "public/images/guided-storyboard-atlas.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "641fcdedc87c8be74f4cbb909611cfc22732cef1287ad8953a18cbb70e86b154"
+    },
+    {
+      "path": "public/images/pack-6-mixed.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "2b3f62cca4c3cb1ba032ba023e6b190a4e6f8d88ba1fa5db22dca19870cfed65"
+    },
+    {
+      "path": "public/images/schmear-vitrina-photo.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "b778cd7360eeb8adfe495da8199fc25d53f924d00e51e70f5e5265a608e0042f"
+    },
+    {
+      "path": "public/images/store-reference-approved.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+    },
+    {
+      "path": "public/master-scenes-clean/bag-handoff.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "bf4f5a851ce3f7c8a0e2dbfadf4112dd43a04e71071e77099e607ed0f785daee"
+    },
+    {
+      "path": "public/master-scenes-clean/bagels-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "1eb7338d7af680af54f23682060809334cf7bd1314c7b44bbdacc20d43e4d9cc"
+    },
+    {
+      "path": "public/master-scenes-clean/cashier.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "3019b3a5138204c7fe25eeaec0df13082efbfc7a78204b9733a5a84f4e7dd051"
+    },
+    {
+      "path": "public/master-scenes-clean/combos.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "758aebf55a9c3031ba4caa999cd903f8baee6557b743961f87c4eab2aef9f633"
+    },
+    {
+      "path": "public/master-scenes-clean/cross-sell.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d81445f6008e9920ebc0e7a3e28cd19989cf5c923ba6e09f57c2289d302ef9f7"
+    },
+    {
+      "path": "public/master-scenes-clean/entrance.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "3010fdf629af5e3330029a0e6fb376d1add5db46e54e08e638e9fe35a9153f33"
+    },
+    {
+      "path": "public/master-scenes-clean/goodbye.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "a72130e29c60ccbb59c35bb82deb498a7708e6b4b56c64849f9539a4f8632b0f"
+    },
+    {
+      "path": "public/master-scenes-clean/inside.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "ff2f7e8cde7cf62801db0f37fd8eb2c46ac06eb12f84da4c76a1f3e763372aa0"
+    },
+    {
+      "path": "public/master-scenes-clean/packs.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "ffb163546b95e3aeadb3ea5ff6aa6ff98f8d27bd5d43304811cd8f4f3afd7ebb"
+    },
+    {
+      "path": "public/master-scenes-clean/pay.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "0a5427273ece27ac213c8b7ec3587a186a4e22115d84715d2cc9eb6f99e4a34c"
+    },
+    {
+      "path": "public/master-scenes-clean/receipt.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "454dd130e7089e6751e55ba10dab99bf47d36e3e1b7ba99d82c01ab2fc3fe339"
+    },
+    {
+      "path": "public/master-scenes-clean/schmears-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "17f75abab42e8cda2e816e10773678c232e64aea6e1682c866ca226f8948f52f"
+    },
+    {
+      "path": "public/master-scenes-clean/schmears.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "a53af5dff252fc39efca949a8e4a4d5e1ec9bf347b0388f24d96c119c673e3f6"
+    },
+    {
+      "path": "public/master-scenes-clean/selector.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "e1609a08df101b69ae96a020c3b77e8ad31ee4b771537236c6e878b29cac469b"
+    },
+    {
+      "path": "public/master-scenes-clean/wallet.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "e59773c20a64e6d3be4ab4bd1dc47711c31c71ec0ba30f2efeafbc196c30a7d3"
+    },
+    {
+      "path": "public/master-scenes/bag-handoff.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46"
+    },
+    {
+      "path": "public/master-scenes/bagels-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f"
+    },
+    {
+      "path": "public/master-scenes/cashier.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7"
+    },
+    {
+      "path": "public/master-scenes/combos.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417"
+    },
+    {
+      "path": "public/master-scenes/cross-sell.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb"
+    },
+    {
+      "path": "public/master-scenes/entrance.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b"
+    },
+    {
+      "path": "public/master-scenes/goodbye.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2"
+    },
+    {
+      "path": "public/master-scenes/inside.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027"
+    },
+    {
+      "path": "public/master-scenes/packs.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa"
+    },
+    {
+      "path": "public/master-scenes/pay.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb"
+    },
+    {
+      "path": "public/master-scenes/receipt.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129"
+    },
+    {
+      "path": "public/master-scenes/schmears-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8"
+    },
+    {
+      "path": "public/master-scenes/schmears.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6"
+    },
+    {
+      "path": "public/master-scenes/selector.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb"
+    },
+    {
+      "path": "public/master-scenes/wallet.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89"
+    },
+    {
+      "path": "public/models/bagel-everything-1024.glb",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "4353d934fbe9571a3816fbedb0b18192e5af46003588dd9626ff3f8a0c83391d"
+    },
+    {
+      "path": "public/models/bagel-everything-512.glb",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "74166e6646680bed44819575491886bf1f523963bb4f0494478aa1581420c8c3"
+    },
+    {
+      "path": "public/reference/storyboard-main.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "25d5d66d0da8b7f548a6ecc176ee67a7cebf4e86a4c2e725eeab69fadd04252b"
+    },
+    {
+      "path": "public/reference/storyboard-master.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "6e823b918d9b00940c4c7ccd9aa94837ce22163dbafa8dd09b17c7e5f5341d39"
+    },
+    {
+      "path": "public/reference/storyboard-schmears.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "806784b82fe66ced33e368a357457fd95d59b4770bf85f88c4bc2466ab8e6809"
+    },
+    {
+      "path": "public/scenes/bag-handoff.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d5778a11903cca9bd72e93fa6c511345a3508c1edb070a19fcdfe2c8b0580e46"
+    },
+    {
+      "path": "public/scenes/bagels-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "daede5aaf9d3edcb78caae225b22778f6d21d7318411fc2ed36ae05df63bad6f"
+    },
+    {
+      "path": "public/scenes/cashier.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "ed14f64cf2084435db42e88b7d1ce9ff88815f2ae0fc9772a4f4cb35cc6132c7"
+    },
+    {
+      "path": "public/scenes/combos.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "6b0f7ad3b23be6dc28baed492bd14b0f8bfa73c813bb801fde7508cf4b8dd417"
+    },
+    {
+      "path": "public/scenes/cross-sell.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "3e813bf66907c1b25311e41037ec14e4c3613ed1499ea6bb54442e890d1332fb"
+    },
+    {
+      "path": "public/scenes/entrance.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "cc1ff08fdaf630ca2b3bec14f2cf86d1184a0db2caa8cceaed3eb3c76fe9ca4b"
+    },
+    {
+      "path": "public/scenes/goodbye.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "4d484189d31ef9b9196293789fe01489cd8620087466eadc70dd957e582468a2"
+    },
+    {
+      "path": "public/scenes/inside.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "61ec4a164ee735adb6bf10ebc6476e3f26f5d11ea1548bddde48b177b4f37027"
+    },
+    {
+      "path": "public/scenes/packs.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "f628aa22e288e94abdecb8d70cd236f1698d09ed8f6f73fe85b44dbfcc0b65fa"
+    },
+    {
+      "path": "public/scenes/pay.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "2517942a392644fc8aa83511c1afc6f4287a74b7abe3541a78598bb0c0974bbb"
+    },
+    {
+      "path": "public/scenes/receipt.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "777768026099c30476db22ecf2d22256f17aa4ff37c39fcd2ec264ead4e17129"
+    },
+    {
+      "path": "public/scenes/schmears-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "05c1983f874a2f1c9b51daca9bd1b798e8325dc2385b69026b088eb98d6c10a8"
+    },
+    {
+      "path": "public/scenes/schmears.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "82383e3f569e54a1e19295a8f988d805dbddcad32bcf1e7d133f15e2c96c2be6"
+    },
+    {
+      "path": "public/scenes/selector.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "7a69a0ecc2eef72bbd2bd5951d23c98db9dbea770fc8b882a5d425aa0d5391fb"
+    },
+    {
+      "path": "public/scenes/wallet.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "a80d18842fa228565127106338196a552e038f300ba6c416301e3a3470e4df89"
+    },
+    {
+      "path": "public/schmear-vitrina.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "979c73e2fd79c8f3b13ac52f26e4e24dd93266ce48b231c3f9752bcf22c1852a"
+    },
+    {
+      "path": "public/store-category-flow.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d3a39315174de4cfb9f678f679cc3043cea05f7d84c0e12b187dd2cd39819f7b"
+    },
+    {
+      "path": "public/store-entry-door.webp",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "8c05e26098fe37c7feb6080b135d6961e383034fd5e7b467dbd125980be7327a"
+    },
+    {
+      "path": "src/domain/data/delivery-districts.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "0788568ab80080dc7b06dbac823a983e09f24aafe5a9938c93c213102affc51f"
+    },
+    {
+      "path": "src/domain/data/flavors.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "66858a14c658e0629d920a55db0d6e49955aa86199eb5c493ee313bd406c02d1"
+    },
+    {
+      "path": "src/domain/data/packs.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d878f89207114f02bc317e06f74ae4a67f7bf23525128d9604a7f31039bca79d"
+    },
+    {
+      "path": "src/domain/data/verified-menu-2026-10-21.json",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080"
+    },
+    {
+      "path": "src/domain/lib/approved-shop-contract.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a"
+    },
+    {
+      "path": "src/domain/lib/batch-availability.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "781cc38601dbe97ea3b232725ce42d309c9823c24a0b626b6eee090685c253aa"
+    },
+    {
+      "path": "src/domain/lib/batch-read.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "96c68a4a1eb6fb5dc626721f8b3bac855a5822a1f2174014c211311360d8444c"
+    },
+    {
+      "path": "src/domain/lib/batch-types.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "323be2fbe4af20595f6fdbecf3e3d670d7e0b2aadadcdb9f74810162d525e1a6"
+    },
+    {
+      "path": "src/domain/lib/catalog.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "214d3415c174c459b28bd0ac7585d2d07da44909521f140dd71097bd0c092bcc"
+    },
+    {
+      "path": "src/domain/lib/delivery-pricing.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "8a74561b843a5b8d1f8ab86ea4d46d451ea77aef67aedb781d4b3a562e49fdd1"
+    },
+    {
+      "path": "src/domain/lib/legal-version.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "207c158db72c81550aabe55dcd6ec153eb3b51b39fd75eb3169974cca2d7f4a9"
+    },
+    {
+      "path": "src/domain/lib/manual-order.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "48c10a9678d205fe98c065481630d0e0465b6496431be668a8a08bdb400b4bf4"
+    },
+    {
+      "path": "src/domain/lib/public-batch-display.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "132f2393e08c9ce581e06aff2f99a6aed5014a723cd195951e7065b0da2cb6ae"
+    },
+    {
+      "path": "src/legal.css",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "fc7f70a810e89303816337481faf2c32676ade6e72e69026dae82953c45bad3c"
+    },
+    {
+      "path": "src/playable/CinematicCommerce.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "2724480ff0d54bb82d5271b0238fa6c3a17c5650da80061591c55006ea29b22b"
+    },
+    {
+      "path": "src/playable/CulqiBrowserCheckout.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "5ada3d9f7362c570a3e87841c0c5a61ebcc5a1858752f2bfc85f6dd547f0cc84"
+    },
+    {
+      "path": "src/playable/GuidedEntry.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "568783f3f59273477dc9ee7b38c143f21a876b1315b0f59df64a08bc06393a5a"
+    },
+    {
+      "path": "src/playable/PlayableStore.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "adae043e55aebd8ef9bcd585dcbc7b3cc97cdc612477100c9f10c0ba928ad904"
+    },
+    {
+      "path": "src/playable/StoreArchitectureVisual.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "9fa5a7b4aa9e361d57249f24cfcde39d536f0636d866155dc7fb88373411c265"
+    },
+    {
+      "path": "src/playable/cinematic.css",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "c8f94263fbd28b60552f99b38c1298442ed350f7c1dd8fc4b770e7c1624be283"
+    },
+    {
+      "path": "src/playable/guided-commerce.css",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "577a46b314f2e8fb37b7a6e57f7d71fb9ef338703ebef5c7fc8e213456164666"
+    },
+    {
+      "path": "src/playable/movement-input.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "550dbf3252aaaddcdf6f319d011d591fcc6efb35ac80f46e59e669b4e6f454f0"
+    },
+    {
+      "path": "src/playable/playable.css",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "ccc930855ef5ae000a752f45d488522db7463c8d3e605621371af0ce156f4ce6"
+    },
+    {
+      "path": "src/reference/reference-storefront.css",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "10877671b42927f6ad1bbb855ee7b769ffa9fddb41b4419739832d2986d0f160"
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "bf39a8ae5b41b5e76f998160fab4037e3ac392177ca0aded0c536d685c4f9abc"
+    },
+    {
+      "path": "src/router.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "15451578f30e37e41d0ad208a45595e500ed3d4887ab4a418bf9c0034ca40d53"
+    },
+    {
+      "path": "src/routes/__root.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "fbb50db8512d0197d89d142db358513a3d7f9f981ac7bb52f5b782f3d6ae8dff"
+    },
+    {
+      "path": "src/routes/api/batch.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "1ff9efedc38397bc864ae78a8a7b471a0b01129e42659dba1f8691461c0e3bc1"
+    },
+    {
+      "path": "src/routes/api/catalog.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "be8004262be921f1716e9c1acc7d2ddfa3135602cb52aa32c7e7a559ff83d84a"
+    },
+    {
+      "path": "src/routes/api/checkout/quote.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "75b04c289003959200d7a4f1855d3a4ba0e45a0a03ad7a5b09e97b4ef8018e3c"
+    },
+    {
+      "path": "src/routes/api/checkout/session.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "12721edd2a79403adabb9a648f844b19b4062e73446fd62386afd010d6a8d995"
+    },
+    {
+      "path": "src/routes/api/payments/culqi/charge.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "24dfd5035c55f46d08b01e7bef763aff57f9f1f005ca69a3dc092aa496c52cfe"
+    },
+    {
+      "path": "src/routes/api/payments/culqi/config.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "e1d13b92151d688e285a7c3cfc60555c83d79db5b3fcf28af5ebc995e548a7df"
+    },
+    {
+      "path": "src/routes/api/payments/culqi/order.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "3b7fdd14bf3a864c8b644003a0993ec49bc5b4fecb057f0c6c467f347e84a16d"
+    },
+    {
+      "path": "src/routes/api/payments/culqi/status.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "8e4c74ef69d0d34a11c8dd271a7e1c2ea0b2dfb77ecbab055c3f242c02f85f10"
+    },
+    {
+      "path": "src/routes/api/webhooks/culqi.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "70ba319e3623d778d9e8b0154faf69c638963e5bd6638eba63464b6e41dc52db"
+    },
+    {
+      "path": "src/routes/index.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "7063138b536a1e84670be8ff40ad4c0bd9d9f8787453431c217ea14fb02556a1"
+    },
+    {
+      "path": "src/routes/legal.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "7a4821a5453d0b1cca81335f96d534c03bd54799460c3e35f0c4824086a0553b"
+    },
+    {
+      "path": "src/routes/playable.tsx",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "dfcae28a3e398c4436fc70420779fc8abb4a069915f6fc9d47259bb8c7d0a073"
+    },
+    {
+      "path": "src/server/batch.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "c0815c63a6065a2883d0c55e1b8a2540aebd7c0c569cf44935c4b503ea8ea483"
+    },
+    {
+      "path": "src/server/charge-coordinator.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "18dc48b1d6156de35e8c3b0d9871c5fe84fd7d7c17b484de92fd836e1a58a5de"
+    },
+    {
+      "path": "src/server/checkout-quote.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "712ad0a2cbbdd8999233fb27130e9604bfdaec326b6dfee1ff47d80893ca601d"
+    },
+    {
+      "path": "src/server/checkout-session.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "db7e3dc384f33291cf161239ef02df930f8e4a742854380e791cc814899a7cbc"
+    },
+    {
+      "path": "src/server/culqi-charge-evidence.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "4f50be81475f55b067b910c682d2e84eaf5b4ee297a8679de433b29b49150719"
+    },
+    {
+      "path": "src/server/culqi-event-evidence.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "1b281db88d9673b4199a3bc3850236088b313360c759ef2b167f47ea71ca3864"
+    },
+    {
+      "path": "src/server/culqi.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "b62bc4fb7f7ddd8513e0ea66dd33e2627167bc97fdbbed0fe03230c02d4ed4e0"
+    },
+    {
+      "path": "src/server/delivery-pricing.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "d08b42672a17e1e33e74a81cc229d22d2d773e7c54ef78cb7ebc0fd887c7cee7"
+    },
+    {
+      "path": "src/server/http-json.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "3e3c01e6e649d9d03f1e4baa57df96c9043193e64c6fa5422dd7873733616875"
+    },
+    {
+      "path": "src/server/payment-config.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "a360033544ce02673324a6b3165421f14ad13f5cff48c0a9cec5c941931f32c4"
+    },
+    {
+      "path": "src/server/public-api-security.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "4f3d54667a6fd8a87840311cc185a4cc598f04dcdf29a7480365e5f529e036d2"
+    },
+    {
+      "path": "src/server/reference-review-guard.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "1016d6e467145286c73de2c8a69cda129298a1d5fd9b72b90f4eba7388d8a3e9"
+    },
+    {
+      "path": "src/server/supabase-admin.server.ts",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "e5e341d4261e7813e7dc7c93844d006d5976468637b89e31fcf2c9e30a6deec6"
+    },
+    {
+      "path": "src/styles.css",
+      "unchanged": true,
+      "workingTreeMatchesAudited": true,
+      "sha256": "bb7db83caa2b346c4c7a352e2151d185cdb7124d0db09118a649eee1ddd97fe6"
+    }
+  ],
+  "checkoutSubtrees": {
+    "checkout-customer-grid": {
+      "byteIdentical": true,
+      "bytes": 1577
+    },
+    "checkout-terms-check": {
+      "byteIdentical": true,
+      "bytes": 353
+    },
+    "CulqiBrowserCheckout": {
+      "byteIdentical": true,
+      "bytes": 670
+    }
+  },
+  "scenePropsUnchanged": true,
+  "sceneEvents": [
+    {
+      "name": "onClick",
+      "initializer": "{props.onMenu}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{props.onCart}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{() => props.onCategory('packs')}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{() => props.onCategory('combos')}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{() => props.onCategory('schmears')}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{() => props.onCategory('packs')}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{() => props.onCategory('schmears')}"
+    },
+    {
+      "name": "onClick",
+      "initializer": "{() => props.onStep(index)}"
+    }
+  ],
+  "reviewOnlyProps": true,
+  "deploymentDisabled": true,
+  "separatePR46Branch": "1cf48c666bcc377e1cd8a068906d27e2494203cf",
+  "priorAssetProof": {
+    "nativePairsExactDecodedRGBA": 3,
+    "resizedPairsExactPILLANCZOSRGBA": 6,
+    "losslessVP8LRIFFFiles": 9,
+    "bytesByWidth": {
+      "480": 441956,
+      "800": 1169442,
+      "native": 4036778
+    },
+    "browserTransferMeasurement": "not performed; pending parent compiled-snapshot evidence"
+  },
+  "compiledTransferMeasurement": "pending parent loaded-entry7 QA. Body length/hash matching will be resource evidence, not a device speed benchmark.",
+  "cssFixes": {
+    "quantityRealSelector": true,
+    "quantityGap6": true,
+    "summarySmallSpanEm12Important": true,
+    "summaryNames13Important": true,
+    "summaryCounts12Box24": true,
+    "cartRows14": true,
+    "selectedMixLight": true,
+    "loyalty12": true,
+    "flowColorFiltersRemoved": true,
+    "entryColorFiltersRemoved": true
+  },
+  "findings": [],
+  "limits": "CSS checks verify source coverage of reproduced families; final geometry, decoded pixels and loaded-resource measurements require separate browser QA.",
+  "passed": true
+}

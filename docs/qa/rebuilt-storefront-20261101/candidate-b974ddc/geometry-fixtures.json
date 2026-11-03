@@ -1,0 +1,3786 @@
+{
+  "beforePath": "git:e27ab1b63f5fe519670fe7f31410d85ae66602de:scripts/qa-rebuilt-geometry.cjs",
+  "afterPath": "/workspace/bagelito-rebuilt-storefront/scripts/qa-rebuilt-geometry.cjs",
+  "beforeSHA256": "ee6e41fff8a30dc57fc4af58cf3c53b810ea7156d0c7da0480517ad5b9c2062c",
+  "baselineGitSHA": "e27ab1b63f5fe519670fe7f31410d85ae66602de",
+  "driverSHA256": "11e8dd01ebd1aa318bf740988cdea82e853fbdbdcd39e74806fcfb02ea198a7f",
+  "afterSHA256": "fce30a9582e785d28b096d2c821e1df8455a4c876218bbc7a6ca0bc5213c9687",
+  "scope": "Only deterministic about:blank fixtures; same DOM is audited before and after; no app server, app edits, external requests or images",
+  "results": [
+    {
+      "name": "visible-lineheight-glyph-spill",
+      "html": "<h1 class=\"fixture\" style=\"font:32px/8px Arial;margin-top:100px;width:250px;overflow:visible\">Ágypy título</h1>",
+      "oldKind": "text-clipped",
+      "newKind": null,
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><h1 class=\"fixture\" style=\"font:32px/8px Arial;margin-top:100px;width:250px;overflow:visible\">Ágypy título</h1>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Ágypy título",
+            "element": {
+              "tag": "H1",
+              "id": null,
+              "className": "fixture",
+              "label": "Ágypy título"
+            },
+            "title": true,
+            "fontSize": 32,
+            "effectiveFontSize": 32,
+            "minimum": 16,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 86,
+                "right": 187.203125,
+                "bottom": 122,
+                "width": 167.203125,
+                "height": 36
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 100,
+              "right": 270,
+              "bottom": 108,
+              "width": 250,
+              "height": 8
+            },
+            "scrollports": [],
+            "clippedGlyphs": [
+              {
+                "x": 20,
+                "y": 86,
+                "right": 187.203125,
+                "bottom": 122,
+                "width": 167.203125,
+                "height": 36
+              }
+            ],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "text-clipped",
+            "element": {
+              "tag": "H1",
+              "id": null,
+              "className": "fixture",
+              "label": "Ágypy título"
+            },
+            "text": "Ágypy título",
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 86,
+                "right": 187.203125,
+                "bottom": 122,
+                "width": 167.203125,
+                "height": 36
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 100,
+              "right": 270,
+              "bottom": 108,
+              "width": 250,
+              "height": 8
+            },
+            "ellipsisApplied": false
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Ágypy título",
+            "element": {
+              "tag": "H1",
+              "id": null,
+              "className": "fixture",
+              "label": "Ágypy título"
+            },
+            "title": true,
+            "fontSize": 32,
+            "effectiveFontSize": 32,
+            "minimum": 16,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 86,
+                "right": 187.203125,
+                "bottom": 122,
+                "width": 167.203125,
+                "height": 36
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 86,
+              "right": 187.203125,
+              "bottom": 122,
+              "width": 167.203125,
+              "height": 36
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [],
+        "passed": true,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "decorative-hidden-overflow-no-pan-no-text",
+      "html": "<div class=\"fixture\" style=\"position:relative;width:80px;height:20px;overflow:hidden\"><div aria-hidden=\"true\" style=\"position:absolute;width:89px;height:20px;background:#004aad\"></div></div>",
+      "oldKind": "horizontal-overflow",
+      "newKind": null,
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><div class=\"fixture\" style=\"position:relative;width:80px;height:20px;overflow:hidden\"><div aria-hidden=\"true\" style=\"position:absolute;width:89px;height:20px;background:#004aad\"></div></div>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [
+          {
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 89,
+            "excess": 9,
+            "overflowX": "hidden"
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "DIV",
+              "id": null,
+              "className": "fixture",
+              "label": ""
+            },
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 89,
+            "excess": 9,
+            "overflowX": "hidden"
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [
+          {
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 89,
+            "excess": 9,
+            "overflowX": "hidden",
+            "reason": "Non-pannable painted spill; no text or interactive descendant clipped by this mask"
+          }
+        ],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [],
+        "passed": true,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "real-text-clipping-remains-failure",
+      "html": "<p class=\"fixture\" style=\"width:80px;height:20px;overflow:hidden;white-space:nowrap\">Texto largo que realmente queda cortado</p>",
+      "newKind": "text-clipped",
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><p class=\"fixture\" style=\"width:80px;height:20px;overflow:hidden;white-space:nowrap\">Texto largo que realmente queda cortado</p>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [
+          {
+            "tag": "P",
+            "id": null,
+            "className": "fixture",
+            "label": "Texto largo que realmente queda cortado",
+            "clientWidth": 80,
+            "scrollWidth": 292,
+            "excess": 212,
+            "overflowX": "hidden"
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Texto largo que realmente queda cortado",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto largo que realmente queda cortado"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 21,
+                "right": 311.75,
+                "bottom": 38,
+                "width": 291.75,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 100,
+              "bottom": 40,
+              "width": 80,
+              "height": 20
+            },
+            "scrollports": [],
+            "clippedGlyphs": [
+              {
+                "x": 20,
+                "y": 21,
+                "right": 311.75,
+                "bottom": 38,
+                "width": 291.75,
+                "height": 17
+              }
+            ],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto largo que realmente queda cortado"
+            },
+            "tag": "P",
+            "id": null,
+            "className": "fixture",
+            "label": "Texto largo que realmente queda cortado",
+            "clientWidth": 80,
+            "scrollWidth": 292,
+            "excess": 212,
+            "overflowX": "hidden"
+          },
+          {
+            "kind": "text-clipped",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto largo que realmente queda cortado"
+            },
+            "text": "Texto largo que realmente queda cortado",
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 21,
+                "right": 311.75,
+                "bottom": 38,
+                "width": 291.75,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 100,
+              "bottom": 40,
+              "width": 80,
+              "height": 20
+            },
+            "ellipsisApplied": false
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [
+          {
+            "tag": "P",
+            "id": null,
+            "className": "fixture",
+            "label": "Texto largo que realmente queda cortado",
+            "clientWidth": 80,
+            "scrollWidth": 292,
+            "excess": 212,
+            "overflowX": "hidden",
+            "clippedContent": {
+              "text": [
+                "Texto largo que realmente queda cortado"
+              ],
+              "targets": []
+            }
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Texto largo que realmente queda cortado",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto largo que realmente queda cortado"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 21,
+                "right": 311.75,
+                "bottom": 38,
+                "width": 291.75,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 21,
+              "right": 100,
+              "bottom": 38,
+              "width": 80,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [
+              {
+                "x": 20,
+                "y": 21,
+                "right": 311.75,
+                "bottom": 38,
+                "width": 291.75,
+                "height": 17
+              }
+            ],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto largo que realmente queda cortado"
+            },
+            "tag": "P",
+            "id": null,
+            "className": "fixture",
+            "label": "Texto largo que realmente queda cortado",
+            "clientWidth": 80,
+            "scrollWidth": 292,
+            "excess": 212,
+            "overflowX": "hidden",
+            "clippedContent": {
+              "text": [
+                "Texto largo que realmente queda cortado"
+              ],
+              "targets": []
+            }
+          },
+          {
+            "kind": "text-clipped",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto largo que realmente queda cortado"
+            },
+            "text": "Texto largo que realmente queda cortado",
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 21,
+                "right": 311.75,
+                "bottom": 38,
+                "width": 291.75,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 21,
+              "right": 100,
+              "bottom": 38,
+              "width": 80,
+              "height": 17
+            },
+            "ellipsisApplied": false
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "native-horizontal-scroll-remains-failure",
+      "html": "<div class=\"fixture\" style=\"width:80px;height:30px;overflow-x:auto;overflow-y:hidden\"><div style=\"width:120px;height:20px;background:#004aad\"></div></div>",
+      "newKind": "horizontal-overflow",
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><div class=\"fixture\" style=\"width:80px;height:30px;overflow-x:auto;overflow-y:hidden\"><div style=\"width:120px;height:20px;background:#004aad\"></div></div>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [
+          {
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 120,
+            "excess": 40,
+            "overflowX": "auto"
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "DIV",
+              "id": null,
+              "className": "fixture",
+              "label": ""
+            },
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 120,
+            "excess": 40,
+            "overflowX": "auto"
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [
+          {
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 120,
+            "excess": 40,
+            "overflowX": "auto",
+            "clippedContent": {
+              "text": [],
+              "targets": []
+            }
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "DIV",
+              "id": null,
+              "className": "fixture",
+              "label": ""
+            },
+            "tag": "DIV",
+            "id": null,
+            "className": "fixture",
+            "label": "",
+            "clientWidth": 80,
+            "scrollWidth": 120,
+            "excess": 40,
+            "overflowX": "auto",
+            "clippedContent": {
+              "text": [],
+              "targets": []
+            }
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "document-overflow-remains-failure",
+      "html": "<div style=\"width:500px;height:1px\"></div>",
+      "newKind": "horizontal-document-overflow",
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><div style=\"width:500px;height:1px\"></div>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 180,
+        "horizontalOverflow": [
+          {
+            "tag": "HTML",
+            "id": null,
+            "className": "",
+            "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible"
+          },
+          {
+            "tag": "BODY",
+            "id": null,
+            "className": "",
+            "label": "Control",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible"
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "HTML",
+              "id": null,
+              "className": "",
+              "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}."
+            },
+            "tag": "HTML",
+            "id": null,
+            "className": "",
+            "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible"
+          },
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "BODY",
+              "id": null,
+              "className": "",
+              "label": "Control"
+            },
+            "tag": "BODY",
+            "id": null,
+            "className": "",
+            "label": "Control",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible"
+          },
+          {
+            "kind": "horizontal-document-overflow",
+            "element": {
+              "tag": "HTML",
+              "id": null,
+              "className": "",
+              "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}."
+            },
+            "excess": 180,
+            "viewportWidth": 320
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 180,
+        "horizontalOverflow": [
+          {
+            "tag": "HTML",
+            "id": null,
+            "className": "",
+            "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible",
+            "clippedContent": {
+              "text": [],
+              "targets": []
+            }
+          },
+          {
+            "tag": "BODY",
+            "id": null,
+            "className": "",
+            "label": "Control",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible",
+            "clippedContent": {
+              "text": [],
+              "targets": []
+            }
+          }
+        ],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "HTML",
+              "id": null,
+              "className": "",
+              "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}."
+            },
+            "tag": "HTML",
+            "id": null,
+            "className": "",
+            "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible",
+            "clippedContent": {
+              "text": [],
+              "targets": []
+            }
+          },
+          {
+            "kind": "horizontal-overflow",
+            "element": {
+              "tag": "BODY",
+              "id": null,
+              "className": "",
+              "label": "Control"
+            },
+            "tag": "BODY",
+            "id": null,
+            "className": "",
+            "label": "Control",
+            "clientWidth": 320,
+            "scrollWidth": 500,
+            "excess": 180,
+            "overflowX": "visible",
+            "clippedContent": {
+              "text": [],
+              "targets": []
+            }
+          },
+          {
+            "kind": "horizontal-document-overflow",
+            "element": {
+              "tag": "HTML",
+              "id": null,
+              "className": "",
+              "label": "*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}."
+            },
+            "excess": 180,
+            "viewportWidth": 320
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "font-eleven-remains-failure",
+      "html": "<p class=\"fixture\" style=\"font-size:11px;line-height:16px\">Texto de once píxeles</p>",
+      "newKind": "font-below-readable-minimum",
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><p class=\"fixture\" style=\"font-size:11px;line-height:16px\">Texto de once píxeles</p>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Texto de once píxeles",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto de once píxeles"
+            },
+            "title": false,
+            "fontSize": 11,
+            "effectiveFontSize": 11,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 22,
+                "right": 126.40625,
+                "bottom": 34,
+                "width": 106.40625,
+                "height": 12
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 300,
+              "bottom": 36,
+              "width": 280,
+              "height": 16
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "font-below-readable-minimum",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto de once píxeles"
+            },
+            "text": "Texto de once píxeles",
+            "fontSize": 11,
+            "scale": 1,
+            "effectiveFontSize": 11,
+            "minimum": 12
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Texto de once píxeles",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto de once píxeles"
+            },
+            "title": false,
+            "fontSize": 11,
+            "effectiveFontSize": 11,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 22,
+                "right": 126.40625,
+                "bottom": 34,
+                "width": 106.40625,
+                "height": 12
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 22,
+              "right": 126.40625,
+              "bottom": 34,
+              "width": 106.40625,
+              "height": 12
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "font-below-readable-minimum",
+            "element": {
+              "tag": "P",
+              "id": null,
+              "className": "fixture",
+              "label": "Texto de once píxeles"
+            },
+            "text": "Texto de once píxeles",
+            "fontSize": 11,
+            "scale": 1,
+            "effectiveFontSize": 11,
+            "minimum": 12
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "target-fortythree-remains-failure",
+      "html": "<button class=\"fixture\" style=\"width:43px;height:43px\">A</button>",
+      "newKind": "target-below-44",
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><button class=\"fixture\" style=\"width:43px;height:43px\">A</button>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "fixture",
+            "label": "A",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            },
+            "rect": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "effective": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "inViewport": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "maxScrollableWidth": 43,
+            "maxScrollableHeight": 43,
+            "scrollports": [],
+            "effectiveWidth": 43,
+            "effectiveHeight": 43,
+            "pendingNativeReveal": false,
+            "withinViewport": false,
+            "point": {
+              "x": 41.5,
+              "y": 41.5
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "A",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 36.15625,
+                "y": 32.5,
+                "right": 46.828125,
+                "bottom": 49.5,
+                "width": 10.671875,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "target-below-44",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            },
+            "rect": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "effectiveWidth": 43,
+            "effectiveHeight": 43,
+            "compositeLabel": false
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "fixture",
+            "label": "A",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            },
+            "rect": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "effective": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "inViewport": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "maxScrollableWidth": 43,
+            "maxScrollableHeight": 43,
+            "scrollports": [],
+            "effectiveWidth": 43,
+            "effectiveHeight": 43,
+            "pendingNativeReveal": false,
+            "withinViewport": false,
+            "point": {
+              "x": 41.5,
+              "y": 41.5
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "A",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 36.15625,
+                "y": 32.5,
+                "right": 46.828125,
+                "bottom": 49.5,
+                "width": 10.671875,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 36.15625,
+              "y": 32.5,
+              "right": 46.828125,
+              "bottom": 49.5,
+              "width": 10.671875,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "target-below-44",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "fixture",
+              "label": "A"
+            },
+            "rect": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 63,
+              "bottom": 63,
+              "width": 43,
+              "height": 43
+            },
+            "effectiveWidth": 43,
+            "effectiveHeight": 43,
+            "compositeLabel": false
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    },
+    {
+      "name": "range-text-overlap-remains-failure",
+      "html": "<div class=\"pack-format-grid fixture\"><button style=\"display:block;width:180px;height:120px;text-align:left;overflow:visible\"><b style=\"display:block;font-size:28px;line-height:18px\">Bagels<br>grandes</b><small style=\"display:block;font-size:14px;line-height:18px\">6 o 12 bagels</small></button></div>",
+      "newKind": "comparable-text-overlap",
+      "dom": "<style>*{box-sizing:border-box}html,body{margin:0;padding:0;font:16px/20px Arial,sans-serif}button{font:16px/20px Arial,sans-serif;border:0;padding:0;background:#fff}.safe{position:fixed;right:20px;bottom:20px;width:100px;height:44px}.fixture{margin:20px}</style><button class=\"safe\">Control</button><div class=\"pack-format-grid fixture\"><button style=\"display:block;width:180px;height:120px;text-align:left;overflow:visible\"><b style=\"display:block;font-size:28px;line-height:18px\">Bagels<br>grandes</b><small style=\"display:block;font-size:14px;line-height:18px\">6 o 12 bagels</small></button></div>",
+      "before": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "",
+            "label": "Bagelsgrandes6 o 12 bagels",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes6 o 12 bagels"
+            },
+            "rect": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "effective": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "inViewport": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "maxScrollableWidth": 180,
+            "maxScrollableHeight": 120,
+            "scrollports": [],
+            "effectiveWidth": 180,
+            "effectiveHeight": 120,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 110,
+              "y": 80
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Bagels",
+            "element": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            },
+            "title": false,
+            "fontSize": 28,
+            "effectiveFontSize": 28,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 46,
+                "right": 111.828125,
+                "bottom": 77,
+                "width": 91.828125,
+                "height": 31
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 53,
+              "right": 200,
+              "bottom": 89,
+              "width": 180,
+              "height": 36
+            },
+            "scrollports": [],
+            "clippedGlyphs": [
+              {
+                "x": 20,
+                "y": 46,
+                "right": 111.828125,
+                "bottom": 77,
+                "width": 91.828125,
+                "height": 31
+              }
+            ],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "grandes",
+            "element": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            },
+            "title": false,
+            "fontSize": 28,
+            "effectiveFontSize": 28,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 64,
+                "right": 128.9375,
+                "bottom": 95,
+                "width": 108.9375,
+                "height": 31
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 53,
+              "right": 200,
+              "bottom": 89,
+              "width": 180,
+              "height": 36
+            },
+            "scrollports": [],
+            "clippedGlyphs": [
+              {
+                "x": 20,
+                "y": 64,
+                "right": 128.9375,
+                "bottom": 95,
+                "width": 108.9375,
+                "height": 31
+              }
+            ],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "6 o 12 bagels",
+            "element": {
+              "tag": "SMALL",
+              "id": null,
+              "className": "",
+              "label": "6 o 12 bagels"
+            },
+            "title": false,
+            "fontSize": 14,
+            "effectiveFontSize": 14,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 90,
+                "right": 104.078125,
+                "bottom": 106,
+                "width": 84.078125,
+                "height": 16
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 89,
+              "right": 200,
+              "bottom": 107,
+              "width": 180,
+              "height": 18
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "text-clipped",
+            "element": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            },
+            "text": "Bagels",
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 46,
+                "right": 111.828125,
+                "bottom": 77,
+                "width": 91.828125,
+                "height": 31
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 53,
+              "right": 200,
+              "bottom": 89,
+              "width": 180,
+              "height": 36
+            },
+            "ellipsisApplied": false
+          },
+          {
+            "kind": "text-clipped",
+            "element": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            },
+            "text": "grandes",
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 64,
+                "right": 128.9375,
+                "bottom": 95,
+                "width": 108.9375,
+                "height": 31
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 53,
+              "right": 200,
+              "bottom": 89,
+              "width": 180,
+              "height": 36
+            },
+            "ellipsisApplied": false
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "after": {
+        "thresholds": {
+          "target": 44,
+          "bodyFont": 12,
+          "titleFont": 16,
+          "geometryTolerance": 0.5,
+          "targetTolerance": 0.01
+        },
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "right": 320,
+          "bottom": 700,
+          "width": 320,
+          "height": 700
+        },
+        "documentOverflow": 0,
+        "horizontalOverflow": [],
+        "nativeInternalOverflow": [],
+        "decorativeOverflow": [],
+        "targets": [
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "safe",
+            "label": "Control",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "rect": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "effective": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "hardClip": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "inViewport": {
+              "x": 200,
+              "y": 636,
+              "right": 300,
+              "bottom": 680,
+              "width": 100,
+              "height": 44
+            },
+            "maxScrollableWidth": 100,
+            "maxScrollableHeight": 44,
+            "scrollports": [],
+            "effectiveWidth": 100,
+            "effectiveHeight": 44,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 250,
+              "y": 658
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "id": null,
+            "className": "",
+            "label": "Bagelsgrandes6 o 12 bagels",
+            "disabled": false,
+            "readOnly": false,
+            "originalRect": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "compositeLabel": false,
+            "interactionElement": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes6 o 12 bagels"
+            },
+            "rect": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "effective": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "hardClip": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "inViewport": {
+              "x": 20,
+              "y": 20,
+              "right": 200,
+              "bottom": 140,
+              "width": 180,
+              "height": 120
+            },
+            "maxScrollableWidth": 180,
+            "maxScrollableHeight": 120,
+            "scrollports": [],
+            "effectiveWidth": 180,
+            "effectiveHeight": 120,
+            "pendingNativeReveal": false,
+            "withinViewport": true,
+            "point": {
+              "x": 110,
+              "y": 80
+            },
+            "hittable": true,
+            "topHit": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            }
+          }
+        ],
+        "texts": [
+          {
+            "text": "Control",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "safe",
+              "label": "Control"
+            },
+            "title": false,
+            "fontSize": 16,
+            "effectiveFontSize": 16,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 224.203125,
+                "y": 649,
+                "right": 275.78125,
+                "bottom": 666,
+                "width": 51.578125,
+                "height": 17
+              }
+            ],
+            "hardClip": {
+              "x": 224.203125,
+              "y": 649,
+              "right": 275.78125,
+              "bottom": 666,
+              "width": 51.578125,
+              "height": 17
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "Bagels",
+            "element": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            },
+            "title": false,
+            "fontSize": 28,
+            "effectiveFontSize": 28,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 46,
+                "right": 111.828125,
+                "bottom": 77,
+                "width": 91.828125,
+                "height": 31
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 46,
+              "right": 111.828125,
+              "bottom": 77,
+              "width": 91.828125,
+              "height": 31
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "grandes",
+            "element": {
+              "tag": "B",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes"
+            },
+            "title": false,
+            "fontSize": 28,
+            "effectiveFontSize": 28,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 64,
+                "right": 128.9375,
+                "bottom": 95,
+                "width": 108.9375,
+                "height": 31
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 64,
+              "right": 128.9375,
+              "bottom": 95,
+              "width": 108.9375,
+              "height": 31
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          },
+          {
+            "text": "6 o 12 bagels",
+            "element": {
+              "tag": "SMALL",
+              "id": null,
+              "className": "",
+              "label": "6 o 12 bagels"
+            },
+            "title": false,
+            "fontSize": 14,
+            "effectiveFontSize": 14,
+            "minimum": 12,
+            "glyphs": [
+              {
+                "x": 20,
+                "y": 90,
+                "right": 104.078125,
+                "bottom": 106,
+                "width": 84.078125,
+                "height": 16
+              }
+            ],
+            "hardClip": {
+              "x": 20,
+              "y": 90,
+              "right": 104.078125,
+              "bottom": 106,
+              "width": 84.078125,
+              "height": 16
+            },
+            "scrollports": [],
+            "clippedGlyphs": [],
+            "ellipsisApplied": false
+          }
+        ],
+        "overlaps": [
+          {
+            "group": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes6 o 12 bagels"
+            },
+            "first": {
+              "element": {
+                "tag": "B",
+                "id": null,
+                "className": "",
+                "label": "Bagelsgrandes"
+              },
+              "text": "Bagels grandes",
+              "glyphs": [
+                {
+                  "x": 20,
+                  "y": 46,
+                  "right": 111.828125,
+                  "bottom": 77,
+                  "width": 91.828125,
+                  "height": 31
+                },
+                {
+                  "x": 20,
+                  "y": 64,
+                  "right": 128.9375,
+                  "bottom": 95,
+                  "width": 108.9375,
+                  "height": 31
+                }
+              ]
+            },
+            "second": {
+              "element": {
+                "tag": "SMALL",
+                "id": null,
+                "className": "",
+                "label": "6 o 12 bagels"
+              },
+              "text": "6 o 12 bagels",
+              "glyphs": [
+                {
+                  "x": 20,
+                  "y": 90,
+                  "right": 104.078125,
+                  "bottom": 106,
+                  "width": 84.078125,
+                  "height": 16
+                }
+              ]
+            },
+            "intersections": [
+              {
+                "x": 20,
+                "y": 90,
+                "right": 104.078125,
+                "bottom": 95,
+                "width": 84.078125,
+                "height": 5
+              }
+            ]
+          }
+        ],
+        "headerOverlaps": [],
+        "forbiddenAssets": [],
+        "failures": [
+          {
+            "kind": "comparable-text-overlap",
+            "element": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes6 o 12 bagels"
+            },
+            "group": {
+              "tag": "BUTTON",
+              "id": null,
+              "className": "",
+              "label": "Bagelsgrandes6 o 12 bagels"
+            },
+            "first": {
+              "element": {
+                "tag": "B",
+                "id": null,
+                "className": "",
+                "label": "Bagelsgrandes"
+              },
+              "text": "Bagels grandes",
+              "glyphs": [
+                {
+                  "x": 20,
+                  "y": 46,
+                  "right": 111.828125,
+                  "bottom": 77,
+                  "width": 91.828125,
+                  "height": 31
+                },
+                {
+                  "x": 20,
+                  "y": 64,
+                  "right": 128.9375,
+                  "bottom": 95,
+                  "width": 108.9375,
+                  "height": 31
+                }
+              ]
+            },
+            "second": {
+              "element": {
+                "tag": "SMALL",
+                "id": null,
+                "className": "",
+                "label": "6 o 12 bagels"
+              },
+              "text": "6 o 12 bagels",
+              "glyphs": [
+                {
+                  "x": 20,
+                  "y": 90,
+                  "right": 104.078125,
+                  "bottom": 106,
+                  "width": 84.078125,
+                  "height": 16
+                }
+              ]
+            },
+            "intersections": [
+              {
+                "x": 20,
+                "y": 90,
+                "right": 104.078125,
+                "bottom": 95,
+                "width": 84.078125,
+                "height": 5
+              }
+            ]
+          }
+        ],
+        "passed": false,
+        "scope": "Read-only whole-document DOM geometry; ordinary vertical page scroll is not clipping. Hidden assistive-only text is excluded. Overlay hit-tests are recorded but asserted only with requireViewportTargets."
+      },
+      "pass": true
+    }
+  ],
+  "failures": [],
+  "requests": [],
+  "browserVersion": "151.0.7922.173",
+  "status": "passed",
+  "sourceUnchanged": true
+}

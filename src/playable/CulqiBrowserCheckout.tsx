@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
+import { confirmPaidOrderReceipt, parsePaymentStatusObservation, type PaidOrderReceipt } from '../domain/lib/paid-order-receipt'
 
 export type CulqiPublicConfig = {
   enabled: boolean
@@ -101,26 +102,98 @@ type RecoveryReference = {
 
 type InvalidRecovery = { invalid: true }
 
-function loadScript(id: string, src: string) {
-  return new Promise<void>((resolve, reject) => {
-    const existing = document.getElementById(id) as HTMLScriptElement | null
-    if (existing?.dataset.ready === 'true') return resolve()
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true })
-      existing.addEventListener('error', () => reject(new Error('script-load-failed')), { once: true })
-      return
+const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+type ReservedCheckout = {checkoutSessionId: string; orderCode: string; amountMinor: number; expiresAt: string}
+function confirmBrowserReservation(value: unknown, checkoutSessionId: string): ReservedCheckout {
+  const r = value as Record<string, unknown> | null
+  if (!r || r.ok !== true || r.checkoutSessionId !== checkoutSessionId || !uuid.test(checkoutSessionId)
+    || typeof r.orderCode !== 'string' || !/^BAG-[A-Z0-9_-]{1,80}$/.test(r.orderCode)
+    || typeof r.amountMinor !== 'number' || !Number.isSafeInteger(r.amountMinor) || r.amountMinor <= 0 || r.amountMinor > 2147483647
+    || typeof r.expiresAt !== 'string' || !Number.isFinite(Date.parse(r.expiresAt)) || Date.parse(r.expiresAt) <= Date.now()
+    || (r.currency !== undefined && r.currency !== 'PEN')) throw new Error('No se pudo verificar la reserva completa.')
+  return {checkoutSessionId, orderCode: r.orderCode, amountMinor: r.amountMinor, expiresAt: r.expiresAt}
+}
+function confirmBrowserPreparation(value: unknown, reservation: ReservedCheckout): CheckoutSession {
+  const r = value as Record<string, unknown> | null
+  if (!r || r.ok !== true || typeof r.sessionId !== 'string' || !uuid.test(r.sessionId)
+    || r.amount !== reservation.amountMinor || typeof r.expiresAt !== 'string'
+    || Date.parse(r.expiresAt) !== Date.parse(reservation.expiresAt) || Date.parse(r.expiresAt) <= Date.now()
+    || (r.currency !== undefined && r.currency !== 'PEN')) throw new Error('La preparación del pago no coincide con la reserva.')
+  return {...reservation, sessionId: r.sessionId}
+}
+
+type ScriptLoadState = {
+  script: HTMLScriptElement
+  src: string
+  status: 'loading' | 'ready' | 'failed'
+  waiters: Set<(error?: Error) => void>
+}
+const scriptLoads = new Map<string, ScriptLoadState>()
+const SDK_LOAD_WAIT_MS = 12_000
+
+function loadScript(id: string, src: string): Promise<void> {
+  const expectedSrc = new URL(src).href
+  const existing = document.getElementById(id) as HTMLScriptElement | null
+  // A matching id alone is not evidence that the expected SDK was loaded.
+  if (existing && (existing.tagName !== 'SCRIPT' || existing.src !== expectedSrc)) {
+    return Promise.reject(new Error('No se pudo verificar la carga de Culqi. Recarga la página.'))
+  }
+  let state = scriptLoads.get(id)
+  if (state && (state.src !== expectedSrc || (state.status === 'loading' && state.script !== existing))) {
+    return Promise.reject(new Error('La carga de Culqi cambió. Recarga la página.'))
+  }
+  if (state?.status === 'ready' || existing?.dataset.ready === 'true') return Promise.resolve()
+
+  let append: (() => void) | undefined
+  if (!state) {
+    const script = existing ?? document.createElement('script')
+    if (!existing) {
+      script.id = id
+      script.src = expectedSrc
+      script.defer = true
     }
-    const script = document.createElement('script')
-    script.id = id
-    script.src = src
-    script.defer = true
-    script.onload = () => {
-      script.dataset.ready = 'true'
-      resolve()
+    const created: ScriptLoadState = {script, src: expectedSrc, status: 'loading', waiters: new Set()}
+    state = created
+    scriptLoads.set(id, created)
+    const settle = (error?: Error) => {
+      if (created.status !== 'loading') return
+      created.status = error ? 'failed' : 'ready'
+      script.removeEventListener('load', onLoad)
+      script.removeEventListener('error', onError)
+      if (error) {
+        // Only a terminal error permits replacement on a later, manual attempt.
+        // A timed-out script may still execute, so timeouts never remove/reinsert it.
+        if (document.getElementById(id) === script) script.remove()
+        if (scriptLoads.get(id) === created) scriptLoads.delete(id)
+      } else script.dataset.ready = 'true'
+      for (const waiter of [...created.waiters]) waiter(error)
     }
-    script.onerror = () => reject(new Error('script-load-failed'))
-    document.body.appendChild(script)
+    const onLoad = () => settle()
+    const onError = () => settle(new Error('No se pudo cargar Culqi. Revisa tu conexión e inténtalo otra vez.'))
+    script.addEventListener('load', onLoad)
+    script.addEventListener('error', onError)
+    if (!existing) append = () => {
+      try { document.body.appendChild(script) }
+      catch { onError() }
+    }
+  }
+
+  const current = state
+  const promise = new Promise<void>((resolve, reject) => {
+    let settled = false
+    const finish = (error?: Error) => {
+      if (settled) return
+      settled = true
+      window.clearTimeout(timer)
+      current.waiters.delete(finish)
+      if (error) reject(error)
+      else resolve()
+    }
+    const timer = window.setTimeout(() => finish(new Error('La carga de Culqi está tardando demasiado. Revisa tu conexión y vuelve a intentarlo.')), SDK_LOAD_WAIT_MS)
+    current.waiters.add(finish)
   })
+  append?.()
+  return promise
 }
 
 function readRecovery(): RecoveryReference | InvalidRecovery | null {
@@ -149,7 +222,7 @@ function setRecovery(session: CheckoutSession, state: 'pending'|'review') {
   }))
 }
 
-function clearRecovery(session: CheckoutSession) {
+function clearRecovery(session: Pick<CheckoutSession, 'checkoutSessionId' | 'orderCode'>) {
   const current = readRecovery()
   if (current && 'checkoutSessionId' in current
     && current.checkoutSessionId === session.checkoutSessionId
@@ -175,10 +248,11 @@ export function CulqiBrowserCheckout(props: {
   customer: CheckoutCustomer
   order: GuidedOrderPayload
   subtotalPen: number
-  onPaid: (result: { orderCode: string; amountPen: number | null }) => void
+  sandboxMode?: boolean
+  onPaid: (result: { orderCode: string; amountPen: number; receipt: PaidOrderReceipt }) => void
   onReview: (message: string) => void
 }) {
-  const { config, customer, order, subtotalPen, onPaid, onReview } = props
+  const { config, customer, order, subtotalPen, onPaid, onReview, sandboxMode = false } = props
   const [status, setStatus] = useState<'idle'|'loading'|'ready'|'charging'|'3ds'|'confirming'|'review'|'error'|'expired'>('idle')
   const [message, setMessage] = useState('')
   const checkoutRef = useRef<CheckoutInstance | null>(null)
@@ -186,15 +260,27 @@ export function CulqiBrowserCheckout(props: {
   const tokenRef = useRef<{ tokenId: string; deviceId: string } | null>(null)
   const busyRef = useRef(false)
   const callbackConsumedRef = useRef(false)
+  const awaiting3DSRef = useRef(false)
   const checkoutSessionIdRef = useRef<string | null>(null)
   const reservationExpiresAtRef = useRef<number | null>(null)
   const reservationTimerRef = useRef<number | null>(null)
   const paymentAttemptStartedRef = useRef(false)
   const aliveRef = useRef(true)
+  const operationVersionRef = useRef(0)
+  const sessionIsCurrentRef = useRef<(() => boolean) | null>(null)
+  const recoveryBusyRef = useRef(false)
+  // A changed order, customer, consent or config invalidates pending responses.
+  // This string remains in memory only; it is never persisted or transmitted.
+  const operationContext = JSON.stringify({config, customer, order})
+  const beginOperation = useCallback(() => {
+    const version = ++operationVersionRef.current
+    return () => aliveRef.current && version === operationVersionRef.current
+  }, [])
 
-  const review = useCallback((text: string) => {
+  const review = useCallback((text: string, preserveStoredReference = false) => {
+    awaiting3DSRef.current = false
     const session = sessionRef.current
-    if (session) setRecovery(session, 'review')
+    if (session && !preserveStoredReference) setRecovery(session, 'review')
     busyRef.current = true
     setStatus('review')
     setMessage(text)
@@ -212,6 +298,7 @@ export function CulqiBrowserCheckout(props: {
   const expireReservation = useCallback(() => {
     if (!aliveRef.current) return
     clearReservationTimer()
+    awaiting3DSRef.current = false
     try { checkoutRef.current?.close() } catch {}
     try { window.Culqi3DS?.reset() } catch {}
 
@@ -253,11 +340,13 @@ export function CulqiBrowserCheckout(props: {
     watch()
   }, [checkReservationExpiry, clearReservationTimer])
 
-  const waitForPaid = useCallback(async (session: CheckoutSession) => {
+  const waitForPaid = useCallback(async (session: CheckoutSession, isCurrent: () => boolean) => {
+    if (!isCurrent()) return
     setStatus('confirming')
     for (let attempt = 0; attempt < 6; attempt += 1) {
       if (attempt > 0) await new Promise((resolve) => window.setTimeout(resolve, Math.min(1500 * (attempt + 1), 6000)))
-      const { response, result } = await jsonFetch<{
+      if (!isCurrent()) return
+      const { response, result: rawStatus } = await jsonFetch<{
         ok?: boolean
         paymentStatus?: string
         amountPen?: number | null
@@ -271,20 +360,34 @@ export function CulqiBrowserCheckout(props: {
         }),
       }, 10_000)
 
-      if (!response.ok || result.reconciliationRequired === true) {
+      if (!isCurrent()) return
+      if (!response.ok) throw new Error('No se pudo verificar el estado del pago.')
+      const result = parsePaymentStatusObservation(rawStatus, {orderCode: session.orderCode, amountMinor: session.amountMinor})
+      if (result.reconciliationRequired === true) {
         review('El pago necesita revisión. No vuelvas a pagar; verifica el estado del pedido.')
         return
       }
       if (result.paymentStatus === 'paid') {
+        const receipt = confirmPaidOrderReceipt(result, {orderCode: session.orderCode, amountMinor: session.amountMinor})
         clearReservationTimer()
         clearRecovery(session)
         busyRef.current = false
         paymentAttemptStartedRef.current = false
         setStatus('ready')
-        onPaid({ orderCode: session.orderCode, amountPen: session.amountMinor / 100 })
+        onPaid({ orderCode: receipt.orderCode, amountPen: receipt.amountMinor / 100, receipt })
         return
       }
-      if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+      if (result.paymentStatus === 'failed') {
+        // A failed attempt does not release the reservation immediately or
+        // rule out a later provider observation. Leave the persisted capability
+        // untouched: another tab may have replaced or resolved it meanwhile.
+        clearReservationTimer()
+        reservationExpiresAtRef.current = null
+        tokenRef.current = null
+        review('El intento del pedido ' + session.orderCode + ' figura como fallido. Conservamos la referencia; verifica su estado con Bagelito antes de volver a pagar. El cupo no se libera de inmediato.', true)
+        return
+      }
+      if (result.paymentStatus === 'expired') {
         clearReservationTimer()
         clearRecovery(session)
         busyRef.current = false
@@ -306,8 +409,9 @@ export function CulqiBrowserCheckout(props: {
     tokenId: string,
     deviceId: string,
     authentication3DS?: Auth3DS,
+    isCurrent = sessionIsCurrentRef.current,
   ) => {
-    if (checkReservationExpiry()) return
+    if (!isCurrent?.() || checkReservationExpiry()) return
     paymentAttemptStartedRef.current = true
 
     const { response, result } = await jsonFetch<{
@@ -328,12 +432,16 @@ export function CulqiBrowserCheckout(props: {
       }),
     }, 30_000)
 
+    if (!isCurrent()) return
     if (!response.ok || result.paymentStatus === 'reconciliation_required') {
       review(result.error || 'El resultado del pago necesita revisión. No vuelvas a pagar.')
       return
     }
 
     if (result.requires3DS) {
+      // A response may arrive after the reservation expired while awaiting charge.
+      // Do not restart authentication; non-3DS outcomes still go to observation.
+      if (checkReservationExpiry()) return
       if (!tokenId.startsWith('tkn_') || !window.Culqi3DS) {
         review('No se pudo iniciar la autenticación bancaria.')
         return
@@ -348,25 +456,30 @@ export function CulqiBrowserCheckout(props: {
           currency: 'PEN',
         },
       }
+      awaiting3DSRef.current = true
       await window.Culqi3DS.initAuthentication(tokenId)
       return
     }
 
     clearReservationTimer()
-    await waitForPaid(session)
+    await waitForPaid(session, isCurrent)
   }, [checkReservationExpiry, clearReservationTimer, customer.email, review, waitForPaid])
 
   const recoverPayment = useCallback(async () => {
+    if (!aliveRef.current || recoveryBusyRef.current) return
     const recovered = readRecovery()
     if (!recovered || !('checkoutSessionId' in recovered)) {
       setStatus('review')
       setMessage('Existe una referencia de pago inválida. No vuelvas a pagar hasta revisarla.')
       return
     }
+    recoveryBusyRef.current = true
+    busyRef.current = true
+    const isCurrent = beginOperation()
     setStatus('confirming')
     setMessage('Consultando el estado del pago…')
     try {
-      const { response, result } = await jsonFetch<{
+      const { response, result: rawStatus } = await jsonFetch<{
         ok?: boolean
         paymentStatus?: string
         amountPen?: number | null
@@ -380,27 +493,43 @@ export function CulqiBrowserCheckout(props: {
         }),
       }, 10_000)
 
-      if (!response.ok || result.reconciliationRequired === true) {
+      if (!isCurrent()) return
+      if (!response.ok) throw new Error('No se pudo verificar el estado del pago.')
+      const result = parsePaymentStatusObservation(rawStatus, {orderCode: recovered.orderCode})
+      if (result.reconciliationRequired === true) {
         setStatus('review')
         setMessage('El pago necesita revisión. No vuelvas a pagar.')
         return
       }
       if (result.paymentStatus === 'paid') {
+        const receipt = confirmPaidOrderReceipt(result, {orderCode: recovered.orderCode})
         clearReservationTimer()
-        window.localStorage.removeItem(RECOVERY_KEY)
+        clearRecovery(recovered)
         busyRef.current = false
         paymentAttemptStartedRef.current = false
         setStatus('ready')
         setMessage('')
         onPaid({
-          orderCode: recovered.orderCode,
-          amountPen: typeof result.amountPen === 'number' ? result.amountPen : null,
+          orderCode: receipt.orderCode,
+          amountPen: receipt.amountMinor / 100, receipt,
         })
         return
       }
-      if (result.paymentStatus === 'failed' || result.paymentStatus === 'expired') {
+      if (result.paymentStatus === 'failed') {
         clearReservationTimer()
-        window.localStorage.removeItem(RECOVERY_KEY)
+        reservationExpiresAtRef.current = null
+        awaiting3DSRef.current = false
+        tokenRef.current = null
+        // Recovery was already persisted before this lookup; never overwrite
+        // a newer reference from another tab with this older observation.
+        busyRef.current = true
+        setStatus('review')
+        setMessage('El intento del pedido ' + recovered.orderCode + ' figura como fallido. Conservamos la referencia; verifica su estado con Bagelito antes de volver a pagar. El cupo no se libera de inmediato.')
+        return
+      }
+      if (result.paymentStatus === 'expired') {
+        clearReservationTimer()
+        clearRecovery(recovered)
         busyRef.current = false
         paymentAttemptStartedRef.current = false
         sessionRef.current = null
@@ -414,13 +543,16 @@ export function CulqiBrowserCheckout(props: {
       setStatus('review')
       setMessage('El pago sigue pendiente. No vuelvas a pagar todavía.')
     } catch {
+      if (!isCurrent()) return
       setStatus('review')
       setMessage('No pudimos consultar el pago. No vuelvas a pagar hasta verificarlo.')
+    } finally {
+      if (isCurrent()) recoveryBusyRef.current = false
     }
-  }, [clearReservationTimer, onPaid])
+  }, [beginOperation, clearReservationTimer, onPaid])
 
   const startCheckout = useCallback(async () => {
-    if (!config.enabled || busyRef.current) return
+    if (!aliveRef.current || !config.enabled || busyRef.current) return
     const recovered = readRecovery()
     if (recovered) {
       await recoverPayment()
@@ -428,6 +560,7 @@ export function CulqiBrowserCheckout(props: {
     }
 
     busyRef.current = true
+    const isCurrent = beginOperation()
     setStatus('loading')
     setMessage('Preparando tu pedido…')
 
@@ -436,13 +569,14 @@ export function CulqiBrowserCheckout(props: {
         loadScript('culqi-custom-checkout', 'https://js.culqi.com/checkout-js'),
         loadScript('culqi-3ds', 'https://3ds.culqi.com'),
       ])
+      if (!isCurrent()) return
       if (!window.CulqiCheckout || !window.Culqi3DS || !config.publicKey || !config.rsaId || !config.rsaPublicKey) {
         throw new Error('Culqi no está disponible.')
       }
 
       const checkoutSessionId = checkoutSessionIdRef.current ?? crypto.randomUUID()
       checkoutSessionIdRef.current = checkoutSessionId
-      const { response: reservationResponse, result: reservation } = await jsonFetch<{
+      const { response: reservationResponse, result: rawReservation } = await jsonFetch<{
         ok?: boolean
         amountMinor?: number
         checkoutSessionId?: string
@@ -460,9 +594,9 @@ export function CulqiBrowserCheckout(props: {
         }),
       }, 20_000)
 
-      if (!reservationResponse.ok || !reservation.ok || !reservation.orderCode || !reservation.amountMinor) {
-        throw new Error(reservation.error || 'No se pudo reservar el pedido.')
-      }
+      if (!isCurrent()) return
+      if (!reservationResponse.ok) throw new Error(rawReservation.error || 'No se pudo reservar el pedido.')
+      const reservation = confirmBrowserReservation(rawReservation, checkoutSessionId)
 
       const { response: prepResponse, result: prepared } = await jsonFetch<{
         ok?: boolean
@@ -480,26 +614,16 @@ export function CulqiBrowserCheckout(props: {
         }),
       }, 15_000)
 
-      if (!prepResponse.ok || !prepared.ok || !prepared.sessionId || !prepared.amount) {
-        throw new Error(prepared.error || 'No se pudo preparar Culqi.')
-      }
-      if (prepared.amount !== reservation.amountMinor) {
-        throw new Error('El monto preparado no coincide con la reserva.')
-      }
-
-      const session: CheckoutSession = {
-        amountMinor: prepared.amount,
-        checkoutSessionId,
-        expiresAt: prepared.expiresAt ?? reservation.expiresAt ?? null,
-        orderCode: reservation.orderCode,
-        sessionId: prepared.sessionId,
-      }
+      if (!isCurrent()) return
+      if (!prepResponse.ok) throw new Error(prepared.error || 'No se pudo preparar Culqi.')
+      const session = confirmBrowserPreparation(prepared, reservation)
       const expiresAt = session.expiresAt ? Date.parse(session.expiresAt) : NaN
       if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
         checkoutSessionIdRef.current = null
         throw new Error('La reserva expiró antes de abrir el checkout.')
       }
       sessionRef.current = session
+      sessionIsCurrentRef.current = isCurrent
       scheduleReservationExpiry(expiresAt)
 
       window.Culqi3DS.publicKey = config.publicKey
@@ -507,7 +631,7 @@ export function CulqiBrowserCheckout(props: {
         showModal: true,
         showLoading: true,
         showIcon: true,
-        closeModalAction: () => review('La autenticación bancaria fue cerrada. Revisa el estado antes de volver a pagar.'),
+        closeModalAction: () => { if (isCurrent() && awaiting3DSRef.current) review('La autenticación bancaria fue cerrada. Revisa el estado antes de volver a pagar.') },
       }
 
       const names = customer.customerName.trim().split(/\s+/)
@@ -556,7 +680,7 @@ export function CulqiBrowserCheckout(props: {
 
       checkoutRef.current = checkout
       checkout.culqi = () => {
-        if (!busyRef.current || callbackConsumedRef.current) return
+        if (!isCurrent() || !busyRef.current || callbackConsumedRef.current) return
         callbackConsumedRef.current = true
         const tokenId = checkout.token?.id
         if (!tokenId) {
@@ -574,6 +698,7 @@ export function CulqiBrowserCheckout(props: {
             setStatus('charging')
             window.Culqi3DS!.publicKey = config.publicKey!
             const deviceId = tokenId.startsWith('tkn_') ? await window.Culqi3DS!.generateDevice() : ''
+            if (!isCurrent()) return
             if (tokenId.startsWith('tkn_') && !deviceId) {
               throw new Error('No se pudo generar el identificador antifraude.')
             }
@@ -583,7 +708,7 @@ export function CulqiBrowserCheckout(props: {
             setRecovery(session, 'pending')
             await submitToken(session, tokenId, deviceId)
           } catch (error) {
-            review(error instanceof Error ? error.message : 'No se pudo procesar el pago.')
+            if (isCurrent()) review(error instanceof Error ? error.message : 'No se pudo procesar el pago.')
           }
         })()
       }
@@ -594,22 +719,29 @@ export function CulqiBrowserCheckout(props: {
       setMessage('')
       checkout.open()
     } catch (error) {
+      if (!isCurrent()) return
       busyRef.current = false
       setStatus('error')
       setMessage(error instanceof Error ? error.message : 'No se pudo iniciar Culqi.')
     }
-  }, [checkReservationExpiry, config, customer, order, recoverPayment, review, scheduleReservationExpiry, submitToken])
+  }, [beginOperation, checkReservationExpiry, config, customer, order, recoverPayment, review, scheduleReservationExpiry, submitToken])
 
   useEffect(() => {
     function on3DSMessage(event: MessageEvent) {
+      const isCurrent = sessionIsCurrentRef.current
+      if (!isCurrent?.() || !awaiting3DSRef.current) return
       if (event.origin !== window.location.origin || !event.data || typeof event.data !== 'object') return
       const data = event.data as { parameters3DS?: Auth3DS; error?: unknown }
       if (data.error) {
+        awaiting3DSRef.current = false
         window.Culqi3DS?.reset()
         review('No se pudo completar la autenticación 3D Secure.')
         return
       }
       if (!data.parameters3DS) return
+      // Consume synchronously before any asynchronous continuation: repeated,
+      // dismissed or late SDK messages must not submit another charge request.
+      awaiting3DSRef.current = false
       const session = sessionRef.current
       const token = tokenRef.current
       if (!session || !token) {
@@ -618,8 +750,9 @@ export function CulqiBrowserCheckout(props: {
       }
       if (checkReservationExpiry()) return
       setStatus('charging')
-      void submitToken(session, token.tokenId, token.deviceId, data.parameters3DS)
-        .finally(() => window.Culqi3DS?.reset())
+      void submitToken(session, token.tokenId, token.deviceId, data.parameters3DS, isCurrent)
+        .catch(() => { if (isCurrent()) review('No pudimos verificar el resultado. No vuelvas a pagar.') })
+        .finally(() => { if (isCurrent()) window.Culqi3DS?.reset() })
     }
 
     window.addEventListener('message', on3DSMessage)
@@ -627,8 +760,6 @@ export function CulqiBrowserCheckout(props: {
   }, [checkReservationExpiry, review, submitToken])
 
   useEffect(() => {
-    aliveRef.current = true
-
     const onForeground = () => { checkReservationExpiry() }
     const onVisibility = () => {
       if (document.visibilityState === 'visible') checkReservationExpiry()
@@ -639,15 +770,37 @@ export function CulqiBrowserCheckout(props: {
     document.addEventListener('visibilitychange', onVisibility)
 
     return () => {
-      aliveRef.current = false
       clearReservationTimer()
       window.removeEventListener('focus', onForeground)
       window.removeEventListener('pageshow', onForeground)
       document.removeEventListener('visibilitychange', onVisibility)
-      try { checkoutRef.current?.close() } catch {}
-      try { window.Culqi3DS?.reset() } catch {}
     }
   }, [checkReservationExpiry, clearReservationTimer])
+
+  useEffect(() => {
+    aliveRef.current = true
+    setStatus('idle')
+    setMessage('')
+    return () => {
+      aliveRef.current = false
+      operationVersionRef.current++
+      recoveryBusyRef.current = false
+      busyRef.current = false
+      sessionIsCurrentRef.current = null
+      sessionRef.current = null
+      tokenRef.current = null
+      checkoutSessionIdRef.current = null
+      reservationExpiresAtRef.current = null
+      callbackConsumedRef.current = false
+      awaiting3DSRef.current = false
+      paymentAttemptStartedRef.current = false
+      clearReservationTimer()
+      try { checkoutRef.current?.close() } catch {}
+      try { window.Culqi3DS?.reset() } catch {}
+      // Recovery in localStorage is deliberately retained: cleanup is not proof
+      // that a submitted payment failed or that another charge is safe.
+    }
+  }, [operationContext, clearReservationTimer])
 
   const customerReady = customer.customerName.trim().length >= 2
     && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email.trim())
@@ -658,24 +811,25 @@ export function CulqiBrowserCheckout(props: {
 
   if (!config.enabled) {
     return <div className="culqi-browser-status is-locked">
-      <b>Checkout Culqi bloqueado</b>
+      <b>{sandboxMode ? 'Prueba sandbox bloqueada' : 'Checkout Culqi bloqueado'}</b>
       <span>Subtotal actual: S/ {subtotalPen}. Se habilitará solo cuando cliente, webhook, datos legales y batch estén listos.</span>
     </div>
   }
 
   return <div className="culqi-browser-checkout">
     <button type="button" className="culqi-start-button" disabled={!customerReady || status === 'loading' || status === 'charging' || status === '3ds' || status === 'confirming' || status === 'review'} onClick={() => void startCheckout()}>
+      {sandboxMode && 'Prueba sandbox · '}
       {status === 'loading' ? 'Preparando…'
         : status === 'expired' ? 'Reserva vencida'
           : status === 'charging' ? 'Procesando…'
           : status === '3ds' ? 'Autenticando banco…'
             : status === 'confirming' ? 'Confirmando pago…'
               : status === 'review' ? 'Pago en revisión'
-                : 'Pagar con Culqi'}
+                : sandboxMode ? 'Iniciar prueba con Culqi' : 'Pagar con Culqi'}
     </button>
-    {!customerReady && <p className="culqi-browser-message">Completa tus datos y acepta los términos para habilitar el pago.</p>}
+    {!customerReady && <p className="culqi-browser-message">{sandboxMode ? 'Completa los datos de prueba autorizados y acepta los términos para habilitar la prueba sandbox.' : 'Completa tus datos y acepta los términos para habilitar el pago.'}</p>}
     {message && <p className="culqi-browser-message">{message}</p>}
-    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>Consultar estado del pago</button>}
+    {status === 'review' && <button type="button" className="culqi-recovery-button" onClick={() => void recoverPayment()}>{sandboxMode ? 'Consultar estado de la prueba sandbox' : 'Consultar estado del pago'}</button>}
     <div id="culqi-checkout-container" className="culqi-browser-container" />
   </div>
 }

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { readBoundedJsonObject } from '../../../../server/http-json.server'
-import { getPrivatePaymentConfig, isPaymentRequestAllowed } from '../../../../server/payment-config.server'
+import { getPrivatePaymentConfig, isPaymentRequestAllowed, isPersistedProductPaymentRequestAllowed } from '../../../../server/payment-config.server'
 import { enforcePublicApiSecurity, PublicApiError } from '../../../../server/public-api-security.server'
 import { createSupabaseAdminClient } from '../../../../server/supabase-admin.server'
 
@@ -33,7 +33,7 @@ export const Route = createFileRoute('/api/payments/culqi/order')({
           const supabase = createSupabaseAdminClient()
           const { data: order, error } = await supabase
             .from('orders')
-            .select('id,order_code,checkout_session_id,email,payment_provider,payment_lane,payment_order_id,payment_status,status')
+            .select('id,order_code,checkout_session_id,email,pack_slug,payment_provider,payment_lane,payment_order_id,payment_status,status')
             .eq('order_code', orderCode)
             .eq('checkout_session_id', checkoutSessionId)
             .maybeSingle()
@@ -46,6 +46,14 @@ export const Route = createFileRoute('/api/payments/culqi/order')({
           }
           if (order.payment_status === 'paid') {
             throw new PublicApiError('This order is already paid.', 409)
+          }
+          if (!isPersistedProductPaymentRequestAllowed(request, order.pack_slug)) {
+            throw new PublicApiError('This product checkout is not enabled for this environment.', 503)
+          }
+          // A terminal result does not reset the order/attempt to pending.
+          // Admission guard only: the core claim still needs an atomic state gate.
+          if (order.payment_status !== 'pending') {
+            throw new PublicApiError('This reservation cannot start another payment attempt. Check its payment status.', 409)
           }
           if (order.status === 'cancelled' || order.status === 'delivered'
             || order.payment_provider !== 'culqi'

@@ -1,0 +1,324 @@
+✖ actual save/restore preserves upsell8 without payment data (6.736515ms)
+✖ actual save/restore preserves downsell2 without payment data (3.103072ms)
+✔ legacy pack, combo and standalone without mode restore coherently (26.445102ms)
+✖ legacy extras, malformed mode, quantities and unknown products are not silently dropped (10.307713ms)
+✖ incomplete pack/combo/extra never restores cashier and keeps selected products (22.496034ms)
+✔ reviewOnly never reads, removes or writes draft storage (8.280934ms)
+✖ recovery notice cannot render in reviewOnly mode (1.122363ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 2
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 436.440717
+
+✖ failing tests:
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:24:55
+✖ actual save/restore preserves upsell8 without payment data (6.736515ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'upsell8'
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:28:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'upsell8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:24:55
+✖ actual save/restore preserves downsell2 without payment data (3.103072ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'downsell2'
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:28:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'downsell2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:37:1
+✖ legacy extras, malformed mode, quantities and unknown products are not silently dropped (10.307713ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(output.DraftRecoveryMessage)
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:39:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:42:1
+✖ incomplete pack/combo/extra never restores cashier and keeps selected products (22.496034ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  'cashier'
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:44:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'cashier',
+    expected: 'cashier',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:52:1
+✖ recovery notice cannot render in reviewOnly mode (1.122363ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\{!reviewOnly && draftRecoveryMessage && <p role="status"/. Input:
+  
+  "import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'\n" +
+    "import { ReferenceScene } from '../reference/ReferenceScene'\n" +
+    "import { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'\n" +
+    "import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'\n" +
+    "import { deliveryDistricts } from '../domain/data/delivery-districts'\n" +
+    "import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'\n" +
+    "import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'\n" +
+    'import {\n' +
+    '  CulqiBrowserCheckout,\n' +
+    '  type CheckoutCustomer,\n' +
+    '  type CulqiPublicConfig,\n' +
+    "} from './CulqiBrowserCheckout'\n" +
+    "import './guided-commerce.css'\n" +
+    '\n' +
+    'const menu = getVerifiedDisplayMenu()\n' +
+    'const optionalPackSchmearSize = menu.schmearSizes.find((size) => size.grams === 120)\n' +
+    "const combos = [{ id: 'two-bagel-schmear', name: '2 Bagels + Schmear', bagels: 2, schmear_count: 1, price: null }] as const\n" +
+    '\n' +
+    'function revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {\n' +
+    '  const grid = event.currentTarget\n' +
+    '  if (grid.scrollWidth <= grid.clientWidth || !(event.target instanceof Element)\n' +
+    "    || !event.target.matches(':focus-visible')) return\n" +
+    '  // Native focus can stop at a partially visible carousel preview. Reveal the\n' +
+    '  // whole card, including its name and removal control, without moving focus.\n' +
+    "  const card = event.target.closest<HTMLElement>('.mobile-bagel-card,.mobile-schmear-card')\n" +
+    "  if (card && grid.contains(card)) card.scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'auto' })\n" +
+    '}\n' +
+    '\n' +
+    "type Category = 'packs' | 'combos' | 'schmears'\n" +
+    "type PackFormat = 'grande' | 'mini'\n" +
+    'type Scene =\n' +
+    "  | 'entrance'\n" +
+    "  | 'selector'\n" +
+    "  | 'pack-size'\n" +
+    "  | 'pack-qty'\n" +
+    "  | 'combos'\n" +
+    "  | 'schmear-size'\n" +
+    "  | 'bagels'\n" +
+    "  | 'schmears'\n" +
+    "  | 'cross-sell'\n" +
+    "  | 'cashier'\n" +
+    "  | 'pay'\n" +
+    "  | 'receipt'\n" +
+    "  | 'wallet'\n" +
+    "  | 'handoff'\n" +
+    "  | 'goodbye'\n" +
+    "  | 'returning'\n" +
+    '\n' +
+    "type BagelMode = 'pack' | 'combo' | 'upsell8' | 'downsell2'\n" +
+    '\n' +
+    '// Spatial order from the approved 1800 × 666 vitrina artwork, NOT catalog order.\n' +
+    '// Left→right: Plain, Everything, Sesame, Classic Onion / Jalapeño Cheddar,\n' +
+    '// Cheddar, Cinnamon Raisin, Blueberry. Keep hotspots aligned to artwork trays.\n' +
+    'export const BAGEL_SHOWCASE_ORDER = [\n' +
+    "  'plain', 'everything', 'sesame', 'classic-onion',\n" +
+    "  'jalapeno-cheddar', 'cheddar', 'cinnamon-raisin', 'blueberry',\n" +
+    '] as const\n' +
+    '\n' +
+    'const BAGEL_SPOTS = [\n' +
+    "  { left: '6%', top: '7%', width: '19%', height: '43%' },\n" +
+    "  { left: '25%', top: '7%', width: '25%', height: '43%' },\n" +
+    "  { left: '50%', top: '7%', width: '25%', height: '43%' },\n" +
+    "  { left: '75%', top: '7%', width: '25%', height: '43%' },\n" +
+    "  { left: '6%', top: '53%', width: '19%', height: '44%' },\n" +
+    "  { left: '25%', top: '53%', width: '25%', height: '44%' },\n" +
+    "  { left: '50%', top: '53%', width: '25%', height: '44%' },\n" +
+    "  { left: '75%', top: '53%', width: '25%', height: '44%' },\n" +
+    '] as const\n' +
+    '\n' +
+    '/** Inverted bagel signs: WHITE text on Bagelito BLUE plates, aligned to the printed labels\n' +
+    ' * in /images/bagel-vitrina-photo.webp (800 × 300 photograph). These are\n' +
+    ' * presentation only; product selection remains on the existing hotspots.\n' +
+    ' */\n' +
+    'export const BAGEL_SIGN_POSITIONS = [\n' +
+    "  { left: '6%', top: '32.5%', width: '21%', height: '12%' },\n" +
+    "  { left: '29%', top: '32.5%', width: '21%', height: '12%' },\n" +
+    "  { left: '52.5%', top: '32.5%', width: '21%', height: '12%' },\n" +
+    "  { left: '76%', top: '32.5%', width: '21.5%', height: '12%' },\n" +
+    "  { left: '5%', top: '77.5%', width: '22.5%', height: '12%' },\n" +
+    "  { left: '28.5%', top: '77.5%', width: '22%', height: '12%' },\n" +
+    "  { left: '52%', top: '77.5%', width: '22%', height: '12%' },\n" +
+    "  { left: '75.5%', top: '77.5%', width: '22%', height: '12%' },\n" +
+    '] as const\n' +
+    '\n' +
+    "const GUIDED_DRAFT_KEY = 'bagelito.guided.product-draft.v1'\n" +
+    'const GUIDED_DRAFT_TTL_MS = 24 * 60 * 60 * 1000\n' +
+    '\n' +
+    'function readSafeSelections(raw: unknown, allowedIds: readonly string[]) {\n' +
+    "  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}\n" +
+    '  const next: Record<string,number> = {}\n' +
+    '  for (const [id,value] of Object.entries(raw)) {\n' +
+    "    if (allowedIds.includes(id) && typeof value === 'number'\n" +
+    '      && Number.isInteger(value) && value > 0 && value <= 24) {\n' +
+    '      next[id] = value\n' +
+    '    }\n' +
+    '  }\n' +
+    '  return next\n' +
+    '}\n' +
+    '\n' +
+    'const SCHMEAR_SPOTS = [\n' +
+    "  { left: '5%', top: '20%', width: '17%', height: '61%' },\n" +
+    "  { left: '23%', top: '20%', width: '17%', height: '61%' },\n" +
+    "  { left: '41%', top: '20%', width: '17%', height: '61%' },\n" +
+    "  { left: '59%', top: '20%', width: '17%', height: '61%' },\n" +
+    "  { left: '77%', top: '20%', width: '17%', height: '61%' },\n" +
+    '] as const\n' +
+    '\n' +
+    "export function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, exitLabel = 'Explorar tienda 3D' }: {\n" +
+    '  onExit: () => void\n' +
+    '  customerName?: string | null\n' +
+    '  initialCategory?: Category | null\n' +
+    '  skipEntrance?: boolean\n' +
+    '  liveWorld?: boolean\n' +
+    '  referenceMode?: boolean\n' +
+    '  reviewOnly?: boolean\n' +
+    '  exitLabel?: string\n' +
+    '  onSceneChange?: (scene: string) => void\n' +
+    '}) {\n' +
+    '  // A shopper coming from a physical 3D station enters the matching product\n' +
+    '  // category or the totem selector, without repeating the entry scene.\n' +
+    "  const [scene, setScene] = useState<Scene>(initialCategory === 'packs' ? 'pack-size'\n" +
+    "    : initialCategory === 'combos' ? 'combos'\n" +
+    "      : initialCategory === 'schmears' ? 'schmear-size'\n" +
+    "        : skipEntrance ? 'selector' : 'entrance')\n" +
+    '  const [menuOpen, setMenuOpen] = useState(false)\n' +
+    '  const [cartOpen, setCartOpen] = useState(false)\n' +
+    '  const [category, setCategory] = useState<Category | null>(initialCategory)\n' +
+    "  const [packFormat, setPackFormat] = useState<PackFormat>('grande')\n" +
+    '  const [packQty, setPackQty] = useState(6)\n' +
+    "  const [packMix, setPackMix] = useState<'mixed'|'single'>('mixed')\n" +
+    '  const [comboId, setComboId] = useState<string | null>(null)\n' +
+    '  const [schmearSize, setSchmearSize] = useState(120)\n' +
+    "  const [bagelMode, setBagelMode] = useState<BagelMode>('pack')\n" +
+    '  const [bagelCounts, setBagelCounts] = useState<Record<string, number>>({})\n' +
+    '  const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})\n' +
+    '  const [receiptPulled, setReceiptPulled] = useState(false)\n' +
+    '  const [walletSaved, setWalletSaved] = useState(false)\n' +
+    '  const [paidOrderCode, setPaidOrderCode] = useState<string | null>(null)\n' +
+    '  const [paidAmountPen, setPaidAmountPen] = useState<number | null>(null)\n' +
+    "  const [paymentReviewMessage, setPaymentReviewMessage] = useState('')\n" +
+    '  const [checkoutCustomer, setCheckoutCustomer] = useState<CheckoutCustomer>({\n' +
+    "    customerName: customerName ?? '',\n" +
+    "    email: '',\n" +
+    "    whatsapp: '',\n" +
+    "    deliveryAddress: '',\n" +
+    "    district: '',\n" +
+    "    addressReference: '',\n" +
+    "    deliveryNotes: '',\n" +
+    '    termsAccepted: false,\n' +
+    '    termsVersion: CHECKOUT_LEGAL_VERSION,\n' +
+    '  })\n' +
+    '  const [paymentConfig, setPaymentConfig] = useState<CulqiPublicConfig | null>(null)\n' +
+    '  const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)\n' +
+    '  const [quoteLoading, setQuoteLoading] = useState(false)\n' +
+    '  const [draftLoaded, setDraftLoaded] = useState(false)\n' +
+    "  const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'\n" +
+    '  const qaMode = !referenceMode && !reviewOnly && qaRequested && paymentConfig?.visualQaAllowed === true\n' +
+    '  const directCatalog = liveWorld || referenceMode\n' +
+    '  const receiptDrag = useRef({ startY: 0, offset: 0 })\n' +
+    '  const receiptPulledRef = useRef(false)\n' +
+    '  const sceneChangeCallback = useRef(onSceneChange)\n' +
+    '  const referenceRoot = useRef<HTMLDivElement>(null)\n' +
+    "  const MenuPanel = referenceMode ? 'section' : 'nav'\n" +
+    "  const CartPanel = referenceMode ? 'section' : 'aside'\n" +
+    '\n' +
+    '  // Only product IDs and quantities are saved for a short-lived in-tab draft.\n' +
+    '  // Never store contact details, 3DS tokens, payment data or confirmation state.\n' +
+    '  useEffect(() => {\n' +
+    '    if (reviewOnly) { setDraftLoaded(true); return }\n' +
+    '    try {\n' +
+    '      if (!initialCategory) {\n' +
+    '        const raw = window.sessionStorage.getItem(GUIDED_DRAFT_KEY)\n' +
+    '        if (raw) {\n' +
+    '          const draft = JSON.parse(raw) as Record<string,unknown>\n' +
+    '          const age = Date.now() - Number(draft.updatedAt)\n' +
+    '          if (!Number.isFinite(age) || age < 0 || age > GUIDED_DRAFT_TTL_MS\n' +
+    "            || !['packs','combos','schmears'].includes(String(draft.category))) {\n" +
+    '            window.sessionStorage.removeItem(GUIDED_DRAFT_KEY)\n' +
+    '          } else {\n' +
+    '            const restoredCategory = draft.category as Category\n' +
+    '            const safeBagels = readSafeSelections(draft.bagels, menu.bagels.map(item => item.id))\n' +
+    '            const safeSchmears = readSafeSelections(draft.schmears, menu.schmears.map(item => item.id))\n' +
+    "            const safeFormat: PackFormat = draft.format === 'mini' ? 'mini' : 'grande'\n" +
+    "            const validQuantities = safeFormat === 'mini' ? [6,12,24] : [6,12]\n" +
+    '            const safeQty = validQuantities.includes(Number(draft.packQty)) ? Number(draft.packQty) : 6\n' +
+    "            const safeMix = draft.packMix === 'single' ? 'single' : 'mixed'\n" +
+    '            const safeSize = [120,180,240].includes(Number(draft.schmearSize)) ? Number(draft.schmearSize) : 120\n' +
+    '            const restoredScene = String(draft.scene)\n' +
+    "            const allowedScenes = ['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears','cashier']\n" +
+    '            const requestedScene: Scene = allowedScenes.includes(restoredScene)\n' +
+    '              ? restoredScene as Scene\n' +
+    "              : restoredCategory === 'schmears' ? 'schmear-size' : 'pack-size'\n" +
+    "            const requiredBagels = restoredCategory === 'combos' ? 2 : safeQty\n" +
+    '            const bagelTotal = Object.values(safeBagels).reduce((sum,n)=>sum+n,0)\n' +
+    '            const schmearTotal = Object.values(safeSchmears).reduce((sum,n)=>sum+n,0)\n' +
+    "            const complete = restoredCategory === 'schmears'\n" +
+    '              ? schmearTotal === 1\n' +
+    "              : restoredCategory === 'packs'\n" +
+    '                ? bagelTotal === requiredBagels\n' +
+    '                : bagelTotal === 2 && schmearTotal === 1\n' +
+    '            setCategory(restoredCategory)\n' +
+    '            setPackFormat(safeForma'... 50607 more characters
+  
+      at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-draft-recovery.test.cjs:52:69)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'\nimport { ReferenceScene } from '../reference/ReferenceScene'\nimport { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'\nimport { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'\nimport { deliveryDistricts } from '../domain/data/delivery-districts'\nimport { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'\nimport { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'\nimport {\n  CulqiBrowserCheckout,\n  type CheckoutCustomer,\n  type CulqiPublicConfig,\n} from './CulqiBrowserCheckout'\nimport './guided-commerce.css'\n\nconst menu = getVerifiedDisplayMenu()\nconst optionalPackSchmearSize = menu.schmearSizes.find((size) => size.grams === 120)\nconst combos = [{ id: 'two-bagel-schmear', name: '2 Bagels + Schmear', bagels: 2, schmear_count: 1, price: null }] as const\n\nfunction revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {\n  const grid = event.currentTarget\n  if (grid.scrollWidth <= grid.clientWidth || !(event.target instanceof Element)\n    || !event.target.matches(':focus-visible')) return\n  // Native focus can stop at a partially visible carousel preview. Reveal the\n  // whole card, including its name and removal control, without moving focus.\n  const card = event.target.closest<HTMLElement>('.mobile-bagel-card,.mobile-schmear-card')\n  if (card && grid.contains(card)) card.scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'auto' })\n}\n\ntype Category = 'packs' | 'combos' | 'schmears'\ntype PackFormat = 'grande' | 'mini'\ntype Scene =\n  | 'entrance'\n  | 'selector'\n  | 'pack-size'\n  | 'pack-qty'\n  | 'combos'\n  | 'schmear-size'\n  | 'bagels'\n  | 'schmears'\n  | 'cross-sell'\n  | 'cashier'\n  | 'pay'\n  | 'receipt'\n  | 'wallet'\n  | 'handoff'\n  | 'goodbye'\n  | 'returning'\n\ntype BagelMode = 'pack' | 'combo' | 'upsell8' | 'downsell2'\n\n// Spatial order from the approved 1800 × 666 vitrina artwork, NOT catalog order.\n// Left→right: Plain, Everything, Sesame, Classic Onion / Jalapeño Cheddar,\n// Cheddar, Cinnamon Raisin, Blueberry. Keep hotspots aligned to artwork trays.\nexport const BAGEL_SHOWCASE_ORDER = [\n  'plain', 'everything', 'sesame', 'classic-onion',\n  'jalapeno-cheddar', 'cheddar', 'cinnamon-raisin', 'blueberry',\n] as const\n\nconst BAGEL_SPOTS = [\n  { left: '6%', top: '7%', width: '19%', height: '43%' },\n  { left: '25%', top: '7%', width: '25%', height: '43%' },\n  { left: '50%', top: '7%', width: '25%', height: '43%' },\n  { left: '75%', top: '7%', width: '25%', height: '43%' },\n  { left: '6%', top: '53%', width: '19%', height: '44%' },\n  { left: '25%', top: '53%', width: '25%', height: '44%' },\n  { left: '50%', top: '53%', width: '25%', height: '44%' },\n  { left: '75%', top: '53%', width: '25%', height: '44%' },\n] as const\n\n/** Inverted bagel signs: WHITE text on Bagelito BLUE plates, aligned to the printed labels\n * in /images/bagel-vitrina-photo.webp (800 × 300 photograph). These are\n * presentation only; product selection remains on the existing hotspots.\n */\nexport const BAGEL_SIGN_POSITIONS = [\n  { left: '6%', top: '32.5%', width: '21%', height: '12%' },\n  { left: '29%', top: '32.5%', width: '21%', height: '12%' },\n  { left: '52.5%', top: '32.5%', width: '21%', height: '12%' },\n  { left: '76%', top: '32.5%', width: '21.5%', height: '12%' },\n  { left: '5%', top: '77.5%', width: '22.5%', height: '12%' },\n  { left: '28.5%', top: '77.5%', width: '22%', height: '12%' },\n  { left: '52%', top: '77.5%', width: '22%', height: '12%' },\n  { left: '75.5%', top: '77.5%', width: '22%', height: '12%' },\n] as const\n\nconst GUIDED_DRAFT_KEY = 'bagelito.guided.product-draft.v1'\nconst GUIDED_DRAFT_TTL_MS = 24 * 60 * 60 * 1000\n\nfunction readSafeSelections(raw: unknown, allowedIds: readonly string[]) {\n  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}\n  const next: Record<string,number> = {}\n  for (const [id,value] of Object.entries(raw)) {\n    if (allowedIds.includes(id) && typeof value === 'number'\n      && Number.isInteger(value) && value > 0 && value <= 24) {\n      next[id] = value\n    }\n  }\n  return next\n}\n\nconst SCHMEAR_SPOTS = [\n  { left: '5%', top: '20%', width: '17%', height: '61%' },\n  { left: '23%', top: '20%', width: '17%', height: '61%' },\n  { left: '41%', top: '20%', width: '17%', height: '61%' },\n  { left: '59%', top: '20%', width: '17%', height: '61%' },\n  { left: '77%', top: '20%', width: '17%', height: '61%' },\n] as const\n\nexport function GuidedCommerce({ onExit, customerName, initialCategory = null, skipEntrance = false, liveWorld = false, onSceneChange, referenceMode = false, reviewOnly = false, exitLabel = 'Explorar tienda 3D' }: {\n  onExit: () => void\n  customerName?: string | null\n  initialCategory?: Category | null\n  skipEntrance?: boolean\n  liveWorld?: boolean\n  referenceMode?: boolean\n  reviewOnly?: boolean\n  exitLabel?: string\n  onSceneChange?: (scene: string) => void\n}) {\n  // A shopper coming from a physical 3D station enters the matching product\n  // category or the totem selector, without repeating the entry scene.\n  const [scene, setScene] = useState<Scene>(initialCategory === 'packs' ? 'pack-size'\n    : initialCategory === 'combos' ? 'combos'\n      : initialCategory === 'schmears' ? 'schmear-size'\n        : skipEntrance ? 'selector' : 'entrance')\n  const [menuOpen, setMenuOpen] = useState(false)\n  const [cartOpen, setCartOpen] = useState(false)\n  const [category, setCategory] = useState<Category | null>(initialCategory)\n  const [packFormat, setPackFormat] = useState<PackFormat>('grande')\n  const [packQty, setPackQty] = useState(6)\n  const [packMix, setPackMix] = useState<'mixed'|'single'>('mixed')\n  const [comboId, setComboId] = useState<string | null>(null)\n  const [schmearSize, setSchmearSize] = useState(120)\n  const [bagelMode, setBagelMode] = useState<BagelMode>('pack')\n  const [bagelCounts, setBagelCounts] = useState<Record<string, number>>({})\n  const [schmearCounts, setSchmearCounts] = useState<Record<string, number>>({})\n  const [receiptPulled, setReceiptPulled] = useState(false)\n  const [walletSaved, setWalletSaved] = useState(false)\n  const [paidOrderCode, setPaidOrderCode] = useState<string | null>(null)\n  const [paidAmountPen, setPaidAmountPen] = useState<number | null>(null)\n  const [paymentReviewMessage, setPaymentReviewMessage] = useState('')\n  const [checkoutCustomer, setCheckoutCustomer] = useState<CheckoutCustomer>({\n    customerName: customerName ?? '',\n    email: '',\n    whatsapp: '',\n    deliveryAddress: '',\n    district: '',\n    addressReference: '',\n    deliveryNotes: '',\n    termsAccepted: false,\n    termsVersion: CHECKOUT_LEGAL_VERSION,\n  })\n  const [paymentConfig, setPaymentConfig] = useState<CulqiPublicConfig | null>(null)\n  const [checkoutQuote, setCheckoutQuote] = useState<{status:string;checkoutAllowed:boolean;amountPen:number|null;reasons:string[]}|null>(null)\n  const [quoteLoading, setQuoteLoading] = useState(false)\n  const [draftLoaded, setDraftLoaded] = useState(false)\n  const qaRequested = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('qa') === '1'\n  const qaMode = !referenceMode && !reviewOnly && qaRequested && paymentConfig?.visualQaAllowed === true\n  const directCatalog = liveWorld || referenceMode\n  const receiptDrag = useRef({ startY: 0, offset: 0 })\n  const receiptPulledRef = useRef(false)\n  const sceneChangeCallback = useRef(onSceneChange)\n  const referenceRoot = useRef<HTMLDivElement>(null)\n  const MenuPanel = referenceMode ? 'section' : 'nav'\n  const CartPanel = referenceMode ? 'section' : 'aside'\n\n  // Only product IDs and quantities are saved for a short-lived in-tab draft.\n  // Never store contact details, 3DS tokens, payment data or confirmation state.\n  useEffect(() => {\n    if (reviewOnly) { setDraftLoaded(true); return }\n    try {\n      if (!initialCategory) {\n        const raw = window.sessionStorage.getItem(GUIDED_DRAFT_KEY)\n        if (raw) {\n          const draft = JSON.parse(raw) as Record<string,unknown>\n          const age = Date.now() - Number(draft.updatedAt)\n          if (!Number.isFinite(age) || age < 0 || age > GUIDED_DRAFT_TTL_MS\n            || !['packs','combos','schmears'].includes(String(draft.category))) {\n            window.sessionStorage.removeItem(GUIDED_DRAFT_KEY)\n          } else {\n            const restoredCategory = draft.category as Category\n            const safeBagels = readSafeSelections(draft.bagels, menu.bagels.map(item => item.id))\n            const safeSchmears = readSafeSelections(draft.schmears, menu.schmears.map(item => item.id))\n            const safeFormat: PackFormat = draft.format === 'mini' ? 'mini' : 'grande'\n            const validQuantities = safeFormat === 'mini' ? [6,12,24] : [6,12]\n            const safeQty = validQuantities.includes(Number(draft.packQty)) ? Number(draft.packQty) : 6\n            const safeMix = draft.packMix === 'single' ? 'single' : 'mixed'\n            const safeSize = [120,180,240].includes(Number(draft.schmearSize)) ? Number(draft.schmearSize) : 120\n            const restoredScene = String(draft.scene)\n            const allowedScenes = ['selector','pack-size','pack-qty','combos','schmear-size','bagels','schmears','cashier']\n            const requestedScene: Scene = allowedScenes.includes(restoredScene)\n              ? restoredScene as Scene\n              : restoredCategory === 'schmears' ? 'schmear-size' : 'pack-size'\n            const requiredBagels = restoredCategory === 'combos' ? 2 : safeQty\n            const bagelTotal = Object.values(safeBagels).reduce((sum,n)=>sum+n,0)\n            const schmearTotal = Object.values(safeSchmears).reduce((sum,n)=>sum+n,0)\n            const complete = restoredCategory === 'schmears'\n              ? schmearTotal === 1\n              : restoredCategory === 'packs'\n                ? bagelTotal === requiredBagels\n                : bagelTotal === 2 && schmearTotal === 1\n            setCategory(restoredCategory)\n            setPackFormat(safeForma"... 50607 more characters,
+    expected: /\{!reviewOnly && draftRecoveryMessage && <p role="status"/,
+    operator: 'match',
+    diff: 'simple'
+  }

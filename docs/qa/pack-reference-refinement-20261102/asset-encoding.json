@@ -1,0 +1,40 @@
+{
+  "source": "../generated_images/exec-f12b831b-639e-47f7-b546-846a680ac56d.png",
+  "sourceSHA256": "92f23dd8eded47b129ea759ffc0ab146d6e1e94b3ff1b6669fb890f3ec255cd6",
+  "sourceSize": [
+    1536,
+    1024
+  ],
+  "assets": [
+    {
+      "path": "public/images/rebuilt-pack-open-tray.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1664366,
+      "sha256": "1c7e0a10bdbffaa8276d6f65e62b7462b09505d466aad772b70800191ef69fd5",
+      "rgbaUnchangedAfterEncoding": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-open-tray-800.webp",
+      "size": [
+        800,
+        533
+      ],
+      "bytes": 431546,
+      "sha256": "e87f24b13673addc46bbff3e6004d9a5e852b3bf83c7f5b4f73970498bea9630",
+      "rgbaUnchangedAfterEncoding": true
+    },
+    {
+      "path": "public/images/rebuilt-pack-open-tray-480.webp",
+      "size": [
+        480,
+        320
+      ],
+      "bytes": 167572,
+      "sha256": "9cbc888da5235149f2acf1dc9aec1642002ac8c0d594eff35f397e35be6d9091",
+      "rgbaUnchangedAfterEncoding": true
+    }
+  ]
+}

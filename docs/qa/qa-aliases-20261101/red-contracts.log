@@ -1,0 +1,4 @@
+{"width":320,"probePass":true,"legacyPredicateErrors":3,"noZoomFailures":["native-card-photo","native-card-photo","native-card-photo","hero-and-vitrina-crops-required"],"blocked":0}
+{"width":390,"probePass":true,"legacyPredicateErrors":3,"noZoomFailures":["native-card-photo","native-card-photo","native-card-photo","hero-and-vitrina-crops-required"],"blocked":0}
+{"width":1280,"probePass":true,"legacyPredicateErrors":3,"noZoomFailures":["desktop-full-image"],"blocked":0}
+{"status":"red-reproduced","cases":3,"unexpectedFailures":0,"output":"/workspace/bagelito-qa-alias-evidence-20261101/red-contracts/red-contract-results.json"}

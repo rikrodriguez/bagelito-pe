@@ -1,0 +1,343 @@
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 build
+> vite build && tsc --noEmit && npm run qa:static && npm run qa:launch && npm run qa:movement
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 156 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/index-B-tAIt2X.css                  1.61 kB │ gzip:   0.73 kB
+.output/public/assets/ReferenceStorefront-CLcC-BAl.css  149.66 kB │ gzip:  23.39 kB
+.output/public/assets/legal-version-BguVS3S4.js           0.03 kB │ gzip:   0.05 kB
+.output/public/assets/playable-DhS8STPr.js                0.16 kB │ gzip:   0.15 kB
+.output/public/assets/routes-DhS8STPr.js                  0.16 kB │ gzip:   0.15 kB
+.output/public/assets/legal-CtHDKues.js                   4.59 kB │ gzip:   1.74 kB
+.output/public/assets/ReferenceStorefront-C0ukhZwE.js    91.99 kB │ gzip:  27.92 kB
+.output/public/assets/index-oQA8tsAk.js                 341.95 kB │ gzip: 110.55 kB
+
+✓ built in 444ms
+vite v8.3.5 building ssr environment for production...
+transforming...
+✓ 103 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/router-B-tAIt2X.css                       1.61 kB │ gzip:  0.73 kB
+node_modules/.nitro/vite/services/ssr/assets/ReferenceStorefront-CLcC-BAl.css        149.66 kB │ gzip: 23.39 kB
+node_modules/.nitro/vite/services/ssr/assets/start-CNYXEtd7.js                         0.19 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-BdWs1eHK.js         0.27 kB │ gzip:  0.19 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-ej48-G4H.js                        0.27 kB │ gzip:  0.19 kB
+node_modules/.nitro/vite/services/ssr/assets/playable-DXt3MxMF.js                      0.28 kB │ gzip:  0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-C3hhkEko.js    1.46 kB │ gzip:  0.51 kB
+node_modules/.nitro/vite/services/ssr/assets/legal-CK0P3m8y.js                         5.60 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/index.js                                        93.91 kB │ gzip: 23.50 kB
+node_modules/.nitro/vite/services/ssr/assets/router-BVouZZdK.js                       98.51 kB │ gzip: 25.10 kB
+node_modules/.nitro/vite/services/ssr/assets/ReferenceStorefront-BZ4Pa3OA.js         121.10 kB │ gzip: 28.32 kB
+
+✓ built in 324ms
+
+[nitro] ◐ Building [Nitro] (preset: node-server, compatibility: 2026-11-02)
+[nitro] ✔ Generated public .output/public
+vite v8.3.5 building nitro environment for production...
+`output.codeSplitting.groups[0].name` is a function. Set `output.codeSplitting.groups[0].debugName` so the bundler timing report can identify this group.
+transforming...
+✓ 233 modules transformed.
+ℹ Tracing dependencies:
+- tslib (2.8.1)
+✔ Traced 1 dependencies (4 files) in 54ms.
+ℹ Ensure your production environment matches the builder OS and architecture (linux-x64) to avoid native module issues.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/start-CNYXEtd7.mjs                    0.18 kB │ gzip:   0.16 kB
+.output/server/_ssr/empty-plugin-adapters-BdWs1eHK.mjs    0.27 kB │ gzip:   0.20 kB
+.output/server/_ssr/routes-ej48-G4H.mjs                   0.47 kB │ gzip:   0.31 kB
+.output/server/_ssr/playable-DXt3MxMF.mjs                 0.48 kB │ gzip:   0.31 kB
+.output/server/_chunks/ssr-renderer.mjs                   1.03 kB │ gzip:   0.52 kB
+.output/server/_libs/hookable.mjs                         1.21 kB │ gzip:   0.54 kB
+.output/server/_runtime.mjs                               1.55 kB │ gzip:   0.72 kB
+.output/server/_tanstack-start-manifest_v-C3hhkEko.mjs    1.58 kB │ gzip:   0.58 kB
+.output/server/_libs/ufo.mjs                              2.18 kB │ gzip:   0.70 kB
+.output/server/_ssr/legal-CK0P3m8y.mjs                    6.69 kB │ gzip:   2.03 kB
+.output/server/_libs/tanstack__history.mjs               12.36 kB │ gzip:   3.68 kB
+.output/server/_libs/supabase__functions-js.mjs          12.66 kB │ gzip:   3.48 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs     33.64 kB │ gzip:   9.00 kB
+.output/server/index.mjs                                 34.52 kB │ gzip:   8.51 kB
+.output/server/_libs/supabase__supabase-js.mjs           37.92 kB │ gzip:  11.18 kB
+.output/server/_libs/supabase__phoenix.mjs               50.57 kB │ gzip:  12.79 kB
+.output/server/_libs/h3+rou3+srvx.mjs                    74.14 kB │ gzip:  19.21 kB
+.output/server/_libs/supabase__realtime-js.mjs           82.31 kB │ gzip:  20.92 kB
+.output/server/_ssr/ssr.mjs                              90.87 kB │ gzip:  23.31 kB
+.output/server/_ssr/router-BVouZZdK.mjs                  97.47 kB │ gzip:  24.85 kB
+.output/server/_libs/supabase__postgrest-js.mjs         110.50 kB │ gzip:  23.22 kB
+.output/server/_libs/@supabase/storage-js+[...].mjs     127.56 kB │ gzip:  23.93 kB
+.output/server/_ssr/ReferenceStorefront-BZ4Pa3OA.mjs    133.72 kB │ gzip:  28.73 kB
+.output/server/_libs/supabase__auth-js.mjs              320.18 kB │ gzip:  64.83 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs   829.04 kB │ gzip: 176.46 kB
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/index.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/index.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/utils.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/utils.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/CatchBoundary.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/CatchBoundary.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/useNavigate.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/useNavigate.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/ClientOnly.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/ClientOnly.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/useRouter.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/useRouter.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/useMatch.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/useMatch.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/link.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/link.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/nonRouteComponentContext.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/nonRouteComponentContext.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/Matches.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/Matches.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/RouterProvider.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/RouterProvider.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/Match.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/Match.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/routerContext.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/routerContext.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/matchContext.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/matchContext.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/useLocation.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/useLocation.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/useBlocker.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/useBlocker.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/HeadContent.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/HeadContent.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/useRouterState.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/useRouterState.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/Transitioner.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/Transitioner.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "<verified-node-modules>/@tanstack/react-router/dist/esm/Asset.js" may not be preserved when bundling.
+   ╭─[ <verified-node-modules>/@tanstack/react-router/dist/esm/Asset.js:1:1 ]
+   │
+ 1 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+✓ built in 528ms
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:static
+> node scripts/qa-tour-static.cjs
+
+Bagelito structural QA: 11/11 passed
+  OK Exact seven guided physical stops
+  OK Eight genuine bagel product textures, no panorama
+  OK Five physical schmear pans and labels
+  OK Reference-aligned white plates with Bagelito blue lettering
+  OK No stuck motion in camera stops
+  OK Collision shields and correct strafing
+  OK 3D product tap enters matching guided category
+  OK 3D failures return the customer to functional guided shopping
+  OK Unfinished cart can resume without storing personal or payment data
+  OK Payment remains gated
+  OK Playwright tests cover 3D-to-commerce handoff
+This does not replace rendering, responsive screenshot comparison or Culqi sandbox tests.
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:launch
+> node scripts/qa-manual-order.cjs
+
+Bagelito manual launch fallback: 4/4 cases passed
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:movement
+> node --test tests/movement-input.test.cjs tests/movement-integration.test.cjs
+
+✔ a 480ms right hold survives keyup before the first rendered frame (2.127842ms)
+✔ sampling frames during a hold does not double-count time when keyup arrives (0.412709ms)
+✔ repeat keydown events preserve one continuous hold rather than adding impulses (0.25292ms)
+✔ releasing one alias or pointer source leaves another held source active (0.225878ms)
+✔ diagonal movement has unit length and opposing directions cancel over each interval (0.255623ms)
+✔ run transitions retain their own elapsed intervals and modifier aliases (0.263015ms)
+✔ reset discards held inputs and queued travel before a later fresh press (0.22703ms)
+✔ a long frame stalls at the configured travel budget rather than building an unbounded backlog (0.190696ms)
+✔ the input clock is monotonic and rejects non-finite timestamps or invalid budgets (0.575633ms)
+✔ CameraController consumes a complete between-frame press once and publishes the resulting position (32.65121ms)
+✔ collision integration approaches the display, slides sideways, and respects the room bounds (17.372586ms)
+✔ the guided controller discards queued and held free-roam movement (13.271332ms)
+✔ the keyboard handler ignores editable targets and still releases a key after focus changes (6.476147ms)
+✔ blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap (18.194449ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 513.069059
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

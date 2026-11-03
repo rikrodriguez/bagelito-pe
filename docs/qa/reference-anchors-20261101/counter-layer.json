@@ -1,0 +1,38 @@
+{
+  "selected": {
+    "path": "/workspace/generated_images/exec-0ed65123-8fb8-4dc5-8b57-653447b7c61e.png",
+    "sha256": "4be0f7a3f6d9659d015abb048555363eab18269fc1a1bc7e24656fe9cc9019bf",
+    "bytes": 2065461,
+    "dimensions": [2020, 778],
+    "mode": "RGBA",
+    "alphaGreaterThan8Bounds": [9, 169, 2014, 662],
+    "alphaGreaterThan128Bounds": [22, 171, 2013, 659],
+    "alphaNonzeroBounds": [0, 0, 2020, 778],
+    "provenance": "New reference-guided native imagegen render; not an original reference crop. User reference supplied as spatial/camera/material input.",
+    "medium": "reference-guided conceptual food/counter art, not verified SKU photography, recipe or inventory",
+    "nativeText": false,
+    "foodTrays": {"bagels": 8, "schmears": 5},
+    "observedPerspective": "Low frontal eye-level, shallow steel trays and two horizontal shelves, realistic glass rails; materially closer than prior top-down food art",
+    "limits": [
+      "Visible case split is approximately57-58percent bagels and42-43percent schmears, not exactly54/46",
+      "Strong subject is493px tall over2005px wide; rendered at1440px whole-image width it is about351px tall, not exactly300",
+      "Faint alpha<=8 wisps extend beyond the strong visible subject; do not call all padding zero-alpha",
+      "Visual flavor concepts are not verified recipes; bagel roundness/crust details differ from original reference"
+    ],
+    "approximatePlacardCentersManualPixels": {
+      "plain": [216, 361], "everything": [481, 361], "sesame": [747, 361], "classic-onion": [1014, 361],
+      "jalapeno-cheddar": [192, 567], "cheddar": [480, 567], "cinnamon-raisin": [746, 567], "blueberry": [1021, 567],
+      "original": [1328, 414], "aji": [1575, 414], "herbs": [1842, 414], "honey": [1373, 585], "strawberry": [1748, 585]
+    }
+  },
+  "rejectedNativeRefinement": {
+    "path": "/workspace/generated_images/exec-4faf8280-fad3-403a-b7fc-701baf7333e8.png",
+    "sha256": "b10db62a8910c8c429cc549b05ee75a65e754b2aef45138e0575a655f1dbc3d0",
+    "reason": "Geometry request did not achieve54/46; lower last bagel became Everything-like seeded concept and lower third blueberry-like. Do not substitute for selected first art.",
+    "dimensions": [2020, 778],
+    "alphaGreaterThan8Bounds": [23, 178, 2001, 641]
+  },
+  "repositoryEdits": false,
+  "paidExternalTools": false,
+  "nativeGenerationCalls": 2
+}

@@ -1,0 +1,1895 @@
+{
+  "canonical_manifest_sha256": "710fbebce2a60627aa45e729e13f63051861243d0d1e771f6686216ab52426be",
+  "source_application": "84425e3a09ab9a8f27d63af219d50b4d34e789ca",
+  "package_count": 197,
+  "symlink_count": 22,
+  "direct_versions": {
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "@react-three/rapier": "2.2.0",
+    "@supabase/supabase-js": "2.118.0",
+    "@tanstack/react-router": "1.170.46",
+    "@tanstack/react-start": "1.169.4",
+    "howler": "2.2.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.186.1",
+    "zustand": "5.0.16",
+    "nitro": "3.0.260903-beta",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "5.9.3",
+    "vite": "8.3.5"
+  },
+  "all_tarball_sha512_verified_before_extraction": true,
+  "no_resolution_or_install_scripts": true,
+  "official_registry_only": "https://registry.npmjs.org",
+  "archive_handling": "One validated outer prefix stripped, equivalent to npm; package/ or known DefinitelyTyped name/name-vMajor.Minor prefix. Tar paths, metadata name/version, regular file types and manifest-only links were verified.",
+  "packages": [
+    {
+      "path": "node_modules/@babel/code-frame",
+      "version": "7.29.7",
+      "sha256": "fa8b176fa0b5d1d72b41ad33443f1f4f75933157a45010dffb51719f40c19c67",
+      "bytes": 10384,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/compat-data",
+      "version": "7.29.7",
+      "sha256": "0cf63b5ed704654bdc7574be035883b2eb3f8872c795a6b8dbb690cb7a3d54b9",
+      "bytes": 6658,
+      "validated_tar_member_count": 15,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/core",
+      "version": "7.29.7",
+      "sha256": "46dd458b3d2bc29daa0e9e01f13b399ab544a8013f27ac6c51b56b831c8a0ed3",
+      "bytes": 192830,
+      "validated_tar_member_count": 125,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/generator",
+      "version": "7.29.12",
+      "sha256": "932925fc129f79b6df51e758d67b8d250b854af93ea8f09f745f1893ebd5cd5e",
+      "bytes": 114192,
+      "validated_tar_member_count": 45,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-compilation-targets",
+      "version": "7.29.7",
+      "sha256": "5b5446f3d32b10ba38cb308af5f65e76afcddaacd7b817e71055a6de6ab934e0",
+      "bytes": 14864,
+      "validated_tar_member_count": 17,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-globals",
+      "version": "7.29.7",
+      "sha256": "94fb962c489aae2c4e5581f1494721083dc76dddd7c703314dd4d7ff965d2a3f",
+      "bytes": 6839,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-module-imports",
+      "version": "7.29.7",
+      "sha256": "4bdf46cf597b875ce16770f151159ca34f96c20ba3c112dc8d7f6c6d6cce770c",
+      "bytes": 14064,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-module-transforms",
+      "version": "7.29.7",
+      "sha256": "dbb3b9b10b0a2828f5af58a6317685b1a150464c6bd54995069c526aba45e6e4",
+      "bytes": 37783,
+      "validated_tar_member_count": 17,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-string-parser",
+      "version": "7.29.11",
+      "sha256": "b5981604e0bed54da225c594dcf50bc3dd97ef2c5749361f4d01c3608bc50f46",
+      "bytes": 8410,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-validator-identifier",
+      "version": "7.29.7",
+      "sha256": "7a31904bc45f1bb232d5e5dd797d12296f4a27fb4bf0f6d517827700f997dc1f",
+      "bytes": 14245,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helper-validator-option",
+      "version": "7.29.7",
+      "sha256": "e32d8ff2cc0455c5210f92f0844d2cb6e1d61b83ee17d7b328fe410f9021e4cd",
+      "bytes": 4384,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/helpers",
+      "version": "7.29.10",
+      "sha256": "57d0c44bfe794c72c97e25891dc678cce5d4556359459a6c5d310b35c3791c25",
+      "bytes": 188854,
+      "validated_tar_member_count": 251,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/parser",
+      "version": "7.29.12",
+      "sha256": "4f84186c5cff1f7fe6909f6daa81fe17848526eab62ea0e21b7c9864ccbe8193",
+      "bytes": 445620,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/runtime",
+      "version": "7.29.10",
+      "sha256": "178671999a0973c5165e5cec57f49ff4d9dd055523962763a771af6bc7e439b1",
+      "bytes": 55269,
+      "validated_tar_member_count": 249,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/template",
+      "version": "7.29.7",
+      "sha256": "5e0ee28d5536e986cf5ff2da0f096fb84810d9136c2a64c6c78a6b495a0e7764",
+      "bytes": 18157,
+      "validated_tar_member_count": 19,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/traverse",
+      "version": "7.29.12",
+      "sha256": "81c633cffbe5178937537afe5a4cf659e2b0127ec7e7e7ca35bb21927a6dc299",
+      "bytes": 168679,
+      "validated_tar_member_count": 64,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@babel/types",
+      "version": "7.29.11",
+      "sha256": "8b5f60bb490c0f306e9c01a51e1603442d04c666bb500e087e70dcfb1fbb0296",
+      "bytes": 301906,
+      "validated_tar_member_count": 178,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@dimforge/rapier3d-compat",
+      "version": "0.19.2",
+      "sha256": "a4c503a6d39189df4531ad715d8074fbb2faa69bd3e9f68c676d5343e7d68de9",
+      "bytes": 2601878,
+      "validated_tar_member_count": 50,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@jridgewell/gen-mapping",
+      "version": "0.3.13",
+      "sha256": "bc16f658c1f6d63e0c8738ab881d03f49f1955d8f853cdcb8f7d315cf62f0082",
+      "bytes": 17972,
+      "validated_tar_member_count": 31,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@jridgewell/remapping",
+      "version": "2.3.5",
+      "sha256": "70b16782a39ad16672e47c33473559a25bff9640214df91cb9dd153005d71a02",
+      "bytes": 14624,
+      "validated_tar_member_count": 32,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@jridgewell/resolve-uri",
+      "version": "3.1.2",
+      "sha256": "db52f9f62558baab13353dd39e3200750fc33e6a129a575b46226f493776e230",
+      "bytes": 9622,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "sha256": "f30a35f6af8c347d01b8ff2f8662272f7d986cf21b916704d86c249a90b97e25",
+      "bytes": 18401,
+      "validated_tar_member_count": 32,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "sha256": "c64c71a119630d5abe8246889edf334b2ca9ddad094e20d623332956b1453ccf",
+      "bytes": 30747,
+      "validated_tar_member_count": 52,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@mediapipe/tasks-vision",
+      "version": "0.10.17",
+      "sha256": "d3dd0759295f1adcf5455f22aa652c58b8c1d537c0d14c8db7df78646011d523",
+      "bytes": 6134498,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@monogrid/gainmap-js",
+      "version": "3.7.2",
+      "sha256": "929aab41f02151ab3ee905341558634c6636d7ca4a4fb2940334ba7d3bf01e96",
+      "bytes": 208594,
+      "validated_tar_member_count": 114,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@oozcitak/dom",
+      "version": "2.0.2",
+      "sha256": "48b0ed28e0084845545f4036402d9bd33a3319f568bf632bda8401f8a9458fa2",
+      "bytes": 196569,
+      "validated_tar_member_count": 267,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@oozcitak/infra",
+      "version": "2.0.2",
+      "sha256": "43a49751780063619d67a3704f947d34a5a40181e6f08a6bb2a6995de4df4372",
+      "bytes": 20372,
+      "validated_tar_member_count": 42,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@oozcitak/url",
+      "version": "3.0.0",
+      "sha256": "b4d9b441f573592e86d3c6e063c9aadc00b8da7840d9e60829e634a72af4b974",
+      "bytes": 35937,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@oozcitak/util",
+      "version": "10.0.0",
+      "sha256": "b732e764e87db4cbc90123051220521ffd675d0ebbbbb79ff642dd303b94fe3b",
+      "bytes": 11647,
+      "validated_tar_member_count": 21,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@oxc-project/types",
+      "version": "0.156.0",
+      "sha256": "9ea3e4ff27f4c9c7bc9b5a8feb7b7d4f2181dd2b1d90067d52f267b6c5897dbc",
+      "bytes": 7629,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@react-three/drei",
+      "version": "10.7.9",
+      "sha256": "02316520c703a4f5513b6c1478602604ed2af905342af7ce1e8f3109a0ab2b0b",
+      "bytes": 473422,
+      "validated_tar_member_count": 483,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@react-three/fiber",
+      "version": "9.8.2",
+      "sha256": "db98d14ff474684e018c6103437b85ba919b83b24c5a1fbf1f0deb58dd96d465",
+      "bytes": 561970,
+      "validated_tar_member_count": 43,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@react-three/rapier",
+      "version": "2.2.0",
+      "sha256": "ee89687626650cc3a3b588a35d7f8ff3ec97d0f1d0ea977af8e60c68426bfa02",
+      "bytes": 63033,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.16",
+      "sha256": "8bcdc0b4e718ad1febfc845775dbd1c2217e875fbcd632eb1b7ea658bf303e7c",
+      "bytes": 8821456,
+      "validated_tar_member_count": 3,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@rolldown/pluginutils",
+      "version": "1.0.1",
+      "sha256": "13fcb3423d37f95a8e861c172e4b62fd24f22412be4e942087367242476e3400",
+      "bytes": 6681,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/auth-js",
+      "version": "2.118.0",
+      "sha256": "97fe38b72ceb12d1bb2b2f504887dfbd88acf0ba6c5259e0ad9b6c2160fb550c",
+      "bytes": 501827,
+      "validated_tar_member_count": 197,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/functions-js",
+      "version": "2.118.0",
+      "sha256": "88b5de0665f7e5e42dae1a8d5c978f3c8f7d1a3c05ff3d20b27db0015683b4a5",
+      "bytes": 70927,
+      "validated_tar_member_count": 53,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/phoenix",
+      "version": "0.4.5",
+      "sha256": "a0e7c10c6f874bcf147755687515cf72f79edd332f003baa9eaabe9f817ed334",
+      "bytes": 163069,
+      "validated_tar_member_count": 49,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/postgrest-js",
+      "version": "2.118.0",
+      "sha256": "7bae0aaa9bfdde3ff0172d6d487d436b7623b8986795aad1e5daffc7d41e13f6",
+      "bytes": 308861,
+      "validated_tar_member_count": 31,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/realtime-js",
+      "version": "2.118.0",
+      "sha256": "546330c08ab4948e13d50cc3cab2043bd7ba4412c25d6c6fe39a4b5bdf967699",
+      "bytes": 129518,
+      "validated_tar_member_count": 143,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/storage-js",
+      "version": "2.118.0",
+      "sha256": "129dca762db6c961de05a7695378427616e6bab271c35835c3ae19b086803475",
+      "bytes": 214494,
+      "validated_tar_member_count": 33,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@supabase/supabase-js",
+      "version": "2.118.0",
+      "sha256": "f2d4f13a8d7a96bdbf338b6f6887a475d1bbca438c6668172b867a94e3d454cf",
+      "bytes": 172030,
+      "validated_tar_member_count": 45,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/history",
+      "version": "1.162.5",
+      "sha256": "4976509ecbfa216337dc5b9bcbd05fe0e1c2fd6acbc9b25709495cac7cc1efc4",
+      "bytes": 19072,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/react-router",
+      "version": "1.170.46",
+      "sha256": "149d12e41e696f549f7380481bcace47d2b069623726737c62b87d2ba7d31895",
+      "bytes": 209843,
+      "validated_tar_member_count": 359,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/react-start",
+      "version": "1.169.4",
+      "sha256": "3eae2a156d1bd9bee2a4e4e89f858776cdbdf82376ca8908a4da9f4082997029",
+      "bytes": 31972,
+      "validated_tar_member_count": 92,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/react-start-client",
+      "version": "1.168.44",
+      "sha256": "3c9f9aa467ffcaef5cb6a89a222cc92d2cf94b00b871e7c248249cd2743ed43a",
+      "bytes": 24041,
+      "validated_tar_member_count": 55,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/react-start-rsc",
+      "version": "0.1.65",
+      "sha256": "cdf712f3094add2c8a648464cd8b95b18488281f1a2185e55e5502774c59a5b2",
+      "bytes": 74217,
+      "validated_tar_member_count": 118,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/react-start-server",
+      "version": "1.167.52",
+      "sha256": "25a37a28c9eec10f807420a7dd2192ecb9a7abefea764dd590d0466f5eb72a1b",
+      "bytes": 3549,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/react-store",
+      "version": "0.11.2",
+      "sha256": "f8291546f1e0e491d8443685f75c9d28493d95747420b7e8880d88c7dd64e342",
+      "bytes": 11268,
+      "validated_tar_member_count": 56,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/router-core",
+      "version": "1.171.39",
+      "sha256": "0c9345f2830bda69901d464a293d101f10635d3c935f7f1e310681b71bd2e962",
+      "bytes": 683353,
+      "validated_tar_member_count": 460,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/router-generator",
+      "version": "1.167.46",
+      "sha256": "8642b39e5a6d649bcc148e9d937099da50dbf8bfff29ac9cabf8cdc44571318e",
+      "bytes": 208203,
+      "validated_tar_member_count": 101,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/router-plugin",
+      "version": "1.168.48",
+      "sha256": "11cf611e62d641e64f927871d60dde2c7bf066872e26f8fae18fdd2d85a03923",
+      "bytes": 136403,
+      "validated_tar_member_count": 178,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/router-utils",
+      "version": "1.162.4",
+      "sha256": "8d3dc8b85d2a54c5a79ff9b6c31dd40a1d4e0a03e0bb7af2e73eb1afe6dbbe21",
+      "bytes": 42287,
+      "validated_tar_member_count": 43,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/start-client-core",
+      "version": "1.170.39",
+      "sha256": "ec58cba1ba5f51b3e2c02c7438d3830d0039f9bdcb0fc357cdfd95d64cb8ba6f",
+      "bytes": 119234,
+      "validated_tar_member_count": 152,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/start-fn-stubs",
+      "version": "1.162.0",
+      "sha256": "6e0dc7cb25de9b184d917c212c17a3348a6ebba644abff48a9540b60995e8f03",
+      "bytes": 3543,
+      "validated_tar_member_count": 13,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/start-plugin-core",
+      "version": "1.171.55",
+      "sha256": "11bef0af0f77e6580bf8b256b3448f06caf1efb37e61f6afa6f3fb78c5af99c2",
+      "bytes": 533184,
+      "validated_tar_member_count": 350,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/start-server-core",
+      "version": "1.169.45",
+      "sha256": "73bf2d751357587139efe6ee6465f2763b3e5155e222e6ee98c0fb9efe12683d",
+      "bytes": 139442,
+      "validated_tar_member_count": 85,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/start-storage-context",
+      "version": "1.167.41",
+      "sha256": "0ce72cf5874534100b8f4e8dde54c43d3c2da073b57200e8a2dc8c8c2bbaa4ab",
+      "bytes": 3834,
+      "validated_tar_member_count": 10,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/store",
+      "version": "0.11.2",
+      "sha256": "4472c964bf8a872bfe518f647a425e5ea1cef1eb88402a30f77a229f018aaa14",
+      "bytes": 21203,
+      "validated_tar_member_count": 39,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tanstack/virtual-file-routes",
+      "version": "1.162.0",
+      "sha256": "774fcd7a7db206ada894086fc9b7d7efbe5ee3b38ad85a59102c0245ad0a8c3e",
+      "bytes": 6751,
+      "validated_tar_member_count": 25,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@tweenjs/tween.js",
+      "version": "23.1.3",
+      "sha256": "e92ea848c92bd29239efd2689a018c0ef531391ce0041a1787a964314fd4eb8a",
+      "bytes": 29052,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/draco3d",
+      "version": "1.4.10",
+      "sha256": "3e8d9126a52a8db30ab9751cfe4cf5b5d343a22edc27636264e2e1f692246cf4",
+      "bytes": 3201,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "draco3d",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/node",
+      "version": "24.19.2",
+      "sha256": "e01cc90bdafb14295f15a8dfbcddd37834250e9dfab4763ff686fb751915d9ce",
+      "bytes": 474850,
+      "validated_tar_member_count": 88,
+      "validated_archive_prefix": "node v24.19",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/offscreencanvas",
+      "version": "2019.7.3",
+      "sha256": "dd3209c9a4c3346bd9774768c030bb8c0dcc91b7d70f9d45304b20eac4769ed4",
+      "bytes": 2690,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "offscreencanvas",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/react",
+      "version": "19.3.0",
+      "sha256": "ffa77ffdbdc82e5f67a0fd74d750990375a7dfd8685ec7f10a27c0db128f7766",
+      "bytes": 77822,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "react",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/react-dom",
+      "version": "19.3.0",
+      "sha256": "0782e1cd4af4a6a030843235a48e55dc690c36f9428b0b672dc53350806dcf21",
+      "bytes": 8185,
+      "validated_tar_member_count": 19,
+      "validated_archive_prefix": "react-dom",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/react-reconciler",
+      "version": "0.28.9",
+      "sha256": "032acc1deb78689706448688863c34920c06d9b954e1d5683017aab1da5a984d",
+      "bytes": 12344,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "react-reconciler",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/stats.js",
+      "version": "0.17.4",
+      "sha256": "34719404e92bb0efd1f021ab175feaca2bba41ba5b3d4eefca7fa76351f46ec8",
+      "bytes": 1913,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "stats.js",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/three",
+      "version": "0.187.0",
+      "sha256": "1abfeed692dcb6651ed4c52e1fb9e9cc9192a2deb33319673a6e011c7627f7c9",
+      "bytes": 380837,
+      "validated_tar_member_count": 1089,
+      "validated_archive_prefix": "three",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/three/node_modules/@dimforge/rapier3d-compat",
+      "version": "0.12.0",
+      "sha256": "8559163a335c12388b02e61a25d588ff5b98da45f9336c59664dc919af086b26",
+      "bytes": 2348060,
+      "validated_tar_member_count": 51,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@types/webxr",
+      "version": "0.5.24",
+      "sha256": "3c846cf2797369ab971b6c89c9eb3089efb967261536c0f9bf31d6c250c9487a",
+      "bytes": 11239,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "webxr",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@use-gesture/core",
+      "version": "10.3.1",
+      "sha256": "f14abf878eee1a8decc278dbb5bdac8ddc136caf02d3d08b8705fe834c155c8a",
+      "bytes": 68105,
+      "validated_tar_member_count": 92,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@use-gesture/react",
+      "version": "10.3.1",
+      "sha256": "c4818fe72f725a2916acb2102bbd9fa5511cdd3fbede0cde426dbbe57f74f911",
+      "bytes": 8876,
+      "validated_tar_member_count": 32,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/@vitejs/plugin-react",
+      "version": "6.1.2",
+      "sha256": "9f1049a369ebeb236b436a75843d80d4fbdcf74b17362bf452fbfe586753e0c3",
+      "bytes": 14558,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/ansis",
+      "version": "4.4.0",
+      "sha256": "e2c445344bc5993059a427e88ccae75685d0956c3f6bc6c08db1f53a6629608b",
+      "bytes": 3496,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/argparse",
+      "version": "2.0.1",
+      "sha256": "27903847fc8215e6fc5a33e81490f7baba66403f8aade33771b988cca097728c",
+      "bytes": 39740,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/babel-dead-code-elimination",
+      "version": "1.0.12",
+      "sha256": "1115dd49a50aec8ddb3045f67dc4ccf53e5cbc2c118dde18ed702a96dc1ec7c0",
+      "bytes": 6384,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/base64-js",
+      "version": "1.5.1",
+      "sha256": "b1b7a945b52685269083425216d6597e33d97bf21699d656e92fdb3eb5210a85",
+      "bytes": 4109,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/baseline-browser-mapping",
+      "version": "2.11.34",
+      "sha256": "f2cbca0606932e5aaf78e61bc04643e4c81ca4d77633d7a8126a26666e007cfa",
+      "bytes": 41853,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/bidi-js",
+      "version": "1.1.0",
+      "sha256": "8a89fce4e2b00c5141929ecde8336e955901e8fa2c7f01c6b5c9732639dd4175",
+      "bytes": 47353,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/browserslist",
+      "version": "4.29.5",
+      "sha256": "945a7d11e915b66fb82c609f8395df0ac74a9374aabdd0d8ae585ef184717e90",
+      "bytes": 18804,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/buffer",
+      "version": "6.0.3",
+      "sha256": "555b6f49224afcf6b2c5a9aea7cd34a7f443f395b10532bc5580022d57aa51f5",
+      "bytes": 23108,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/camera-controls",
+      "version": "3.1.2",
+      "sha256": "489d6e0c991108023d13fa169be53a932a682cc88c4e3b33a30ec494a55d7767",
+      "bytes": 71329,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/caniuse-lite",
+      "version": "1.0.30001820",
+      "sha256": "468d01b72a44e2155618ba7be494060f64fc9ad6e0417501344158acbabde381",
+      "bytes": 349328,
+      "validated_tar_member_count": 841,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/chokidar",
+      "version": "5.0.0",
+      "sha256": "45d07ea7d57ee482c733ab3c547cc49edc1423bc231507e41ff99d2711f7f5e3",
+      "bytes": 23399,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/consola",
+      "version": "3.4.2",
+      "sha256": "da9fde00a7cf8bc01706872b4b36e4791b6be5e5a3330b539c702aaf51fb0e71",
+      "bytes": 83357,
+      "validated_tar_member_count": 39,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/convert-source-map",
+      "version": "2.0.0",
+      "sha256": "17f7253ec7e4e09f68371192fded2b5241a5cf85e610e5059b1d49e878fe1898",
+      "bytes": 4952,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/cookie-es",
+      "version": "3.1.1",
+      "sha256": "418c99189a7b46265f08ae064f6ac2b29da551ef2d243510c8848e1cea659e68",
+      "bytes": 8855,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/cross-env",
+      "version": "7.0.3",
+      "sha256": "d44ad3b6925ff024f64fc4eec88a7da8b8291dd66de858c34866be611ad3c5de",
+      "bytes": 9301,
+      "validated_tar_member_count": 10,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/cross-spawn",
+      "version": "7.0.6",
+      "sha256": "188c320cdc413adfec03098fda72af7a9b02152ba13d3a8f87f172d93ced38ea",
+      "bytes": 6255,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/crossws",
+      "version": "0.4.17",
+      "sha256": "380e5b836c5de04c04da711717a00be1e0c51c88bdb0ed9233e058c0e5ba2719",
+      "bytes": 61590,
+      "validated_tar_member_count": 76,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/csstype",
+      "version": "3.2.3",
+      "sha256": "f3501f8ee1c73f7568fecb22c11231162c0467e59262461da5579519307427a3",
+      "bytes": 138324,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/db0",
+      "version": "0.4.2",
+      "sha256": "61de814782208cd6ea8940ca7d96491029a6ed60d5b3756f95a1cffa9001ceb2",
+      "bytes": 24296,
+      "validated_tar_member_count": 61,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/debug",
+      "version": "4.4.3",
+      "sha256": "89c1ac9c946ee8905a875837114528e97eeae35e03be3190584b2216af43e4a7",
+      "bytes": 13449,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/detect-gpu",
+      "version": "5.0.70",
+      "sha256": "edbfe85e6606ea24fc493476c248d8161a67a31fe88e701447dc964fa936d4ec",
+      "bytes": 126429,
+      "validated_tar_member_count": 38,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/detect-libc",
+      "version": "2.1.2",
+      "sha256": "270dec0fc06cff86481da8af2dd8f18dee6b602790b14ef0e1c2c18d7da39427",
+      "bytes": 7776,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/diff",
+      "version": "9.0.0",
+      "sha256": "b898bf23c95594607576e25ddd4013f1d51ed0e862aaf0732815830c87b3b58f",
+      "bytes": 152500,
+      "validated_tar_member_count": 136,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/draco3d",
+      "version": "1.5.9",
+      "sha256": "05d6f4d7ce2a2807f1d41d60e19001c179aaff21c71d66e469f8f96ac259721f",
+      "bytes": 305069,
+      "validated_tar_member_count": 12,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/electron-to-chromium",
+      "version": "1.5.472",
+      "sha256": "dc38794bb6e9641d829393c58f681a5fe64a0d68efbd5e2676a9cd005536c129",
+      "bytes": 36324,
+      "validated_tar_member_count": 12,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/env-runner",
+      "version": "0.2.3",
+      "sha256": "23c60ec4dbba280348b9bf7c71e02729b0f3f6ad41a409d000336d3e0082f01e",
+      "bytes": 85892,
+      "validated_tar_member_count": 61,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/escalade",
+      "version": "3.2.0",
+      "sha256": "ba2755afc0e6c6705326711fd218ebe107a527eccbd6485155fde98ed000bee7",
+      "bytes": 4483,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/exsolve",
+      "version": "1.2.0",
+      "sha256": "03c4704f07456b3d53b5b8757348efc547c14ade17819a4a3515644c40ef198a",
+      "bytes": 15975,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/fdir",
+      "version": "6.5.0",
+      "sha256": "241ddcd9f31e2a1fca405326017dbb8333ce174198e887f0f96387c29f0d365e",
+      "bytes": 9742,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/fetchdts",
+      "version": "0.2.0",
+      "sha256": "2cf63efbbc254a2a7b7173e57179e9f351a2140d19d84e479bc751e48eff8793",
+      "bytes": 40840,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/fflate",
+      "version": "0.8.3",
+      "sha256": "38c2cd824402407b43153c782274aec2ea83ea688e4aa0b743c5f2c305857d92",
+      "bytes": 173034,
+      "validated_tar_member_count": 17,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/gensync",
+      "version": "1.0.0-beta.2",
+      "sha256": "df9f92ef26a35d4f92cb8a73415dfea8dadaf294a03e60e4d176df82f38d17c9",
+      "bytes": 7442,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/glsl-noise",
+      "version": "0.0.0",
+      "sha256": "854201bdb89876874823514ba294b0ac1457d64470a289830a4af51558598d20",
+      "bytes": 6997,
+      "validated_tar_member_count": 12,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/h3",
+      "version": "2.0.8",
+      "sha256": "c7057a8d25d926432810454476d37c9f0c9ad5da94d159965b150b600c746f56",
+      "bytes": 123897,
+      "validated_tar_member_count": 40,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/h3/node_modules/rou3",
+      "version": "1.0.0",
+      "sha256": "25aec0fa32fbfbb2bbaf801c1db3886bd97389f59344cbcd798a73712cee28e1",
+      "bytes": 48565,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/hls.js",
+      "version": "1.7.4",
+      "sha256": "e4ab3d5d13f7cca9ef241d098f39686e19fd451831ba07dc9943482fd5ff75c7",
+      "bytes": 8072437,
+      "validated_tar_member_count": 166,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/hookable",
+      "version": "6.1.2",
+      "sha256": "24cad484d81ea7ccc280f6796a95b2f0ce2789243414dc54d5397b6324497e14",
+      "bytes": 7654,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/howler",
+      "version": "2.2.4",
+      "sha256": "be9d8d09345954e246e932a057de0c9724475c8b58120dc690644432a0ba485f",
+      "bytes": 72709,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/httpxy",
+      "version": "0.5.6",
+      "sha256": "45a717be803ef283a1deb0c8af12cd9f0582488579a86f48e77451fd24693710",
+      "bytes": 18222,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/iceberg-js",
+      "version": "0.8.1",
+      "sha256": "a243d02997e6d2f46ba981093d9df44dc99aae6403ddade2dbea96a9e2546781",
+      "bytes": 35844,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/ieee754",
+      "version": "1.2.1",
+      "sha256": "8ef14b9b397e339db89db97881fb714f49319d8f0eb1275901f45567b28f9dac",
+      "bytes": 2886,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/immediate",
+      "version": "3.0.6",
+      "sha256": "98c792f39650b00818c05dcc407902034dc4092f368596b37658d44f28739d11",
+      "bytes": 4905,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/is-promise",
+      "version": "2.2.2",
+      "sha256": "355c65185f8538cf595ce2a8d7c710dc33b01cbe299e646a2d236a1e569c29fa",
+      "bytes": 1549,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/isbot",
+      "version": "5.2.2",
+      "sha256": "5782d736fa7c2a837eeb5f015fd48470e77ac136fb0e7425059b11e1a5dca883",
+      "bytes": 11589,
+      "validated_tar_member_count": 10,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/isexe",
+      "version": "2.0.0",
+      "sha256": "47cfe872e088e28c53b736fef305324b57cc1cfc9f72a9b0f769f92731cb8359",
+      "bytes": 3756,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/its-fine",
+      "version": "2.1.1",
+      "sha256": "c178dee7b09aad3b44cd5ebd97a9c1afe03be8379862f70c83b90b4de2f9e885",
+      "bytes": 14357,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/jiti",
+      "version": "2.7.0",
+      "sha256": "8dd0d365fb49c0e7cc42d6a00df6fb2da9056fc24492094346fc34ecdbcf28ca",
+      "bytes": 427320,
+      "validated_tar_member_count": 16,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/js-tokens",
+      "version": "4.0.0",
+      "sha256": "d884c7a2d8adb5568c1272d92b4f9c62707f4226cf9e7b22e7b957c7361e3c53",
+      "bytes": 6542,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/js-yaml",
+      "version": "4.3.2",
+      "sha256": "c7b241d2224cf9253ff53854aa4cee87da91bd889c4d0fa3a3ffd1041ecee5b1",
+      "bytes": 227545,
+      "validated_tar_member_count": 36,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/jsesc",
+      "version": "3.1.0",
+      "sha256": "0c712225ccca9a70bf83f2ac2f52a268c858c7df3b3df196f1623239d80d3c09",
+      "bytes": 10038,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/json5",
+      "version": "2.2.3",
+      "sha256": "08afb33db600d11fc89b98fac4054f19d5d3e0fe527063116150e1ecc2d2377b",
+      "bytes": 50318,
+      "validated_tar_member_count": 20,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/lie",
+      "version": "3.3.0",
+      "sha256": "2db8461cd4a10e2fc3588c8c55da34d33465ff81cc19c72416bbcaec7ee6a36e",
+      "bytes": 8877,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/lightningcss",
+      "version": "1.33.0",
+      "sha256": "d492f4278bb7234ceaa3c2638ef944e108ea17a23db7c6a2367c14fa725598cf",
+      "bytes": 87655,
+      "validated_tar_member_count": 14,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "sha256": "fd485dfd57082c4ef864dd867fa87fd8e1a9b5d58ee85c2b76e28e42c8f3e1d3",
+      "bytes": 3855795,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/lru-cache",
+      "version": "5.1.1",
+      "sha256": "b11e78819544a6606e3317647a5593c102ea38d3c5afae62cd63f9c2c369485a",
+      "bytes": 5824,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/maath",
+      "version": "0.10.8",
+      "sha256": "18f03b8de32be2d4f3c180a49671196155bf01ffd8481b089240cb34b0c2017c",
+      "bytes": 38594,
+      "validated_tar_member_count": 119,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/magic-string",
+      "version": "0.30.21",
+      "sha256": "fa49762567dca44e8ccf327f365d250e04c482bf7a4ed0ae7d03659b09ac656f",
+      "bytes": 89981,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/meshline",
+      "version": "3.3.1",
+      "sha256": "65543d347be8c5cff2533aa91fabb8f809ff68bed93a0770ba72f3a66462c2bf",
+      "bytes": 8995,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/meshoptimizer",
+      "version": "1.1.1",
+      "sha256": "c23bef9ef57613c8a4e85d446c738154e52cac38e1a017dfb6ed33cfffa43593",
+      "bytes": 72797,
+      "validated_tar_member_count": 21,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/ms",
+      "version": "2.1.3",
+      "sha256": "f6616e15e530ed552f9daa2d3ce71963947c6bc7c98c9b64fd3e673fd02622c6",
+      "bytes": 2967,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/nanoid",
+      "version": "3.3.20",
+      "sha256": "5ae134779aa22c2c04b691d361bc1f3c004c354e81c7ee166ea1c6e848eedc4f",
+      "bytes": 5721,
+      "validated_tar_member_count": 26,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/nf3",
+      "version": "0.3.24",
+      "sha256": "636d1f3c50cd6f7f42baf0b40db09fbb965f1b21c74e4387cbe6216b93014ef2",
+      "bytes": 160412,
+      "validated_tar_member_count": 158,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/nitro",
+      "version": "3.0.260903-beta",
+      "sha256": "1b35fa4a9c9d99aa4af94077d5e7b717f1e02664362026c90ad6519d437823c8",
+      "bytes": 653277,
+      "validated_tar_member_count": 406,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/node-releases",
+      "version": "2.0.63",
+      "sha256": "0d3de8133fb407d1a73e74ccb7c7c6b9c7966fb7bf109238a53399a3fb7c78a0",
+      "bytes": 6144,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/ocache",
+      "version": "0.3.1",
+      "sha256": "858c6367ace30b4096df734ce860a4d0978a7dc57801ba98bc1198ed46ae827d",
+      "bytes": 31467,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/path-key",
+      "version": "3.1.1",
+      "sha256": "4b8999acb914830edcd3c5b8fec632b32c6bc759ac3edc86336f5a9e08ba7b92",
+      "bytes": 2258,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/pathe",
+      "version": "2.0.3",
+      "sha256": "6e3b73bc5dbb7f8a108ff5d8459b07da04062e822c662339416525510696df36",
+      "bytes": 10514,
+      "validated_tar_member_count": 16,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/picocolors",
+      "version": "1.1.1",
+      "sha256": "d3aedb2807967b7eb37fd11b03b7e3701e725af79c650d0812ff7213f8f882d9",
+      "bytes": 2625,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/picomatch",
+      "version": "4.0.7",
+      "sha256": "697b463be3cdbd9ffc8f4194fd5019a69ddf95875fb703d78b2b115cc9e740a8",
+      "bytes": 24326,
+      "validated_tar_member_count": 10,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/postcss",
+      "version": "8.5.32",
+      "sha256": "8e8eb3453860bfc35cd0e51653a3565980a2d83e4ddcf93f8fa5455754cf9066",
+      "bytes": 52987,
+      "validated_tar_member_count": 55,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/potpack",
+      "version": "1.0.2",
+      "sha256": "1795e2abaa858d49a6183a0d520a51d04ea3b7bf413054b63ab0f3deb6af60ff",
+      "bytes": 3440,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/prettier",
+      "version": "3.9.10",
+      "sha256": "9dc72045591793dff972432fb78722f7ab91aaa90a7fa8c1261ede55969246b7",
+      "bytes": 2801570,
+      "validated_tar_member_count": 56,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/promise-worker-transferable",
+      "version": "1.0.4",
+      "sha256": "399c508d701f61753c58a1b84d52724ca6930f807f02d610be055a15a6a4651b",
+      "bytes": 13434,
+      "validated_tar_member_count": 9,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/react",
+      "version": "19.3.1",
+      "sha256": "56936913918dcf1f7a6fe58784e79df54b18200a88655ce809cf5e9c4ef871aa",
+      "bytes": 26394,
+      "validated_tar_member_count": 27,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/react-dom",
+      "version": "19.3.1",
+      "sha256": "8b49975821eec6311e00d2b3f4b8337923253c876517388a33f9839c61ab262e",
+      "bytes": 1410652,
+      "validated_tar_member_count": 43,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/react-use-measure",
+      "version": "2.1.7",
+      "sha256": "927e2feef8d1d014b2b45159a2091afd6b41499942a82736a1518cac0e007005",
+      "bytes": 8391,
+      "validated_tar_member_count": 12,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/readdirp",
+      "version": "5.1.1",
+      "sha256": "935a688197715ea14c184e4a56542d6abe99a75b2c6d805d24a4cdf36514d5a5",
+      "bytes": 9058,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/require-from-string",
+      "version": "2.0.2",
+      "sha256": "cb694a4965908f7775a0c757f00cf4e624d193cd71d77988fbcca0f597b88d82",
+      "bytes": 1816,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/rolldown",
+      "version": "1.2.16",
+      "sha256": "9a86591756be331a7686bc11bdc3f41d51ced8bcb13a888d9e34038cae31030b",
+      "bytes": 205329,
+      "validated_tar_member_count": 54,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/rou3",
+      "version": "0.9.2",
+      "sha256": "e92174fa9a83332963aebb3e6d273bc1b9868015e578a02067f67c6bb0aafecb",
+      "bytes": 25070,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/scheduler",
+      "version": "0.28.0",
+      "sha256": "302995d590e3c0a11eeb40d1d0f299c1df1800135d599d85cdd5faeb614f32d6",
+      "bytes": 10011,
+      "validated_tar_member_count": 15,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/semver",
+      "version": "6.3.1",
+      "sha256": "3c9b042a38e099cbd00a9bd792042aefb62a70b3f0f1ba1a3cbddf07e5eb1230",
+      "bytes": 19093,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/seroval",
+      "version": "1.7.6",
+      "sha256": "1753cd5a8056da05e531358b3fdc8d96f30a72db1cfbe36e62ddd1dd555da68b",
+      "bytes": 121520,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/seroval-plugins",
+      "version": "1.7.6",
+      "sha256": "fd6083dbf7645867b3e06ab853419fe4494aebef0de059e102be20bb77af62ab",
+      "bytes": 12084,
+      "validated_tar_member_count": 23,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/shebang-command",
+      "version": "2.0.0",
+      "sha256": "9acba5bd18a51e9cdf5898380e4df63f803e1844def64ae1a46f88cff86d556e",
+      "bytes": 1506,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/shebang-regex",
+      "version": "3.0.0",
+      "sha256": "fedbabaa6db26c6be0183f82777dfa852d59a62f8885de93bd32ebc28758958f",
+      "bytes": 1503,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/source-map",
+      "version": "0.7.6",
+      "sha256": "a846beb72106a0aff68f93e5850e54523d90328d5a57ac93cb8c9f63cbebc16b",
+      "bytes": 51980,
+      "validated_tar_member_count": 19,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/source-map-js",
+      "version": "1.2.2",
+      "sha256": "05c8cf8e7c3a6b56cada7668fe9342b10f4b625efc92aba9ba05b9e8fe4d71a3",
+      "bytes": 36349,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/srvx",
+      "version": "1.0.8",
+      "sha256": "e271a9b290733ebd280a5c21c5ee92741e67d156e4c72dc280dded4026a20bd0",
+      "bytes": 52074,
+      "validated_tar_member_count": 43,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/stats-gl",
+      "version": "2.4.2",
+      "sha256": "9d871fdf4f5f81f70f82488acba5d86e62822a623c795280b3f49c7bebbf95cd",
+      "bytes": 14517,
+      "validated_tar_member_count": 13,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/stats-gl/node_modules/three",
+      "version": "0.170.0",
+      "sha256": "4a608a355dcaba72e0e5383cdc814303f5b6060b43c238cdf6932dceb699238d",
+      "bytes": 7156850,
+      "validated_tar_member_count": 1074,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/stats.js",
+      "version": "0.17.0",
+      "sha256": "0380cb308ef367359ac3e68ce4608c88d7bb437a92f451d289a25e11e04cfd9d",
+      "bytes": 3341,
+      "validated_tar_member_count": 4,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/suspend-react",
+      "version": "0.1.3",
+      "sha256": "0a67f39c28df9da47e13d391b862141104bd1c4dcfec30301ab941a14993d65e",
+      "bytes": 4547,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/three",
+      "version": "0.186.1",
+      "sha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+      "bytes": 4648523,
+      "validated_tar_member_count": 1263,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/three-mesh-bvh",
+      "version": "0.8.3",
+      "sha256": "be096ff206b7604ca2546687aede3acf861f8b61e50e9be8c49352e31386ed61",
+      "bytes": 278815,
+      "validated_tar_member_count": 80,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/three-stdlib",
+      "version": "2.36.1",
+      "sha256": "e246431950e1f73bad0f217ab928f1e66b08fc4e003e50ed5ce6817a8150c0cc",
+      "bytes": 4955095,
+      "validated_tar_member_count": 1399,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/three-stdlib/node_modules/fflate",
+      "version": "0.6.11",
+      "sha256": "bdf7a26614ef7d2e4b0045d57a199d731aef8f27ca31825be2980190424e2a8d",
+      "bytes": 126878,
+      "validated_tar_member_count": 13,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/tinyglobby",
+      "version": "0.2.17",
+      "sha256": "afb4afae9175f8b873ac13e1d21cea0997a0bcb40c3598613a834490058cb562",
+      "bytes": 7873,
+      "validated_tar_member_count": 7,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/troika-three-text",
+      "version": "0.52.5",
+      "sha256": "e77118eae77594ebdd883eed487cc24b2227cdc1b8d18265284decefda2ba08e",
+      "bytes": 247642,
+      "validated_tar_member_count": 49,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/troika-three-utils",
+      "version": "0.52.5",
+      "sha256": "5689cc0266bbe6fae89187402d80de33549facd75d4eaf0e4201f933d53a4b38",
+      "bytes": 38111,
+      "validated_tar_member_count": 40,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/troika-worker-utils",
+      "version": "0.52.0",
+      "sha256": "05cc4bd518b409497ceb4320651cc1e103d87b226f7e1d87fb0d6e058524da0c",
+      "bytes": 16437,
+      "validated_tar_member_count": 14,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/tslib",
+      "version": "2.8.1",
+      "sha256": "66f635d5eeabae44807534976913a102cf615b9a045368359c9f79ae6ee2119e",
+      "bytes": 18477,
+      "validated_tar_member_count": 14,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/tunnel-rat",
+      "version": "0.1.2",
+      "sha256": "b7bc5bcddffb142255d6caad6185387416edb730f68cbee6278983f6b3e0977e",
+      "bytes": 8202,
+      "validated_tar_member_count": 21,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/tunnel-rat/node_modules/zustand",
+      "version": "4.5.7",
+      "sha256": "5240b7736397aa0e8442d290dea0ce7a6dd324c986e1a8644ff91bf61864e863",
+      "bytes": 52378,
+      "validated_tar_member_count": 141,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/typescript",
+      "version": "5.9.3",
+      "sha256": "10e108c9cf7d5f2879053dff18515fb405abf2ccef63eaaf017d9c571687a1d3",
+      "bytes": 4377468,
+      "validated_tar_member_count": 132,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/ufo",
+      "version": "1.6.4",
+      "sha256": "b060e20d485ef8f6a8b9d58dc0fb28e8b9607dfeabf2b6007a73e60f012e6ab0",
+      "bytes": 21428,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/undici-types",
+      "version": "7.24.6",
+      "sha256": "2abf595a86b87dd22951218848ec4ad89c018db0e656716dc04b8b2f9290a0f4",
+      "bytes": 28510,
+      "validated_tar_member_count": 47,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/unenv",
+      "version": "2.0.0-rc.24",
+      "sha256": "5f9ff24d9a07010f7d2cd33f029841449d0837f85a22b4cd4e02347ce6bce735",
+      "bytes": 161279,
+      "validated_tar_member_count": 327,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/unplugin",
+      "version": "3.7.0",
+      "sha256": "72aee6d936fa757603104ff8449a69ab1563582353e963c8db2e2aa90074161d",
+      "bytes": 21171,
+      "validated_tar_member_count": 20,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/unstorage",
+      "version": "2.0.0-beta.0",
+      "sha256": "f6b5c4f2cfd4dcb2950e8647ef88353bfac1d5b8517cf37a068a0d45c8a10f7c",
+      "bytes": 45333,
+      "validated_tar_member_count": 87,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/update-browserslist-db",
+      "version": "1.3.4",
+      "sha256": "8804801cca499f383d0dc8d8b78ed0e3775aa99832bddfeb9853d1eaa21e85ca",
+      "bytes": 8585,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/use-sync-external-store",
+      "version": "1.7.0",
+      "sha256": "4f62a44660396a55417322fb0c71c14413b784192e4cd18acfec6bdf3157e359",
+      "bytes": 4189,
+      "validated_tar_member_count": 18,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/utility-types",
+      "version": "3.11.0",
+      "sha256": "d8a4ab48578f90e6d787e7a64b13c4374a337b4bb61d487b15db8f968e9475f1",
+      "bytes": 14934,
+      "validated_tar_member_count": 21,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/vite",
+      "version": "8.3.5",
+      "sha256": "7f22c2a78d15bac5ad755c5f413806048db453604fa0c293f6a0613890dc7c17",
+      "bytes": 587457,
+      "validated_tar_member_count": 37,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/vitefu",
+      "version": "1.1.3",
+      "sha256": "91ac953765942a6f17277078d34ecd4e5acdd999d0344262879c50a1baaf85d1",
+      "bytes": 7039,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/webgl-constants",
+      "version": "1.1.1",
+      "sha256": "b3ae2a8b64b98afec45bde02878f0df0cc6a7d5211913fb358349cc8213e4707",
+      "bytes": 92901,
+      "validated_tar_member_count": 15,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/webgl-sdf-generator",
+      "version": "1.1.1",
+      "sha256": "731d64ae82603e91335b7b41149fff5bc000ad526791ce2d3f924027665b8031",
+      "bytes": 31139,
+      "validated_tar_member_count": 8,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/webpack-virtual-modules",
+      "version": "0.6.2",
+      "sha256": "9506996a90d4cf9ed547a0459884e4eb8e391e6b9512f23d137feafe697ab719",
+      "bytes": 10846,
+      "validated_tar_member_count": 11,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/which",
+      "version": "2.0.2",
+      "sha256": "a13adf5fddeb769655edce551e81fbb11904b9c9be76d95e41da8c4c499d4edc",
+      "bytes": 4496,
+      "validated_tar_member_count": 6,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/xmlbuilder2",
+      "version": "4.0.3",
+      "sha256": "ec05eccfe8c35a04ff19eddf30eeb3f96fc66f5dbe0f094e7c26a52fb69c2bdf",
+      "bytes": 207515,
+      "validated_tar_member_count": 83,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/yallist",
+      "version": "3.1.1",
+      "sha256": "50f14ae6cfe8360cb2259ba3e93305e069036f13251d69d3cbee9e1d4775ca04",
+      "bytes": 4496,
+      "validated_tar_member_count": 5,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/zod",
+      "version": "4.6.7",
+      "sha256": "84efd155bed93270286e793fc951be270b536cbd5b0eeb111f0fa3967201d698",
+      "bytes": 1141941,
+      "validated_tar_member_count": 840,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    },
+    {
+      "path": "node_modules/zustand",
+      "version": "5.0.16",
+      "sha256": "fd0edff32f0a7f6a440dba81c0f5db644b710adcea7e54a35eef6cf976cb8d7e",
+      "bytes": 23018,
+      "validated_tar_member_count": 52,
+      "validated_archive_prefix": "package",
+      "sha512_verified_before_extract": true
+    }
+  ],
+  "symlinks": [
+    {
+      "path": "node_modules/.bin/baseline-browser-mapping",
+      "target": "../baseline-browser-mapping/dist/cli.cjs"
+    },
+    {
+      "path": "node_modules/.bin/browserslist",
+      "target": "../browserslist/cli.js"
+    },
+    {
+      "path": "node_modules/.bin/cross-env",
+      "target": "../cross-env/src/bin/cross-env.js"
+    },
+    {
+      "path": "node_modules/.bin/cross-env-shell",
+      "target": "../cross-env/src/bin/cross-env-shell.js"
+    },
+    {
+      "path": "node_modules/.bin/env-runner",
+      "target": "../env-runner/dist/cli.mjs"
+    },
+    {
+      "path": "node_modules/.bin/h3",
+      "target": "../h3/bin/h3.mjs"
+    },
+    {
+      "path": "node_modules/.bin/jiti",
+      "target": "../jiti/lib/jiti-cli.mjs"
+    },
+    {
+      "path": "node_modules/.bin/js-yaml",
+      "target": "../js-yaml/bin/js-yaml.js"
+    },
+    {
+      "path": "node_modules/.bin/jsesc",
+      "target": "../jsesc/bin/jsesc"
+    },
+    {
+      "path": "node_modules/.bin/json5",
+      "target": "../json5/lib/cli.js"
+    },
+    {
+      "path": "node_modules/.bin/nanoid",
+      "target": "../nanoid/bin/nanoid.cjs"
+    },
+    {
+      "path": "node_modules/.bin/nitro",
+      "target": "../nitro/dist/cli/index.mjs"
+    },
+    {
+      "path": "node_modules/.bin/node-which",
+      "target": "../which/bin/node-which"
+    },
+    {
+      "path": "node_modules/.bin/parser",
+      "target": "../@babel/parser/bin/babel-parser.js"
+    },
+    {
+      "path": "node_modules/.bin/prettier",
+      "target": "../prettier/bin/prettier.cjs"
+    },
+    {
+      "path": "node_modules/.bin/rolldown",
+      "target": "../rolldown/bin/cli.mjs"
+    },
+    {
+      "path": "node_modules/.bin/semver",
+      "target": "../semver/bin/semver.js"
+    },
+    {
+      "path": "node_modules/.bin/srvx",
+      "target": "../srvx/bin/srvx.mjs"
+    },
+    {
+      "path": "node_modules/.bin/tsc",
+      "target": "../typescript/bin/tsc"
+    },
+    {
+      "path": "node_modules/.bin/tsserver",
+      "target": "../typescript/bin/tsserver"
+    },
+    {
+      "path": "node_modules/.bin/update-browserslist-db",
+      "target": "../update-browserslist-db/cli.js"
+    },
+    {
+      "path": "node_modules/.bin/vite",
+      "target": "../vite/bin/vite.js"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "applicationSHA": "b974ddcd7b8633c0a86e752facf7c58f183757b6",
+  "status": "FAILED candidate; never final acceptance",
+  "entry": "PASS7/7",
+  "decodedEntry": "PASS7/7",
+  "commerce": {
+    "completeJourneys": 15,
+    "legalNewTabs": 15,
+    "passCases": 10,
+    "failCases": 5,
+    "fontFlags": 93,
+    "textOverlapFlags": 30,
+    "totalFlags": 123
+  },
+  "manualVisualFailure": "Combo bowl overlaps description/badge at320/390; automated text checks did not cover image-text occlusion. Root adds dedicated geometry assertion before fixing.",
+  "extraThreeResponsiveJourneys": "not executed",
+  "preview": "unchanged"
+}

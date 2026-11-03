@@ -1,0 +1,53 @@
+{
+  "baseHead": "3dcd98509118454b3ae1d301ca6af06767b4773d",
+  "baseTree": "91b3f1920cb967237d9fb747eb60549813f6e7ec",
+  "node": {
+    "passed": 373,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "newCases": 21
+  },
+  "build": {
+    "exitCode": 0,
+    "typescript": "PASS",
+    "structuralCases": 11,
+    "manualCases": 4,
+    "movementCases": 14,
+    "subsetsNotAddedToNode": true
+  },
+  "browser": {
+    "executed": false,
+    "scriptPrepared": true,
+    "expectedClosedCases": 2,
+    "expectedEnabledCases": 20
+  },
+  "independentReview": {
+    "journeyPassed": 13,
+    "blockingIssues": 0,
+    "scope": "Actual component sources with local hooks/JSX, not browser or React StrictMode"
+  },
+  "sqlChanged": false,
+  "financialBackendChanged": false,
+  "pricesChanged": false,
+  "publicHomepageChanged": false,
+  "productionChanged": false,
+  "activated": false,
+  "messagesSent": 0,
+  "ordersCreated": 0,
+  "charges": 0,
+  "sha256": {
+    ".env.example": "5553814a81c8b3bbf01f2304e3f4dee988636ff6846d7a232bc714a992918e58",
+    "src/domain/lib/manual-order.ts": "e31e8ded8ec498bd07a6031f8f7ae03f53f089d601827d609c47a57c0bf14c9e",
+    "src/playable/GuidedCommerce.tsx": "0e4706caa6da19d1777033a384d5a454e89690dc4ab925dd0a52c96107f23beb",
+    "src/reference/ReferenceScene.tsx": "62285c6e8a13e224fe36d44a09a54b08f8f09c60c78bbb39992214b2f083cfa4",
+    "src/routeTree.gen.ts": "972ad6192c3ff2518246adac699524719bc279118459b88c52e0d531525a14ac",
+    "src/routes/consulta.tsx": "289f2cdde41ad28500662e7248c77365ff9207c5e58df9df82c36acf2e6602f6",
+    "src/server/manual-inquiry-config.server.ts": "c2b9ce08071373365df09dc1db2ab68c8618184dd294760f2b5fac23dfb41dc2",
+    "tests/guided-sandbox-contact.test.cjs": "4f073953accdd93caa048087fbcc234dd55e7ead9209d775bd2426894c89dcc7",
+    "tests/manual-inquiry-config.test.cjs": "b8009dec75f81de8f47fce6b7586a19d885f03f8d61afbdcf52ad5413befd44f",
+    "tests/manual-inquiry-availability.test.cjs": "e68d143a46982ca25ea64d3b52d7258eabea06122d642681f0a9e2e7d0825da1",
+    "tests/manual-inquiry-journey.test.cjs": "160c5e90dc4d52769258d191fcb5a967e69828534bdf79960a28e4039aa8a1cd",
+    "scripts/qa-manual-inquiry.cjs": "313f4075b57ef514b40fc5b825a7126c6064fe2f6c9643e489d6c58002a6797b"
+  }
+}

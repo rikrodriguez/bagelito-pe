@@ -1,0 +1,43 @@
+Command: ["node", "--test", "--test-concurrency=1", "tests/guided-product-checkout-session.test.cjs", "tests/guided-product-payment-gate.test.cjs", "tests/guided-sandbox-contact.test.cjs", "tests/sandbox-entry-availability.test.cjs"]
+✔ service checks its own sandbox gate before all validation or side effects (167.276598ms)
+✔ pack plus pot bridges complete products into the JSONB RPC and returns only browser contract (77.499303ms)
+✔ all fifteen standalone pot variants preserve grams and confirmed prices with no bagel rows (623.291846ms)
+✔ unsupported combos extras premium and minis cannot touch limiter or database (183.987632ms)
+✔ customer legal capability and malformed product validation happen before remote effects (366.775843ms)
+✔ normalized customer values feed limiter and strict adapter without truncation (31.327064ms)
+✔ rate-limit denial and honeypot stop before any reservation client (60.147418ms)
+✔ existing guided session uses original batch and preserves persisted identity and expiry on replay (31.972212ms)
+✔ legacy or malformed prior sessions never fall back or attempt a reservation (179.464807ms)
+✔ missing/malformed/error lookup envelopes cannot start a write (123.619763ms)
+✔ lost write response or SQL replay rejection is generic and never retried (123.819473ms)
+✔ hanging initial read is aborted and bounded even when transport ignores abort (44.248427ms)
+✔ two reads and write share 5 seconds, at most 2 seconds per operation (29.394135ms)
+✔ late write completion is rejected even before its timeout callback runs (26.264009ms)
+✔ full-product flag defaults closed and never appears in public configuration (151.754378ms)
+✔ explicit Origin, matching proxy origin, same-site metadata and every intake flag remain mandatory (66.920949ms)
+✔ order: complete guided reservations cannot enter live, production, review-only or closed sandbox lanes (68.29502ms)
+✔ order: cross-site guided payment cannot reach preparation or provider (40.898753ms)
+✔ order: allowed sandbox preserves complete pack/pot contract and exact namespace (66.122181ms)
+✔ order: unknown guided contracts stay closed even with sandbox opt-in (45.185633ms)
+✔ order: legacy reservation keeps its existing live path without the new opt-in (11.597948ms)
+✔ charge: complete guided reservations cannot enter live, production, review-only or closed sandbox lanes (50.573606ms)
+✔ charge: cross-site guided payment cannot reach preparation or provider (34.589058ms)
+✔ charge: allowed sandbox preserves complete pack/pot contract and exact namespace (61.780708ms)
+✔ charge: unknown guided contracts stay closed even with sandbox opt-in (43.512092ms)
+✔ charge: legacy reservation keeps its existing live path without the new opt-in (11.022596ms)
+✔ sandbox cashier never generates a commercial link or offers the contact block (2.505298ms)
+✔ ordinary cashier keeps its commercial contact and payment wording by default (0.818938ms)
+✔ review-only cashier still offers review without a commercial link or payment (0.623475ms)
+✔ explicit sandbox labels the actual Culqi button in every state without changing disabled behavior (8.053621ms)
+✔ closed sandbox and incomplete customer remain explicitly marked as a test (1.388943ms)
+✔ availability false returns only a boolean capability and is private/uncached (75.399056ms)
+✔ availability true returns only a boolean capability and is private/uncached (13.035995ms)
+✔ sandbox document declares private no-store and noindex independently of availability (10.908935ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3689.892643

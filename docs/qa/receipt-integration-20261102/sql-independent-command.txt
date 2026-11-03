@@ -1,0 +1,2 @@
+# cwd: /workspace/bagelito-sql-cdcaded
+NODE_PATH=/workspace/sql-validation-f6f96bb/typescript-loader/node_modules NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node --wasm-num-compilation-tasks=1 --test --test-concurrency=1 --test-reporter=tap tests/sql/product-lines.test.cjs

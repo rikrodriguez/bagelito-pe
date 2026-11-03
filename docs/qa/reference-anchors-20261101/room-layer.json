@@ -1,0 +1,20 @@
+{
+  "asset": "/workspace/generated_images/exec-64439a92-4053-4334-beaa-9ef938a89ca1.png",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "bytes": 2089216,
+  "sha256": "4d3518e5cb31000bd5795e7f9797505dd1b677e2b06c9c1a1a7dfcbfe34ca7af",
+  "reference": "/workspace/bagelito-rebuilt-storefront/public/images/store-reference-approved.webp",
+  "referenceSHA256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9",
+  "comparison": {
+    "exactAlignedRGBPixels": 398,
+    "pixels": 1572864,
+    "exactPixelFraction": 0.0002530415852864583,
+    "exactAligned8x8Blocks": 0,
+    "interpretation": "Exact-pixel comparison only; no exact8x8blocks does not establish independently authored content or prove absence of transformed/copied structures. It is reference-guided generated concept art, not a source-screenshot crop or verified photo."
+  },
+  "workflow": "native image_gen__imagegen, reference-guided wholesale architectural re-render prompt, not local raster editing",
+  "scope": "Architecture layer only; no raster text/logo/UI/price labels/foreground food. Staff fictional generated, blank wall/pillars/tote, shallow empty glass cases."
+}

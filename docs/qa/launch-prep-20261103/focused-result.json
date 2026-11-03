@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "tests/manual-inquiry-journey.test.cjs",
+    "tests/guided-checkout-quote.test.cjs",
+    "tests/guided-sandbox-contact.test.cjs",
+    "tests/schmear-price-evidence.test.cjs",
+    "tests/manual-inquiry-config.test.cjs",
+    "tests/manual-inquiry-availability.test.cjs"
+  ],
+  "exitCode": 0,
+  "elapsedMs": 3528
+}

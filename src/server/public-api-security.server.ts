@@ -1,7 +1,10 @@
 import { createHash } from 'node:crypto'
+import { performance } from 'node:perf_hooks'
 import { createSupabaseAdminClient } from './supabase-admin.server'
 
 type Scope = 'payments' | 'reservations' | 'quotes'
+const RATE_LIMIT_BUDGET_MS = 2000
+const unavailable = () => new PublicApiError('This service is temporarily unavailable.', 503)
 
 const rules: Record<Scope, { requester: [string, number, number]; contact?: [string, number, number] }> = {
   payments: {
@@ -49,34 +52,47 @@ function contactId(email: string, whatsapp: string) {
   return digits ? 'phone:' + digits : ''
 }
 
-async function consume(scope: string, identifier: string, limit: number, windowSeconds: number) {
+async function consume(scope: string, identifier: string, limit: number, windowSeconds: number, deadline: number) {
   let data: unknown
-  let error: { message?: string } | null = null
+  const remaining = deadline - performance.now()
+  if (remaining <= 0) throw unavailable()
+  const controller = new AbortController()
+  let timer: ReturnType<typeof setTimeout> | undefined
 
   try {
     const supabase = createSupabaseAdminClient()
-    const result = await supabase.rpc('consume_api_rate_limit', {
-      p_identifier: hash(identifier),
-      p_limit: limit,
-      p_scope: scope,
-      p_window_seconds: windowSeconds,
-    }).single()
+    // Racing also bounds transports that ignore abort. Never retry: the RPC
+    // may already have consumed a slot even when its response was lost.
+    const result = await Promise.race([
+      Promise.resolve().then(() => supabase.rpc('consume_api_rate_limit', {
+        p_identifier: hash(identifier),
+        p_limit: limit,
+        p_scope: scope,
+        p_window_seconds: windowSeconds,
+      }).abortSignal(controller.signal).single()),
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => { controller.abort(); reject(unavailable()) }, remaining)
+      }),
+    ])
+    // An overdue promise can settle before a delayed timer callback runs.
+    if (performance.now() >= deadline) { controller.abort(); throw unavailable() }
+    if (!result || result.error !== null) throw unavailable()
     data = result.data
-    error = result.error
   } catch {
-    throw new PublicApiError('This service is temporarily unavailable.', 503)
+    throw unavailable()
+  } finally {
+    clearTimeout(timer)
   }
 
-  if (error) {
-    throw new PublicApiError('This service is temporarily unavailable.', 503)
-  }
-
-  const result = data as { allowed?: boolean; retry_after_seconds?: number } | null
-  if (!result?.allowed) {
+  const result = data as { allowed?: unknown; retry_after_seconds?: unknown } | null
+  if (!result || typeof result !== 'object' || Array.isArray(result) || typeof result.allowed !== 'boolean') throw unavailable()
+  if (result.allowed === false) {
+    const retry = result.retry_after_seconds ?? windowSeconds
+    if (typeof retry !== 'number' || !Number.isSafeInteger(retry) || retry < 0) throw unavailable()
     throw new PublicApiError(
       'Too many attempts. Please try again later.',
       429,
-      Math.max(1, Number(result?.retry_after_seconds || windowSeconds)),
+      Math.min(windowSeconds, Math.max(1, retry)),
     )
   }
 }
@@ -89,12 +105,14 @@ export async function enforcePublicApiSecurity(input: {
   trapValue?: string
 }) {
   if ((input.trapValue || '').trim()) throw new PublicApiError('Invalid submission.', 400)
+  // One budget for both requester and optional contact, not 2 s per RPC.
+  const deadline = performance.now() + RATE_LIMIT_BUDGET_MS
   const rule = rules[input.scope]
   const [rScope, rLimit, rWindow] = rule.requester
-  await consume(rScope, requesterId(input.request), rLimit, rWindow)
+  await consume(rScope, requesterId(input.request), rLimit, rWindow, deadline)
   const contact = contactId(input.email || '', input.whatsapp || '')
   if (contact && rule.contact) {
     const [cScope, cLimit, cWindow] = rule.contact
-    await consume(cScope, contact, cLimit, cWindow)
+    await consume(cScope, contact, cLimit, cWindow, deadline)
   }
 }

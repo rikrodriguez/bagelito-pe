@@ -1,0 +1,41 @@
+{
+  "baseHead": "eff2f0848bc82c3ca58be1b0a6a66500cbc13026",
+  "files": [
+    {
+      "path": "src/playable/CulqiBrowserCheckout.tsx",
+      "sha256": "ab7f12e29ee8b3cc0950ce9259ee87f0c3928d03f85ef875250b659f28f14d0c"
+    },
+    {
+      "path": "tests/culqi-ui-lifecycle.test.cjs",
+      "sha256": "46710e00f54403eee94bf5275276b9ecd2f892957f5782d3d8a9f4579c323bf1"
+    },
+    {
+      "path": "package.json",
+      "sha256": "5da8eda3bc2d6498cc3ff96de38a03ec204164708ffc3a8f2ebb752b8912c551"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+    }
+  ],
+  "node": "v24.19.0",
+  "dependencies": [
+    {
+      "name": "typescript",
+      "version": "5.9.3"
+    },
+    {
+      "name": "react",
+      "version": "19.3.1"
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.1"
+    },
+    {
+      "name": "vite",
+      "version": "8.3.5"
+    }
+  ],
+  "dependencySource": "Existing installed node_modules from bagelito-pr47-transaction linked locally; no dependency source, lockfile or version changed."
+}

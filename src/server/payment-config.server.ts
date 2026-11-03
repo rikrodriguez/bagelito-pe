@@ -146,3 +146,52 @@ export function isPaymentStatusRequestAllowed(request: Request) {
     && cfg.bridgeReady
     && requestMatchesConfiguredOrigin(request)
 }
+
+/** Draft receipt disclosure gate. Not an intake/payment switch. Never live or
+ * production; future cutover requires a separate reviewed change. Browser-only
+ * same-origin disclosure, in addition to the order capability checked by status.
+ */
+export function isGuidedReceiptRequestAllowed(request: Request) {
+  const cfg = buildPaymentConfig()
+  return process.env.BAGELITO_GUIDED_RECEIPT_ENABLED === 'true'
+    && process.env.VERCEL_ENV !== 'production'
+    && cfg.mode === 'sandbox' && cfg.configured && cfg.bridgeReady
+    && requestMatchesConfiguredOrigin(request)
+    && request.headers.get('origin') === new URL(request.url).origin
+    && (!request.headers.has('sec-fetch-site') || request.headers.get('sec-fetch-site') === 'same-origin')
+}
+
+/** Closed-by-default draft product-intake lane. No live/production opt-in is
+ * supported; the independent SQL owner policy must also permit reservations.
+ */
+export function isGuidedProductCheckoutRequestAllowed(request: Request) {
+  const cfg = buildPaymentConfig()
+  return process.env.BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED === 'true'
+    && process.env.BAGELITO_REFERENCE_REVIEW_ONLY !== 'true'
+    && process.env.VERCEL_ENV !== 'production'
+    && cfg.mode === 'sandbox' && isPaymentRequestAllowed(request)
+    && request.headers.get('origin') === new URL(request.url).origin
+    && (!request.headers.has('sec-fetch-site') || request.headers.get('sec-fetch-site') === 'same-origin')
+}
+
+/** Read-only sandbox entry availability; never returned as payment authority.
+ * Navigating to this GET page need not carry Origin, but its checkout requests do.
+ */
+export function isGuidedProductCheckoutPageAllowed(request: Request) {
+  const cfg = buildPaymentConfig()
+  return process.env.BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED === 'true'
+    && process.env.BAGELITO_REFERENCE_REVIEW_ONLY !== 'true'
+    && process.env.VERCEL_ENV !== 'production'
+    && cfg.mode === 'sandbox' && isPaymentRequestAllowed(request)
+}
+
+/** Recheck at token preparation and charge, not only at reservation creation.
+ * A shared/copied database must never route a draft guided reservation to live.
+ * Legacy orders retain their existing guards. Unknown guided versions stay shut.
+ */
+export function isPersistedProductPaymentRequestAllowed(request: Request, packSlug: unknown) {
+  if (typeof packSlug !== 'string' || !packSlug) return false
+  if (!packSlug.startsWith('guided-')) return true
+  return /^guided-v1:((6|12)-(single|mixed)|schmear-(120|180|240))$/.test(packSlug)
+    && isGuidedProductCheckoutRequestAllowed(request)
+}

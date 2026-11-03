@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { GuidedCommerce } from '../playable/GuidedCommerce'
 import './reference-storefront.css'
+import './rebuilt-flow.css'
 
 export function ReferenceStorefront() {
   const [scene, setScene] = useState('selector')
@@ -23,11 +24,10 @@ export function ReferenceStorefront() {
     {scene === 'pay' && <aside className="reference-loyalty" aria-label="Programa de fidelidad">
       <small>FIDELIDAD BAGELITO</small>
       <h2>Cada 10 pedidos, 2 bagels + 1 schmear gratis.</h2>
-      <p>El programa usará pedidos verificados y seguimiento interno. El registro y el canje están pendientes de implementación; esta revisión no genera pedidos ni recompensas.</p>
+      <p>El programa contará pedidos verificados por el backend. El seguimiento y el canje aún no están activados; esta revisión no genera pedidos ni recompensas.</p>
     </aside>}
     <footer className="reference-review-note">
-      Vista de revisión · sin cobros, reservas ni envío de datos.
-      Los precios dibujados pertenecen a la imagen de referencia; las opciones del flujo usan el catálogo verificado.
+      Vista de revisión · sin cobros, reservas ni envío de datos. Imágenes referenciales.
     </footer>
   </div>
 }

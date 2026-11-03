@@ -1,0 +1,77 @@
+✔ adapter derives money from confirmed catalog, not client amount fields (3.102173ms)
+✔ adapter normalizes bounded customer data without silently truncating (0.611772ms)
+✔ missing affirmative current consent cannot call any RPC (0.5246ms)
+✔ invalid customer, district, identity and expiry fail before persistence (1.105685ms)
+✔ unpriced extras, combo, mini and premium never create a persistence candidate (0.976922ms)
+✔ RPC receives only canonical product lines, customer and server context (7.479775ms)
+✔ RPC errors remain a failure and never leak provider or database details (0.558121ms)
+✔ malformed or partial RPC results cannot be accepted as complete reservations (2.207945ms)
+✔ JSONB key ordering does not cause a false mismatch on replay (0.457289ms)
+✔ read-only adapter rejects invalid identity before RPC and returns null for no snapshot (0.826004ms)
+✔ snapshot read validates version and stored monetary consistency without current catalog repricing (0.977933ms)
+✔ snapshot read errors are not treated as missing products or leaked diagnostics (0.194493ms)
+✔ read-only snapshot rejects malformed composition before any fulfillment projection (0.844051ms)
+✖ transport rejection after possible reservation commit does not leak details or retry automatically (0.884272ms)
+✖ snapshot transport rejection is not missing data and never leaks raw diagnostics (0.260332ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 13
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 437.997844
+
+✖ failing tests:
+
+test at tests/guided-product-adapter.test.cjs:103:1
+✖ transport rejection after possible reservation commit does not leak details or retry automatically (0.884272ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: private database endpoint and connection details
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:105:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: private database endpoint and connection details
+        at Object.rpc (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:105:89)
+        at Object.persistGuidedProductReservation (evalmachine.<anonymous>:77:38)
+        at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:105:28)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/guided-product-adapter.test.cjs:109:1
+✖ snapshot transport rejection is not missing data and never leaks raw diagnostics (0.260332ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: private database endpoint and connection details
+      at async TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:111:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: private database endpoint and connection details
+        at Object.rpc (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:111:86)
+        at Object.readGuidedProductReservation (evalmachine.<anonymous>:99:38)
+        at TestContext.<anonymous> (/workspace/scratch/241128f28314/bagelito-pr47-continuation/tests/guided-product-adapter.test.cjs:111:28)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }

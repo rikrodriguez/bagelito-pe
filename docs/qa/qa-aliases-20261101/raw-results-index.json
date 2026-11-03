@@ -1,0 +1,26 @@
+[
+  {
+    "run": "secondary",
+    "sourceSHA256": "d49dd83181a2ca61fc45b2b122ab0cfa5de539aea41498eb97edac40d65df332",
+    "file": "raw-results/secondary.json.gz",
+    "gzipSHA256": "c013db11f6d5df041e4422ba15d48ae2c5b2a4d392cc051ede21c2da2d90513b"
+  },
+  {
+    "run": "text",
+    "sourceSHA256": "972858336463ab98890eae370cd4b6e8e485529f76e8b87aecbbfd69e4846da1",
+    "file": "raw-results/text.json.gz",
+    "gzipSHA256": "c036f7312d40c0bdbb61c25a640958fe552385fcebea51d6dd83a587b7f87aa1"
+  },
+  {
+    "run": "entry",
+    "sourceSHA256": "6e30839347ec236e72c8a3f6965730a86e355eccb2d6bd4cf7a2c751480898b4",
+    "file": "raw-results/entry.json.gz",
+    "gzipSHA256": "afde9ead4d96ec8f71a5e4be0e23dd1a1794a18b2f28efa77f5ab535beb58b09"
+  },
+  {
+    "run": "journey-390-pack-flavoured",
+    "sourceSHA256": "963cc712605523261c09e67f4671e8bf906538d1058d33e042cab2cf751ba673",
+    "file": "raw-results/journey-390-pack-flavoured.json.gz",
+    "gzipSHA256": "dc1711fc1a39582756d4d82c64ecd67c29b298247c3657ba310f3a68d7938346"
+  }
+]

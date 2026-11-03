@@ -1,0 +1,340 @@
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 build
+> vite build && tsc --noEmit && npm run qa:static && npm run qa:launch && npm run qa:movement
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 175 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/index-DU-vTPin.css                35.26 kB │ gzip:   5.05 kB
+.output/public/assets/GuidedCommerce-BcypqY4g.css      116.01 kB │ gzip:  19.61 kB
+.output/public/assets/legal-version-BguVS3S4.js          0.03 kB │ gzip:   0.05 kB
+.output/public/assets/playable-Bg-1E52n.js               0.16 kB │ gzip:   0.15 kB
+.output/public/assets/routes-Bg-1E52n.js                 0.16 kB │ gzip:   0.15 kB
+.output/public/assets/ReferenceStorefront-D2F4CYEI.js    1.44 kB │ gzip:   0.82 kB
+.output/public/assets/sandbox-checkout-CtiNSJYQ.js       1.64 kB │ gzip:   0.90 kB
+.output/public/assets/legal-DuCX7LGT.js                  4.59 kB │ gzip:   1.75 kB
+.output/public/assets/GuidedCommerce-j7l3VVkK.js        92.18 kB │ gzip:  28.04 kB
+.output/public/assets/index-B1z7q5TB.js                346.50 kB │ gzip: 112.26 kB
+
+✓ built in 496ms
+vite v8.3.5 building ssr environment for production...
+transforming...
+✓ 114 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/router-B-tAIt2X.css                       1.61 kB │ gzip:  0.73 kB
+node_modules/.nitro/vite/services/ssr/assets/rebuilt-flow-CNKp7sFP.css                33.65 kB │ gzip:  4.61 kB
+node_modules/.nitro/vite/services/ssr/assets/GuidedCommerce-BcypqY4g.css             116.01 kB │ gzip: 19.61 kB
+node_modules/.nitro/vite/services/ssr/assets/start-DLWCcoXJ.js                         0.15 kB │ gzip:  0.14 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-DF9En4HQ.js         0.23 kB │ gzip:  0.17 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-DvaqhGFl.js                        0.27 kB │ gzip:  0.19 kB
+node_modules/.nitro/vite/services/ssr/assets/playable-Ct_Z1JdW.js                      0.28 kB │ gzip:  0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/rolldown-runtime-DDijeYup.js              0.33 kB │ gzip:  0.23 kB
+node_modules/.nitro/vite/services/ssr/assets/sandbox-checkout-COlTnCNE.js              1.38 kB │ gzip:  0.68 kB
+node_modules/.nitro/vite/services/ssr/assets/ReferenceStorefront-DMBKnupJ.js           1.98 kB │ gzip:  0.94 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-BWpvG7V6.js    2.01 kB │ gzip:  0.59 kB
+node_modules/.nitro/vite/services/ssr/assets/sandbox-checkout-cLF3LRFY.js              2.30 kB │ gzip:  1.08 kB
+node_modules/.nitro/vite/services/ssr/assets/legal-B5QPwt2B.js                         5.60 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/payment-config.server-CVEZD-Th.js         6.93 kB │ gzip:  2.15 kB
+node_modules/.nitro/vite/services/ssr/index.js                                       101.98 kB │ gzip: 25.59 kB
+node_modules/.nitro/vite/services/ssr/assets/router-BmhVRbnn.js                      107.54 kB │ gzip: 27.13 kB
+node_modules/.nitro/vite/services/ssr/assets/GuidedCommerce-wjoxGHyF.js              122.02 kB │ gzip: 28.57 kB
+
+✓ built in 326ms
+
+[nitro] ◐ Building [Nitro] (preset: node-server, compatibility: 2026-10-28)
+[nitro] ✔ Generated public .output/public
+vite v8.3.5 building nitro environment for production...
+`output.codeSplitting.groups[0].name` is a function. Set `output.codeSplitting.groups[0].debugName` so the bundler timing report can identify this group.
+transforming...
+✓ 238 modules transformed.
+ℹ Tracing dependencies:
+- tslib (2.8.1)
+✔ Traced 1 dependencies (4 files) in 49ms.
+ℹ Ensure your production environment matches the builder OS and architecture (linux-x64) to avoid native module issues.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/start-DLWCcoXJ.mjs                    0.15 kB │ gzip:   0.13 kB
+.output/server/_ssr/empty-plugin-adapters-DF9En4HQ.mjs    0.24 kB │ gzip:   0.17 kB
+.output/server/_ssr/routes-DvaqhGFl.mjs                   0.44 kB │ gzip:   0.28 kB
+.output/server/_ssr/playable-Ct_Z1JdW.mjs                 0.44 kB │ gzip:   0.29 kB
+.output/server/_chunks/ssr-renderer.mjs                   0.96 kB │ gzip:   0.50 kB
+.output/server/_libs/hookable.mjs                         1.17 kB │ gzip:   0.52 kB
+.output/server/_ssr/sandbox-checkout-COlTnCNE.mjs         1.32 kB │ gzip:   0.65 kB
+.output/server/_runtime.mjs                               1.55 kB │ gzip:   0.72 kB
+.output/server/_tanstack-start-manifest_v-BWpvG7V6.mjs    2.10 kB │ gzip:   0.64 kB
+.output/server/_libs/ufo.mjs                              2.18 kB │ gzip:   0.70 kB
+.output/server/_ssr/ReferenceStorefront-DMBKnupJ.mjs      2.37 kB │ gzip:   1.06 kB
+.output/server/_ssr/sandbox-checkout-cLF3LRFY.mjs         2.73 kB │ gzip:   1.18 kB
+.output/server/_ssr/legal-B5QPwt2B.mjs                    6.65 kB │ gzip:   2.00 kB
+.output/server/_ssr/payment-config.server-CVEZD-Th.mjs    6.98 kB │ gzip:   2.18 kB
+.output/server/_libs/tanstack__history.mjs               12.32 kB │ gzip:   3.66 kB
+.output/server/_libs/supabase__functions-js.mjs          12.55 kB │ gzip:   3.46 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs     33.12 kB │ gzip:   8.97 kB
+.output/server/index.mjs                                 34.81 kB │ gzip:   8.57 kB
+.output/server/_libs/supabase__supabase-js.mjs           37.85 kB │ gzip:  11.16 kB
+.output/server/_libs/supabase__phoenix.mjs               50.54 kB │ gzip:  12.77 kB
+.output/server/_libs/h3+rou3+srvx.mjs                    73.65 kB │ gzip:  19.17 kB
+.output/server/_libs/supabase__realtime-js.mjs           81.89 kB │ gzip:  20.90 kB
+.output/server/_ssr/ssr.mjs                              99.84 kB │ gzip:  25.50 kB
+.output/server/_ssr/router-BmhVRbnn.mjs                 106.25 kB │ gzip:  26.69 kB
+.output/server/_libs/supabase__postgrest-js.mjs         110.47 kB │ gzip:  23.21 kB
+.output/server/_libs/@supabase/storage-js+[...].mjs     127.49 kB │ gzip:  23.91 kB
+.output/server/_ssr/GuidedCommerce-wjoxGHyF.mjs         134.48 kB │ gzip:  28.93 kB
+.output/server/_libs/supabase__auth-js.mjs              319.66 kB │ gzip:  64.78 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs   826.74 kB │ gzip: 176.42 kB
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/index.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/index.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useRouter.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useRouter.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useNavigate.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useNavigate.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useMatch.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useMatch.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useRouterState.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useRouterState.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/utils.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/utils.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Match.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Match.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/RouterProvider.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/RouterProvider.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Matches.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Matches.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/ClientOnly.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/ClientOnly.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/HeadContent.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/HeadContent.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useLocation.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useLocation.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Asset.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Asset.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/routerContext.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/routerContext.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useBlocker.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/useBlocker.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/link.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/link.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/matchContext.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/matchContext.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/nonRouteComponentContext.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/nonRouteComponentContext.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Transitioner.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../bagelito-pr47-continuation/node_modules/@tanstack/react-router/dist/esm/Transitioner.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+✓ built in 421ms
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:static
+> node scripts/qa-tour-static.cjs
+
+Bagelito structural QA: 11/11 passed
+  OK Exact seven guided physical stops
+  OK Eight genuine bagel product textures, no panorama
+  OK Five physical schmear pans and labels
+  OK Reference-aligned white plates with Bagelito blue lettering
+  OK No stuck motion in camera stops
+  OK Collision shields and correct strafing
+  OK 3D product tap enters matching guided category
+  OK 3D failures return the customer to functional guided shopping
+  OK Unfinished cart can resume without storing personal or payment data
+  OK Payment remains gated
+  OK Playwright tests cover 3D-to-commerce handoff
+This does not replace rendering, responsive screenshot comparison or Culqi sandbox tests.
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:launch
+> node scripts/qa-manual-order.cjs
+
+Bagelito manual launch fallback: 4/4 cases passed
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 qa:movement
+> node --test tests/movement-input.test.cjs tests/movement-integration.test.cjs
+
+✔ a 480ms right hold survives keyup before the first rendered frame (2.58273ms)
+✔ sampling frames during a hold does not double-count time when keyup arrives (0.419171ms)
+✔ repeat keydown events preserve one continuous hold rather than adding impulses (0.293222ms)
+✔ releasing one alias or pointer source leaves another held source active (0.293853ms)
+✔ diagonal movement has unit length and opposing directions cancel over each interval (0.278449ms)
+✔ run transitions retain their own elapsed intervals and modifier aliases (0.277238ms)
+✔ reset discards held inputs and queued travel before a later fresh press (0.275174ms)
+✔ a long frame stalls at the configured travel budget rather than building an unbounded backlog (0.215545ms)
+✔ the input clock is monotonic and rejects non-finite timestamps or invalid budgets (0.540214ms)
+✔ CameraController consumes a complete between-frame press once and publishes the resulting position (24.003902ms)
+✔ collision integration approaches the display, slides sideways, and respects the room bounds (12.119544ms)
+✔ the guided controller discards queued and held free-roam movement (10.625764ms)
+✔ the keyboard handler ignores editable targets and still releases a key after focus changes (4.416442ms)
+✔ blur, visibility, cleanup, and guided setup discard movement across a five-minute inactive clock gap (12.333305ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 421.644091

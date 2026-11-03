@@ -1,0 +1,94 @@
+Browser tab: 151, Title: "Bagelito isolated receipt QA", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bagelito isolated receipt QA, URL: 127.0.0.1:4173/
+	1 heading Bagelito — isolated browser QA, Value: 1
+		2 text Bagelito — isolated browser QA
+	3 container
+		4 text SIMULATION ONLY — no charge, no backend, no real SDK.  Real ReactDOM and application components; all fetches are intercepted, localStorage is memory-only, CSP blocks outgoing connections.
+	5 button Run isolated QA, ID: run
+	17 text 8/8 passed — simulation only
+	12 content list results
+		13 container
+			14 AXListMarker 1. 
+			15 text PASS: Unmount pending reservation: no preparation or widget
+		18 container
+			19 AXListMarker 2. 
+			20 text PASS: Changed cart ignores old reservation response
+		21 container
+			22 AXListMarker 3. 
+			23 text PASS: Late recovery after unmount never confirms
+		24 container
+			25 AXListMarker 4. 
+			26 text PASS: Wrong paid order code never confirms
+		27 container
+			28 AXListMarker 5. 
+			29 text PASS: Two DOM recovery clicks create one pending lookup
+		30 container
+			31 AXListMarker 6. 
+			32 text PASS: Mock widget opens, token callback after unmount cannot charge
+		33 container
+			34 AXListMarker 7. 
+			35 text PASS: Paid poll after unmount never confirms
+		36 container
+			37 AXListMarker 8. 
+			38 text PASS: Recovered snapshot renders Sesame and 120 g, never current Plain cart
+	7 heading Component fixture / recovered receipt, Value: 2
+		8 text Component fixture / recovered receipt
+	16 container fixture
+		39 container
+			40 text 6  ×
+		41 text Sesame
+		42 container
+			43 text 1  ×
+		44 container
+			45 text Whipped Original  · 120 g
+		46 text Productos
+		47 container
+			48 text S/  62.00
+		49 text Delivery
+		50 container
+			51 text S/  8.00
+		52 container
+			53 text TOTAL REGISTRADO S/  70.00
+		54 text Detalle informativo. No es comprobante fiscal ni autorización de despacho.
+	9 heading Results JSON, Value: 2
+		10 text Results JSON
+	55 text {
+  "simulation": true,
+  "realPayments": false,
+  "results": [
+    {
+      "name": "Unmount pending reservation: no preparation or widget",
+      "status": "PASS"
+    },
+    {
+      "name": "Changed cart ignores old reservation response",
+      "status": "PASS"
+    },
+    {
+      "name": "Late recovery after unmount never confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "Wrong paid order code never confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "Two DOM recovery clicks create one pending lookup",
+      "status": "PASS"
+    },
+    {
+      "name": "Mock widget opens, token callback after unmount cannot charge",
+      "status": "PASS"
+    },
+    {
+      "name": "Paid poll after unmount never confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "Recovered snapshot renders Sesame and 120 g, never current Plain cart",
+      "status": "PASS"
+    }
+  ]
+}
+
+The focused UI element is 0 AXWebArea Bagelito isolated receipt QA, URL: 127.0.0.1:4173/

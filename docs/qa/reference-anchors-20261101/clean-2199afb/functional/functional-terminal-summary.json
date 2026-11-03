@@ -1,0 +1,191 @@
+{
+  "codeSHA": "2199afb6b51a3321259f512242bd47268ac3300c",
+  "scope": "ONLY current1536entry. Prior320combo belongs solely to4be846f; prior390pack and1536entry belong solely tocbf10f7. No new journey or broad matrix.",
+  "status": "passed",
+  "exitCode": 0,
+  "completed": {
+    "entryViewports": 1,
+    "categoryCallbacks": 3,
+    "vitrineCallbacks": 2,
+    "keyboardEntries": 1,
+    "decodedEntryPhotos": 5,
+    "mobileSVGWindows": 0,
+    "referenceAnchorViewports": 1,
+    "productTextStates": 0,
+    "productTextCards": 0,
+    "secondaryStates": 0,
+    "completeJourneys": 0,
+    "legalNewTabs": 0,
+    "screenshots": 30
+  },
+  "failures": [],
+  "reportSHA256": "ead35612f004153c137762a471e19aa1f53c14bbc3150d9fa85c59bd4ef115bb",
+  "screenshots": 30,
+  "verifiedPNGHashes": 30,
+  "missingOrMismatch": [],
+  "sourcesUnchangedThroughTerminal": true,
+  "frozenSourceFiles": 43,
+  "safety": {
+    "knownFrameworkReads": 1,
+    "capabilityErrors": 0,
+    "blockedRequests": 0,
+    "networkErrors": 0,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "callbackErrors": 0,
+    "documents": 1
+  },
+  "referenceAnchors": {
+    "toleranceCSSPx": 1,
+    "anchors": [
+      {
+        "selector": ".rebuilt-store",
+        "target": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 1024
+        },
+        "actual": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 1024
+        }
+      },
+      {
+        "selector": ".rebuilt-brand",
+        "target": {
+          "x": 460,
+          "y": 45,
+          "width": 780,
+          "height": 243.75
+        },
+        "actual": {
+          "x": 459.984375,
+          "y": 44.984375,
+          "width": 780,
+          "height": 243.75
+        }
+      },
+      {
+        "selector": ".rebuilt-hero",
+        "target": {
+          "x": 493,
+          "y": 270,
+          "width": 706.56,
+          "height": 66
+        },
+        "actual": {
+          "x": 493,
+          "y": 270,
+          "width": 706.546875,
+          "height": 66
+        }
+      },
+      {
+        "selector": ".rebuilt-categories",
+        "target": {
+          "x": 395,
+          "y": 350,
+          "width": 835,
+          "height": 234
+        },
+        "actual": {
+          "x": 394.984375,
+          "y": 350,
+          "width": 835,
+          "height": 234
+        }
+      },
+      {
+        "selector": ".rebuilt-counter",
+        "target": {
+          "x": 90,
+          "y": 600,
+          "width": 1440,
+          "height": 300
+        },
+        "actual": {
+          "x": 90,
+          "y": 600,
+          "width": 1440,
+          "height": 300
+        }
+      },
+      {
+        "selector": ".rebuilt-progress",
+        "target": {
+          "x": 465,
+          "y": 916,
+          "width": 605,
+          "height": 79
+        },
+        "actual": {
+          "x": 464.984375,
+          "y": 915.984375,
+          "width": 604.984375,
+          "height": 78.984375
+        }
+      }
+    ],
+    "headlineFont": 60,
+    "wordmarkLocalGeometry": {
+      "x": 20.09521484375,
+      "y": -31.947858810424805,
+      "width": 928.9963989257812,
+      "height": 321.2548522949219
+    },
+    "geometryScope": "Nominal DOM anchors from the1536x1024 reference spec. SVG geometry excludes exact painted ink/antialias; counter alpha and source-window band are reported separately. No fidelity score.",
+    "failures": [],
+    "pass": true
+  },
+  "counterArtAudit": {
+    "method": "Off-DOM readback of the already-decoded NEW counter asset; alpha>=1 and alpha>=16 are separate measurements, not acceptance thresholds.",
+    "naturalWidth": 2020,
+    "naturalHeight": 778,
+    "alphaBounds": [
+      {
+        "threshold": 1,
+        "x": 0,
+        "y": 0,
+        "right": 2020,
+        "bottom": 778,
+        "width": 2020,
+        "height": 778
+      },
+      {
+        "threshold": 16,
+        "x": 12,
+        "y": 170,
+        "right": 2014,
+        "bottom": 661,
+        "width": 2002,
+        "height": 491
+      }
+    ],
+    "renderedImageBox": {
+      "x": 90,
+      "y": 463.203125,
+      "width": 1440,
+      "height": 554.609375
+    },
+    "nominalSourceWindow": {
+      "x": 0,
+      "y": 169,
+      "width": 2020,
+      "height": 493
+    },
+    "renderedNominalWindow": {
+      "x": 90,
+      "y": 583.6783725247525,
+      "width": 1440,
+      "height": 351.4455445544554
+    },
+    "sourceSplit": {
+      "bagels": 0.5767326732673267,
+      "schmears": 0.42326732673267325
+    },
+    "scope": "Nominal DOM anchor, full alpha bounds, stronger alpha band and source-window split differ. Container matching does not certify visual fidelity."
+  }
+}

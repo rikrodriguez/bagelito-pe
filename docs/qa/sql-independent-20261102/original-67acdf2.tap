@@ -1,0 +1,300 @@
+TAP version 13
+# Subtest: policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged
+ok 1 - policy defaults closed, has no consumer/admin-client toggle and core definitions are unchanged
+  ---
+  duration_ms: 2033.748365
+  type: 'test'
+  ...
+# Subtest: pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once
+ok 2 - pack plus pot commits complete snapshot, real bagel items, exact money and legal evidence once
+  ---
+  duration_ms: 45.330556
+  type: 'test'
+  ...
+# Subtest: all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels
+ok 3 - all fifteen confirmed standalone flavor-size combinations persist zero fictitious bagels
+  ---
+  duration_ms: 60.245625
+  type: 'test'
+  ...
+# Subtest: all four ordinary pack prices and pack-plus-pot prices match existing contract
+ok 4 - all four ordinary pack prices and pack-plus-pot prices match existing contract
+  ---
+  duration_ms: 31.581427
+  type: 'test'
+  ...
+# Subtest: all district delivery fees are recomputed in SQL rather than trusted from caller
+ok 5 - all district delivery fees are recomputed in SQL rather than trusted from caller
+  ---
+  duration_ms: 63.376936
+  type: 'test'
+  ...
+# Subtest: exact replay returns original identity/expiry with no second order, line or history
+ok 6 - exact replay returns original identity/expiry with no second order, line or history
+  ---
+  duration_ms: 22.372824
+  type: 'test'
+  ...
+# Subtest: canonical bagel row order does not change the replay identity
+ok 7 - canonical bagel row order does not change the replay identity
+  ---
+  duration_ms: 24.333137
+  type: 'test'
+  ...
+# Subtest: same-price schmear substitution and same-total bagel substitution are rejected
+ok 8 - same-price schmear substitution and same-total bagel substitution are rejected
+  ---
+  duration_ms: 27.473115
+  type: 'test'
+  ...
+# Subtest: changed customer, delivery, terms or missing snapshot never reuse an existing session
+ok 9 - changed customer, delivery, terms or missing snapshot never reuse an existing session
+  ---
+  duration_ms: 54.385945
+  type: 'test'
+  ...
+# Subtest: tampered persisted bagel rows, total and snapshot fail replay without repair or second charge
+ok 10 - tampered persisted bagel rows, total and snapshot fail replay without repair or second charge
+  ---
+  duration_ms: 31.713876
+  type: 'test'
+  ...
+# Subtest: expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake
+ok 11 - expired, cancelled, paid, in-flight or provider-ID reservations cannot restart intake
+  ---
+  duration_ms: 179.081546
+  type: 'test'
+  ...
+# Subtest: zero-bagel standalone consumes one order slot, not bagel capacity
+ok 12 - zero-bagel standalone consumes one order slot, not bagel capacity
+  ---
+  duration_ms: 20.673914
+  type: 'test'
+  ...
+# Subtest: bagel capacity and closed/future/missing-delivery batches remain fail closed
+ok 13 - bagel capacity and closed/future/missing-delivery batches remain fail closed
+  ---
+  duration_ms: 98.879645
+  type: 'test'
+  ...
+# Subtest: new expired or overly long holds cannot reserve capacity
+ok 14 - new expired or overly long holds cannot reserve capacity
+  ---
+  duration_ms: 20.606673
+  type: 'test'
+  ...
+# Subtest: fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically
+ok 15 - fabricated amount, premium, duplicate flavor, wrong size and duplicate pot reject atomically
+  ---
+  duration_ms: 37.344814
+  type: 'test'
+  ...
+# Subtest: unpriced combos and extras cannot be given an invented selling price at either boundary
+ok 16 - unpriced combos and extras cannot be given an invented selling price at either boundary
+  ---
+  duration_ms: 20.053562
+  type: 'test'
+  ...
+# Subtest: legal trigger mismatch rolls back the entire transaction including bagels/history
+ok 17 - legal trigger mismatch rolls back the entire transaction including bagels/history
+  ---
+  duration_ms: 15.530433
+  type: 'test'
+  ...
+# Subtest: failure after order/item insert rolls back all partial records
+ok 18 - failure after order/item insert rolls back all partial records
+  ---
+  duration_ms: 18.217247
+  type: 'test'
+  ...
+# Subtest: anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes
+ok 19 - anon/authenticated cannot execute RPC or read snapshots; service RPC works without direct snapshot writes
+  ---
+  duration_ms: 16.979008
+  type: 'test'
+  ...
+# Subtest: new migration replay preserves enabled policy, snapshot data and financial core definitions
+ok 20 - new migration replay preserves enabled policy, snapshot data and financial core definitions
+  ---
+  duration_ms: 32.75546
+  type: 'test'
+  ...
+# Subtest: unrecognized relation collision and schema drift fail before replacing own objects
+ok 21 - unrecognized relation collision and schema drift fail before replacing own objects
+  ---
+  duration_ms: 36.610928
+  type: 'test'
+  ...
+# Subtest: existing financial token preparation sees the complete total and does not claim a provider payment
+ok 22 - existing financial token preparation sees the complete total and does not claim a provider payment
+  ---
+  duration_ms: 25.727811
+  type: 'test'
+  ...
+# Subtest: new adapter is not imported by any current public API route
+ok 23 - new adapter is not imported by any current public API route
+  ---
+  duration_ms: 11.748766
+  type: 'test'
+  ...
+# Subtest: missing financial prerequisite fails migration without creating product objects
+ok 24 - missing financial prerequisite fails migration without creating product objects
+  ---
+  duration_ms: 2814.595622
+  type: 'test'
+  ...
+# Subtest: unknown or altered function definition is not silently replaced on migration replay
+ok 25 - unknown or altered function definition is not silently replaced on migration replay
+  ---
+  duration_ms: 72.531163
+  type: 'test'
+  ...
+# Subtest: persisted snapshot substitution is detected, never repaired or used as a new price
+ok 26 - persisted snapshot substitution is detected, never repaired or used as a new price
+  ---
+  duration_ms: 46.862776
+  type: 'test'
+  ...
+# Subtest: service-only snapshot reader works after payment and closed intake without another reservation
+not ok 27 - service-only snapshot reader works after payment and closed intake without another reservation
+  ---
+  duration_ms: 28.188879
+  type: 'test'
+  location: '<checkout-67acdf2>/tests/sql/product-lines.test.cjs:217:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Values have same structure but are not reference-equal:
+
+    [
+      {
+        bagels: [
+          {
+            flavorId: 'plain',
+            quantity: 6
+          }
+        ],
+        id: 'grande-6-single',
+        kind: 'pack',
+        publishedAmountPen: 50,
+        quantity: 1,
+        schmears: []
+      },
+      {
+        bagels: [],
+        id: 'whipped-original',
+        kind: 'schmear',
+        publishedAmountPen: 12,
+        quantity: 1,
+        schmears: [
+          {
+            flavorId: 'whipped-original',
+            grams: 120,
+            quantity: 1
+          }
+        ]
+      }
+    ]
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      kind: 'pack'
+      id: 'grande-6-single'
+      quantity: 1
+      bagels:
+        0:
+          flavorId: 'plain'
+          quantity: 6
+      schmears:
+      publishedAmountPen: 50
+    1:
+      kind: 'schmear'
+      id: 'whipped-original'
+      quantity: 1
+      bagels:
+      schmears:
+        0:
+          flavorId: 'whipped-original'
+          quantity: 1
+          grams: 120
+      publishedAmountPen: 12
+  actual:
+    0:
+      kind: 'pack'
+      id: 'grande-6-single'
+      quantity: 1
+      bagels:
+        0:
+          flavorId: 'plain'
+          quantity: 6
+      schmears:
+      publishedAmountPen: 50
+    1:
+      kind: 'schmear'
+      id: 'whipped-original'
+      quantity: 1
+      bagels:
+      schmears:
+        0:
+          flavorId: 'whipped-original'
+          quantity: 1
+          grams: 120
+      publishedAmountPen: 12
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (<checkout-67acdf2>/tests/sql/product-lines.test.cjs:224:94)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: snapshot reader returns no record for unknown order and rejects inconsistent stored money
+ok 28 - snapshot reader returns no record for unknown order and rejects inconsistent stored money
+  ---
+  duration_ms: 18.348789
+  type: 'test'
+  ...
+# Subtest: complete product reservation runs through real coordinator and SQL using only synthetic charge evidence
+ok 29 - complete product reservation runs through real coordinator and SQL using only synthetic charge evidence
+  ---
+  duration_ms: 80.599272
+  type: 'test'
+  ...
+# Subtest: synthetic lower charge amount cannot mark full pack and schmear paid or lose products
+ok 30 - synthetic lower charge amount cannot mark full pack and schmear paid or lose products
+  ---
+  duration_ms: 27.051071
+  type: 'test'
+  ...
+# Subtest: synthetic provider failure preserves complete snapshot and prevents automatic second attempt
+ok 31 - synthetic provider failure preserves complete snapshot and prevents automatic second attempt
+  ---
+  duration_ms: 22.147872
+  type: 'test'
+  ...
+# Subtest: synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot
+ok 32 - synthetic 3DS continuation binds the same source and preserves the complete commercial snapshot
+  ---
+  duration_ms: 29.175109
+  type: 'test'
+  ...
+# Subtest: isolated packing reader fails on corrupted physical composition instead of inventing a missing pot
+ok 33 - isolated packing reader fails on corrupted physical composition instead of inventing a missing pot
+  ---
+  duration_ms: 20.724796
+  type: 'test'
+  ...
+# Subtest: read-only packing projection rejects missing changed or invented physical bagels and mismatched header
+ok 34 - read-only packing projection rejects missing changed or invented physical bagels and mismatched header
+  ---
+  duration_ms: 126.315607
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 33
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6759.087465

@@ -1,0 +1,20 @@
+{
+  "client_js_files": 8,
+  "markers": {
+    "SUPABASE_SERVICE_ROLE_KEY": [],
+    "CULQI_SECRET_KEY": [],
+    "getPrivatePaymentConfig": [],
+    "isGuidedProductCheckoutPageAllowed": [],
+    "BAGELITO_GUIDED_PRODUCT_CHECKOUT_ENABLED": [],
+    "create_guided_product_reservation": [],
+    "enforcePublicApiSecurity": [],
+    "getRequest()": []
+  },
+  "server_fn_stub": [
+    {
+      "file": ".output/public/assets/sandbox-checkout-B3ZXpzkL.js",
+      "bytes": 1640,
+      "server_fn_id_present": false
+    }
+  ]
+}

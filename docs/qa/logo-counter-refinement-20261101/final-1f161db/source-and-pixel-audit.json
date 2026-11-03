@@ -1,0 +1,49 @@
+{
+  "codeSHA": "1f161dba29d8920bced2ebd647e1e24d5c06d7d2",
+  "baseSHA": "4c98fd141c6e04dcfbe1cdc7fa24a721700b95ae",
+  "eightCallbacksIdentical": true,
+  "protectedPathsUnchanged": [
+    "src/playable/GuidedCommerce.tsx",
+    "src/reference/ReferenceStorefront.tsx",
+    "src/reference/rebuilt-flow.css",
+    "src/domain",
+    "src/server",
+    "package.json",
+    "vercel.json",
+    "vite.config.ts",
+    "scripts/qa-rebuilt-safety.cjs",
+    "scripts/qa-rebuilt-geometry.cjs",
+    "scripts/qa-rebuilt-composition.cjs",
+    "scripts/qa-reference-review-steps.cjs",
+    "scripts/qa-reference-text-geometry.cjs",
+    "scripts/qa-reference-secondary-readability.cjs"
+  ],
+  "selectedVisualMeasurementSourceSHA": "5f318730e928fd3e6d05dcdb7b34dbfc13247c59",
+  "actualCurrentCapture": "/workspace/bagelito-boutique-evidence-20261101/logo-counter-refinement/final-1f161db/read-only/1536-entry.png",
+  "actualCurrentCaptureSHA256": "7a2ea4d8a00f609fa9c8b411277f2f9b692a9d911f2b6b15e652779acdb35b6e",
+  "regions": [
+    {
+      "region": "brand",
+      "box": [
+        460,
+        45,
+        1240,
+        260
+      ],
+      "pixelsEqual5f": true,
+      "RGBA8SHA256": "9fcff14779b9212250167e36c77169428fa67ca0ce01ab01155318b4c8f5ed0f"
+    },
+    {
+      "region": "counter",
+      "box": [
+        60,
+        570,
+        1536,
+        1024
+      ],
+      "pixelsEqual5f": true,
+      "RGBA8SHA256": "bfd86539f9e709b1b0a8954a29b88a9cf1e86755242d7d505be7f75c30062220"
+    }
+  ],
+  "scope": "Current actual pixels independently match the prior measured logo/counter regions. See separate full PNG comparison; this is not a global fidelity score."
+}

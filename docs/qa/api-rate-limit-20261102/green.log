@@ -1,0 +1,38 @@
+✔ stalled RPC has a finite deadline, aborts, and never retries or consumes the contact (23.745537ms)
+✔ requester and contact share the same 2 s budget (14.717749ms)
+✔ late result cannot win after elapsed deadline even if timer has not fired (10.07755ms)
+✔ wall-clock rollback never extends the shared monotonic budget (13.50321ms)
+✔ timely allowed response preserves exact scopes, hashing and sequential consumption (9.87189ms)
+✔ valid denial stays 429 and never advances to contact consumption (8.460324ms)
+✔ malformed truthy string fails closed with 503, not permission or misleading throttling (8.286411ms)
+✔ malformed truthy number fails closed with 503, not permission or misleading throttling (9.575343ms)
+✔ malformed truthy array fails closed with 503, not permission or misleading throttling (7.918026ms)
+✔ malformed missing boolean fails closed with 503, not permission or misleading throttling (9.725039ms)
+✔ malformed null fails closed with 503, not permission or misleading throttling (6.308182ms)
+✔ malformed array row fails closed with 503, not permission or misleading throttling (5.603ms)
+✔ malformed false with NaN retry fails closed with 503, not permission or misleading throttling (5.480155ms)
+✔ malformed false with string retry fails closed with 503, not permission or misleading throttling (5.347255ms)
+✔ malformed false with infinite retry fails closed with 503, not permission or misleading throttling (6.740373ms)
+✔ malformed false with negative retry fails closed with 503, not permission or misleading throttling (9.445087ms)
+✔ malformed false with fractional retry fails closed with 503, not permission or misleading throttling (11.040339ms)
+✔ missing error envelope or RPC error fails closed without leaking details (6.271527ms)
+✔ missing error envelope or RPC error fails closed without leaking details (5.393745ms)
+✔ throwing transport is sanitized and clears its timer (5.437711ms)
+✔ honeypot is rejected before creating a client (5.295607ms)
+✔ valid denial retry undefined is bounded to the configured window (4.440779ms)
+✔ valid denial retry null is bounded to the configured window (4.869255ms)
+✔ valid denial retry 0 is bounded to the configured window (4.499297ms)
+✔ valid denial retry 999999 is bounded to the configured window (4.545627ms)
+✔ late completion after timeout cannot authorize or trigger contact consumption (9.749114ms)
+✔ real status route returns sanitized uncached 503 on limiter timeout before creating an order reader (10.228127ms)
+✔ real status route honors limiter outcome 503 before reading order state (6.107329ms)
+✔ real status route honors limiter outcome 429 before reading order state (5.469449ms)
+✔ real status route honors limiter outcome 200 before reading order state (5.678613ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 603.083381

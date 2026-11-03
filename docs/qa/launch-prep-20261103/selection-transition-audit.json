@@ -1,0 +1,461 @@
+{
+  "sourceBefore": "1231a12b6f1b43bcc491c221288a077d7987103d493d481ce1db431cba3e0306",
+  "sourceAfter": "1231a12b6f1b43bcc491c221288a077d7987103d493d481ce1db431cba3e0306",
+  "sourceStable": true,
+  "passed": 26,
+  "failed": 0,
+  "scope": "Real component handlers and source domain; ordinary controls only, no forceScene/state mutation, no external calls/browser/provider/DB",
+  "results": [
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":6,\"mix\":\"single\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 6,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":6,\"mix\":\"single\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 6,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":6,\"mix\":\"mixed\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 6,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 3,
+          "everything": 3
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (mixto)\n\nBagels:\n- 3 × Everything\n- 3 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":6,\"mix\":\"mixed\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 6,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 3,
+          "everything": 3
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (mixto)\n\nBagels:\n- 3 × Everything\n- 3 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":12,\"mix\":\"single\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 12,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 12
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels grandes (un sabor)\n\nBagels:\n- 12 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":12,\"mix\":\"single\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 12,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 12
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels grandes (un sabor)\n\nBagels:\n- 12 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":12,\"mix\":\"mixed\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 12,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6,
+          "everything": 6
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels grandes (mixto)\n\nBagels:\n- 6 × Everything\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"grande\",\"quantity\":12,\"mix\":\"mixed\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "grande",
+        "packQty": 12,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6,
+          "everything": 6
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels grandes (mixto)\n\nBagels:\n- 6 × Everything\n- 6 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":6,\"mix\":\"single\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 6,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels minis (un sabor)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":6,\"mix\":\"single\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 6,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels minis (un sabor)\n\nBagels:\n- 6 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":6,\"mix\":\"mixed\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 6,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 3,
+          "everything": 3
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels minis (mixto)\n\nBagels:\n- 3 × Everything\n- 3 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":6,\"mix\":\"mixed\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 6,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 3,
+          "everything": 3
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels minis (mixto)\n\nBagels:\n- 3 × Everything\n- 3 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":12,\"mix\":\"single\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 12,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 12
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels minis (un sabor)\n\nBagels:\n- 12 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":12,\"mix\":\"single\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 12,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 12
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels minis (un sabor)\n\nBagels:\n- 12 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":12,\"mix\":\"mixed\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 12,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6,
+          "everything": 6
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels minis (mixto)\n\nBagels:\n- 6 × Everything\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":12,\"mix\":\"mixed\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 12,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 6,
+          "everything": 6
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 12 bagels minis (mixto)\n\nBagels:\n- 6 × Everything\n- 6 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":24,\"mix\":\"single\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 24,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 24
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 24 bagels minis (un sabor)\n\nBagels:\n- 24 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":24,\"mix\":\"single\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 24,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 24
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 24 bagels minis (un sabor)\n\nBagels:\n- 24 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":24,\"mix\":\"mixed\",\"extra\":false}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 24,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 12,
+          "everything": 12
+        },
+        "schmears": {}
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 24 bagels minis (mixto)\n\nBagels:\n- 12 × Everything\n- 12 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "ordinary {\"format\":\"mini\",\"quantity\":24,\"mix\":\"mixed\",\"extra\":true}",
+      "passed": true,
+      "state": {
+        "scene": "cashier",
+        "category": "packs",
+        "packFormat": "mini",
+        "packQty": 24,
+        "packMix": "mixed",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {
+          "plain": 12,
+          "everything": 12
+        },
+        "schmears": {
+          "whipped-original": 1
+        }
+      },
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 24 bagels minis (mixto)\n\nBagels:\n- 12 × Everything\n- 12 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "single-flavor replacement keeps pack count and optional pot",
+      "passed": true,
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Everything\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "editing mixed bagels invalidates review until complete and updates inquiry",
+      "passed": true,
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (mixto)\n\nBagels:\n- 3 × Everything\n- 1 × Sesame\n- 2 × Plain\n\nSchmears:\n- 1 × Whipped Original (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "standalone size 120 change clears prior flavor",
+      "passed": true,
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nSchmear individual (240 g)\n\nSchmears:\n- 1 × Honey Cinnamon (240 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "standalone size 180 change clears prior flavor",
+      "passed": true,
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nSchmear individual (240 g)\n\nSchmears:\n- 1 × Honey Cinnamon (240 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "standalone size 240 change clears prior flavor",
+      "passed": true,
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nSchmear individual (120 g)\n\nSchmears:\n- 1 × Honey Cinnamon (120 g)\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "name": "menu Inicio clears complete choice before next category",
+      "passed": true,
+      "state": {
+        "scene": "entrance",
+        "category": null,
+        "packFormat": "mini",
+        "packQty": 24,
+        "packMix": "single",
+        "comboId": null,
+        "schmearSize": 120,
+        "bagelMode": "pack",
+        "bagels": {},
+        "schmears": {}
+      }
+    }
+  ]
+}

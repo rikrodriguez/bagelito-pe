@@ -1,0 +1,133 @@
+{
+  "codeQA": "3101bda61114618353644ccbbc6dbd073c3bc5d2",
+  "runtimeUI": "79e484ca37ae151781cc647e5d8096ffce67cc89",
+  "selected": [
+    {
+      "file": "captures/secondary/390-secondary-05-secondary-mini-quantity-full.png",
+      "sha256": "2bd22415b163e25ca6d9f598a627a021c2b6401ea46748e07e82678349f5aa9b",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/390-secondary-05-secondary-mini-quantity-full.png"
+    },
+    {
+      "file": "captures/secondary/390-secondary-19-secondary-checkout-longtexts-full.png",
+      "sha256": "8b14b204798624cbec381f2502cea2e06e98eef5c1d259ec7767883c72096685",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/390-secondary-19-secondary-checkout-longtexts-full.png"
+    },
+    {
+      "file": "captures/secondary/390-secondary-22-secondary-combo-heading-full.png",
+      "sha256": "726e833ee0f9658c3751c4434b8a2b6f61b67b29f93f76ba06e257f52556d331",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/390-secondary-22-secondary-combo-heading-full.png"
+    },
+    {
+      "file": "captures/secondary/320-secondary-05-secondary-mini-quantity-full.png",
+      "sha256": "6054b7673e64fca0912a414a3faa6550a1d48cc1625e03607aca190831daaf2c",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/320-secondary-05-secondary-mini-quantity-full.png"
+    },
+    {
+      "file": "captures/secondary/320-secondary-19-secondary-checkout-longtexts-full.png",
+      "sha256": "b1925d899da5f6afa8b305d02aa98de30b50ceccc89a57fffc5e1fd6a9a98155",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/320-secondary-19-secondary-checkout-longtexts-full.png"
+    },
+    {
+      "file": "captures/secondary/320-secondary-22-secondary-combo-heading-full.png",
+      "sha256": "755c54ea90f9fe931da9b2f04e2bb9b0ec1c523555dfa39035d677daeb882adb",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/320-secondary-22-secondary-combo-heading-full.png"
+    },
+    {
+      "file": "captures/secondary/1280-secondary-05-secondary-mini-quantity-full.png",
+      "sha256": "245aac5a58946c16ddbfea7bb07ab123b555428ea3e2e4bced7d2e5ea6385b81",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/1280-secondary-05-secondary-mini-quantity-full.png"
+    },
+    {
+      "file": "captures/secondary/1280-secondary-19-secondary-checkout-longtexts-full.png",
+      "sha256": "2621b5e0570692870f9fdbe3bf6073884620bf128a3d5f9b110d9ad3c1a4ab03",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/1280-secondary-19-secondary-checkout-longtexts-full.png"
+    },
+    {
+      "file": "captures/secondary/1280-secondary-22-secondary-combo-heading-full.png",
+      "sha256": "a66f0e180a66973cd85e30258bc4b0068bba470071ce6d25fe7b543c941a3e63",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/secondary/1280-secondary-22-secondary-combo-heading-full.png"
+    },
+    {
+      "file": "captures/text/390-product-text-09-text-herb-roasted-garlic-full.png",
+      "sha256": "d288a0e8b4710f0f4e3c5e2fb02595393cfa7bd5c8e5eea28c413337e5b3322b",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/text/390-product-text-09-text-herb-roasted-garlic-full.png"
+    },
+    {
+      "file": "captures/text/390-product-text-11-text-classic-strawberry-full.png",
+      "sha256": "477f5284c880b8ed6ff455d60b00acbd5701b2eba4b778c4620042c787601782",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/text/390-product-text-11-text-classic-strawberry-full.png"
+    },
+    {
+      "file": "captures/text/320-product-text-09-text-herb-roasted-garlic-full.png",
+      "sha256": "80ef5c2750a72bf73e5e822ce7fd963e76f461179b6f867fcd95a501f7528ca1",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/text/320-product-text-09-text-herb-roasted-garlic-full.png"
+    },
+    {
+      "file": "captures/text/320-product-text-11-text-classic-strawberry-full.png",
+      "sha256": "4312c0c2cce17d93f67b5f73884a4d492bdb66915c7e18a7dd7126ab749bbdc0",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/text/320-product-text-11-text-classic-strawberry-full.png"
+    },
+    {
+      "file": "captures/text/1280-product-text-09-text-herb-roasted-garlic-full.png",
+      "sha256": "4914dc0d21ef2b98bddac7198348d94d090637e623596df7efebe0f3e91f4feb",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/text/1280-product-text-09-text-herb-roasted-garlic-full.png"
+    },
+    {
+      "file": "captures/text/1280-product-text-11-text-classic-strawberry-full.png",
+      "sha256": "c32fe7a90628859277f97ee66f2a75e8b5e8ef82818ea4c241d2189c7248ff19",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/text/1280-product-text-11-text-classic-strawberry-full.png"
+    },
+    {
+      "file": "captures/entry/390-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "759ff0677e09419b4edca6f828b08ecb861efd03b5375ae49fe4ebddb3ae7902",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/390-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/entry/320-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "edf56868fd24dde4bb21aee3e2193f32c24bd0a37e8083c81912324e89d1dd8b",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/320-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/entry/1280-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "5c37d29de76243ad062e14730760cdbf1c2612e76c2275312f871f3d3c4bf0e9",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/1280-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/entry/768-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "8e27f77d41f4c8612bd82cbbca8af12590a441848c96ee24c0dd81014f2a35e8",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/768-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/entry/1024-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "3b8fe46c7a4c908c672d9b00dd170ed9864b641012055080adf6272e09bfc61a",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/1024-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/entry/844-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "212b5372e3b5b16875959dbb6097450ae6ab7d6e2794a4512f4045c7f958575d",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/844-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/entry/1920-entry-15-entry-gallery-loaded-full.png",
+      "sha256": "a15963e6ede99cf6da795ff1d948c5dab90cda2222329a290e2ca156d459e117",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/entry/1920-entry-15-entry-gallery-loaded-full.png"
+    },
+    {
+      "file": "captures/journey-390-pack-flavoured/390-pack-flavoured-10-summary-full.png",
+      "sha256": "3973d7ef08a1195d37305357b7043095e4dda3dbc1611702b7abf36a49f807d6",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/journey-390-pack-flavoured/390-pack-flavoured-10-summary-full.png"
+    },
+    {
+      "file": "captures/journey-390-pack-flavoured/390-pack-flavoured-13-review-consented-full.png",
+      "sha256": "e98651602d3a2e34546bc708f971270f90d4fe905a99f35fb276b7426ca8654b",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/journey-390-pack-flavoured/390-pack-flavoured-13-review-consented-full.png"
+    },
+    {
+      "file": "captures/journey-390-pack-flavoured/390-pack-flavoured-legal.png",
+      "sha256": "bee72cdf3980389a093c4770082a0c65fddf0615e4aea79c99b49e549b294a56",
+      "source": "/workspace/bagelito-qa-alias-evidence-20261101/green-3101bda/journey-390-pack-flavoured/390-pack-flavoured-legal.png"
+    }
+  ],
+  "allGeneratedPNGs": 515,
+  "scope": "Exact selected PNG copies. Raw reports preserve hashes of all515PNG; remaining frames retained in original workspace paths."
+}

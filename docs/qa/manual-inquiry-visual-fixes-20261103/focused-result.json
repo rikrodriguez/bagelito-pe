@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "tests/manual-inquiry-journey.test.cjs",
+    "tests/manual-inquiry-config.test.cjs",
+    "tests/manual-inquiry-availability.test.cjs"
+  ],
+  "exitCode": 0
+}

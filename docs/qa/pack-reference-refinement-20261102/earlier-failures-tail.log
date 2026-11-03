@@ -1,0 +1,82 @@
+===== /tmp/bagelito-pack-refinement-build.log (last 24 lines) =====
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+✓ built in 13.02s
+[33m[PLUGIN_TIMINGS] [0mJavaScript callbacks ran for 12.7s of this 13.0s build (98%).
+The slowest callbacks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+  - plugin nitro:virtual load (97%, 12.5s, 10 calls)
+Additional callback time came from the callbacks below and from callbacks under 1s.
+2 callbacks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+  - plugin nitro:virtual-deps resolveId (29 calls)
+  - plugin nitro:externals resolveId (4 calls)
+See https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.
+
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+Killed
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+===== /tmp/bagelito-pack-refinement-build-retry.log (last 24 lines) =====
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+✓ built in 4.44s
+[33m[PLUGIN_TIMINGS] [0mJavaScript callbacks ran for 4.3s of this 4.4s build (97%).
+The slowest callbacks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+  - plugin nitro:virtual load (94%, 4.2s, 10 calls)
+  - plugin nitro:import-attributes transform (50%, 2.2s, 2 calls)
+These rows add up to more than the total. Callbacks can overlap, so the same time counts for more than one row.
+2 callbacks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+  - plugin nitro:virtual-deps resolveId (29 calls)
+  - plugin nitro:externals resolveId (4 calls)
+See https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.
+
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+Killed
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+===== /tmp/bagelito-pack-refinement-typecheck.log (last 24 lines) =====
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> bagelito-ai-studio-tanstack-preview@0.1.0 typecheck
+> tsc --noEmit
+
+Killed
+===== /tmp/bagelito-pack-refinement-build-low-memory.log (last 24 lines) =====
+[38;5;246m───╯[0m
+
+✓ built in 468ms
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+
+<--- Last few GCs --->
+
+[42:0x1df68000]     5199 ms: Mark-Compact (reduce) 316.9 (322.4) -> 314.0 (319.4) MB, pooled: 0 MB, 82.44 / 0.00 ms  (+ 0.0 ms in 9 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 88 ms) (average mu = 0.260, current mu =
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x91d810  [node]
+ 2: 0x75bb1b node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
+ 3: 0xc755c0  [node]
+ 4: 0xc756bf  [node]
+ 5: 0xf24835  [node]
+ 6: 0xf24862  [node]
+ 7: 0xf24be4  [node]
+ 8: 0xf3694a  [node]
+ 9: 0xf3ae00  [node]
+10: 0x1a3ed81  [node]
+Aborted

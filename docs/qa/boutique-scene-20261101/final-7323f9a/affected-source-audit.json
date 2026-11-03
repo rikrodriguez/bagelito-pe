@@ -1,0 +1,12 @@
+{
+  "base": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "codeSHA": "7323f9a70888538e3db96071eaf022dce5a06a80",
+  "runtimeChangedFiles": [
+    "src/reference/ReferenceScene.tsx"
+  ],
+  "change": "Exact deletion of one noninteractive aria-hidden left-wall paragraph; all other ReferenceScene bytes identical.",
+  "identicalOnClickExpressions": 8,
+  "unchangedFrozenInputsExceptScene": 37,
+  "allOtherSrcPublicScriptsFilesUnchanged": 176,
+  "forbiddenCopyAbsent": true
+}

@@ -1,0 +1,289 @@
+{
+  "sourceAsset": "/workspace/generated_images/exec-36b58e1b-55b0-4d0a-89f3-262b85cca7a6.png",
+  "sourceSHA256": "3350bfefeccc2e88afdc6197737075b3c81d40ac77fb8c77268b8abef3f38afc",
+  "scope": "Two independent uniform case windows on NEW generated art. No source pixels squashed; not runtime reference crop. Geometry estimates require real capture verification.",
+  "measurementMethod": "Cyan horizontal-row peak and median adjacent-row RGB steel edges; all values same chosen planes.",
+  "creamLandmarkPairs": {
+    "strongFrontCyan": [
+      641,
+      241
+    ],
+    "upperFrontCyanEdge": [
+      636,
+      232
+    ],
+    "midSteelTopAfterPlacard": [
+      773,
+      436
+    ],
+    "midSteelBottom": [
+      780,
+      445
+    ],
+    "baseSteelUpper": [
+      892,
+      608
+    ],
+    "baseSteelLower": [
+      904,
+      617
+    ]
+  },
+  "bagelFit": {
+    "uniformScale": 0.761485826001955,
+    "wholeImageGlobalOrigin": [
+      62.59530791788856,
+      428.9956989247312
+    ],
+    "sourceViewportSuggested": [
+      24,
+      189,
+      1083,
+      458
+    ],
+    "sourceViewportGlobalOrigin": [
+      80.87096774193549,
+      572.9165200391006
+    ],
+    "sourceViewportDisplaySize": [
+      824.6891495601172,
+      348.7605083088954
+    ],
+    "pairedLandmarks": [
+      {
+        "reference": 604,
+        "source": 211,
+        "mapped": 589.6692082111437,
+        "delta": -14.330791788856345
+      },
+      {
+        "reference": 729,
+        "source": 394,
+        "mapped": 729.0211143695014,
+        "delta": 0.021114369501447072
+      },
+      {
+        "reference": 744,
+        "source": 416,
+        "mapped": 745.7738025415445,
+        "delta": 1.7738025415444554
+      },
+      {
+        "reference": 870,
+        "source": 586,
+        "mapped": 875.2263929618769,
+        "delta": 5.226392961876854
+      },
+      {
+        "reference": 890,
+        "source": 615,
+        "mapped": 897.3094819159335,
+        "delta": 7.309481915933475
+      }
+    ],
+    "strongFootGlobalY": 921.6770283479962
+  },
+  "creamFit": {
+    "uniformScale": 0.7069767441860465,
+    "wholeImageGlobalOrigin": [
+      124.3767441860465,
+      466.1451162790698
+    ],
+    "sourceViewportSuggested": [
+      1080,
+      189,
+      940,
+      458
+    ],
+    "sourceViewportGlobalOrigin": [
+      887.9116279069767,
+      599.7637209302326
+    ],
+    "sourceViewportDisplaySize": [
+      664.5581395348837,
+      323.7953488372093
+    ],
+    "pairedLandmarks": [
+      {
+        "reference": 641,
+        "source": 241,
+        "mapped": 636.526511627907,
+        "delta": -4.473488372093016
+      },
+      {
+        "reference": 773,
+        "source": 436,
+        "mapped": 774.3869767441861,
+        "delta": 1.3869767441860859
+      },
+      {
+        "reference": 780,
+        "source": 445,
+        "mapped": 780.7497674418605,
+        "delta": 0.7497674418605129
+      },
+      {
+        "reference": 892,
+        "source": 608,
+        "mapped": 895.986976744186,
+        "delta": 3.986976744185995
+      },
+      {
+        "reference": 904,
+        "source": 617,
+        "mapped": 902.3497674418604,
+        "delta": -1.650232558139578
+      }
+    ],
+    "strongFootGlobalY": 923.5590697674419
+  },
+  "all13MappedPlacardCenters": {
+    "plain": {
+      "source": [
+        207,
+        372.5
+      ],
+      "global1536x1024": [
+        220.223,
+        712.649
+      ]
+    },
+    "everything": {
+      "source": [
+        453.5,
+        372
+      ],
+      "global1536x1024": [
+        407.929,
+        712.268
+      ]
+    },
+    "sesame": {
+      "source": [
+        702,
+        372
+      ],
+      "global1536x1024": [
+        597.158,
+        712.268
+      ]
+    },
+    "classic-onion": {
+      "source": [
+        956,
+        373.5
+      ],
+      "global1536x1024": [
+        790.576,
+        713.411
+      ]
+    },
+    "jalapeno-cheddar": {
+      "source": [
+        188,
+        556.5
+      ],
+      "global1536x1024": [
+        205.755,
+        852.763
+      ]
+    },
+    "cheddar": {
+      "source": [
+        439,
+        557
+      ],
+      "global1536x1024": [
+        396.888,
+        853.143
+      ]
+    },
+    "cinnamon-raisin": {
+      "source": [
+        696.5,
+        556.5
+      ],
+      "global1536x1024": [
+        592.97,
+        852.763
+      ]
+    },
+    "blueberry": {
+      "source": [
+        956.5,
+        557
+      ],
+      "global1536x1024": [
+        790.957,
+        853.143
+      ]
+    },
+    "original": {
+      "source": [
+        1248.5,
+        413
+      ],
+      "global1536x1024": [
+        1007.037,
+        758.127
+      ]
+    },
+    "aji": {
+      "source": [
+        1513,
+        413.5
+      ],
+      "global1536x1024": [
+        1194.033,
+        758.48
+      ]
+    },
+    "herbs": {
+      "source": [
+        1795,
+        413.5
+      ],
+      "global1536x1024": [
+        1393.4,
+        758.48
+      ]
+    },
+    "honey": {
+      "source": [
+        1314.5,
+        560.5
+      ],
+      "global1536x1024": [
+        1053.698,
+        862.406
+      ]
+    },
+    "strawberry": {
+      "source": [
+        1742.5,
+        560.5
+      ],
+      "global1536x1024": [
+        1356.284,
+        862.406
+      ]
+    }
+  },
+  "seam": {
+    "bagelInnerX": 885.0,
+    "bagelNextJambX": 905.5601173020528,
+    "creamLeftWindowX": 887.9116279069767,
+    "creamNextJambX": 907.0,
+    "creamRightColumnX": 1515.0,
+    "creamStrongRightX": 1536.2093023255816,
+    "overlapCSSPx": 17.648489395076126,
+    "assessment": "Horizontal overlap~17.65px places glass jambs~1.44px apart; render cream on top to cover duplicated metal seam, then inspect actual screenshot. Strong right edge extends0.21px, confined to metal/shadow. All13placards inside viewport."
+  },
+  "limits": [
+    "Bagel topfront remains14.33px above reference with least-squaresY; bagelrear top~572.92 vs reference~591, while lowerrails differ~5..7px. Cannot claim fullheightmatch.",
+    "Cream selected5anchors residuals -4.47..+3.99px; much more coherent than using bagel Y positions for both cases.",
+    "Full decorative steel foot ends~921.68/923.56px; chosen base landmarks897.31/902.35 correspond to upper steel edges, not entire alpha silhouette. Do not hide this distinction.",
+    "Do not change mobile image/viewBoxes/native-label maps silently; preserve old mobile art/map or separately verify any update."
+  ],
+  "repositoryEdits": false
+}

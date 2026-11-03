@@ -1,0 +1,47 @@
+{
+  "initial_checks": [
+    {
+      "check": "typecheck",
+      "cwd": "/workspace/bagelito-status-84425e3",
+      "command": "NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' node /workspace/sql-validation-f6f96bb/typescript-loader/node_modules/typescript/bin/tsc --noEmit",
+      "started_at": "2026-11-02T15:41:29.278425+00:00",
+      "finished_at": "2026-11-02T15:41:30.023719+00:00",
+      "elapsed_seconds": 0.7453202500000771,
+      "exit_code": 2,
+      "signal": null
+    },
+    {
+      "check": "build",
+      "cwd": "/workspace/bagelito-status-84425e3",
+      "command": "NODE_OPTIONS='--max-old-space-size=640 --max-semi-space-size=4' npm run build",
+      "started_at": "2026-11-02T15:41:30.024039+00:00",
+      "finished_at": "2026-11-02T15:41:30.319323+00:00",
+      "elapsed_seconds": 0.29530697999962285,
+      "exit_code": 127,
+      "signal": null
+    }
+  ],
+  "initial_typecheck_diagnostic": "TS2688: Cannot find type definition file for 'node'",
+  "initial_build_diagnostic": "vite: not found",
+  "classification": "Missing dependencies, not evidence of an application defect; not SIGKILL. Original logs preserved.",
+  "private_library_transfer": {
+    "filename": "verified-node-modules-20261102.tar.gz",
+    "expected_size_bytes": 75297088,
+    "expected_sha256": "53a412807f4a7148c1e76f1371a465c2b0a933eeb453d27c35277d8a604cbdd2",
+    "archive_received": false,
+    "archive_hash_verified": false,
+    "materialization_helper_exit_code": 1,
+    "diagnostic": "Tunnel connection failed: 403 Forbidden",
+    "after_denial": "No transfer retry, alternate storage download, proxy/network/credential change or extraction."
+  },
+  "separately_authorized_public_reconstruction": {
+    "input_completion": "Received19-record missing span; exact197paths/22links; canonical hash matched before further downloads.",
+    "canonical_manifest_sha256": "710fbebce2a60627aa45e729e13f63051861243d0d1e771f6686216ab52426be",
+    "prefix_validation_history": [
+      "Initial literal package/ verifier stopped on official @types/draco3d root draco3d after successful SRI.",
+      "Named-root verifier then observed official @types/node root node v24.19 after successful SRI.",
+      "Private verification helper accepted only npm-equivalent single known DefinitelyTyped prefix with exact package metadata. Cached exact tarballs were reverified; no package data/version/integrity changed."
+    ],
+    "result": "All197exact tarballs verified and extracted; all197installed versions and22listed internal links verified; no resolver, npm install or lifecycle scripts."
+  }
+}

@@ -1,0 +1,128 @@
+/* Reference stage anchors: coordinates refer to the approved 1536 x 1024 view.
+   Only the entry scene uses this composition. Checkout keeps its native flow. */
+.rebuilt-wordmark text { font-size:168px; font-variation-settings:"wdth" var(--letter-width,100),"wght" var(--letter-weight,600); font-weight:600; fill:#023a9b; stroke:#f18b85; }
+.rebuilt-wordmark .rebuilt-tagline { font-family:Arial,sans-serif; font-size:39px; font-weight:700; font-variation-settings:normal; letter-spacing:0; fill:#023a9b; stroke:none; }
+.rebuilt-wordmark .rebuilt-initial-b { fill:#023a9b; stroke:#f18b85; stroke-width:11px; }
+.rebuilt-wordmark .rebuilt-a-counter-edge { fill:none; stroke:#f18b85; stroke-width:3.5px; }
+.rebuilt-wordmark { filter:none; }
+.rebuilt-wordmark>g { filter:drop-shadow(0 2px 0 #003277) drop-shadow(0 3px 3px #4b39252a); }
+.rebuilt-store[data-compact="true"] .rebuilt-tagline { display:none; }
+.rebuilt-store[data-compact="true"] .rebuilt-wall-menu,
+.rebuilt-store[data-compact="true"] .rebuilt-shirt-mark { display:none; }
+.rebuilt-architecture>picture { filter:none; }
+.rebuilt-room-shade { display:none; }
+.rebuilt-combo-photo { display:block; width:100%; height:100%; object-fit:contain; }
+.rebuilt-counter { container-type:inline-size; }
+/* Desktop own-art windows stop after the steel base: source y618 (bagels)
+   and y624 (schmears). Food, placards and uniform scales are unchanged; the
+   redundant decorative plinth no longer extends over the room counter. */
+.rebuilt-counter-photo { display:block; position:absolute; left:-1.9031036168%; top:-11.8752986858cqw; width:106.8195394808%; height:auto; clip-path:inset(0 45.198019802% 20.5655526992% 0); pointer-events:none; }
+.rebuilt-desktop-case-art { display:block; position:absolute; left:55.4105297158%; top:-9.2954780362cqw; width:46.149870801%; height:auto; aspect-ratio:940/624; pointer-events:none; }
+.rebuilt-mobile-case-art { display:none; }
+.rebuilt-counter:before { display:none; }
+.rebuilt-counter .rebuilt-display { position:absolute; inset:0; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; overflow:visible; pointer-events:none; }
+.rebuilt-counter .rebuilt-bagel-trays,
+.rebuilt-counter .rebuilt-schmear-trays { position:absolute; inset:0; display:block; padding:0; margin:0; aspect-ratio:auto; background:none; pointer-events:none; }
+.rebuilt-counter .rebuilt-product-placard { position:absolute; left:var(--label-x); top:var(--label-y); width:13%; min-width:0; margin:0; padding:0; transform:translate(-50%,-50%); border:0; background:none; box-shadow:none; pointer-events:none; }
+.rebuilt-counter .rebuilt-schmear-tray { width:14.5%; }
+.rebuilt-counter .rebuilt-schmear-tray:nth-of-type(4),
+.rebuilt-counter .rebuilt-schmear-tray:nth-of-type(5) { width:20%; }
+.rebuilt-counter .rebuilt-product-placard figcaption { display:block; min-height:0; padding:0 2px; background:none; border:0; border-radius:0; box-shadow:none; color:#004aad; text-align:center; font-family:Fredoka,Arial,sans-serif; font-size:clamp(12px,1.25cqw,20px); font-variation-settings:"wdth" 75,"wght" 700; font-weight:700; text-transform:uppercase; line-height:1.05; letter-spacing:-.025em; }
+.rebuilt-counter .rebuilt-case-link { position:absolute; z-index:5; top:0; bottom:0; margin:0; padding:0; min-height:44px; background:transparent; border:0; border-radius:2px; box-shadow:none; pointer-events:auto; }
+.rebuilt-bagel-display .rebuilt-case-link { left:0; width:55.2083333333%; }
+.rebuilt-schmear-display .rebuilt-case-link { right:0; width:44.7916666667%; }
+.rebuilt-counter .rebuilt-case-link>.rebuilt-arrow { position:absolute; right:6px; top:6px; width:44px; height:44px; color:#004aad; background:#fffdf5ed; box-shadow:0 2px 7px #1c353522; }
+.rebuilt-counter .rebuilt-case-link:hover { outline:2px solid #004aad88; outline-offset:0; }
+
+@media(min-width:1051px) {
+  .reference-presentation.rebuilt-store[data-compact="false"] { display:block; container-type:inline-size; width:100%; min-height:0; aspect-ratio:3/2; padding:0; overflow:clip; background:#ede9e1; }
+  .rebuilt-store[data-compact="false"] .rebuilt-architecture { inset:0; }
+  .rebuilt-store[data-compact="false"] .rebuilt-room-photo { width:100%; height:auto; }
+  .rebuilt-store[data-compact="false"] .rebuilt-topbar { position:absolute; z-index:6; top:1.7578125%; left:1.3020833%; right:1.3020833%; min-height:0; height:5.859375%; }
+  .rebuilt-store[data-compact="false"] .rebuilt-menu { width:3.90625cqw; height:3.90625cqw; min-width:44px; min-height:44px; }
+  .rebuilt-store[data-compact="false"] .rebuilt-cart { min-height:44px; padding:.8cqw 1.2cqw; font-size:clamp(14px,1.05cqw,20px); }
+  .rebuilt-store[data-compact="false"] .rebuilt-brand { position:absolute; left:29.9479167%; top:4.39453125%; width:50.78125%; margin:0; }
+  .rebuilt-store[data-compact="false"] .rebuilt-hero { position:absolute; left:32.096354%; top:26.3671875%; width:46%; margin:0; text-align:left; }
+  .rebuilt-store[data-compact="false"] .rebuilt-hero h1 { font-size:3.90625cqw; line-height:1.1; font-weight:600; letter-spacing:-.025em; text-shadow:0 2px 4px #211a1466; }
+  .rebuilt-store[data-compact="false"] .rebuilt-categories { position:absolute; left:25.716146%; top:34.1796875%; width:54.361979%; height:22.8515625%; margin:0; grid-template-columns:1fr 1.05fr 1fr; gap:.9114583cqw; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category { height:100%; padding:0 1.302083cqw .390625cqw; border-radius:1.5625cqw; box-shadow:0 6px 16px #211a1426; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-visual { flex-shrink:0; height:9.440104cqw; margin:0 0 .32552cqw; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-copy { gap:.32552cqw; padding-right:1.3cqw; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-copy>strong { font-size:2.018229cqw; line-height:1.08; font-weight:600; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-copy>small { font-size:clamp(12px,.9765625cqw,19px); line-height:1.25; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category>.rebuilt-arrow { right:1.10677cqw; bottom:2.34375cqw; width:2.34375cqw; height:2.34375cqw; font-size:1.7cqw; }
+  .rebuilt-store[data-compact="false"] .rebuilt-counter { position:absolute; left:5.859375%; top:58.59375%; width:93.75%; height:29.296875%; margin:0; padding:0; border:0; border-radius:0; background:none; box-shadow:none; }
+  .rebuilt-store[data-compact="false"] .rebuilt-progress { position:absolute; left:30.2734375%; top:89.453125%; width:39.388021%; height:7.71484375%; margin:0; padding:.32552cqw; gap:0; border-radius:3cqw; }
+  .rebuilt-store[data-compact="false"] .rebuilt-progress>button { min-height:44px; height:100%; border-radius:3cqw; }
+  .rebuilt-store[data-compact="false"] .rebuilt-progress>button>span { font-size:clamp(12px,.78125cqw,16px); }
+  .rebuilt-store[data-compact="false"] .rebuilt-wall-copy-right { top:14.0625%; right:7.03125%; font-size:1.953125cqw; width:6.5%; line-height:1.04; transform:rotate(8deg); }
+  .rebuilt-wall-menu { display:flex; flex-direction:column; position:absolute; top:3.1%; left:6.7%; width:10.2%; margin:0; color:#004aad; font-family:Fredoka,Arial,sans-serif; font-variation-settings:"wdth" 75,"wght" 600; text-transform:uppercase; transform:perspective(900px) rotateY(10deg) rotate(1deg); transform-origin:top left; }
+  .rebuilt-wall-menu h2 { margin:0 0 .3cqw; font-size:clamp(16px,1.45cqw,28px); line-height:1.15; font-weight:700; }
+  .rebuilt-wall-menu h2:not(:first-child) { margin-top:1.1cqw; }
+  .rebuilt-wall-menu>span { font-size:clamp(13px,1.03cqw,20px); line-height:1.35; letter-spacing:-.03em; white-space:nowrap; }
+  .rebuilt-shirt-mark { position:absolute; top:47.4%; color:#004aad; font-family:Fredoka,Arial,sans-serif; font-variation-settings:"wdth" 75,"wght" 700; font-size:clamp(12px,.9cqw,20px); text-transform:uppercase; letter-spacing:-.04em; transform:rotate(-3deg); }
+  .rebuilt-shirt-mark-left { left:20.6%; }.rebuilt-shirt-mark-right { left:85.4%; transform:rotate(3deg); }
+}
+
+@media(max-width:1050px) {
+  .rebuilt-wall-menu,.rebuilt-shirt-mark { display:none; }
+  .rebuilt-store[data-compact="false"] .rebuilt-wordmark { margin:0 auto; }
+  .rebuilt-counter { position:relative; display:flex; flex-direction:column; gap:18px; width:100%; padding:0; margin:0; border:0; background:none; box-shadow:none; }
+  .rebuilt-counter-photo,.rebuilt-desktop-case-art { display:none; }
+  .rebuilt-counter .rebuilt-display { position:relative; inset:auto; width:100%; }
+  .rebuilt-counter .rebuilt-bagel-display { aspect-ratio:1165/493; }
+  .rebuilt-counter .rebuilt-schmear-display { aspect-ratio:855/493; }
+  .rebuilt-mobile-case-art { display:block; width:100%; height:100%; }
+  .rebuilt-counter .rebuilt-product-placard { left:var(--mobile-label-x); top:var(--mobile-label-y); width:21%; }
+  .rebuilt-counter .rebuilt-schmear-tray { width:27%; }
+  .rebuilt-counter .rebuilt-schmear-tray:nth-of-type(4),.rebuilt-counter .rebuilt-schmear-tray:nth-of-type(5) { width:40%; }
+  .rebuilt-counter .rebuilt-product-placard figcaption { font-size:clamp(12px,1.5cqw,18px); line-height:1.1; }
+  .rebuilt-counter .rebuilt-case-link { left:0; right:0; width:100%; }
+  .rebuilt-store[data-compact="false"] .rebuilt-progress { margin-top:20px; }
+  .rebuilt-store[data-compact="false"] .rebuilt-hero { margin-top:8px; }
+}
+
+@media(min-width:1051px) and (max-width:1199px){.rebuilt-store[data-compact="false"] .rebuilt-category-visual{height:8.8cqw}}
+
+.rebuilt-progress>button>i{display:flex;align-items:center;justify-content:center}
+.rebuilt-progress>button>i>svg{display:block;width:24px;height:24px}
+
+/* Explicit source-text placards and a visible mobile action; no enlarged-image UI. */
+.rebuilt-case-label{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:1050px){
+ .rebuilt-counter .rebuilt-display{margin-bottom:50px}
+ .rebuilt-counter .rebuilt-product-placard{width:23%}
+ .rebuilt-counter .rebuilt-schmear-tray{width:28%}
+ .rebuilt-counter .rebuilt-product-placard figcaption{padding:2px 3px;background:#fffdf4;border-radius:1px;font-size:clamp(14px,1.5cqw,18px);line-height:1.1;font-variation-settings:"wdth" 85,"wght" 600;font-weight:600}
+ .rebuilt-counter .rebuilt-case-label{left:0;top:calc(100% + 6px);display:flex;align-items:center;justify-content:center;width:100%;height:44px;margin:0;padding:4px 48px 4px 12px;overflow:visible;clip-path:none;white-space:normal;border:1px solid #ffffffd9;border-radius:999px;background:#fffdf4;color:#004aad;font-size:15px;font-weight:700;line-height:1.2;box-shadow:0 2px 9px #5e48301a}
+ .rebuilt-counter .rebuilt-case-link>.rebuilt-arrow{top:calc(100% + 6px);right:0;background:transparent;box-shadow:none}
+ .rebuilt-counter .rebuilt-case-link:focus-visible .rebuilt-case-label{outline:3px solid #004aad;outline-offset:3px}
+}
+
+@media(max-width:640px){.rebuilt-counter .rebuilt-product-placard figcaption{font-size:16px}}
+
+@media(max-width:360px){
+ .rebuilt-counter .rebuilt-product-placard{width:24%}
+ .rebuilt-counter .rebuilt-schmear-tray{width:28%}
+ .rebuilt-counter .rebuilt-product-placard figcaption{font-size:16px;text-transform:none;font-variation-settings:"wdth" 75,"wght" 500;font-weight:500}
+}
+
+/* Match the reference's category chevrons and full desktop step name without
+   shrinking the compact/mobile labels or changing any click target. */
+.rebuilt-category>.rebuilt-arrow>svg { width:70%; height:70%; display:block; }
+.rebuilt-progress>button>.rebuilt-step-label-wide { display:none; }
+@media(min-width:1051px) {
+  .rebuilt-store[data-compact="false"] .rebuilt-progress>button>.rebuilt-step-label-wide { display:block; }
+  .rebuilt-store[data-compact="false"] .rebuilt-progress>button>.rebuilt-step-label-short { display:none; }
+}
+
+/* Native browser zoom can leave less than 300 CSS px. Reflow, do not shrink
+   lettering or silently clip the third category behind the scene's mask. */
+@media(max-width:300px) {
+  .rebuilt-store[data-compact="false"] .rebuilt-categories { grid-template-columns:minmax(0,1fr); }
+  .rebuilt-store[data-compact="false"] .rebuilt-category { display:grid; grid-template-columns:88px minmax(0,1fr); gap:8px; align-items:center; padding:10px; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-visual { height:88px; margin:0; }
+  .rebuilt-store[data-compact="false"] .rebuilt-category-copy { min-width:0; overflow-wrap:anywhere; }
+  .rebuilt-progress { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .rebuilt-store[data-compact="true"] .rebuilt-brand { margin:4px auto; }
+}

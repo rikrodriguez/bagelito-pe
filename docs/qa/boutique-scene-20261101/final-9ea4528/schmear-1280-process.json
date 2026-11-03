@@ -1,0 +1,16 @@
+{
+  "stage": "schmear-1280",
+  "command": [
+    "node",
+    "scripts/qa-rebuilt-storefront.cjs"
+  ],
+  "widths": "1280",
+  "scenarios": "schmear",
+  "startedAt": "2026-11-01T14:20:45.550674+00:00",
+  "codeSHA": "9ea4528806f5dd032e1d76eb7f56e1be98a9d042",
+  "log": "/workspace/bagelito-boutique-evidence-20261101/final-9ea4528/schmear-1280.log",
+  "pid": 69771,
+  "exitCode": 0,
+  "endedAt": "2026-11-01T14:20:58.071543+00:00",
+  "sourcesUnchanged": true
+}

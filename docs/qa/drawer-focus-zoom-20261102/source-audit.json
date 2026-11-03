@@ -1,0 +1,76 @@
+{
+  "baselineLocalSHA": "0298310684c8fe2b40fca41d03a4e3f17607789f",
+  "baselineRemoteSHA": "d3a5d4c8e2170175d849c1992bc5c47d36cc540c",
+  "testedLocalSHA": "6fe38498ae0edc852f77b5d18072fec3dfd2744f",
+  "testedTree": "6005b51c84f5601b23564a3b547739f05cf6fe8f",
+  "changedFiles": [
+    "src/playable/GuidedCommerce.tsx",
+    "src/reference/reference-aligned.css",
+    "src/reference/reference-drawer-focus.ts",
+    "tests/reference-category-presentation.test.cjs",
+    "tests/reference-drawer-focus.test.cjs"
+  ],
+  "unchangedRuntimeAssetConfigFiles": 159,
+  "unchangedNamedFunctions": [
+    "revealFocusedCatalogCard",
+    "readSafeSelections",
+    "resetSelections",
+    "chooseCategory",
+    "choosePackFormat",
+    "choosePackMix",
+    "choosePack",
+    "chooseCombo",
+    "chooseSchmearSize",
+    "addBagel",
+    "removeBagel",
+    "addSchmear",
+    "removeSchmear",
+    "nextFromBagels",
+    "nextFromSchmears",
+    "acceptPrimaryUpsell",
+    "acceptDownsell",
+    "pullReceipt",
+    "saveWallet",
+    "goBack",
+    "jumpToStage",
+    "goToEntrance",
+    "jumpToReferenceStage",
+    "CrossSellPanel"
+  ],
+  "commercialRenderAfterChromeByteIdentical": true,
+  "frozen": [
+    {
+      "path": "public/images/store-reference-approved.webp",
+      "sha256": "0df3c229a570bc1b6f4fb6a0130e818ec68d4f921d98c065035542636d169cc9"
+    },
+    {
+      "path": "public/images/bagelito-logo.svg",
+      "sha256": "badaef5c1540bb4bcf7eb108f37347296dfd47fccac60105624b0fa586498b7e"
+    },
+    {
+      "path": "public/images/bagelito-wordmark.svg",
+      "sha256": "44cb170fa0e648bffdf5b909bd23019cfa2f294bc9233c7605e06f8575bcd3a9"
+    },
+    {
+      "path": "src/reference/ReferenceScene.tsx",
+      "sha256": "a4dc57dfdc0e32ad115427f7612a2bacb5c1460a70aa1969ecbcf9749045b03e"
+    },
+    {
+      "path": "src/domain/lib/approved-shop-contract.ts",
+      "sha256": "fe22a3cf34dabfe6d1c8f092545d54ff491ee711243a730f172110dbae82ff7a"
+    },
+    {
+      "path": "src/domain/data/verified-menu-2026-10-21.json",
+      "sha256": "017f066dd6ce9a59643f8eb0f105b827d68a96ec994721af4789e5ebae611080"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "1f772cbd5aa3ec3e408d33ff74fd75ffde0884fa6095670c83d3e4f166e55f11"
+    }
+  ],
+  "notes": [
+    "Menu selector callback now also dismisses the reference drawer; not all onClick expressions are unchanged.",
+    "Focus helper mutates inert/focus only in the reference-mode chrome; no commerce storage/payment state reads.",
+    "Changes in source/asset files outside the three listed application files: none."
+  ]
+}
