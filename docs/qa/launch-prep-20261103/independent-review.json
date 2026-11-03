@@ -1,0 +1,142 @@
+{
+  "reviewer": "launch_pricing_audit",
+  "reviewType": "Independent read-only source and captured-image review; no independent full test rerun",
+  "baseHead": "bbd149019b249edf4243fb4776c6acff944775be",
+  "subject": "Working-tree launch-preparation candidate over the exact base, bound by source hashes below",
+  "decision": "GO for draft PR update if parent verifies remote HEAD and essential checks; no approval to merge, deploy, activate payments or make sales commitments",
+  "blockingFindings": [],
+  "sourceHashes": {
+    "src/domain/lib/manual-order.ts": "8ca520f220eabefbd491bb3c3cc28421a50fd810f6ff412c9a9c38c6bfaf6904",
+    "src/playable/GuidedCommerce.tsx": "1231a12b6f1b43bcc491c221288a077d7987103d493d481ce1db431cba3e0306",
+    "src/domain/lib/approved-shop-contract.ts": "fab9996af2b13cc39f08ca845ef57a6ef9cd230049fb174f0da6cf34f4b36dc2",
+    "tests/manual-inquiry-journey.test.cjs": "f5864dd65602a310e583fe9f6e1d6c22906b61b6a7b9a8d6e7da565527f5b26d",
+    "tests/guided-sandbox-contact.test.cjs": "c6d4b6cade4fb7f74c22a315240fc48ac5f43aa1b1f425599edaa6f2d6f5b743",
+    "scripts/qa-manual-inquiry.cjs": "fc0787a4c7ed1c4ceb4f95a9f7e4ac71bd61e430819bdf112a0a9890d9fa942d"
+  },
+  "observations": [
+    {
+      "topic": "Same-flavor normalization",
+      "result": "fixed",
+      "evidence": [
+        "src/domain/lib/manual-order.ts:27",
+        "src/domain/lib/manual-order.ts:42",
+        "src/domain/lib/guided-order-quote.ts:116",
+        "tests/guided-checkout-quote.test.cjs:65"
+      ],
+      "assessment": "The shared description derives single/mixed from the actual selected flavors. A completed six-Plain selection entered via mixed now says un sabor in cashier and inquiry, consistent with the canonical order plan. Two actual flavors remain mixed. Current caller summaries use unique verified menu names, so their distinct display names correspond to distinct flavor IDs."
+    },
+    {
+      "topic": "Selection identity in cart and cashier",
+      "result": "fixed",
+      "evidence": [
+        "src/playable/GuidedCommerce.tsx:673",
+        "src/playable/GuidedCommerce.tsx:686",
+        "src/playable/GuidedCommerce.tsx:817",
+        "src/playable/GuidedCommerce.tsx:819",
+        "src/playable/GuidedCommerce.tsx:1063"
+      ],
+      "assessment": "Cart, cashier and contact formatter receive the same category, format, target quantity, combo and current schmear grams. The cart now retains mini24 context and the pot size. Standalone240 shows 240 g both as product context and on the selected flavor row."
+    },
+    {
+      "topic": "Prices and commercial scope",
+      "result": "preserved",
+      "evidence": [
+        "src/domain/data/verified-menu-2026-10-21.json",
+        "src/domain/lib/approved-shop-contract.ts:102",
+        "src/domain/lib/guided-order-quote.ts"
+      ],
+      "assessment": "No retail value, quote eligibility, stock check or payment calculation changes. The approved-shop-contract diff only clarifies a comment: the current visual2+1 journey does not commercially supersede historical bundles. Current2+1 remains unpriced/review_required, minis/premium remain restricted, and manual totals still require human confirmation."
+    },
+    {
+      "topic": "Side effects and payment gates",
+      "result": "preserved",
+      "evidence": [
+        "src/playable/GuidedCommerce.tsx:126",
+        "src/playable/GuidedCommerce.tsx:671",
+        "src/playable/GuidedCommerce.tsx:673"
+      ],
+      "assessment": "No change to manualInquiry/review/sandbox gates, contact destination or encoding, iframe/SDK, backend route, schema, provider, origin configuration or deployment settings. The helper is descriptive and performs no I/O."
+    },
+    {
+      "topic": "Regressions",
+      "result": "adequate for this bounded draft change",
+      "evidence": [
+        "tests/manual-inquiry-journey.test.cjs:174",
+        "tests/guided-sandbox-contact.test.cjs:27"
+      ],
+      "assessment": "Added journeys cover one-flavor mixed entry, genuine mixed entry, size retention120/180/240, removal, product identity and normal category/format resets. Existing sandbox contact render fixture supplies the newly rendered descriptive value without relaxing guard assertions."
+    }
+  ],
+  "visualInspection": {
+    "files": [
+      "supplemental/390-mixed-one-flavor-cashier.png",
+      "supplemental/1280-mixed-one-flavor-cashier.png",
+      "supplemental/390-mini24-cart.png",
+      "supplemental/1280-mini24-cart.png",
+      "supplemental/390-standalone240-cart.png",
+      "supplemental/1280-standalone240-cart.png"
+    ],
+    "manuallyInspected": 6,
+    "findings": [
+      "Both390/1280 cashier images visibly say Pack de6bagels grandes(un sabor) for6Plain.",
+      "Both mini24 cart images identify the format, mixed composition,12Everything+12Plain and one120g pot.",
+      "Both standalone cart images identify Schmear individual(240g) and Whipped Original240g.",
+      "No evident clipping or overlap in the six inspected images; cart backdrop dimming is expected modal behavior."
+    ],
+    "evidenceSource": "Parent-produced loopback screenshots; reviewer did not start a browser or server"
+  },
+  "checksReviewedNotRerun": {
+    "focused": {
+      "exitCode": 0,
+      "pass": 55
+    },
+    "node": {
+      "exitCode": 0,
+      "pass": 361,
+      "excludedFiles": [
+        "qa-guided-driver.test.cjs",
+        "qa-loopback-guard.test.cjs",
+        "qa-world-driver.test.cjs"
+      ],
+      "reason": "Approved offline HDR unavailable"
+    },
+    "build": {
+      "exitCode": 0
+    },
+    "canonicalVisual": {
+      "closed": 2,
+      "enabled": 20,
+      "passed": true
+    },
+    "supplementalVisual": {
+      "captures": 12,
+      "passed": true,
+      "viewports": [
+        390,
+        1280
+      ],
+      "blocked": 0,
+      "httpErrors": 0,
+      "pageErrors": 0,
+      "routeErrors": 0,
+      "overflows": 0
+    }
+  },
+  "limits": [
+    "This review does not establish current stock, delivery date/capacity or commercial approval of unresolved products.",
+    "A manual inquiry still does not reserve, charge or guarantee a final price.",
+    "Only six supplied PNGs were manually inspected; parent reports22canonical+12supplemental cases. No assertion of full visual fidelity, real-device behavior, StrictMode, keyboard/focus or accessibility certification.",
+    "The available approved reference is a desktop landing; no approved cashier or mobile reference was used to claim fidelity.",
+    "No WhatsApp delivery, Culqi/provider acceptance, external schema inspection, migration installation or multi-session financial locking validation was performed.",
+    "Draft update remains conditional on the parent checking current remote HEAD and documenting excluded HDR coverage."
+  ],
+  "reviewerActions": {
+    "sourceEdits": false,
+    "browserOrServerStarted": false,
+    "testSuitesRerun": false,
+    "externalDatabaseOrProvider": false,
+    "whatsAppOrOrder": false,
+    "pushMergeDeploy": false,
+    "onlyArtifactWritten": "/workspace/bagelito-launch-prep-artifacts-20261103/independent-review.json"
+  }
+}

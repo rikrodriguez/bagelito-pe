@@ -99,7 +99,9 @@ export function quotePublishedSchmear(input: { flavorId: string; grams: number }
   return ready(price)
 }
 
-/** Latest user-approved two-bagel journey overrides historical printed combo composition. */
+/** Preview of the current two-bagel visual journey. It is not commercial
+ * approval to replace historical bundles or assign their prices to this offer.
+ */
 export function quoteTwoBagelCombo(input: {
   bagels: BagelSelection[]
   schmearId: string

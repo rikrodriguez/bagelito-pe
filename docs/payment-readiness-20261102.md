@@ -2,6 +2,12 @@
 
 **No está lista para vender automáticamente.** La aprobación comercial de Culqi ya fue recibida; no se vuelve a presentar como pendiente del titular. Este documento describe los pendientes técnicos del candidato PR47, no una solicitud de repetir la apertura de cuenta.
 
+**Actualización del 3 de noviembre:** para el candidato actual consultar
+[preparación de lanzamiento](qa/launch-prep-20261103/README.md). El puente de
+productos completo y su persistencia propuesta ya existen en sandbox; los
+estados de implementación e inventarios de entorno que siguen son evidencia
+histórica. No prueban el esquema, llaves o runtime desplegados hoy.
+
 ## Evidencia actual, separada por capa
 
 - PR47 consultado a las 12:10 UTC: abierto, borrador, sin merge; HEAD b612ecc. Es la tienda guiada visual, no un release financiero.

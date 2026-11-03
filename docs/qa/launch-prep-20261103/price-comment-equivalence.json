@@ -1,0 +1,8 @@
+{
+  "file": "src/domain/lib/approved-shop-contract.ts",
+  "base": "bbd149019b249edf4243fb4776c6acff944775be",
+  "change": "Documentation only; no commercial approval inferred from visual journey",
+  "comparison": "TypeScript transpilation with removeComments=true",
+  "sameJavaScript": true,
+  "javaScriptSha256": "c8e5773facee4cb3fb5386ae73fe7dcae0a615b71edda66ae7006fa644a73ccb"
+}

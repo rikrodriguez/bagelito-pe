@@ -24,6 +24,7 @@ function render({sandboxMode = false, reviewOnly = false, enabled = true} = {}) 
     canPayOnline: enabled && !reviewOnly, qaMode: false, quoteLoading: false,
     paymentConfig: {enabled}, checkoutQuote: {checkoutAllowed: enabled, amountPen: 62},
     packFormat: 'grande', packQty: 6, packMix: 'single', selectedCombo: null, schmearSize: 120,
+    selectionDescription: 'Pack de 6 bagels grandes (un sabor)',
     selectedBagelSummary: [{name: 'Plain', quantity: 6}], selectedSchmearSummary: [],
     setScene() {throw Error('navigation is outside this render test')},
     createManualOrderWhatsAppHref(input) {calls.push(input); return 'https://contact.example.test/fixture'},

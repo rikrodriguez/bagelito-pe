@@ -171,3 +171,70 @@ test('even hostile enabled payment and QA state cannot mount payment in manual m
   assert.equal(stateNames[18],'paymentConfig');assert.equal(stateNames[19],'checkoutQuote')
   const j=pack({mix:'single',injectPayment:true}); j.primary(); assert.match(j.message(),/no confirma ni paga/);j.forceScene('pay');j.noLink()
 })
+
+function panelText(j,className) {
+  const panels=j.nodes().filter(n=>n.props.className===className)
+  assert.equal(panels.length,1,'one visible '+className)
+  return justText(panels[0]).replace(/\s+/g,' ').trim()
+}
+function selectMixedWithOneFlavor(format,quantity) {
+  const j=journey({initialCategory:'packs'})
+  j.click(format==='mini'?'Mini bagels':'Bagels grandes')
+  j.click('Elegir '+quantity+' '+(format==='mini'?'mini bagels':'bagels')+', mixtos')
+  for(let i=0;i<quantity;i++)j.click('Agregar Plain')
+  j.primary();j.primary();assert.equal(j.scene(),'cashier')
+  return j
+}
+for(const [format,quantity] of [['grande',6],['mini',24]])test('one-flavor selection from mixed '+format+' inquiry uses its actual single composition',()=>{
+  const j=selectMixedWithOneFlavor(format,quantity)
+  assert.match(j.message(),new RegExp('Pack de '+quantity+' bagels '+(format==='mini'?'minis':'grandes')+' \\(un sabor\\)'))
+  assert.match(j.message(),new RegExp(quantity+' × Plain'))
+  assert.doesNotMatch(j.message(),/\(mixto\)/,'the inquiry must agree with the canonical same-flavor classification')
+})
+for(const options of [{mix:'mixed'},{mix:'mixed',format:'mini',quantity:24}])test('two-flavor '+(options.format||'grande')+' inquiry keeps its mixed composition',()=>{
+  const j=pack(options);j.primary()
+  assert.match(j.message(),/\(mixto\)/);assert.doesNotMatch(j.message(),/\(un sabor\)/)
+})
+for(const grams of [120,180,240])test('cart review retains selected standalone '+grams+' g context',()=>{
+  const j=journey({initialCategory:'schmears'})
+  j.click(n=>justText(n).replace(/\s+/g,' ').startsWith(grams+' g '))
+  j.click('Agregar Whipped Original');j.primary();j.click('Ver tu pedido:')
+  const cart=panelText(j,'guided-store-cart-panel')
+  assert.match(cart,/Whipped Original/);assert.match(cart,new RegExp('\\b'+grams+' g\\b'))
+  for(const other of [120,180,240].filter(n=>n!==grams))assert.doesNotMatch(cart,new RegExp('\\b'+other+' g\\b'))
+})
+test('removing the optional pack pot clears its size from cart review',()=>{
+  const j=pack({mix:'single'});j.click('Agregar Whipped Original');j.primary();j.click('Ver tu pedido:')
+  assert.match(panelText(j,'guided-store-cart-panel'),/120 g/)
+  j.click('Cerrar resumen');j.click(n=>n.props.className==='guided-journey-back')
+  j.click('Agregar Whipped Original');j.primary();j.click('Ver tu pedido:')
+  assert.doesNotMatch(panelText(j,'guided-store-cart-panel'),/Whipped Original|120 g/)
+  assert.doesNotMatch(j.message(),/Whipped Original/)
+})
+for(const options of [{mix:'single',format:'grande',quantity:6},{mix:'mixed',format:'mini',quantity:24}])test('cart and cashier identify '+options.format+' '+options.quantity+' pack before inquiry',()=>{
+  const j=pack(options);j.primary()
+  const description=new RegExp('Pack de '+options.quantity+' bagels '+(options.format==='mini'?'minis':'grandes'))
+  const mix=options.mix==='single'?/un sabor/:/mixto/
+  const cashier=panelText(j,'guided-cashier-copy');assert.match(cashier,description);assert.match(cashier,mix)
+  j.click('Ver tu pedido:');const cart=panelText(j,'guided-store-cart-panel')
+  assert.match(cart,description);assert.match(cart,mix)
+})
+test('normal standalone-to-pack category change clears the old pot and resets its size',()=>{
+  const j=journey({initialCategory:'schmears'})
+  j.click(n=>justText(n).replace(/\s+/g,' ').startsWith('240 g '));j.click('Agregar Whipped Original');j.primary()
+  j.click('Ir a Entrada');j.click(n=>n.props['aria-label']==='Packs')
+  j.click('Bagels grandes');j.click('Un sabor');j.click('Elegir 6 bagels, un sabor');j.noLink()
+  j.click('Agregar Plain');j.primary();j.click('Agregar Whipped Original');j.primary()
+  assert.match(j.message(),/Pack de 6 bagels grandes \(un sabor\)/)
+  assert.match(j.message(),/Whipped Original \(120 g\)/);assert.doesNotMatch(j.message(),/240 g|Schmear individual/)
+})
+test('normal format change clears the old mini pack quantities and optional pot',()=>{
+  const j=pack({mix:'single',format:'mini',quantity:24});j.click('Agregar Whipped Original');j.primary()
+  j.click('Ir a Categoría');j.click('Bagels grandes')
+  j.click('Elegir 6 bagels, mixtos');j.noLink()
+  assert.equal(j.nodes().some(n=>n.props.className==='guided-primary-next'),false,'old 24-unit choice must not complete the new six-pack')
+  for(let i=0;i<6;i++)j.click(i%2===0?'Agregar Plain':'Agregar Everything')
+  j.primary();j.primary()
+  assert.match(j.message(),/Pack de 6 bagels grandes \(mixto\)/)
+  assert.doesNotMatch(j.message(),/minis|Whipped Original|24 ×/)
+})

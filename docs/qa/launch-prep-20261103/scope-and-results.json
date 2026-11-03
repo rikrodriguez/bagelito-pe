@@ -1,0 +1,77 @@
+{
+  "baseHead": "bbd149019b249edf4243fb4776c6acff944775be",
+  "changedSource": {
+    "src/domain/lib/manual-order.ts": "8ca520f220eabefbd491bb3c3cc28421a50fd810f6ff412c9a9c38c6bfaf6904",
+    "src/playable/GuidedCommerce.tsx": "1231a12b6f1b43bcc491c221288a077d7987103d493d481ce1db431cba3e0306",
+    "src/domain/lib/approved-shop-contract.ts": "fab9996af2b13cc39f08ca845ef57a6ef9cd230049fb174f0da6cf34f4b36dc2",
+    "tests/manual-inquiry-journey.test.cjs": "f5864dd65602a310e583fe9f6e1d6c22906b61b6a7b9a8d6e7da565527f5b26d",
+    "tests/guided-sandbox-contact.test.cjs": "c6d4b6cade4fb7f74c22a315240fc48ac5f43aa1b1f425599edaa6f2d6f5b743"
+  },
+  "decision": {
+    "manualInquiry": "Ready for draft review only; release/origin and human commercial confirmation still needed",
+    "automatedCulqi": "Not production-ready; complete-product lane intentionally sandbox-only"
+  },
+  "validation": {
+    "focused": 55,
+    "nodeExecuted": 361,
+    "hdrCasesNotExecuted": 25,
+    "hdrFilesNotExecuted": [
+      "qa-guided-driver.test.cjs",
+      "qa-loopback-guard.test.cjs",
+      "qa-world-driver.test.cjs"
+    ],
+    "buildExitCode": 0,
+    "visual": {
+      "closed": {
+        "passed": true,
+        "captures": 2,
+        "forbidden": 0,
+        "httpErrors": 0,
+        "pageErrors": 0,
+        "routeErrors": 0,
+        "errors": 0
+      },
+      "enabled": {
+        "passed": true,
+        "captures": 20,
+        "forbidden": 0,
+        "httpErrors": 0,
+        "pageErrors": 0,
+        "routeErrors": 0,
+        "errors": 0
+      },
+      "supplemental": {
+        "passed": true,
+        "captures": 12,
+        "forbidden": 0,
+        "httpErrors": 0,
+        "pageErrors": 0,
+        "routeErrors": 0,
+        "errors": 0
+      }
+    },
+    "independentTransitionAudit": 26
+  },
+  "external": {
+    "providerCalls": false,
+    "dbOperations": false,
+    "whatsAppOpened": false,
+    "messagesSent": false,
+    "ordersSubmitted": false
+  },
+  "release": {
+    "deployment": false,
+    "paymentActivation": false,
+    "merge": false,
+    "remoteEnvironmentMutation": false
+  },
+  "notValidated": [
+    "Current deployed runtime/environment and installed schema",
+    "Real provider acceptance, multi-session locks and refund operations",
+    "Current stock, final commercial offers, delivery/date/capacity",
+    "WhatsApp delivery, real devices, other engines, full accessibility/contrast/StrictMode",
+    "Exact visual fidelity from desktop reference"
+  ],
+  "pricesChanged": false,
+  "manualDescriptionChanged": true
+}

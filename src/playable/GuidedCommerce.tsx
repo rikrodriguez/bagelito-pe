@@ -4,7 +4,7 @@ import { ReferenceScene } from '../reference/ReferenceScene'
 import { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
-import { createManualOrderWhatsAppHref } from '../domain/lib/manual-order'
+import { createManualOrderWhatsAppHref, describeManualOrderSelection } from '../domain/lib/manual-order'
 import { CHECKOUT_LEGAL_VERSION } from '../domain/lib/legal-version'
 import type { PaidOrderReceipt } from '../domain/lib/paid-order-receipt'
 import { PaidOrderReceiptDetails } from './PaidOrderReceiptDetails'
@@ -683,6 +683,12 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       })
     : null
 
+  const selectionDescription = category ? describeManualOrderSelection({
+    category, format: packFormat, packQuantity: packQty, packMix,
+    comboName: selectedCombo?.name, schmearSizeGrams: schmearSize,
+    bagels: selectedBagelSummary, schmears: selectedSchmearSummary,
+  }) : null
+
   function goBack() {
     const previous: Scene | null = scene === 'selector' ? 'entrance'
       : scene === 'pack-size' ? 'selector'
@@ -808,8 +814,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     {cartOpen && <CartPanel className="guided-store-cart-panel" aria-label="Resumen de tu pedido" role={referenceMode ? 'dialog' : undefined} aria-modal={referenceMode || undefined} tabIndex={referenceMode ? -1 : undefined}>
       <strong>Tu pedido</strong>
       {visibleCartCount === 0 && <p>Aún no has elegido productos.</p>}
+      {visibleCartCount > 0 && selectionDescription && <p>{selectionDescription}</p>}
       {selectedBagelSummary.map((item) => <div key={'bagel-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
-      {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}</span><b>× {item.quantity}</b></div>)}
+      {selectedSchmearSummary.map((item) => <div key={'schmear-' + item.name}><span>{item.name}{' · ' + schmearSize + ' g'}</span><b>× {item.quantity}</b></div>)}
       <small>{manualInquiry ? 'Precio final por confirmar con Bagelito.' : checkoutQuote?.checkoutAllowed && checkoutQuote.amountPen != null ? 'Subtotal verificado: S/ ' + checkoutQuote.amountPen.toFixed(2) : 'Importe validado al pasar por caja.'}</small>
       {canEditOrder && category && visibleCartCount > 0 && <button type="button" onClick={() => {
         setCartOpen(false)
@@ -1053,6 +1060,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <div className="guided-cashier-copy">
         <small>CAJA BAGELITO</small>
         <h2>Tu pedido</h2>
+        {selectionDescription && <p>{selectionDescription}</p>}
         <div className="guided-cashier-lines">
           {selectedBagelSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
           {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{' · ' + schmearSize + ' g'}</b></span>)}

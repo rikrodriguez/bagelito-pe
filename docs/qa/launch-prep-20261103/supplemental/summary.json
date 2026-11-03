@@ -1,0 +1,145 @@
+{
+  "baseHead": "bbd149019b249edf4243fb4776c6acff944775be",
+  "scope": "Loopback launch checks of selection descriptions, cart sizes, displayed pot prices and closed sandbox; never opens WhatsApp/Culqi",
+  "passed": true,
+  "blocked": [],
+  "httpErrors": [],
+  "pageErrors": [],
+  "routeErrors": [],
+  "captures": [
+    {
+      "width": 390,
+      "name": "mixed-one-flavor-cashier",
+      "screenshot": "390-mixed-one-flavor-cashier.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "name": "mini24-cart",
+      "screenshot": "390-mini24-cart.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "name": "confirmed-pot-price-cards",
+      "screenshot": "390-confirmed-pot-price-cards.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "name": "standalone240-cart",
+      "screenshot": "390-standalone240-cart.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "name": "category-reset-cashier",
+      "screenshot": "390-category-reset-cashier.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "name": "sandbox-closed",
+      "screenshot": "390-sandbox-closed.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "name": "mixed-one-flavor-cashier",
+      "screenshot": "1280-mixed-one-flavor-cashier.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "name": "mini24-cart",
+      "screenshot": "1280-mini24-cart.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "name": "confirmed-pot-price-cards",
+      "screenshot": "1280-confirmed-pot-price-cards.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "name": "standalone240-cart",
+      "screenshot": "1280-standalone240-cart.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "name": "category-reset-cashier",
+      "screenshot": "1280-category-reset-cashier.png",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "name": "sandbox-closed",
+      "screenshot": "1280-sandbox-closed.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "observations": [
+    {
+      "width": 390,
+      "scenario": "one-flavor normalization",
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "width": 390,
+      "scenario": "mini cart identity",
+      "cart": "Tu pedido\n\nPack de 24 bagels minis (mixto)\n\nEverything\n× 12\nPlain\n× 12\nWhipped Original · 120 g\n× 1\nPrecio final por confirmar con Bagelito.\nEditar saboresCerrar resumen"
+    },
+    {
+      "width": 390,
+      "scenario": "displayed pot reference prices",
+      "cards": [
+        "120 g\nOriginal S/12 · Sabores S/16",
+        "180 g\nOriginal S/18 · Sabores S/23",
+        "240 g\nOriginal S/22 · Sabores S/29"
+      ]
+    },
+    {
+      "width": 390,
+      "scenario": "standalone cart identity",
+      "cart": "Tu pedido\n\nSchmear individual (240 g)\n\nWhipped Original · 240 g\n× 1\nPrecio final por confirmar con Bagelito.\nEditar saboresCerrar resumen"
+    },
+    {
+      "width": 390,
+      "scenario": "category reset",
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "width": 1280,
+      "scenario": "one-flavor normalization",
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    },
+    {
+      "width": 1280,
+      "scenario": "mini cart identity",
+      "cart": "Tu pedido\n\nPack de 24 bagels minis (mixto)\n\nEverything\n× 12\nPlain\n× 12\nWhipped Original · 120 g\n× 1\nPrecio final por confirmar con Bagelito.\nEditar saboresCerrar resumen"
+    },
+    {
+      "width": 1280,
+      "scenario": "displayed pot reference prices",
+      "cards": [
+        "120 g\nOriginal S/12 · Sabores S/16",
+        "180 g\nOriginal S/18 · Sabores S/23",
+        "240 g\nOriginal S/22 · Sabores S/29"
+      ]
+    },
+    {
+      "width": 1280,
+      "scenario": "standalone cart identity",
+      "cart": "Tu pedido\n\nSchmear individual (240 g)\n\nWhipped Original · 240 g\n× 1\nPrecio final por confirmar con Bagelito.\nEditar saboresCerrar resumen"
+    },
+    {
+      "width": 1280,
+      "scenario": "category reset",
+      "message": "Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (un sabor)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido."
+    }
+  ],
+  "errors": [],
+  "serverStopped": true
+}

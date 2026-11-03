@@ -1,0 +1,84 @@
+{
+  "baseHead": "bbd149019b249edf4243fb4776c6acff944775be",
+  "candidateSourceSha256": "1231a12b6f1b43bcc491c221288a077d7987103d493d481ce1db431cba3e0306",
+  "manualOrderHelperSha256": "8ca520f220eabefbd491bb3c3cc28421a50fd810f6ff412c9a9c38c6bfaf6904",
+  "origin": "http://127.0.0.1:3280",
+  "scriptSha256": "fc0787a4c7ed1c4ceb4f95a9f7e4ac71bd61e430819bdf112a0a9890d9fa942d",
+  "adapterSha256": "04939a68a8397e7de28a5dd8cffcbaf4fefea4bb530fb9cf7b0ffe0973c43880",
+  "browser": {
+    "executable": "/usr/bin/chromium",
+    "version": "Chromium 151.0.7922.173 built on Debian GNU/Linux 13 (trixie)",
+    "playwright": "1.64.1"
+  },
+  "security": {
+    "serverEnvSanitized": true,
+    "providerOrDatabaseCredentialsPassed": false,
+    "referenceReviewOnly": true,
+    "merchantReviewOnly": true,
+    "culqiEnabled": false,
+    "productionChanges": "Normalize manual inquiry composition and preserve full selection context in review panels",
+    "externalBrowserRequestsAllowed": false
+  },
+  "runs": [
+    {
+      "mode": "closed",
+      "serverCredentialVariables": [],
+      "serverPid": 8321,
+      "command": [
+        "node",
+        "--require",
+        "/tmp/bagelito-system-chromium-preload.cjs",
+        "scripts/qa-manual-inquiry.cjs"
+      ],
+      "output": "/workspace/bagelito-launch-prep-artifacts-20261103/closed",
+      "readiness": {
+        "status": 200,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "summary": {
+        "passed": true,
+        "cases": 2,
+        "blocked": 0,
+        "httpErrors": 0,
+        "pageErrors": 0,
+        "routeErrors": 0,
+        "horizontalOverflow": [],
+        "errors": []
+      },
+      "elapsedMs": 3817,
+      "serverStopped": true
+    },
+    {
+      "mode": "enabled",
+      "serverCredentialVariables": [],
+      "serverPid": 8524,
+      "command": [
+        "node",
+        "--require",
+        "/tmp/bagelito-system-chromium-preload.cjs",
+        "scripts/qa-manual-inquiry.cjs"
+      ],
+      "output": "/workspace/bagelito-launch-prep-artifacts-20261103/enabled",
+      "readiness": {
+        "status": 200,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "summary": {
+        "passed": true,
+        "cases": 20,
+        "blocked": 0,
+        "httpErrors": 0,
+        "pageErrors": 0,
+        "routeErrors": 0,
+        "horizontalOverflow": [],
+        "errors": []
+      },
+      "elapsedMs": 37916,
+      "serverStopped": true
+    }
+  ]
+}

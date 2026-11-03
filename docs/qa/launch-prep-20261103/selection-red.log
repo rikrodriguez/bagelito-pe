@@ -1,0 +1,220 @@
+✔ manual pack journey {"mix":"single"} (281.192266ms)
+✔ manual pack journey {"mix":"mixed"} (139.262246ms)
+✔ manual pack journey {"format":"mini","quantity":24} (102.389119ms)
+✔ combo requires two bagels and one schmear (93.373816ms)
+✔ standalone 120 grams (83.840312ms)
+✔ standalone 180 grams (73.929719ms)
+✔ standalone 240 grams (79.672122ms)
+✔ manual contact uses a decorative nonfocusable vector icon without font glyph dependence (84.896383ms)
+✔ conflicting mode fails closed {"sandboxMode":true} (76.609377ms)
+✔ conflicting mode fails closed {"reviewOnly":true} (86.459899ms)
+✔ conflicting mode fails closed {"sandboxMode":true,"reviewOnly":true} (69.087584ms)
+✔ manual payment scene cannot expose form; incomplete selection has no link (77.636184ms)
+✔ manual cart copy confirms price later and progress excludes payment (71.572939ms)
+✔ even hostile enabled payment and QA state cannot mount payment in manual mode (79.30601ms)
+✖ one-flavor selection from mixed grande inquiry uses its actual single composition (63.187514ms)
+✖ one-flavor selection from mixed mini inquiry uses its actual single composition (76.733584ms)
+✔ two-flavor grande inquiry keeps its mixed composition (63.324651ms)
+✔ two-flavor mini inquiry keeps its mixed composition (82.383587ms)
+✖ cart review retains selected standalone 120 g context (71.134007ms)
+✖ cart review retains selected standalone 180 g context (70.191347ms)
+✖ cart review retains selected standalone 240 g context (72.856403ms)
+✖ removing the optional pack pot clears its size from cart review (78.835431ms)
+✖ cart and cashier identify grande 6 pack before inquiry (69.314075ms)
+✖ cart and cashier identify mini 24 pack before inquiry (92.883422ms)
+✔ normal standalone-to-pack category change clears the old pot and resets its size (67.173074ms)
+✔ normal format change clears the old mini pack quantities and optional pot (81.737618ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 18
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2540.815975
+
+✖ failing tests:
+
+test at tests/manual-inquiry-journey.test.cjs:188:59
+✖ one-flavor selection from mixed grande inquiry uses its actual single composition (63.187514ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Pack de 6 bagels grandes \(un sabor\)/. Input:
+  
+  'Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n' +
+    '\n' +
+    'Pack de 6 bagels grandes (mixto)\n' +
+    '\n' +
+    'Bagels:\n' +
+    '- 6 × Plain\n' +
+    '\n' +
+    '¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\n' +
+    'Entiendo que esta consulta no confirma ni paga el pedido.'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:190:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 6 bagels grandes (mixto)\n\nBagels:\n- 6 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido.',
+    expected: /Pack de 6 bagels grandes \(un sabor\)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:188:59
+✖ one-flavor selection from mixed mini inquiry uses its actual single composition (76.733584ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Pack de 24 bagels minis \(un sabor\)/. Input:
+  
+  'Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n' +
+    '\n' +
+    'Pack de 24 bagels minis (mixto)\n' +
+    '\n' +
+    'Bagels:\n' +
+    '- 24 × Plain\n' +
+    '\n' +
+    '¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\n' +
+    'Entiendo que esta consulta no confirma ni paga el pedido.'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:190:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Hola, Bagelito. Quisiera consultar la disponibilidad de este pedido:\n\nPack de 24 bagels minis (mixto)\n\nBagels:\n- 24 × Plain\n\n¿Me confirman la disponibilidad, el precio final, el delivery y la fecha del próximo batch?\nEntiendo que esta consulta no confirma ni paga el pedido.',
+    expected: /Pack de 24 bagels minis \(un sabor\)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:198:34
+✖ cart review retains selected standalone 120 g context (71.134007ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\b120 g\b/. Input:
+  
+  'Tu pedido Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:203:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Tu pedido Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen',
+    expected: /\b120 g\b/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:198:34
+✖ cart review retains selected standalone 180 g context (70.191347ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\b180 g\b/. Input:
+  
+  'Tu pedido Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:203:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Tu pedido Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen',
+    expected: /\b180 g\b/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:198:34
+✖ cart review retains selected standalone 240 g context (72.856403ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\b240 g\b/. Input:
+  
+  'Tu pedido Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:203:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Tu pedido Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen',
+    expected: /\b240 g\b/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:206:1
+✖ removing the optional pack pot clears its size from cart review (78.835431ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /120 g/. Input:
+  
+  'Tu pedido Plain × 6 Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:208:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Tu pedido Plain × 6 Whipped Original × 1 Precio final por confirmar con Bagelito. Editar sabores Cerrar resumen',
+    expected: /120 g/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:214:106
+✖ cart and cashier identify grande 6 pack before inquiry (69.314075ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Pack de 6 bagels grandes/. Input:
+  
+  'CAJA BAGELITO Tu pedido 6 × Plain Precio final por confirmar Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:218:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CAJA BAGELITO Tu pedido 6 × Plain Precio final por confirmar Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.',
+    expected: /Pack de 6 bagels grandes/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/manual-inquiry-journey.test.cjs:214:106
+✖ cart and cashier identify mini 24 pack before inquiry (92.883422ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Pack de 24 bagels minis/. Input:
+  
+  'CAJA BAGELITO Tu pedido 12 × Everything 12 × Plain Precio final por confirmar Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.'
+  
+      at TestContext.<anonymous> (/workspace/bagelito-manual-inquiry-qa/tests/manual-inquiry-journey.test.cjs:218:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CAJA BAGELITO Tu pedido 12 × Everything 12 × Plain Precio final por confirmar Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.',
+    expected: /Pack de 24 bagels minis/,
+    operator: 'match',
+    diff: 'simple'
+  }
