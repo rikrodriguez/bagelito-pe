@@ -67,7 +67,15 @@ QA_HDR_FIXTURE_PATH=/ruta/al/lebombo_1k.hdr NODE_OPTIONS=--max-old-space-size=38
 NODE_OPTIONS=--max-old-space-size=384 npm run build
 ```
 
-## QA visual preparada, aún sin ejecutar
+## QA visual: preparación original y ejecución posterior
+
+La preparación de `1cbf516` todavía no tenía ejecución visual. La corrección
+posterior del tamaño visible y el icono ya ejecutó **22/22 casos en 390/1280 px**,
+con los gates cerrados para pagos y sin abrir WhatsApp. Resultados, capturas,
+regresiones y límites actuales:
+[QA de correcciones visuales](../manual-inquiry-visual-fixes-20261103/README.md).
+Las cifras Node de la sección anterior son la verificación original del
+respaldo, no la reejecución de esa corrección posterior.
 
 Usar dos servidores locales de build, primero con flag falso y después con flag
 verdadero, sin llaves ni DB. No es un deploy. En cada caso mantener
@@ -90,11 +98,13 @@ redirecciones ni WebSocket. Sólo inspecciona el href WhatsApp, nunca lo abre.
 Guarda `summary.json` también si falla. `--preflight` valida configuración sin
 abrir navegador; no constituye QA visual. El script pasó syntax y preflight.
 
-**No es QA browser/layout/focus, React StrictMode, WhatsApp delivery, SQL o
-aceptación Culqi.** El navegador local tiene una restricción conocida de sockets;
-no se intenta eludirla. Browser Use y Firecrawl consultados para la tienda pública
-no ejecutaron por créditos insuficientes, sin compras ni reintentos. La lectura
-web tampoco pudo acceder al dominio; eso no demuestra caída del sitio.
+Las pruebas Node originales **no constituyen QA browser/layout/focus, React
+StrictMode, WhatsApp delivery, SQL o aceptación Culqi**. La restricción de sockets
+reportada durante la preparación no se eludió; la ejecución local posterior y
+sus herramientas se documentan separadamente en el enlace anterior. Browser Use
+y Firecrawl consultados originalmente para la tienda pública no ejecutaron por
+créditos insuficientes, sin compras ni reintentos. La lectura web tampoco pudo
+acceder al dominio; eso no demuestra caída del sitio.
 
 La metadata de Vercel sí confirma que la última producción enumerada permanece
 en `main/ca6f5b022864ee2164845f18c1c81f137cf0b108`, deployment
@@ -110,10 +120,11 @@ público no se considera validado por la metadata de despliegue.
 2. Cerrar precios pendientes según composición, stock por sabor/tamaño de pots,
    batch/capacidad/fecha y contenido legal. La activación comercial Culqi ya
    obtenida no se vuelve a pedir ni equivale a aceptación técnica.
-3. Ejecutar QA visual segura del commit exacto en un executor autorizado,
-   móvil/escritorio, sin abrir WhatsApp o Culqi ni realizar pedidos. El respaldo
-   no necesita llaves, DB ni acceso externo. El script preparado debe informarse
-   por separado como ejecutado o pendiente, no confundirse con las pruebas Node.
+3. La QA visual segura de consulta en 390/1280 px ya tiene ejecución posterior
+   documentada en el enlace anterior, sin abrir WhatsApp/Culqi ni realizar
+   pedidos. La aceptación visual final, dispositivos reales y el resto de las
+   pruebas de lanzamiento siguen pendientes; esos resultados no se infieren de
+   los casos Node ni de la emulación local.
 4. Si se decide usar el respaldo mientras se cierra Culqi: revisar la propuesta,
    autorizar despliegue del candidato y habilitar sólo la ruta/origen aprobados.
    Mantener los gates financieros cerrados. Dar al cliente la URL `/consulta`

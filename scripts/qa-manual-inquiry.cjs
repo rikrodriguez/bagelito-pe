@@ -67,8 +67,13 @@ async function main() {
         }
         async function capture(name,message) {
           await safety(); const filename=width+'-'+name+'.png'
-          await page.screenshot({path:path.join(config.output,filename),fullPage:true})
-          summary.cases.push({width,name,screenshot:filename,message:message||null,horizontalOverflow:await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)})
+          await page.evaluate(()=>Promise.all(document.getAnimations()
+            .filter(animation=>animation.effect?.getComputedTiming().iterations!==Infinity)
+            .map(animation=>animation.finished.catch(()=>{}))))
+          await page.screenshot({path:path.join(config.output,filename),fullPage:true,animations:'disabled'})
+          summary.cases.push({width,name,screenshot:filename,message:message||null,
+            horizontalOverflow:await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),
+            cashierOpacity:await page.locator('.guided-cashier-action').evaluateAll(elements=>elements[0]?getComputedStyle(elements[0]).opacity:null)})
         }
         async function inquiry() {
           await stage('cashier')
@@ -77,6 +82,11 @@ async function main() {
           assert.equal(url.origin,'https://wa.me');assert.equal(url.pathname,'/51917547745')
           const message=url.searchParams.get('text');assert.match(message,/no confirma ni paga el pedido/)
           assert.match(message,/precio final, el delivery y la fecha/)
+          const icon=link.locator('svg[aria-hidden="true"][focusable="false"]')
+          assert.equal(await icon.count(),1,'Contact icon uses a decorative nonfocusable SVG')
+          assert.ok(await icon.locator('path,line,polyline').count()>0,'Contact icon contains vector geometry')
+          assert.equal((await icon.textContent()).trim(),'','Contact icon does not depend on a font glyph')
+          const box=await icon.boundingBox();assert.ok(box&&box.width>=12&&box.height>=12,'Contact icon has visible geometry')
           return message // Inspect only. Never click this link.
         }
         if(config.mode==='closed') {
@@ -96,31 +106,40 @@ async function main() {
             await page.getByRole('button',{name:'Agregar Whipped Original',exact:true}).click()
             await page.locator('.guided-primary-next').click()
             let message=await inquiry();assert.match(message,/1 × Whipped Original \(120 g\)/)
+            assert.match(await page.locator('.guided-cashier-lines').innerText(),/Whipped Original\s*·\s*120 g/)
             assert.match(message,new RegExp('Pack de '+spec.count+' bagels '+(spec.format==='mini'?'minis':'grandes')))
             if(spec.mix==='single') assert.match(message,/6 × Plain/)
             else {assert.match(message,new RegExp(spec.count/2+' × Plain'));assert.match(message,new RegExp(spec.count/2+' × Everything'))}
             await capture(spec.name+'-optional120',message)
             await page.getByRole('button',{name:'Volver al paso anterior',exact:true}).click();await stage('schmears')
             await page.getByRole('button',{name:'Agregar Whipped Original',exact:true}).click();await page.locator('.guided-primary-next').click()
-            message=await inquiry();assert.doesNotMatch(message,/Whipped Original/);await capture(spec.name+'-removed',message)
+            message=await inquiry();assert.doesNotMatch(message,/Whipped Original/)
+            assert.doesNotMatch(await page.locator('.guided-cashier-lines').innerText(),/Whipped Original/)
+            await capture(spec.name+'-removed',message)
           }
           await start('Combos');await stage('combos');await page.getByRole('button',{name:'Bagels + schmears',exact:true}).click();await stage('bagels')
           await page.getByRole('button',{name:'Agregar Plain',exact:true}).click();assert.equal(await page.locator('.guided-primary-next').count(),0)
           await page.getByRole('button',{name:'Agregar Everything',exact:true}).click();await page.locator('.guided-primary-next').click();await stage('schmears')
           assert.equal(await page.locator('.guided-primary-next').count(),0)
           await page.getByRole('button',{name:'Agregar Whipped Original',exact:true}).click();await page.locator('.guided-primary-next').click()
-          const combo=await inquiry();assert.match(combo,/2 Bagels \+ Schmear/);assert.match(combo,/1 × Plain/);assert.match(combo,/1 × Everything/);assert.match(combo,/1 × Whipped Original \(120 g\)/);await capture('combo2plus1',combo)
+          const combo=await inquiry();assert.match(combo,/2 Bagels \+ Schmear/);assert.match(combo,/1 × Plain/);assert.match(combo,/1 × Everything/);assert.match(combo,/1 × Whipped Original \(120 g\)/)
+          assert.match(await page.locator('.guided-cashier-lines').innerText(),/Whipped Original\s*·\s*120 g/)
+          await capture('combo2plus1',combo)
           for(const grams of [120,180,240]) {
             await start('Schmears');await stage('schmear-size')
             await page.locator('.guided-size-cards button').filter({has:page.locator('b',{hasText:new RegExp('^'+grams+' g$')})}).click();await stage('schmears')
             assert.equal(await page.locator('.guided-primary-next').count(),0)
             await page.getByRole('button',{name:'Agregar Whipped Original',exact:true}).click();await page.locator('.guided-primary-next').click()
-            const message=await inquiry();assert.match(message,new RegExp('Schmear individual \\('+grams+' g\\)'));assert.match(message,new RegExp('Whipped Original \\('+grams+' g\\)'));await capture('standalone'+grams,message)
+            const message=await inquiry();assert.match(message,new RegExp('Schmear individual \\('+grams+' g\\)'));assert.match(message,new RegExp('Whipped Original \\('+grams+' g\\)'))
+            assert.match(await page.locator('.guided-cashier-lines').innerText(),new RegExp('Whipped Original\\s*·\\s*'+grams+' g'))
+            await capture('standalone'+grams,message)
           }
         }
       } finally {await context.close()}
     }
     for(const key of ['blocked','httpErrors','pageErrors','routeErrors']) assert.equal(summary[key].length,0,key+' must be empty')
+    assert.ok(summary.cases.every(entry=>!entry.horizontalOverflow),'No horizontal overflow')
+    assert.ok(summary.cases.every(entry=>entry.cashierOpacity===null||entry.cashierOpacity==='1'),'Cashier captures must finish the entry animation')
     summary.passed=true
   } catch(error) {summary.errors.push(String(error.stack||error));process.exitCode=1}
   finally {if(browser) await browser.close().catch(error=>{summary.errors.push(String(error));summary.passed=false;process.exitCode=1});summary.finishedAt=new Date().toISOString();fs.writeFileSync(path.join(config.output,'summary.json'),JSON.stringify(summary,null,2));console.log(JSON.stringify({passed:summary.passed,cases:summary.cases.length,summary:path.join(config.output,'summary.json')}))}

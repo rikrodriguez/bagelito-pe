@@ -1,0 +1,116 @@
+{
+  "reviewer": "manual_qa_safety_review",
+  "reviewType": "independent read-only source/diff review",
+  "baseHead": "1cbf5162b3e9abc5ddf6a29efc34896bc9feffef",
+  "decision": "GO for draft PR delivery after the parent verifies current visual checks and remote HEAD; no approval to deploy or activate payments",
+  "blockingFindings": [],
+  "reviewedFiles": [
+    {
+      "path": "src/playable/GuidedCommerce.tsx",
+      "sha256": "de09c687a3749ef7f7913d0b1939094dcfaa53ead7306f1d91076cb3395978f6"
+    },
+    {
+      "path": "scripts/qa-manual-inquiry.cjs",
+      "sha256": "fc0787a4c7ed1c4ceb4f95a9f7e4ac71bd61e430819bdf112a0a9890d9fa942d"
+    },
+    {
+      "path": "tests/manual-inquiry-journey.test.cjs",
+      "sha256": "e2a8b6e60c8147f8672ad4ffba2064cd44e685f4537787734a37bb05a1906fa2"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "info",
+      "topic": "Runtime scope",
+      "evidence": [
+        "src/playable/GuidedCommerce.tsx:1058",
+        "src/playable/GuidedCommerce.tsx:1095"
+      ],
+      "assessment": "Only the visible selected-schmear row and outgoing-contact icon change. Shared cashier rendering also shows grams in other supported modes; no catalog, price, request payload, contact formatter, link target/rel, gate, payment or order effect changes."
+    },
+    {
+      "severity": "info",
+      "topic": "Product size coherence",
+      "evidence": [
+        "src/playable/GuidedCommerce.tsx:141",
+        "src/playable/GuidedCommerce.tsx:517",
+        "src/playable/GuidedCommerce.tsx:568",
+        "tests/manual-inquiry-journey.test.cjs:92"
+      ],
+      "assessment": "Pack/combo entry resets schmearSize to120; standalone selection preserves120/180/240. Always displaying the selected size corrects the missing optional-pack/combo detail without inventing a size. The journey assertions inspect rendered product rows, verify exactly one expected size, and verify removal clears the visible row."
+    },
+    {
+      "severity": "info",
+      "topic": "SVG and accessibility",
+      "evidence": [
+        "src/playable/GuidedCommerce.tsx:1095",
+        "src/playable/guided-commerce.css:1719",
+        "tests/manual-inquiry-journey.test.cjs:131"
+      ],
+      "assessment": "Inline18x18 vector removes reliance on an installed arrow glyph. aria-hidden and focusable=false keep it decorative and out of the keyboard sequence, while the existing text preserves the accessible link name. currentColor preserves inherited contrast; existing flex/gap rules still apply. No conflicting generic SVG CSS was found. Actual geometry/readability remains a browser check."
+    },
+    {
+      "severity": "info",
+      "topic": "QA network safety",
+      "evidence": [
+        "scripts/qa-manual-inquiry.cjs:34",
+        "scripts/qa-manual-inquiry.cjs:74"
+      ],
+      "assessment": "The diff does not change interception ordering, external-origin/API/non-GET/HEAD/redirect/WebSocket blocking or service-worker restrictions. inquiry continues to inspect WA href only and never clicks it. No added provider request or order submission path."
+    },
+    {
+      "severity": "info",
+      "topic": "QA capture accuracy",
+      "evidence": [
+        "scripts/qa-manual-inquiry.cjs:68",
+        "scripts/qa-manual-inquiry.cjs:85",
+        "scripts/qa-manual-inquiry.cjs:140"
+      ],
+      "assessment": "Waiting for finite animations before capture avoids sampling the cashier entry opacity; screenshot animations are disabled, overflow and completed opacity are asserted, and SVG geometry and visible grams are checked. These additions strengthen checks while preserving both closed and enabled routes."
+    }
+  ],
+  "availableEvidence": [
+    {
+      "path": "focused-result.json",
+      "command": [
+        "node",
+        "--test",
+        "tests/manual-inquiry-journey.test.cjs",
+        "tests/manual-inquiry-config.test.cjs",
+        "tests/manual-inquiry-availability.test.cjs"
+      ],
+      "exitCode": 0,
+      "note": "Read existing parent-run artifact; not independently rerun."
+    },
+    {
+      "path": "build-result.json",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "note": "Read existing parent-run artifact; not independently rerun."
+    },
+    {
+      "path": "red.log",
+      "note": "Read baseline failure evidence, including missing inline-vector assertion; parent reports five baseline failures."
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "note": "Reviewer executed source whitespace check."
+    }
+  ],
+  "limits": [
+    "Reviewer did not run a browser, server or provider; runtime captures and their geometry must be verified by parent.",
+    "Journey harness exercises real component handlers/effects with synthetic hooks/JSX; it does not prove React StrictMode, focus behavior, browser accessibility tree or real-device rendering.",
+    "Browser interception does not constrain Node SSR egress; server environment must remain credential-free with the stated payment/review gates.",
+    "No screenshot fidelity to approved references is established by this source review.",
+    "No source edits, external DB/provider requests, messages, publication or deployment performed by reviewer."
+  ]
+}

@@ -83,8 +83,28 @@ function pack({mix='mixed',format='grande',quantity=6,...props}={}) {
   for(let i=0;i<(mix==='single'?1:quantity);i++) j.click(i%2===0?'Agregar Plain':'Agregar Everything')
   j.primary(); assert.equal(j.scene(),'schmears'); return j
 }
+function cashierLines(j) {
+  assert.equal(j.scene(),'cashier')
+  const lines=j.nodes().filter(n=>n.props.className==='guided-cashier-lines')
+  assert.equal(lines.length,1,'one rendered product summary')
+  return lines[0]
+}
+function assertVisibleSchmearSize(j,grams) {
+  const rows=[]
+  function walk(node) {
+    if(Array.isArray(node))return node.forEach(walk)
+    if(!node||typeof node!=='object')return
+    if(node.type==='span'&&/Whipped Original/.test(justText(node)))rows.push(node)
+    walk(node.props?.children)
+  }
+  walk(cashierLines(j))
+  assert.equal(rows.length,1,'one visible selected schmear row')
+  const sizes=justText(rows[0]).match(/\b(?:120|180|240)\s*g\b/g)
+  assert.deepEqual(sizes,[grams+' g'],'visible size must match the selected product, not only the contact message')
+}
 for(const options of [{mix:'single'},{mix:'mixed'},{format:'mini',quantity:24}]) test('manual pack journey '+JSON.stringify(options),()=>{
   const j=pack(options); j.click('Agregar Whipped Original'); j.primary()
+  assertVisibleSchmearSize(j,120)
   const message=j.message()
   assert.match(message,new RegExp('Pack de '+(options.quantity||6)+' bagels '+(options.format==='mini'?'minis':'grandes')))
   assert.match(message,/1 × Whipped Original \(120 g\)/)
@@ -93,17 +113,43 @@ for(const options of [{mix:'single'},{mix:'mixed'},{format:'mini',quantity:24}])
   else {const count=(options.quantity||6)/2; assert.match(message,new RegExp(count+' × Plain')); assert.match(message,new RegExp(count+' × Everything'))}
   j.click(n=>n.props.className==='guided-journey-back'); j.click('Agregar Whipped Original'); j.primary()
   assert.doesNotMatch(j.message(),/Whipped Original/)
+  assert.doesNotMatch(justText(cashierLines(j)),/Whipped Original|120\s*g/,'removal must clear the visible schmear detail too')
 })
 test('combo requires two bagels and one schmear',()=>{
   const j=journey({initialCategory:'combos'}); j.click('Bagels + schmears'); j.click('Agregar Plain')
   j.forceScene('cashier'); j.noLink(); j.forceScene('bagels'); j.click('Agregar Everything'); j.primary()
   j.forceScene('cashier'); j.noLink(); j.forceScene('schmears'); j.click('Agregar Whipped Original'); j.primary()
+  assertVisibleSchmearSize(j,120)
   assert.match(j.message(),/2 Bagels \+ Schmear/); assert.match(j.message(),/1 × Plain/); assert.match(j.message(),/1 × Everything/); assert.match(j.message(),/1 × Whipped Original \(120 g\)/)
 })
 for(const grams of [120,180,240]) test('standalone '+grams+' grams',()=>{
   const j=journey({initialCategory:'schmears'}); j.click(n=>justText(n).replace(/\s+/g,' ').startsWith(grams+' g '))
   j.forceScene('cashier'); j.noLink(); j.forceScene('schmears'); j.click('Agregar Whipped Original'); j.primary()
+  assertVisibleSchmearSize(j,grams)
   assert.match(j.message(),new RegExp('Schmear individual \\('+grams+' g\\)')); assert.match(j.message(),new RegExp('Whipped Original \\('+grams+' g\\)'))
+})
+test('manual contact uses a decorative nonfocusable vector icon without font glyph dependence',()=>{
+  const j=pack({mix:'single'});j.click('Agregar Whipped Original');j.primary()
+  const links=j.nodes().filter(n=>n.type==='a'&&n.props.href?.startsWith('https://wa.me/'))
+  assert.equal(links.length,1)
+  const link=links[0],descendants=[]
+  function walk(node){if(Array.isArray(node))return node.forEach(walk);if(node&&typeof node==='object'){descendants.push(node);walk(node.props?.children)}}
+  walk(link.props.children)
+  const icons=descendants.filter(n=>n.type==='svg')
+  assert.equal(icons.length,1,'outgoing contact icon must be an inline vector, independent of installed fonts')
+  const icon=icons[0]
+  assert.ok(icon.props['aria-hidden']===true||icon.props['aria-hidden']==='true','icon is decorative')
+  assert.ok(icon.props.focusable===false||icon.props.focusable==='false','icon must not add a keyboard stop')
+  assert.ok(icon.props.tabIndex==null||icon.props.tabIndex===-1)
+  assert.match(icon.props.viewBox,/^\s*-?\d+(?:\.\d+)?\s+-?\d+(?:\.\d+)?\s+[1-9]\d*(?:\.\d+)?\s+[1-9]\d*(?:\.\d+)?\s*$/)
+  assert.ok(descendants.some(n=>n.type==='path'&&typeof n.props.d==='string'&&n.props.d.trim()
+    ||n.type==='line'&&n.props.x1!=null&&n.props.y1!=null&&n.props.x2!=null&&n.props.y2!=null
+    ||['polyline','polygon'].includes(n.type)&&typeof n.props.points==='string'&&n.props.points.trim()),'vector geometry is present')
+  assert.doesNotMatch(justText(link),/↗/)
+  assert.match(justText(link),/Consultar mi pedido por WhatsApp/)
+  assert.equal(link.props.target,'_blank');assert.match(link.props.rel,/\bnoopener\b/);assert.match(link.props.rel,/\bnoreferrer\b/)
+  assert.match(j.message(),/Whipped Original \(120 g\)/)
+  assert.match(j.message(),/no confirma ni paga el pedido/)
 })
 function justText(n){if(Array.isArray(n))return n.map(justText).join(' ');if(n&&typeof n==='object')return justText(n.props?.children);return typeof n==='string'||typeof n==='number'?String(n):''}
 for(const extra of [{sandboxMode:true},{reviewOnly:true},{sandboxMode:true,reviewOnly:true}]) test('conflicting mode fails closed '+JSON.stringify(extra),()=>{

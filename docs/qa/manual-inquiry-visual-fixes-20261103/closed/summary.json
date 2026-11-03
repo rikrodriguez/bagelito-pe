@@ -1,0 +1,32 @@
+{
+  "startedAt": "2026-11-03T01:59:16.065Z",
+  "origin": "http://127.0.0.1:3280",
+  "mode": "closed",
+  "output": "/workspace/bagelito-manual-visual-fix-artifacts-20261103/closed",
+  "scope": "Local Chromium emulation only; no external requests, order sends, payments, deploy or real-device claims.",
+  "passed": true,
+  "cases": [
+    {
+      "width": 390,
+      "name": "closed",
+      "screenshot": "390-closed.png",
+      "message": null,
+      "horizontalOverflow": false,
+      "cashierOpacity": null
+    },
+    {
+      "width": 1280,
+      "name": "closed",
+      "screenshot": "1280-closed.png",
+      "message": null,
+      "horizontalOverflow": false,
+      "cashierOpacity": null
+    }
+  ],
+  "blocked": [],
+  "httpErrors": [],
+  "pageErrors": [],
+  "routeErrors": [],
+  "errors": [],
+  "finishedAt": "2026-11-03T01:59:18.459Z"
+}

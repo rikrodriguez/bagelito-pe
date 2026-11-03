@@ -1055,7 +1055,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         <h2>Tu pedido</h2>
         <div className="guided-cashier-lines">
           {selectedBagelSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}</b></span>)}
-          {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{category === 'schmears' ? ' · ' + schmearSize + ' g' : ''}</b></span>)}
+          {selectedSchmearSummary.map((item) => <span key={item.name}><i>{item.quantity} ×</i><b>{item.name}{' · ' + schmearSize + ' g'}</b></span>)}
         </div>
         <div className="guided-cashier-quote">
           <span>{manualInquiry || paymentConfig?.enabled !== true
@@ -1092,7 +1092,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           rel="noopener noreferrer"
         >
           {canPayOnline ? 'Consultar por WhatsApp' : 'Consultar mi pedido por WhatsApp'}
-          <b aria-hidden="true">↗</b>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+            <path d="M7 17 17 7M7 7h10v10" />
+          </svg>
         </a>}
         <p>{canPayOnline
           ? 'Consulta adicional, sin modificar tu pedido.'
