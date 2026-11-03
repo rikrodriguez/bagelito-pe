@@ -208,6 +208,7 @@ export function CulqiBrowserCheckout(props: {
   const tokenRef = useRef<{ tokenId: string; deviceId: string } | null>(null)
   const busyRef = useRef(false)
   const callbackConsumedRef = useRef(false)
+  const awaiting3DSRef = useRef(false)
   const checkoutSessionIdRef = useRef<string | null>(null)
   const reservationExpiresAtRef = useRef<number | null>(null)
   const reservationTimerRef = useRef<number | null>(null)
@@ -225,6 +226,7 @@ export function CulqiBrowserCheckout(props: {
   }, [])
 
   const review = useCallback((text: string) => {
+    awaiting3DSRef.current = false
     const session = sessionRef.current
     if (session) setRecovery(session, 'review')
     busyRef.current = true
@@ -244,6 +246,7 @@ export function CulqiBrowserCheckout(props: {
   const expireReservation = useCallback(() => {
     if (!aliveRef.current) return
     clearReservationTimer()
+    awaiting3DSRef.current = false
     try { checkoutRef.current?.close() } catch {}
     try { window.Culqi3DS?.reset() } catch {}
 
@@ -374,6 +377,9 @@ export function CulqiBrowserCheckout(props: {
     }
 
     if (result.requires3DS) {
+      // A response may arrive after the reservation expired while awaiting charge.
+      // Do not restart authentication; non-3DS outcomes still go to observation.
+      if (checkReservationExpiry()) return
       if (!tokenId.startsWith('tkn_') || !window.Culqi3DS) {
         review('No se pudo iniciar la autenticación bancaria.')
         return
@@ -388,6 +394,7 @@ export function CulqiBrowserCheckout(props: {
           currency: 'PEN',
         },
       }
+      awaiting3DSRef.current = true
       await window.Culqi3DS.initAuthentication(tokenId)
       return
     }
@@ -550,7 +557,7 @@ export function CulqiBrowserCheckout(props: {
         showModal: true,
         showLoading: true,
         showIcon: true,
-        closeModalAction: () => { if (isCurrent()) review('La autenticación bancaria fue cerrada. Revisa el estado antes de volver a pagar.') },
+        closeModalAction: () => { if (isCurrent() && awaiting3DSRef.current) review('La autenticación bancaria fue cerrada. Revisa el estado antes de volver a pagar.') },
       }
 
       const names = customer.customerName.trim().split(/\s+/)
@@ -648,15 +655,19 @@ export function CulqiBrowserCheckout(props: {
   useEffect(() => {
     function on3DSMessage(event: MessageEvent) {
       const isCurrent = sessionIsCurrentRef.current
-      if (!isCurrent?.()) return
+      if (!isCurrent?.() || !awaiting3DSRef.current) return
       if (event.origin !== window.location.origin || !event.data || typeof event.data !== 'object') return
       const data = event.data as { parameters3DS?: Auth3DS; error?: unknown }
       if (data.error) {
+        awaiting3DSRef.current = false
         window.Culqi3DS?.reset()
         review('No se pudo completar la autenticación 3D Secure.')
         return
       }
       if (!data.parameters3DS) return
+      // Consume synchronously before any asynchronous continuation: repeated,
+      // dismissed or late SDK messages must not submit another charge request.
+      awaiting3DSRef.current = false
       const session = sessionRef.current
       const token = tokenRef.current
       if (!session || !token) {
@@ -707,6 +718,7 @@ export function CulqiBrowserCheckout(props: {
       checkoutSessionIdRef.current = null
       reservationExpiresAtRef.current = null
       callbackConsumedRef.current = false
+      awaiting3DSRef.current = false
       paymentAttemptStartedRef.current = false
       clearReservationTimer()
       try { checkoutRef.current?.close() } catch {}

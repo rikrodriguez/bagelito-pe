@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-11-03T00:04:51.634361+00:00",
+  "elapsed_seconds": 9.555351162998704,
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "returncode": 0,
+  "environment": "explicit PATH/HOME/TMPDIR/Node heap; no inherited credentials",
+  "node_options": "--max-old-space-size=512 --max-semi-space-size=4"
+}

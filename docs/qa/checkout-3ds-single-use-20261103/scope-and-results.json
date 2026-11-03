@@ -1,0 +1,40 @@
+{
+  "base_remote_commit": "0e53f9d898c84d943aa29c95ad75e46a304ee395",
+  "base_local_commit": "35999bc2416abb58cd9d7a92391af11f7e4f36f1",
+  "base_tree": "5c28a500d70160fa4236e3b9217d01980017484f",
+  "code_only_tree": "847d097d1425e1ad2ffe532b72fd03039b44ef11",
+  "changed_tracked_paths": [
+    "src/playable/CulqiBrowserCheckout.tsx",
+    "tests/culqi-ui-lifecycle.test.cjs"
+  ],
+  "all_other_tracked_files_unchanged": true,
+  "new_credentials_config_activation_or_prices": false,
+  "autodeploy": false,
+  "runtime": "Node v24.22.1; npm 11.9.0; reused existing dependency tree, no install",
+  "source_sha256": {
+    "src/playable/CulqiBrowserCheckout.tsx": "941d516ff28555fbf0e4d6dd22862c274cec9d38497b1930c56a8d08ce4670e0",
+    "tests/culqi-ui-lifecycle.test.cjs": "f30bd527dcf4f71cdefc5de2ec59e8196ee8194e96d864408727253a3a519e30"
+  },
+  "node_counts": {
+    "total": 329,
+    "pass": 329,
+    "fail": 0,
+    "skipped": 0
+  },
+  "focused_counts": {
+    "total": 47,
+    "pass": 47
+  },
+  "new_tests": 10,
+  "independent_review": "47/47 focalized PASS; no blockers in reviewed scope; no SDK/provider/browser acceptance",
+  "sql": "not rerun; byte-identical and unaffected",
+  "build": {
+    "aggregate": "PASS",
+    "typecheck": "PASS",
+    "returncode": 0,
+    "structural": 11,
+    "manual_fallback": 4,
+    "movement": 14,
+    "movement_in_node_count": true
+  }
+}

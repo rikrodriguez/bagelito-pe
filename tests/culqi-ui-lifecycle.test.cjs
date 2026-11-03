@@ -51,6 +51,7 @@ function harness({recovery=false}={}) {
  return{calls,paid,reviews,storage,widgets,window:fakeWindow,timers,get opened(){return opened},
   async settle(){for(let i=0;i<24;i++){await Promise.resolve();if(dirty&&mounted)render()}},
   click(kind='start',times=1){if(dirty)render();const button=elements(tree).find(x=>x.type==='button'&&x.props.className===(kind==='start'?'culqi-start-button':'culqi-recovery-button'));assert.ok(button,'actual '+kind+' button exists');const handler=button.props.onClick;for(let i=0;i<times;i++)handler()},
+  dispatch(type,event){for(const fn of [...(listeners.get(type)??[])])fn(event)},
   rerender(patch){current={...current,...patch};render()},
   unmount(){mounted=false;for(const slot of slots)if(slot?.effect)slot.cleanup?.()},
  }
@@ -203,4 +204,82 @@ test('poll delay waking after unmount cannot send a further status request',asyn
  h.calls[3].resolve(response({...paidStatus(),paymentStatus:'pending',orderStatus:'payment_pending_review'}));await h.settle()
  const delay=[...h.timers.values()].find(t=>t.ms===3000);assert.ok(delay,'actual poll delay was scheduled')
  h.unmount();delay.fn();await h.settle();assert.equal(h.calls.length,4);assert.equal(h.paid.length,0)
+})
+
+const auth3DS=()=>({cavv:'fixture-cavv',eci:'05',protocolVersion:'2.2.0',xid:'fixture-xid'})
+const authenticationMessage=(h,patch={})=>({origin:h.window.location.origin,data:{parameters3DS:auth3DS()},...patch})
+async function start3DS(h){
+ const widget=await openWidget(h);widget.token={id:'tkn_fixture'};widget.culqi();await h.settle()
+ assert.equal(h.calls.length,3);h.calls[2].resolve(response({ok:true,requires3DS:true}));await h.settle()
+}
+test('3DS message before challenge cannot submit a payment continuation',async()=>{
+ const h=harness(),widget=await openWidget(h);widget.token={id:'tkn_fixture'};widget.culqi();await h.settle()
+ h.dispatch('message',authenticationMessage(h));await h.settle()
+ assert.equal(h.calls.length,3,'only initial charge exists until server requests 3DS');h.unmount()
+})
+test('duplicate 3DS messages consume one challenge and submit one continuation',async()=>{
+ const h=harness();await start3DS(h)
+ h.dispatch('message',authenticationMessage(h));h.dispatch('message',authenticationMessage(h));await h.settle()
+ assert.equal(h.calls.length,4,'one initial charge plus one authenticated continuation')
+ assert.equal(h.calls[3].url,'/api/payments/culqi/charge');assert.ok(h.calls[3].body.authentication3DS);h.unmount()
+})
+test('closed 3DS challenge ignores a late authentication message',async()=>{
+ const h=harness();await start3DS(h);h.window.Culqi3DS.options.closeModalAction()
+ h.dispatch('message',authenticationMessage(h));await h.settle()
+ assert.equal(h.calls.length,3,'dismissal must not resume payment from a stale event');assert.equal(h.reviews.length,1);h.unmount()
+})
+test('3DS failure consumes challenge before a later success message',async()=>{
+ const h=harness();await start3DS(h);h.dispatch('message',authenticationMessage(h,{data:{error:'fixture'}}))
+ h.dispatch('message',authenticationMessage(h));await h.settle()
+ assert.equal(h.calls.length,3);assert.equal(h.reviews.length,1);h.unmount()
+})
+test('foreign and unrelated messages do not consume a valid 3DS challenge',async()=>{
+ const h=harness();await start3DS(h)
+ h.dispatch('message',authenticationMessage(h,{origin:'https://foreign.invalid'}))
+ h.dispatch('message',authenticationMessage(h,{data:{unrelated:true}}));await h.settle();assert.equal(h.calls.length,3)
+ h.dispatch('message',authenticationMessage(h));await h.settle();assert.equal(h.calls.length,4);h.unmount()
+})
+test('late 3DS message after context change cannot resume the abandoned payment',async()=>{
+ const h=harness();await start3DS(h);h.rerender({customer:{...props().customer,email:'other@example.test'}})
+ h.dispatch('message',authenticationMessage(h));await h.settle();assert.equal(h.calls.length,3);h.unmount()
+})
+
+test('programmatic 3DS reset after consumed success does not downgrade payment confirmation',async()=>{
+ const h=harness();await start3DS(h)
+ h.window.Culqi3DS.reset=()=>h.window.Culqi3DS.options.closeModalAction()
+ h.dispatch('message',authenticationMessage(h));await h.settle();assert.equal(h.calls.length,4)
+ h.calls[3].resolve(response({ok:true,paymentStatus:'paid'}));await h.settle();assert.equal(h.calls.length,5)
+ h.calls[4].resolve(response(paidStatus()));await h.settle()
+ assert.equal(h.paid.length,1);assert.equal(h.reviews.length,0,'completed challenge reset is not a customer cancellation')
+ assert.equal(h.storage.has(recoveryKey),false);h.unmount()
+})
+test('expiry disarms 3DS before SDK reset can synchronously deliver a message',async()=>{
+ const h=harness();await start3DS(h)
+ const expiry=[...h.timers.values()].find(t=>t.ms>30_000);assert.ok(expiry)
+ const oldNow=Date.now;Date.now=()=>oldNow()+60*60_000
+ h.window.Culqi3DS.reset=()=>h.dispatch('message',authenticationMessage(h))
+ try {expiry.fn();await h.settle()} finally {Date.now=oldNow}
+ assert.equal(h.calls.length,3);assert.equal(h.reviews.length,1,'expiry must enter review only once without reentrant processing');h.unmount()
+})
+
+test('late 3DS-required response after reservation expiry never opens a challenge',async()=>{
+ const h=harness(),widget=await openWidget(h);let authentications=0
+ h.window.Culqi3DS.initAuthentication=async()=>{authentications++}
+ widget.token={id:'tkn_fixture'};widget.culqi();await h.settle();assert.equal(h.calls.length,3)
+ const oldNow=Date.now;Date.now=()=>oldNow()+60*60_000
+ try {
+  h.dispatch('focus',{});h.calls[2].resolve(response({ok:true,requires3DS:true}));await h.settle()
+  assert.equal(authentications,0,'expired reservation must not re-arm authentication from a late response')
+  h.dispatch('message',authenticationMessage(h));await h.settle();assert.equal(h.calls.length,3)
+ } finally {Date.now=oldNow;h.unmount()}
+})
+test('late non-3DS charge response after expiry still observes the submitted payment',async()=>{
+ const h=harness(),widget=await openWidget(h)
+ widget.token={id:'tkn_fixture'};widget.culqi();await h.settle();assert.equal(h.calls.length,3)
+ const oldNow=Date.now;Date.now=()=>oldNow()+60*60_000
+ try {
+  h.dispatch('focus',{});h.calls[2].resolve(response({ok:true,paymentStatus:'paid'}));await h.settle()
+  assert.equal(h.calls.length,4);assert.equal(h.calls[3].url,'/api/payments/culqi/status')
+  h.calls[3].resolve(response(paidStatus()));await h.settle();assert.equal(h.paid.length,1)
+ } finally {Date.now=oldNow;h.unmount()}
 })
