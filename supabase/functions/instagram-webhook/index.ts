@@ -199,7 +199,7 @@ async function postInstagramMessage(args: {
   message: Record<string, unknown>;
 }) {
   const response = await fetch(
-    `https://graph.instagram.com/v26.0/${args.accountId}/messages`,
+    `https://graph.facebook.com/v26.0/${args.accountId}/messages`,
     {
       method: "POST",
       headers: {
