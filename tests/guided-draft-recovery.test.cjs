@@ -13,20 +13,21 @@ const saveStart=source.indexOf('  useEffect(() => {\n    if (reviewOnly || !draf
 const saveEnd=source.indexOf('\n\n',source.indexOf('  }, [draftLoaded',saveStart))
 const helper=source.match(/function readSafeSelections\([\s\S]*?\n\}/)[0]
 const menu=JSON.parse(fs.readFileSync('src/domain/data/verified-menu-2026-10-21.json','utf8'))
+const combos=menu.combos,legacyCombo={id:'two-bagel-schmear',bagels:2,schmear_count:1}
 const base={updatedAt:Date.now(),category:'packs',scene:'cashier',format:'grande',packQty:6,packMix:'single',schmearSize:120,bagels:{plain:6},schmears:{},bagelMode:'pack'}
 function restore(draft, reviewOnly=false) {
  const output={}, effects=[]
- const ctx={Error,SyntaxError,JSON,planGuidedOrder,menu,useEffect:f=>f(),reviewOnly,initialCategory:null,GUIDED_DRAFT_KEY:'MOCK',GUIDED_DRAFT_TTL_MS:86400000,window:{sessionStorage:{getItem:()=>{effects.push('read');return typeof draft==='string'?draft:JSON.stringify(draft)},removeItem:()=>effects.push('remove')}}}
+ const ctx={Error,SyntaxError,JSON,planGuidedOrder,menu,combos,legacyCombo,useEffect:f=>f(),reviewOnly,initialCategory:null,GUIDED_DRAFT_KEY:'MOCK',GUIDED_DRAFT_TTL_MS:86400000,window:{sessionStorage:{getItem:()=>{effects.push('read');return typeof draft==='string'?draft:JSON.stringify(draft)},removeItem:()=>effects.push('remove')}}}
  for(const x of ['DraftLoaded','DraftRecoveryMessage','Category','PackFormat','PackQty','PackMix','ComboId','SchmearSize','BagelMode','BagelCounts','SchmearCounts','Scene'])ctx['set'+x]=v=>output[x]=v
  vm.runInNewContext(transpile(helper+'\n'+source.slice(restoreStart,restoreEnd)),ctx)
  return {output,effects}
 }
 for(const [mode,n] of [['upsell8',8],['downsell2',2]])test(`actual save/restore preserves ${mode} without payment data`,()=>{
  let saved
- const ctx={useEffect:f=>f(),reviewOnly:false,draftLoaded:true,category:'schmears',scene:'cashier',packFormat:'grande',packQty:6,packMix:'mixed',schmearSize:120,bagelMode:mode,bagelCounts:{plain:n},schmearCounts:{'whipped-original':1},paidOrderCode:null,GUIDED_DRAFT_KEY:'MOCK',window:{sessionStorage:{setItem:(_k,v)=>saved=JSON.parse(v),removeItem:()=>{}}}}
+ const ctx={useEffect:f=>f(),reviewOnly:false,draftLoaded:true,category:'schmears',scene:'cashier',packFormat:'grande',packQty:6,packMix:'mixed',comboId:null,schmearSize:120,bagelMode:mode,bagelCounts:{plain:n},schmearCounts:{'whipped-original':1},paidOrderCode:null,GUIDED_DRAFT_KEY:'MOCK',window:{sessionStorage:{setItem:(_k,v)=>saved=JSON.parse(v),removeItem:()=>{}}}}
  vm.runInNewContext(transpile(source.slice(saveStart,saveEnd)),ctx)
  assert.equal(saved.bagelMode,mode)
- assert.deepEqual(Object.keys(saved).sort(),['updatedAt','category','scene','format','packQty','packMix','schmearSize','bagelMode','bagels','schmears'].sort())
+ assert.deepEqual(Object.keys(saved).sort(),['updatedAt','category','scene','format','packQty','packMix','comboId','schmearSize','bagelMode','bagels','schmears'].sort())
  const {output}=restore(saved);assert.equal(output.BagelMode,mode);assert.equal(output.BagelCounts.plain,n);assert.equal(output.Scene,'cashier')
 })
 test('legacy pack, combo and standalone without mode restore coherently',()=>{
@@ -46,7 +47,7 @@ test('incomplete pack/combo/extra never restores cashier and keeps selected prod
 })
 test('reviewOnly never reads, removes or writes draft storage',()=>{
  const {effects}=restore(base,true);assert.deepEqual(effects,[])
- vm.runInNewContext(transpile(source.slice(saveStart,saveEnd)),{useEffect:f=>f(),reviewOnly:true,draftLoaded:true,category:null,scene:'selector',packFormat:'grande',packQty:6,packMix:'mixed',schmearSize:120,bagelMode:'pack',bagelCounts:{},schmearCounts:{},paidOrderCode:null,window:{get sessionStorage(){throw Error('storage accessed')}}})
+ vm.runInNewContext(transpile(source.slice(saveStart,saveEnd)),{useEffect:f=>f(),reviewOnly:true,draftLoaded:true,category:null,scene:'selector',packFormat:'grande',packQty:6,packMix:'mixed',comboId:null,schmearSize:120,bagelMode:'pack',bagelCounts:{},schmearCounts:{},paidOrderCode:null,window:{get sessionStorage(){throw Error('storage accessed')}}})
 })
 
 test('recovery notice cannot render in reviewOnly mode',()=>{assert.match(source,/\{!reviewOnly && draftRecoveryMessage && <p role="status"/)});

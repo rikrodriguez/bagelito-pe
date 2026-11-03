@@ -126,3 +126,40 @@ test('inventory failure, closed batch, missing and malformed dates remain unavai
     assert.equal(result.status, 'unavailable'); assert.equal(result.checkoutAllowed, false); assert.equal(result.amountPen, null)
   }
 })
+
+test('reconfirmed published combos preserve bundle prices, counts and every selected pot without enabling checkout', async () => {
+  for (const [comboId, units, schmears, price] of [
+    ['perfect-pair', 6, {'whipped-original': 1}, 74],
+    ['brunch-pack', 12, {'whipped-original': 1, 'aji-amarillo': 1}, 140],
+    ['schmear-lover', 6, {'classic-strawberry': 3}, 99],
+  ]) {
+    for (const sandboxCapability of [false, true]) {
+      const {quote, calls} = setup()
+      const result = await quote(combo({comboId, bagels: {plain: units}, schmears}), sandboxCapability)
+      assert.equal(result.status, 'review_required'); assert.equal(result.checkoutAllowed, false)
+      assert.equal(result.amountPen, price); assert.deepEqual(calls, [units])
+      assert.equal(result.lines.length, 1); assert.equal(result.lines[0].id, comboId)
+      assert.equal(result.lines[0].schmears.reduce((n, item) => n + item.quantity, 0), Object.values(schmears).reduce((n, x) => n + x, 0))
+      assert.ok(result.lines[0].schmears.every(item => item.grams === 120))
+    }
+  }
+})
+test('published combo invalid quantities and unknown flavors fail before inventory lookup', async () => {
+  for (const overrides of [
+    {bagels: {plain: 2}}, {schmears: {}}, {schmears: {'whipped-original': 2}},
+    {comboId: 'brunch-pack', bagels: {plain: 12}, schmears: {'whipped-original': 1}},
+    {comboId: 'schmear-lover', schmears: {'whipped-original': 4}},
+    {schmears: {'unknown': 1}}, {schmears: {'whipped-original': '1'}}, {bagelMode: 'pack'},
+  ]) {
+    const {quote, calls} = setup()
+    const result = await quote(combo({comboId: 'perfect-pair', bagels: {plain: 6}, ...overrides}))
+    assert.equal(result.status, 'invalid'); assert.equal(result.checkoutAllowed, false); assert.deepEqual(calls, [])
+  }
+})
+test('published combo upgrades and premium bagels never acquire inferred payable prices', async () => {
+  for (const overrides of [{schmearSize: 180}, {schmearSize: 240}, {bagels: {cheddar: 6}}]) {
+    const result = await setup().quote(combo({comboId: 'perfect-pair', bagels: {plain: 6}, ...overrides}), true)
+    assert.equal(result.status, 'review_required'); assert.equal(result.checkoutAllowed, false)
+    assert.equal(result.amountPen, null); assert.equal(result.lines[0].publishedAmountPen, null)
+  }
+})

@@ -4,6 +4,7 @@ import {
   quotePublishedPack,
   quotePublishedSchmear,
   quoteTwoBagelCombo,
+  quotePublishedCombo,
   type BagelSelection,
   type BagelFormat,
   type PackMix,
@@ -89,7 +90,7 @@ export function planGuidedOrder(input: GuidedQuoteRequest): GuidedOrderPlan {
   const bagels = selection(input.bagels, bagelIds)
   const schmears = selection(input.schmears, schmearIds)
   if (!bagels || !schmears) return invalid('Sabores o cantidades inválidos; no se omitirá ningún producto del pedido.')
-  if (schmears.length > 1 || schmears.some(item => item.quantity !== 1)) {
+  if (input.category !== 'combos' && (schmears.length > 1 || schmears.some(item => item.quantity !== 1))) {
     return invalid('Este journey admite un solo pote de schmear.')
   }
   const grams = input.schmearSize === undefined ? 120 : input.schmearSize
@@ -146,6 +147,16 @@ export function planGuidedOrder(input: GuidedQuoteRequest): GuidedOrderPlan {
   }
 
   if (input.category === 'combos') {
+    if (typeof input.comboId === 'string' && menu.publishedCombos.some(combo => combo.id === input.comboId)) {
+      if (input.bagelMode !== undefined && input.bagelMode !== 'combo') return invalid('Modo de combo inválido.')
+      const quote = quotePublishedCombo({comboId: input.comboId, bagels, schmears, schmearGrams: grams})
+      if (quote.status === 'invalid') return invalid(quote.reasons[0])
+      return result('review_required', quote.reasons, [{
+        kind: 'combo', id: input.comboId, quantity: 1, bagels,
+        schmears: schmears.map(item => ({...item, grams})), publishedAmountPen: quote.publishedBasePen,
+      }])
+    }
+    if (schmears.length > 1 || schmears.some(item => item.quantity !== 1)) return invalid('El combo anterior admite un solo pote.')
     if (input.comboId !== 'two-bagel-schmear' || (input.bagelMode !== undefined && input.bagelMode !== 'combo')) {
       return invalid('Combo no compatible con el journey actual.')
     }

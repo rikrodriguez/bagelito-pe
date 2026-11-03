@@ -34,7 +34,7 @@ export function describeManualOrderSelection(input: ManualOrderInput) {
       (input.format === 'mini' ? 'minis' : 'grandes') +
       ' (' + (singleFlavor ? 'un sabor' : 'mixto') + ')'
     : input.category === 'combos'
-      ? (input.comboName || 'Combo 2 bagels + 1 schmear')
+      ? (input.comboName || 'Combo de bagels y schmears')
       : 'Schmear individual (' + String(input.schmearSizeGrams || 120) + ' g)'
 }
 

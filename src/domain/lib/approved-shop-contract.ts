@@ -1,7 +1,7 @@
 /**
  * Bagelito read-only, portable shop-selection contract.
  * Published menu evidence: catalog-verified-for-design.md (2026-10-21)
- * Product journey approved later: Packs (Grande/Mini), Combos (2 bagels + schmear), Schmears.
+ * Menu screenshots reconfirmed by the user on 2026-11-03: Packs, published Combos, Schmears.
  * DO NOT charge from this module. All commerce amounts must be server-verified.
  */
 import verifiedMenu from '../data/verified-menu-2026-10-21.json'
@@ -60,7 +60,11 @@ export function getVerifiedDisplayMenu() {
     schmearSizes: verifiedMenu.schmear_sizes,
     largePacks: verifiedMenu.packs,
     miniPacks: verifiedMenu.mini_packs,
+    publishedCombos: verifiedMenu.combos,
+    // Compatibility alias for older preview consumers.
     historicalPublishedCombos: verifiedMenu.combos,
+    customColors: verifiedMenu.custom_colors,
+    comboUpgrades: verifiedMenu.combo_upgrades,
   }
 }
 
@@ -99,7 +103,38 @@ export function quotePublishedSchmear(input: { flavorId: string; grams: number }
   return ready(price)
 }
 
-/** Preview of the current two-bagel visual journey. It is not commercial
+/** Published bundle composition only. Unsupported transactions remain closed.
+ * Printed upgrades do not specify per-pot versus per-combo pricing.
+ */
+export function quotePublishedCombo(input: {
+  comboId: string
+  bagels: BagelSelection[]
+  schmears: BagelSelection[]
+  schmearGrams?: number
+}): ShopQuote {
+  const combo = verifiedMenu.combos.find(item => item.id === input.comboId)
+  if (!combo) return invalid('Unknown published combo.')
+  const bad = validBagelSelection(input.bagels, combo.bagels, 'mixed')
+  if (bad) return invalid(bad)
+  if (!Array.isArray(input.schmears) || !input.schmears.every(item => item
+    && verifiedMenu.schmears.some(flavor => flavor.id === item.flavorId)
+    && Number.isSafeInteger(item.quantity) && item.quantity > 0)
+    || new Set(input.schmears.map(item => item.flavorId)).size !== input.schmears.length
+    || input.schmears.reduce((sum, item) => sum + item.quantity, 0) !== combo.schmear_count) {
+    return invalid(`Select exactly ${combo.schmear_count} schmear pots from the published flavors.`)
+  }
+  const grams = input.schmearGrams ?? combo.schmear_grams_each
+  if (!verifiedMenu.schmear_sizes.some(item => item.grams === grams)) return invalid('Unknown schmear size.')
+  if (grams !== combo.schmear_grams_each) {
+    return review(null, 'Combo upgrade pricing per pot or per bundle is not confirmed.')
+  }
+  if (input.bagels.some(item => verifiedMenu.bagels.some(flavor => flavor.id === item.flavorId && flavor.premium))) {
+    return review(null, 'Published menu does not define premium flavor surcharge or inclusion in combos.')
+  }
+  return review(combo.price, 'Published combo reference only; combo stock and transactional support are not confirmed.')
+}
+
+/** Compatibility preview for older saved two-bagel selections. It is not commercial
  * approval to replace historical bundles or assign their prices to this offer.
  */
 export function quoteTwoBagelCombo(input: {
@@ -112,7 +147,7 @@ export function quoteTwoBagelCombo(input: {
   if (!verifiedMenu.schmears.some((s) => s.id === input.schmearId)) return invalid('Unknown schmear.')
   const grams = input.schmearGrams ?? 120
   if (!verifiedMenu.schmear_sizes.some((s) => s.grams === grams)) return invalid('Unknown schmear size.')
-  return review(null, 'The approved two-bagel combo has no confirmed selling price or upgrade rules.')
+  return review(null, 'The legacy two-bagel combo has no confirmed selling price or upgrade rules.')
 }
 
 /** A UI quote is not payment authorization. Server must always recheck price and inventory. */

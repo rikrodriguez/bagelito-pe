@@ -120,3 +120,12 @@ test('malformed RPC envelopes are not accepted as successful writes or absent sn
     await assert.rejects(api.readGuidedProductReservation(db,'33333333-3333-4333-8333-333333333333'),/Could not read/)
   }
 })
+
+test('published combo prices do not authorize unsupported product persistence or RPC writes', async () => {
+  for (const [comboId, units, pots] of [['perfect-pair', 6, 1], ['brunch-pack', 12, 2], ['schmear-lover', 6, 3]]) {
+    let calls = 0
+    const order = {category:'combos',comboId,bagelMode:'combo',bagels:{plain:units},schmears:{'whipped-original':pots},schmearSize:120}
+    await assert.rejects(api.persistGuidedProductReservation({rpc(){calls++;throw Error('must not call')}}, fixture({order})), /confirmed prices/)
+    assert.equal(calls, 0)
+  }
+})

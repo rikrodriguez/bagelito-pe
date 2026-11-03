@@ -1,6 +1,8 @@
 import { type FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { planGuidedOrder } from '../domain/lib/guided-order-quote'
 import { ReferenceScene } from '../reference/ReferenceScene'
+import { SelectionBox } from '../reference/SelectionBox'
+import { BagelVitrine } from '../reference/BagelVitrine'
 import { containReferenceDrawerFocus } from '../reference/reference-drawer-focus'
 import { getVerifiedDisplayMenu } from '../domain/lib/approved-shop-contract'
 import { deliveryDistricts } from '../domain/data/delivery-districts'
@@ -17,7 +19,8 @@ import './guided-commerce.css'
 
 const menu = getVerifiedDisplayMenu()
 const optionalPackSchmearSize = menu.schmearSizes.find((size) => size.grams === 120)
-const combos = [{ id: 'two-bagel-schmear', name: '2 Bagels + Schmear', bagels: 2, schmear_count: 1, price: null }] as const
+const combos = menu.publishedCombos
+const legacyCombo = { id: 'two-bagel-schmear', name: '2 Bagels + Schmear (selección anterior)', bagels: 2, schmear_count: 1, price: null } as const
 
 function revealFocusedCatalogCard(event: FocusEvent<HTMLDivElement>) {
   const grid = event.currentTarget
@@ -215,21 +218,26 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
             const modeValid = typeof safeMode === 'string' && (restoredCategory === 'packs' ? safeMode === 'pack'
               : restoredCategory === 'combos' ? safeMode === 'combo'
                 : ['pack','upsell8','downsell2'].includes(safeMode))
-            const target = restoredCategory === 'packs' ? safeQty : restoredCategory === 'combos' ? 2
+            const restoredCombo = restoredCategory === 'combos'
+              ? draft.comboId === undefined || draft.comboId === legacyCombo.id ? legacyCombo : combos.find(item => item.id === draft.comboId) ?? null
+              : null
+            if (restoredCategory === 'combos' && !restoredCombo
+              && !(draft.comboId === null && requestedScene === 'combos' && bagelTotal === 0 && schmearTotal === 0)) throw new Error('invalid-product-draft')
+            const target = restoredCategory === 'packs' ? safeQty : restoredCategory === 'combos' ? restoredCombo?.bagels ?? 0
               : safeMode === 'upsell8' ? 8 : safeMode === 'downsell2' ? 2 : 0
-            if (!modeValid || bagelTotal > target || schmearTotal > 1
+            if (!modeValid || bagelTotal > target || schmearTotal > (restoredCategory === 'combos' ? restoredCombo?.schmear_count ?? 0 : 1)
               || (safeMix === 'single' && restoredCategory === 'packs' && Object.keys(safeBagels).length > 1)
               || (restoredCategory !== 'schmears' && safeSize !== 120)) throw new Error('invalid-product-draft')
             const restoredPlan = planGuidedOrder({category: restoredCategory, packFormat: safeFormat,
               packQty: safeQty, packMix: safeMix, bagels: safeBagels, schmears: safeSchmears,
               schmearSize: safeSize, bagelMode: safeMode,
-              comboId: restoredCategory === 'combos' ? 'two-bagel-schmear' : undefined})
+              comboId: restoredCombo?.id})
             const complete = restoredPlan.status !== 'invalid'
             setCategory(restoredCategory)
             setPackFormat(safeFormat)
             setPackQty(safeQty)
             setPackMix(safeMix)
-            setComboId(restoredCategory === 'combos' ? 'two-bagel-schmear' : null)
+            setComboId(restoredCombo?.id ?? null)
             setSchmearSize(safeSize)
             setBagelMode(safeMode as BagelMode)
             setBagelCounts(safeBagels)
@@ -264,6 +272,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         format: packFormat,
         packQty,
         packMix,
+        comboId,
         schmearSize,
         bagelMode,
         bagels: bagelCounts,
@@ -272,7 +281,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     } catch {
       // Safari private mode or a blocked storage quota is non-fatal.
     }
-  }, [draftLoaded,category,scene,packFormat,packQty,packMix,schmearSize,bagelMode,bagelCounts,schmearCounts,paidOrderCode,reviewOnly])
+  }, [draftLoaded,category,scene,packFormat,packQty,packMix,comboId,schmearSize,bagelMode,bagelCounts,schmearCounts,paidOrderCode,reviewOnly])
 
   // Navigation and order drawer stay in their own layer while walking.
   // Close both when the customer moves to a new scene.
@@ -431,7 +440,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     return () => { active = false }
   }, [scene, category, packFormat, packQty, packMix, bagelCounts, schmearCounts, schmearSize, comboId, bagelMode, paymentConfig, qaMode, reviewOnly])
 
-  const selectedCombo = combos.find((c) => c.id === comboId) ?? null
+  const selectedCombo = combos.find((c) => c.id === comboId) ?? (comboId === legacyCombo.id ? legacyCombo : null)
   const bagelTotal = Object.values(bagelCounts).reduce((sum, n) => sum + n, 0)
   const schmearTotal = Object.values(schmearCounts).reduce((sum, n) => sum + n, 0)
   const selectedBagelSummary = menu.bagels
@@ -561,6 +570,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
   function chooseCombo(id: string) {
     if (id !== comboId) resetSelections()
     setComboId(id)
+    setSchmearSize(120)
     setBagelMode('combo')
     setScene('bagels')
   }
@@ -682,6 +692,9 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         schmears: selectedSchmearSummary,
       })
     : null
+
+  const displayPlan = planGuidedOrder({category, packFormat, packQty, packMix, comboId,
+    bagels: bagelCounts, schmears: schmearCounts, schmearSize, bagelMode})
 
   const selectionDescription = category ? describeManualOrderSelection({
     category, format: packFormat, packQuantity: packQty, packMix,
@@ -862,7 +875,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         </button>
         <button aria-label="Combos" onClick={() => chooseCategory('combos')}>
           <span className="selector-product-photo selector-product-combo" role="img" aria-label="Fotografía de dos bagels con schmear" data-art-medium="photograph-crop" />
-          <span><b>Combos</b><small>2 bagels + schmear</small></span>
+          <span><b>Combos</b><small>Bagels + schmears</small></span>
         </button>
         <button aria-label="Schmears" onClick={() => chooseCategory('schmears')}>
           <span className="selector-product-photo selector-product-schmear" role="img" aria-label="Fotografía de un schmear" data-art-medium="photograph-crop" />
@@ -903,7 +916,11 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <div className="pack-choice-grid">
         {(packFormat === 'mini' ? [6, 12, 24] : [6, 12]).map((qty) => <button key={qty} onClick={() => choosePack(qty, packMix)}
           aria-label={'Elegir ' + qty + ' ' + (packFormat === 'mini' ? 'mini bagels' : 'bagels') + ', ' + (packMix === 'single' ? 'un sabor' : 'mixtos')}>
-          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span><small>Elegir sabores →</small>
+          <b>{qty}</b><span>{packFormat === 'mini' ? 'mini bagels' : 'bagels'}</span>
+          <strong className="boutique-pack-price">S/ {packFormat === 'mini'
+            ? menu.miniPacks.find(item => item.quantity === qty)?.[packMix === 'mixed' ? 'mixed_price' : 'single_price']
+            : menu.largePacks.find(item => item.quantity === qty && item.mix === packMix)?.price}</strong>
+          <small>Elegir sabores →</small>
         </button>)}
       </div>
       <p>{packMix === 'single'
@@ -912,17 +929,16 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
     </div>}
 
     {scene === 'combos' && <div className="guided-combo-overlay approved-combo-overlay">
-      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={referenceMode ? 'Bagels + schmears' : combo.name}>
+      {combos.map((combo) => <button key={combo.id} onClick={() => chooseCombo(combo.id)} aria-label={combo.name}>
         <span className="approved-combo-art">
-          <img src="/images/bagel-everything.webp" alt="" />
-          <img src="/images/bagel-sesame.webp" alt="" />
+          <img className="boutique-combo-pack" src="/images/rebuilt-pack-open-tray-480.webp" alt="" width={1536} height={1024} />
           {referenceMode ? <img className="rebuilt-combo-schmear" src="/images/rebuilt-schmear-neutral-480.webp" srcSet="/images/rebuilt-schmear-neutral-480.webp 480w, /images/rebuilt-schmear-neutral-800.webp 800w" sizes="140px" alt="" /> : <i className="approved-schmear" />}
         </span>
         <span className="approved-combo-copy">
           <small>COMBO BAGELITO</small>
-          <b>{referenceMode ? 'Bagels + schmears' : combo.name}</b>
-          <em>Elige 2 bagels + 1 schmear</em>
-          <strong>Precio por confirmar</strong>
+          <b>{combo.name}</b>
+          <em>{combo.bagels} bagels mixtos + {combo.schmear_count} {combo.schmear_count === 1 ? 'schmear' : 'schmears'} de 120 g</em>
+          <strong>S/ {combo.price}</strong>
         </span>
         <span className="approved-combo-arrow">→</span>
       </button>)}
@@ -939,14 +955,18 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
       <section className="mobile-product-stage mobile-bagel-stage" data-format={category === 'packs' ? packFormat : 'grande'} aria-label="Selecciona sabores de bagels">
         <header>
           <small>VITRINA BAGELITO · {packFormat === 'mini' && category === 'packs' ? 'MINIS' : 'GRANDES'}</small>
-          <h2>{category === 'packs' && packMix === 'single' ? 'Elige un sabor' : 'Elige tus sabores'}</h2>
+          <h2>{category === 'packs' && packMix === 'single' ? (referenceMode ? 'Un sabor, toda tu caja' : 'Elige un sabor') : referenceMode ? 'De la vitrina a tu caja' : 'Elige tus sabores'}</h2>
           <span>{category === 'packs' && packMix === 'single' ? 'Un toque completa todo tu pack.' : bagelTotal + ' de ' + bagelTarget + ' seleccionados'}</span>
         </header>
-        <div className="mobile-bagel-grid" onFocusCapture={directCatalog ? revealFocusedCatalogCard : undefined}>
+        {referenceMode && <SelectionBox bagels={menu.bagels} counts={bagelCounts} target={bagelTarget} singleFlavor={category === 'packs' && packMix === 'single'} onRemove={(id) => {
+          removeBagel(id)
+          referenceRoot.current?.querySelector<HTMLButtonElement>(`[data-bagel-id="${id}"]`)?.focus()
+        }} />}
+        {referenceMode ? <BagelVitrine counts={bagelCounts} onAdd={addBagel} /> : <div className="mobile-bagel-grid" onFocusCapture={directCatalog ? revealFocusedCatalogCard : undefined}>
           {menu.bagels.map((bagel) => {
             const count = bagelCounts[bagel.id] ?? 0
             return <article key={bagel.id} className="mobile-bagel-card" data-selected={count > 0}>
-              <button type="button" onClick={() => addBagel(bagel.id)} aria-label={'Agregar ' + bagel.name}>
+              <button type="button" data-bagel-id={bagel.id} onClick={() => addBagel(bagel.id)} aria-label={'Agregar ' + bagel.name}>
                 <img src={'/images/bagel-' + bagel.id + '.webp'} alt={bagel.name} loading="eager" />
                 <span className="mobile-bagel-sign">{bagel.name}</span>
                 {bagel.premium && <small>Premium</small>}
@@ -958,7 +978,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
               </div>}
             </article>
           })}
-        </div>
+        </div>}
       </section>
       {!directCatalog && <div className="guided-product-frame bagel-product-frame">
         <img src={sceneImage} alt="Vitrina con ocho sabores de bagels" />
@@ -985,7 +1005,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           </button>
         })}
       </div></div>}
-      <div className="guided-order-counter bagel-live-summary">
+      <div className="guided-order-counter bagel-live-summary" data-box-visible={referenceMode ? 'true' : undefined}>
         <small>{bagelMode === 'upsell8' ? '6 + 2 GRATIS' : bagelMode === 'downsell2' ? 'PRUEBA CON 2' : category === 'combos' ? selectedCombo?.name : packFormat === 'mini' ? 'MINIS' : 'TU PACK'}</small>
         <b>{bagelTotal}/{bagelTarget}</b>
         <div className="bagel-summary-lines">
@@ -996,7 +1016,7 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
           : category === 'packs' && packMix === 'single' ? 'Toca un solo sabor para todo tu pack'
           : 'Toca los sabores en la vitrina'}</em>
       </div>
-      {bagelTotal === bagelTarget && <button className="guided-primary-next" onClick={nextFromBagels}>Continuar <b>→</b></button>}
+      {bagelTotal === bagelTarget && <button className="guided-primary-next" onClick={nextFromBagels}>{referenceMode ? 'Elegir schmear' : 'Continuar'} <b>→</b></button>}
     </>}
 
     {scene === 'schmears' && <>
@@ -1067,11 +1087,14 @@ export function GuidedCommerce({ onExit, customerName, initialCategory = null, s
         </div>
         <div className="guided-cashier-quote">
           <span>{manualInquiry || paymentConfig?.enabled !== true
-            ? 'Precio final por confirmar'
+            ? displayPlan.amountPen != null ? 'Precio de carta · sin delivery' : 'Precio final por confirmar'
             : quoteLoading
               ? 'Validando precio e inventario…'
               : checkoutQuote?.checkoutAllowed ? 'Subtotal verificado' : 'Necesita revisión'}</span>
-          {!manualInquiry && paymentConfig?.enabled === true && checkoutQuote?.amountPen != null && <strong>S/ {checkoutQuote.amountPen}</strong>}
+          {!manualInquiry && paymentConfig?.enabled === true && checkoutQuote?.amountPen != null
+            ? <strong>S/ {checkoutQuote.amountPen}</strong>
+            : displayPlan.amountPen != null && <strong>S/ {displayPlan.amountPen}</strong>}
+          {displayPlan.reasons.some(reason => /premium/i.test(reason)) && <small>Base de carta. Los sabores premium requieren confirmar el total.</small>}
         </div>
         {manualInquiry
           ? <p>Consulta tu selección con Bagelito. La disponibilidad, el precio y la fecha se confirman por WhatsApp; aún no hay un pedido reservado.</p>
