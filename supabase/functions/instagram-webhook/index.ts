@@ -555,7 +555,9 @@ async function generateShadowDraft(args: {
     .slice(0, 7);
 
   if (intent === "flavors" || intent === "menu" || intent === "how_to_order") {
-    if (humanUsedKeys.length > 0) {
+    if (catalogAlreadySentRecently && !explicitRepeatMediaRequest) {
+      requestedMediaKeys = [];
+    } else if (humanUsedKeys.length > 0) {
       requestedMediaKeys = humanUsedKeys;
     } else if (intent === "flavors" || intent === "menu") {
       const regularFlavorKeys = (mediaAssets ?? [])
