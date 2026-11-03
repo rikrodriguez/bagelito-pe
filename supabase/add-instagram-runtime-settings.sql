@@ -13,6 +13,7 @@ create table if not exists public.instagram_runtime_settings (
   ]::text[],
   media_enabled boolean not null default true,
   max_media integer not null default 7 check (max_media between 0 and 7),
+  max_text_messages integer not null default 2 check (max_text_messages between 1 and 2),
   updated_at timestamptz not null default now()
 );
 
