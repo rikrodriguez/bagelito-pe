@@ -774,7 +774,7 @@ Deno.serve(async (req: Request) => {
             const safeForAuto =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
-              conversation.mode !== "human_active" &&
+              (testOnly || conversation.mode !== "human_active") &&
               (testOnly || fullAuto) &&
               autoIntents.includes(shadow.intent) &&
               typeof shadow.confidence === "number" &&
