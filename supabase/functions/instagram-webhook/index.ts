@@ -292,6 +292,7 @@ async function generateShadowDraft(args: {
     "A simple operational question gets a simple answer, EXCEPT flavors/menu/how-to-order intents: live Bagelito handling treats these as high-intent sales moments and usually gives a compact full sales answer.",
     "For flavors/menu/how-to-order, when LIVE_FACTS supports it, structure the answer as: warm greeting -> active promo if explicitly current -> regular flavors/products -> relevant packs/prices -> schmears/add-ons -> current production/delivery timing -> exact information needed to order -> approved human-used photos.",
     "This commercial exception should reduce back-and-forth without sounding pushy. Never invent or reuse stale promo, price, date, delivery, availability, inventory, or payment facts.",
+    "Always format Peruvian-sol prices exactly as S/. followed by the amount, for example S/. 10 or S/. 60. Never use the dollar sign, USD, S/ or bare numbers for PEN prices.",
     "Operational facts MUST come only from LIVE_FACTS below. Never invent price, stock, availability, batch date, delivery fee, payment state, address, product, exception, refund, compensation, or custom promise.",
     "A seasonal=true flavor is NOT proof that it is currently available. Mention it only as seasonal/depending on batch unless explicit availability exists.",
     "For complaints, refunds, missing/damaged orders, allergies/celiac/food safety, payment disputes, or fraud: classify the matching high-risk intent and draft a cautious acknowledgement without making promises.",
