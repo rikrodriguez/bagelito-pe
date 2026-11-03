@@ -1,0 +1,108 @@
+{
+  "reviewer": "independent_financial_review",
+  "decision": "GO for publication of the existing draft PR only; no approval to merge, deploy, install migration, or activate payments",
+  "reviewedBase": "b946d0721e7f7148a3b135427f7ea41d880efbc5",
+  "reviewedMigration": {
+    "path": "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql",
+    "sha256": "486c9b54acf5c7c8e445fb3504716ef1e5522050ae7c9c869035695ab4e02507"
+  },
+  "blockingFindings": [],
+  "observations": [
+    {
+      "severity": "info",
+      "topic": "Financial eligibility",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:63",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:65",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:83",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:99",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:102",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:117"
+      ],
+      "assessment": "Order is locked before both pending-state checks and attempt validation. Failed/expired/refunded/inconsistent attempt states do not reset to pending. Amount, currency, expiry and capture identities remain bound. No provider callback is reached for a failure committed before claim."
+    },
+    {
+      "severity": "info",
+      "topic": "Lock order",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:77",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:114",
+        "tests/sql/fixtures/financial-core/add-checkout-safety.sql:198",
+        "tests/sql/fixtures/financial-core/add-culqi-charge-confirmation.sql:195",
+        "tests/sql/fixtures/financial-core/add-culqi-session-expiry.sql:22"
+      ],
+      "assessment": "Changed entry points take order then attempts in stable ID order and never later acquire batch; this introduces no new cycle with batch->order->attempt paths. Static reasoning is not a real concurrency proof."
+    },
+    {
+      "severity": "info",
+      "topic": "Idempotence and 3DS",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:78",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:128",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:143",
+        "tests/sql/culqi-failed-retry.test.cjs:89",
+        "tests/sql/culqi-failed-retry.test.cjs:131",
+        "tests/sql/culqi-failed-retry.test.cjs:141"
+      ],
+      "assessment": "Preparation preserves the original eligible session; claims preserve single-winner semantics and source/device-bound 3DS continuation. Already-paid/submitted handling is retained, and failed events do not rearm the row."
+    },
+    {
+      "severity": "info",
+      "topic": "Capacity and late payments",
+      "evidence": [
+        "supabase/add-guided-product-lines.sql:238",
+        "supabase/add-guided-product-lines.sql:247",
+        "tests/sql/fixtures/financial-core/add-checkout-safety.sql:198",
+        "tests/sql/fixtures/financial-core/add-checkout-safety.sql:245",
+        "tests/sql/culqi-failed-capacity.test.cjs:67"
+      ],
+      "assessment": "The change does not release failed capacity early. Existing reservation and webhook paths serialize on batch; paid after release remains cancelled with reconciliation. Immediate commercial recovery of the last slot remains intentionally unimplemented."
+    },
+    {
+      "severity": "info",
+      "topic": "Installation and replay",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:13",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:45",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:49",
+        "tests/sql/culqi-guard-prerequisites.test.cjs:25"
+      ],
+      "assessment": "Known body/config/signature/privilege contracts are checked before either CREATE OR REPLACE. Unknown prerequisite or contract drift aborts the transaction and existing data/ACL/function definitions remain intact; exact fixed replay is accepted."
+    }
+  ],
+  "independentValidation": {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/sql/culqi-guard-prerequisites.test.cjs",
+      "tests/sql/culqi-failed-capacity.test.cjs",
+      "tests/sql/culqi-failed-retry.test.cjs"
+    ],
+    "engine": "PGlite in-memory only",
+    "exitCode": 0,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 7940.45447,
+    "whitespaceCheck": {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  },
+  "limits": [
+    "Single PGlite backend queues statements; Promise.all covers request/transaction ordering but does not validate independent-session lock waits, MVCC overlap, deadlocks or production load.",
+    "No external schema inspection was performed. Only prepare, claim and confirmation are fingerprinted by the migration; actual deployed webhook, expiry, table, trigger and capacity definitions still require compatibility review before installation.",
+    "A provider operation whose claim committed before a later failure cannot be recalled by this SQL gate. Tests confirm no subsequent continuation rearms the failed row.",
+    "No real Culqi request, payment, live migration, credential change, deployment, merge, network workaround, or native PostgreSQL was performed by this reviewer.",
+    "Build and frontend/browser validation are outside this independent financial SQL review; parent is evaluating build separately."
+  ],
+  "fileChangesByReviewer": [
+    "/tmp/bagelito-financial-independent-review.json"
+  ]
+}

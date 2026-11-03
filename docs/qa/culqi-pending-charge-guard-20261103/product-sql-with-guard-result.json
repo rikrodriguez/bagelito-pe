@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "--require",
+    "./tests/sql/with-pending-charge-guard.cjs",
+    "--test",
+    "--test-concurrency=1",
+    "tests/sql/product-lines.test.cjs",
+    "tests/sql/product-checkout-route.test.cjs"
+  ],
+  "exitCode": 0,
+  "elapsedMs": 9211,
+  "engine": "PGlite in memory only"
+}

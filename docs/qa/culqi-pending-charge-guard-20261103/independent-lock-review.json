@@ -1,0 +1,91 @@
+{
+  "reviewer": "independent_lock_review",
+  "base_commit": "b946d0721e7f7148a3b135427f7ea41d880efbc5",
+  "scope": "Read-only concurrency, lock ordering, idempotence, failed states and late payment/capacity review of staged pending-charge guard; independent of implementation.",
+  "verdict": "GO for draft PR publication only; no blocking regression found in the introduced state/lock changes. Not approval for schema installation, merge, deployment or live charges.",
+  "blocking_findings": [],
+  "reasoning": [
+    {
+      "topic": "Lock graph",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:63",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:77",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:99",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:114",
+        "tests/sql/fixtures/financial-core/add-checkout-safety.sql:179",
+        "tests/sql/fixtures/financial-core/add-checkout-safety.sql:198",
+        "tests/sql/fixtures/financial-core/add-culqi-session-expiry.sql:22",
+        "tests/sql/fixtures/financial-core/add-culqi-charge-confirmation.sql:195",
+        "supabase/add-guided-product-lines.sql:204",
+        "supabase/add-guided-product-lines.sql:238"
+      ],
+      "assessment": "Prepare/claim acquire order -> provider attempts in stable ID order and never request batch after order. Webhook uses event -> batch -> order -> attempts, expiry/confirmation/adverse finish use batch -> order -> attempts, normal finish uses order -> attempts. Existing reservation replay returns before batch; fresh reservation acquires batch before insert. No new cycle found among these supported paths. Attempt insertion FK refers to the order already locked by the caller."
+    },
+    {
+      "topic": "Failed admission race",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:65",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:83",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:102",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:117",
+        "tests/sql/culqi-failed-retry.test.cjs:81"
+      ],
+      "assessment": "A failure committed before claim is re-read under the order row lock and blocks both the stale HTTP observation and a fresh source. Both order and attempt must remain pending; no evidence is reset to make the row eligible."
+    },
+    {
+      "topic": "Provider boundary and 3DS idempotence",
+      "evidence": [
+        "src/server/charge-coordinator.server.ts:31",
+        "src/server/charge-coordinator.server.ts:72",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:128",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:143",
+        "tests/sql/fixtures/financial-core/add-culqi-charge-confirmation.sql:105",
+        "tests/sql/culqi-failed-retry.test.cjs:102",
+        "tests/sql/culqi-failed-retry.test.cjs:141"
+      ],
+      "assessment": "The RPC transaction ends before provider I/O. First eligible claim changes state to submitting and creates a bound attempt ID; subsequent claims observe submitting/paid rather than authorizing additional callbacks. Bound 3DS source/device remains required. Failure committed after an already-authorized claim cannot recall provider I/O, but clears/breaks the old attempt and stale finish cannot rearm it. That limitation is accurately documented."
+    },
+    {
+      "topic": "Last slot and late payment",
+      "evidence": [
+        "supabase/add-guided-product-lines.sql:238",
+        "supabase/add-guided-product-lines.sql:247",
+        "tests/sql/fixtures/financial-core/add-checkout-safety.sql:245",
+        "tests/sql/fixtures/financial-core/add-culqi-charge-confirmation.sql:287",
+        "tests/sql/culqi-failed-capacity.test.cjs:67",
+        "tests/sql/culqi-failed-capacity.test.cjs:89"
+      ],
+      "assessment": "New preparation/claim mutations do not change the capacity predicate or any capacity-relevant payment/status state. Failed unexpired rows retain their slot. After expiry a new reservation can take it; subsequent verified old success is serialized on batch and kept paid/cancelled with payment_after_reservation_release. No new oversell path found; smooth immediate failed-checkout recovery remains unimplemented."
+    },
+    {
+      "topic": "Install/replay boundary",
+      "evidence": [
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:7",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:45",
+        "supabase/migrations/20261103003917_culqi_pending_charge_guard.sql:149"
+      ],
+      "assessment": "Whole migration is transactional, accepts known baseline/fixed bodies and function contracts, and preserves data. Installation should be a controlled schema cutover with no concurrent uncoordinated DDL; metadata fingerprint checks alone are not a concurrency lock against another administrator changing functions between check and replacement."
+    }
+  ],
+  "validation": {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=pending API read|competing bound 3DS|expired failed hold|failed event queued|failure committed after claim",
+      "tests/sql/culqi-failed-capacity.test.cjs",
+      "tests/sql/culqi-failed-retry.test.cjs"
+    ],
+    "exit_code": 0,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "engine": "fresh PGlite in memory via SHA-verified immutable SQL fixture; callbacks fabricated in-process"
+  },
+  "limits": [
+    "PGlite serializes statements on one backend; Promise.all tests are transaction ordering checks, not independent-session lock waits, concurrent MVCC, or deadlock proof.",
+    "Static graph covers the reviewed RPCs/triggers; out-of-contract direct service/owner DML or concurrent DDL is not validated.",
+    "No external DB/provider/socket/native PostgreSQL/403 bypass, source edit, publication, deployment or real charge was performed.",
+    "Draft description must preserve outstanding real Culqi acceptance, multi-session contention and installation limitations; database/runtime behavior remains unchanged until a separately authorized migration install."
+  ]
+}
