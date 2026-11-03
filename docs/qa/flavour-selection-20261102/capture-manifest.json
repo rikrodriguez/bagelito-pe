@@ -1,0 +1,86 @@
+{
+  "code_sha": "7ba7a5b98c3a25907583a1b72cf04befd23ef9d0",
+  "captures": [
+    {
+      "path": "captures/before-desktop-empty.jpg",
+      "bytes": 77590,
+      "dimensions": [
+        1165,
+        1050
+      ],
+      "sha256": "b1c2f3385031d1f6e7c18b3004643bc6a65d2e2a409b2731f2ecb4a75548aaae"
+    },
+    {
+      "path": "captures/before-desktop-selected.jpg",
+      "bytes": 81806,
+      "dimensions": [
+        1165,
+        1106
+      ],
+      "sha256": "01e0875789e63af728054baee88878ab030f275cb66d1c0aececdc4a405394b5"
+    },
+    {
+      "path": "captures/before-narrow-selected.jpg",
+      "bytes": 59996,
+      "dimensions": [
+        486,
+        1404
+      ],
+      "sha256": "db64564512bb4fdbba935518f166ef35da974f41e9ffe088885e509160d901c7"
+    },
+    {
+      "path": "captures/final-334-keyboard.jpg",
+      "bytes": 17558,
+      "dimensions": [
+        334,
+        505
+      ],
+      "sha256": "836d0a78558a86fdf40c7e6bb21b32b65bffb0d2153d0241bf22ec626d16be68"
+    },
+    {
+      "path": "captures/final-334-schmears.jpg",
+      "bytes": 32469,
+      "dimensions": [
+        216,
+        1101
+      ],
+      "sha256": "d55608d9dcd2537b5be45565f4a998b8fc96adc37aea45187222de9f6d91a087"
+    },
+    {
+      "path": "captures/final-334-selected.jpg",
+      "bytes": 30891,
+      "dimensions": [
+        216,
+        1142
+      ],
+      "sha256": "8c442392306c866b962f388668ab8a104e3c07f7d3aa0ba493ad4f33ac778081"
+    },
+    {
+      "path": "captures/final-desktop-empty.jpg",
+      "bytes": 81261,
+      "dimensions": [
+        1165,
+        1261
+      ],
+      "sha256": "d08bc9859a2378f744d6dc25014471b5b8b36211f18e6dc8bbef898fdccb5393"
+    },
+    {
+      "path": "captures/final-desktop-schmears.jpg",
+      "bytes": 79836,
+      "dimensions": [
+        1165,
+        1267
+      ],
+      "sha256": "84e4fe1a7d824ba19d64663cdaaca4af9242d1f81eba4dafd28a3df6a6ee5671"
+    },
+    {
+      "path": "captures/final-desktop-selected.jpg",
+      "bytes": 85015,
+      "dimensions": [
+        1165,
+        1261
+      ],
+      "sha256": "ae41678604e7cc9a0d83256c4a48573f1ee30eb6ee8fb121c7e721d8567e89f8"
+    }
+  ]
+}

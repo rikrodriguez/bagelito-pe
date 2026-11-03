@@ -1,0 +1,214 @@
+{
+  "selectedBefore": [
+    {
+      "name": "Agregar Everything",
+      "rect": {
+        "bottom": 354.140625,
+        "height": 238,
+        "left": 104.5,
+        "right": 331.5,
+        "top": 116.140625,
+        "width": 227,
+        "x": 104.5,
+        "y": 116.140625
+      }
+    },
+    {
+      "name": "Agregar Sesame",
+      "rect": {
+        "bottom": 354.140625,
+        "height": 238,
+        "left": 347.5,
+        "right": 574.5,
+        "top": 116.140625,
+        "width": 227,
+        "x": 347.5,
+        "y": 116.140625
+      }
+    },
+    {
+      "name": "Agregar Plain",
+      "rect": {
+        "bottom": 354.140625,
+        "height": 238,
+        "left": 590.5,
+        "right": 817.5,
+        "top": 116.140625,
+        "width": 227,
+        "x": 590.5,
+        "y": 116.140625
+      }
+    },
+    {
+      "name": "Agregar Classic Onion",
+      "rect": {
+        "bottom": 354.140625,
+        "height": 238,
+        "left": 833.5,
+        "right": 1060.5,
+        "top": 116.140625,
+        "width": 227,
+        "x": 833.5,
+        "y": 116.140625
+      }
+    },
+    {
+      "name": "Agregar Jalapeño Cheddar",
+      "rect": {
+        "bottom": 573.03125,
+        "height": 202.890625,
+        "left": 104.5,
+        "right": 331.5,
+        "top": 370.140625,
+        "width": 227,
+        "x": 104.5,
+        "y": 370.140625
+      }
+    },
+    {
+      "name": "Agregar Cheddar",
+      "rect": {
+        "bottom": 573.03125,
+        "height": 202.890625,
+        "left": 347.5,
+        "right": 574.5,
+        "top": 370.140625,
+        "width": 227,
+        "x": 347.5,
+        "y": 370.140625
+      }
+    },
+    {
+      "name": "Agregar Cinnamon Raisin",
+      "rect": {
+        "bottom": 573.03125,
+        "height": 202.890625,
+        "left": 590.5,
+        "right": 817.5,
+        "top": 370.140625,
+        "width": 227,
+        "x": 590.5,
+        "y": 370.140625
+      }
+    },
+    {
+      "name": "Agregar Blueberry",
+      "rect": {
+        "bottom": 573.03125,
+        "height": 202.890625,
+        "left": 833.5,
+        "right": 1060.5,
+        "top": 370.140625,
+        "width": 227,
+        "x": 833.5,
+        "y": 370.140625
+      }
+    }
+  ],
+  "emptyBefore": [
+    {
+      "name": "Agregar Everything",
+      "rect": {
+        "bottom": 351.140625,
+        "height": 182,
+        "left": 104.5,
+        "right": 331.5,
+        "top": 169.140625,
+        "width": 227,
+        "x": 104.5,
+        "y": 169.140625
+      }
+    },
+    {
+      "name": "Agregar Sesame",
+      "rect": {
+        "bottom": 351.140625,
+        "height": 182,
+        "left": 347.5,
+        "right": 574.5,
+        "top": 169.140625,
+        "width": 227,
+        "x": 347.5,
+        "y": 169.140625
+      }
+    },
+    {
+      "name": "Agregar Plain",
+      "rect": {
+        "bottom": 351.140625,
+        "height": 182,
+        "left": 590.5,
+        "right": 817.5,
+        "top": 169.140625,
+        "width": 227,
+        "x": 590.5,
+        "y": 169.140625
+      }
+    },
+    {
+      "name": "Agregar Classic Onion",
+      "rect": {
+        "bottom": 351.140625,
+        "height": 182,
+        "left": 833.5,
+        "right": 1060.5,
+        "top": 169.140625,
+        "width": 227,
+        "x": 833.5,
+        "y": 169.140625
+      }
+    },
+    {
+      "name": "Agregar Jalapeño Cheddar",
+      "rect": {
+        "bottom": 570.03125,
+        "height": 202.890625,
+        "left": 104.5,
+        "right": 331.5,
+        "top": 367.140625,
+        "width": 227,
+        "x": 104.5,
+        "y": 367.140625
+      }
+    },
+    {
+      "name": "Agregar Cheddar",
+      "rect": {
+        "bottom": 570.03125,
+        "height": 202.890625,
+        "left": 347.5,
+        "right": 574.5,
+        "top": 367.140625,
+        "width": 227,
+        "x": 347.5,
+        "y": 367.140625
+      }
+    },
+    {
+      "name": "Agregar Cinnamon Raisin",
+      "rect": {
+        "bottom": 570.03125,
+        "height": 202.890625,
+        "left": 590.5,
+        "right": 817.5,
+        "top": 367.140625,
+        "width": 227,
+        "x": 590.5,
+        "y": 367.140625
+      }
+    },
+    {
+      "name": "Agregar Blueberry",
+      "rect": {
+        "bottom": 570.03125,
+        "height": 202.890625,
+        "left": 833.5,
+        "right": 1060.5,
+        "top": 367.140625,
+        "width": 227,
+        "x": 833.5,
+        "y": 367.140625
+      }
+    }
+  ]
+}

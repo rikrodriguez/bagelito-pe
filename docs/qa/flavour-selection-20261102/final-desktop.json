@@ -1,0 +1,316 @@
+{
+  "empty": {
+    "cards": [
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Everything",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Everything",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Sesame",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Sesame",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 243,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Plain",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Plain",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 486,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Classic Onion",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Classic Onion",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 729,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Jalapeño Cheddar",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Jalapeño Cheddar",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 0,
+        "y": 298
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Cheddar",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Cheddar",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 243,
+        "y": 298
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Cinnamon Raisin",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Cinnamon Raisin",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 486,
+        "y": 298
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Blueberry",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Blueberry",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 729,
+        "y": 298
+      }
+    ],
+    "overflow": 0,
+    "reviewOnly": "true",
+    "viewport": {
+      "dpr": 1,
+      "height": 757,
+      "width": 1180
+    }
+  },
+  "selected": {
+    "cards": [
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Everything",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Everything",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Sesame",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Sesame",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 243,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Plain",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Plain",
+        "quantity": "1",
+        "quantitySize": "18px",
+        "remove": {
+          "h": 44,
+          "w": 44
+        },
+        "selected": "true",
+        "width": 227,
+        "x": 486,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Classic Onion",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Classic Onion",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 729,
+        "y": 0
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Jalapeño Cheddar",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Jalapeño Cheddar",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 0,
+        "y": 298
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Cheddar",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Cheddar",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 243,
+        "y": 298
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Cinnamon Raisin",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Cinnamon Raisin",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 486,
+        "y": 298
+      },
+      {
+        "actionTop": 224,
+        "height": 282,
+        "image": {
+          "h": 130,
+          "w": 130
+        },
+        "label": "Blueberry",
+        "labelBottom": 180.5,
+        "labelSize": "18px",
+        "name": "Agregar Blueberry",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 227,
+        "x": 729,
+        "y": 298
+      }
+    ],
+    "overflow": 0,
+    "reviewOnly": "true",
+    "viewport": {
+      "dpr": 1,
+      "height": 757,
+      "width": 1180
+    }
+  }
+}
