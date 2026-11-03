@@ -25,7 +25,7 @@ async function postInstagramMessage(
   const accessToken = requiredEnv("INSTAGRAM_ACCESS_TOKEN");
 
   const response = await fetch(
-    `https://graph.instagram.com/${GRAPH_VERSION}/${accountId}/messages`,
+    `https://graph.facebook.com/${GRAPH_VERSION}/${accountId}/messages`,
     {
       method: "POST",
       headers: {
