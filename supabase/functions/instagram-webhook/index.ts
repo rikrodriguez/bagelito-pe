@@ -286,6 +286,17 @@ async function generateShadowDraft(args: {
   const factMap = Object.fromEntries((facts ?? []).map((f: any) => [f.fact_key, f.fact_value]));
 
   const instructions = [
+    "Dawn formatting is part of the Bagelito voice. Never send a long wall of text.",
+    "Short operational replies can stay on one natural line when that is enough.",
+    "For medium or long answers, use short paragraphs with a blank line between ideas; usually one or two sentences per paragraph.",
+    "For orders, menus, flavors, prices, totals, address, payment, or delivery, use vertical scan-friendly formatting and separate visual blocks.",
+    "Use emojis as visual anchors for sections or tone, not as decoration on every sentence.",
+    "For flavors, menu, and how-to-order, never compress the whole answer into one paragraph.",
+    "Use proposed_messages as the exact outbound Instagram bubbles, in order. Return 1 or 2 messages only.",
+    "Use 1 message for simple direct replies, logistics, confirmations, and short explanations.",
+    "For flavors/menu/how-to-order, prefer 2 messages when useful: message 1 = offer/catalog/prices/current delivery context; message 2 = exact information needed to order plus a concise CTA. Media follows after the text messages.",
+    "Do not split into 2 messages if the second would be redundant or unnatural.",
+    "proposed_reply is only a legacy combined preview and must equal proposed_messages joined with a blank line.",
     "You are Bagelito's Instagram Shadow Mode assistant. Your draft is internal and must NEVER be sent automatically.",
     "Write in the customer's language and natural style. Spanish and English should sound native, not translated.",
     "Bagelito voice learned from historical DMs: warm, personal, concise, lightly enthusiastic, sometimes playful elongation like 'Holaaa', and natural emojis.",
@@ -342,13 +353,19 @@ async function generateShadowDraft(args: {
               language: { type: "string", enum: ["es","en","mixed","unknown"] },
               confidence: { type: "number", minimum: 0, maximum: 1 },
               proposed_reply: { type: "string" },
+              proposed_messages: {
+                type: "array",
+                minItems: 1,
+                maxItems: 2,
+                items: { type: "string" }
+              },
               proposed_media_tags: {
                 type: "array",
                 maxItems: 8,
                 items: { type: "string" }
               }
             },
-            required: ["intent","language","confidence","proposed_reply","proposed_media_tags"]
+            required: ["intent","language","confidence","proposed_reply","proposed_messages","proposed_media_tags"]
           }
         }
       }
@@ -419,7 +436,19 @@ async function generateShadowDraft(args: {
   const intent = INTENTS.includes(parsed.intent) ? parsed.intent : "other";
   const language = ["es","en","mixed","unknown"].includes(parsed.language) ? parsed.language : "unknown";
   const confidence = typeof parsed.confidence === "number" ? Math.min(1, Math.max(0, parsed.confidence)) : null;
-  const proposedReply = typeof parsed.proposed_reply === "string" ? parsed.proposed_reply.trim() : "";
+  const rawMessages = Array.isArray(parsed.proposed_messages)
+    ? parsed.proposed_messages
+        .filter((item: unknown) => typeof item === "string")
+        .map((item: string) => item.trim())
+        .filter(Boolean)
+        .slice(0, 2)
+    : [];
+  const proposedMessages = rawMessages.length
+    ? rawMessages
+    : (typeof parsed.proposed_reply === "string" && parsed.proposed_reply.trim()
+        ? [parsed.proposed_reply.trim()]
+        : []);
+  const proposedReply = proposedMessages.join("\n\n");
   let requestedMediaKeys = Array.isArray(parsed.proposed_media_tags) ? parsed.proposed_media_tags.slice(0,8) : [];
   const approvedMediaByKey = new Map((mediaAssets ?? []).map((asset: any) => [asset.asset_key, asset]));
 
@@ -477,6 +506,7 @@ async function generateShadowDraft(args: {
       language,
       confidence,
       proposed_reply: proposedReply,
+      proposed_messages: proposedMessages,
       proposed_media: proposedMedia,
       facts_used: {
         fact_keys: (facts ?? []).map((f: any) => f.fact_key),
@@ -505,6 +535,7 @@ async function generateShadowDraft(args: {
     confidence,
     risk: RISK[intent] ?? "review",
     proposedReply,
+    proposedMessages,
     proposedMedia
   };
 }
@@ -587,7 +618,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: runtimeSettings } = await db
     .from("instagram_runtime_settings")
-    .select("enabled,mode,test_recipient_igsid,test_recipient_igsids,min_confidence,auto_intents,media_enabled,max_media")
+    .select("enabled,mode,test_recipient_igsid,test_recipient_igsids,min_confidence,auto_intents,media_enabled,max_media,max_text_messages")
     .eq("id", "default")
     .maybeSingle();
 
@@ -772,6 +803,16 @@ Deno.serve(async (req: Request) => {
               runtimeSettings?.mode === "test_auto" &&
               configuredTestRecipients.includes(contactInstagramId);
             const fullAuto = runtimeSettings?.mode === "auto";
+            const maxTextMessages = Math.max(1, Math.min(2, Number(runtimeSettings?.max_text_messages ?? 2)));
+            const outboundTextMessages = Array.isArray(shadow.proposedMessages) && shadow.proposedMessages.length
+              ? shadow.proposedMessages.slice(0, maxTextMessages)
+              : [shadow.proposedReply].filter(Boolean).slice(0, maxTextMessages);
+            const replyLooksReadable =
+              outboundTextMessages.length > 0 &&
+              outboundTextMessages.every((message: string) =>
+                message.trim().length > 0 &&
+                (message.trim().length <= 220 || message.includes("\n"))
+              );
             const safeForAuto =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
@@ -782,25 +823,34 @@ Deno.serve(async (req: Request) => {
               shadow.confidence >= minConfidence &&
               shadow.risk === "auto" &&
               typeof shadow.proposedReply === "string" &&
-              shadow.proposedReply.trim().length > 0;
+              shadow.proposedReply.trim().length > 0 &&
+              replyLooksReadable;
 
             if (safeForAuto) {
               try {
-                const textSend = await postInstagramMessage({
-                  accountId: igAccountId,
-                  recipientId: contactInstagramId,
-                  accessToken: instagramAccessToken,
-                  message: { text: shadow.proposedReply.trim() }
-                });
+                const sentTextMessages: any[] = [];
+                for (const outboundText of outboundTextMessages) {
+                  const textSend = await postInstagramMessage({
+                    accountId: igAccountId,
+                    recipientId: contactInstagramId,
+                    accessToken: instagramAccessToken,
+                    message: { text: outboundText.trim() }
+                  });
 
-                if (textSend?.message_id) {
-                  await db.from("instagram_outbound_sends").insert({
-                    conversation_id: conversation.id,
-                    ai_run_id: shadow.aiRunId,
-                    provider_message_id: textSend.message_id,
-                    recipient_igsid: contactInstagramId,
-                    kind: "text",
-                    source: "ai"
+                  if (textSend?.message_id) {
+                    await db.from("instagram_outbound_sends").insert({
+                      conversation_id: conversation.id,
+                      ai_run_id: shadow.aiRunId,
+                      provider_message_id: textSend.message_id,
+                      recipient_igsid: contactInstagramId,
+                      kind: "text",
+                      source: "ai"
+                    });
+                  }
+
+                  sentTextMessages.push({
+                    provider_message_id: textSend?.message_id ?? null,
+                    text: outboundText.trim()
                   });
                 }
 
