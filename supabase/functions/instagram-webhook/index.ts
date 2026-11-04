@@ -438,8 +438,7 @@ async function extractSalesTurn(args: {
         CURRENT_ORDER: args.currentOrder
           ? { ...args.currentOrder, items: args.currentOrderItems }
           : null,
-        PROJECTED_SALES_STATE: projectedSales,
-    LIVE_FACTS: {
+        LIVE_FACTS: {
           packs: args.facts.packs ?? [],
           bagel_flavors: args.facts.bagel_flavors ?? [],
           schmears: args.facts.schmears ?? [],
@@ -701,6 +700,7 @@ async function generateShadowDraft(args: {
   const input = {
     CUSTOMER: { instagram_user_id: customerId },
     RECENT_MESSAGES: recentMessages,
+    PROJECTED_SALES_STATE: projectedSales,
     LIVE_FACTS: {
       menu: factMap,
       current_batch: customerFacingBatch(batch, factMap.sales_schedule),
