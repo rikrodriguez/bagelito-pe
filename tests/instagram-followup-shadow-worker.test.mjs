@@ -32,3 +32,9 @@ test("follow-up drafts are limited to one compact bubble", () => {
   assert.match(source, /maxItems:\s*1/);
   assert.match(source, /one compact follow-up/i);
 });
+
+
+test("follow-up worker receives exact missing fields from the candidate", () => {
+  assert.match(source, /MISSING_FIELDS/);
+  assert.match(source, /candidate\.metadata\?\.missing_fields/);
+});
