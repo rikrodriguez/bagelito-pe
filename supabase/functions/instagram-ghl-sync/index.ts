@@ -272,7 +272,7 @@ Deno.serve(async (req) => {
   const serviceRoleKey = requiredEnv("SUPABASE_SERVICE_ROLE_KEY");
   const token = Deno.env.get("GHL_API_TOKEN")?.trim() ?? "";
   const version = Deno.env.get("GHL_API_VERSION")?.trim() || "2021-07-28";
-  const locationId = Deno.env.get("GHL_LOCATION_ID")?.trim() || "wGVp4L7zAl46JR7gg0Hx";
+  const locationId = Deno.env.get("GHL_LOCATION_ID")?.trim() ?? "";
 
   if (req.method === "GET") {
     return respond({
@@ -286,6 +286,7 @@ Deno.serve(async (req) => {
 
   if (req.method !== "POST") return respond({ ok: false, error: "method_not_allowed" }, 405);
   if (!token) return respond({ ok: false, error: "missing_ghl_api_token" }, 503);
+  if (!locationId) return respond({ ok: false, error: "missing_ghl_location_id" }, 503);
 
   const db = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
