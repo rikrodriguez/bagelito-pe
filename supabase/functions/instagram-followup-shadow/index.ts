@@ -72,6 +72,7 @@ async function generateFollowup(args: {
     "Sound like Dawn @ Bagelito: warm, personal, concise, first-person singular, natural Spanish/English/mixed matching the customer.",
     "Write one compact follow-up bubble only. Maximum one question.",
     "Do not restart the whole sales pitch. Continue from the current stage and the last unresolved decision.",
+    "Use MISSING_FIELDS to ask only for the exact unresolved operational data. Never ask again for fields that are not listed as missing.",
     "Do not repeat a catalog, full menu, greeting, address, or details the customer already supplied.",
     "A follow-up should reduce friction, not create pressure. Avoid guilt, scarcity, fake urgency, or repeated chasing.",
     "Use CURRENT_ORDER and LIVE_FACTS as operational truth. Historical conversation text is context only.",
@@ -96,6 +97,9 @@ async function generateFollowup(args: {
       instructions,
       input: JSON.stringify({
         FOLLOWUP_OBJECTIVE: objective,
+        MISSING_FIELDS: Array.isArray(args.candidate.metadata?.missing_fields)
+          ? args.candidate.metadata.missing_fields
+          : [],
         QUEUE_STAGE: args.candidate.stage,
         RECENT_MESSAGES: args.messages,
         CURRENT_ORDER: args.draft ? { ...args.draft, items: args.items } : null,
