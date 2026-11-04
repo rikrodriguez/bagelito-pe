@@ -413,7 +413,7 @@ async function extractSalesTurn(args: {
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: {
-      "authorization": \`Bearer \${args.openaiKey}\`,
+      "authorization": `Bearer ${args.openaiKey}`,
       "content-type": "application/json"
     },
     body: JSON.stringify({
@@ -515,7 +515,7 @@ async function extractSalesTurn(args: {
 
   const raw = await response.text();
   if (!response.ok) {
-    throw new Error(\`sales_preflight_openai_\${response.status}:\${raw.slice(0,800)}\`);
+    throw new Error(`sales_preflight_openai_${response.status}:${raw.slice(0,800)}`);
   }
   const payload = JSON.parse(raw);
   const output = extractOutputText(payload);
