@@ -857,34 +857,56 @@ Deno.serve(async (req) => {
     }
 
     const latestMessage = text(triggeringMessage.text_content);
-    const extraction = await callOpenAI({
-      apiKey: openaiKey,
-      model,
-      input: {
-        LATEST_INBOUND_MESSAGE: {
-          text: latestMessage,
-          has_attachments: Array.isArray(triggeringMessage.attachments) && triggeringMessage.attachments.length > 0,
-        },
-        RECENT_MESSAGES: recentMessages,
-        CURRENT_ORDER_DRAFT: existingDraft
-          ? { ...existingDraft, items: existingItems }
-          : null,
-        CURRENT_AI_CLASSIFICATION: {
-          intent: claimed.intent,
-          language: claimed.language,
-          confidence: claimed.confidence,
-          proposed_messages: claimed.proposed_messages,
-        },
-        LIVE_FACTS: {
-          packs: facts.packs ?? [],
-          bagel_flavors: facts.bagel_flavors ?? [],
-          schmears: facts.schmears ?? [],
-          delivery_pricing: facts.delivery_pricing ?? null,
-          payment_policy: facts.payment_policy ?? null,
-          current_batch: batch ?? null,
-        },
-      },
-    });
+    const preflightExtraction = claimed.facts_used?.preflight_extraction ?? null;
+    const preflightSales = claimed.facts_used?.preflight_sales ?? null;
+    const hasReusablePreflight = Boolean(
+      preflightExtraction &&
+      preflightSales &&
+      typeof preflightExtraction === "object" &&
+      typeof preflightSales === "object" &&
+      preflightExtraction.order_patch &&
+      typeof preflightSales.stage === "string" &&
+      typeof preflightSales.action === "string"
+    );
+
+    const extraction = hasReusablePreflight
+      ? {
+          ...preflightExtraction,
+          buyer_signal: preflightSales.buyerSignal ?? preflightExtraction.buyer_signal ?? "interested",
+          sales_stage: preflightSales.stage,
+          next_best_action: preflightSales.action,
+          handoff_reason: preflightSales.handoffReason ?? preflightExtraction.handoff_reason ?? null,
+        } as Extraction
+      : await callOpenAI({
+          apiKey: openaiKey,
+          model,
+          input: {
+            LATEST_INBOUND_MESSAGE: {
+              text: latestMessage,
+              has_attachments:
+                Array.isArray(triggeringMessage.attachments) &&
+                triggeringMessage.attachments.length > 0,
+            },
+            RECENT_MESSAGES: recentMessages,
+            CURRENT_ORDER_DRAFT: existingDraft
+              ? { ...existingDraft, items: existingItems }
+              : null,
+            CURRENT_AI_CLASSIFICATION: {
+              intent: claimed.intent,
+              language: claimed.language,
+              confidence: claimed.confidence,
+              proposed_messages: claimed.proposed_messages,
+            },
+            LIVE_FACTS: {
+              packs: facts.packs ?? [],
+              bagel_flavors: facts.bagel_flavors ?? [],
+              schmears: facts.schmears ?? [],
+              delivery_pricing: facts.delivery_pricing ?? null,
+              payment_policy: facts.payment_policy ?? null,
+              current_batch: batch ?? null,
+            },
+          },
+        });
 
     const patch = extraction.order_patch;
     const mergedItems = mergeItems(existingItems, patch);
