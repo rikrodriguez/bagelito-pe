@@ -77,6 +77,55 @@ function materialPatch(patch:any) {
   if(scalar.some(k=>patch[k]!==null && patch[k]!==undefined && !(typeof patch[k]==="string" && !patch[k].trim()))) return true;
   return (patch.items?.length??0)>0 || (patch.schmears?.length??0)>0;
 }
+
+const EXPLICIT_REPEAT_ORDER_PATTERN =
+  /\b(lo mismo|igual que la vez pasada|mismo pedido|same as last time|same order|repeat the same)\b/i;
+const EXPLICIT_REPEAT_DETAILS_PATTERN =
+  /\b(misma direcci[oó]n|mismos datos|same address|same details|same delivery address)\b/i;
+
+export function applyTrustedCustomerMemory(patch:any, latestMessage:string, memory:any) {
+  const next={...(patch??{})};
+  if(!memory?.is_returning_customer || !memory?.latest_order) return next;
+
+  if(EXPLICIT_REPEAT_ORDER_PATTERN.test(text(latestMessage))){
+    const priorItems=Array.isArray(memory.latest_items)?memory.latest_items:[];
+    if(!(next.items?.length)){
+      next.items=priorItems
+        .filter((item:any)=>item?.item_kind==="bagel" && Number(item.quantity)>0)
+        .map((item:any)=>({
+          key:text(item.item_key),
+          name:text(item.item_name)||text(item.item_key),
+          quantity:Number(item.quantity)
+        }))
+        .filter((item:any)=>item.key && Number.isFinite(item.quantity));
+    }
+    if(!(next.schmears?.length)){
+      next.schmears=priorItems
+        .filter((item:any)=>item?.item_kind==="schmear" && Number(item.quantity)>0)
+        .map((item:any)=>({
+          key:text(item.item_key),
+          name:text(item.item_name)||text(item.item_key),
+          quantity:Number(item.quantity)
+        }))
+        .filter((item:any)=>item.key && Number.isFinite(item.quantity));
+    }
+    if(next.units==null && Number(memory.latest_order.units)>0) next.units=Number(memory.latest_order.units);
+    if(next.pack_slug==null && text(memory.latest_order.pack_slug)) next.pack_slug=text(memory.latest_order.pack_slug);
+    if(next.pack_name==null && text(memory.latest_order.pack_name)) next.pack_name=text(memory.latest_order.pack_name);
+  }
+
+  if(EXPLICIT_REPEAT_DETAILS_PATTERN.test(text(latestMessage))){
+    const prior=memory.latest_order;
+    if(next.customer_name==null && text(prior.customer_name)) next.customer_name=text(prior.customer_name);
+    if(next.phone==null && text(prior.phone)) next.phone=text(prior.phone);
+    if(next.district==null && text(prior.district)) next.district=text(prior.district);
+    if(next.address==null && text(prior.delivery_address)) next.address=text(prior.delivery_address);
+    if(next.address_reference==null && text(prior.address_reference)) next.address_reference=text(prior.address_reference);
+    if(next.delivery_notes==null && text(prior.delivery_notes)) next.delivery_notes=text(prior.delivery_notes);
+  }
+
+  return next;
+}
 export function getMissingFields(order:any,items:any[]) {
   const missing:string[]=[];
   if(!items.some(x=>x.item_kind==="bagel" && Number(x.quantity)>0)) missing.push("items");
@@ -244,7 +293,12 @@ function classifyStage(order:any,items:any[],input:any,quote:any,handoffReason:s
   const current=text(order.sales_stage); return ACTIVE_STAGES.has(current as any)?current:"new_inquiry";
 }
 export function projectSalesState(args:any){
-  const current=args.currentOrder??{}; const patch=args.extraction?.order_patch??{};
+  const current=args.currentOrder??{};
+  const patch=applyTrustedCustomerMemory(
+    args.extraction?.order_patch??{},
+    text(args.latestMessage),
+    args.customerMemory??null
+  );
   const projectedItems=mergeAllItems(args.currentItems??[],patch);
   const bagelQuantity=projectedItems.filter((x:any)=>x.item_kind==="bagel").reduce((s:number,x:any)=>s+Number(x.quantity),0);
   const latestMessage=text(args.latestMessage);
