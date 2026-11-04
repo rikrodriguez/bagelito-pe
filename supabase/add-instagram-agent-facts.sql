@@ -71,9 +71,25 @@ values
     "principles":["latest_question_first","one_clear_next_decision","progressive_disclosure","diagnose_before_persuade","live_facts_only","crm_is_operational_memory","human_handoff_for_consequential_exceptions","no_pressure_after_natural_close"],
     "objection_protocol":["acknowledge","clarify_if_needed","answer_from_live_facts","confirm_resolution","resume_smallest_next_step"],
     "payment_rules":{"request_requires_verified_quote":true,"evidence_is_not_confirmation":true,"currency":"PEN","display":"S/."},
-    "historical_directional_evidence":{"analyzable_conversations":521,"clear_next_step_with_signal_pct":38.1,"clear_next_step_without_signal_pct":16.7,"decision_question_with_signal_pct":32.2,"decision_question_without_signal_pct":20.6,"one_text_burst_signal_pct":24.9,"two_text_burst_signal_pct":20.5,"after_12h_signal_pct":3.8,"caveat":"heuristic association, not causal uplift"}
+    "operational_field_bundle":{"allowed_stage":"details_collection","allowed_fields":["customer_name","phone","district","address"],"rule":"One decision per turn does not forbid one compact structured bundle of non-decision operational fields after the order itself is configured."},
+    "historical_directional_evidence":{"analyzable_conversations":521,"clear_next_step_with_signal_pct":38.1,"clear_next_step_without_signal_pct":16.7,"decision_question_with_signal_pct":32.2,"decision_question_without_signal_pct":20.6,"one_text_burst_signal_pct":24.9,"two_text_burst_signal_pct":20.5,"after_12h_signal_pct":3.8,"micro_conversion":{"ask_flavors_advance_pct":50.0,"ask_quantity_advance_pct":39.5,"ask_contact_details_advance_pct":53.8,"one_question_advance_pct":30.7,"two_question_advance_pct":21.4,"no_question_advance_pct":17.6,"analyzed_dawn_to_customer_transitions":2014,"caveat":"heuristic immediate-progress associations, not causal uplift"},"caveat":"heuristic association, not causal uplift"}
   }'::jsonb,
   'Bagelito historical Instagram audit + reviewed sales research, 2026-11-04',
+  now()
+),
+(
+  'ghl_crm_config',
+  '{
+    "enabled":false,
+    "target_name":"Bagelito",
+    "locationId":null,
+    "pipelineId":null,
+    "stages":{},
+    "contactFields":{},
+    "opportunityFields":{},
+    "reason":"Waiting for the new dedicated Bagelito HighLevel sub-account. Never fall back to a legacy location."
+  }'::jsonb,
+  'CRM safety reset before dedicated Bagelito GHL sub-account, 2026-11-04',
   now()
 )
 on conflict (fact_key) do update
