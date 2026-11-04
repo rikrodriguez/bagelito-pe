@@ -22,6 +22,13 @@ export type InstagramInboxConversation = {
     sentAt: string;
     hasAttachments: boolean;
   } | null;
+  reviewDraft: {
+    id: string;
+    handoffReason: string | null;
+    customRequest: string | null;
+    status: string;
+    salesStage: string;
+  } | null;
 };
 
 export type InstagramInboxData = {
@@ -72,8 +79,11 @@ export async function fetchInstagramInbox(): Promise<InstagramInboxData> {
     const contactIds = [...new Set(conversations.map((item) => item.contact_id))];
     const conversationIds = conversations.map((item) => item.id);
 
-    const [{ data: contacts, error: contactError }, { data: messages, error: messageError }] =
-      await Promise.all([
+    const [
+      { data: contacts, error: contactError },
+      { data: messages, error: messageError },
+      { data: drafts, error: draftError },
+    ] = await Promise.all([
         supabase
           .from("instagram_contacts")
           .select("id, instagram_user_id, username, display_name")
@@ -86,6 +96,12 @@ export async function fetchInstagramInbox(): Promise<InstagramInboxData> {
           .in("conversation_id", conversationIds)
           .order("sent_at", { ascending: false })
           .limit(600),
+        supabase
+          .from("instagram_order_drafts")
+          .select("id, conversation_id, sales_stage, status, handoff_reason, custom_request, updated_at")
+          .in("conversation_id", conversationIds)
+          .order("updated_at", { ascending: false })
+          .limit(300),
       ]);
 
     if (contactError) {
@@ -97,9 +113,23 @@ export async function fetchInstagramInbox(): Promise<InstagramInboxData> {
       if (isMissingInstagramSchema(messageError)) return empty;
       throw new Error(`instagram_inbox_messages_failed: ${messageError.message}`);
     }
+    if (draftError) {
+      if (isMissingInstagramSchema(draftError)) return empty;
+      throw new Error(`instagram_inbox_drafts_failed: ${draftError.message}`);
+    }
 
     const contactsById = new Map((contacts ?? []).map((contact) => [contact.id, contact]));
     const lastMessageByConversation = new Map<string, NonNullable<typeof messages>[number]>();
+    const reviewDraftByConversation = new Map<string, NonNullable<typeof drafts>[number]>();
+
+    for (const draft of drafts ?? []) {
+      if (
+        !reviewDraftByConversation.has(draft.conversation_id) &&
+        (draft.status === "human_review" || Boolean(draft.handoff_reason))
+      ) {
+        reviewDraftByConversation.set(draft.conversation_id, draft);
+      }
+    }
 
     for (const message of messages ?? []) {
       if (!lastMessageByConversation.has(message.conversation_id)) {
@@ -140,6 +170,18 @@ export async function fetchInstagramInbox(): Promise<InstagramInboxData> {
               hasAttachments: attachments.length > 0,
             }
           : null,
+        reviewDraft: reviewDraftByConversation.has(conversation.id)
+          ? (() => {
+              const draft = reviewDraftByConversation.get(conversation.id)!;
+              return {
+                id: draft.id,
+                handoffReason: draft.handoff_reason,
+                customRequest: draft.custom_request,
+                status: draft.status,
+                salesStage: draft.sales_stage,
+              };
+            })()
+          : null,
       }];
     });
 
@@ -148,7 +190,9 @@ export async function fetchInstagramInbox(): Promise<InstagramInboxData> {
       conversations: normalized,
       openCount: normalized.filter((item) => item.status === "open").length,
       unreadCount: normalized.reduce((sum, item) => sum + item.unreadCount, 0),
-      reviewCount: normalized.filter((item) => item.mode === "review_required").length,
+      reviewCount: normalized.filter(
+        (item) => item.mode === "review_required" || item.mode === "human_active" || item.reviewDraft,
+      ).length,
     };
   } catch (error) {
     console.error("instagram_inbox_read_failed", error);
