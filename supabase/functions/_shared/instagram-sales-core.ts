@@ -52,7 +52,7 @@ function mergeAllItems(current:any[] = [], patch:any) {
 }
 function materialPatch(patch:any) {
   if(!patch) return false;
-  const scalar=["pack_slug","pack_name","units","district","address","custom_request","requested_date"];
+  const scalar=["bagel_size","pack_slug","pack_name","units","district","address","custom_request","requested_date"];
   if(scalar.some(k=>patch[k]!==null && patch[k]!==undefined && !(typeof patch[k]==="string" && !patch[k].trim()))) return true;
   return (patch.items?.length??0)>0 || (patch.schmears?.length??0)>0;
 }
@@ -73,13 +73,17 @@ export function calculateDeliveryFee(district:string,fact:any) {
   const base=Math.ceil(distance*rate); const adjusted=base>=threshold?Math.ceil(base*(1-discount)):base;
   return Math.max(minimum,adjusted);
 }
-function findPack(packs:any[],order:any,items:any[]) {
+function findPack(facts:any,order:any,items:any[]) {
+  const size=text(order.bagel_size)==="mini" ? "mini" : "regular";
+  const packs=size==="mini"
+    ? (Array.isArray(facts?.mini_bagel_packs)?facts.mini_bagel_packs:[])
+    : (Array.isArray(facts?.packs)?facts.packs:[]);
   const slug=text(order.pack_slug), name=text(order.pack_name);
-  if(slug){const p=packs.find(x=>normalize(text(x.slug))===normalize(slug));if(p)return p;}
-  if(name){const p=packs.find(x=>normalize(text(x.name))===normalize(name));if(p)return p;}
+  if(slug){const p=packs.find((x:any)=>normalize(text(x.slug))===normalize(slug));if(p)return p;}
+  if(name){const p=packs.find((x:any)=>normalize(text(x.name))===normalize(name));if(p)return p;}
   const bagels=items.filter(x=>x.item_kind==="bagel"&&Number(x.quantity)>0);
   const units=bagels.reduce((s,x)=>s+Number(x.quantity),0); const packType=bagels.length>1?"mixed":"single";
-  return packs.find(x=>Number(x.units)===units && text(x.packType)===packType)??null;
+  return packs.find((x:any)=>Number(x.units)===units && text(x.packType)===packType)??null;
 }
 export function deterministicHandoff(input:any, order:any, materialChange:boolean) {
   if(text(order.handoff_reason)) return text(order.handoff_reason);
@@ -93,9 +97,8 @@ export function deterministicHandoff(input:any, order:any, materialChange:boolea
   return null;
 }
 function calculateQuote(order:any,items:any[],facts:any,handoffReason:string|null,missing:string[]) {
-  const packs=Array.isArray(facts?.packs)?facts.packs:[];
   const schmearFacts=Array.isArray(facts?.schmears)?facts.schmears:[];
-  const pack=findPack(packs,order,items);
+  const pack=findPack(facts,order,items);
   const bagels=items.filter(x=>x.item_kind==="bagel"&&Number(x.quantity)>0);
   const schmears=items.filter(x=>x.item_kind==="schmear"&&Number(x.quantity)>0);
   const bagelQuantity=bagels.reduce((s,x)=>s+Number(x.quantity),0);
@@ -108,7 +111,7 @@ function calculateQuote(order:any,items:any[],facts:any,handoffReason:string|nul
   const itemsSubtotal=pack?Number(pack.amount):null;
   const total=verified && itemsSubtotal!==null ? roundMoney(itemsSubtotal+schmearsSubtotal+Number(deliveryFee)) : null;
   const reason=verified?null:(!pack?"pack_not_resolved":packUnits!==bagelQuantity?"item_quantity_mismatch":missing.length?"missing_order_fields":deliveryFee===null?"delivery_fee_unavailable":unpricedSchmear?"schmear_price_unavailable":text(order.custom_request)?"custom_request_requires_review":handoffReason||"quote_not_verified");
-  return {verified,pack,bagelQuantity,itemsSubtotal,schmearsSubtotal:roundMoney(schmearsSubtotal),deliveryFee,total,reason};
+  return {verified,pack,bagelSize:text(order.bagel_size)==="mini"?"mini":"regular",bagelQuantity,itemsSubtotal,schmearsSubtotal:roundMoney(schmearsSubtotal),deliveryFee,total,reason};
 }
 function actionForStage(stage:string,intent:string,quoteVerified:boolean){
   if(stage==="menu_discovery") return ["menu","flavors","price","product_photo"].includes(intent)?"send_menu":"ask_quantity_flavors";
@@ -152,7 +155,7 @@ export function projectSalesState(args:any){
   const bagelQuantity=projectedItems.filter((x:any)=>x.item_kind==="bagel").reduce((s:number,x:any)=>s+Number(x.quantity),0);
   const changed=materialPatch(patch);
   const projectedOrder={...current,
-    pack_slug:mergeScalar(current.pack_slug,patch.pack_slug),pack_name:mergeScalar(current.pack_name,patch.pack_name),units:mergeScalar(current.units,patch.units),
+    bagel_size:mergeScalar(current.bagel_size,patch.bagel_size),pack_slug:mergeScalar(current.pack_slug,patch.pack_slug),pack_name:mergeScalar(current.pack_name,patch.pack_name),units:mergeScalar(current.units,patch.units),
     customer_name:mergeScalar(current.customer_name,patch.customer_name),phone:mergeScalar(current.phone,patch.phone),email:mergeScalar(current.email,patch.email),district:mergeScalar(current.district,patch.district),
     delivery_address:mergeScalar(current.delivery_address,patch.address),address_reference:mergeScalar(current.address_reference,patch.address_reference),delivery_notes:mergeScalar(current.delivery_notes,patch.delivery_notes),
     requested_delivery_at:mergeScalar(current.requested_delivery_at,patch.requested_date),custom_request:mergeScalar(current.custom_request,patch.custom_request),
