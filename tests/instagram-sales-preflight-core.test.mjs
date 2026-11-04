@@ -241,3 +241,34 @@ test("plain price inquiry is not forced into objection handling", () => {
   assert.equal(state.action, "send_menu");
   assert.notEqual(state.buyerSignal, "objection");
 });
+
+
+test("low-information thanks does not create a low-confidence handoff",()=>{
+  const state=core.projectSalesState({
+    currentOrder:{sales_stage:"payment_pending",status:"payment_pending",payment_status:"pending"},
+    currentItems:[],
+    extraction:{
+      intent:"other",confidence:.35,buyer_signal:"interested",objection_type:"none",
+      handoff_reason:null,customer_requested_human:false,conflicting_data:false,payment_evidence_claimed:false,
+      order_patch:{bagel_size:null,pack_slug:null,pack_name:null,units:null,customer_name:null,phone:null,email:null,district:null,address:null,address_reference:null,delivery_notes:null,requested_date:null,custom_request:null,items:[],schmears:[]}
+    },
+    facts,latestMessage:"Gracias!! 😊"
+  });
+  assert.equal(state.handoffReason,null);
+  assert.equal(state.stage,"payment_pending");
+  assert.equal(state.action,"wait");
+});
+
+test("explicit human request still hands off even when short",()=>{
+  const state=core.projectSalesState({
+    currentOrder:null,currentItems:[],
+    extraction:{
+      intent:"other",confidence:.4,buyer_signal:"support",objection_type:"none",
+      handoff_reason:null,customer_requested_human:true,conflicting_data:false,payment_evidence_claimed:false,
+      order_patch:{bagel_size:null,pack_slug:null,pack_name:null,units:null,customer_name:null,phone:null,email:null,district:null,address:null,address_reference:null,delivery_notes:null,requested_date:null,custom_request:null,items:[],schmears:[]}
+    },
+    facts,latestMessage:"Humano"
+  });
+  assert.equal(state.handoffReason,"customer_requested_human");
+  assert.equal(state.stage,"human_review");
+});
