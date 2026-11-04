@@ -35,3 +35,10 @@ test("feedback evaluation stores structured lessons without auto-applying them",
   assert.match(worker,/instagram_ai_feedback_reviews/);
   assert.match(sql,/instagram_feedback_learning_summary/);
 });
+
+
+test("normalizes accidental five-point evaluator scores to 100-point scale",()=>{
+  assert.match(worker,/function normalizeEvaluatorScore/);
+  assert.match(worker,/n <= 5 \? n \* 20/);
+  assert.match(worker,/0–100 scale/i);
+});
