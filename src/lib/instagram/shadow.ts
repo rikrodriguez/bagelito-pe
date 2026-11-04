@@ -6,6 +6,7 @@ import {
   type InstagramLanguage,
 } from "@/lib/instagram/policy";
 import type { InstagramLiveContext } from "@/lib/instagram/live-context";
+import { buildBagelitoSalesSkillInstructions } from "@/lib/instagram/sales-skill";
 
 export type InstagramShadowMessage = {
   direction: "inbound" | "outbound";
@@ -134,6 +135,7 @@ function buildInstructions() {
     "Food allergy, celiac/gluten safety, complaint, refund, missing/damaged order, payment dispute, and fraud must be classified into their matching human intent.",
     "Use ingredient_question or vegan_request for ordinary ingredient/vegan questions that need review. Use food_safety or allergy when cross-contact, celiac disease, allergy, or safety is involved.",
     "Media tags are internal search hints only. Never fabricate media URLs.",
+    buildBagelitoSalesSkillInstructions(),
     ...bagelitoConversationGuardrails.always,
     ...bagelitoConversationGuardrails.never,
     "Return JSON only and conform exactly to the supplied JSON schema.",
