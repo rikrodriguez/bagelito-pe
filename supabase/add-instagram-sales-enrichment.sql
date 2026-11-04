@@ -22,14 +22,14 @@ create or replace function public.ensure_instagram_sales_internal_secret()
 returns void
 language plpgsql
 security definer
-set search_path = public, vault
+set search_path = public, vault, extensions
 as $$
 begin
   if not exists (
     select 1 from vault.secrets where name = 'instagram_sales_internal_token'
   ) then
     perform vault.create_secret(
-      encode(gen_random_bytes(32), 'hex'),
+      encode(extensions.gen_random_bytes(32), 'hex'),
       'instagram_sales_internal_token',
       'Internal token for database-to-edge sales enrichment calls'
     );
