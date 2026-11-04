@@ -86,6 +86,63 @@ function extractId(payload: Record<string, unknown>, key: string) {
   return null;
 }
 
+const instagramUserIdFieldId = "YMqyWSqEiTyE3u3SgXl5";
+
+function optionalText(value: unknown) {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function contactSearchName(body: Record<string, unknown>) {
+  const fullName = optionalText(body.name);
+  if (fullName) return fullName.toLowerCase();
+  const parts = [optionalText(body.firstName), optionalText(body.lastName)].filter(Boolean);
+  return parts.length ? parts.join(" ").toLowerCase() : null;
+}
+
+function customFieldValue(fields: unknown, fieldId: string) {
+  if (!Array.isArray(fields)) return null;
+  for (const field of fields) {
+    if (!field || typeof field !== "object") continue;
+    const record = field as Record<string, unknown>;
+    if (record.id !== fieldId) continue;
+    const value = record.fieldValue ?? record.field_value ?? record.value;
+    return optionalText(value);
+  }
+  return null;
+}
+
+async function findIgOnlyContact(args: {
+  token: string;
+  version: string;
+  body: Record<string, unknown>;
+}) {
+  const contactName = contactSearchName(args.body);
+  const instagramUserId = customFieldValue(args.body.customFields, instagramUserIdFieldId);
+  if (!contactName || !instagramUserId) return null;
+
+  const response = await ghlRequest({
+    token: args.token,
+    version: args.version,
+    method: "POST",
+    path: "/contacts/search",
+    body: {
+      filters: [{ field: "contactName", operator: "eq", value: contactName }],
+      pageLimit: 20,
+    },
+  });
+
+  const contacts = Array.isArray(response.contacts) ? response.contacts : [];
+  for (const candidate of contacts) {
+    if (!candidate || typeof candidate !== "object") continue;
+    const record = candidate as Record<string, unknown>;
+    const candidateInstagramId = customFieldValue(record.customFields, instagramUserIdFieldId);
+    if (candidateInstagramId === instagramUserId && typeof record.id === "string") {
+      return record.id;
+    }
+  }
+  return null;
+}
+
 async function syncJob(args: {
   job: SyncJob;
   db: ReturnType<typeof createClient>;
@@ -109,18 +166,47 @@ async function syncJob(args: {
       body: payload.contact.body,
     });
   } else {
-    contactResponse = await ghlRequest({
-      token,
-      version,
-      method: "POST",
-      path: "/contacts/upsert",
-      body: {
-        ...payload.contact.body,
-        locationId,
-        createNewIfDuplicateAllowed: false,
-      },
-    });
-    contactId = extractId(contactResponse, "contact");
+    const hasEmailOrPhone = Boolean(
+      optionalText(payload.contact.body.email) || optionalText(payload.contact.body.phone),
+    );
+
+    if (hasEmailOrPhone) {
+      contactResponse = await ghlRequest({
+        token,
+        version,
+        method: "POST",
+        path: "/contacts/upsert",
+        body: {
+          ...payload.contact.body,
+          locationId,
+          createNewIfDuplicateAllowed: false,
+        },
+      });
+      contactId = extractId(contactResponse, "contact");
+    } else {
+      contactId = await findIgOnlyContact({ token, version, body: payload.contact.body });
+      if (contactId) {
+        contactResponse = await ghlRequest({
+          token,
+          version,
+          method: "PUT",
+          path: `/contacts/${encodeURIComponent(contactId)}`,
+          body: payload.contact.body,
+        });
+      } else {
+        contactResponse = await ghlRequest({
+          token,
+          version,
+          method: "POST",
+          path: "/contacts/",
+          body: {
+            ...payload.contact.body,
+            locationId,
+          },
+        });
+        contactId = extractId(contactResponse, "contact");
+      }
+    }
   }
 
   if (!contactId) throw new Error("ghl_contact_id_missing");
