@@ -144,7 +144,7 @@ async function archiveHumanUsedMedia(db: any) {
 
 const INTENTS = [
   "menu","price","flavors","product_photo","batch_status","delivery_area","how_to_order","storage","reheating",
-  "ingredient_question","vegan_request","order_status","payment_confirmation","address_change","custom_order","catering","collaboration","discount_exception",
+  "ingredient_question","vegan_request","order_status","payment_confirmation","payment_exception","address_change","custom_order","catering","collaboration","discount_exception",
   "complaint","refund","missing_item","damaged_order","food_safety","allergy","payment_dispute","fraud","other"
 ] as const;
 
@@ -152,7 +152,7 @@ const RISK: Record<string,"auto"|"review"|"human"> = {
   menu:"auto", price:"auto", flavors:"auto", product_photo:"auto", batch_status:"auto", delivery_area:"auto",
   how_to_order:"auto", storage:"auto", reheating:"auto",
   ingredient_question:"review", vegan_request:"review", order_status:"review", payment_confirmation:"review",
-  address_change:"review", custom_order:"review", catering:"review", collaboration:"review", discount_exception:"review",
+  address_change:"review", custom_order:"review", catering:"review", collaboration:"review", discount_exception:"review", payment_exception:"review",
   complaint:"human", refund:"human", missing_item:"human", damaged_order:"human", food_safety:"human",
   allergy:"human", payment_dispute:"human", fraud:"human", other:"review"
 };
@@ -670,6 +670,7 @@ async function extractSalesTurn(args: {
         "Preserve uncertainty: never invent a phone, address, district, delivery date, flavor, quantity, custom feasibility or payment confirmation.",
         "A screenshot/attachment or claim that payment was sent is payment evidence only, never confirmed payment.",
         "Birthday bagels, shapes, logos, special colors or personalization are custom requests requiring feasibility review.",
+        "Split payments, 50/50 terms, deferred payment, COD exceptions or any nonstandard payment arrangement are payment_exception and require human review. Historical exceptions are never current policy.",
         "CUSTOMER_MEMORY is trusted only for prior confirmed/operational orders. Use it only to resolve an explicit repeat reference such as same as last time, lo mismo, otra vez, or otro pedido. Never silently copy an old address, phone, quantity, flavor or order into a new order.",
         "A plain price question is not a price objection. Use objection_type=price only when the customer resists or negotiates price.",
         "Only set bagel_size=mini when the customer explicitly says mini/minis. Use regular for ordinary/full-size bagels when clear from context. If size is genuinely ambiguous, return null rather than guessing.",
@@ -719,7 +720,7 @@ async function extractSalesTurn(args: {
               },
               handoff_reason: {
                 anyOf: [
-                  { type: "string", enum: ["complaint","refund","missing_or_damaged_order","food_safety","allergy","payment_dispute","fraud","custom_feasibility","discount_exception","delivery_exception","customer_requested_human","repeated_misunderstanding","low_confidence","conflicting_data"] },
+                  { type: "string", enum: ["complaint","refund","missing_or_damaged_order","food_safety","allergy","payment_dispute","fraud","custom_feasibility","discount_exception","payment_exception","delivery_exception","customer_requested_human","repeated_misunderstanding","low_confidence","conflicting_data"] },
                   { type: "null" }
                 ]
               },
