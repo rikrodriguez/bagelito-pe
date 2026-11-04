@@ -519,6 +519,44 @@ function isSalesReadyInstagramTurn(
   return true;
 }
 
+async function isConversationFreshForAuto(
+  db: any,
+  conversationId: string,
+  triggeringMessageId: string,
+  triggeringSentAt: string
+) {
+  try {
+    const [{ data: currentConversation, error: conversationError }, { data: latestInbound, error: inboundError }] =
+      await Promise.all([
+        db.from("instagram_conversations")
+          .select("mode,last_outbound_at")
+          .eq("id",conversationId)
+          .single(),
+        db.from("instagram_messages")
+          .select("id")
+          .eq("conversation_id",conversationId)
+          .eq("direction","inbound")
+          .order("sent_at",{ascending:false})
+          .order("created_at",{ascending:false})
+          .limit(1)
+          .maybeSingle()
+      ]);
+
+    if (conversationError || inboundError || !currentConversation || !latestInbound) return false;
+    if (currentConversation.mode === "human_active") return false;
+    if (latestInbound.id !== triggeringMessageId) return false;
+
+    const triggeredAt = Date.parse(triggeringSentAt);
+    const lastOutboundAt = Date.parse(currentConversation.last_outbound_at ?? "");
+    if (!Number.isFinite(triggeredAt)) return false;
+    if (Number.isFinite(lastOutboundAt) && lastOutboundAt > triggeredAt) return false;
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function mediaFamilyKey(asset: any) {
   if (!asset) return null;
   const tags = Array.isArray(asset.tags) ? asset.tags : [];
@@ -1469,7 +1507,10 @@ Deno.serve(async (req: Request) => {
                 )
               : { pass: false, skipped: true, overallScore: 0, issues: [], recommendedAction: "hold" };
 
-            const safeForAuto = baseAutoCandidate && salesJudge.pass;
+            const preSendFresh = baseAutoCandidate && salesJudge.pass
+              ? await isConversationFreshForAuto(db, conversation.id, insertedMessage.id, sentAt)
+              : false;
+            const safeForAuto = baseAutoCandidate && salesJudge.pass && preSendFresh;
 
             if (!replyLooksReadable) {
               await db.from("instagram_conversation_events").insert({
@@ -1500,6 +1541,18 @@ Deno.serve(async (req: Request) => {
                 }
               });
             }
+            if (baseAutoCandidate && salesJudge.pass && !preSendFresh) {
+              await db.from("instagram_conversation_events").insert({
+                conversation_id: conversation.id,
+                event_type: "auto_send_held",
+                from_mode: conversation.mode,
+                to_mode: conversation.mode,
+                reason: "stale_conversation_needs_review",
+                actor: "ai",
+                metadata: { ai_run_id: shadow.aiRunId, checked_after_judge: true }
+              });
+            }
+
             if (baseAutoCandidate && !salesJudge.pass) {
               await db.from("instagram_conversation_events").insert({
                 conversation_id: conversation.id,
