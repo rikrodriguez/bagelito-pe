@@ -1,6 +1,7 @@
 import { Bot, CircleUserRound, Languages, MessageCircle, ShieldCheck } from "lucide-react";
 import type { InstagramInboxData } from "@/lib/admin/instagram-inbox";
 import { InstagramShadowDraftButton } from "./InstagramShadowDraftButton";
+import { InstagramHandoffActions } from "./InstagramHandoffActions";
 
 function languageLabel(language: string) {
   if (language === "es") return "ES";
@@ -106,6 +107,14 @@ export function InstagramInboxPanel({ data }: { data: InstagramInboxData }) {
                   <strong>{previewText(conversation.lastMessage)}</strong>
                   <small>{conversation.lastMessage?.hasAttachments ? "Includes media · " : ""}Shadow Mode: analysis only.</small>
                 </div>
+
+                {conversation.reviewDraft ? (
+                  <InstagramHandoffActions
+                    draftId={conversation.reviewDraft.id}
+                    reason={conversation.reviewDraft.handoffReason}
+                    customRequest={conversation.reviewDraft.customRequest}
+                  />
+                ) : null}
 
                 <InstagramShadowDraftButton conversationId={conversation.id} />
               </article>
