@@ -944,6 +944,7 @@ Deno.serve(async (req) => {
       },
       facts,
       latestMessage,
+      customerMemory,
     });
     const mergedItems = projectedSales.projectedItems as DraftItem[];
     const mergedDraft = projectedSales.projectedOrder as JsonRecord;
