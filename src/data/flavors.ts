@@ -8,8 +8,8 @@ export type Flavor = {
 };
 
 export const flavors: Flavor[] = [
-  { slug: "jalapeno-cheddar", name: "Jalapeno Cheddar", category: "classic", price: 10, variant: "jalapeno" },
-  { slug: "cheddar", name: "Cheddar", category: "classic", price: 10, variant: "cheddar" },
+  { slug: "jalapeno-cheddar", name: "Jalapeno Cheddar", category: "premium", price: 12, variant: "jalapeno" },
+  { slug: "cheddar", name: "Cheddar", category: "premium", price: 12, variant: "cheddar" },
   { slug: "sesame", name: "Sesame", category: "classic", price: 10, variant: "sesame" },
   { slug: "everything-bagel", name: "Everything Bagel", category: "classic", price: 10, variant: "everything" },
   { slug: "cinnamon-raisin", name: "Cinnamon Raisin", category: "classic", price: 10, variant: "cinnamon" },
