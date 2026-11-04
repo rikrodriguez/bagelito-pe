@@ -153,9 +153,21 @@ export function projectSalesState(args:any){
   const current=args.currentOrder??{}; const patch=args.extraction?.order_patch??{};
   const projectedItems=mergeAllItems(args.currentItems??[],patch);
   const bagelQuantity=projectedItems.filter((x:any)=>x.item_kind==="bagel").reduce((s:number,x:any)=>s+Number(x.quantity),0);
-  const changed=materialPatch(patch);
+  const latestMessage=text(args.latestMessage);
+  const explicitBagelSize =
+    /\bmini(?:s)?\b/i.test(latestMessage) ? "mini"
+    : /\b(regular(?:es|s)?|grande(?:s)?|full[ -]?size|standard)\b/i.test(latestMessage) ? "regular"
+    : null;
+  const modelBagelSize=text(patch.bagel_size);
+  const currentBagelSize=text(current.bagel_size);
+  const nextBagelSize=explicitBagelSize || (["regular","mini"].includes(modelBagelSize) ? modelBagelSize : null) || currentBagelSize || null;
+  const sizeChanged=Boolean(
+    nextBagelSize &&
+    nextBagelSize !== (currentBagelSize || "regular")
+  );
+  const changed=materialPatch(patch) || sizeChanged;
   const projectedOrder={...current,
-    bagel_size:mergeScalar(current.bagel_size,patch.bagel_size),pack_slug:mergeScalar(current.pack_slug,patch.pack_slug),pack_name:mergeScalar(current.pack_name,patch.pack_name),units:mergeScalar(current.units,patch.units),
+    bagel_size:nextBagelSize,pack_slug:mergeScalar(current.pack_slug,patch.pack_slug),pack_name:mergeScalar(current.pack_name,patch.pack_name),units:mergeScalar(current.units,patch.units),
     customer_name:mergeScalar(current.customer_name,patch.customer_name),phone:mergeScalar(current.phone,patch.phone),email:mergeScalar(current.email,patch.email),district:mergeScalar(current.district,patch.district),
     delivery_address:mergeScalar(current.delivery_address,patch.address),address_reference:mergeScalar(current.address_reference,patch.address_reference),delivery_notes:mergeScalar(current.delivery_notes,patch.delivery_notes),
     requested_delivery_at:mergeScalar(current.requested_delivery_at,patch.requested_date),custom_request:mergeScalar(current.custom_request,patch.custom_request),
