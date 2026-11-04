@@ -12,6 +12,17 @@ const HIGH_RISK_INTENT_REASONS: Record<string,string> = {
 };
 const CUSTOM_REQUEST_PATTERN = /\b(birthday|cumplea[nñ]os|cumple|custom|personaliz|forma especial|shape|color especial|logo|tem[aá]tico)\b/i;
 const HUMAN_REQUEST_PATTERN = /\b(humano|persona real|hablar con (alguien|una persona)|asesor|dawn|human|real person|talk to someone)\b/i;
+
+function isLowInformationAcknowledgement(value:unknown){
+  const raw=text(value).toLocaleLowerCase("es");
+  const withoutEmoji=raw.replace(/[\p{Extended_Pictographic}\uFE0F]/gu," ");
+  const normalized=withoutEmoji
+    .replace(/[!¡?¿.,;:…]+/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+  if(!normalized && raw.length<=20) return true;
+  return /^(gracias|gracias+|muchas gracias|mil gracias|thanks|thank you|thank you so much|thx|ok|okay|okey|perfecto|perfect|genial|buenazo|listo|dale|ya|s[ií]|s[ií] gracias|ok gracias|perfecto gracias)$/.test(normalized);
+}
 const MENU_INTENTS = new Set(["menu","flavors","price","product_photo","how_to_order","delivery_area","batch_status"]);
 const ACTIVE_STAGES = new Set(SALES_STAGES);
 const OBJECTION_RESUME_ACTION: Record<string,string> = {
@@ -166,8 +177,10 @@ export function deterministicHandoff(input:any, order:any, materialChange:boolea
   if(text(order.custom_request)||CUSTOM_REQUEST_PATTERN.test(text(input.latestMessage))) return "custom_feasibility";
   if(input.customer_requested_human||HUMAN_REQUEST_PATTERN.test(text(input.latestMessage))) return "customer_requested_human";
   if(input.conflicting_data) return "conflicting_data";
-  if(typeof input.confidence==="number" && input.confidence<0.78) return "low_confidence";
-  if(text(input.model_handoff_reason)) return text(input.model_handoff_reason);
+  const acknowledgement=isLowInformationAcknowledgement(input.latestMessage);
+  if(typeof input.confidence==="number" && input.confidence<0.78 && !acknowledgement) return "low_confidence";
+  const modelReason=text(input.model_handoff_reason);
+  if(modelReason && !(acknowledgement && modelReason==="low_confidence")) return modelReason;
   if(materialChange && text(order.payment_status)==="confirmed") return "conflicting_data";
   return null;
 }
@@ -265,7 +278,12 @@ export function projectSalesState(args:any){
   const baseAction=actionForStage(stage,text(args.extraction?.intent),quote.verified);
   const rawObjection=text(args.extraction?.objection_type);
   const objectionType=rawObjection && rawObjection!=="custom_request" ? rawObjection : "none";
-  const action=objectionType!=="none" && !effectiveHandoff ? "handle_objection" : baseAction;
+  const acknowledgement=isLowInformationAcknowledgement(args.latestMessage);
+  const action=acknowledgement && !effectiveHandoff
+    ? "wait"
+    : objectionType!=="none" && !effectiveHandoff
+      ? "handle_objection"
+      : baseAction;
   const resumeAction=objectionType!=="none" ? (OBJECTION_RESUME_ACTION[objectionType] || baseAction) : null;
   const paymentStatus=text(projectedOrder.payment_status)||"none";
   const buyerSignal=paymentStatus==="evidence_received"?"payment_sent":effectiveHandoff==="custom_feasibility"?"custom_request":effectiveHandoff?"support":objectionType!=="none"?"objection":stage==="quote_ready"?"order_complete":["order_configuration","details_collection"].includes(stage)?"selection_started":"interested";
