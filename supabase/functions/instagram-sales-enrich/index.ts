@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { projectSalesState } from "../_shared/instagram-sales-core.ts";
 
 const SALES_STAGES = [
   "new_inquiry",
@@ -909,55 +910,27 @@ Deno.serve(async (req) => {
         });
 
     const patch = extraction.order_patch;
-    const mergedItems = mergeItems(existingItems, patch);
-    const mergedDraft: JsonRecord = {
-      ...(existingDraft ?? {}),
-      pack_slug: mergeScalar(existingDraft?.pack_slug, patch.pack_slug),
-      pack_name: mergeScalar(existingDraft?.pack_name, patch.pack_name),
-      units: mergeScalar(existingDraft?.units, patch.units),
-      customer_name: mergeScalar(existingDraft?.customer_name, patch.customer_name),
-      phone: mergeScalar(existingDraft?.phone, patch.phone),
-      email: mergeScalar(existingDraft?.email, patch.email),
-      district: mergeScalar(existingDraft?.district, patch.district),
-      delivery_address: mergeScalar(existingDraft?.delivery_address, patch.address),
-      address_reference: mergeScalar(existingDraft?.address_reference, patch.address_reference),
-      delivery_notes: mergeScalar(existingDraft?.delivery_notes, patch.delivery_notes),
-      requested_delivery_at: mergeScalar(existingDraft?.requested_delivery_at, parseDate(patch.requested_date)),
-      custom_request: mergeScalar(existingDraft?.custom_request, patch.custom_request),
-      sales_stage: existingDraft?.sales_stage ?? extraction.sales_stage,
-    };
-
-    const bagelQuantity = mergedItems
-      .filter((item) => item.item_kind === "bagel")
-      .reduce((total, item) => total + item.quantity, 0);
-    if (!numberOrNull(mergedDraft.units) && [6, 12].includes(bagelQuantity)) {
-      mergedDraft.units = bagelQuantity;
-    }
-
     const currentPaymentStatus = text(existingDraft?.payment_status) || "none";
-    const hasInboundAttachment = Array.isArray(triggeringMessage.attachments) && triggeringMessage.attachments.length > 0;
-    const paymentEvidence =
-      currentPaymentStatus !== "confirmed" &&
-      claimed.intent === "payment_confirmation" &&
-      (hasInboundAttachment || extraction.payment_evidence_claimed);
-    const paymentStatus = currentPaymentStatus === "confirmed"
-      ? "confirmed"
-      : paymentEvidence
-        ? "evidence_received"
-        : currentPaymentStatus;
-    const handoffReason = deterministicHandoff({
-      intent: text(claimed.intent),
-      latestMessage,
-      confidence: numberOrNull(claimed.confidence),
-      extraction,
-      customRequest: text(mergedDraft.custom_request) || null,
-    });
-    const quote = calculateQuote({
-      draft: mergedDraft,
-      items: mergedItems,
+    const projectedSales = projectSalesState({
+      currentOrder: existingDraft,
+      currentItems: existingItems,
+      extraction: {
+        ...extraction,
+        intent: text(claimed.intent),
+        confidence: numberOrNull(claimed.confidence),
+        model_handoff_reason: extraction.handoff_reason ?? null,
+      },
       facts,
-      handoffReason,
+      latestMessage,
     });
+    const mergedItems = projectedSales.projectedItems as DraftItem[];
+    const mergedDraft = projectedSales.projectedOrder as JsonRecord;
+    const paymentStatus = projectedSales.paymentStatus;
+    const paymentEvidence =
+      currentPaymentStatus !== "evidence_received" &&
+      paymentStatus === "evidence_received";
+    const handoffReason = projectedSales.handoffReason;
+    const quote = projectedSales.quote;
 
     if (quote.pack) {
       mergedDraft.pack_slug = quote.pack.slug;
@@ -965,27 +938,19 @@ Deno.serve(async (req) => {
       mergedDraft.units = Number(quote.pack.units);
     }
 
-    const state = stageAndAction({
-      intent: text(claimed.intent),
-      latestMessage,
-      draft: mergedDraft,
-      items: mergedItems,
-      paymentStatus,
-      quoteVerified: quote.verified,
-      quoteSent: Boolean(existingDraft?.quote_sent_at),
-      handoffReason,
-    });
+    const state = {
+      stage: projectedSales.stage,
+      action: projectedSales.action,
+    };
     const objectionType = classifyObjection(latestMessage) !== "none"
       ? classifyObjection(latestMessage)
-      : (OBJECTION_TYPES.includes(extraction.objection_type as any) ? extraction.objection_type : "none");
-    const signal = buyerSignal({
-      modelSignal: extraction.buyer_signal,
-      stage: state.stage,
-      objection: objectionType,
-      handoffReason,
-      paymentStatus,
-    });
-    const missing = missingFields(mergedDraft, mergedItems);
+      : (OBJECTION_TYPES.includes(extraction.objection_type as any)
+          ? extraction.objection_type
+          : "none");
+    const signal = objectionType !== "none"
+      ? "objection"
+      : projectedSales.buyerSignal;
+    const missing = projectedSales.missingFields;
     const voice = scoreVoice(claimed.proposed_messages);
 
     const { data: existingLead, error: leadLookupError } = await db
