@@ -71,7 +71,7 @@ export const BAGELITO_CHAT_SALES_SKILL = {
   objectionProtocol: ["acknowledge","clarify_if_needed","answer_from_live_facts","confirm_resolution","resume_smallest_next_step"] as const,
   hardHandoff: [
     "complaint","refund","missing_or_damaged_order","food_safety","allergy",
-    "payment_dispute","fraud","custom_feasibility","discount_exception",
+    "payment_dispute","payment_exception","fraud","custom_feasibility","discount_exception",
     "delivery_exception","customer_requested_human","repeated_misunderstanding",
     "low_confidence","conflicting_data",
   ] as const,
@@ -150,7 +150,7 @@ export function buildBagelitoSalesSkillInstructions() {
     "Supabase is the operational source of truth for order state, prices, delivery, payment and fulfillment. Never override it with historical chat content.",
     "Do not request payment until there is a verified quote including delivery and total.",
     "Payment evidence is not payment confirmation. A human or verified system event must confirm it.",
-    "Use handoff for complaints, refunds, food safety/allergies, disputes, fraud, custom feasibility, exceptions, conflicting data, repeated misunderstanding, explicit human requests or low confidence.",
+    "Use handoff for complaints, refunds, food safety/allergies, payment disputes or nonstandard payment terms, fraud, custom feasibility, exceptions, conflicting data, repeated misunderstanding, explicit human requests or low confidence.",
     "After confirmation or fulfillment, be concise and operational. Do not force an upsell or reopen a natural close.",
     "Historical evidence: clear next-step language and decision-moving questions are associated with higher conversion signals, while longer initial message bursts are not. Treat this as directional evidence, not causal proof.",
   ].join("\n");
