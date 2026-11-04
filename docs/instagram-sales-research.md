@@ -114,3 +114,47 @@ External sales guidance that matched Bagelito evidence:
 - Zendesk conversational messaging: customers should not have to repeat themselves and automation should collect useful context progressively.
 
 The implementation therefore prioritizes context → one next decision → structured state → deterministic safety gate, not a long static script.
+## Full-export transition analysis v3 — 2026-11-04
+
+This is a separate methodology from the earlier conversation-level heuristic, so the figures below must not be blended as if they were the same metric.
+
+Dataset:
+- 537 conversation files
+- 522 conversations with a meaningful customer opener
+- 2,660 Dawn-to-customer transitions
+
+Conversation-level directional associations:
+- clear next-step language: 62.3% likely-conversion signal vs 30.6% without
+- decision-moving question: 52.9% vs 33.3%
+- warm opener: 42.6% vs 31.0%
+- multiline / breathing room: 46.1% vs 30.8%
+- media in the initial burst: 31.0% vs 35.6%
+
+Transition-level immediate progression:
+- ask quantity: n=99, 54.5% immediate advance vs 21.8% baseline
+- ask flavors: n=64, 43.8% vs 22.5%
+- ask operational details: n=395, 42.3% vs 19.7%
+- clear next-step phrase: n=428, 32.9% vs 21.1%
+
+Question-count signal:
+- 0 questions: 21.5% immediate advance
+- 1 question: 34.0%
+- 2 questions: 25.0%
+- 3+ questions: 0% in a tiny sample
+
+This supports the rule **one sales decision per turn**. It does not prohibit a compact operational bundle such as name + phone + district + address after the product order is already configured.
+
+Commercial follow-ups detected after a meaningful period of silence:
+- 57 candidate historical follow-ups
+- 0.5–2 h: ~45% response
+- 2–4 h: ~50%
+- 4–8 h: 46.2% within 24 h / 53.8% within 7 days
+- 8–23 h: ~50%
+
+Because this is observational and the sample is small/noisy, follow-up remains **shadow-only** until prospective measurement confirms timing and copy.
+
+### Important historical traps found
+
+The export contains old promos, one-off discounts, free-delivery exceptions, alternative payment methods, rush promises, four-unit exceptions and experimental products. These are useful examples of how Dawn converses, but **none are current operational truth**. The agent must only use live facts for price, availability, payment, delivery and exceptions.
+
+The mini-bagel review found a concrete historical failure mode: a customer explicitly corrected Bagelito after a mini order was interpreted as regular. This is why mini/minis is now a deterministic order-size signal rather than a purely model-inferred field.
