@@ -178,3 +178,66 @@ test("incomplete configured order asks for operational details", () => {
   assert.equal(state.action, "ask_contact_delivery");
   assert.deepEqual(state.missingFields, ["customer_name", "phone", "district", "address"]);
 });
+
+
+test("price resistance interrupts the normal script with objection handling", () => {
+  const state = core.projectSalesState({
+    currentOrder: null,
+    currentItems: [],
+    extraction: {
+      intent: "price",
+      confidence: 0.98,
+      buyer_signal: "objection",
+      objection_type: "price",
+      handoff_reason: null,
+      customer_requested_human: false,
+      conflicting_data: false,
+      payment_evidence_claimed: false,
+      order_patch: {
+        bagel_size: null,
+        pack_slug: null, pack_name: null, units: null,
+        customer_name: null, phone: null, email: null, district: null,
+        address: null, address_reference: null, delivery_notes: null,
+        requested_date: null, custom_request: null, items: [], schmears: [],
+      },
+    },
+    facts,
+    latestMessage: "Está un poco caro, no tienes algo más económico?",
+  });
+
+  assert.equal(state.stage, "menu_discovery");
+  assert.equal(state.objectionType, "price");
+  assert.equal(state.action, "handle_objection");
+  assert.equal(state.resumeAction, "recommend_pack");
+  assert.equal(state.buyerSignal, "objection");
+});
+
+test("plain price inquiry is not forced into objection handling", () => {
+  const state = core.projectSalesState({
+    currentOrder: null,
+    currentItems: [],
+    extraction: {
+      intent: "price",
+      confidence: 0.98,
+      buyer_signal: "interested",
+      objection_type: "none",
+      handoff_reason: null,
+      customer_requested_human: false,
+      conflicting_data: false,
+      payment_evidence_claimed: false,
+      order_patch: {
+        bagel_size: null,
+        pack_slug: null, pack_name: null, units: null,
+        customer_name: null, phone: null, email: null, district: null,
+        address: null, address_reference: null, delivery_notes: null,
+        requested_date: null, custom_request: null, items: [], schmears: [],
+      },
+    },
+    facts,
+    latestMessage: "Cuánto cuestan?",
+  });
+
+  assert.equal(state.objectionType, "none");
+  assert.equal(state.action, "send_menu");
+  assert.notEqual(state.buyerSignal, "objection");
+});
