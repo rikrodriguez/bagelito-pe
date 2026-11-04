@@ -61,6 +61,7 @@ export const BAGELITO_GHL_CONFIG = {
     stage: "fFDZRiMIPr6tuiECFwEx",
     nextBestAction: "LnkfrJpsLPtBiCmrL1ik",
     handoffReason: "Y6THkp6mRCAfCV9vFwLD",
+    customRequest: "YMf2Xh1tPGAmXWY1Hqko",
     checkoutUrl: "Aok79XFWl22gTqVluOpW",
     deliveryWindow: "XF1Zu13UFq9v5zJBqFv4",
     voucherReference: "60gUz0JPM0OwYkKBIl1z",
@@ -191,6 +192,7 @@ export function buildGhlOpportunityCustomFields(input: {
   stage: BagelitoSalesStage;
   nextBestAction?: string | null;
   handoffReason?: string | null;
+  customRequest?: string | null;
   checkoutUrl?: string | null;
   deliveryWindow?: string | null;
   voucherReference?: string | null;
@@ -213,6 +215,7 @@ export function buildGhlOpportunityCustomFields(input: {
   addField(fields, ids.stage, input.stage);
   addField(fields, ids.nextBestAction, input.nextBestAction);
   addField(fields, ids.handoffReason, input.handoffReason);
+  addField(fields, ids.customRequest, input.customRequest);
   addField(fields, ids.checkoutUrl, input.checkoutUrl);
   addField(fields, ids.deliveryWindow, input.deliveryWindow);
   addField(fields, ids.voucherReference, input.voucherReference);
