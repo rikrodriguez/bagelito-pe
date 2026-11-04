@@ -15,9 +15,11 @@ function extractOutputText(payload:any){
   }
   return parts.join("\n").trim();
 }
-function boundedScore(value:unknown){
+function normalizeEvaluatorScore(value:unknown){
   const n=Number(value);
-  return Number.isFinite(n)?Math.max(0,Math.min(100,Math.round(n))):null;
+  if(!Number.isFinite(n)) return null;
+  const normalized=n>=0 && n<=5 ? n*20 : n;
+  return Math.max(0,Math.min(100,Math.round(normalized)));
 }
 
 Deno.serve(async(req)=>{
@@ -74,6 +76,7 @@ Deno.serve(async(req)=>{
       "This evaluator NEVER changes prompts, agent facts, prices, menu, availability, delivery, payment or customer state.",
       "Human text is evidence of Dawn's conversational choice, but any historical price, promo, payment method, availability or exception in the human reply must not become current operational truth.",
       "Assess behavior: latest-question handling, Dawn voice/format, sales progression, factual restraint, handoff judgment and media choice.",
+      "Use a 0–100 scale for every score, not a 0–5 scale: 100=excellent, 80=good, 60=material improvement needed, 40=poor, 20=very poor, 0=failed.",
       "Do not reward the human merely for being human. The AI may be better or equally good.",
       "Classify why the reply differs. A wording difference alone can be style_only rather than a sales failure.",
       "A safe_lesson must be generalized behavioral guidance only. It must not contain customer names, phone numbers, addresses, historical prices, promo amounts, payment destinations or order-specific facts.",
@@ -97,7 +100,7 @@ Deno.serve(async(req)=>{
             text:run.human_final_reply,media:run.human_final_media
           }
         }),
-        max_output_tokens:900,
+        max_output_tokens:1200,
         text:{format:{
           type:"json_schema",name:"bagelito_feedback_review",strict:true,
           schema:{
@@ -126,12 +129,12 @@ Deno.serve(async(req)=>{
     if(!output) throw new Error("feedback_output_empty");
     const evaluation=JSON.parse(output);
     const scores=[
-      boundedScore(evaluation.latest_question_score),
-      boundedScore(evaluation.dawn_voice_score),
-      boundedScore(evaluation.sales_progression_score),
-      boundedScore(evaluation.factual_safety_score),
-      boundedScore(evaluation.handoff_score),
-      boundedScore(evaluation.media_score)
+      normalizeEvaluatorScore(evaluation.latest_question_score),
+      normalizeEvaluatorScore(evaluation.dawn_voice_score),
+      normalizeEvaluatorScore(evaluation.sales_progression_score),
+      normalizeEvaluatorScore(evaluation.factual_safety_score),
+      normalizeEvaluatorScore(evaluation.handoff_score),
+      normalizeEvaluatorScore(evaluation.media_score)
     ].filter((v):v is number=>v!==null);
     const overall=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null;
 
@@ -140,12 +143,12 @@ Deno.serve(async(req)=>{
       .update({
         status:"completed",
         human_edit_type:evaluation.human_edit_type,
-        latest_question_score:boundedScore(evaluation.latest_question_score),
-        dawn_voice_score:boundedScore(evaluation.dawn_voice_score),
-        sales_progression_score:boundedScore(evaluation.sales_progression_score),
-        factual_safety_score:boundedScore(evaluation.factual_safety_score),
-        handoff_score:boundedScore(evaluation.handoff_score),
-        media_score:boundedScore(evaluation.media_score),
+        latest_question_score:normalizeEvaluatorScore(evaluation.latest_question_score),
+        dawn_voice_score:normalizeEvaluatorScore(evaluation.dawn_voice_score),
+        sales_progression_score:normalizeEvaluatorScore(evaluation.sales_progression_score),
+        factual_safety_score:normalizeEvaluatorScore(evaluation.factual_safety_score),
+        handoff_score:normalizeEvaluatorScore(evaluation.handoff_score),
+        media_score:normalizeEvaluatorScore(evaluation.media_score),
         overall_score:overall,
         ai_better_or_equal:Boolean(evaluation.ai_better_or_equal),
         behavioral_categories:Array.isArray(evaluation.behavioral_categories)?evaluation.behavioral_categories:[],
