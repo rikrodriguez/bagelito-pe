@@ -427,6 +427,7 @@ async function extractSalesTurn(args: {
         "A screenshot/attachment or claim that payment was sent is payment evidence only, never confirmed payment.",
         "Birthday bagels, shapes, logos, special colors or personalization are custom requests requiring feasibility review.",
         "A plain price question is not a price objection. Use objection_type=price only when the customer resists or negotiates price.",
+        "Only set bagel_size=mini when the customer explicitly says mini/minis. Use regular for ordinary/full-size bagels when clear from context. If size is genuinely ambiguous, return null rather than guessing.",
         "Return JSON only matching the schema."
       ].join("\\n"),
       input: JSON.stringify({
@@ -440,6 +441,8 @@ async function extractSalesTurn(args: {
           : null,
         LIVE_FACTS: {
           packs: args.facts.packs ?? [],
+          mini_bagel_packs: args.facts.mini_bagel_packs ?? [],
+          order_rules: args.facts.order_rules ?? null,
           bagel_flavors: args.facts.bagel_flavors ?? [],
           schmears: args.facts.schmears ?? [],
           payment_policy: args.facts.payment_policy ?? null,
@@ -481,6 +484,12 @@ async function extractSalesTurn(args: {
                 type: "object",
                 additionalProperties: false,
                 properties: {
+                  bagel_size: {
+                    anyOf: [
+                      { type: "string", enum: ["regular","mini"] },
+                      { type: "null" }
+                    ]
+                  },
                   pack_slug: nullableString,
                   pack_name: nullableString,
                   units: nullableNumber,
@@ -497,7 +506,7 @@ async function extractSalesTurn(args: {
                   schmears: { type: "array", maxItems: 12, items: itemLine }
                 },
                 required: [
-                  "pack_slug","pack_name","units","customer_name","phone","email","district",
+                  "bagel_size","pack_slug","pack_name","units","customer_name","phone","email","district",
                   "address","address_reference","delivery_notes","requested_date","custom_request",
                   "items","schmears"
                 ]
@@ -567,7 +576,7 @@ async function generateShadowDraft(args: {
       .eq("approved", true)
       .order("asset_key", { ascending: true }),
     db.from("instagram_order_drafts")
-      .select("id,sales_stage,status,pack_slug,pack_name,units,customer_name,phone,email,district,delivery_address,address_reference,delivery_notes,requested_delivery_at,custom_request,total_amount,quote_verified,quote_sent_at,payment_method,payment_status,handoff_reason,updated_at")
+      .select("id,sales_stage,status,bagel_size,pack_slug,pack_name,units,customer_name,phone,email,district,delivery_address,address_reference,delivery_notes,requested_delivery_at,custom_request,total_amount,quote_verified,quote_sent_at,payment_method,payment_status,handoff_reason,updated_at")
       .eq("conversation_id", conversationId)
       .in("status", ["active","quoted","payment_pending","payment_verification","confirmed","in_production","ready_for_delivery","human_review"])
       .order("updated_at", { ascending: false })
@@ -705,6 +714,8 @@ async function generateShadowDraft(args: {
     PROJECTED_SALES_STATE: projectedSales,
     LIVE_FACTS: {
       menu: factMap,
+      mini_bagel_packs: factMap.mini_bagel_packs ?? [],
+      order_rules: factMap.order_rules ?? null,
       current_batch: customerFacingBatch(batch, factMap.sales_schedule),
       current_order: projectedOrderForWriter,
       media_assets: mediaAssets ?? [],
