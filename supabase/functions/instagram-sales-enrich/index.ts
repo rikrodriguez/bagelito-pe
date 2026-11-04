@@ -152,6 +152,7 @@ type Extraction = {
   conflicting_data: boolean;
   payment_evidence_claimed: boolean;
   order_patch: {
+    bagel_size: string | null;
     pack_slug: string | null;
     pack_name: string | null;
     units: number | null;
@@ -655,6 +656,7 @@ async function callOpenAI(args: {
         "Never infer phone, email, address, district, custom feasibility, payment confirmation or a delivery date.",
         "A screenshot or statement that payment was sent is payment evidence only, never confirmed payment.",
         "Birthday bagels, shapes, colors, logos and personalization are custom requests requiring feasibility review.",
+        "Only set bagel_size=mini when the customer explicitly says mini/minis. Use regular for ordinary/full-size bagels when clear from context. If size is genuinely ambiguous, return null rather than guessing.",
         "Return JSON only matching the schema.",
       ].join("\n"),
       input: JSON.stringify(args.input),
@@ -685,6 +687,12 @@ async function callOpenAI(args: {
                 type: "object",
                 additionalProperties: false,
                 properties: {
+                  bagel_size: {
+                    anyOf: [
+                      { type: "string", enum: ["regular","mini"] },
+                      { type: "null" }
+                    ]
+                  },
                   pack_slug: nullableString,
                   pack_name: nullableString,
                   units: nullableNumber,
@@ -701,6 +709,7 @@ async function callOpenAI(args: {
                   schmears: { type: "array", maxItems: 12, items: line },
                 },
                 required: [
+                  "bagel_size",
                   "pack_slug",
                   "pack_name",
                   "units",
@@ -900,6 +909,8 @@ Deno.serve(async (req) => {
             },
             LIVE_FACTS: {
               packs: facts.packs ?? [],
+              mini_bagel_packs: facts.mini_bagel_packs ?? [],
+              order_rules: facts.order_rules ?? null,
               bagel_flavors: facts.bagel_flavors ?? [],
               schmears: facts.schmears ?? [],
               delivery_pricing: facts.delivery_pricing ?? null,
@@ -1026,6 +1037,7 @@ Deno.serve(async (req) => {
         sales_stage: state.stage,
         buyer_signal: signal,
         status: statusFor(state.stage, Boolean(existingDraft?.quote_sent_at)),
+        bagel_size: text(mergedDraft.bagel_size) || null,
         pack_slug: text(mergedDraft.pack_slug) || null,
         pack_name: text(mergedDraft.pack_name) || null,
         units: numberOrNull(mergedDraft.units),
