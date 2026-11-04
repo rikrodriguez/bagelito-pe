@@ -8,7 +8,7 @@ const HIGH_RISK_INTENT_REASONS: Record<string,string> = {
   complaint:"complaint", refund:"refund", missing_item:"missing_or_damaged_order",
   damaged_order:"missing_or_damaged_order", food_safety:"food_safety", allergy:"allergy",
   payment_dispute:"payment_dispute", fraud:"fraud", custom_order:"custom_feasibility",
-  discount_exception:"discount_exception",
+  discount_exception:"discount_exception", payment_exception:"payment_exception",
 };
 const CUSTOM_REQUEST_PATTERN = /\b(birthday|cumplea[nñ]os|cumple|custom|personaliz|forma especial|shape|color especial|logo|tem[aá]tico)\b/i;
 const HUMAN_REQUEST_PATTERN = /\b(humano|persona real|hablar con (alguien|una persona)|asesor|dawn|human|real person|talk to someone)\b/i;
