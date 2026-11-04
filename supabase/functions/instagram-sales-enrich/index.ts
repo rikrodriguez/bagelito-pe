@@ -123,53 +123,13 @@ const ACTIVE_DRAFT_STATUSES = [
   "human_review",
 ];
 
-const GHL = {
-  locationId: "wGVp4L7zAl46JR7gg0Hx",
-  pipelineId: "atqtqzswVGYoGU18TF8z",
-  stages: {
-    new_inquiry: "bbe7c4a0-e9db-4a07-b57d-0721dd5f8b73",
-    menu_discovery: "742a824e-0cf0-4616-9213-5ebeef71dc9d",
-    recommendation: "742a824e-0cf0-4616-9213-5ebeef71dc9d",
-    order_configuration: "65a30996-7475-461a-80b8-75e685e1d5e4",
-    details_collection: "44974f36-cf1e-4cdb-9aaf-87d527be9176",
-    quote_ready: "2e97ae2c-eaf1-4307-9b00-745fad62f83d",
-    payment_pending: "0585ceec-3683-49cf-8d0f-6b966341f61c",
-    payment_evidence_received: "0b8e8d6a-a3a7-4baa-9be2-7dd005ff9083",
-    confirmed: "ee15b1c7-b83b-4f00-995d-d7aefad559cf",
-    production: "a156a48a-2afa-411a-9d2b-3fc9c1006701",
-    delivery: "2858af5b-1d27-4ede-8ef7-6f2867d89cdd",
-    completed: "09c4debd-4170-41b1-b36c-26c5b33f0e8c",
-    human_review: "cc706e8b-07d7-4079-ab48-47609c310542",
-    lost: "464f9679-6a5c-4e3b-961f-d782cd1c59e7",
-  } as Record<string, string>,
-  contactFields: {
-    instagramUserId: "YMqyWSqEiTyE3u3SgXl5",
-    instagramUsername: "YxVBq2caxvWmpgkQKIcx",
-    preferredLanguage: "domH1AQAZQBfKN1UFoUL",
-    favoriteFlavors: "Ilz60BOeZnt7SOPogWrB",
-    customerStatus: "98Tyyn9n6MxrocJZoOby",
-  },
-  opportunityFields: {
-    draftId: "VURl4HkdljWGJHXA6TLW",
-    conversationId: "XuusqPh2IFQ86DytisNa",
-    batchId: "M7CdQanSHXDXp76cKFBY",
-    pack: "JIpR445DlJu3dyzEKbS4",
-    units: "qDAsMNcxqP442rhyS8TM",
-    flavors: "pbqo9DiMWLbNQdjmHJ7P",
-    schmears: "j6QJNN7gLhiJHoV8UApy",
-    district: "YcVEYnwErfb41tmLcxSX",
-    address: "laCgedFMnlN6BgIxHqgs",
-    total: "ehvbhMqtdQ63YmKvrdPD",
-    paymentMethod: "56x7Vk2On55txY4fOzmB",
-    paymentStatus: "FAGU5085fCUqbSj5YXoY",
-    stage: "fFDZRiMIPr6tuiECFwEx",
-    nextBestAction: "LnkfrJpsLPtBiCmrL1ik",
-    handoffReason: "Y6THkp6mRCAfCV9vFwLD",
-    checkoutUrl: "Aok79XFWl22gTqVluOpW",
-    deliveryWindow: "XF1Zu13UFq9v5zJBqFv4",
-    voucherReference: "60gUz0JPM0OwYkKBIl1z",
-  },
-};
+function ghlConfigReady(config: any) {
+  if (!config || config.enabled !== true) return false;
+  if (typeof config.locationId !== "string" || !config.locationId.trim()) return false;
+  if (typeof config.pipelineId !== "string" || !config.pipelineId.trim()) return false;
+  if (!config.stages || !config.contactFields || !config.opportunityFields) return false;
+  return true;
+}
 
 type JsonRecord = Record<string, unknown>;
 type DraftItem = {
@@ -579,7 +539,11 @@ function buildGhlPayload(args: {
   handoffReason: string | null;
   paymentPolicy: any;
   batch: any;
+  ghlConfig: any;
 }) {
+  const GHL = args.ghlConfig;
+  if (!ghlConfigReady(GHL)) return null;
+
   const displayName = text(args.draft?.customer_name) || text(args.contact.display_name) || text(args.contact.username) || `Instagram Lead ${text(args.contact.instagram_user_id).slice(-6)}`;
   const name = splitName(displayName);
   const contactFields: any[] = [];
@@ -1183,18 +1147,22 @@ Deno.serve(async (req) => {
       handoffReason,
       paymentPolicy: facts.payment_policy,
       batch,
+      ghlConfig: facts.ghl_crm_config,
     });
-    const queueEntityType = savedDraft ? "opportunity" : "contact";
-    const queueEntityId = savedDraft?.id ?? lead.id;
-    const queueVersion = savedDraft?.version ?? lead.version ?? 1;
-    const { error: queueError } = await db.rpc("enqueue_instagram_crm_sync", {
-      p_entity_type: queueEntityType,
-      p_entity_id: queueEntityId,
-      p_operation: "upsert",
-      p_entity_version: queueVersion,
-      p_payload: ghlPayload,
-    });
-    if (queueError) throw new Error(`crm_queue_failed:${queueError.message}`);
+    const crmSyncEnabled = Boolean(ghlPayload);
+    if (crmSyncEnabled && ghlPayload) {
+      const queueEntityType = savedDraft ? "opportunity" : "contact";
+      const queueEntityId = savedDraft?.id ?? lead.id;
+      const queueVersion = savedDraft?.version ?? lead.version ?? 1;
+      const { error: queueError } = await db.rpc("enqueue_instagram_crm_sync", {
+        p_entity_type: queueEntityType,
+        p_entity_id: queueEntityId,
+        p_operation: "upsert",
+        p_entity_version: queueVersion,
+        p_payload: ghlPayload,
+      });
+      if (queueError) throw new Error(`crm_queue_failed:${queueError.message}`);
+    }
 
     const { error: runUpdateError } = await db
       .from("instagram_ai_runs")
@@ -1214,14 +1182,16 @@ Deno.serve(async (req) => {
       .eq("id", claimed.id);
     if (runUpdateError) throw new Error(`run_update_failed:${runUpdateError.message}`);
 
-    fetch(`${supabaseUrl}/functions/v1/instagram-ghl-sync`, {
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${serviceRoleKey}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ limit: 5 }),
-    }).catch((error) => console.error("ghl_worker_invoke_failed", error));
+    if (crmSyncEnabled) {
+      fetch(`${supabaseUrl}/functions/v1/instagram-ghl-sync`, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${serviceRoleKey}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ limit: 5 }),
+      }).catch((error) => console.error("ghl_worker_invoke_failed", error));
+    }
 
     return respond({
       ok: true,
