@@ -1037,11 +1037,12 @@ Deno.serve(async (req: Request) => {
   }
   if (webhookInsertError) return respond({ ok: false, error: "webhook_insert_failed" }, 500);
 
-  let eventsSeen = 0;
-  let messagesStored = 0;
-  let shadowGenerated = 0;
+  const backgroundTask = (async () => {
+    let eventsSeen = 0;
+    let messagesStored = 0;
+    let shadowGenerated = 0;
 
-  try {
+    try {
     for (const entry of payload.entry ?? []) {
       for (const event of entry.messaging ?? []) {
         eventsSeen += 1;
@@ -1403,22 +1404,30 @@ Deno.serve(async (req: Request) => {
       .update({ processed_at: new Date().toISOString(), processing_error: null })
       .eq("event_key", webhookEventKey);
 
-    return respond({
-      ok: true,
-      shadowMode: true,
+    console.log("instagram_webhook_processing_completed", JSON.stringify({
       eventsSeen,
       messagesStored,
       shadowGenerated,
       humanMediaArchive,
       aiReady: Boolean(openaiKey)
-    });
+    }));
   } catch (error) {
     const errorText = error instanceof Error ? error.message : String(error);
     console.error("instagram_webhook_processing_failed", errorText);
     await db.from("instagram_webhook_events")
       .update({ processed_at: new Date().toISOString(), processing_error: errorText.slice(0,1000) })
       .eq("event_key", webhookEventKey);
-    return respond({ ok: false, error: "processing_failed" }, 500);
+    return;
   }
+  })();
+
+  EdgeRuntime.waitUntil(backgroundTask);
+
+  return respond({
+    ok: true,
+    accepted: true,
+    shadowMode: true,
+    eventKey: webhookEventKey
+  });
 });
 
