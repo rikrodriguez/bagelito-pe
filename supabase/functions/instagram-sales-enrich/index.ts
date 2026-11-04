@@ -511,7 +511,8 @@ function scoreVoice(messages: unknown) {
   return { score, pass: score >= 80 && !issues.some((issue) => (penalties[issue] ?? 0) >= 30), issues };
 }
 
-function addCustomField(fields: any[], id: string, value: unknown) {
+function addCustomField(fields: any[], id: string | undefined, value: unknown) {
+  if (typeof id !== "string" || !id.trim()) return;
   if (typeof value === "number" && Number.isFinite(value)) {
     fields.push({ id, fieldValue: value });
     return;
@@ -555,7 +556,13 @@ function buildGhlPayload(args: {
   addCustomField(contactFields, GHL.contactFields.instagramUserId, args.contact.instagram_user_id);
   addCustomField(contactFields, GHL.contactFields.instagramUsername, args.contact.username);
   addCustomField(contactFields, GHL.contactFields.preferredLanguage, args.contact.detected_language);
-  addCustomField(contactFields, GHL.contactFields.favoriteFlavors, args.lead.preferred_flavors?.join?.(", "));
+  const favoriteFlavors = Array.isArray(args.lead.preferred_flavors)
+    ? args.lead.preferred_flavors.map((flavor: any) =>
+        typeof flavor === "string" ? flavor
+          : text(flavor?.item_name) || text(flavor?.name) || text(flavor?.item_key)
+      ).filter(Boolean).join(", ")
+    : "";
+  addCustomField(contactFields, GHL.contactFields.favoriteFlavors, favoriteFlavors);
   addCustomField(contactFields, GHL.contactFields.customerStatus, args.lead.status === "customer" ? "repeat" : "lead");
 
   const contactBody: JsonRecord = {
@@ -604,7 +611,17 @@ function buildGhlPayload(args: {
   addCustomField(opportunityFields, GHL.opportunityFields.handoffReason, args.handoffReason);
   addCustomField(opportunityFields, GHL.opportunityFields.checkoutUrl, args.draft.metadata?.checkout_url);
   addCustomField(opportunityFields, GHL.opportunityFields.deliveryWindow, args.draft.requested_delivery_at || args.batch?.delivery_date);
-  addCustomField(opportunityFields, GHL.opportunityFields.voucherReference, args.draft.payment_evidence_path);
+  // Never mirror private voucher storage paths or raw screenshot data into GHL.
+  addCustomField(opportunityFields, GHL.opportunityFields.voucherReference,
+    args.draft.payment_status === "confirmed"
+      ? "Verificado en sistema de pedidos"
+      : args.draft.payment_status === "evidence_received"
+        ? "Pendiente de verificación"
+        : null
+  );
+  addCustomField(opportunityFields, GHL.extraOpportunityFields?.orderId, args.draft.final_order_id);
+  addCustomField(opportunityFields, GHL.extraOpportunityFields?.sourceChannel, "instagram");
+  addCustomField(opportunityFields, GHL.extraOpportunityFields?.fulfillmentStatus, args.draft.status);
 
   return {
     leadId: args.lead.id,
@@ -617,7 +634,9 @@ function buildGhlPayload(args: {
         pipelineStageId: GHL.stages[args.stage] || GHL.stages.new_inquiry,
         name: `Bagelito | ${displayName} | ${args.draft.id}`,
         status: ghlStatus(args.stage),
-        ...(typeof args.draft.total_amount === "number" ? { monetaryValue: args.draft.total_amount } : {}),
+        ...(args.draft.quote_verified === true && typeof args.draft.total_amount === "number"
+          ? { monetaryValue: args.draft.total_amount }
+          : {}),
       },
       customFields: opportunityFields,
     },
