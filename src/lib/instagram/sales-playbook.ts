@@ -93,7 +93,7 @@ export type PaymentPolicy = {
 };
 
 export const BAGELITO_SALES_PLAYBOOK = {
-  version: "bagelito-sales-2026-11-03-v1",
+  version: "bagelito-sales-2026-11-04-v2",
   goal: "Help the customer make one clear next decision while preserving Dawn's natural voice.",
   maximumQuestionsPerTurn: 1,
   principles: [
@@ -113,19 +113,24 @@ export const BAGELITO_SALES_PLAYBOOK = {
   ],
   objectionGuidance: {
     price: {
-      clarify: "Find out whether total budget, pack size or perceived value is the real concern.",
+      clarify: "If the blocker is already explicit, answer directly. Clarify only when you genuinely cannot tell whether the concern is total budget, pack size or value.",
       allowed: [
-        "Explain the relevant live pack options.",
-        "Help compare pack sizes or single-flavor versus mixed.",
-        "Recommend the smallest approved option that fits the customer's need.",
+        "State the relevant live price clearly.",
+        "Compare approved live pack sizes or single-flavor versus mixed.",
+        "Recommend the smallest approved option that fits the customer's stated need.",
       ],
-      forbidden: ["Invent a discount.", "Pressure the customer.", "Argue about affordability."],
+      forbidden: [
+        "Invent a discount.",
+        "Pressure the customer.",
+        "Argue about affordability.",
+        "Ask another question when the price question can be answered directly from live facts.",
+      ],
       resumeAction: "recommend_pack",
     },
     minimum_order: {
-      clarify: "Confirm the quantity the customer actually needs.",
-      allowed: ["State the live minimum order.", "Offer approved alternatives if they exist."],
-      forbidden: ["Promise an exception without approval."],
+      clarify: "Confirm quantity only if it is not already stated.",
+      allowed: ["State the live minimum order.", "Offer only approved live alternatives if they exist."],
+      forbidden: ["Promise a smaller custom quantity or exception without approval."],
       resumeAction: "recommend_pack",
     },
     availability: {
@@ -135,21 +140,21 @@ export const BAGELITO_SALES_PLAYBOOK = {
       resumeAction: "ask_quantity_flavors",
     },
     delivery: {
-      clarify: "Ask for the district before quoting delivery.",
-      allowed: ["Use the live delivery calculator or approved fee."],
-      forbidden: ["Guess a fee or promise an exception."],
+      clarify: "If district is missing, ask for it. If district is known, answer the fee/coverage directly without another diagnostic question.",
+      allowed: ["Use the live delivery calculator or approved fee.", "Then move to the next unresolved order decision."],
+      forbidden: ["Guess a fee or promise an exception.", "Ask for a district the customer already supplied."],
       resumeAction: "ask_contact_delivery",
     },
     timing: {
-      clarify: "Ask which date or deadline the customer needs.",
-      allowed: ["Use the current batch delivery window."],
-      forbidden: ["Promise rush production without approval."],
+      clarify: "Ask for a date/deadline only when it is not already explicit. Otherwise answer feasibility from current batch/schedule facts first.",
+      allowed: ["Use the current batch delivery window.", "Offer only approved current alternatives."],
+      forbidden: ["Promise rush production without approval.", "Copy historical one-off timing exceptions into current policy."],
       resumeAction: "ask_quantity_flavors",
     },
     choice_overload: {
-      clarify: "Ask whether the customer prefers sweet, savory or a balanced mix.",
-      allowed: ["Recommend a small live set of suitable flavors."],
-      forbidden: ["Repeat the full catalog when a focused recommendation is enough."],
+      clarify: "If preference is unknown, ask one preference such as sweet, savory or mix.",
+      allowed: ["Recommend 2–3 live options matched to the stated preference."],
+      forbidden: ["Repeat the full catalog when a focused recommendation is enough.", "Ask multiple preference questions in the same turn."],
       resumeAction: "ask_quantity_flavors",
     },
     trust: {
@@ -159,9 +164,9 @@ export const BAGELITO_SALES_PLAYBOOK = {
       resumeAction: "ask_quantity_flavors",
     },
     custom_request: {
-      clarify: "Capture the requested design, quantity and needed date.",
-      allowed: ["Acknowledge and route for feasibility review."],
-      forbidden: ["Promise that Bagelito can produce it."],
+      clarify: "Capture only the minimum context needed for Dawn to assess feasibility; do not turn it into a full order before approval.",
+      allowed: ["Acknowledge the request and route for feasibility review.", "Resume the normal flow only after explicit human resolution."],
+      forbidden: ["Promise that Bagelito can produce it.", "Quote an unapproved custom price."],
       resumeAction: "handoff",
     },
     other: {
@@ -170,6 +175,19 @@ export const BAGELITO_SALES_PLAYBOOK = {
       forbidden: ["Launch into a generic sales pitch."],
       resumeAction: "answer_question",
     },
+  },
+  historicalExceptionRule: "Historical discounts, 50/50 payment arrangements, rush production, free extras and special delivery exceptions are examples of Dawn's human flexibility, not reusable policy. They always require current live approval.",
+  objectionEvidence: {
+    source: "Bagelito Instagram historical corpus; heuristic and non-causal",
+    frictionEventsAnalyzed: 606,
+    paymentAdvancePct: 41.5,
+    priceAdvancePct: 36.4,
+    deliveryAdvancePct: 22.9,
+    timingAdvancePct: 23.8,
+    choiceAdvancePct: 25.0,
+    customAdvancePct: 22.6,
+    changeAdvancePct: 28.6,
+    note: "Directly resolving a known blocker often worked better than adding clarification questions; samples vary greatly by category and are not causal benchmarks.",
   },
   payment: {
     requestCopy: "Te confirmo el total y te paso el método de pago vigente. Cuando puedas, me mandas la captura 😊",
