@@ -92,6 +92,7 @@ export function getStageConversationPolicy(stage: BagelitoSalesStage) {
       : stage === "completed" ? "Close naturally and leave the relationship warm."
       : "Answer the latest question and advance only one decision.",
     maximumQuestions: 1 as const,
+    allowOperationalFieldBundle: stage === "details_collection",
     askFor: active ? "smallest_next_decision" as const : "nothing" as const,
     recommendedClose:
       stage === "quote_ready" ? "summary" as const
