@@ -642,7 +642,8 @@ async function generateShadowDraft(args: {
     currentItems: currentOrderItems,
     extraction: salesExtraction,
     facts: factMap,
-    latestMessage: latestInboundText
+    latestMessage: latestInboundText,
+    customerMemory
   });
   const projectedOrderForWriter = {
     ...projectedSales.projectedOrder,
