@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { projectSalesState } from "../_shared/instagram-sales-core.ts";
+import { adjudicateSalesJudge } from "../_shared/instagram-sales-judge-policy.ts";
 
 const encoder = new TextEncoder();
 
@@ -256,23 +257,6 @@ function extractOutputText(payload: any) {
 
 
 
-const SALES_JUDGE_CRITICAL_ISSUES = new Set([
-  "latest_question_unanswered",
-  "too_many_decisions",
-  "reasks_known_data",
-  "contradicts_order_state",
-  "factual_or_operational_claim_unverified",
-  "payment_risk",
-  "should_handoff",
-  "pressuring_customer"
-]);
-
-function judgeScore(value: unknown) {
-  const n = Number(value);
-  if (!Number.isFinite(n)) return 0;
-  return Math.max(0, Math.min(100, Math.round(n)));
-}
-
 async function evaluateSalesDraft(args: {
   db: any;
   conversationId: string;
@@ -408,52 +392,11 @@ async function evaluateSalesDraft(args: {
     if (!outputText) throw new Error("judge_output_empty");
     const parsed = JSON.parse(outputText);
 
-    const latestQuestionScore = judgeScore(parsed.latest_question_score);
-    const salesProgressionScore = judgeScore(parsed.sales_progression_score);
-    const factualSafetyScore = judgeScore(parsed.factual_safety_score);
-    const handoffScore = judgeScore(parsed.handoff_score);
-    const dawnVoiceScore = judgeScore(parsed.dawn_voice_score);
-    const pressureSafetyScore = judgeScore(parsed.pressure_safety_score);
-    const issues = Array.isArray(parsed.issues)
-      ? parsed.issues.filter((issue: unknown) => typeof issue === "string" && issue !== "none")
-      : [];
-    const scores = [
-      latestQuestionScore,salesProgressionScore,factualSafetyScore,
-      handoffScore,dawnVoiceScore,pressureSafetyScore
-    ];
-    const overallScore = Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length);
-    const criticalIssues = issues.filter((issue: string) => SALES_JUDGE_CRITICAL_ISSUES.has(issue));
-    const recommendedAction =
-      ["send","hold","human_review","regenerate"].includes(parsed.recommended_action)
-        ? parsed.recommended_action
-        : "hold";
-
-    const pass = Boolean(
-      recommendedAction === "send" &&
-      overallScore >= args.minScore &&
-      latestQuestionScore >= 85 &&
-      salesProgressionScore >= 80 &&
-      factualSafetyScore >= 95 &&
-      handoffScore >= 95 &&
-      dawnVoiceScore >= 75 &&
-      pressureSafetyScore >= 90 &&
-      criticalIssues.length === 0
-    );
-
-    const review = {
-      pass,
-      overallScore,
-      latestQuestionScore,
-      salesProgressionScore,
-      factualSafetyScore,
-      handoffScore,
-      dawnVoiceScore,
-      pressureSafetyScore,
-      issues,
-      criticalIssues,
-      recommendedAction,
-      rationale: typeof parsed.rationale === "string" ? parsed.rationale.slice(0,1000) : ""
-    };
+    const review = adjudicateSalesJudge(parsed, args.minScore);
+    const {
+      pass, overallScore, latestQuestionScore, salesProgressionScore, factualSafetyScore,
+      handoffScore, dawnVoiceScore, pressureSafetyScore, issues, recommendedAction
+    } = review;
 
     const { error: judgePersistError } = await args.db.from("instagram_sales_judge_reviews").upsert({
       ai_run_id: args.aiRunId,
@@ -1570,6 +1513,7 @@ Deno.serve(async (req: Request) => {
                   intent: shadow.intent,
                   overall_score: salesJudge.overallScore ?? 0,
                   issues: salesJudge.issues ?? [],
+                  critical_issues: salesJudge.criticalIssues ?? [],
                   recommended_action: salesJudge.recommendedAction ?? "hold",
                   judge_version: "bagelito-sales-judge-2026-11-04-v1"
                 }
