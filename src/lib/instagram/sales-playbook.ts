@@ -70,6 +70,7 @@ export const HANDOFF_REASONS = [
   "food_safety",
   "allergy",
   "payment_dispute",
+  "payment_exception",
   "fraud",
   "custom_feasibility",
   "discount_exception",
