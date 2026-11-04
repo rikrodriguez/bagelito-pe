@@ -656,6 +656,7 @@ async function callOpenAI(args: {
         "Never infer phone, email, address, district, custom feasibility, payment confirmation or a delivery date.",
         "A screenshot or statement that payment was sent is payment evidence only, never confirmed payment.",
         "Birthday bagels, shapes, colors, logos and personalization are custom requests requiring feasibility review.",
+        "CUSTOMER_MEMORY is trusted only for prior confirmed/operational orders. Use it only when the latest message explicitly refers to a prior order or prior detail (same as last time, lo mismo, otra vez, otro pedido, same address). Never silently copy old customer data into order_patch.",
         "Only set bagel_size=mini when the customer explicitly says mini/minis. Use regular for ordinary/full-size bagels when clear from context. If size is genuinely ambiguous, return null rather than guessing.",
         "Return JSON only matching the schema.",
       ].join("\n"),
@@ -866,6 +867,15 @@ Deno.serve(async (req) => {
       existingItems = (data ?? []) as DraftItem[];
     }
 
+    const { data: customerMemory, error: customerMemoryError } = await db.rpc(
+      "get_instagram_customer_memory",
+      {
+        p_contact_id: contact.id,
+        p_exclude_draft_id: existingDraft?.id ?? null,
+      },
+    );
+    if (customerMemoryError) throw new Error(`customer_memory_lookup_failed:${customerMemoryError.message}`);
+
     const latestMessage = text(triggeringMessage.text_content);
     const preflightExtraction = claimed.facts_used?.preflight_extraction ?? null;
     const preflightSales = claimed.facts_used?.preflight_sales ?? null;
@@ -898,6 +908,7 @@ Deno.serve(async (req) => {
                 triggeringMessage.attachments.length > 0,
             },
             RECENT_MESSAGES: recentMessages,
+            CUSTOMER_MEMORY: customerMemory ?? null,
             CURRENT_ORDER_DRAFT: existingDraft
               ? { ...existingDraft, items: existingItems }
               : null,
@@ -981,6 +992,9 @@ Deno.serve(async (req) => {
           first_intent: existingLead.first_intent || claimed.intent,
           last_intent: claimed.intent,
           preferred_language: claimed.language || contact.detected_language,
+          lifetime_order_count: Number(customerMemory?.trusted_order_count ?? existingLead.lifetime_order_count ?? 0),
+          lifetime_revenue: Number(customerMemory?.lifetime_revenue ?? existingLead.lifetime_revenue ?? 0),
+          preferred_flavors: Array.isArray(customerMemory?.preferred_flavors) ? customerMemory.preferred_flavors : existingLead.preferred_flavors,
           last_seen_at: triggeringMessage.sent_at || new Date().toISOString(),
         })
         .eq("id", existingLead.id)
@@ -999,6 +1013,9 @@ Deno.serve(async (req) => {
           first_intent: claimed.intent,
           last_intent: claimed.intent,
           preferred_language: claimed.language || contact.detected_language,
+          lifetime_order_count: Number(customerMemory?.trusted_order_count ?? 0),
+          lifetime_revenue: Number(customerMemory?.lifetime_revenue ?? 0),
+          preferred_flavors: Array.isArray(customerMemory?.preferred_flavors) ? customerMemory.preferred_flavors : [],
           first_seen_at: contact.first_seen_at || new Date().toISOString(),
           last_seen_at: triggeringMessage.sent_at || new Date().toISOString(),
         })
