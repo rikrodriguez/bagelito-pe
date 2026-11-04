@@ -94,7 +94,17 @@ begin
       'policy_version','bagelito-instagram-followup-2026-11-04-v1',
       'shadow_only',true,
       'standard_window_hours',24,
-      'safety_buffer_minutes',60
+      'safety_buffer_minutes',60,
+      'missing_fields', to_jsonb(array_remove(array[
+        case when d.id is not null and not exists (
+          select 1 from public.instagram_order_draft_items i
+          where i.draft_id=d.id and i.item_kind='bagel' and i.quantity>0
+        ) then 'items' end,
+        case when d.id is not null and coalesce(trim(d.customer_name),'')='' then 'customer_name' end,
+        case when d.id is not null and coalesce(trim(d.phone),'')='' then 'phone' end,
+        case when d.id is not null and coalesce(trim(d.district),'')='' then 'district' end,
+        case when d.id is not null and coalesce(trim(d.delivery_address),'')='' then 'address' end
+      ],null))
     )
   from public.instagram_conversations c
   left join public.instagram_leads l
