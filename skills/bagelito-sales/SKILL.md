@@ -164,3 +164,51 @@ Bagelito history remains primary. External references were used only to challeng
 - Pilot Instagram sales architecture: https://github.com/getpilot/pilot
 
 The external patterns retained are those that agree with Bagelito evidence: one next question, context-aware progression, CRM as truth, deterministic handoff and no monologues.
+## Product-size safety
+
+Bagel size is order state, not presentation copy.
+
+- `mini/minis` is a deterministic mini signal.
+- regular/full-size orders use the regular pack catalog.
+- mini orders use the mini pack catalog.
+- never quote a regular pack amount for a mini order or vice versa.
+- mini pack sizes currently modeled: 6, 12 and 24.
+- regular pack sizes currently modeled: 6 and 12.
+- historical four-unit orders or exceptions are not current policy.
+- if a customer asks for fewer than six regular bagels, use current `order_rules`; the present rule is `unknown_requires_review`, so do not invent an exception.
+
+## Stage-level conversion priority
+
+The full-export transition analysis suggests the next action should be chosen in this order when the customer has not supplied it already:
+
+1. quantity / pack decision;
+2. flavor decision;
+3. operational detail bundle after product configuration;
+4. verified quote;
+5. payment;
+6. fulfillment.
+
+In the v3 historical analysis, quantity prompts had the strongest immediate-progression signal (~54.5%), followed by flavor prompts (~43.8%) and operational detail prompts (~42.3%). These are observational signals, not guaranteed uplift.
+
+## Objection interrupt
+
+An objection interrupts normal progression. The current stage remains useful context, but `next_best_action` becomes `handle_objection` until the blocker is resolved.
+
+Do not confuse a normal question with an objection:
+- `¿Cuánto cuesta?` = price inquiry.
+- `Está caro, ¿tienes algo más económico?` = price objection.
+- `¿Cuánto cuesta el delivery a Miraflores?` = delivery inquiry.
+- `Ese delivery está muy caro` = delivery objection.
+
+After resolving the objection, resume the smallest appropriate next action rather than restarting the whole script.
+
+## Follow-up
+
+Follow-up is currently shadow-only.
+
+- minimum silence: 4 hours;
+- one candidate follow-up per customer window;
+- never follow up human-owned, payment-evidence, confirmed, production, delivery, completed, lost or human-review threads;
+- no guilt, fake urgency, repeated chasing or catalog replay;
+- one compact bubble, at most one question;
+- only promote to AUTO after prospective measurement validates reply rate and customer experience.
