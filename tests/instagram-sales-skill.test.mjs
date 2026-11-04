@@ -59,3 +59,17 @@ test("instructions encode core sales safeguards",()=>{
   assert.match(s,/latest customer question/i); assert.match(s,/one clear next decision/i);
   assert.match(s,/Supabase/i); assert.match(s,/handoff/i); assert.match(s,/verified quote/i);
 });
+
+
+test("details collection may bundle non-decision operational fields", () => {
+  const details = getStageConversationPolicy("details_collection");
+  const discovery = getStageConversationPolicy("menu_discovery");
+  assert.equal(details.allowOperationalFieldBundle, true);
+  assert.equal(discovery.allowOperationalFieldBundle, false);
+});
+
+test("sales instructions distinguish decisions from operational field bundles", () => {
+  const instructions = buildBagelitoSalesSkillInstructions();
+  assert.match(instructions, /operational field bundle/i);
+  assert.match(instructions, /name, phone, district and address/i);
+});
