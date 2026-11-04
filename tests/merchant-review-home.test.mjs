@@ -29,6 +29,7 @@ function render(name, locale, review, accepting) {
     "@/data/flavors": { flavors },
     "@/data/flavor-images": { flavorImages },
     "@/lib/merchant-review": loadTs("src/lib/merchant-review.ts"),
+    "@/lib/shop-draft": loadTs("src/lib/shop-draft.ts"),
     "framer-motion": {
       motion: { span: ({ children, className }) => React.createElement("span", { className }, children), div: ({ children, className }) => React.createElement("div", { className }, children) },
       useScroll: () => ({ scrollYProgress: 0 }), useTransform: () => 0,

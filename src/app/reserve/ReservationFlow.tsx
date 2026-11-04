@@ -23,6 +23,7 @@ import { flavorCopy, packCopy } from "@/lib/i18n";
 import type { CulqiAuthentication3DS, PublicPaymentConfig } from "@/lib/payments";
 import { districtOptions } from "@/lib/reservations/schema";
 import { siteAddress, siteServiceArea } from "@/lib/site";
+import { SHOP_DRAFT_KEY, SHOP_DRAFT_UPDATED_EVENT } from "@/lib/shop-draft";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 type Props = {
@@ -86,6 +87,67 @@ export function ReservationFlow({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [website, setWebsite] = useState(initialBotTrap);
   const [error, setError] = useState("");
+  const [shopDraftRestored, setShopDraftRestored] = useState(false);
+
+  // Resume the visual storefront selection without creating a reservation.
+  // Treat localStorage as untrusted UI data; server-side pack/payment validation
+  // remains authoritative. Never restore customer or payment details.
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(SHOP_DRAFT_KEY);
+      if (!raw) return;
+      const value: unknown = JSON.parse(raw);
+      if (!value || typeof value !== "object") return;
+      const draft = value as Record<string, unknown>;
+      const pack = packs.find((item) => item.slug === initialPackSlug);
+      if (draft.version !== 1 || !pack || draft.packSlug !== pack.slug) return;
+      const known = new Set(flavors.map((flavor) => flavor.slug));
+      // The public builder may choose a delivery district. Keep the exact tariff
+      // consistent without restoring or storing personal delivery information.
+      if (typeof draft.district === "string" && districtOptions.some((option) => option === draft.district)) {
+        setDetails((current) => ({ ...current, district: draft.district as string }));
+      }
+      if (pack.packType === "single") {
+        if (typeof draft.singleFlavor === "string" && known.has(draft.singleFlavor)) {
+          setSingleFlavor(draft.singleFlavor);
+          setStep(3);
+        }
+      } else {
+        const record = draft.quantities && typeof draft.quantities === "object"
+          ? draft.quantities as Record<string, unknown> : {};
+        const cleaned: Record<string, number> = {};
+        let remaining = pack.units;
+        for (const flavor of flavors) {
+          const rawCount = record[flavor.slug];
+          const count = typeof rawCount === "number" && Number.isInteger(rawCount) && rawCount > 0
+            ? Math.min(rawCount, remaining) : 0;
+          if (count > 0) cleaned[flavor.slug] = count;
+          remaining -= count;
+        }
+        if (remaining < pack.units) {
+          setQuantities(cleaned);
+          setStep(remaining === 0 ? 3 : 2);
+        }
+      }
+    } catch {
+      // Storage blocked or stale browser data: use the default checkout.
+    } finally {
+      setShopDraftRestored(true);
+    }
+  }, [initialPackSlug, packs, flavors]);
+
+  useEffect(() => {
+    if (!shopDraftRestored) return;
+    try {
+      window.localStorage.setItem(SHOP_DRAFT_KEY, JSON.stringify({
+        version: 1, packSlug, quantities, singleFlavor, district: details.district,
+      }));
+      window.dispatchEvent(new Event(SHOP_DRAFT_UPDATED_EVENT));
+    } catch {
+      // Storage is optional; never block the checkout.
+    }
+  }, [shopDraftRestored, packSlug, quantities, singleFlavor, details.district]);
+
   const hasMountedRef = useRef(false);
   const checkoutSessionRef = useRef({ fingerprint: "", id: "" });
 
