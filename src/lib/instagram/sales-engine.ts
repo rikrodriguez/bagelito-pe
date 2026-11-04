@@ -81,6 +81,7 @@ const HIGH_RISK_INTENT_REASONS: Record<string, HandoffReason> = {
   food_safety: "food_safety",
   allergy: "allergy",
   payment_dispute: "payment_dispute",
+  payment_exception: "payment_exception",
   fraud: "fraud",
   custom_order: "custom_feasibility",
   discount_exception: "discount_exception",
