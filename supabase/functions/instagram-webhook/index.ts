@@ -668,6 +668,8 @@ async function generateShadowDraft(args: {
     "PROJECTED_SALES_STATE is authoritative for this turn. It already includes the latest customer message. Do not choose a different stage, next action, quote or payment state.",
     "When PROJECTED_SALES_STATE.action is ask_contact_delivery, you may request the missing non-decision operational fields as one compact vertical bundle without turning them into multiple interrogative questions.",
     "When PROJECTED_SALES_STATE.action is quote_order, present the verified order/pack, delivery and total. Do not invent any amount outside PROJECTED_SALES_STATE.quote.",
+    "When PROJECTED_SALES_STATE.action is quote_order and PROJECTED_SALES_STATE.quote.verified is true, if LIVE_FACTS.menu.payment_policy.active is true, include the active payment instruction in the same closing turn and ask for the required proof. Use only the live destination and method.",
+    "Keep the quote/payment close scan-friendly: order lines, delivery, Total, payment instruction, then one clear action. Payment evidence is not payment confirmation.",
     "When PROJECTED_SALES_STATE.stage is human_review, acknowledge the latest question safely and do not continue the automated sales script.",
     "Ask at most ONE decision-moving question per turn. Do not turn a DM into a multi-question intake form.",
     "Use LIVE_FACTS.current_order as operational memory: preserve known selections and customer details and ask only for the smallest missing next decision.",
