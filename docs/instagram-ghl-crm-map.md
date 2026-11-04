@@ -59,6 +59,19 @@ GHL opportunity status mapping:
 
 Use built-in contact fields for name, phone and email. Do not overwrite GHL tags through contact upsert; tags require a dedicated additive/removal operation.
 
+### Instagram-only contacts
+
+A new Instagram lead may not yet have a phone number or email. HighLevel's contact upsert route rejects that shape, so the worker uses a deterministic IG-only path:
+
+1. derive the stable placeholder contact name already stored in the queued payload;
+2. search GHL by exact `contactName`;
+3. verify the candidate's `Bagelito | Instagram User ID` custom field;
+4. update the verified contact if found;
+5. otherwise create one contact through `POST /contacts/` using the name and Instagram custom fields;
+6. save the returned contact ID in `instagram_leads.ghl_contact_id` so subsequent syncs update by ID.
+
+Never manufacture a fake phone number or email for duplicate matching.
+
 ## Opportunity custom fields
 
 | Field | ID |
@@ -113,10 +126,11 @@ Queue worker RPCs:
 1. Incoming DM updates the Supabase lead.
 2. The sales engine extracts explicit order changes and updates the active draft.
 3. A new draft version enqueues a GHL sync job with an idempotency key like `ghl:opportunity:<draft-id>:v<version>`.
-4. `instagram-ghl-sync` claims jobs with `FOR UPDATE SKIP LOCKED`.
-5. It creates/updates the GHL contact, then upserts the opportunity and custom fields.
-6. Returned GHL IDs are written back to `instagram_leads` and `instagram_order_drafts`.
-7. Failed jobs retry with backoff and become `dead` after five attempts.
+4. `instagram-ghl-sync` claims jobs with `FOR UPDATE SKIP LOCKED` and supersedes older unsent versions of the same entity.
+5. It creates or updates the GHL contact using the phone/email upsert path or the verified IG-only path.
+6. It upserts the opportunity and writes the current custom fields.
+7. Returned GHL IDs are written back to `instagram_leads` and `instagram_order_drafts`.
+8. Failed jobs retry with backoff and become `dead` after five attempts.
 
 ## Runtime requirements
 
@@ -131,7 +145,7 @@ Optional secrets:
 - `GHL_LOCATION_ID` — defaults to RikMarketing location `wGVp4L7zAl46JR7gg0Hx`
 - `GHL_API_VERSION` — defaults to `2021-07-28`
 
-The worker is deployed with JWT verification enabled. Until `GHL_API_TOKEN` is configured, it reports `configured: false` and does not claim or modify queue jobs.
+The worker is deployed with JWT verification enabled. Until `GHL_API_TOKEN` is configured, it reports `configured: false` and returns 503 without claiming or modifying queue jobs.
 
 ## Checkout evolution
 
