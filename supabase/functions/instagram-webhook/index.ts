@@ -255,6 +255,249 @@ function extractOutputText(payload: any) {
 }
 
 
+
+const SALES_JUDGE_CRITICAL_ISSUES = new Set([
+  "latest_question_unanswered",
+  "too_many_decisions",
+  "reasks_known_data",
+  "contradicts_order_state",
+  "factual_or_operational_claim_unverified",
+  "payment_risk",
+  "should_handoff",
+  "pressuring_customer"
+]);
+
+function judgeScore(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(100, Math.round(n)));
+}
+
+async function evaluateSalesDraft(args: {
+  db: any;
+  conversationId: string;
+  aiRunId: string | null;
+  openaiKey: string;
+  model: string;
+  shadow: any;
+  minScore: number;
+}) {
+  if (!args.aiRunId) {
+    return { pass: false, error: "ai_run_missing", recommendedAction: "hold", overallScore: 0, issues: ["judge_error"] };
+  }
+
+  try {
+    const [{ data: messages, error: messagesError }, { data: facts, error: factsError }] = await Promise.all([
+      args.db.from("instagram_messages")
+        .select("direction,text_content,message_type,sent_at")
+        .eq("conversation_id", args.conversationId)
+        .order("sent_at", { ascending: false })
+        .limit(12),
+      args.db.from("instagram_agent_facts")
+        .select("fact_key,fact_value")
+    ]);
+    if (messagesError || factsError) throw new Error("judge_context_lookup_failed");
+
+    const recentMessages = [...(messages ?? [])].reverse();
+    const latestCustomerMessage =
+      [...recentMessages].reverse().find((message: any) => message.direction === "inbound") ?? null;
+    const factMap = Object.fromEntries((facts ?? []).map((fact: any) => [fact.fact_key, fact.fact_value]));
+
+    const instructions = [
+      "You are the independent Bagelito Sales Judge. You do NOT write the customer reply.",
+      "Your only job is to decide whether the proposed Instagram sales turn is safe and commercially strong enough to send automatically.",
+      "Be stricter than the writer. A good average score must never hide a critical payment, factual, handoff or latest-question failure.",
+      "The customer newest message has priority. The proposal must answer it before resuming any earlier script.",
+      "The proposal should move one buying decision forward. During details_collection, one compact operational bundle of name/phone/district/address is allowed.",
+      "Do not penalize a natural close for having no CTA after payment/confirmation/fulfillment.",
+      "Use CURRENT_ORDER, PROJECTED_SALES_STATE and LIVE_FACTS as operational truth. Historical/chat wording is never operational truth.",
+      "Never allow a payment request before a verified quote. Evidence or a screenshot is not payment confirmation.",
+      "If a handoff reason, custom feasibility issue, complaint, food-safety concern, dispute or conflicting data exists, recommend human_review.",
+      "Reject pressure, fake urgency, invented scarcity, unnecessary repeated media/catalog, re-asking known data and generic support-bot language.",
+      "Dawn voice should be warm, personal, mobile-readable and concise; style matters, but factual safety matters more.",
+      "Return JSON only matching the schema."
+    ].join("\n");
+
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + args.openaiKey,
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        model: args.model,
+        store: false,
+        instructions,
+        input: JSON.stringify({
+          LATEST_CUSTOMER_MESSAGE: latestCustomerMessage,
+          RECENT_MESSAGES: recentMessages,
+          PROPOSED_MESSAGES: args.shadow.proposedMessages,
+          PROPOSED_MEDIA: (args.shadow.proposedMedia ?? []).map((asset: any) => ({
+            asset_key: asset.asset_key ?? null,
+            category: asset.category ?? null,
+            product_slug: asset.product_slug ?? null,
+            tags: asset.tags ?? []
+          })),
+          CURRENT_ORDER: args.shadow.currentOrder ?? null,
+          PROJECTED_SALES_STATE: args.shadow.projectedSales ?? null,
+          LIVE_FACTS: {
+            sales_skill_v2: factMap.sales_skill_v2 ?? null,
+            payment_policy: factMap.payment_policy ?? null,
+            packs: factMap.packs ?? [],
+            mini_bagel_packs: factMap.mini_bagel_packs ?? [],
+            bagel_flavors: factMap.bagel_flavors ?? [],
+            schmears: factMap.schmears ?? [],
+            delivery_pricing: factMap.delivery_pricing ?? null,
+            sales_schedule: factMap.sales_schedule ?? null
+          }
+        }),
+        max_output_tokens: 900,
+        text: {
+          format: {
+            type: "json_schema",
+            name: "bagelito_sales_judge",
+            strict: true,
+            schema: {
+              type: "object",
+              additionalProperties: false,
+              properties: {
+                latest_question_score: { type: "integer", minimum: 0, maximum: 100 },
+                sales_progression_score: { type: "integer", minimum: 0, maximum: 100 },
+                factual_safety_score: { type: "integer", minimum: 0, maximum: 100 },
+                handoff_score: { type: "integer", minimum: 0, maximum: 100 },
+                dawn_voice_score: { type: "integer", minimum: 0, maximum: 100 },
+                pressure_safety_score: { type: "integer", minimum: 0, maximum: 100 },
+                issues: {
+                  type: "array",
+                  maxItems: 8,
+                  items: {
+                    type: "string",
+                    enum: [
+                      "latest_question_unanswered",
+                      "too_many_decisions",
+                      "reasks_known_data",
+                      "weak_or_missing_next_step",
+                      "contradicts_order_state",
+                      "factual_or_operational_claim_unverified",
+                      "payment_risk",
+                      "should_handoff",
+                      "pressuring_customer",
+                      "bot_tone_or_format",
+                      "irrelevant_or_repeated_media",
+                      "none"
+                    ]
+                  }
+                },
+                recommended_action: { type: "string", enum: ["send","hold","human_review","regenerate"] },
+                rationale: { type: "string" }
+              },
+              required: [
+                "latest_question_score","sales_progression_score","factual_safety_score",
+                "handoff_score","dawn_voice_score","pressure_safety_score","issues",
+                "recommended_action","rationale"
+              ]
+            }
+          }
+        }
+      })
+    });
+
+    const raw = await response.text();
+    if (!response.ok) throw new Error("judge_openai_" + response.status + ":" + raw.slice(0,500));
+    const outputText = extractOutputText(JSON.parse(raw));
+    if (!outputText) throw new Error("judge_output_empty");
+    const parsed = JSON.parse(outputText);
+
+    const latestQuestionScore = judgeScore(parsed.latest_question_score);
+    const salesProgressionScore = judgeScore(parsed.sales_progression_score);
+    const factualSafetyScore = judgeScore(parsed.factual_safety_score);
+    const handoffScore = judgeScore(parsed.handoff_score);
+    const dawnVoiceScore = judgeScore(parsed.dawn_voice_score);
+    const pressureSafetyScore = judgeScore(parsed.pressure_safety_score);
+    const issues = Array.isArray(parsed.issues)
+      ? parsed.issues.filter((issue: unknown) => typeof issue === "string" && issue !== "none")
+      : [];
+    const scores = [
+      latestQuestionScore,salesProgressionScore,factualSafetyScore,
+      handoffScore,dawnVoiceScore,pressureSafetyScore
+    ];
+    const overallScore = Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length);
+    const criticalIssues = issues.filter((issue: string) => SALES_JUDGE_CRITICAL_ISSUES.has(issue));
+    const recommendedAction =
+      ["send","hold","human_review","regenerate"].includes(parsed.recommended_action)
+        ? parsed.recommended_action
+        : "hold";
+
+    const pass = Boolean(
+      recommendedAction === "send" &&
+      overallScore >= args.minScore &&
+      latestQuestionScore >= 85 &&
+      salesProgressionScore >= 80 &&
+      factualSafetyScore >= 95 &&
+      handoffScore >= 95 &&
+      dawnVoiceScore >= 75 &&
+      pressureSafetyScore >= 90 &&
+      criticalIssues.length === 0
+    );
+
+    const review = {
+      pass,
+      overallScore,
+      latestQuestionScore,
+      salesProgressionScore,
+      factualSafetyScore,
+      handoffScore,
+      dawnVoiceScore,
+      pressureSafetyScore,
+      issues,
+      criticalIssues,
+      recommendedAction,
+      rationale: typeof parsed.rationale === "string" ? parsed.rationale.slice(0,1000) : ""
+    };
+
+    await args.db.from("instagram_sales_judge_reviews").upsert({
+      ai_run_id: args.aiRunId,
+      status: "completed",
+      pass,
+      overall_score: overallScore,
+      latest_question_score: latestQuestionScore,
+      sales_progression_score: salesProgressionScore,
+      factual_safety_score: factualSafetyScore,
+      handoff_score: handoffScore,
+      dawn_voice_score: dawnVoiceScore,
+      pressure_safety_score: pressureSafetyScore,
+      issues,
+      recommended_action: recommendedAction,
+      rationale: review.rationale,
+      evaluator_model: args.model,
+      error_message: null
+    }, { onConflict: "ai_run_id" });
+
+    return review;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    await args.db.from("instagram_sales_judge_reviews").upsert({
+      ai_run_id: args.aiRunId,
+      status: "error",
+      pass: false,
+      issues: ["judge_error"],
+      recommended_action: "hold",
+      evaluator_model: args.model,
+      error_message: message.slice(0,1000)
+    }, { onConflict: "ai_run_id" });
+    console.error("instagram_sales_judge_failed", message);
+    return {
+      pass: false,
+      overallScore: 0,
+      issues: ["judge_error"],
+      criticalIssues: ["judge_error"],
+      recommendedAction: "hold",
+      rationale: message.slice(0,500),
+      error: message
+    };
+  }
+}
+
 const DM_FORMAT_VERSION = "dawn-mobile-2026-11-03-v1";
 
 function normalizeInstagramText(value: string) {
@@ -1047,7 +1290,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: runtimeSettings } = await db
     .from("instagram_runtime_settings")
-    .select("enabled,mode,test_recipient_igsid,test_recipient_igsids,min_confidence,auto_intents,media_enabled,max_media,max_text_messages")
+    .select("enabled,mode,test_recipient_igsid,test_recipient_igsids,min_confidence,auto_intents,media_enabled,max_media,max_text_messages,sales_judge_enabled,sales_judge_min_score")
     .eq("id", "default")
     .maybeSingle();
 
@@ -1250,7 +1493,7 @@ Deno.serve(async (req: Request) => {
                 shadow.intent,
                 shadow.currentOrder
               );
-            const safeForAuto =
+            const baseAutoCandidate =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
               (testOnly || conversation.mode !== "human_active") &&
@@ -1264,6 +1507,24 @@ Deno.serve(async (req: Request) => {
               shadow.proposedReply.trim().length > 0 &&
               replyLooksReadable &&
               replyLooksSalesReady;
+
+            const salesJudge = baseAutoCandidate
+              ? (
+                  runtimeSettings?.sales_judge_enabled === false
+                    ? { pass: true, disabled: true, overallScore: 100, issues: [], recommendedAction: "send" }
+                    : await evaluateSalesDraft({
+                        db,
+                        conversationId: conversation.id,
+                        aiRunId: shadow.aiRunId,
+                        openaiKey,
+                        model: aiModel,
+                        shadow,
+                        minScore: Number(runtimeSettings?.sales_judge_min_score ?? 85)
+                      })
+                )
+              : { pass: false, skipped: true, overallScore: 0, issues: [], recommendedAction: "hold" };
+
+            const safeForAuto = baseAutoCandidate && salesJudge.pass;
 
             if (!replyLooksReadable) {
               await db.from("instagram_conversation_events").insert({
@@ -1294,6 +1555,25 @@ Deno.serve(async (req: Request) => {
                 }
               });
             }
+            if (baseAutoCandidate && !salesJudge.pass) {
+              await db.from("instagram_conversation_events").insert({
+                conversation_id: conversation.id,
+                event_type: "auto_send_held",
+                from_mode: conversation.mode,
+                to_mode: conversation.mode,
+                reason: "sales_judge_needs_review",
+                actor: "ai",
+                metadata: {
+                  ai_run_id: shadow.aiRunId,
+                  intent: shadow.intent,
+                  overall_score: salesJudge.overallScore ?? 0,
+                  issues: salesJudge.issues ?? [],
+                  recommended_action: salesJudge.recommendedAction ?? "hold",
+                  judge_version: "bagelito-sales-judge-2026-11-04-v1"
+                }
+              });
+            }
+
 
             if (safeForAuto) {
               try {
