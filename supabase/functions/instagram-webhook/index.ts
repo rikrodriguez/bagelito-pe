@@ -455,7 +455,7 @@ async function evaluateSalesDraft(args: {
       rationale: typeof parsed.rationale === "string" ? parsed.rationale.slice(0,1000) : ""
     };
 
-    await args.db.from("instagram_sales_judge_reviews").upsert({
+    const { error: judgePersistError } = await args.db.from("instagram_sales_judge_reviews").upsert({
       ai_run_id: args.aiRunId,
       status: "completed",
       pass,
@@ -472,6 +472,7 @@ async function evaluateSalesDraft(args: {
       evaluator_model: args.model,
       error_message: null
     }, { onConflict: "ai_run_id" });
+    if (judgePersistError) throw new Error(`judge_persist_failed:${judgePersistError.message}`);
 
     return review;
   } catch (error) {
@@ -1497,7 +1498,7 @@ Deno.serve(async (req: Request) => {
             const baseAutoCandidate =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
-              (testOnly || conversation.mode !== "human_active") &&
+              conversation.mode !== "human_active" &&
               (testOnly || fullAuto) &&
               !latestMessageNeedsCustomReview &&
               autoIntents.includes(shadow.intent) &&
@@ -1511,9 +1512,8 @@ Deno.serve(async (req: Request) => {
 
             const salesJudge = baseAutoCandidate
               ? (
-                  runtimeSettings?.sales_judge_enabled === false
-                    ? { pass: true, disabled: true, overallScore: 100, issues: [], recommendedAction: "send" }
-                    : await evaluateSalesDraft({
+                  runtimeSettings?.sales_judge_enabled === true
+                    ? await evaluateSalesDraft({
                         db,
                         conversationId: conversation.id,
                         aiRunId: shadow.aiRunId,
@@ -1522,6 +1522,7 @@ Deno.serve(async (req: Request) => {
                         shadow,
                         minScore: Number(runtimeSettings?.sales_judge_min_score ?? 85)
                       })
+                    : { pass: false, disabled: true, overallScore: 0, issues: ["judge_disabled"], recommendedAction: "hold" }
                 )
               : { pass: false, skipped: true, overallScore: 0, issues: [], recommendedAction: "hold" };
 
