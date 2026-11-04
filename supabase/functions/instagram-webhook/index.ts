@@ -339,6 +339,27 @@ function mediaFamilyKey(asset: any) {
   return asset.asset_key ?? null;
 }
 
+function customerFacingBatch(batch: any, schedule: any) {
+  if (!batch) return null;
+  if (schedule?.merchant_review_only === true) {
+    return {
+      id: batch.id,
+      name: batch.name,
+      status: schedule.orders_open === false ? "closed" : batch.status,
+      orders_open_at: schedule.customer_facing_open_at ?? null,
+      orders_close_at: schedule.customer_facing_close_at ?? null,
+      delivery_date: schedule.delivery_date ?? null,
+      delivery_date_confirmed: schedule.delivery_date_confirmed === true,
+      merchant_review_dates_hidden: true,
+    };
+  }
+  return {
+    ...batch,
+    delivery_date_confirmed: Boolean(batch.delivery_date),
+    merchant_review_dates_hidden: false,
+  };
+}
+
 function preferredHumanMedia(assets: any[]) {
   return assets
     .filter((asset: any) =>
@@ -473,6 +494,7 @@ async function generateShadowDraft(args: {
     "proposed_reply is a legacy preview and must equal proposed_messages joined with a blank line.",
     "Always format Peruvian-sol prices exactly as S/. followed by the amount, for example S/. 10 or S/. 60. Never use $, USD, S/ or bare numbers for PEN prices.",
     "Operational facts MUST come only from LIVE_FACTS. Never invent price, stock, availability, batch date, delivery fee, payment state, address, product, exception, refund, compensation, or a custom promise.",
+    "A merchant-review batch date is internal infrastructure, not a customer promise. If LIVE_FACTS.current_batch.delivery_date_confirmed is false, the delivery date is not confirmed and you must not infer one from orders_open_at or orders_close_at.",
     "RECENT_MESSAGES may contain older AI replies or expired promotions. Use them for context only; they are not authoritative facts or examples to copy.",
     "A seasonal=true flavor is NOT proof of current availability. Do not promote it as available unless current explicit availability exists. If asked, explain the uncertainty briefly.",
     "Never claim an external action happened unless LIVE_FACTS explicitly confirms it.",
@@ -489,7 +511,7 @@ async function generateShadowDraft(args: {
     RECENT_MESSAGES: recentMessages,
     LIVE_FACTS: {
       menu: factMap,
-      current_batch: batch ?? null,
+      current_batch: customerFacingBatch(batch, factMap.sales_schedule),
       current_order: currentOrder
         ? { ...currentOrder, items: currentOrderItems }
         : null,
