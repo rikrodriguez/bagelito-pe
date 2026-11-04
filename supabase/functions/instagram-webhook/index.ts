@@ -580,7 +580,7 @@ async function generateShadowDraft(args: {
       .eq("approved", true)
       .order("asset_key", { ascending: true }),
     db.from("instagram_order_drafts")
-      .select("id,sales_stage,status,bagel_size,pack_slug,pack_name,units,customer_name,phone,email,district,delivery_address,address_reference,delivery_notes,requested_delivery_at,custom_request,total_amount,quote_verified,quote_sent_at,payment_method,payment_status,handoff_reason,updated_at")
+      .select("id,sales_stage,status,bagel_size,pack_slug,pack_name,units,customer_name,phone,email,district,delivery_address,address_reference,delivery_notes,requested_delivery_at,custom_request,custom_request_status,total_amount,quote_verified,quote_sent_at,payment_method,payment_status,handoff_reason,handoff_resolved_at,handoff_resolution,handoff_resolved_by,updated_at")
       .eq("conversation_id", conversationId)
       .in("status", ["active","quoted","payment_pending","payment_verification","confirmed","in_production","ready_for_delivery","human_review"])
       .order("updated_at", { ascending: false })
