@@ -274,6 +274,63 @@ function isReadableInstagramText(value: string) {
   return text.split(/\n\s*\n/).every((block) => [...block].length <= 180);
 }
 
+const SALES_NEXT_STEP_PATTERN =
+  /\b(me avisas|te aviso|solo necesito|te confirmo|m[aá]ndame|env[ií]ame|dime|cu[eé]ntame|prefieres|quieres pack|cu[aá]ntos|cu[aá]ntas|cu[aá]l prefieres|cu[aá]les prefieres|let me know|send me|tell me|what do you prefer|which do you prefer|how many)\b/i;
+const SALES_COMMERCIAL_INTENTS = new Set([
+  "menu","price","flavors","product_photo","how_to_order"
+]);
+const PAYMENT_REQUEST_PATTERN =
+  /\b(puedes pagar|puedes yapear|yapea|realiza el pago|haz el pago|m[aá]ndame la captura|send me the (receipt|screenshot)|pay by yape)\b/i;
+const PAYMENT_CONFIRMED_PATTERN =
+  /\b(pago confirmado|payment confirmed|ya est[aá] pagado|pedido confirmado por pago)\b/i;
+
+function countSalesQuestions(messages: string[]) {
+  return messages.reduce(
+    (total, message) => total + (message.match(/\?/g)?.length ?? 0),
+    0
+  );
+}
+
+function hasClearSalesNextStep(messages: string[]) {
+  const combined = messages.join("\n");
+  return SALES_NEXT_STEP_PATTERN.test(combined) || countSalesQuestions(messages) === 1;
+}
+
+function isSalesReadyInstagramTurn(
+  messages: string[],
+  intent: string,
+  currentOrder: any
+) {
+  if (!messages.length) return false;
+  if (countSalesQuestions(messages) > 1) return false;
+
+  if (
+    currentOrder?.sales_stage === "human_review" ||
+    currentOrder?.status === "human_review" ||
+    Boolean(currentOrder?.handoff_reason)
+  ) {
+    return false;
+  }
+
+  const combined = messages.join("\n");
+  if (SALES_COMMERCIAL_INTENTS.has(intent) && !hasClearSalesNextStep(messages)) {
+    return false;
+  }
+
+  if (PAYMENT_REQUEST_PATTERN.test(combined) && currentOrder?.quote_verified !== true) {
+    return false;
+  }
+
+  if (
+    currentOrder?.payment_status === "evidence_received" &&
+    PAYMENT_CONFIRMED_PATTERN.test(combined)
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
 function mediaFamilyKey(asset: any) {
   if (!asset) return null;
   const tags = Array.isArray(asset.tags) ? asset.tags : [];
@@ -319,7 +376,7 @@ async function generateShadowDraft(args: {
 }) {
   const { db, conversationId, triggeringMessageId, customerId, openaiKey, model, runtimeSettings } = args;
 
-  const [{ data: messages }, { data: facts }, { data: batch }, { data: mediaAssets }] = await Promise.all([
+  const [{ data: messages }, { data: facts }, { data: batch }, { data: mediaAssets }, { data: currentOrder }] = await Promise.all([
     db.from("instagram_messages")
       .select("direction,text_content,message_type,sent_at")
       .eq("conversation_id", conversationId)
@@ -335,11 +392,28 @@ async function generateShadowDraft(args: {
     db.from("instagram_media_assets")
       .select("asset_key,storage_path,public_url,category,product_slug,locale,tags,approved,sendable")
       .eq("approved", true)
-      .order("asset_key", { ascending: true })
+      .order("asset_key", { ascending: true }),
+    db.from("instagram_order_drafts")
+      .select("id,sales_stage,status,pack_slug,pack_name,units,customer_name,phone,email,district,delivery_address,address_reference,delivery_notes,requested_delivery_at,custom_request,total_amount,quote_verified,quote_sent_at,payment_method,payment_status,handoff_reason,updated_at")
+      .eq("conversation_id", conversationId)
+      .in("status", ["active","quoted","payment_pending","payment_verification","confirmed","in_production","ready_for_delivery","human_review"])
+      .order("updated_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
   ]);
 
   const recentMessages = [...(messages ?? [])].reverse();
   const factMap = Object.fromEntries((facts ?? []).map((f: any) => [f.fact_key, f.fact_value]));
+
+  let currentOrderItems: any[] = [];
+  if (currentOrder?.id) {
+    const { data: orderItems } = await db
+      .from("instagram_order_draft_items")
+      .select("item_kind,item_key,item_name,quantity,unit_price")
+      .eq("draft_id", currentOrder.id)
+      .order("created_at", { ascending: true });
+    currentOrderItems = orderItems ?? [];
+  }
 
   const { data: recentMediaSends } = await db
     .from("instagram_outbound_sends")
@@ -382,6 +456,11 @@ async function generateShadowDraft(args: {
     "Put each pack, price, or requested order detail on its own line. Never place two options on the same line separated by a vertical bar or semicolon.",
     "Use a few natural emojis as Dawn does, normally 1 or 2 per reply. Avoid bureaucratic phrases such as 'te guiamos con los siguientes pasos'.",
     "Answer the latest question first. If the customer asks how to order, explain that they can order here and ask for the next missing order information.",
+    "Follow LIVE_FACTS.menu.sales_skill_v2 as the current Bagelito sales policy. The key rule is: answer the newest customer question first, then move exactly one decision forward.",
+    "Ask at most ONE decision-moving question per turn. Do not turn a DM into a multi-question intake form.",
+    "Use LIVE_FACTS.current_order as operational memory: preserve known selections and customer details and ask only for the smallest missing next decision.",
+    "If LIVE_FACTS.current_order is in human_review or has a handoff_reason, do not continue automated selling or make consequential promises.",
+    "Never request payment unless LIVE_FACTS.current_order.quote_verified is true. Payment evidence is never payment confirmation.",
     "Read RECENT_MESSAGES: do not repeat the entire menu, the same prices, an earlier greeting, or order details already supplied. If the user asks to see something again, do provide it.",
     "Do not resend a catalog image or equivalent catalog-overview image if LIVE_FACTS.media_delivery.catalog_already_sent_recently is true, unless explicit_repeat_media_request is true.",
     "If the latest customer message asks about a birthday bagel, custom shape, custom color, personalization, or another special request, answer that latest question first and classify it as custom_order for human review instead of auto-sending a generic order summary.",
@@ -411,6 +490,9 @@ async function generateShadowDraft(args: {
     LIVE_FACTS: {
       menu: factMap,
       current_batch: batch ?? null,
+      current_order: currentOrder
+        ? { ...currentOrder, items: currentOrderItems }
+        : null,
       media_assets: mediaAssets ?? [],
       media_delivery: {
         enabled: Boolean(runtimeSettings?.media_enabled),
@@ -641,7 +723,10 @@ async function generateShadowDraft(args: {
     risk: RISK[intent] ?? "review",
     proposedReply,
     proposedMessages,
-    proposedMedia: dedupedProposedMedia
+    proposedMedia: dedupedProposedMedia,
+    currentOrder: currentOrder
+      ? { ...currentOrder, items: currentOrderItems }
+      : null
   };
 }
 
@@ -918,6 +1003,12 @@ Deno.serve(async (req: Request) => {
             const replyLooksReadable =
               outboundTextMessages.length > 0 &&
               outboundTextMessages.every(isReadableInstagramText);
+            const replyLooksSalesReady =
+              isSalesReadyInstagramTurn(
+                outboundTextMessages,
+                shadow.intent,
+                shadow.currentOrder
+              );
             const safeForAuto =
               Boolean(runtimeSettings?.enabled) &&
               Boolean(instagramAccessToken) &&
@@ -930,7 +1021,8 @@ Deno.serve(async (req: Request) => {
               shadow.risk === "auto" &&
               typeof shadow.proposedReply === "string" &&
               shadow.proposedReply.trim().length > 0 &&
-              replyLooksReadable;
+              replyLooksReadable &&
+              replyLooksSalesReady;
 
             if (!replyLooksReadable) {
               await db.from("instagram_conversation_events").insert({
@@ -941,6 +1033,24 @@ Deno.serve(async (req: Request) => {
                 reason: "reply_format_needs_review",
                 actor: "ai",
                 metadata: { ai_run_id: shadow.aiRunId, formatting_version: DM_FORMAT_VERSION }
+              });
+            }
+
+            if (replyLooksReadable && !replyLooksSalesReady) {
+              await db.from("instagram_conversation_events").insert({
+                conversation_id: conversation.id,
+                event_type: "auto_send_held",
+                from_mode: conversation.mode,
+                to_mode: conversation.mode,
+                reason: "sales_quality_needs_review",
+                actor: "ai",
+                metadata: {
+                  ai_run_id: shadow.aiRunId,
+                  intent: shadow.intent,
+                  question_count: countSalesQuestions(outboundTextMessages),
+                  has_clear_next_step: hasClearSalesNextStep(outboundTextMessages),
+                  sales_skill_version: "bagelito-chat-sales-2026-11-04-v2"
+                }
               });
             }
 
