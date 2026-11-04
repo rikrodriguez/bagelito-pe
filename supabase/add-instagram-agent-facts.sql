@@ -60,6 +60,22 @@ values
   'Live audit of Dawn current Instagram handling, 2026-10-28',
   now()
 )
+
+,
+(
+  'sales_skill_v2',
+  '{
+    "version":"bagelito-chat-sales-2026-11-04-v2",
+    "goal":"Answer the latest customer question, reduce uncertainty, and move exactly one decision forward.",
+    "maximum_questions_per_turn":1,
+    "principles":["latest_question_first","one_clear_next_decision","progressive_disclosure","diagnose_before_persuade","live_facts_only","crm_is_operational_memory","human_handoff_for_consequential_exceptions","no_pressure_after_natural_close"],
+    "objection_protocol":["acknowledge","clarify_if_needed","answer_from_live_facts","confirm_resolution","resume_smallest_next_step"],
+    "payment_rules":{"request_requires_verified_quote":true,"evidence_is_not_confirmation":true,"currency":"PEN","display":"S/."},
+    "historical_directional_evidence":{"analyzable_conversations":521,"clear_next_step_with_signal_pct":38.1,"clear_next_step_without_signal_pct":16.7,"decision_question_with_signal_pct":32.2,"decision_question_without_signal_pct":20.6,"one_text_burst_signal_pct":24.9,"two_text_burst_signal_pct":20.5,"after_12h_signal_pct":3.8,"caveat":"heuristic association, not causal uplift"}
+  }'::jsonb,
+  'Bagelito historical Instagram audit + reviewed sales research, 2026-11-04',
+  now()
+)
 on conflict (fact_key) do update
 set fact_value = excluded.fact_value,
     source = excluded.source,
