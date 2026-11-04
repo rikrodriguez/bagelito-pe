@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { projectSalesState } from "../_shared/instagram-sales-core.ts";
 
 const encoder = new TextEncoder();
 
@@ -386,6 +387,158 @@ function buildInstagramOutboundSteps(messages: string[], media: any[], intent: s
   return [...texts, ...images];
 }
 
+
+async function extractSalesTurn(args: {
+  openaiKey: string;
+  model: string;
+  latestMessage: string;
+  latestHasAttachments: boolean;
+  recentMessages: any[];
+  currentOrder: any;
+  currentOrderItems: any[];
+  facts: Record<string, any>;
+}) {
+  const nullableString = { anyOf: [{ type: "string" }, { type: "null" }] };
+  const nullableNumber = { anyOf: [{ type: "number" }, { type: "null" }] };
+  const itemLine = {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      key: { type: "string" },
+      name: { type: "string" },
+      quantity: { type: "number", minimum: 0 }
+    },
+    required: ["key","name","quantity"]
+  };
+  const response = await fetch("https://api.openai.com/v1/responses", {
+    method: "POST",
+    headers: {
+      "authorization": \`Bearer \${args.openaiKey}\`,
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      model: args.model,
+      store: false,
+      instructions: [
+        "You are the state-understanding pass for Bagelito sales. Do NOT write the customer-facing reply.",
+        "The latest inbound message has priority. Older messages are context only.",
+        "Extract only facts the customer explicitly added, changed, removed or claimed in the latest turn.",
+        "Preserve uncertainty: never invent a phone, address, district, delivery date, flavor, quantity, custom feasibility or payment confirmation.",
+        "A screenshot/attachment or claim that payment was sent is payment evidence only, never confirmed payment.",
+        "Birthday bagels, shapes, logos, special colors or personalization are custom requests requiring feasibility review.",
+        "A plain price question is not a price objection. Use objection_type=price only when the customer resists or negotiates price.",
+        "Return JSON only matching the schema."
+      ].join("\\n"),
+      input: JSON.stringify({
+        LATEST_INBOUND_MESSAGE: {
+          text: args.latestMessage,
+          has_attachments: args.latestHasAttachments
+        },
+        RECENT_MESSAGES: args.recentMessages,
+        CURRENT_ORDER: args.currentOrder
+          ? { ...args.currentOrder, items: args.currentOrderItems }
+          : null,
+        PROJECTED_SALES_STATE: projectedSales,
+    LIVE_FACTS: {
+          packs: args.facts.packs ?? [],
+          bagel_flavors: args.facts.bagel_flavors ?? [],
+          schmears: args.facts.schmears ?? [],
+          payment_policy: args.facts.payment_policy ?? null,
+          delivery_pricing: args.facts.delivery_pricing ?? null,
+          sales_schedule: args.facts.sales_schedule ?? null
+        }
+      }),
+      max_output_tokens: 1200,
+      text: {
+        format: {
+          type: "json_schema",
+          name: "bagelito_sales_preflight",
+          strict: true,
+          schema: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              intent: { type: "string", enum: INTENTS },
+              language: { type: "string", enum: ["es","en","mixed","unknown"] },
+              confidence: { type: "number", minimum: 0, maximum: 1 },
+              buyer_signal: {
+                type: "string",
+                enum: ["browsing","interested","selection_started","order_complete","payment_ready","payment_sent","urgent","objection","custom_request","support"]
+              },
+              objection_type: {
+                type: "string",
+                enum: ["none","price","minimum_order","availability","delivery","timing","choice_overload","trust","custom_request","other"]
+              },
+              handoff_reason: {
+                anyOf: [
+                  { type: "string", enum: ["complaint","refund","missing_or_damaged_order","food_safety","allergy","payment_dispute","fraud","custom_feasibility","discount_exception","delivery_exception","customer_requested_human","repeated_misunderstanding","low_confidence","conflicting_data"] },
+                  { type: "null" }
+                ]
+              },
+              customer_requested_human: { type: "boolean" },
+              conflicting_data: { type: "boolean" },
+              payment_evidence_claimed: { type: "boolean" },
+              order_patch: {
+                type: "object",
+                additionalProperties: false,
+                properties: {
+                  pack_slug: nullableString,
+                  pack_name: nullableString,
+                  units: nullableNumber,
+                  customer_name: nullableString,
+                  phone: nullableString,
+                  email: nullableString,
+                  district: nullableString,
+                  address: nullableString,
+                  address_reference: nullableString,
+                  delivery_notes: nullableString,
+                  requested_date: nullableString,
+                  custom_request: nullableString,
+                  items: { type: "array", maxItems: 24, items: itemLine },
+                  schmears: { type: "array", maxItems: 12, items: itemLine }
+                },
+                required: [
+                  "pack_slug","pack_name","units","customer_name","phone","email","district",
+                  "address","address_reference","delivery_notes","requested_date","custom_request",
+                  "items","schmears"
+                ]
+              }
+            },
+            required: [
+              "intent","language","confidence","buyer_signal","objection_type","handoff_reason",
+              "customer_requested_human","conflicting_data","payment_evidence_claimed","order_patch"
+            ]
+          }
+        }
+      }
+    })
+  });
+
+  const raw = await response.text();
+  if (!response.ok) {
+    throw new Error(\`sales_preflight_openai_\${response.status}:\${raw.slice(0,800)}\`);
+  }
+  const payload = JSON.parse(raw);
+  const output = extractOutputText(payload);
+  if (!output) throw new Error("sales_preflight_empty_output");
+  const parsed = JSON.parse(output);
+  const intent = INTENTS.includes(parsed.intent) ? parsed.intent : "other";
+  const language = ["es","en","mixed","unknown"].includes(parsed.language)
+    ? parsed.language
+    : "unknown";
+  const confidence = typeof parsed.confidence === "number"
+    ? Math.min(1, Math.max(0, parsed.confidence))
+    : 0;
+
+  return {
+    ...parsed,
+    intent,
+    language,
+    confidence,
+    model_handoff_reason: parsed.handoff_reason ?? null
+  };
+}
+
 async function generateShadowDraft(args: {
   db: any;
   conversationId: string;
@@ -399,7 +552,7 @@ async function generateShadowDraft(args: {
 
   const [{ data: messages }, { data: facts }, { data: batch }, { data: mediaAssets }, { data: currentOrder }] = await Promise.all([
     db.from("instagram_messages")
-      .select("direction,text_content,message_type,sent_at")
+      .select("direction,text_content,message_type,attachments,sent_at")
       .eq("conversation_id", conversationId)
       .order("sent_at", { ascending: false })
       .limit(14),
@@ -451,8 +604,43 @@ async function generateShadowDraft(args: {
       .map((send: any) => mediaFamilyKey(approvedMediaByKeyForHistory.get(send.asset_key)))
       .filter(Boolean)
   );
-  const latestInboundText =
-    [...recentMessages].reverse().find((message: any) => message.direction === "inbound")?.text_content ?? "";
+  const latestInboundMessage =
+    [...recentMessages].reverse().find((message: any) => message.direction === "inbound") ?? null;
+  const latestInboundText = latestInboundMessage?.text_content ?? "";
+  const salesExtraction = await extractSalesTurn({
+    openaiKey,
+    model,
+    latestMessage: latestInboundText,
+    latestHasAttachments:
+      Array.isArray(latestInboundMessage?.attachments) &&
+      latestInboundMessage.attachments.length > 0,
+    recentMessages,
+    currentOrder,
+    currentOrderItems,
+    facts: factMap
+  });
+  const projectedSales = projectSalesState({
+    currentOrder,
+    currentItems: currentOrderItems,
+    extraction: salesExtraction,
+    facts: factMap,
+    latestMessage: latestInboundText
+  });
+  const projectedOrderForWriter = {
+    ...projectedSales.projectedOrder,
+    items: projectedSales.projectedItems,
+    sales_stage: projectedSales.stage,
+    next_best_action: projectedSales.action,
+    buyer_signal: projectedSales.buyerSignal,
+    missing_fields: projectedSales.missingFields,
+    handoff_reason: projectedSales.handoffReason,
+    quote_verified: projectedSales.quote.verified,
+    items_subtotal: projectedSales.quote.itemsSubtotal,
+    schmears_subtotal: projectedSales.quote.schmearsSubtotal,
+    delivery_fee: projectedSales.quote.deliveryFee,
+    total_amount: projectedSales.quote.total,
+    payment_status: projectedSales.paymentStatus
+  };
   const explicitRepeatMediaRequest =
     /\b(otra vez|de nuevo|again|reenvi|reenv[ií]a|m[aá]ndame otra|send it again)\b/i.test(latestInboundText);
   const catalogAlreadySentRecently = recentMediaFamilies.has("catalog-overview");
@@ -478,6 +666,10 @@ async function generateShadowDraft(args: {
     "Use a few natural emojis as Dawn does, normally 1 or 2 per reply. Avoid bureaucratic phrases such as 'te guiamos con los siguientes pasos'.",
     "Answer the latest question first. If the customer asks how to order, explain that they can order here and ask for the next missing order information.",
     "Follow LIVE_FACTS.menu.sales_skill_v2 as the current Bagelito sales policy. The key rule is: answer the newest customer question first, then move exactly one decision forward.",
+    "PROJECTED_SALES_STATE is authoritative for this turn. It already includes the latest customer message. Do not choose a different stage, next action, quote or payment state.",
+    "When PROJECTED_SALES_STATE.action is ask_contact_delivery, you may request the missing non-decision operational fields as one compact vertical bundle without turning them into multiple interrogative questions.",
+    "When PROJECTED_SALES_STATE.action is quote_order, present the verified order/pack, delivery and total. Do not invent any amount outside PROJECTED_SALES_STATE.quote.",
+    "When PROJECTED_SALES_STATE.stage is human_review, acknowledge the latest question safely and do not continue the automated sales script.",
     "Ask at most ONE decision-moving question per turn. Do not turn a DM into a multi-question intake form.",
     "Use LIVE_FACTS.current_order as operational memory: preserve known selections and customer details and ask only for the smallest missing next decision.",
     "If LIVE_FACTS.current_order is in human_review or has a handoff_reason, do not continue automated selling or make consequential promises.",
@@ -512,9 +704,7 @@ async function generateShadowDraft(args: {
     LIVE_FACTS: {
       menu: factMap,
       current_batch: customerFacingBatch(batch, factMap.sales_schedule),
-      current_order: currentOrder
-        ? { ...currentOrder, items: currentOrderItems }
-        : null,
+      current_order: projectedOrderForWriter,
       media_assets: mediaAssets ?? [],
       media_delivery: {
         enabled: Boolean(runtimeSettings?.media_enabled),
@@ -632,9 +822,9 @@ async function generateShadowDraft(args: {
     });
     return { generated: false, error: "openai_json_parse_failed" };
   }
-  const intent = INTENTS.includes(parsed.intent) ? parsed.intent : "other";
-  const language = ["es","en","mixed","unknown"].includes(parsed.language) ? parsed.language : "unknown";
-  const confidence = typeof parsed.confidence === "number" ? Math.min(1, Math.max(0, parsed.confidence)) : null;
+  const intent = salesExtraction.intent;
+  const language = salesExtraction.language;
+  const confidence = salesExtraction.confidence;
   const rawMessages = Array.isArray(parsed.proposed_messages)
     ? parsed.proposed_messages
         .filter((item: unknown) => typeof item === "string")
@@ -720,7 +910,9 @@ async function generateShadowDraft(args: {
         current_batch: batch ?? null,
         risk: RISK[intent] ?? "review",
         formatting_version: DM_FORMAT_VERSION,
-        readable: proposedMessages.length > 0 && proposedMessages.every(isReadableInstagramText)
+        readable: proposedMessages.length > 0 && proposedMessages.every(isReadableInstagramText),
+        preflight_extraction: salesExtraction,
+        preflight_sales: projectedSales
       },
       model,
       status: "proposed"
@@ -746,9 +938,8 @@ async function generateShadowDraft(args: {
     proposedReply,
     proposedMessages,
     proposedMedia: dedupedProposedMedia,
-    currentOrder: currentOrder
-      ? { ...currentOrder, items: currentOrderItems }
-      : null
+    currentOrder: projectedOrderForWriter,
+    projectedSales
   };
 }
 
