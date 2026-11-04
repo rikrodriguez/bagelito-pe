@@ -54,12 +54,13 @@ export function InstagramShadowDraftButton({
       const payload = (await response.json()) as ShadowResponse;
 
       if (!response.ok || !payload.ok) {
+        const responseError = payload.ok ? null : payload.error;
         setResult(null);
         setWarnings([]);
         setError(
-          payload.error === "instagram_ai_not_configured"
+          responseError === "instagram_ai_not_configured"
             ? "AI model is not configured in this environment yet."
-            : payload.error || "Could not generate a shadow draft.",
+            : responseError || "Could not generate a shadow draft.",
         );
         return;
       }
