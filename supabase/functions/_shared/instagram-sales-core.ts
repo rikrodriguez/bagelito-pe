@@ -14,6 +14,16 @@ const CUSTOM_REQUEST_PATTERN = /\b(birthday|cumplea[nñ]os|cumple|custom|persona
 const HUMAN_REQUEST_PATTERN = /\b(humano|persona real|hablar con (alguien|una persona)|asesor|dawn|human|real person|talk to someone)\b/i;
 const MENU_INTENTS = new Set(["menu","flavors","price","product_photo","how_to_order","delivery_area","batch_status"]);
 const ACTIVE_STAGES = new Set(SALES_STAGES);
+const OBJECTION_RESUME_ACTION: Record<string,string> = {
+  price: "recommend_pack",
+  minimum_order: "recommend_pack",
+  availability: "ask_quantity_flavors",
+  delivery: "ask_contact_delivery",
+  timing: "ask_quantity_flavors",
+  choice_overload: "recommend_pack",
+  trust: "ask_quantity_flavors",
+  other: "answer_question",
+};
 
 function text(value: unknown) { return typeof value === "string" ? value.trim() : ""; }
 function num(value: unknown) { return typeof value === "number" && Number.isFinite(value) ? value : null; }
@@ -187,8 +197,12 @@ export function projectSalesState(args:any){
     Object.assign(quote,calculateQuote(projectedOrder,projectedItems,args.facts??{},effectiveHandoff,missingFields));
   }
   const stage=classifyStage(projectedOrder,projectedItems,{intent:args.extraction?.intent,latestMessage:args.latestMessage},quote,effectiveHandoff,changed);
-  const action=actionForStage(stage,text(args.extraction?.intent),quote.verified);
+  const baseAction=actionForStage(stage,text(args.extraction?.intent),quote.verified);
+  const rawObjection=text(args.extraction?.objection_type);
+  const objectionType=rawObjection && rawObjection!=="custom_request" ? rawObjection : "none";
+  const action=objectionType!=="none" && !effectiveHandoff ? "handle_objection" : baseAction;
+  const resumeAction=objectionType!=="none" ? (OBJECTION_RESUME_ACTION[objectionType] || baseAction) : null;
   const paymentStatus=text(projectedOrder.payment_status)||"none";
-  const buyerSignal=paymentStatus==="evidence_received"?"payment_sent":effectiveHandoff==="custom_feasibility"?"custom_request":effectiveHandoff?"support":stage==="quote_ready"?"order_complete":["order_configuration","details_collection"].includes(stage)?"selection_started":"interested";
-  return {projectedOrder,projectedItems,missingFields,quote,handoffReason:effectiveHandoff,stage,action,buyerSignal,paymentStatus,materialChange:changed};
+  const buyerSignal=paymentStatus==="evidence_received"?"payment_sent":effectiveHandoff==="custom_feasibility"?"custom_request":effectiveHandoff?"support":objectionType!=="none"?"objection":stage==="quote_ready"?"order_complete":["order_configuration","details_collection"].includes(stage)?"selection_started":"interested";
+  return {projectedOrder,projectedItems,missingFields,quote,handoffReason:effectiveHandoff,stage,action,resumeAction,objectionType,buyerSignal,paymentStatus,materialChange:changed};
 }
