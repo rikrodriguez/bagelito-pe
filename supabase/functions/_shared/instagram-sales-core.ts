@@ -174,7 +174,11 @@ function findPack(facts:any,order:any,items:any[]) {
 export function deterministicHandoff(input:any, order:any, materialChange:boolean) {
   if(text(order.handoff_reason)) return text(order.handoff_reason);
   const high=HIGH_RISK_INTENT_REASONS[text(input.intent)]; if(high)return high;
-  if(text(order.custom_request)||CUSTOM_REQUEST_PATTERN.test(text(input.latestMessage))) return "custom_feasibility";
+  const customStatus=text(order.custom_request_status)||"none";
+  if(
+    (text(order.custom_request)||CUSTOM_REQUEST_PATTERN.test(text(input.latestMessage))) &&
+    customStatus!=="approved_standard_pricing"
+  ) return "custom_feasibility";
   if(input.customer_requested_human||HUMAN_REQUEST_PATTERN.test(text(input.latestMessage))) return "customer_requested_human";
   if(input.conflicting_data) return "conflicting_data";
   const acknowledgement=isLowInformationAcknowledgement(input.latestMessage);
@@ -195,10 +199,12 @@ function calculateQuote(order:any,items:any[],facts:any,handoffReason:string|nul
   let schmearsSubtotal=0, unpricedSchmear=false;
   for(const item of schmears){const f:any=smap.get(normalize(text(item.item_key)));const p=f?num(f.price):null;if(p===null)unpricedSchmear=true;else schmearsSubtotal+=p*Number(item.quantity);}
   const packUnits=pack?Number(pack.units):null;
-  const verified=Boolean(pack && packUnits===bagelQuantity && deliveryFee!==null && !unpricedSchmear && !text(order.custom_request) && !handoffReason && missing.length===0);
+  const customApproved =
+    !text(order.custom_request) || text(order.custom_request_status)==="approved_standard_pricing";
+  const verified=Boolean(pack && packUnits===bagelQuantity && deliveryFee!==null && !unpricedSchmear && customApproved && !handoffReason && missing.length===0);
   const itemsSubtotal=pack?Number(pack.amount):null;
   const total=verified && itemsSubtotal!==null ? roundMoney(itemsSubtotal+schmearsSubtotal+Number(deliveryFee)) : null;
-  const reason=verified?null:(!pack?"pack_not_resolved":packUnits!==bagelQuantity?"item_quantity_mismatch":missing.length?"missing_order_fields":deliveryFee===null?"delivery_fee_unavailable":unpricedSchmear?"schmear_price_unavailable":text(order.custom_request)?"custom_request_requires_review":handoffReason||"quote_not_verified");
+  const reason=verified?null:(!pack?"pack_not_resolved":packUnits!==bagelQuantity?"item_quantity_mismatch":missing.length?"missing_order_fields":deliveryFee===null?"delivery_fee_unavailable":unpricedSchmear?"schmear_price_unavailable":!customApproved?"custom_request_requires_review":handoffReason||"quote_not_verified");
   return {verified,pack,bagelSize:text(order.bagel_size)==="mini"?"mini":"regular",bagelQuantity,itemsSubtotal,schmearsSubtotal:roundMoney(schmearsSubtotal),deliveryFee,total,reason};
 }
 function actionForStage(stage:string,intent:string,quoteVerified:boolean){
@@ -259,6 +265,15 @@ export function projectSalesState(args:any){
     customer_name:mergeScalar(current.customer_name,patch.customer_name),phone:mergeScalar(current.phone,patch.phone),email:mergeScalar(current.email,patch.email),district:mergeScalar(current.district,patch.district),
     delivery_address:mergeScalar(current.delivery_address,patch.address),address_reference:mergeScalar(current.address_reference,patch.address_reference),delivery_notes:mergeScalar(current.delivery_notes,patch.delivery_notes),
     requested_delivery_at:mergeScalar(current.requested_delivery_at,patch.requested_date),custom_request:mergeScalar(current.custom_request,patch.custom_request),
+    custom_request_status:
+      text(patch.custom_request)
+        ? (text(patch.custom_request)===text(current.custom_request) && text(current.custom_request_status)==="approved_standard_pricing"
+            ? "approved_standard_pricing"
+            : "pending")
+        : (text(current.custom_request_status)||"none"),
+    handoff_resolved_at:current.handoff_resolved_at??null,
+    handoff_resolution:current.handoff_resolution??null,
+    handoff_resolved_by:current.handoff_resolved_by??null,
     payment_status:text(current.payment_status)||"none",
     quote_sent_at: changed ? null : (current.quote_sent_at??null), quote_verified: changed ? false : current.quote_verified===true,
   };
