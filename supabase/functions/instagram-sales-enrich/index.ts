@@ -71,6 +71,7 @@ const HANDOFF_REASONS = [
   "fraud",
   "custom_feasibility",
   "discount_exception",
+  "payment_exception",
   "delivery_exception",
   "customer_requested_human",
   "repeated_misunderstanding",
@@ -89,6 +90,7 @@ const HIGH_RISK_INTENTS: Record<string, string> = {
   fraud: "fraud",
   custom_order: "custom_feasibility",
   discount_exception: "discount_exception",
+  payment_exception: "payment_exception",
 };
 
 const SALES_RELEVANT_INTENTS = new Set([
@@ -105,6 +107,7 @@ const SALES_RELEVANT_INTENTS = new Set([
   "custom_order",
   "catering",
   "discount_exception",
+  "payment_exception",
   "complaint",
   "refund",
   "missing_item",
@@ -656,6 +659,7 @@ async function callOpenAI(args: {
         "Never infer phone, email, address, district, custom feasibility, payment confirmation or a delivery date.",
         "A screenshot or statement that payment was sent is payment evidence only, never confirmed payment.",
         "Birthday bagels, shapes, colors, logos and personalization are custom requests requiring feasibility review.",
+        "Nonstandard payment terms such as split payment, 50/50, deferred balance or cash-on-delivery exception require handoff_reason=payment_exception. Never copy a historical exception into current policy.",
         "CUSTOMER_MEMORY is trusted only for prior confirmed/operational orders. Use it only when the latest message explicitly refers to a prior order or prior detail (same as last time, lo mismo, otra vez, otro pedido, same address). Never silently copy old customer data into order_patch.",
         "Only set bagel_size=mini when the customer explicitly says mini/minis. Use regular for ordinary/full-size bagels when clear from context. If size is genuinely ambiguous, return null rather than guessing.",
         "Return JSON only matching the schema.",
