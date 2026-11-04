@@ -85,15 +85,80 @@ export function calculateDeliveryFee(district:string,fact:any) {
 }
 function findPack(facts:any,order:any,items:any[]) {
   const size=text(order.bagel_size)==="mini" ? "mini" : "regular";
-  const packs=size==="mini"
+  const catalog=(size==="mini"
     ? (Array.isArray(facts?.mini_bagel_packs)?facts.mini_bagel_packs:[])
-    : (Array.isArray(facts?.packs)?facts.packs:[]);
-  const slug=text(order.pack_slug), name=text(order.pack_name);
-  if(slug){const p=packs.find((x:any)=>normalize(text(x.slug))===normalize(slug));if(p)return p;}
-  if(name){const p=packs.find((x:any)=>normalize(text(x.name))===normalize(name));if(p)return p;}
+    : (Array.isArray(facts?.packs)?facts.packs:[])
+  ).filter((x:any)=>Number(x.units)>0 && Number.isFinite(Number(x.amount)));
+
   const bagels=items.filter(x=>x.item_kind==="bagel"&&Number(x.quantity)>0);
-  const units=bagels.reduce((s,x)=>s+Number(x.quantity),0); const packType=bagels.length>1?"mixed":"single";
-  return packs.find((x:any)=>Number(x.units)===units && text(x.packType)===packType)??null;
+  const units=bagels.reduce((s,x)=>s+Number(x.quantity),0);
+  if(!Number.isFinite(units) || units<=0 || units>600) return null;
+  const packType=bagels.length>1?"mixed":"single";
+  const eligible=catalog
+    .filter((x:any)=>text(x.packType)===packType)
+    .sort((a:any,b:any)=>Number(b.units)-Number(a.units));
+
+  const slug=text(order.pack_slug), name=text(order.pack_name);
+  const explicit=eligible.find((x:any)=>
+    (slug && normalize(text(x.slug))===normalize(slug)) ||
+    (name && normalize(text(x.name))===normalize(name))
+  );
+  if(explicit && Number(explicit.units)===units) {
+    return {
+      ...explicit,
+      components:[{...explicit,quantity:1}],
+      derived:false,
+      bagelSize:size,
+    };
+  }
+
+  type PackPlan={amount:number;count:number;picks:Record<string,{pack:any;quantity:number}>};
+  const dp:Array<PackPlan|null>=Array(units+1).fill(null);
+  dp[0]={amount:0,count:0,picks:{}};
+
+  for(let target=1;target<=units;target+=1){
+    let best:PackPlan|null=null;
+    for(const pack of eligible){
+      const packUnits=Number(pack.units), amount=Number(pack.amount);
+      if(target<packUnits || !dp[target-packUnits]) continue;
+      const prev=dp[target-packUnits]!;
+      const key=text(pack.slug)||normalize(text(pack.name))||String(packUnits);
+      const picks={...prev.picks};
+      const prior=picks[key];
+      picks[key]={pack,quantity:(prior?.quantity??0)+1};
+      const candidate={amount:roundMoney(prev.amount+amount),count:prev.count+1,picks};
+      if(
+        !best ||
+        candidate.amount<best.amount ||
+        (candidate.amount===best.amount && candidate.count<best.count)
+      ){
+        best=candidate;
+      }
+    }
+    dp[target]=best;
+  }
+
+  const plan=dp[units];
+  if(!plan) return null;
+  const components=Object.values(plan.picks)
+    .sort((a:any,b:any)=>Number(b.pack.units)-Number(a.pack.units))
+    .map((entry:any)=>({...entry.pack,quantity:entry.quantity}));
+  const nameParts=components.map((entry:any)=>
+    entry.quantity>1 ? `${entry.quantity} × ${text(entry.name)}` : text(entry.name)
+  );
+  const slugParts=components.map((entry:any)=>
+    `${text(entry.slug) || Number(entry.units)}x${entry.quantity}`
+  );
+  return {
+    slug:`bundle:${slugParts.join("+")}`,
+    name:nameParts.join(" + "),
+    units,
+    amount:plan.amount,
+    packType,
+    bagelSize:size,
+    components,
+    derived:true,
+  };
 }
 export function deterministicHandoff(input:any, order:any, materialChange:boolean) {
   if(text(order.handoff_reason)) return text(order.handoff_reason);
