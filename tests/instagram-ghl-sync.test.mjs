@@ -33,6 +33,10 @@ test("GHL config points to the dedicated Bagelito pipeline", () => {
     BAGELITO_GHL_CONFIG.stageIds.new_inquiry,
     "bbe7c4a0-e9db-4a07-b57d-0721dd5f8b73",
   );
+  assert.equal(
+    BAGELITO_GHL_CONFIG.opportunityFields.customRequest,
+    "YMf2Xh1tPGAmXWY1Hqko",
+  );
 });
 
 test("sales stages map to the correct GHL stage and status", () => {
@@ -98,9 +102,10 @@ test("opportunity custom fields carry order, payment, and handoff context", () =
     total: 145,
     paymentMethod: "Yape",
     paymentStatus: "pending",
-    stage: "payment_pending",
-    nextBestAction: "request_payment",
-    handoffReason: null,
+    stage: "human_review",
+    nextBestAction: "handoff",
+    handoffReason: "custom_feasibility",
+    customRequest: "Tienes birthday bagel?",
     checkoutUrl: null,
     deliveryWindow: "Friday afternoon",
     voucherReference: null,
@@ -112,4 +117,8 @@ test("opportunity custom fields carry order, payment, and handoff context", () =
   assert.match(String(values.get(BAGELITO_GHL_CONFIG.opportunityFields.flavors)), /Plain: 6/);
   assert.equal(values.get(BAGELITO_GHL_CONFIG.opportunityFields.total), 145);
   assert.equal(values.get(BAGELITO_GHL_CONFIG.opportunityFields.paymentStatus), "pending");
+  assert.equal(
+    values.get(BAGELITO_GHL_CONFIG.opportunityFields.customRequest),
+    "Tienes birthday bagel?",
+  );
 });
