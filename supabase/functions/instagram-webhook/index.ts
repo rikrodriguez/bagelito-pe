@@ -396,6 +396,7 @@ async function extractSalesTurn(args: {
   recentMessages: any[];
   currentOrder: any;
   currentOrderItems: any[];
+  customerMemory: any;
   facts: Record<string, any>;
 }) {
   const nullableString = { anyOf: [{ type: "string" }, { type: "null" }] };
@@ -426,6 +427,7 @@ async function extractSalesTurn(args: {
         "Preserve uncertainty: never invent a phone, address, district, delivery date, flavor, quantity, custom feasibility or payment confirmation.",
         "A screenshot/attachment or claim that payment was sent is payment evidence only, never confirmed payment.",
         "Birthday bagels, shapes, logos, special colors or personalization are custom requests requiring feasibility review.",
+        "CUSTOMER_MEMORY is trusted only for prior confirmed/operational orders. Use it only to resolve an explicit repeat reference such as same as last time, lo mismo, otra vez, or otro pedido. Never silently copy an old address, phone, quantity, flavor or order into a new order.",
         "A plain price question is not a price objection. Use objection_type=price only when the customer resists or negotiates price.",
         "Only set bagel_size=mini when the customer explicitly says mini/minis. Use regular for ordinary/full-size bagels when clear from context. If size is genuinely ambiguous, return null rather than guessing.",
         "Return JSON only matching the schema."
@@ -439,6 +441,7 @@ async function extractSalesTurn(args: {
         CURRENT_ORDER: args.currentOrder
           ? { ...args.currentOrder, items: args.currentOrderItems }
           : null,
+        CUSTOMER_MEMORY: args.customerMemory ?? null,
         LIVE_FACTS: {
           packs: args.facts.packs ?? [],
           mini_bagel_packs: args.facts.mini_bagel_packs ?? [],
@@ -552,11 +555,12 @@ async function generateShadowDraft(args: {
   conversationId: string;
   triggeringMessageId: string;
   customerId: string;
+  contactId: string;
   openaiKey: string;
   model: string;
   runtimeSettings?: any;
 }) {
-  const { db, conversationId, triggeringMessageId, customerId, openaiKey, model, runtimeSettings } = args;
+  const { db, conversationId, triggeringMessageId, customerId, contactId, openaiKey, model, runtimeSettings } = args;
 
   const [{ data: messages }, { data: facts }, { data: batch }, { data: mediaAssets }, { data: currentOrder }] = await Promise.all([
     db.from("instagram_messages")
@@ -597,6 +601,11 @@ async function generateShadowDraft(args: {
     currentOrderItems = orderItems ?? [];
   }
 
+  const { data: customerMemory } = await db.rpc("get_instagram_customer_memory", {
+    p_contact_id: contactId,
+    p_exclude_draft_id: currentOrder?.id ?? null
+  });
+
   const { data: recentMediaSends } = await db
     .from("instagram_outbound_sends")
     .select("asset_key,created_at")
@@ -625,6 +634,7 @@ async function generateShadowDraft(args: {
     recentMessages,
     currentOrder,
     currentOrderItems,
+    customerMemory,
     facts: factMap
   });
   const projectedSales = projectSalesState({
@@ -711,6 +721,7 @@ async function generateShadowDraft(args: {
 
   const input = {
     CUSTOMER: { instagram_user_id: customerId },
+    CUSTOMER_MEMORY: customerMemory ?? null,
     RECENT_MESSAGES: recentMessages,
     PROJECTED_SALES_STATE: projectedSales,
     LIVE_FACTS: {
@@ -1204,6 +1215,7 @@ Deno.serve(async (req: Request) => {
             conversationId: conversation.id,
             triggeringMessageId: insertedMessage.id,
             customerId: contactInstagramId,
+            contactId: contact.id,
             openaiKey,
             model: aiModel,
             runtimeSettings
