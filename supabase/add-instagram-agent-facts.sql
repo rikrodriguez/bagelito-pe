@@ -14,8 +14,8 @@ values
 (
   'bagel_flavors',
   '[
-    {"slug":"jalapeno-cheddar","name":"Jalapeno Cheddar","category":"classic","price":10,"seasonal":false},
-    {"slug":"cheddar","name":"Cheddar","category":"classic","price":10,"seasonal":false},
+    {"slug":"jalapeno-cheddar","name":"Jalapeno Cheddar","category":"premium","price":12,"seasonal":false},
+    {"slug":"cheddar","name":"Cheddar","category":"premium","price":12,"seasonal":false},
     {"slug":"sesame","name":"Sesame","category":"classic","price":10,"seasonal":false},
     {"slug":"everything-bagel","name":"Everything Bagel","category":"classic","price":10,"seasonal":false},
     {"slug":"cinnamon-raisin","name":"Cinnamon Raisin","category":"classic","price":10,"seasonal":false},
