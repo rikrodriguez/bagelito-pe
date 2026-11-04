@@ -120,3 +120,14 @@ test("webhook and enrichment extract mini vs regular before writing or quoting",
     assert.match(source, /mini_bagel_packs/);
   }
 });
+
+
+test("explicit mini wording overrides a null model size", () => {
+  const input = completeOrder(null);
+  input.latestMessage = "Quiero 6 minis, 3 Plain y 3 Blueberry";
+  input.extraction.order_patch.bagel_size = null;
+  const state = core.projectSalesState(input);
+  assert.equal(state.projectedOrder.bagel_size, "mini");
+  assert.equal(state.quote.pack.slug, "mini-6-mixed");
+  assert.equal(state.quote.itemsSubtotal, 25);
+});
