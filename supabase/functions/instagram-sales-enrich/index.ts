@@ -608,7 +608,7 @@ function buildGhlPayload(args: {
   addCustomField(opportunityFields, GHL.opportunityFields.schmears, schmearLines);
   addCustomField(opportunityFields, GHL.opportunityFields.district, args.draft.district);
   addCustomField(opportunityFields, GHL.opportunityFields.address, args.draft.delivery_address);
-  addCustomField(opportunityFields, GHL.opportunityFields.total, args.draft.total_amount);
+  addCustomField(opportunityFields, GHL.opportunityFields.total, args.draft.quote_verified === true ? args.draft.total_amount : null);
   // Mirrors of verified quotes use integer cents. Supabase remains the financial source of truth.
   if (args.draft.quote_verified === true) {
     for (const [key,value] of [["subtotalCents",args.draft.items_subtotal],["deliveryCents",args.draft.delivery_fee],["totalCents",args.draft.total_amount]] as const) {
@@ -616,7 +616,7 @@ function buildGhlPayload(args: {
     }
   }
   if (Number.isSafeInteger(args.draft.version) && args.draft.version > 0) addCustomField(opportunityFields, GHL.opportunityFields.eventVersion, args.draft.version);
-  addCustomField(opportunityFields, GHL.opportunityFields.paymentMethod, args.draft.payment_method || args.paymentPolicy?.display_name);
+  addCustomField(opportunityFields, GHL.opportunityFields.paymentMethod, args.draft.payment_method);
   addCustomField(opportunityFields, GHL.opportunityFields.paymentStatus, args.draft.payment_status);
   addCustomField(opportunityFields, GHL.opportunityFields.stage, args.stage);
   addCustomField(opportunityFields, GHL.opportunityFields.nextBestAction, args.action);
