@@ -128,7 +128,8 @@ const ACTIVE_DRAFT_STATUSES = [
 ];
 
 function ghlConfigReady(config: any) {
-  if (!config || config.enabled !== true) return false;
+  if (!config || config.enabled !== true || config.target_name !== "Bagelito") return false;
+  if (!["integration_test_approved","production_approved"].includes(String(config.approval ?? ""))) return false;
   if (typeof config.locationId !== "string" || !config.locationId.trim()) return false;
   if (typeof config.pipelineId !== "string" || !config.pipelineId.trim()) return false;
   if (!config.stages || !config.contactFields || !config.opportunityFields) return false;
@@ -556,6 +557,7 @@ function buildGhlPayload(args: {
   addCustomField(contactFields, GHL.contactFields.instagramUserId, args.contact.instagram_user_id);
   addCustomField(contactFields, GHL.contactFields.instagramUsername, args.contact.username);
   addCustomField(contactFields, GHL.contactFields.preferredLanguage, args.contact.detected_language);
+  addCustomField(contactFields, GHL.contactFields.preferredChannel, "instagram");
   const favoriteFlavors = Array.isArray(args.lead.preferred_flavors)
     ? args.lead.preferred_flavors.map((flavor: any) =>
         typeof flavor === "string" ? flavor
@@ -564,6 +566,9 @@ function buildGhlPayload(args: {
     : "";
   addCustomField(contactFields, GHL.contactFields.favoriteFlavors, favoriteFlavors);
   addCustomField(contactFields, GHL.contactFields.customerStatus, args.lead.status === "customer" ? "repeat" : "lead");
+  // Only mirror confirmed historical order metrics. Never invent a canonical cross-channel customer ID.
+  if (Number(args.lead.lifetime_order_count) > 0) addCustomField(contactFields, GHL.extraContactFields?.lifetimeOrders, Number(args.lead.lifetime_order_count));
+  if (Number(args.lead.lifetime_revenue) > 0) addCustomField(contactFields, GHL.contactFields.verifiedRevenueCents, Math.round(Number(args.lead.lifetime_revenue) * 100));
 
   const contactBody: JsonRecord = {
     firstName: name.firstName,
@@ -604,6 +609,13 @@ function buildGhlPayload(args: {
   addCustomField(opportunityFields, GHL.opportunityFields.district, args.draft.district);
   addCustomField(opportunityFields, GHL.opportunityFields.address, args.draft.delivery_address);
   addCustomField(opportunityFields, GHL.opportunityFields.total, args.draft.total_amount);
+  // Mirrors of verified quotes use integer cents. Supabase remains the financial source of truth.
+  if (args.draft.quote_verified === true) {
+    for (const [key,value] of [["subtotalCents",args.draft.items_subtotal],["deliveryCents",args.draft.delivery_fee],["totalCents",args.draft.total_amount]] as const) {
+      if (typeof value === "number" && Number.isFinite(value) && value >= 0) addCustomField(opportunityFields, GHL.opportunityFields[key], Math.round(value * 100));
+    }
+  }
+  if (Number.isSafeInteger(args.draft.version) && args.draft.version > 0) addCustomField(opportunityFields, GHL.opportunityFields.eventVersion, args.draft.version);
   addCustomField(opportunityFields, GHL.opportunityFields.paymentMethod, args.draft.payment_method || args.paymentPolicy?.display_name);
   addCustomField(opportunityFields, GHL.opportunityFields.paymentStatus, args.draft.payment_status);
   addCustomField(opportunityFields, GHL.opportunityFields.stage, args.stage);
