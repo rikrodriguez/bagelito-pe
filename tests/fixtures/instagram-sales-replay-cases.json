@@ -1,0 +1,409 @@
+{
+  "version": "bagelito-sales-replay-2026-11-04-v1",
+  "note": "Anonymized behavioral scenarios derived from Bagelito Instagram history. No historical commercial fact is treated as current truth.",
+  "cases": [
+    {
+      "id": "flavors_discovery",
+      "latestMessage": "Hola, qué sabores tienen?",
+      "extraction": {
+        "intent": "flavors",
+        "confidence": 0.99,
+        "buyer_signal": "interested",
+        "objection_type": "none"
+      },
+      "patch": {},
+      "expect": {
+        "stage": "menu_discovery",
+        "action": "send_menu",
+        "handoff": null
+      }
+    },
+    {
+      "id": "how_to_order",
+      "latestMessage": "Holaaa, cómo hago un pedido?",
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.99,
+        "buyer_signal": "interested",
+        "objection_type": "none"
+      },
+      "patch": {},
+      "expect": {
+        "stage": "menu_discovery",
+        "action": "ask_quantity_flavors",
+        "handoff": null
+      }
+    },
+    {
+      "id": "price_inquiry",
+      "latestMessage": "Cuánto cuestan?",
+      "extraction": {
+        "intent": "price",
+        "confidence": 0.99,
+        "buyer_signal": "interested",
+        "objection_type": "none"
+      },
+      "patch": {},
+      "expect": {
+        "stage": "menu_discovery",
+        "action": "send_menu",
+        "handoff": null
+      }
+    },
+    {
+      "id": "price_objection",
+      "latestMessage": "Está un poco caro, tienes algo más económico?",
+      "extraction": {
+        "intent": "price",
+        "confidence": 0.98,
+        "buyer_signal": "objection",
+        "objection_type": "price"
+      },
+      "patch": {},
+      "expect": {
+        "stage": "menu_discovery",
+        "action": "handle_objection",
+        "resumeAction": "recommend_pack",
+        "objectionType": "price",
+        "handoff": null
+      }
+    },
+    {
+      "id": "recommendation",
+      "latestMessage": "Cuál me recomiendas si quiero algo salado?",
+      "extraction": {
+        "intent": "other",
+        "confidence": 0.95,
+        "buyer_signal": "interested",
+        "objection_type": "none"
+      },
+      "patch": {},
+      "expect": {
+        "stage": "recommendation",
+        "action": "recommend_pack",
+        "handoff": null
+      }
+    },
+    {
+      "id": "quantity_before_flavors",
+      "latestMessage": "Quiero 12!",
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.98,
+        "buyer_signal": "selection_started",
+        "objection_type": "none"
+      },
+      "patch": {
+        "units": 12
+      },
+      "expect": {
+        "stage": "order_configuration",
+        "action": "ask_quantity_flavors",
+        "handoff": null
+      }
+    },
+    {
+      "id": "regular_configured_missing_details",
+      "latestMessage": "Quiero 3 Plain y 3 Cheddar",
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.99,
+        "buyer_signal": "selection_started",
+        "objection_type": "none"
+      },
+      "patch": {
+        "bagel_size": "regular",
+        "units": 6,
+        "items": [
+          [
+            "plain",
+            "Plain",
+            3
+          ],
+          [
+            "cheddar",
+            "Cheddar",
+            3
+          ]
+        ]
+      },
+      "expect": {
+        "stage": "details_collection",
+        "action": "ask_contact_delivery",
+        "missing": [
+          "customer_name",
+          "phone",
+          "district",
+          "address"
+        ],
+        "handoff": null
+      }
+    },
+    {
+      "id": "complete_regular_quote",
+      "latestMessage": "Son 3 Plain y 3 Cheddar",
+      "current": {
+        "customer_name": "Customer",
+        "phone": "999111222",
+        "district": "Miraflores",
+        "delivery_address": "Address"
+      },
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.99,
+        "buyer_signal": "selection_started",
+        "objection_type": "none"
+      },
+      "patch": {
+        "bagel_size": "regular",
+        "units": 6,
+        "items": [
+          [
+            "plain",
+            "Plain",
+            3
+          ],
+          [
+            "cheddar",
+            "Cheddar",
+            3
+          ]
+        ]
+      },
+      "expect": {
+        "stage": "quote_ready",
+        "action": "quote_order",
+        "quoteVerified": true,
+        "subtotal": 60,
+        "delivery": 16,
+        "total": 76,
+        "handoff": null
+      }
+    },
+    {
+      "id": "complete_mini_quote",
+      "latestMessage": "Quiero 6 minis, 3 Plain y 3 Blueberry",
+      "current": {
+        "customer_name": "Customer",
+        "phone": "999111222",
+        "district": "Lince",
+        "delivery_address": "Address"
+      },
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.99,
+        "buyer_signal": "selection_started",
+        "objection_type": "none"
+      },
+      "patch": {
+        "bagel_size": null,
+        "units": 6,
+        "items": [
+          [
+            "plain",
+            "Plain",
+            3
+          ],
+          [
+            "blueberry",
+            "Blueberry",
+            3
+          ]
+        ]
+      },
+      "expect": {
+        "stage": "quote_ready",
+        "action": "quote_order",
+        "bagelSize": "mini",
+        "quoteVerified": true,
+        "subtotal": 25,
+        "delivery": 8,
+        "total": 33,
+        "handoff": null
+      }
+    },
+    {
+      "id": "birthday_custom",
+      "latestMessage": "Tienen birthday bagel?",
+      "extraction": {
+        "intent": "custom_order",
+        "confidence": 0.99,
+        "buyer_signal": "custom_request",
+        "objection_type": "custom_request"
+      },
+      "patch": {
+        "custom_request": "birthday bagel"
+      },
+      "expect": {
+        "stage": "human_review",
+        "action": "handoff",
+        "handoff": "custom_feasibility"
+      }
+    },
+    {
+      "id": "payment_evidence",
+      "latestMessage": "Ya mandé la captura",
+      "current": {
+        "sales_stage": "payment_pending",
+        "status": "payment_pending",
+        "payment_status": "none",
+        "quote_verified": true,
+        "quote_sent_at": "2026-11-04T10:00:00Z"
+      },
+      "extraction": {
+        "intent": "payment_confirmation",
+        "confidence": 0.99,
+        "buyer_signal": "payment_sent",
+        "objection_type": "none",
+        "payment_evidence_claimed": true
+      },
+      "patch": {},
+      "expect": {
+        "stage": "payment_evidence_received",
+        "action": "acknowledge_payment_evidence",
+        "paymentStatus": "evidence_received",
+        "handoff": null
+      }
+    },
+    {
+      "id": "change_after_payment",
+      "latestMessage": "Mejor cambia 2 Plain por Cheddar",
+      "current": {
+        "sales_stage": "confirmed",
+        "status": "confirmed",
+        "payment_status": "confirmed",
+        "bagel_size": "regular",
+        "customer_name": "Customer",
+        "phone": "999111222",
+        "district": "Lince",
+        "delivery_address": "Address"
+      },
+      "currentItems": [
+        [
+          "plain",
+          "Plain",
+          6
+        ]
+      ],
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.99,
+        "buyer_signal": "selection_started",
+        "objection_type": "none"
+      },
+      "patch": {
+        "items": [
+          [
+            "plain",
+            "Plain",
+            4
+          ],
+          [
+            "cheddar",
+            "Cheddar",
+            2
+          ]
+        ]
+      },
+      "expect": {
+        "stage": "human_review",
+        "action": "handoff",
+        "handoff": "conflicting_data"
+      }
+    },
+    {
+      "id": "unsupported_delivery",
+      "latestMessage": "La entrega es a Punta Hermosa",
+      "current": {
+        "customer_name": "Customer",
+        "phone": "999111222",
+        "district": "Punta Hermosa",
+        "delivery_address": "Address",
+        "bagel_size": "regular"
+      },
+      "currentItems": [
+        [
+          "plain",
+          "Plain",
+          3
+        ],
+        [
+          "cheddar",
+          "Cheddar",
+          3
+        ]
+      ],
+      "extraction": {
+        "intent": "delivery_area",
+        "confidence": 0.99,
+        "buyer_signal": "order_complete",
+        "objection_type": "none"
+      },
+      "patch": {
+        "units": 6
+      },
+      "expect": {
+        "stage": "human_review",
+        "action": "handoff",
+        "handoff": "delivery_exception",
+        "quoteVerified": false
+      }
+    },
+    {
+      "id": "allergy_safety",
+      "latestMessage": "Es seguro si tengo alergia?",
+      "extraction": {
+        "intent": "allergy",
+        "confidence": 0.99,
+        "buyer_signal": "support",
+        "objection_type": "none"
+      },
+      "patch": {},
+      "expect": {
+        "stage": "human_review",
+        "action": "handoff",
+        "handoff": "allergy"
+      }
+    },
+    {
+      "id": "unpriced_schmear",
+      "latestMessage": "Agrega Ají Amarillo 120g",
+      "current": {
+        "customer_name": "Customer",
+        "phone": "999111222",
+        "district": "Lince",
+        "delivery_address": "Address",
+        "bagel_size": "regular"
+      },
+      "currentItems": [
+        [
+          "plain",
+          "Plain",
+          6
+        ]
+      ],
+      "extraction": {
+        "intent": "how_to_order",
+        "confidence": 0.99,
+        "buyer_signal": "selection_started",
+        "objection_type": "none"
+      },
+      "patch": {
+        "units": 6,
+        "schmears": [
+          [
+            "aji-amarillo-120g",
+            "Ají Amarillo 120g",
+            1
+          ]
+        ]
+      },
+      "expect": {
+        "stage": "human_review",
+        "action": "handoff",
+        "handoff": "conflicting_data",
+        "quoteVerified": false
+      }
+    }
+  ]
+}

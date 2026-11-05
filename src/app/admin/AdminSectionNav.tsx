@@ -9,6 +9,7 @@ import {
   Calculator,
   CreditCard,
   Home,
+  Inbox,
   MapPin,
   Menu,
   MessageCircle,
@@ -23,6 +24,7 @@ import {
 export type AdminSection =
   | "overview"
   | "customers"
+  | "inbox"
   | "crm"
   | "finance"
   | "calculator"
@@ -37,6 +39,7 @@ export type AdminSection =
 type AdminNavIcon =
   | "overview"
   | "customers"
+  | "inbox"
   | "crm"
   | "finance"
   | "calculator"
@@ -59,6 +62,7 @@ type AdminNavItem = {
 const navIconMap: Record<AdminNavIcon, LucideIcon> = {
   overview: Home,
   customers: Users,
+  inbox: Inbox,
   crm: ReceiptText,
   finance: CreditCard,
   calculator: Calculator,
