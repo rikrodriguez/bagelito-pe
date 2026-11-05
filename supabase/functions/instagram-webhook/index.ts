@@ -1461,6 +1461,8 @@ Deno.serve(async (req: Request) => {
               runtimeSettings?.mode === "test_auto" &&
               configuredTestRecipients.includes(contactInstagramId);
             const fullAuto = runtimeSettings?.mode === "auto";
+            // Use this event, not the draft writer's separately scoped latest message.
+            const latestInboundText = typeof event.message.text === "string" ? event.message.text : "";
             const latestMessageNeedsCustomReview =
               /\b(birthday|cumplea[nñ]os|cumple|custom|personaliz|forma especial|shape|color especial)\b/i.test(latestInboundText);
             const maxTextMessages = Math.max(1, Math.min(2, Number(runtimeSettings?.max_text_messages ?? 2)));
