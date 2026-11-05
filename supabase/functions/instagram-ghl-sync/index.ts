@@ -72,7 +72,7 @@ async function ghlRequest(args: {
   }
 
   if (!response.ok) {
-    throw new Error(`ghl_${response.status}:${raw.slice(0, 1000)}`);
+    throw new Error(`ghl_api_status_${response.status}`);
   }
 
   return payload;
@@ -158,6 +158,7 @@ async function syncJob(args: {
   const { job, db, token, version, locationId, instagramUserIdFieldId, pipelineId } = args;
   const payload = job.payload;
   if (!payload?.contact?.body) throw new Error("invalid_sync_payload:contact");
+  if (payload.contact.body.locationId && payload.contact.body.locationId !== locationId) throw new Error("invalid_sync_payload:location_mismatch");
   if (payload.opportunity && payload.opportunity.body?.pipelineId !== pipelineId) {
     throw new Error("invalid_sync_payload:pipeline_mismatch");
   }
@@ -288,13 +289,14 @@ Deno.serve(async (req) => {
       ok: true,
       function: "instagram-ghl-sync",
       configured: Boolean(token),
-      locationConfigured: Boolean(locationId),
+      locationConfigured: Boolean(secretLocationId),
       version,
     });
   }
 
   if (req.method !== "POST") return respond({ ok: false, error: "method_not_allowed" }, 405);
   if (!token) return respond({ ok: false, error: "missing_ghl_api_token" }, 503);
+  if (!secretLocationId) return respond({ ok: false, error: "missing_ghl_location_secret" }, 503);
   const db = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
@@ -307,12 +309,15 @@ Deno.serve(async (req) => {
   if (crmConfigError || !crmFact?.fact_value) return respond({ ok: false, error: "missing_ghl_crm_config" }, 503);
   const config = crmFact.fact_value as Record<string, any>;
   if (config.enabled !== true) return respond({ ok: false, error: "ghl_sync_disabled" }, 503);
+  if (!["integration_test_approved","production_approved"].includes(String(config.approval ?? ""))) {
+    return respond({ ok: false, error: "ghl_sync_not_approved" }, 503);
+  }
   const locationId = typeof config.locationId === "string" ? config.locationId.trim() : "";
   if (!locationId) return respond({ ok: false, error: "missing_ghl_location_id" }, 503);
   if (locationId !== BAGELITO_LOCATION_ID || config.target_name !== "Bagelito") {
     return respond({ ok: false, error: "ghl_target_not_verified" }, 409);
   }
-  if (secretLocationId && secretLocationId !== locationId) {
+  if (secretLocationId !== locationId) {
     return respond({ ok: false, error: "ghl_location_secret_mismatch" }, 409);
   }
   const pipelineId = typeof config.pipelineId === "string" ? config.pipelineId.trim() : "";
