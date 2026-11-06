@@ -1665,16 +1665,25 @@ Deno.serve(async (req: Request) => {
                       .maybeSingle()
                   : { data: null, error: null };
                 if (activation.error) throw activation.error;
-                const ownershipRetained = Boolean(activation.data?.id);
+                let ownershipRetained = Boolean(activation.data?.id);
 
                 if (shadow.aiRunId) {
-                  await db.from("instagram_ai_runs")
+                  // Preserve a human review recorded while provider requests were in flight.
+                  const { data: transitionedRun, error: runUpdateError } = await db.from("instagram_ai_runs")
                     .update({
                       execution_mode: "auto",
                       status: ownershipRetained ? "sent" : "escalated",
                       updated_at: new Date().toISOString()
                     })
-                    .eq("id", shadow.aiRunId);
+                    .eq("id", shadow.aiRunId)
+                    .eq("execution_mode", "shadow")
+                    .eq("status", "proposed")
+                    .is("human_final_reply", null)
+                    .select("id")
+                    .maybeSingle();
+                  if (runUpdateError) throw runUpdateError;
+                  // A zero-row match is legitimate concurrent ownership, never a retry.
+                  if (!transitionedRun?.id) ownershipRetained = false;
                 }
 
                 await db.from("instagram_conversation_events").insert({
