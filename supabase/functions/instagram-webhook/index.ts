@@ -1588,7 +1588,15 @@ Deno.serve(async (req: Request) => {
                   .slice(0, maxMedia);
                 const steps = buildInstagramOutboundSteps(outboundTextMessages, mediaToSend, shadow.intent);
 
+                let sendInterrupted = false;
                 for (const step of steps) {
+                  const mediaUrl = step.kind === "image" ? await resolveInstagramMediaUrl(db, step.asset) : null;
+                  if (step.kind === "image" && !mediaUrl) continue;
+                  // Media resolution and each preceding send may yield to a human/new inbound.
+                  if (!await isConversationFreshForAuto(db, conversation.id, insertedMessage.id, sentAt)) {
+                    sendInterrupted = true;
+                    break;
+                  }
                   if (step.kind === "text") {
                     const textSend = await postInstagramMessage({
                       accountId: igAccountId,
@@ -1613,8 +1621,6 @@ Deno.serve(async (req: Request) => {
                     });
                   } else {
                     const asset = step.asset;
-                    const mediaUrl = await resolveInstagramMediaUrl(db, asset);
-                    if (!mediaUrl) continue;
                     const mediaSend = await postInstagramMessage({
                       accountId: igAccountId,
                       recipientId: contactInstagramId,
@@ -1645,22 +1651,47 @@ Deno.serve(async (req: Request) => {
                   }
                 }
 
+                // Recheck after the final provider/ledger await, then claim the
+                // transition conditionally so a concurrent human/new turn wins.
+                const postSendFresh = !sendInterrupted &&
+                  await isConversationFreshForAuto(db, conversation.id, insertedMessage.id, sentAt);
+                const activation = postSendFresh
+                  ? await db.from("instagram_conversations")
+                      .update({ mode: "ai_active", updated_at: new Date().toISOString() })
+                      .eq("id", conversation.id)
+                      .eq("mode", conversation.mode)
+                      .eq("last_inbound_at", sentAt)
+                      .select("id")
+                      .maybeSingle()
+                  : { data: null, error: null };
+                if (activation.error) throw activation.error;
+                let ownershipRetained = Boolean(activation.data?.id);
+
                 if (shadow.aiRunId) {
-                  await db.from("instagram_ai_runs")
+                  // Preserve a human review recorded while provider requests were in flight.
+                  const { data: transitionedRun, error: runUpdateError } = await db.from("instagram_ai_runs")
                     .update({
                       execution_mode: "auto",
-                      status: "sent",
+                      status: ownershipRetained ? "sent" : "escalated",
                       updated_at: new Date().toISOString()
                     })
-                    .eq("id", shadow.aiRunId);
+                    .eq("id", shadow.aiRunId)
+                    .eq("execution_mode", "shadow")
+                    .eq("status", "proposed")
+                    .is("human_final_reply", null)
+                    .select("id")
+                    .maybeSingle();
+                  if (runUpdateError) throw runUpdateError;
+                  // A zero-row match is legitimate concurrent ownership, never a retry.
+                  if (!transitionedRun?.id) ownershipRetained = false;
                 }
 
                 await db.from("instagram_conversation_events").insert({
                   conversation_id: conversation.id,
-                  event_type: testOnly ? "test_auto_send" : "auto_send",
+                  event_type: ownershipRetained ? (testOnly ? "test_auto_send" : "auto_send") : "auto_send_held",
                   from_mode: conversation.mode,
-                  to_mode: "ai_active",
-                  reason: testOnly ? "controlled_test" : "safe_auto",
+                  to_mode: ownershipRetained ? "ai_active" : null,
+                  reason: ownershipRetained ? (testOnly ? "controlled_test" : "safe_auto") : "stale_conversation_during_send",
                   actor: "ai",
                   metadata: {
                     triggering_message_id: insertedMessage.id,
@@ -1670,13 +1701,12 @@ Deno.serve(async (req: Request) => {
                     provider_message_id: sentTextMessages[0]?.provider_message_id ?? null,
                     sent_text_messages: sentTextMessages,
                     sent_media: sentMedia,
+                    delivery_status: !sendInterrupted ? "complete" :
+                      (sentTextMessages.length || sentMedia.length ? "partial" : "not_sent"),
+                    ownership_retained: ownershipRetained,
                     formatting_version: DM_FORMAT_VERSION
                   }
                 });
-
-                await db.from("instagram_conversations")
-                  .update({ mode: "ai_active", updated_at: new Date().toISOString() })
-                  .eq("id", conversation.id);
               } catch (sendError) {
                 const sendErrorText = sendError instanceof Error ? sendError.message : String(sendError);
 

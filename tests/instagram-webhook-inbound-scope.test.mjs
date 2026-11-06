@@ -27,6 +27,7 @@ function harness(options = {}) {
     sales_judge_enabled: true, sales_judge_min_score: 85, ...options.settings
   };
   rows("instagram_runtime_settings").push(settings);
+  rows("instagram_ai_runs").push({ id: "synthetic-run", status: "proposed", execution_mode: "shadow", human_final_reply: null });
   const unique = {
     instagram_webhook_events: ["event_key"],
     instagram_accounts: ["instagram_user_id"],
@@ -35,7 +36,13 @@ function harness(options = {}) {
     instagram_messages: ["provider_event_key"]
   };
   const db = {
-    storage: { getBucket: async () => ({ data: { id: "synthetic-bucket" } }) },
+    storage: {
+      getBucket: async () => ({ data: { id: "synthetic-bucket" } }),
+      from: () => ({ createSignedUrl: async () => {
+        options.duringMediaResolve?.({ rows });
+        return { data: { signedUrl: "https://synthetic.invalid/image.jpg" }, error: null };
+      } })
+    },
     from(name) {
       let operation = "select", payload, single = false, limit;
       const filters = [], sort = [];
@@ -45,6 +52,7 @@ function harness(options = {}) {
         upsert(value) { operation = "upsert"; payload = value; return query; },
         update(value) { operation = "update"; payload = value; return query; },
         eq(key, value) { filters.push((row) => row[key] === value); return query; },
+        is(key, value) { filters.push((row) => (row[key] ?? null) === value); return query; },
         in(key, values) { filters.push((row) => values.includes(row[key])); return query; },
         order(key, { ascending }) { sort.push({ key, ascending }); return query; },
         limit(value) { limit = value; return query; },
@@ -52,6 +60,8 @@ function harness(options = {}) {
         maybeSingle() { single = true; return query; },
         then(resolve, reject) {
           return Promise.resolve().then(() => {
+            const overridden = options.beforeQuery?.({ rows, name, operation, payload, sends });
+            if (overridden) return overridden;
             const table = rows(name);
             let selected = table.filter((row) => filters.every((filter) => filter(row)));
             if (operation === "insert" || operation === "upsert") {
@@ -102,6 +112,7 @@ function harness(options = {}) {
     fetch: async (url, init) => {
       assert.match(String(url), /^https:\/\/graph\.facebook\.com\//);
       sends.push(JSON.parse(init.body));
+      await options.afterSend?.({ rows, sends });
       return new Response(JSON.stringify(options.sendFailure ? { error: { message: "synthetic provider failure" } } : { message_id: "synthetic-send-" + sends.length }), { status: options.sendFailure ? 500 : 200 });
     },
     draftBoundary: async (input) => {
@@ -252,4 +263,217 @@ test("test_auto never sends to a recipient outside its existing allowlist", asyn
   assertProcessed(h);
   assert.equal(h.judges.length, 0);
   assert.equal(h.sends.length, 0);
+});
+
+const twoBubbleDraft = { proposedMessages: ["Dime qué pack prefieres.", "Te ayudo con los sabores."] };
+
+function assertInterrupted(h, sentCount, deliveryStatus = sentCount ? "partial" : "not_sent") {
+  const held = h.rows("instagram_conversation_events").find((row) => row.reason === "stale_conversation_during_send");
+  assert.ok(held);
+  assert.equal(held.to_mode, null);
+  assert.equal(held.metadata.delivery_status, deliveryStatus);
+  assert.equal(held.metadata.ownership_retained, false);
+  assert.equal(h.rows("instagram_ai_runs")[0].status, "escalated");
+  assert.equal(h.rows("instagram_conversation_events").some((row) => row.event_type === "test_auto_send"), false);
+}
+
+test("fresh two-bubble reply still sends both parts in test_auto", async () => {
+  const h = harness({ draft: twoBubbleDraft });
+  await h.deliver([inbound("two-bubbles", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 2);
+  assert.equal(h.rows("instagram_conversations")[0].mode, "ai_active");
+  assert.equal(h.rows("instagram_ai_runs")[0].status, "sent");
+});
+
+test("human takeover while the first bubble is in flight stops the second bubble", async () => {
+  const h = harness({
+    draft: twoBubbleDraft,
+    afterSend: ({ rows }) => { rows("instagram_conversations")[0].mode = "human_active"; }
+  });
+  await h.deliver([inbound("human-mid-send", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.rows("instagram_conversations")[0].mode, "human_active");
+  assertInterrupted(h, 1);
+});
+
+test("new inbound while the first bubble is in flight stops the remaining stale reply", async () => {
+  const h = harness({
+    draft: twoBubbleDraft,
+    afterSend: ({ rows }) => {
+      const conversation = rows("instagram_conversations")[0];
+      conversation.last_inbound_at = "2030-01-01T00:00:00Z";
+      rows("instagram_messages").push({ id: "newer-mid-send", direction: "inbound", conversation_id: conversation.id, sent_at: conversation.last_inbound_at });
+    }
+  });
+  await h.deliver([inbound("newer-mid-send", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.rows("instagram_conversations")[0].mode, "review_required");
+  assertInterrupted(h, 1);
+});
+
+test("human takeover during media URL resolution stops the image and later text", async () => {
+  const h = harness({
+    settings: { media_enabled: true, max_media: 1 },
+    draft: { ...twoBubbleDraft, proposedMedia: [{ sendable: true, asset_key: "synthetic-media", storage_path: "synthetic/image.jpg" }] },
+    duringMediaResolve: ({ rows }) => { rows("instagram_conversations")[0].mode = "human_active"; }
+  });
+  await h.deliver([inbound("human-media-resolve", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.sends[0].message.text, "Dime qué pack prefieres.");
+  assert.equal(h.rows("instagram_conversations")[0].mode, "human_active");
+  assertInterrupted(h, 1);
+});
+
+test("new inbound during media URL resolution stops the image and later text", async () => {
+  const h = harness({
+    settings: { media_enabled: true, max_media: 1 },
+    draft: { ...twoBubbleDraft, proposedMedia: [{ sendable: true, storage_path: "synthetic/image.jpg" }] },
+    duringMediaResolve: ({ rows }) => {
+      const conversation = rows("instagram_conversations")[0];
+      conversation.last_inbound_at = "2030-01-01T00:00:00Z";
+      rows("instagram_messages").push({ id: "newer-during-media", direction: "inbound", conversation_id: conversation.id, sent_at: conversation.last_inbound_at });
+    }
+  });
+  await h.deliver([inbound("newer-media-resolve", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assertInterrupted(h, 1);
+});
+
+test("human takeover at the final mode update is not overwritten or reported as ai_active", async () => {
+  const h = harness({
+    beforeQuery: ({ rows, name, operation, payload }) => {
+      if (name === "instagram_conversations" && operation === "update" && payload.mode === "ai_active") {
+        rows(name)[0].mode = "human_active";
+      }
+    }
+  });
+  await h.deliver([inbound("human-final-update", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.rows("instagram_conversations")[0].mode, "human_active");
+  assertInterrupted(h, 1, "complete");
+});
+
+test("new inbound at the final mode update prevents stale activation", async () => {
+  const h = harness({
+    beforeQuery: ({ rows, name, operation, payload }) => {
+      if (name === "instagram_conversations" && operation === "update" && payload.mode === "ai_active") {
+        rows(name)[0].last_inbound_at = "2030-01-01T00:00:00Z";
+      }
+    }
+  });
+  await h.deliver([inbound("newer-final-update", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.rows("instagram_conversations")[0].mode, "review_required");
+  assertInterrupted(h, 1, "complete");
+});
+
+test("a freshness read error after the first send holds the remaining reply", async () => {
+  const h = harness({
+    draft: twoBubbleDraft,
+    beforeQuery: ({ name, operation, sends }) => {
+      if (name === "instagram_conversations" && operation === "select" && sends.length) {
+        return { data: null, error: { message: "synthetic read failure" } };
+      }
+    }
+  });
+  await h.deliver([inbound("freshness-read-error", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assertInterrupted(h, 1);
+});
+
+test("takeover after initial freshness but before the first dispatch records not_sent", async () => {
+  let conversationReads = 0;
+  const h = harness({
+    beforeQuery: ({ rows, name, operation }) => {
+      if (name === "instagram_conversations" && operation === "select" && ++conversationReads === 2) {
+        rows(name)[0].mode = "human_active";
+      }
+    }
+  });
+  await h.deliver([inbound("human-before-first-dispatch", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 0);
+  assert.equal(h.rows("instagram_conversations")[0].mode, "human_active");
+  assertInterrupted(h, 0);
+});
+
+test("human review during an in-flight send keeps its status, reply and shadow mode", async () => {
+  for (const status of ["approved", "edited"]) {
+    const h = harness({
+      draft: twoBubbleDraft,
+      afterSend: ({ rows }) => {
+        rows("instagram_conversations")[0].mode = "human_active";
+        Object.assign(rows("instagram_ai_runs")[0], {
+          status, execution_mode: "shadow", human_final_reply: "Yo me encargo de este pedido."
+        });
+      }
+    });
+    await h.deliver([inbound("human-reviewed-run-" + status, "Hola, menú")]);
+    assertProcessed(h);
+    assert.equal(h.sends.length, 1);
+    assert.equal(h.drafts.length, 1);
+    assert.equal(h.rows("instagram_conversations")[0].mode, "human_active");
+    assert.equal(h.rows("instagram_ai_runs")[0].status, status);
+    assert.equal(h.rows("instagram_ai_runs")[0].execution_mode, "shadow");
+    assert.equal(h.rows("instagram_ai_runs")[0].human_final_reply, "Yo me encargo de este pedido.");
+    const held = h.rows("instagram_conversation_events").find((row) => row.reason === "stale_conversation_during_send");
+    assert.ok(held);
+    assert.equal(held.metadata.ownership_retained, false);
+  }
+});
+
+test("a concurrent run transition at the UPDATE boundary is preserved without retry", async () => {
+  let updateAttempts = 0;
+  const h = harness({
+    beforeQuery: ({ rows, name, operation, payload }) => {
+      if (name === "instagram_ai_runs" && operation === "update" && payload.execution_mode === "auto") {
+        updateAttempts += 1;
+        Object.assign(rows(name)[0], {
+          status: "edited", execution_mode: "draft", human_final_reply: "Revisado por una persona."
+        });
+        rows("instagram_conversations")[0].mode = "human_active";
+      }
+    }
+  });
+  await h.deliver([inbound("human-run-update-boundary", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(updateAttempts, 1);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.rows("instagram_ai_runs")[0].status, "edited");
+  assert.equal(h.rows("instagram_ai_runs")[0].execution_mode, "draft");
+  assert.equal(h.rows("instagram_ai_runs")[0].human_final_reply, "Revisado por una persona.");
+  assert.equal(h.rows("instagram_conversations")[0].mode, "human_active");
+  const held = h.rows("instagram_conversation_events").find((row) => row.reason === "stale_conversation_during_send");
+  assert.ok(held);
+  assert.equal(held.to_mode, null);
+  assert.equal(held.metadata.ownership_retained, false);
+  assert.equal(held.metadata.delivery_status, "complete");
+});
+
+test("a human final reply blocks automatic finalization even before its review status changes", async () => {
+  const h = harness({
+    beforeQuery: ({ rows, name, operation, payload }) => {
+      if (name === "instagram_ai_runs" && operation === "update" && payload.execution_mode === "auto") {
+        rows(name)[0].human_final_reply = "Mensaje humano vigente.";
+        rows("instagram_conversations")[0].mode = "human_active";
+      }
+    }
+  });
+  await h.deliver([inbound("human-run-reply-first", "Hola, menú")]);
+  assertProcessed(h);
+  assert.equal(h.sends.length, 1);
+  assert.equal(h.rows("instagram_ai_runs")[0].status, "proposed");
+  assert.equal(h.rows("instagram_ai_runs")[0].execution_mode, "shadow");
+  assert.equal(h.rows("instagram_ai_runs")[0].human_final_reply, "Mensaje humano vigente.");
+  const held = h.rows("instagram_conversation_events").find((row) => row.reason === "stale_conversation_during_send");
+  assert.ok(held);
+  assert.equal(held.metadata.ownership_retained, false);
 });
