@@ -1,0 +1,212 @@
+{
+  "schmearEmpty": {
+    "cards": [
+      {
+        "actionTop": 221.29165649414065,
+        "height": 277.29168701171875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Whipped Original",
+        "labelBottom": 181,
+        "labelSize": "18px",
+        "name": "Agregar Whipped Original",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 2,
+        "y": 0
+      },
+      {
+        "actionTop": 221.29165649414065,
+        "height": 277.29168701171875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Ají Amarillo",
+        "labelBottom": 158.5,
+        "labelSize": "18px",
+        "name": "Agregar Ají Amarillo",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 141,
+        "y": 0
+      },
+      {
+        "actionTop": 261.1875,
+        "height": 317.1875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Herb & Roasted Garlic",
+        "labelBottom": 203.5,
+        "labelSize": "18px",
+        "name": "Agregar Herb & Roasted Garlic",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 2,
+        "y": 287.2916564941406
+      },
+      {
+        "actionTop": 261.1875,
+        "height": 317.1875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Honey Cinnamon",
+        "labelBottom": 181,
+        "labelSize": "18px",
+        "name": "Agregar Honey Cinnamon",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 141,
+        "y": 287.2916564941406
+      },
+      {
+        "actionTop": 261.1875,
+        "height": 317.1875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Classic Strawberry",
+        "labelBottom": 181,
+        "labelSize": "18px",
+        "name": "Agregar Classic Strawberry",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 2,
+        "y": 614.4791564941406
+      }
+    ],
+    "overflow": 0,
+    "reviewOnly": "true",
+    "viewport": {
+      "dpr": 1.5,
+      "height": 505,
+      "width": 334
+    }
+  },
+  "schmearSelected": {
+    "cards": [
+      {
+        "actionTop": 221.29166412353516,
+        "height": 277.29168701171875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Whipped Original",
+        "labelBottom": 181.00000762939453,
+        "labelSize": "18px",
+        "name": "Agregar Whipped Original",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "true",
+        "width": 129,
+        "x": 2,
+        "y": 0
+      },
+      {
+        "actionTop": 221.29166412353516,
+        "height": 277.29168701171875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Ají Amarillo",
+        "labelBottom": 158.50000762939453,
+        "labelSize": "18px",
+        "name": "Agregar Ají Amarillo",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 141,
+        "y": 0
+      },
+      {
+        "actionTop": 261.1875,
+        "height": 317.1875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Herb & Roasted Garlic",
+        "labelBottom": 203.5,
+        "labelSize": "18px",
+        "name": "Agregar Herb & Roasted Garlic",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 2,
+        "y": 287.29166412353516
+      },
+      {
+        "actionTop": 261.1875,
+        "height": 317.1875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Honey Cinnamon",
+        "labelBottom": 181,
+        "labelSize": "18px",
+        "name": "Agregar Honey Cinnamon",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 141,
+        "y": 287.29166412353516
+      },
+      {
+        "actionTop": 261.1875,
+        "height": 317.1875,
+        "image": {
+          "h": 112,
+          "w": 109
+        },
+        "label": "Classic Strawberry",
+        "labelBottom": 181,
+        "labelSize": "18px",
+        "name": "Agregar Classic Strawberry",
+        "quantitySize": null,
+        "remove": null,
+        "selected": "false",
+        "width": 129,
+        "x": 2,
+        "y": 614.4791641235352
+      }
+    ],
+    "overflow": 0,
+    "reviewOnly": "true",
+    "viewport": {
+      "dpr": 1.5,
+      "height": 505,
+      "width": 334
+    }
+  },
+  "packSummary": "2 ×\nEverything\n2 ×\nSesame\n2 ×\nPlain",
+  "packGate": {
+    "disabled": true,
+    "overflow": 0,
+    "reviewOnly": "true",
+    "scene": "pay",
+    "status": "Modo revisión: no se envían datos, no se crea una reserva y no se realiza ningún cobro."
+  }
+}
