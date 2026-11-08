@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {evaluateCheckoutReadiness} from '../src/lib/checkout-readiness.mjs';
+const base={items:[{sku:'TEST-1',quantity:2}],catalog:{'TEST-1':{available:true,priceCents:1000}},delivery:{addressVerified:true,feeCents:1000},customer:{contactConsent:true},paymentEnabled:true};
+test('eligible checkout passes only with all gates',()=>assert.equal(evaluateCheckoutReadiness(base).ready,true));
+test('payments default off',()=>assert.deepEqual(evaluateCheckoutReadiness({...base,paymentEnabled:undefined}).reasons,['PAYMENTS_DISABLED']));
+test('unconfirmed inventory fails closed',()=>assert.ok(evaluateCheckoutReadiness({...base,catalog:{'TEST-1':{priceCents:1000}}}).reasons.includes('UNCONFIRMED_AVAILABILITY')));
+test('unverified address blocks checkout',()=>assert.ok(evaluateCheckoutReadiness({...base,delivery:{feeCents:1000}}).reasons.includes('DELIVERY_NOT_VERIFIED')));
+test('unknown SKU blocked',()=>assert.ok(evaluateCheckoutReadiness({...base,items:[{sku:'BAD',quantity:1}]}).reasons.includes('UNKNOWN_SKU')));
+test('invalid quantities blocked',()=>assert.ok(evaluateCheckoutReadiness({...base,items:[{sku:'TEST-1',quantity:-1}]}).reasons.includes('INVALID_LINE')));
+test('missing contact consent blocked',()=>assert.ok(evaluateCheckoutReadiness({...base,customer:{}}).reasons.includes('CONTACT_CONSENT_MISSING')));
+test('empty cart blocked',()=>assert.ok(evaluateCheckoutReadiness({...base,items:[]}).reasons.includes('EMPTY_CART')));
+test('unapproved price blocked',()=>assert.ok(evaluateCheckoutReadiness({...base,catalog:{'TEST-1':{available:true}}}).reasons.includes('UNAPPROVED_PRICE')));
