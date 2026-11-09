@@ -6,6 +6,7 @@ import {
   type IntentLine,
 } from "@/lib/order-intents/contract";
 import { LIMA_DISTRICTS, CALLAO_DISTRICTS } from "@/lib/delivery-v2/delivery-metropolitan";
+import { buildRequestCartLine, appendRequestCartLine } from "@/lib/order-intents/request-cart";
 import "./request.css";
 
 const CORE_FLAVORS = [
@@ -47,22 +48,17 @@ export function OrderRequestForm() {
   function changed() {idempotencyKey.current="";setRequestId("");setFeedback("");}
   function updateContact(next:Partial<typeof contact>) {changed();setContact(current=>({...current,...next}));}
   function addLine() {
-    if(cart.length>=20){setFeedback("Máximo 20 líneas por solicitud.");return;}
-    let next:IntentLine={sku,quantity};
-    if(isPack){
-      const composition=Object.entries(flavors).filter(([,n])=>n>0).map(([flavor,quantity])=>({flavor,quantity}));
-      if(selectedCount!==count || (sku.endsWith("-un-sabor")?composition.length!==1:composition.length<2)){
-        setFeedback(`Este pack necesita exactamente ${count} bagels y la combinación de sabores indicada.`);
-        return;
-      }
-      next={sku,quantity,flavors:composition};
-    } else if(isSchmear&&schmearFlavor.trim()){
-      next={sku,quantity,schmearFlavor:schmearFlavor.trim().toLowerCase().replace(/\s+/g,"-")};
+    try {
+      const next = buildRequestCartLine(sku, quantity, flavors, schmearFlavor);
+      const updated = appendRequestCartLine(cart, next);
+      changed();
+      setCart(updated);
+      setFlavors({});
+      setSchmearFlavor("");
+      setQuantity(1);
+    } catch(error) {
+      setFeedback(error instanceof Error ? error.message : "Revisa tu selección.");
     }
-    if(cart.some(line=>JSON.stringify(line)===JSON.stringify(next))){
-      setFeedback("Ese producto ya está incluido con la misma composición. Modifica la cantidad o selección.");return;
-    }
-    changed();setCart(current=>[...current,next]);setFlavors({});setSchmearFlavor("");setQuantity(1);
   }
   useEffect(()=>{
     let active=true;setDelivery(null);
