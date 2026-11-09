@@ -12,6 +12,11 @@ const NEXT: Record<IntentReviewStatus, readonly IntentReviewStatus[]> = {
   expired: [],
 };
 
+export function allowedReviewTransitions(from: unknown): readonly IntentReviewStatus[] {
+  if (typeof from !== "string" || !Object.prototype.hasOwnProperty.call(NEXT, from)) return [];
+  return NEXT[from as IntentReviewStatus];
+}
+
 export function assertReviewTransition(from: unknown, to: unknown): asserts to is IntentReviewStatus {
   if (
     typeof from !== "string" || typeof to !== "string" ||
