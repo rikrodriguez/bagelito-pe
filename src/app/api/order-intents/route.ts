@@ -32,7 +32,7 @@ export async function POST(request:Request){
     const payload=validateOrderIntent(await readLimited(request));
     await enforcePublicApiSecurity({request,scope:'reservations',email:payload.email,whatsapp:payload.whatsapp,trapValue:''});
     const result=await createNonPayableOrderIntent(payload);
-    return NextResponse.json({ok:true,...result,message:'Solicitud recibida para revisión; aún no está confirmada.'},{status:202,headers});
+    return NextResponse.json({ok:true,...result,message:'Solicitud localizada. Su estado de revisión está indicado en la respuesta; no confirma compra ni pago.'},{status:202,headers});
   } catch(error) {
     if(error instanceof OrderIntentConflict)return fail(409,'A different request already uses this identifier.');
     if(error instanceof DeliveryTierError)return fail(422,'Please select a valid delivery district.');
