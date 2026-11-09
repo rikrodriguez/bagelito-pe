@@ -24,7 +24,7 @@ function label(sku:string) {
 }
 function sizeOfPack(sku:string) {return Number(sku.match(/^pack-(?:mini|grande)-(6|12|24)-/)?.[1] ?? 0);}
 type DeliveryPreview = {estimatedFeeMinor:number|null;status:string;reason?:string};
-type SubmitResponse = {ok?:boolean;requestId?:string;error?:string};
+type SubmitResponse = {ok?:boolean;requestId?:string;status?:string;error?:string};
 
 export function OrderRequestForm() {
   const [sku,setSku]=useState<string>(ALLOWED_PACKS[0]);
@@ -90,7 +90,17 @@ export function OrderRequestForm() {
       const data=await response.json() as SubmitResponse;
       if(!response.ok||!data.ok||!data.requestId){
         setFeedback(response.status===503?"Las solicitudes aún no están habilitadas. No se registró ningún pedido.":data.error??"No pudimos registrar la solicitud.");
-      }else{setRequestId(data.requestId);setFeedback("Solicitud recibida para revisión humana. Todavía no hay pedido confirmado ni pago.");}
+      }else{
+        setRequestId(data.requestId);
+        const messages: Record<string,string> = {
+          awaiting_human_review: "Solicitud recibida para revisión humana.",
+          reviewing: "Tu solicitud ya está siendo revisada por nuestro equipo.",
+          approved_for_followup: "Tu solicitud ya fue revisada y está pendiente de seguimiento.",
+          rejected: "Esta solicitud fue descartada. Modifica tu selección para iniciar una solicitud nueva.",
+          expired: "Esta solicitud venció. Modifica tu selección para iniciar otra.",
+        };
+        setFeedback((messages[data.status ?? ""] ?? "Solicitud localizada.") + " No hay pedido confirmado ni pago.");
+      }
     }catch {setFeedback("No pudimos confirmar el registro. Puedes reintentar sin duplicar tu solicitud.");}
     finally {setSending(false);}
   }
