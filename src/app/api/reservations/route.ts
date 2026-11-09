@@ -4,6 +4,7 @@ import { getDurationMs, getRequestId, logError, logInfo, logWarn } from "@/lib/m
 import { PublicApiError, enforcePublicApiSecurity } from "@/lib/public-api-security";
 import { trackBagelitoServerEvent } from "@/lib/server-analytics";
 import { createReservation } from "@/lib/reservations/service";
+import { DeliveryV2ReviewRequiredError } from "@/lib/delivery-v2/server-quote";
 
 export const runtime = "nodejs";
 
@@ -45,9 +46,11 @@ export async function POST(request: Request) {
     });
     return NextResponse.json({ ok: true, orderCode });
   } catch (error) {
-    const status = error instanceof PublicApiError ? error.status : 400;
-    const errorType = error instanceof ZodError
-      ? "validation"
+    const status = error instanceof DeliveryV2ReviewRequiredError ? error.statusCode : error instanceof PublicApiError ? error.status : 400;
+    const errorType = error instanceof DeliveryV2ReviewRequiredError
+      ? "delivery_review_required"
+      : error instanceof ZodError
+        ? "validation"
       : error instanceof PublicApiError
         ? error.code
         : "server";
@@ -64,7 +67,9 @@ export async function POST(request: Request) {
       type: errorType,
     };
 
-    if (error instanceof PublicApiError) {
+    if (error instanceof DeliveryV2ReviewRequiredError) {
+      logWarn("reservation_api_delivery_v2_pending", context);
+    } else if (error instanceof PublicApiError) {
       logWarn("reservation_api_public_blocked", {
         ...context,
         retryAfterSeconds: error.retryAfterSeconds ?? undefined,
