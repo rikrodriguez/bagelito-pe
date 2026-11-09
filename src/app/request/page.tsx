@@ -15,7 +15,7 @@ export const revalidate = 0;
 export default function RequestPage() {
   // Server flag: no public capture without database migration, review queue
   // certification, privacy approval, and explicit launch permission.
-  const enabled = process.env.BAGELITO_ORDER_INTENTS_ENABLED === "true";
+  const enabled = process.env.BAGELITO_ORDER_INTENTS_ENABLED === "true" && process.env.BAGELITO_ORDER_INTENTS_ADMIN_ENABLED === "true";
   return (
     <>
       <Header />
