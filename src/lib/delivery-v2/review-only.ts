@@ -4,7 +4,7 @@
  * Final delivery requires trusted server-verified CUSTOMER address + capacity.
  * Do not accept client-supplied "trusted evidence" or dispatch coordinates.
  */
-import {previewDeliveryTier, TARIFF_VERSION} from './delivery-private-tiers';
+import {previewDeliveryTier, TARIFF_VERSION} from './delivery-private-tiers.js';
 
 export type DeliveryReviewOnly = Readonly<{
   district: string;
