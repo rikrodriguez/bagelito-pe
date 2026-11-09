@@ -4,7 +4,7 @@
 import {
   ALLOWED_PACKS, ALLOWED_SCHMEARS, REVIEW_ONLY_CATEGORIES,
   type IntentLine,
-} from "./contract";
+} from "./contract.js";
 
 const ALL = new Set<string>([...ALLOWED_PACKS,...ALLOWED_SCHMEARS,...REVIEW_ONLY_CATEGORIES]);
 const CORE = new Set(["plain","everything","sesame","classic-onion","jalapeno-cheddar",
