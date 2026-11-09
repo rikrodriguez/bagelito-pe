@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:order-intents": "node --experimental-strip-types --test tests/order-intents-contract.test.mjs tests/order-intents-repository.test.mjs tests/order-intents-review-state.test.ts tests/order-intents-cart.test.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
