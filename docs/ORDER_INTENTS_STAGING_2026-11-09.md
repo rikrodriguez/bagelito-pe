@@ -33,3 +33,12 @@
 
 ## Next engineering gate
 Build an authenticated internal review queue and human status workflow with strict role permissions; test real Supabase schema in a controlled nonproduction environment after authorization. Then connect the visual storefront to this request endpoint, without moving any Golden imagery.
+
+## 9-Nov update: review queue and UI now implemented in Draft
+
+- Added private `/admin/order-intents` queue with the existing `requireAdmin()` login and compare-and-swap status transitions, `review_note`, `reviewed_at` and a draft-only DB audit trigger.
+- Added separate nonpayable `/request` form and cart-to-intent adapter, plus a conditional link from `/reserve`. Golden assets not modified.
+- Both `BAGELITO_ORDER_INTENTS_ENABLED` **and** `BAGELITO_ORDER_INTENTS_ADMIN_ENABLED` must be `true` before public capture can be shown or accepted. No such flags changed in any live environment.
+- Newly executed offline: **8/8 review-state**, **8/8 cart-mapper**, both Git blob verified, plus **19/19 source-level assertions**. Full Next and Supabase execution still pending.
+- Read-only Supabase check confirmed project active but `public.order_intents` absent. Migration is **not applied**.
+- Detailed audit: `docs/qa/ORDER_INTENTS_ADMIN_UI_2026-11-09.md`.
