@@ -12,7 +12,7 @@ import {
   quoteDeliveryTier,
   TARIFF_VERSION,
   type TrustedDestinationEvidence,
-} from "./delivery-private-tiers";
+} from "./delivery-private-tiers.js";
 
 export type CustomerDeliveryRequest = Readonly<{
   district: string;
