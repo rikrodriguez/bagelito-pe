@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test:delivery-v2": "node --test src/lib/delivery-v2-preview.test.mjs"
+    "test:delivery-v2": "node --test src/lib/delivery-v2-preview.test.mjs src/lib/delivery-v2-response.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
