@@ -27,7 +27,7 @@ async function readLimited(request:Request){
 }
 export async function POST(request:Request){
   // Commercial activation requires explicit approval and SQL migration.
-  if(process.env.BAGELITO_ORDER_INTENTS_ENABLED!=='true')return fail(503,'Order requests are not enabled yet.');
+  if(process.env.BAGELITO_ORDER_INTENTS_ENABLED!=='true' || process.env.BAGELITO_ORDER_INTENTS_ADMIN_ENABLED!=='true')return fail(503,'Order requests are not enabled yet.');
   try {
     const payload=validateOrderIntent(await readLimited(request));
     await enforcePublicApiSecurity({request,scope:'reservations',email:payload.email,whatsapp:payload.whatsapp,trapValue:''});
