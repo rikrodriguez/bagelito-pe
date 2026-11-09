@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { flavors, getValidPack, packs } from "@/lib/catalog";
@@ -46,6 +47,12 @@ export default async function ReservePage({ searchParams }: { searchParams?: Pro
     <>
       <Header />
       <main className="reserve-page">
+        {process.env.BAGELITO_ORDER_INTENTS_ENABLED === "true" && process.env.BAGELITO_ORDER_INTENTS_ADMIN_ENABLED === "true" ? (
+          <aside className="reserve-alert" style={{margin:"20px auto",maxWidth:920}}>
+            <strong>¿Prefieres solicitar una revisión sin pagar?</strong>{" "}
+            <Link href="/request">Arma tu solicitud de Bagelito</Link>. No confirma precio, stock ni delivery.
+          </aside>
+        ) : null}
         <ReservationFlow
           packs={packs}
           flavors={flavors}

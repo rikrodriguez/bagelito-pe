@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { getFlavorBySlug, getPackBySlug } from "@/lib/catalog";
 import { getCheckoutExtraPackOffer } from "@/lib/checkout-upsell";
-import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
+import { requireVerifiedDeliveryV2 } from "@/lib/delivery-v2/server-quote";
 import { getMissingReservationEnv } from "@/lib/env";
 import { logError, logWarn } from "@/lib/monitoring";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -492,8 +492,13 @@ export async function createReservation(formData: FormData) {
   const payload = payloadFromFormData(formData);
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
-  const deliveryDistanceKm = getDeliveryDistanceKm(payload.district);
-  const deliveryFee = getDeliveryFee(payload.district);
+  // Do not create a reservation or payment session from an unverified address.
+  const verifiedDelivery = await requireVerifiedDeliveryV2({
+    district: payload.district,
+    deliveryAddress: payload.deliveryAddress,
+    addressReference: payload.addressReference,
+  });
+  const deliveryFee = verifiedDelivery.feeSoles;
   const totalAmount = pack.amount + deliveryFee;
 
   const supabase = createSupabaseAdminClient();
@@ -507,7 +512,7 @@ export async function createReservation(formData: FormData) {
   const orderCode = await nextOrderCode(supabase);
   const paymentScreenshotPath = orderCode + "/" + Date.now() + "-" + safeFilename(paymentScreenshot.name);
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
-  const deliveryNotes = [handoffNote, `Delivery: S/${deliveryFee} (${deliveryDistanceKm} km)`, payload.deliveryNotes].filter(Boolean).join(" | ");
+  const deliveryNotes = [handoffNote, `Delivery V2: S/${deliveryFee} (${verifiedDelivery.tariffVersion})`, payload.deliveryNotes].filter(Boolean).join(" | ");
 
   const { error: uploadError } = await supabase.storage
     .from(paymentProofBucket)
@@ -600,8 +605,13 @@ export async function createCulqiReservation(input: unknown) {
   const pack = getPackBySlug(payload.packSlug);
   if (!pack) throw new Error("Invalid pack selected.");
 
-  const deliveryDistanceKm = getDeliveryDistanceKm(payload.district);
-  const deliveryFee = getDeliveryFee(payload.district);
+  // Do not create a reservation or payment session from an unverified address.
+  const verifiedDelivery = await requireVerifiedDeliveryV2({
+    district: payload.district,
+    deliveryAddress: payload.deliveryAddress,
+    addressReference: payload.addressReference,
+  });
+  const deliveryFee = verifiedDelivery.feeSoles;
   const extraPackOffer = getCheckoutExtraPackOffer(pack.amount);
   const productSubtotal = pack.amount + (payload.extraPack ? extraPackOffer.discountedAmount : 0);
   const totalAmount = productSubtotal + deliveryFee;
@@ -659,7 +669,7 @@ export async function createCulqiReservation(input: unknown) {
   const handoffNote = payload.deliveryHandoff === "porteria" ? "Recepción: Dejar en portería" : "Recepción: Yo lo recibo";
   const deliveryNotes = [
     handoffNote,
-    `Delivery: S/${deliveryFee} (${deliveryDistanceKm} km)`,
+    `Delivery V2: S/${deliveryFee} (${verifiedDelivery.tariffVersion})`,
     payload.extraPack
       ? `Upsell: pack extra con 20% de descuento (S/${extraPackOffer.discountedAmount})`
       : "",

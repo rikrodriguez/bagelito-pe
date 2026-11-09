@@ -1470,6 +1470,9 @@ export default async function AdminPage({
             <a href="/admin/export/driver"><FileDown size={16} /> Driver CSV</a>
             <a href="/admin/export/waitlist"><FileDown size={16} /> Waitlist CSV</a>
             <Link href="/admin/reclamaciones"><BookOpenCheck size={16} /> Reclamaciones</Link>
+            {process.env.BAGELITO_ORDER_INTENTS_ADMIN_ENABLED === "true" ? (
+              <Link href="/admin/order-intents"><Package size={16} /> Solicitudes por revisar</Link>
+            ) : null}
           </div>
         </div>
 

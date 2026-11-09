@@ -3,6 +3,7 @@ import { ZodError } from "zod";
 import { getPaymentConfig } from "@/lib/payments";
 import { PublicApiError, enforcePublicApiSecurity } from "@/lib/public-api-security";
 import { createCulqiReservation } from "@/lib/reservations/service";
+import { DeliveryV2ReviewRequiredError } from "@/lib/delivery-v2/server-quote";
 
 export const runtime = "nodejs";
 
@@ -39,11 +40,13 @@ export async function POST(request: Request) {
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
-    const status = error instanceof PublicApiError
-      ? error.status
-      : error instanceof ZodError
-        ? 400
-        : 500;
+    const status = error instanceof DeliveryV2ReviewRequiredError
+      ? error.statusCode
+      : error instanceof PublicApiError
+        ? error.status
+        : error instanceof ZodError
+          ? 400
+          : 500;
     const message = error instanceof ZodError
       ? error.issues.map((issue) => issue.message).join(" ")
       : error instanceof Error
