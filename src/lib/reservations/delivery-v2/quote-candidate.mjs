@@ -19,6 +19,8 @@ const APPROVED_POLICY = Object.freeze({
   laMolinaFarSectors: Object.freeze(['El Sol de La Molina','Las Lagunas de La Molina','La Planicie']),
   roadKmUpgrades: Object.freeze({over_15_km:1500, over_25_km:2000, over_40_km:'manual-review'}),
   publicResponseFields: Object.freeze(['district','province','feeMinor','tier','status','payable','tariffVersion']),
+  checkout: 'requires verified destination district and address from internal backend; no client-supplied evidence',
+  manual: 'remote districts may need separate logistic quote; never claim fixed S/20 beyond feasible radius',
 });
 
 const canonical = value => value.normalize('NFD')
@@ -39,12 +41,15 @@ function hasExactKeys(value, expectedKeys) {
 }
 
 function isExactApprovedPolicy(policy) {
-  if (!policy || typeof policy !== 'object' || Array.isArray(policy) ||
+  if (!hasExactKeys(policy, ['schema','owner_approval_date','public_dispatch_area','private_origin',
+        'currency','pricing','overrides','checkout','manual','public_response_fields']) ||
       policy.schema !== SCHEMA ||
       policy.owner_approval_date !== APPROVED_POLICY.ownerApprovalDate ||
       policy.public_dispatch_area !== APPROVED_POLICY.publicDispatchArea ||
       policy.private_origin !== APPROVED_POLICY.privateOrigin ||
-      policy.currency !== APPROVED_POLICY.currency) return false;
+      policy.currency !== APPROVED_POLICY.currency ||
+      policy.checkout !== APPROVED_POLICY.checkout ||
+      policy.manual !== APPROVED_POLICY.manual) return false;
 
   const pricing = policy.pricing;
   if (!hasExactKeys(pricing, Object.keys(APPROVED_POLICY.pricing)) ||
