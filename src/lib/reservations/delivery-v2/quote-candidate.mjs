@@ -60,6 +60,11 @@ export function evaluateDeliveryV2Candidate({district, province, adjacent, secto
     const isFarSector = typeof sector === 'string' &&
       policy.overrides.la_molina_verified_sectors_very_distant
         .some(name => canonical(name) === canonical(sector));
+    // The policy lists far sectors, but does NOT certify a near-sector
+    // allowlist. Missing or unknown sector could still be S/20; do not
+    // publish a misleading S/15 candidate merely because no far match was
+    // found. A verified >25 km route independently fixes the S/20 tier.
+    if (!isFarSector && roadKm <= 25) return base;
     if (isFarSector) feeMinor = Math.max(feeMinor, policy.pricing.very_distant_minor);
   }
   if (roadKm > 15) feeMinor = Math.max(feeMinor, distanceRules.over_15_km);
