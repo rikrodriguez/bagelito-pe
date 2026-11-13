@@ -34,14 +34,20 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
         Object.keys(extras).length > 0) {
       throw new TypeError('opaque destinationId only; client geo, rates and evidence prohibited');
     }
-    const nowMs = now();
-    if (!Number.isSafeInteger(nowMs) || nowMs <= 0) throw new TypeError('invalid server clock');
+    const startedAtMs = now();
+    if (!Number.isSafeInteger(startedAtMs) || startedAtMs <= 0) {
+      throw new TypeError('invalid server clock');
+    }
     const address = await lookupVerifiedAddress(destinationId);
+    const checkedAtMs = now();
+    if (!Number.isSafeInteger(checkedAtMs) || checkedAtMs < startedAtMs) {
+      throw new TypeError('invalid or nonmonotonic server clock');
+    }
     if (!exact(address, ADDRESS_KEYS) || address.status !== 'verified' ||
         address.destinationId !== destinationId ||
         !positiveInt(address.addressRevision) ||
         !sha.test(address.verificationId ?? '') ||
-        !fresh(address.verifiedAtMs, nowMs) ||
+        !fresh(address.verifiedAtMs, checkedAtMs) ||
         !text(address.district) || !text(address.province) ||
         typeof address.adjacent !== 'boolean' ||
         (address.sector !== null && !text(address.sector))) {
@@ -58,11 +64,21 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
       sector:address.sector === null ? null : address.sector.trim().replace(/\s+/g,' '),
     });
     const route = await measureTrustedRoute(identity);
+    // Both proofs must still be fresh at the END of the async operation. A
+    // slow route lookup cannot resurrect an address valid only at entry.
+    const completedAtMs = now();
+    if (!Number.isSafeInteger(completedAtMs) || completedAtMs < checkedAtMs) {
+      throw new TypeError('invalid or nonmonotonic server clock');
+    }
+    if (!fresh(address.verifiedAtMs, completedAtMs)) {
+      return fail('address_verification_required');
+    }
     if (!exact(route, ROUTE_KEYS) || route.status !== 'measured' ||
         route.destinationId !== destinationId ||
         route.addressRevision !== identity.addressRevision ||
         route.verificationId !== identity.verificationId ||
-        !fresh(route.measuredAtMs, nowMs) ||
+        !fresh(route.measuredAtMs, completedAtMs) ||
+        route.measuredAtMs < address.verifiedAtMs ||
         typeof route.roadKm !== 'number' || !Number.isFinite(route.roadKm) ||
         route.roadKm <= 0) {
       return fail('route_verification_required');
