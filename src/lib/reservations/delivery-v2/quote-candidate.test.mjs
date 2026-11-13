@@ -84,6 +84,11 @@ test('policy drift in any approved tariff field fails closed before quote calcul
     draft => { draft.overrides.server_verified_road_km_upgrade.over_40_km = 'fixed'; },
     draft => { draft.overrides.extra_override = true; },
     draft => { draft.owner_approval_date = '2026-11-07'; },
+    draft => { draft.checkout = 'client-supplied address accepted'; },
+    draft => { draft.manual = 'always charge a fixed fee'; },
+    draft => { draft.checkout_enabled = true; },
+    draft => { draft.payable = true; },
+    draft => { draft.server_verified = true; },
     draft => { draft.public_response_fields.push('address'); },
   ];
   for (const mutate of mutations) {
