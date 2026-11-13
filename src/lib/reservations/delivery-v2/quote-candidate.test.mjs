@@ -6,11 +6,10 @@ import {dirname, join} from 'node:path';
 import {evaluateDeliveryV2Candidate} from './quote-candidate.mjs';
 
 const policy = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'approved-policy-v2.json'), 'utf8'));
-const candidate = (overrides = {}) => evaluateDeliveryV2Candidate({
+const candidate = (overrides = {}, selectedPolicy = policy) => evaluateDeliveryV2Candidate({
   district: 'Lince', province: 'Lima', adjacent: true, roadKm: 3, ...overrides,
-}, policy);
+}, selectedPolicy);
 
-// This is tariff logic QA, NOT proof that a road-distance or address provider is integrated.
 test('adjacent/regular tiers and threshold upgrades are deterministic', () => {
   assert.equal(candidate().feeMinor, 800);
   assert.equal(candidate({adjacent:false}).feeMinor, 1000);
@@ -69,4 +68,32 @@ test('public output allowlist is exact, never authorizes payment or exposes priv
       assert.equal(serialized.includes(forbidden),false,forbidden);
     }
   }
+});
+
+test('policy drift in any approved tariff field fails closed before quote calculation', () => {
+  const mutations = [
+    draft => { draft.pricing.adjacent_minor = 801; },
+    draft => { draft.pricing.regular_minor = 1001; },
+    draft => { draft.pricing.distant_minor = 1501; },
+    draft => { draft.pricing.very_distant_minor = 2001; },
+    draft => { draft.pricing.extra_tier_minor = 2500; },
+    draft => { draft.overrides.la_molina_min = 1400; },
+    draft => { draft.overrides.la_molina_verified_sectors_very_distant[0] = 'Other sector'; },
+    draft => { draft.overrides.server_verified_road_km_upgrade.over_15_km = 1400; },
+    draft => { draft.overrides.server_verified_road_km_upgrade.over_25_km = 1900; },
+    draft => { draft.overrides.server_verified_road_km_upgrade.over_40_km = 'fixed'; },
+    draft => { draft.overrides.extra_override = true; },
+    draft => { draft.owner_approval_date = '2026-11-07'; },
+    draft => { draft.public_response_fields.push('address'); },
+  ];
+  for (const mutate of mutations) {
+    const tampered = structuredClone(policy);
+    mutate(tampered);
+    assert.throws(() => candidate({}, tampered), /Exact owner-approved Delivery V2 policy is required/);
+  }
+});
+
+test('the exact owner-approved policy remains accepted', () => {
+  assert.equal(candidate().feeMinor, policy.pricing.adjacent_minor);
+  assert.equal(candidate({adjacent:false}).feeMinor, policy.pricing.regular_minor);
 });
