@@ -28,8 +28,15 @@ test('above 40 km requires manual review without presenting a fixed price', () =
   });
 });
 
-test('La Molina minimum and named sectors apply with accent and case normalization', () => {
-  assert.equal(candidate({district:' LA  MOLINA ',adjacent:false,roadKm:8}).feeMinor,1500);
+test('La Molina uncertain sectors fail closed; verified far sectors and >25 km can yield a nonpayable S/20 candidate', () => {
+  for (const sector of [null, '', 'La Rinconada', 'unknown']) {
+    const quote = candidate({district:' LA  MOLINA ',adjacent:false,sector,roadKm:8});
+    assert.equal(quote.feeMinor,null);
+    assert.equal(quote.status,'verification_required');
+    assert.equal(quote.payable,false);
+  }
+  assert.equal(candidate({district:'La Molina',adjacent:false,sector:null,roadKm:25}).feeMinor,null);
+  assert.equal(candidate({district:'La Molina',adjacent:false,sector:null,roadKm:25.01}).feeMinor,2000);
   assert.equal(candidate({district:'La Molina',adjacent:false,sector:'la planicie',roadKm:8}).feeMinor,2000);
   assert.equal(candidate({district:'La Molina',adjacent:false,sector:'EL SOL DE LA MOLINA',roadKm:8}).feeMinor,2000);
   assert.equal(candidate({district:'La Molina',adjacent:false,sector:'Las Lagunas de La Molina',roadKm:8}).feeMinor,2000);
