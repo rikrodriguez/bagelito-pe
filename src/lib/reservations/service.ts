@@ -1,4 +1,5 @@
 import { randomBytes } from "node:crypto";
+import { requireVerifiedDeliveryV2Pricing } from "./delivery-v2-hard-stop";
 import { getFlavorBySlug, getPackBySlug } from "@/lib/catalog";
 import { getCheckoutExtraPackOffer } from "@/lib/checkout-upsell";
 import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
@@ -486,6 +487,7 @@ async function createReservationLegacy(
 }
 
 export async function createReservation(formData: FormData) {
+  requireVerifiedDeliveryV2Pricing();
   const missing = getMissingReservationEnv();
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
 
@@ -593,6 +595,7 @@ export async function createReservation(formData: FormData) {
 }
 
 export async function createCulqiReservation(input: unknown) {
+  requireVerifiedDeliveryV2Pricing();
   const missing = getMissingReservationEnv();
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
 
