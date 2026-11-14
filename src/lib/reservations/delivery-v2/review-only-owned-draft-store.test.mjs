@@ -114,3 +114,11 @@ test('wrong owner cannot validate a signed review link for another owner draft',
     assert.equal(await isReviewOnlyDraftLinkCurrent({link:issued.link,loadDraft:f.a.loadDraft,serverKey:key,now:()=>timestamp}),false);
   }finally{f.finish()}
 });
+
+test('bootstrap rejects nonstring digest with a deceptive toString before touching SQLite',()=>{
+  const f=fixture();try{
+    const deceptive={toString:()=> 'a'.repeat(64)};
+    assert.throws(()=>f.a.insertInitialDraft({...base,cartSha256:deceptive}),/snapshot/);
+    assert.equal(f.a.loadDraft(draftId),null);
+  }finally{f.finish()}
+});
