@@ -18,7 +18,8 @@ const id = v => typeof v === 'string' && ID.test(v);
 const rev = v => Number.isSafeInteger(v) && v > 0;
 const FIELDS = ['draftId','revision','cartSha256','destinationId','destinationRevision'];
 const validDraft = d => exact(d, FIELDS) && id(d.draftId) &&
-  rev(d.revision) && d.revision < Number.MAX_SAFE_INTEGER && SHA.test(d.cartSha256) &&
+  rev(d.revision) && d.revision < Number.MAX_SAFE_INTEGER && typeof d.cartSha256 === 'string' &&
+  SHA.test(d.cartSha256) &&
   id(d.destinationId) && rev(d.destinationRevision);
 const exposed = row => row === undefined ? null : Object.freeze({
   draftId:row.draft_id, revision:row.revision, cartSha256:row.cart_sha256,
@@ -33,10 +34,12 @@ export function createReviewOnlyOwnedDraftStore({db, getTrustedPrincipal}={}) {
   function actor() {
     // Resolve on EACH operation; do not bind the actor from a previous request.
     const p = getTrustedPrincipal();
-    if (!exact(p,['tenantId','ownerId']) || !id(p.tenantId) || !id(p.ownerId)) {
+    // Copy validated scalar identities once; never retain mutable session data.
+    const tenantId = p?.tenantId, ownerId = p?.ownerId;
+    if (!exact(p,['tenantId','ownerId']) || !id(tenantId) || !id(ownerId)) {
       throw new TypeError('verified synchronous server principal required');
     }
-    return p;
+    return Object.freeze({tenantId,ownerId});
   }
   db.exec(`CREATE TABLE IF NOT EXISTS bagelito_review_owned_drafts (
     tenant_id TEXT NOT NULL,
