@@ -53,8 +53,11 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
         (address.sector !== null && !text(address.sector))) {
       return fail('address_verification_required');
     }
+    // Snapshot the original verification time too: a mutable provider response
+    // must not backdate or refresh its timestamp during route measurement.
     // Copy before the async boundary: provider-owned objects can be mutated
     // while the route is in flight. Never trust them after await.
+    const verifiedAtMs = address.verifiedAtMs;
     const identity = Object.freeze({destinationId,
       addressRevision:address.addressRevision, verificationId:address.verificationId});
     const destination = Object.freeze({
@@ -70,7 +73,7 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
     if (!Number.isSafeInteger(completedAtMs) || completedAtMs < checkedAtMs) {
       throw new TypeError('invalid or nonmonotonic server clock');
     }
-    if (!fresh(address.verifiedAtMs, completedAtMs)) {
+    if (!fresh(verifiedAtMs, completedAtMs)) {
       return fail('address_verification_required');
     }
     if (!exact(route, ROUTE_KEYS) || route.status !== 'measured' ||
@@ -78,7 +81,7 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
         route.addressRevision !== identity.addressRevision ||
         route.verificationId !== identity.verificationId ||
         !fresh(route.measuredAtMs, completedAtMs) ||
-        route.measuredAtMs < address.verifiedAtMs ||
+        route.measuredAtMs < verifiedAtMs ||
         typeof route.roadKm !== 'number' || !Number.isFinite(route.roadKm) ||
         route.roadKm <= 0) {
       return fail('route_verification_required');
