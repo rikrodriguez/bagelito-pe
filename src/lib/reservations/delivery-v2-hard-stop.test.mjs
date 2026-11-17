@@ -54,3 +54,45 @@ test('temporary hard stop remains unconditional until a trusted server-owned V2 
   );
   assert.doesNotMatch(guardSource, /process\.env|import\.meta\.env|globalThis/);
 });
+
+/**
+ * Isolated execution of the exact getReservationBatchAvailability body from
+ * service.ts. Imports for the Next/Supabase service are intentionally replaced
+ * with traps: the unconditional P0 gate must return before any of them run.
+ * This is NOT an integration test or a production checkout certification.
+ */
+function availabilityWithGuard(guard) {
+  const start = 'export async function getReservationBatchAvailability(): Promise<BatchAvailability> {';
+  const end = '\n}\n\nexport function payloadFromFormData';
+  const from = source.indexOf(start);
+  const to = source.indexOf(end, from);
+  assert.ok(from >= 0 && to > from, 'find actual availability function in service.ts');
+  const body = source.slice(from + start.length, to);
+
+  const failOnSideEffect = () => { throw new Error('P0: downstream operation reached'); };
+  const create = new Function(
+    'requireVerifiedDeliveryV2Pricing', 'DeliveryV2VerificationRequired',
+    'fallbackBatchAvailability', 'getMissingReservationEnv',
+    'createSupabaseAdminClient', 'readCurrentBatch',
+    'getBatchCapacityUsage', 'getBatchBlockReason',
+    `return async function isolatedAvailability() {${body}\n};`
+  );
+  return create(
+    guard, DeliveryV2VerificationRequired,
+    (options = {}) => ({ accepting: true, status: 'unknown', ...options }),
+    failOnSideEffect, failOnSideEffect, failOnSideEffect,
+    failOnSideEffect, failOnSideEffect
+  );
+}
+
+test('batch availability fails closed before environment and database while delivery V2 is blocked', async () => {
+  const readAvailability = availabilityWithGuard(requireVerifiedDeliveryV2Pricing);
+  assert.deepEqual(await readAvailability(), { accepting: false, status: 'closed' });
+});
+
+test('batch availability does not swallow unexpected errors from the verification guard', async () => {
+  const readAvailability = availabilityWithGuard(() => {
+    throw new Error('unexpected pricing verification failure');
+  });
+  await assert.rejects(readAvailability(), /unexpected pricing verification failure/);
+});
