@@ -159,3 +159,17 @@ test('mutable provider cannot refresh an expired address proof during slow route
   });
   assert.deepEqual(await go({destinationId}),{ready:false,reason:'address_verification_required',payable:false});
 });
+
+
+test('mutable route getter cannot swap measured distance after validation',async()=>{
+  let reads=0;
+  const unstableRoute={...route(),get roadKm(){
+    reads+=1;
+    return reads===1 ? 8.4 : 60;
+  }};
+  const result=await gate(address(),unstableRoute)({destinationId});
+  assert.equal(result.ready,true);
+  assert.equal(result.destination.roadKm,8.4);
+  assert.equal(result.payable,false);
+  assert.equal(reads,1);
+});
