@@ -24,7 +24,7 @@ test('Culqi reservation is guarded before environment, DB or checkout session op
 });
 
 test('guard has an explicit imported dependency, not a client-controlled bypass', () => {
-  assert.match(source, /import \{ requireVerifiedDeliveryV2Pricing \} from "\.\/delivery-v2-hard-stop";/);
+  assert.match(source, /import \{ DeliveryV2VerificationRequired, requireVerifiedDeliveryV2Pricing \} from "\.\/delivery-v2-hard-stop";/);
 });
 
 test('every exported reservation mutation entry point is guarded, including future additions', () => {
