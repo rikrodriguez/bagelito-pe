@@ -69,6 +69,41 @@ test('destination replacement with unchanged cart is detected before issuing lin
   assert.equal((await issue(fn)).status,'draft_changed');
 });
 
+test('mutating a provider quote during async draft re-read cannot change signed fee or payable state',async()=>{
+  const quote={...(await issue()).quote};
+  let loads=0;
+  const fn=make({
+    quoteDestination:async()=>({ready:true,status:'review_candidate_only',payable:false,quote}),
+    loadDraft:async()=>{
+      loads++;
+      if(loads===2){quote.feeMinor=1;quote.payable=true;}
+      return {...persisted};
+    }
+  });
+  const result=await issue(fn);
+  assert.equal(loads,2);
+  assert.equal(result.ready,true);
+  assert.equal(result.payable,false);
+  assert.equal(result.quote.feeMinor,800);
+  assert.equal(result.quote.payable,false);
+  assert.equal(result.link.feeMinor,800);
+  assert.equal(await verify(result.link),true);
+});
+
+test('provider quote changing between validation and snapshot fails closed',async()=>{
+  const quote={...(await issue()).quote};
+  let reads=0;
+  Object.defineProperty(quote,'feeMinor',{enumerable:true,configurable:true,
+    get:()=>++reads===1?800:1});
+  const fn=make({quoteDestination:async()=>({
+    ready:true,status:'review_candidate_only',payable:false,quote
+  })});
+  const result=await issue(fn);
+  assert.equal(result.ready,false);
+  assert.equal(result.status,'manual_review_required');
+  assert.equal(result.link,null);
+});
+
 test('post-issuance cart, draft revision or destination revision changes invalidate the signed link',async()=>{
   const {link}=await issue();
   for(const patch of [{revision:5},{cartSha256:'b'.repeat(64)},
