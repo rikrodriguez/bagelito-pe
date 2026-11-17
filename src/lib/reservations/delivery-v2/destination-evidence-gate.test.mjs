@@ -136,3 +136,26 @@ test('server clock jumping backwards after route measurement fails closed',async
     measureTrustedRoute:async()=>{clock-=5;return route();}});
   await assert.rejects(go({destinationId}),/nonmonotonic server clock/);
 });
+
+test('mutable provider cannot backdate address proof to accept an older route',async()=>{
+  const mutable=address();
+  const olderRoute={...route(),measuredAtMs:mutable.verifiedAtMs-1};
+  const go=gate(mutable,olderRoute,{measureTrustedRoute:async()=>{
+    mutable.verifiedAtMs=nowMs-10000; return olderRoute;
+  }});
+  assert.deepEqual(await go({destinationId}),{ready:false,reason:'route_verification_required',payable:false});
+});
+
+test('mutable provider cannot refresh an expired address proof during slow route lookup',async()=>{
+  let clock=nowMs;
+  const mutable={...address(),verifiedAtMs:nowMs-10*60*1000+1};
+  const go=gate(mutable,route(),{
+    now:()=>clock,
+    measureTrustedRoute:async()=>{
+      clock+=2;
+      mutable.verifiedAtMs=clock;
+      return {...route(),measuredAtMs:clock};
+    }
+  });
+  assert.deepEqual(await go({destinationId}),{ready:false,reason:'address_verification_required',payable:false});
+});
