@@ -76,20 +76,34 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
     if (!fresh(verifiedAtMs, completedAtMs)) {
       return fail('address_verification_required');
     }
-    if (!exact(route, ROUTE_KEYS) || route.status !== 'measured' ||
-        route.destinationId !== destinationId ||
-        route.addressRevision !== identity.addressRevision ||
-        route.verificationId !== identity.verificationId ||
-        !fresh(route.measuredAtMs, completedAtMs) ||
-        route.measuredAtMs < verifiedAtMs ||
-        typeof route.roadKm !== 'number' || !Number.isFinite(route.roadKm) ||
-        route.roadKm <= 0) {
+    if (!exact(route, ROUTE_KEYS)) {
+      return fail('route_verification_required');
+    }
+    // Read the route proof once after the async boundary. An accessor or a
+    // mutable provider object must not change the measured distance between
+    // validation and the nonpayable review response.
+    const measuredRoute = Object.freeze({
+      destinationId: route.destinationId,
+      addressRevision: route.addressRevision,
+      verificationId: route.verificationId,
+      measuredAtMs: route.measuredAtMs,
+      roadKm: route.roadKm,
+      status: route.status,
+    });
+    if (measuredRoute.status !== 'measured' ||
+        measuredRoute.destinationId !== destinationId ||
+        measuredRoute.addressRevision !== identity.addressRevision ||
+        measuredRoute.verificationId !== identity.verificationId ||
+        !fresh(measuredRoute.measuredAtMs, completedAtMs) ||
+        measuredRoute.measuredAtMs < verifiedAtMs ||
+        typeof measuredRoute.roadKm !== 'number' || !Number.isFinite(measuredRoute.roadKm) ||
+        measuredRoute.roadKm <= 0) {
       return fail('route_verification_required');
     }
     // No address line, provider token, coordinates, payment or amount is returned.
     // Ownership and actual provider authentication remain the host's duty.
     return Object.freeze({ready:true, payable:false, status:'evidence_for_review_only',
-      destination:Object.freeze({...destination, roadKm:route.roadKm})
+      destination:Object.freeze({...destination, roadKm:measuredRoute.roadKm})
     });
   };
 }
