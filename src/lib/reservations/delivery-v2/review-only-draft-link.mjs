@@ -87,6 +87,13 @@ export function createReviewOnlyDraftLink({loadDraft,quoteDestination,serverKey,
     if(!result || result.payable!==false || result.ready!==true ||
         result.status!=='review_candidate_only' || !candidateValid(result.quote))
       return fail('manual_review_required');
+    // Snapshot the verified quote before awaiting the second draft read.
+    // Provider-owned result.quote may be mutated while that read is in flight.
+    let safeQuote;
+    try {
+      safeQuote=Object.freeze(Object.fromEntries(CANDIDATE_KEYS.map(k=>[k,result.quote[k]])));
+    } catch {return fail('manual_review_required');}
+    if(!candidateValid(safeQuote)) return fail('manual_review_required');
     let second;
     try {second=snapshot(await loadDraft(request.draftId));}
     catch {return fail('draft_unavailable');}
@@ -94,7 +101,6 @@ export function createReviewOnlyDraftLink({loadDraft,quoteDestination,serverKey,
     const at=now();
     if(!Number.isSafeInteger(at) || at<=0 || at>Number.MAX_SAFE_INTEGER-TTL_MS)
       return fail('verification_unavailable');
-    const safeQuote=Object.freeze(Object.fromEntries(CANDIDATE_KEYS.map(k=>[k,result.quote[k]])));
     const body=payload(first,safeQuote,at);
     const link=Object.freeze({...body,signature:signature(body,serverKey)});
     return Object.freeze({ready:true,status:'review_only',payable:false,quote:safeQuote,link});
