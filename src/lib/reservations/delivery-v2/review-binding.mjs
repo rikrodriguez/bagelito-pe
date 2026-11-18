@@ -34,6 +34,23 @@ function validCandidate(candidate) {
     Object.hasOwn(TIERS, candidate.tier) &&
     candidate.feeMinor === TIERS[candidate.tier];
 }
+// Snapshot each input field ONCE before validation and HMAC signing/comparison.
+// A mutable provider object or accessor must not change revision or fee mid-check.
+function snapshotDraft(draft) {
+  if (!draft || typeof draft !== 'object') return null;
+  return {draftId:draft.draftId, revision:draft.revision, cartSha256:draft.cartSha256};
+}
+function snapshotCandidate(candidate) {
+  if (!candidate || typeof candidate !== 'object') return null;
+  return {payable:candidate.payable, status:candidate.status,
+    tariffVersion:candidate.tariffVersion, tier:candidate.tier, feeMinor:candidate.feeMinor};
+}
+function snapshotBinding(binding) {
+  if (!binding || typeof binding !== 'object' ||
+      Object.keys(binding).length !== KEYS.length ||
+      KEYS.some(k => !Object.hasOwn(binding,k))) return null;
+  return Object.fromEntries(KEYS.map(k => [k,binding[k]]));
+}
 function body(fields) {
   return {
     schema:SCHEMA, draftId:fields.draftId, draftRevision:fields.draftRevision,
@@ -48,12 +65,14 @@ function sign(payload, serverKey) {
 
 export function createDeliveryV2ReviewBinding({draft, candidate, serverKey, nowMs = Date.now()}) {
   assertKey(serverKey);
-  if (!validDraft(draft) || !validCandidate(candidate) ||
+  const verifiedDraft = snapshotDraft(draft);
+  const verifiedCandidate = snapshotCandidate(candidate);
+  if (!validDraft(verifiedDraft) || !validCandidate(verifiedCandidate) ||
       !Number.isSafeInteger(nowMs) || nowMs < 0 || nowMs > Number.MAX_SAFE_INTEGER - TTL_MS) {
     throw new TypeError('Server-owned valid draft, candidate and issue time required');
   }
-  const payload = body({draftId:draft.draftId,draftRevision:draft.revision,
-    cartSha256:draft.cartSha256,tier:candidate.tier,feeMinor:candidate.feeMinor,
+  const payload = body({draftId:verifiedDraft.draftId,draftRevision:verifiedDraft.revision,
+    cartSha256:verifiedDraft.cartSha256,tier:verifiedCandidate.tier,feeMinor:verifiedCandidate.feeMinor,
     issuedAtMs:nowMs,expiresAtMs:nowMs+TTL_MS});
   return Object.freeze({...payload,signature:sign(payload,serverKey)});
 }
@@ -61,25 +80,25 @@ export function createDeliveryV2ReviewBinding({draft, candidate, serverKey, nowM
 /** True only for a matching, unexpired review envelope. NEVER a payment authorization. */
 export function isDeliveryV2ReviewBindingCurrent({binding, draft, serverKey, nowMs = Date.now()}) {
   assertKey(serverKey);
-  if (!validDraft(draft) || !binding || typeof binding !== 'object' ||
-      Object.keys(binding).length !== KEYS.length ||
-      KEYS.some(k=>!Object.hasOwn(binding,k)) ||
+  const verifiedDraft = snapshotDraft(draft);
+  const verifiedBinding = snapshotBinding(binding);
+  if (!validDraft(verifiedDraft) || !verifiedBinding ||
       !Number.isSafeInteger(nowMs) || nowMs < 0 ||
-      !Number.isSafeInteger(binding.issuedAtMs) ||
-      !Number.isSafeInteger(binding.expiresAtMs) ||
-      binding.issuedAtMs < 0 || binding.issuedAtMs > nowMs ||
-      binding.expiresAtMs !== binding.issuedAtMs + TTL_MS ||
-      nowMs >= binding.expiresAtMs ||
-      binding.draftId !== draft.draftId ||
-      binding.draftRevision !== draft.revision ||
-      binding.cartSha256 !== draft.cartSha256 ||
-      binding.schema !== SCHEMA || binding.tariffVersion !== TARIFF ||
-      binding.payable !== false || binding.status !== 'review_only' ||
-      !Object.hasOwn(TIERS,binding.tier) || TIERS[binding.tier] !== binding.feeMinor ||
-      typeof binding.signature !== 'string' || !/^[0-9a-f]{64}$/.test(binding.signature)) {
+      !Number.isSafeInteger(verifiedBinding.issuedAtMs) ||
+      !Number.isSafeInteger(verifiedBinding.expiresAtMs) ||
+      verifiedBinding.issuedAtMs < 0 || verifiedBinding.issuedAtMs > nowMs ||
+      verifiedBinding.expiresAtMs !== verifiedBinding.issuedAtMs + TTL_MS ||
+      nowMs >= verifiedBinding.expiresAtMs ||
+      verifiedBinding.draftId !== verifiedDraft.draftId ||
+      verifiedBinding.draftRevision !== verifiedDraft.revision ||
+      verifiedBinding.cartSha256 !== verifiedDraft.cartSha256 ||
+      verifiedBinding.schema !== SCHEMA || verifiedBinding.tariffVersion !== TARIFF ||
+      verifiedBinding.payable !== false || verifiedBinding.status !== 'review_only' ||
+      !Object.hasOwn(TIERS,verifiedBinding.tier) || TIERS[verifiedBinding.tier] !== verifiedBinding.feeMinor ||
+      typeof verifiedBinding.signature !== 'string' || !/^[0-9a-f]{64}$/.test(verifiedBinding.signature)) {
     return false;
   }
-  const expected = Buffer.from(sign(body(binding),serverKey),'hex');
-  const provided = Buffer.from(binding.signature,'hex');
+  const expected = Buffer.from(sign(body(verifiedBinding),serverKey),'hex');
+  const provided = Buffer.from(verifiedBinding.signature,'hex');
   return timingSafeEqual(expected,provided);
 }
