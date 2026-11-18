@@ -122,3 +122,28 @@ test('bootstrap rejects nonstring digest with a deceptive toString before touchi
     assert.equal(f.a.loadDraft(draftId),null);
   }finally{f.finish()}
 });
+
+
+test('bootstrap writes one validated snapshot even when revision is an accessor',()=>{
+  const f=fixture();try{
+    let reads=0;
+    const unstable={...base};
+    Object.defineProperty(unstable,'revision',{enumerable:true,
+      get(){reads++;return reads===1?4:0;}});
+    f.a.insertInitialDraft(unstable);
+    assert.equal(reads,1);
+    assert.deepEqual(f.a.loadDraft(draftId),base);
+  }finally{f.finish()}
+});
+test('CAS persists the exact validated cart hash when input contains an accessor',()=>{
+  const f=fixture();try{
+    f.a.insertInitialDraft(base);
+    let reads=0;
+    const unstable=change();
+    Object.defineProperty(unstable,'cartSha256',{enumerable:true,
+      get(){reads++;return reads<=2?'b'.repeat(64):'invalid';}});
+    assert.equal(f.a.compareAndSetDraft(unstable),true);
+    assert.equal(reads,1);
+    assert.deepEqual(f.a.loadDraft(draftId),{...base,revision:5,cartSha256:'b'.repeat(64)});
+  }finally{f.finish()}
+});
