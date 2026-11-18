@@ -29,12 +29,17 @@ function keyCheck(key){
   if (!Buffer.isBuffer(key) || key.length<32) throw new TypeError('server-only HMAC key >=32 bytes required');
 }
 function snapshot(input){
-  if (!exact(input,DRAFT_KEYS) || !safeId(input.draftId) ||
-      !safeInt(input.revision) || !safeId(input.destinationId) ||
-      !safeInt(input.destinationRevision) ||
-      typeof input.cartSha256!=='string' || !SHA.test(input.cartSha256)) return null;
-  // Never retain an object supplied by a callback across an await boundary.
-  return Object.freeze(Object.fromEntries(DRAFT_KEYS.map(k=>[k,input[k]])));
+  if (!exact(input,DRAFT_KEYS)) return null;
+  // A trusted adapter can still hand back a mutable record or accessors.
+  // Capture each field once, then validate exactly the values we will sign.
+  // This must happen before either async quote or the second draft read.
+  let fields;
+  try { fields=Object.fromEntries(DRAFT_KEYS.map(k=>[k,input[k]])); }
+  catch { return null; }
+  if (!safeId(fields.draftId) || !safeInt(fields.revision) ||
+      !safeId(fields.destinationId) || !safeInt(fields.destinationRevision) ||
+      typeof fields.cartSha256!=='string' || !SHA.test(fields.cartSha256)) return null;
+  return Object.freeze(fields);
 }
 function same(a,b){return DRAFT_KEYS.every(k=>a[k]===b[k]);}
 function finger(draft){
