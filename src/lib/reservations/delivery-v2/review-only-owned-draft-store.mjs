@@ -17,6 +17,14 @@ const exact = (v, keys) => v !== null && typeof v === 'object' &&
 const id = v => typeof v === 'string' && ID.test(v);
 const rev = v => Number.isSafeInteger(v) && v > 0;
 const FIELDS = ['draftId','revision','cartSha256','destinationId','destinationRevision'];
+// Capture each externally supplied scalar once before checking or writing it.
+// Re-reading mutable accessors after validation can make SQLite persist a
+// different revision, cart digest or destination than the validated input.
+const snapshot = (input, keys) => {
+  if (!exact(input,keys)) return null;
+  try { return Object.fromEntries(keys.map(key => [key,input[key]])); }
+  catch { return null; }
+};
 const validDraft = d => exact(d, FIELDS) && id(d.draftId) &&
   rev(d.revision) && d.revision < Number.MAX_SAFE_INTEGER && typeof d.cartSha256 === 'string' &&
   SHA.test(d.cartSha256) &&
@@ -63,9 +71,10 @@ export function createReviewOnlyOwnedDraftStore({db, getTrustedPrincipal}={}) {
 
   function insertInitialDraft(input) {
     const p = actor();
-    if (!validDraft(input)) throw new TypeError('invalid server-owned draft snapshot');
-    insert.run(p.tenantId,p.ownerId,input.draftId,input.revision,
-      input.cartSha256,input.destinationId,input.destinationRevision);
+    const draft = snapshot(input,FIELDS);
+    if (!validDraft(draft)) throw new TypeError('invalid server-owned draft snapshot');
+    insert.run(p.tenantId,p.ownerId,draft.draftId,draft.revision,
+      draft.cartSha256,draft.destinationId,draft.destinationRevision);
   }
   function loadDraft(draftId) {
     const p = actor();
@@ -75,14 +84,15 @@ export function createReviewOnlyOwnedDraftStore({db, getTrustedPrincipal}={}) {
   function compareAndSetDraft(input) {
     const p = actor();
     const keys=['draftId','expectedRevision','cartSha256','destinationId','destinationRevision'];
-    if (!exact(input,keys) || !id(input.draftId) ||
-        !rev(input.expectedRevision) || input.expectedRevision >= Number.MAX_SAFE_INTEGER ||
-        typeof input.cartSha256 !== 'string' || !SHA.test(input.cartSha256) ||
-        !id(input.destinationId) || !rev(input.destinationRevision)) {
+    const proposal = snapshot(input,keys);
+    if (!proposal || !id(proposal.draftId) ||
+        !rev(proposal.expectedRevision) || proposal.expectedRevision >= Number.MAX_SAFE_INTEGER ||
+        typeof proposal.cartSha256 !== 'string' || !SHA.test(proposal.cartSha256) ||
+        !id(proposal.destinationId) || !rev(proposal.destinationRevision)) {
       throw new TypeError('invalid server-owned CAS proposal');
     }
-    const r = cas.run(input.cartSha256,input.destinationId,input.destinationRevision,
-      p.tenantId,p.ownerId,input.draftId,input.expectedRevision);
+    const r = cas.run(proposal.cartSha256,proposal.destinationId,proposal.destinationRevision,
+      p.tenantId,p.ownerId,proposal.draftId,proposal.expectedRevision);
     return r.changes===1;
   }
   return Object.freeze({insertInitialDraft,loadDraft,compareAndSetDraft});
