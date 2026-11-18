@@ -170,3 +170,54 @@ test('signing key and callbacks must be server-only and valid',()=>{
   assert.throws(()=>createReviewOnlyDraftLink({serverKey:'browser',loadDraft:async()=>{},quoteDestination:async()=>{}}),/HMAC key/);
   assert.throws(()=>createReviewOnlyDraftLink({serverKey,loadDraft:async()=>{}}),/callback/);
 });
+
+test('single-read snapshot forbids revision getter from changing value after validation',async()=>{
+  const counters=[];
+  const loadDraft=async()=>{
+    const draft={...persisted};let reads=0;
+    Object.defineProperty(draft,'revision',{enumerable:true,get:()=>{
+      reads++;return reads===1?persisted.revision:0;
+    }});
+    counters.push(()=>reads);
+    return draft;
+  };
+  const result=await issue(make({loadDraft}));
+  assert.equal(result.ready,true);
+  assert.equal(result.link.draftRevision,persisted.revision);
+  assert.equal(await verify(result.link),true);
+  assert.deepEqual(counters.map(read=>read()),[1,1]);
+});
+
+test('single-read snapshot forbids cart digest getter from swapping digest during signing',async()=>{
+  const counters=[];
+  const loadDraft=async()=>{
+    const draft={...persisted};let reads=0;
+    Object.defineProperty(draft,'cartSha256',{enumerable:true,get:()=>{
+      reads++;return reads===1?persisted.cartSha256:'NOT_A_HASH';
+    }});
+    counters.push(()=>reads);
+    return draft;
+  };
+  const result=await issue(make({loadDraft}));
+  assert.equal(result.ready,true);
+  assert.equal(result.link.cartSha256,persisted.cartSha256);
+  assert.equal(await verify(result.link),true);
+  assert.deepEqual(counters.map(read=>read()),[1,1]);
+});
+
+test('single-read snapshot forbids swapping verified destination ID after validation',async()=>{
+  const counters=[];
+  const loadDraft=async()=>{
+    const draft={...persisted};let reads=0;
+    Object.defineProperty(draft,'destinationId',{enumerable:true,get:()=>{
+      reads++;return reads===1?persisted.destinationId:'invalid!';
+    }});
+    counters.push(()=>reads);
+    return draft;
+  };
+  const result=await issue(make({loadDraft}));
+  assert.equal(result.ready,true);
+  assert.equal(result.link.payable,false);
+  assert.equal(await verify(result.link),true);
+  assert.deepEqual(counters.map(read=>read()),[1,1]);
+});
