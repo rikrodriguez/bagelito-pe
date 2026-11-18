@@ -75,7 +75,12 @@ function isExactApprovedPolicy(policy) {
 }
 
 /** Returns public-safe, explicitly nonpayable candidate; never a verified quote. */
-export function evaluateDeliveryV2Candidate({district, province, adjacent, sector = null, roadKm = null}, policy) {
+export function evaluateDeliveryV2Candidate({district, province, adjacent, sector = null, roadKm = null}, sourcePolicy) {
+  // Validate and calculate from the same immutable logical snapshot. Accessors
+  // or later mutations must never change a tariff after approval validation.
+  let policy;
+  try { policy = structuredClone(sourcePolicy); }
+  catch { throw new TypeError('Exact owner-approved Delivery V2 policy is required'); }
   if (!isExactApprovedPolicy(policy)) {
     throw new TypeError('Exact owner-approved Delivery V2 policy is required');
   }
