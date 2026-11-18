@@ -63,3 +63,22 @@ test('invalid server key, order revision, cart digest and timestamps are refused
   assert.throws(()=>issue({nowMs:NaN}),TypeError);
   assert.equal(check(issue(),{draft:{...draft,revision:0}}),false);
 });
+
+// Regression: the previous verifier read draft.revision once during validation
+// and again during comparison, accepting a changing getter as a matching draft.
+test('draft getter cannot swap revision between validation and signed comparison',()=>{
+  const binding=issue();
+  let reads=0;
+  const unstable={...draft,get revision(){return ++reads===1?8:7}};
+  assert.equal(check(binding,{draft:unstable}),false);
+  assert.equal(reads,1);
+});
+
+test('creation signs only the revision validated in the single input snapshot',()=>{
+  let reads=0;
+  const unstable={...draft,get revision(){return ++reads===1?7:8}};
+  const binding=issue({draft:unstable});
+  assert.equal(binding.draftRevision,7);
+  assert.equal(reads,1);
+  assert.equal(check(binding),true);
+});
