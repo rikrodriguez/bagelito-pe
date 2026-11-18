@@ -38,7 +38,13 @@ export function createDeliveryV2EvidenceGate({lookupVerifiedAddress, measureTrus
     if (!Number.isSafeInteger(startedAtMs) || startedAtMs <= 0) {
       throw new TypeError('invalid server clock');
     }
-    const address = await lookupVerifiedAddress(destinationId);
+    const rawAddress = await lookupVerifiedAddress(destinationId);
+    // Snapshot each proof field exactly once before validation. Provider
+    // accessors must not return one district/verification ID for validation
+    // and another for the route binding or review response.
+    const address = exact(rawAddress, ADDRESS_KEYS)
+      ? Object.freeze(Object.fromEntries(ADDRESS_KEYS.map(key => [key, rawAddress[key]])))
+      : null;
     const checkedAtMs = now();
     if (!Number.isSafeInteger(checkedAtMs) || checkedAtMs < startedAtMs) {
       throw new TypeError('invalid or nonmonotonic server clock');
