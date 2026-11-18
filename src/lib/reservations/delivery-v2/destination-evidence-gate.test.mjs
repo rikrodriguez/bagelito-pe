@@ -173,3 +173,34 @@ test('mutable route getter cannot swap measured distance after validation',async
   assert.equal(result.payable,false);
   assert.equal(reads,1);
 });
+
+test('client cannot inject a store origin or GHL account address before destination lookup',async()=>{
+  let lookups=0;
+  const go=gate(address(),route(),{lookupVerifiedAddress:async()=>{lookups++;return address();}});
+  for (const key of ['origin','originAddress','ghlLocationAddress','storeOriginId']) {
+    await assert.rejects(go({destinationId,[key]:'client-controlled-location'}),/opaque destinationId only/);
+  }
+  assert.equal(lookups,0);
+});
+
+test('origin metadata in provider address evidence fails closed before routing',async()=>{
+  for (const key of ['origin','originAddress','ghlLocationAddress']) {
+    let routeCalls=0;
+    const go=gate({...address(),[key]:'provider-origin'},route(),{
+      measureTrustedRoute:async()=>{routeCalls++;return route();}
+    });
+    assert.deepEqual(await go({destinationId}),{
+      ready:false,reason:'address_verification_required',payable:false
+    });
+    assert.equal(routeCalls,0);
+  }
+});
+
+test('origin metadata in provider route evidence fails closed and never authorizes payment',async()=>{
+  for (const key of ['origin','originAddress','ghlLocationAddress']) {
+    const result=await gate(address(),{...route(),[key]:'provider-origin'})({destinationId});
+    assert.deepEqual(result,{
+      ready:false,reason:'route_verification_required',payable:false
+    });
+  }
+});
