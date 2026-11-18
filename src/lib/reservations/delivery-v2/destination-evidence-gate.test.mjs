@@ -204,3 +204,25 @@ test('origin metadata in provider route evidence fails closed and never authoriz
     });
   }
 });
+
+test('mutable address getters cannot swap validated district or verification identity',async()=>{
+  let districtReads=0,verificationReads=0;
+  const unstable={...address(),
+    get district(){districtReads++;return districtReads===1 ? 'Lince':'Surco';},
+    get verificationId(){verificationReads++;return verificationReads===1 ? verificationId:'b'.repeat(64);}
+  };
+  const out=await gate(unstable,route())({destinationId});
+  assert.equal(out.ready,true);
+  assert.equal(out.destination.district,'Lince');
+  assert.equal(districtReads,1);
+  assert.equal(verificationReads,1);
+  assert.equal(out.payable,false);
+});
+
+test('first invalid address proof getter cannot be rescued by a second read',async()=>{
+  let reads=0;
+  const unstable={...address(),get district(){reads++;return reads===1 ? '' : 'Lince';}};
+  const out=await gate(unstable,route())({destinationId});
+  assert.deepEqual(out,{ready:false,reason:'address_verification_required',payable:false});
+  assert.equal(reads,1);
+});
