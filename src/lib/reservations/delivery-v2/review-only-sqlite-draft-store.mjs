@@ -51,8 +51,19 @@ export function createReviewOnlySqliteDraftStore({db}={}) {
   // Test-fixture bootstrap only. A real integration must seed only after
   // authenticating and authorizing the draft owner in the host.
   function insertInitialDraft(input) {
-    if (!validate(input)) throw new TypeError('invalid server-owned draft snapshot');
-    insert.run(input.draftId,input.revision,input.cartSha256,input.destinationId,input.destinationRevision);
+    // Inserting a test-only draft must write the SAME values we validated.
+    // Getter-backed/mutable fixtures can otherwise pass validation and then
+    // change a digest or ID before SQLite receives the insert values.
+    let fields;
+    try {
+      if (!exact(input,COLUMNS)) throw new TypeError('invalid input');
+      fields = Object.fromEntries(COLUMNS.map(key => [key,input[key]]));
+    } catch {
+      throw new TypeError('invalid server-owned draft snapshot');
+    }
+    if (!validate(fields)) throw new TypeError('invalid server-owned draft snapshot');
+    insert.run(fields.draftId,fields.revision,fields.cartSha256,
+      fields.destinationId,fields.destinationRevision);
   }
 
   function loadDraft(draftId) {
