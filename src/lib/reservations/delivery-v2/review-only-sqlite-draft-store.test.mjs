@@ -101,3 +101,33 @@ test('invalid identities and unbounded revisions are rejected before writing',()
     assert.deepEqual(s.storeA.loadDraft(dId),snapshot);
   }finally{s.finish();}
 });
+
+test('bootstrap snapshots accessor-backed fields once before validating and inserting',()=>{
+  const db=new DatabaseSync(':memory:');
+  try {
+    const store=createReviewOnlySqliteDraftStore({db});
+    let reads=0;
+    const input={...snapshot,draftId:'draft_accessor_12345678'};
+    Object.defineProperty(input,'cartSha256',{enumerable:true,get(){
+      reads+=1;
+      return reads===1 ? 'd'.repeat(64) : 'not-a-sha';
+    }});
+    store.insertInitialDraft(input);
+    assert.equal(reads,1);
+    assert.deepEqual(store.loadDraft(input.draftId),
+      {...snapshot,draftId:input.draftId,cartSha256:'d'.repeat(64)});
+  } finally {db.close();}
+});
+
+test('bootstrap fails closed when a draft getter throws, without inserting',()=>{
+  const db=new DatabaseSync(':memory:');
+  try {
+    const store=createReviewOnlySqliteDraftStore({db});
+    const input={...snapshot,draftId:'draft_throw_12345678'};
+    Object.defineProperty(input,'cartSha256',{enumerable:true,get(){
+      throw new Error('untrusted getter');
+    }});
+    assert.throws(()=>store.insertInitialDraft(input),/invalid server-owned draft snapshot/);
+    assert.equal(store.loadDraft(input.draftId),null);
+  } finally {db.close();}
+});
