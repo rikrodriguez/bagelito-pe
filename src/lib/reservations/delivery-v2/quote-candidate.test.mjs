@@ -102,3 +102,23 @@ test('the exact owner-approved policy remains accepted', () => {
   assert.equal(candidate().feeMinor, policy.pricing.adjacent_minor);
   assert.equal(candidate({adjacent:false}).feeMinor, policy.pricing.regular_minor);
 });
+test('side-effecting approved policy getter cannot switch a validated S/8 quote to S/10', () => {
+  const dynamic = structuredClone(policy);
+  let reads = 0;
+  Object.defineProperty(dynamic.pricing, 'adjacent_minor', {
+    enumerable: true,
+    get() { return ++reads === 1 ? 800 : 1000; },
+  });
+  const result = candidate({}, dynamic);
+  assert.equal(result.feeMinor, 800);
+  assert.equal(result.tier, 'adjacent');
+  assert.equal(result.payable, false);
+  assert.equal(reads, 1, 'tariff accessor must be read only once');
+});
+
+test('snapshot validates policy without changing normal approved S/8 and S/10 review prices', () => {
+  assert.equal(candidate().feeMinor, 800);
+  assert.equal(candidate({adjacent:false}).feeMinor, 1000);
+  assert.equal(candidate().payable, false);
+  assert.throws(() => candidate({}, {...policy,schema:'unapproved'}), /Exact owner-approved/);
+});
