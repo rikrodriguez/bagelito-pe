@@ -37,13 +37,21 @@ function validCandidate(candidate) {
 // Snapshot each input field ONCE before validation and HMAC signing/comparison.
 // A mutable provider object or accessor must not change revision or fee mid-check.
 function snapshotDraft(draft) {
-  if (!draft || typeof draft !== 'object') return null;
-  return {draftId:draft.draftId, revision:draft.revision, cartSha256:draft.cartSha256};
+  try {
+    if (!draft || typeof draft !== 'object') return null;
+    return {draftId:draft.draftId, revision:draft.revision, cartSha256:draft.cartSha256};
+  } catch {
+    return null;
+  }
 }
 function snapshotCandidate(candidate) {
-  if (!candidate || typeof candidate !== 'object') return null;
-  return {payable:candidate.payable, status:candidate.status,
-    tariffVersion:candidate.tariffVersion, tier:candidate.tier, feeMinor:candidate.feeMinor};
+  try {
+    if (!candidate || typeof candidate !== 'object') return null;
+    return {payable:candidate.payable, status:candidate.status,
+      tariffVersion:candidate.tariffVersion, tier:candidate.tier, feeMinor:candidate.feeMinor};
+  } catch {
+    return null;
+  }
 }
 function snapshotBinding(binding) {
   // A review envelope may be caller-held. Hostile accessors/proxies must fail
