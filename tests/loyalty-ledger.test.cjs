@@ -287,6 +287,35 @@ test('database constraints independently reject duplicate credits, cycles, reque
   assert.equal(store.count('loyalty_redemptions'), 1)
 })
 
+test('legacy ten-order loyalty data requires explicit migration; no silent credit or redemption', async t => {
+  const {store, service} = setup(t)
+  const before = await earn(store, service, 10)
+  const [oldReward, newerReward] = before.entitlements
+  // Simulate persisted V1 records: ten credits, one reward, legacy rule identifier.
+  // No production data is touched. Never reinterpret that entitlement as V2.
+  store.db.prepare('DELETE FROM loyalty_entitlements WHERE id = ?').run(newerReward.id)
+  store.db.prepare('UPDATE loyalty_entitlements SET ruleId = ? WHERE id = ?')
+    .run('paid-orders-10-v1', oldReward.id)
+  await rejectsCode(service.getProgress('session-a'), 'ledger_integrity_error')
+  await rejectsCode(service.creditPaidOrder(order(store, 'after-legacy')), 'ledger_integrity_error')
+  await rejectsCode(service.redeem('session-a', {entitlementId:oldReward.id, requestId:'legacy-redeem'}), 'ledger_integrity_error')
+  assert.equal(store.count('loyalty_credits'), 10)
+  assert.equal(store.count('loyalty_entitlements'), 1)
+  assert.equal(store.count('loyalty_redemptions'), 0)
+  assert.equal(store.db.prepare('SELECT ruleId FROM loyalty_entitlements WHERE id = ?')
+    .get(oldReward.id).ruleId, 'paid-orders-10-v1')
+})
+
+test('legacy five paid credits with no ten-order reward cannot mint a retroactive gift', async t => {
+  const {store, service} = setup(t)
+  const reward = (await earn(store, service, 5)).entitlements[0]
+  store.db.prepare('DELETE FROM loyalty_entitlements WHERE id = ?').run(reward.id)
+  await rejectsCode(service.getProgress('session-a'), 'ledger_integrity_error')
+  await rejectsCode(service.creditPaidOrder(order(store, 'sixth-after-legacy')), 'ledger_integrity_error')
+  assert.equal(store.count('loyalty_credits'), 5)
+  assert.equal(store.count('loyalty_entitlements'), 0)
+})
+
 test('corrupt reward data fails closed rather than silently granting a different reward', async t => {
   const {store, service} = setup(t)
   const reward = (await earn(store, service, 5)).entitlements[0]
