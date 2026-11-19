@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {createReviewOnlyDraftLink,isReviewOnlyDraftLinkCurrent} from './review-only-draft-link.mjs';
 import {createDeliveryV2ReviewOnlyAdapter} from './review-only-quote-adapter.mjs';
@@ -220,4 +221,25 @@ test('single-read snapshot forbids swapping verified destination ID after valida
   assert.equal(result.link.payable,false);
   assert.equal(await verify(result.link),true);
   assert.deepEqual(counters.map(read=>read()),[1,1]);
+});
+
+
+test('mutable signed link cannot switch draft during async verification',async()=>{
+  const {link}=await issue();
+  const mutable={...link};
+  const other={...persisted,draftId:'draft_qa_87654321',revision:5,
+    cartSha256:'b'.repeat(64),destinationId:'dest_qa_87654321',destinationRevision:10};
+  let requestedId=null;
+  const current=await verify(mutable,{loadDraft:async id=>{
+    requestedId=id;
+    // Simulate mutation of a caller-held link while server loads the draft.
+    // The unchanged HMAC belongs only to the ORIGINAL draft, never "other".
+    Object.assign(mutable,{draftId:other.draftId,draftRevision:other.revision,
+      cartSha256:other.cartSha256,
+      destinationFingerprint:createHash('sha256').update(JSON.stringify([
+        other.destinationId,other.destinationRevision])).digest('hex')});
+    return other;
+  }});
+  assert.equal(requestedId,dId);
+  assert.equal(current,false,'a link for draft A must not validate draft B');
 });
