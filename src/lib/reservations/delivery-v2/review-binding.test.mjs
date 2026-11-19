@@ -82,3 +82,15 @@ test('creation signs only the revision validated in the single input snapshot',(
   assert.equal(reads,1);
   assert.equal(check(binding),true);
 });
+
+
+test('hostile proxy/getter in a caller-held review link fails closed without throwing',()=>{
+  const valid=issue();
+  const proxy=new Proxy({...valid},{ownKeys(){throw Error('PROVIDER_PRIVATE_DATA');}});
+  assert.equal(check(proxy),false);
+  const accessor={...valid};
+  Object.defineProperty(accessor,'signature',{enumerable:true,
+    get(){throw Error('PROVIDER_PRIVATE_DATA');}});
+  assert.equal(check(accessor),false);
+  assert.equal(check(valid),true,'regular signed links must remain valid');
+});
