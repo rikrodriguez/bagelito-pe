@@ -118,7 +118,7 @@ test('four independent SQLite writers deduplicate 80 attempts into 20 credits an
     assert.equal(attempts.filter(value => value.status === 'already_credited').length, 3, orderId)
   }
   assert.equal(fixture.store.count('loyalty_credits'), 20)
-  assert.equal(fixture.store.count('loyalty_entitlements'), 2)
+  assert.equal(fixture.store.count('loyalty_entitlements'), 4)
   assert.equal(fixture.store.count('loyalty_redemptions'), 0)
   const progress = await fixture.service.getProgress('session-a')
   assert.equal(progress.creditedOrders, 20)
@@ -132,7 +132,7 @@ test('four independent SQLite writers deduplicate 80 attempts into 20 credits an
   assert.equal((await fixture.service.getProgress('session-b')).creditedOrders, 0)
 })
 
-test('independent connections racing the same tenth order create exactly one boundary reward', {timeout}, async t => {
+test('independent connections racing the same fifth order create exactly one boundary reward', {timeout}, async t => {
   const fixture = setup(t)
   const before = await earn(fixture, 4)
   assert.equal(before.creditedOrders, 4)
