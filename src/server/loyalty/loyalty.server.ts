@@ -44,7 +44,7 @@ export interface LoyaltyStore {
 export class LoyaltyError extends Error {
   constructor(public readonly code: string) { super(code); this.name = 'LoyaltyError' }
 }
-export const LOYALTY_RULE = Object.freeze({ id: 'paid-orders-10-v1', orders: 10, bagels: 2, schmears: 1 })
+export const LOYALTY_RULE = Object.freeze({ id: 'paid-orders-5-v1', orders: 5, bagels: 2, schmears: 1 })
 function validId(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0 && value.length <= 200
 }
