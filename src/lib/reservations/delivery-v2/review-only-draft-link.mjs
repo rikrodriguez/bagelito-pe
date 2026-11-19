@@ -61,6 +61,14 @@ function signature(body,key){
 function readPayload(link){
   const out={};for(const key of LINK_KEYS.slice(0,-1)) out[key]=link[key];return out;
 }
+// Capture untrusted envelope fields once, before the async draft lookup.
+// A caller-held link must not switch identities after its HMAC is checked.
+function snapshotLink(input){
+  try {
+    if(!exact(input,LINK_KEYS)) return null;
+    return Object.freeze(Object.fromEntries(LINK_KEYS.map(key=>[key,input[key]])));
+  } catch { return null; }
+}
 function validLink(link,at){
   return exact(link,LINK_KEYS) && link.schema===SCHEMA &&
     safeId(link.draftId) && safeInt(link.draftRevision) &&
@@ -120,16 +128,17 @@ export async function isReviewOnlyDraftLinkCurrent({link,loadDraft,serverKey,now
   keyCheck(serverKey);
   if(typeof loadDraft!=='function' || typeof now!=='function')
     throw new TypeError('server-only draft loader and clock required');
+  const saved=snapshotLink(link);
   const at=now();
-  if(!Number.isSafeInteger(at) || !validLink(link,at)) return false;
-  const expected=Buffer.from(signature(readPayload(link),serverKey),'hex');
-  const provided=Buffer.from(link.signature,'hex');
+  if(!Number.isSafeInteger(at) || !validLink(saved,at)) return false;
+  const expected=Buffer.from(signature(readPayload(saved),serverKey),'hex');
+  const provided=Buffer.from(saved.signature,'hex');
   if(!timingSafeEqual(expected,provided)) return false;
   let latest;
-  try {latest=snapshot(await loadDraft(link.draftId));} catch {return false;}
+  try {latest=snapshot(await loadDraft(saved.draftId));} catch {return false;}
   const completedAt=now();
-  return Boolean(latest && latest.draftId===link.draftId &&
-    latest.revision===link.draftRevision && latest.cartSha256===link.cartSha256 &&
-    finger(latest)===link.destinationFingerprint &&
-    Number.isSafeInteger(completedAt) && completedAt>=at && completedAt<link.expiresAtMs);
+  return Boolean(latest && latest.draftId===saved.draftId &&
+    latest.revision===saved.draftRevision && latest.cartSha256===saved.cartSha256 &&
+    finger(latest)===saved.destinationFingerprint &&
+    Number.isSafeInteger(completedAt) && completedAt>=at && completedAt<saved.expiresAtMs);
 }
