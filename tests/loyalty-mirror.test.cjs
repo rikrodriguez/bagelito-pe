@@ -81,7 +81,7 @@ test('impayments and forged payment objects cannot be supplied as mirror progres
   f.backend.seedOrder({orderId: 'unpaid', subjectId: 'a', paymentState: 'pending', verifiedSource: null, verificationId: null, requiresReview: false})
   await f.mirror.capture('a')
   assert.equal(f.store.get('a').envelope.summary.creditedOrders, 0)
-  await rejectsCode(f.mirror.capture({subjectId: 'a', creditedOrders: 50, paid: true}), 'invalid_input')
+  await rejectsCode(f.mirror.capture({subjectId: 'a', creditedOrders: 100, paid: true}), 'invalid_input')
   assert.equal(f.backend.count('loyalty_credits'), 0)
 })
 
