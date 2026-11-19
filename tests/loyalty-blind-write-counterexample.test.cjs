@@ -144,19 +144,19 @@ if (!isMainThread) {
         verificationId: 'synthetic-backend-verification-' + number, requiresReview: false})
       await service.creditPaidOrder(orderId)
     }
-    for (let i = 1; i <= 9; i++) await credit(i)
+    for (let i = 1; i <= 4; i++) await credit(i)
     const oldCapture = await mirror.capture(subjectId)
     assert.equal(oldCapture.status, 'captured')
     const older = oldCapture.envelope
     assert.equal(older.revision, 1)
-    assert.equal(older.summary.creditedOrders, 9)
+    assert.equal(older.summary.creditedOrders, 4)
     assert.equal(older.summary.earnedRewards, 0)
-    await credit(10)
+    await credit(5)
     const newCapture = await mirror.capture(subjectId)
     assert.equal(newCapture.status, 'captured')
     const newer = newCapture.envelope
     assert.equal(newer.revision, 2)
-    assert.equal(newer.summary.creditedOrders, 10)
+    assert.equal(newer.summary.creditedOrders, 5)
     assert.equal(newer.summary.earnedRewards, 1)
     assert.notEqual(older.messageId, newer.messageId)
     const authoritativeBefore = dumpLedger(backend)
@@ -178,11 +178,11 @@ if (!isMainThread) {
     writerB.release()
     assert.deepEqual((await writerB.done).receipt, {status: 'applied', revision: 2})
     assert.deepEqual(receiver.read(subjectId), newer)
-    trace.push({writer: 'B', operation: 'blind-PUT', storedRevision: 2, creditedOrders: 10})
+    trace.push({writer: 'B', operation: 'blind-PUT', storedRevision: 2, creditedOrders: 5})
     writerA.release()
     assert.deepEqual((await writerA.done).receipt, {status: 'applied', revision: 1})
     assert.deepEqual(receiver.read(subjectId), older, 'Expected counterexample: delayed old PUT overwrites the newer destination snapshot')
-    trace.push({writer: 'A', operation: 'blind-PUT', storedRevision: 1, creditedOrders: 9})
+    trace.push({writer: 'A', operation: 'blind-PUT', storedRevision: 1, creditedOrders: 4})
     assert.equal(receiver.db.prepare('SELECT COUNT(*) AS count FROM not_ghl_blind_idempotency').get().count, 2)
     assert.deepEqual(receiver.write(newer), {status: 'duplicate', revision: 2})
     assert.deepEqual(receiver.read(subjectId), older, 'An idempotent retry of B cannot repair this receiver after A regressed it')
@@ -196,15 +196,15 @@ if (!isMainThread) {
     assert.deepEqual(dumpLedger(backend), authoritativeBefore)
     assert.deepEqual(mirrorStore.get(subjectId), projectionBefore)
     const progress = await service.getProgress(session)
-    assert.equal(progress.creditedOrders, 10)
+    assert.equal(progress.creditedOrders, 5)
     assert.equal(progress.earnedRewards, 1)
     assert.equal(progress.unredeemedRewards, 1)
-    assert.equal(backend.count('loyalty_credits'), 10)
+    assert.equal(backend.count('loyalty_credits'), 5)
     assert.equal(backend.count('loyalty_entitlements'), 1)
     assert.equal(backend.count('loyalty_redemptions'), 0)
     t.diagnostic(JSON.stringify({scope: 'NOT GHL; local SQLite receivers and synthetic identifiers only; no HTTP',
-      trace, blindFinal: {revision: 1, creditedOrders: 9, appliedDistinctMessageIds: 2},
-      conditionalLocalFakeFinal: {revision: 2, creditedOrders: 10, oldDeliveryStatus: 'stale', applies: 1},
-      authoritativeBackend: {creditedOrders: 10, earnedRewards: 1, unchanged: true}}))
+      trace, blindFinal: {revision: 1, creditedOrders: 4, appliedDistinctMessageIds: 2},
+      conditionalLocalFakeFinal: {revision: 2, creditedOrders: 5, oldDeliveryStatus: 'stale', applies: 1},
+      authoritativeBackend: {creditedOrders: 5, earnedRewards: 1, unchanged: true}}))
   })
 }
