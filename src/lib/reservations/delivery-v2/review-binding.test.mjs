@@ -94,3 +94,23 @@ test('hostile proxy/getter in a caller-held review link fails closed without thr
   assert.equal(check(accessor),false);
   assert.equal(check(valid),true,'regular signed links must remain valid');
 });
+
+
+test('throwing draft getters or proxies fail closed on verification',()=>{
+  const binding=issue();
+  const getter={...draft,get revision(){throw Error('PRIVATE_PROVIDER_DATA')}};
+  assert.equal(check(binding,{draft:getter}),false);
+  const proxy=new Proxy(draft,{get(target,prop){
+    if(prop==='cartSha256')throw Error('PRIVATE_PROVIDER_DATA');
+    return Reflect.get(target,prop);
+  }});
+  assert.equal(check(binding,{draft:proxy}),false);
+});
+
+test('throwing draft/candidate getters reject signing with controlled TypeError',()=>{
+  const invalidDraft={...draft,get revision(){throw Error('PRIVATE_PROVIDER_DATA')}};
+  const invalidCandidate={...candidate,get feeMinor(){throw Error('PRIVATE_PROVIDER_DATA')}};
+  assert.throws(()=>issue({draft:invalidDraft}),TypeError);
+  assert.throws(()=>issue({candidate:invalidCandidate}),TypeError);
+  assert.equal(check(issue()),true,'normal signed envelope still validates');
+});
