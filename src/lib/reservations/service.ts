@@ -1,4 +1,5 @@
 import { randomBytes } from "node:crypto";
+import { DeliveryV2VerificationRequired, requireVerifiedDeliveryV2Pricing } from "./delivery-v2-hard-stop";
 import { getFlavorBySlug, getPackBySlug } from "@/lib/catalog";
 import { getCheckoutExtraPackOffer } from "@/lib/checkout-upsell";
 import { getDeliveryDistanceKm, getDeliveryFee } from "@/lib/delivery-pricing";
@@ -213,6 +214,15 @@ function fallbackBatchAvailability({
 }
 
 export async function getReservationBatchAvailability(): Promise<BatchAvailability> {
+  // P0: capacity may exist while every reservation path is blocked by Delivery V2.
+  // Do not advertise "accepting" until the same server-owned pricing guard allows writes.
+  // This guard executes before environment reads, storage calls or database queries.
+  try {
+    requireVerifiedDeliveryV2Pricing();
+  } catch (error) {
+    if (!(error instanceof DeliveryV2VerificationRequired)) throw error;
+    return fallbackBatchAvailability({ accepting: false, status: "closed" });
+  }
   const missing = getMissingReservationEnv();
   if (missing.length) return fallbackBatchAvailability();
 
@@ -486,6 +496,7 @@ async function createReservationLegacy(
 }
 
 export async function createReservation(formData: FormData) {
+  requireVerifiedDeliveryV2Pricing();
   const missing = getMissingReservationEnv();
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
 
@@ -593,6 +604,7 @@ export async function createReservation(formData: FormData) {
 }
 
 export async function createCulqiReservation(input: unknown) {
+  requireVerifiedDeliveryV2Pricing();
   const missing = getMissingReservationEnv();
   if (missing.length) throw new Error("Missing required environment variables: " + missing.join(", "));
 

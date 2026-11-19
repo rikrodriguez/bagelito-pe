@@ -1,0 +1,37 @@
+{
+  "schema": "bagelito.delivery-tiers.2026-11-06.v2",
+  "owner_approval_date": "2026-11-06",
+  "public_dispatch_area": "Lince, Lima",
+  "private_origin": "NOT_RECORDED_OR_REQUIRED",
+  "currency": "PEN",
+  "pricing": {
+    "adjacent_minor": 800,
+    "regular_minor": 1000,
+    "distant_minor": 1500,
+    "very_distant_minor": 2000
+  },
+  "overrides": {
+    "la_molina_min": 1500,
+    "la_molina_verified_sectors_very_distant": [
+      "El Sol de La Molina",
+      "Las Lagunas de La Molina",
+      "La Planicie"
+    ],
+    "server_verified_road_km_upgrade": {
+      "over_15_km": 1500,
+      "over_25_km": 2000,
+      "over_40_km": "manual-review"
+    }
+  },
+  "checkout": "requires verified destination district and address from internal backend; no client-supplied evidence",
+  "manual": "remote districts may need separate logistic quote; never claim fixed S/20 beyond feasible radius",
+  "public_response_fields": [
+    "district",
+    "province",
+    "feeMinor",
+    "tier",
+    "status",
+    "payable",
+    "tariffVersion"
+  ]
+}
