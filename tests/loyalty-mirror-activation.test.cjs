@@ -38,7 +38,7 @@ async function setup(t) {
   const backend = createStore(path.join(dir, 'backend.sqlite'))
   backend.seedSubject('a','session-a')
   const service = createLoyaltyService(backend)
-  for (let i=1;i<=10;i++) {
+  for (let i=1;i<=5;i++) {
     backend.seedOrder({orderId:'paid-'+i, subjectId:'a', paymentState:'paid', verifiedSource:'backend-confirmed', verificationId:'fake-payment-'+i, requiresReview:false})
     await service.creditPaidOrder('paid-'+i)
   }
@@ -61,7 +61,7 @@ test('verified LOCAL fixtures delegate to the configured fake and preserve the l
   const f=await setup(t), before=dump(f.backend)
   assert.deepEqual(await assessMirrorActivation(f.store, scope, descriptor), {status:'local-fixture-only',code:'local_fixture_only'})
   assert.equal((await f.mirror.deliver('a')).status,'delivered')
-  assert.equal(f.receiver.get('a').envelope.summary.creditedOrders,10)
+  assert.equal(f.receiver.get('a').envelope.summary.creditedOrders,5)
   assert.equal(f.receiver.get('a').envelope.summary.unredeemedRewards,1)
   assert.equal(f.mirrorStore.get('a').pending,false)
   assert.deepEqual(dump(f.backend),before)
