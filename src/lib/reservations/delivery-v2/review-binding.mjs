@@ -46,10 +46,16 @@ function snapshotCandidate(candidate) {
     tariffVersion:candidate.tariffVersion, tier:candidate.tier, feeMinor:candidate.feeMinor};
 }
 function snapshotBinding(binding) {
-  if (!binding || typeof binding !== 'object' ||
-      Object.keys(binding).length !== KEYS.length ||
-      KEYS.some(k => !Object.hasOwn(binding,k))) return null;
-  return Object.fromEntries(KEYS.map(k => [k,binding[k]]));
+  // A review envelope may be caller-held. Hostile accessors/proxies must fail
+  // closed instead of propagating exceptions or exposing provider internals.
+  try {
+    if (!binding || typeof binding !== 'object' ||
+        Object.keys(binding).length !== KEYS.length ||
+        KEYS.some(k => !Object.hasOwn(binding,k))) return null;
+    return Object.fromEntries(KEYS.map(k => [k,binding[k]]));
+  } catch {
+    return null;
+  }
 }
 function body(fields) {
   return {
