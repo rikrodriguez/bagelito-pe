@@ -104,7 +104,7 @@ function assertReward(reward, cycle) {
   assert.equal(reward.schmears, 1)
 }
 
-test('four independent SQLite writers deduplicate 80 attempts into 20 credits and two rewards', {timeout}, async t => {
+test('four independent SQLite writers deduplicate 80 attempts into 20 credits and four rewards', {timeout}, async t => {
   const fixture = setup(t)
   const ids = Array.from({length: 20}, (_, i) => seedOrder(fixture.store, 'concurrent-' + (i + 1)))
   const orders = [ids, [...ids].reverse(), [...ids.slice(7), ...ids.slice(0, 7)], [...ids.slice(13), ...ids.slice(0, 13)]]
@@ -122,30 +122,30 @@ test('four independent SQLite writers deduplicate 80 attempts into 20 credits an
   assert.equal(fixture.store.count('loyalty_redemptions'), 0)
   const progress = await fixture.service.getProgress('session-a')
   assert.equal(progress.creditedOrders, 20)
-  assert.equal(progress.earnedRewards, 2)
-  assert.equal(progress.unredeemedRewards, 2)
+  assert.equal(progress.earnedRewards, 4)
+  assert.equal(progress.unredeemedRewards, 4)
   assert.equal(progress.ordersInCurrentCycle, 0)
-  assert.equal(progress.ordersUntilNextReward, 10)
+  assert.equal(progress.ordersUntilNextReward, 5)
   assert.equal(progress.requiresReview, false)
-  assert.equal(progress.entitlements.length, 2)
+  assert.equal(progress.entitlements.length, 4)
   progress.entitlements.forEach((reward, i) => { assertReward(reward, i + 1); assert.equal(reward.redemption, null) })
   assert.equal((await fixture.service.getProgress('session-b')).creditedOrders, 0)
 })
 
 test('independent connections racing the same tenth order create exactly one boundary reward', {timeout}, async t => {
   const fixture = setup(t)
-  const before = await earn(fixture, 9)
-  assert.equal(before.creditedOrders, 9)
+  const before = await earn(fixture, 4)
+  assert.equal(before.creditedOrders, 4)
   assert.equal(before.earnedRewards, 0)
   const orderId = seedOrder(fixture.store, 'raced-tenth')
   const lists = Array.from({length: 4}, () => Array.from({length: 4}, () => ({type: 'credit', orderId})))
   const values = fulfilled((await race(fixture, lists)).flat())
   assert.equal(values.filter(value => value.status === 'credited').length, 1)
   assert.equal(values.filter(value => value.status === 'already_credited').length, 15)
-  assert.equal(fixture.store.count('loyalty_credits'), 10)
+  assert.equal(fixture.store.count('loyalty_credits'), 5)
   assert.equal(fixture.store.count('loyalty_entitlements'), 1)
   const progress = await fixture.service.getProgress('session-a')
-  assert.equal(progress.creditedOrders, 10)
+  assert.equal(progress.creditedOrders, 5)
   assert.equal(progress.earnedRewards, 1)
   assert.equal(progress.unredeemedRewards, 1)
   assert.equal(progress.requiresReview, false)
@@ -155,7 +155,7 @@ test('independent connections racing the same tenth order create exactly one bou
 
 test('two redemption requests for one reward have one winner and one already-consumed error', {timeout}, async t => {
   const fixture = setup(t)
-  const reward = (await earn(fixture, 10)).entitlements[0]
+  const reward = (await earn(fixture, 5)).entitlements[0]
   const actions = ['request-one', 'request-two'].map(requestId => [{type: 'redeem', context: 'session-a', input: {entitlementId: reward.id, requestId}}])
   const results = (await race(fixture, actions)).flat()
   const winners = results.filter(result => result.status === 'fulfilled')
@@ -173,7 +173,7 @@ test('two redemption requests for one reward have one winner and one already-con
 
 test('same redemption request racing on separate connections replays the same persisted redemption', {timeout}, async t => {
   const fixture = setup(t)
-  const reward = (await earn(fixture, 10)).entitlements[0]
+  const reward = (await earn(fixture, 5)).entitlements[0]
   const input = {entitlementId: reward.id, requestId: 'same-request'}
   const actions = Array.from({length: 2}, () => [{type: 'redeem', context: 'session-a', input}])
   const values = fulfilled((await race(fixture, actions)).flat())
@@ -186,7 +186,7 @@ test('same redemption request racing on separate connections replays the same pe
 
 test('wrong-customer competitor cannot consume a reward or poison the legitimate request', {timeout}, async t => {
   const fixture = setup(t)
-  const reward = (await earn(fixture, 10)).entitlements[0]
+  const reward = (await earn(fixture, 5)).entitlements[0]
   const input = {entitlementId: reward.id, requestId: 'shared-concurrent-request'}
   const [authorized, unauthorized] = await race(fixture, [
     [{type: 'redeem', context: 'session-a', input}],
