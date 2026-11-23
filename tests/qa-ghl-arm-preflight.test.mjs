@@ -95,3 +95,44 @@ test('empty subject is never considered a complete email template', () => {
   const result = auditTemplate({data:{name:'NoSubject',subject:' ',editorContent:'<p>Hola</p>'}});
   assert.ok(result.findings.some(x=>x.startsWith('EMPTY_EMAIL_CONTENT')));
 });
+
+
+test('unrelated conditional cannot conceal unguarded recovery email path', () => {
+  const result = auditWorkflow({status:'draft',definition:{
+    triggers:[{type:'checkout_abandoned'}],
+    actions:[
+      {id:'wait',type:'wait',name:'Wait'},
+      {id:'mail',type:'email',name:'Recovery 1'},
+      {id:'separate',type:'if_else',name:'Unrelated branch'}
+    ],
+    edges:[{from:'wait',to:'mail'}]
+  }});
+  assert.ok(result.findings.some(x => x.startsWith('EMAIL_UNGUARDED_PATH')));
+  assert.equal(result.safeToActivate,false);
+});
+
+test('email downstream of a conditional still needs semantic/E2E verification', () => {
+  const result = auditWorkflow({status:'draft',definition:{
+    triggers:[{type:'checkout_abandoned'}],
+    actions:[
+      {id:'gate',type:'if_else',name:'Consent + purchase guard'},
+      {id:'mail',type:'email',name:'Recovery'}
+    ],
+    edges:[{from:'gate',to:'mail'}]
+  }});
+  assert.equal(result.findings.filter(x => x.startsWith('EMAIL_UNGUARDED_PATH')).length,0);
+  assert.ok(result.findings.some(x => x.startsWith('UNVERIFIED_GATES')));
+  assert.equal(result.safeToActivate,false);
+});
+
+test('branch node without graph edges cannot certify a send path', () => {
+  const result = auditWorkflow({status:'draft',definition:{
+    triggers:[{type:'event'}],
+    actions:[
+      {id:'gate',type:'if_else',name:'Guard'},
+      {id:'mail',type:'email',name:'Send'}
+    ],edges:[]
+  }});
+  assert.ok(result.findings.some(x => x.startsWith('GATE_GRAPH_UNVERIFIED')));
+  assert.equal(result.safeToActivate,false);
+});
