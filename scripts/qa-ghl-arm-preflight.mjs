@@ -26,6 +26,18 @@ export function auditWorkflow(source) {
     if (!branches.length) findings.push('NO_EXECUTABLE_GATE: Email sequence lacks conditional nodes. Action names are not guards.');
     if (branches.length) findings.push('UNVERIFIED_GATES: Conditional nodes exist, but their consent, order and DND semantics require manual E2E QA.');
   }
+  // Check real transition edges, not just labels: an unmet objective may reach a
+  // downstream step even when its instructions say "do not advance".
+  const edges = Array.isArray(definition?.edges) ? definition.edges : [];
+  const actionById = new Map(actions.filter(a => typeof a.id === 'string').map(a => [a.id, a]));
+  for (const objective of actions) {
+    if (objective.type !== 'conversationai_objective' || objective.attributes?.proceedIfNotMet !== true || typeof objective.id !== 'string') continue;
+    const destinations = edges.filter(e => e.from === objective.id)
+      .map(e => actionById.get(e.to)).filter(Boolean);
+    if (destinations.length) {
+      findings.push(`OBJECTIVE_UNMET_HAS_DOWNSTREAM: "${objective.name ?? objective.id}" -> ${destinations.map(a => a.name ?? a.id).join(', ')}. May proceed with incomplete data; require manual path QA and a verified completion gate.`);
+    }
+  }
   if (status === 'published' && actions.some(a => a.type === 'conversationai_objective' && a.attributes?.proceedIfNotMet === true)) {
     findings.push('AI_OBJECTIVE_FALLTHROUGH: Published conversation AI has proceedIfNotMet=true. Inspect actual transitions.');
   }
