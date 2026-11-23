@@ -1,0 +1,122 @@
+{
+  "_note": "PLANTILLA INCOMPLETA: NO es evidencia, no editar/publicar desde GitHub. Completar SOLO tras exportar y comprobar Vibe original en AI Studio; jamás incluir credenciales ni clientes.",
+  "locationId": "AO82PQzM13CKpSZO2hER",
+  "projectId": "1794259044802846738",
+  "previewUrl": "https://bagelito-tienda.vibepreview.app/",
+  "sourceKind": "GHL_AI_STUDIO_VIBE_ORIGINAL",
+  "testedOnOriginalPreview": false,
+  "build": {
+    "versionId": "",
+    "exportedAt": "",
+    "zipSha256": "",
+    "concurrentEditingChecked": false,
+    "authenticatedVibeIdConfirmed": false
+  },
+  "scenes": [
+    {
+      "id": "S01",
+      "goldenVersion": "",
+      "approvalDate": "",
+      "componentPath": "",
+      "buildVersion": "",
+      "published": false,
+      "publishAuthorizedForScene": false,
+      "qa": [
+        {
+          "viewport": "1440x900",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        },
+        {
+          "viewport": "390x844",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        }
+      ]
+    },
+    {
+      "id": "S02A",
+      "goldenVersion": "",
+      "approvalDate": "",
+      "componentPath": "",
+      "buildVersion": "",
+      "published": false,
+      "publishAuthorizedForScene": false,
+      "qa": [
+        {
+          "viewport": "1440x900",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        },
+        {
+          "viewport": "390x844",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        }
+      ]
+    },
+    {
+      "id": "S02B",
+      "goldenVersion": "",
+      "approvalDate": "",
+      "componentPath": "",
+      "buildVersion": "",
+      "published": false,
+      "publishAuthorizedForScene": false,
+      "qa": [
+        {
+          "viewport": "1440x900",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        },
+        {
+          "viewport": "390x844",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "goldenVersion": "",
+      "approvalDate": "",
+      "componentPath": "",
+      "buildVersion": "",
+      "published": false,
+      "publishAuthorizedForScene": false,
+      "qa": [
+        {
+          "viewport": "1440x900",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        },
+        {
+          "viewport": "390x844",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "goldenVersion": "",
+      "approvalDate": "",
+      "componentPath": "",
+      "buildVersion": "",
+      "published": false,
+      "publishAuthorizedForScene": false,
+      "qa": [
+        {
+          "viewport": "1440x900",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        },
+        {
+          "viewport": "390x844",
+          "screenshotPath": "",
+          "verifiedAgainstGolden": false
+        }
+      ]
+    }
+  ]
+}
