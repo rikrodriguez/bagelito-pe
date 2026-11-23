@@ -72,3 +72,26 @@ test('unmet objective without an outgoing edge does not invent a path', () => {
   ],edges:[]}});
   assert.equal(result.findings.filter(x=>x.startsWith('OBJECTIVE_UNMET_HAS_DOWNSTREAM')).length,0);
 });
+
+test('nested email editor JSON is inspected for placeholders, never treated as rendered HTML', () => {
+  const result = auditTemplate({data:{name:'TX Nested',subject:'Confirmación',editorContent:{blocks:[{text:'Tu pedido [[ORDER_ID]]'}]}}});
+  assert.deepEqual(result.unresolvedPlaceholders,['[[ORDER_ID]]']);
+  assert.ok(result.findings.some(x=>x.startsWith('UNVERIFIED_TEMPLATE_STRUCTURE')));
+  assert.ok(result.findings.some(x=>x.startsWith('UNRESOLVED_MERGE_DATA')));
+});
+
+test('a missing email body is a finding instead of a clean release result', () => {
+  const result = auditTemplate({data:{name:'Empty',subject:'Un asunto'}});
+  assert.ok(result.findings.some(x=>x.startsWith('MISSING_TEMPLATE_CONTENT')));
+  assert.ok(result.findings.some(x=>x.startsWith('EMPTY_EMAIL_CONTENT')));
+});
+
+test('generic double-bracket template variables are caught beyond ORDER and CART', () => {
+  const result = auditTemplate({data:{name:'Abandono',subject:'Hola [[CUSTOMER_NAME]]',editorContent:'<p>Oferta</p>'}});
+  assert.deepEqual(result.unresolvedPlaceholders,['[[CUSTOMER_NAME]]']);
+});
+
+test('empty subject is never considered a complete email template', () => {
+  const result = auditTemplate({data:{name:'NoSubject',subject:' ',editorContent:'<p>Hola</p>'}});
+  assert.ok(result.findings.some(x=>x.startsWith('EMPTY_EMAIL_CONTENT')));
+});
