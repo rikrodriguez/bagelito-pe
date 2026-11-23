@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs';
 
 const EMAIL_ACTION_TYPES = new Set(['email', 'send_email', 'send-email']);
 const EXECUTABLE_BRANCH_TYPES = new Set(['if_else', 'if-else', 'condition', 'branch']);
-const UNSAFE_PLACEHOLDER = /\[\[(?:ORDER|CART|PENDING_CART|CAMPAIGN)_[A-Z0-9_ -]+\]\]/g;
+const UNSAFE_PLACEHOLDER = /\[\[[A-Z][A-Z0-9_ -]{2,}\]\]/g;
 
 export function auditWorkflow(source) {
   const envelope = source?.data?.definition ? source.data : source;
@@ -51,13 +51,29 @@ export function auditWorkflow(source) {
 
 export function auditTemplate(source) {
   const data = source?.data?.editorContent !== undefined ? source.data : source;
-  const html = typeof data?.editorContent === 'string' ? data.editorContent : '';
+  const content = data?.editorContent;
   const subject = String(data?.subject ?? data?.subjectLine ?? '');
-  const unresolved = [...new Set(`${subject}\n${html}`.match(UNSAFE_PLACEHOLDER) ?? [])];
-  return { name: String(data?.name ?? 'Unnamed'),
-    unresolvedPlaceholders: unresolved,
-    findings: unresolved.length ? ['UNRESOLVED_MERGE_DATA: Literal staging placeholders remain; do not send.'] : [],
-    safeToSend: false }; // Template rendering and data-plane merge are not verified here.
+  const findings = [];
+  let inspectableContent = '';
+  if (typeof content === 'string') {
+    inspectableContent = content;
+  } else if (content && typeof content === 'object') {
+    // Some GHL exports represent the editor as nested JSON. Check all text,
+    // but do NOT interpret JSON inspection as verified HTML email rendering.
+    inspectableContent = JSON.stringify(content);
+    findings.push('UNVERIFIED_TEMPLATE_STRUCTURE: Nested editor JSON needs rendered email QA.');
+  } else {
+    findings.push('MISSING_TEMPLATE_CONTENT: Editor content absent or of unexpected type.');
+  }
+  if (!subject.trim() || !inspectableContent.trim()) {
+    findings.push('EMPTY_EMAIL_CONTENT: Subject or email body is empty.');
+  }
+  const unresolved = [...new Set(`${subject}\n${inspectableContent}`.match(UNSAFE_PLACEHOLDER) ?? [])];
+  if (unresolved.length) {
+    findings.push('UNRESOLVED_MERGE_DATA: Literal placeholders remain; do not send.');
+  }
+  return { name: String(data?.name ?? 'Unnamed'), unresolvedPlaceholders: unresolved,
+    findings, safeToSend: false };
 }
 
 export function auditSnapshot(snapshot) {
