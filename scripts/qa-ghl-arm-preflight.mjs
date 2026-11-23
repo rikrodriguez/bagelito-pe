@@ -30,6 +30,36 @@ export function auditWorkflow(source) {
   // downstream step even when its instructions say "do not advance".
   const edges = Array.isArray(definition?.edges) ? definition.edges : [];
   const actionById = new Map(actions.filter(a => typeof a.id === 'string').map(a => [a.id, a]));
+  // A branch anywhere in the workflow is NOT a guard for an email on another path.
+  // Static graph checks fail closed when the export lacks usable edges.
+  if (emails.length && branches.length) {
+    if (!edges.length || actions.some(a => !a.id)) {
+      findings.push('GATE_GRAPH_UNVERIFIED: Workflow has conditional nodes, but the action graph is incomplete.');
+    } else {
+      const incoming = new Set(edges.map(e => e.to));
+      const roots = actions.map(a => a.id).filter(id => !incoming.has(id));
+      const outbound = new Map();
+      for (const edge of edges) {
+        if (!outbound.has(edge.from)) outbound.set(edge.from, []);
+        outbound.get(edge.from).push(edge.to);
+      }
+      const reachesWithoutGate = (nodeId, targetId, visited = new Set()) => {
+        if (nodeId === targetId) return true;
+        if (visited.has(nodeId)) return false;
+        const node = actionById.get(nodeId);
+        if (node && EXECUTABLE_BRANCH_TYPES.has(node.type)) return false;
+        const nextVisited = new Set(visited);
+        nextVisited.add(nodeId);
+        return (outbound.get(nodeId) ?? []).some(nextId =>
+          reachesWithoutGate(nextId, targetId, nextVisited));
+      };
+      for (const email of emails) {
+        if (roots.some(rootId => reachesWithoutGate(rootId, email.id))) {
+          findings.push(`EMAIL_UNGUARDED_PATH: "${email.name ?? email.id}" reachable without a conditional node. Labels are not gates.`);
+        }
+      }
+    }
+  }
   for (const objective of actions) {
     if (objective.type !== 'conversationai_objective' || objective.attributes?.proceedIfNotMet !== true || typeof objective.id !== 'string') continue;
     const destinations = edges.filter(e => e.from === objective.id)
