@@ -41,3 +41,34 @@ test('static preflight never grants approval for clean-looking inputs', () => {
   const result=auditSnapshot({workflows:[],templates:[]});
   assert.equal(result.scope,'static read-only; NOT production certification');
 });
+
+test('published Dawn: detects the actual unmet-order to private-delivery edge', () => {
+  const result = auditWorkflow({status:'published',definition:{
+    name:'Dawn STAGING',triggers:[{type:'conv_ai_trigger'}],
+    actions:[
+      {id:'configure',type:'conversationai_objective',name:'04 Configurar pedido',attributes:{proceedIfNotMet:true}},
+      {id:'delivery',type:'conversationai_objective',name:'05 Datos privados de entrega',attributes:{proceedIfNotMet:true}},
+      {id:'review',type:'goto',name:'07 Revision humana'}
+    ],edges:[{from:'configure',to:'delivery'},{from:'delivery',to:'review'}]
+  }});
+  const paths=result.findings.filter(f=>f.startsWith('OBJECTIVE_UNMET_HAS_DOWNSTREAM'));
+  assert.equal(paths.length,2);
+  assert.match(paths[0],/Configurar pedido.*Datos privados de entrega/);
+  assert.match(paths[1],/Datos privados de entrega.*Revision humana/);
+  assert.equal(result.safeToActivate,false);
+});
+
+test('draft workflow with unmet objective outgoing edge is held for review too', () => {
+  const result=auditWorkflow({status:'draft',definition:{actions:[
+    {id:'obj',type:'conversationai_objective',name:'Objective',attributes:{proceedIfNotMet:true}},
+    {id:'next',type:'goto',name:'Next'}
+  ],edges:[{from:'obj',to:'next'}]}});
+  assert.ok(result.findings.some(x=>x.startsWith('OBJECTIVE_UNMET_HAS_DOWNSTREAM')));
+});
+
+test('unmet objective without an outgoing edge does not invent a path', () => {
+  const result=auditWorkflow({status:'draft',definition:{actions:[
+    {id:'obj',type:'conversationai_objective',name:'Objective',attributes:{proceedIfNotMet:true}}
+  ],edges:[]}});
+  assert.equal(result.findings.filter(x=>x.startsWith('OBJECTIVE_UNMET_HAS_DOWNSTREAM')).length,0);
+});
